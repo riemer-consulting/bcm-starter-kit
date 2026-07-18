@@ -1,0 +1,1 @@
+Offline, single-file Business Continuity Management workbook: process records, business impact analysis, critical resources, emergency operations, resilience checks, measures, versioning and PDF reporting. No install, no cloud. Apache-2.0.

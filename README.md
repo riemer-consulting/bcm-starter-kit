@@ -1,0 +1,142 @@
+<p align="center">
+  <img src="assets/logo-main.png" alt="BCM Starter Kit" width="420">
+</p>
+
+<h3 align="center">Open Source Edition</h3>
+
+<p align="center">
+  A single-file, offline Business Continuity Management workbook.<br>
+  No installation. No account. No cloud. No tracking.
+</p>
+
+<p align="center">
+  <a href="LICENSE.txt"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
+  <img alt="Version" src="https://img.shields.io/badge/version-2.1.0-informational">
+  <img alt="No build step" src="https://img.shields.io/badge/build-none%20required-brightgreen">
+  <img alt="Works offline" src="https://img.shields.io/badge/works-offline-brightgreen">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/dashboard.png" alt="BCM Starter Kit dashboard" width="800">
+</p>
+
+*(Screenshot placeholder — see [Screenshots](#screenshots) below.)*
+
+---
+
+## What is this?
+
+**BCM Starter Kit** is a complete Business Continuity Management (BCM) workbook packaged as a single HTML file. Open it in a browser and you have process records, business impact analysis, minimum viable capability planning, critical resource tracking, emergency operations documentation, resilience checks, a measures catalog, version history, and PDF reporting — with nothing to install and nothing leaving your machine unless you choose to export it.
+
+It was originally built for practical, hands-on BCM work in small and mid-sized organizations that need a structured starting point without procuring, deploying, or paying for a full GRC platform.
+
+## Why this exists
+
+Most Business Continuity Management tooling falls into one of two categories: expensive enterprise GRC suites that are overkill for a first BCM initiative, or a scattering of spreadsheets and Word templates with no structure connecting them. BCM Starter Kit is meant to sit between the two — structured enough to produce a defensible, audit-ready result, simple enough that a single file you can email, put on a USB stick, or check into a private repository *is* the entire deployment.
+
+## Key features
+
+- **Process records** — steckbrief, 60-second pitch, business impact analysis, minimum viable capability, critical resources, emergency operations, resilience check, and measures per process, with a completeness indicator throughout.
+- **Structured dependencies** — process-to-process dependencies by ID (not free text), with detection of cycles, contradictions, and orphaned references, and a multi-step critical-chain analysis.
+- **Data-quality-aware management view** — a compact executive dashboard that keeps confirmed risks strictly separate from data-quality gaps, so an incomplete field is never mistaken for a validated finding.
+- **Release governance** — a configurable readiness check with hard blockers and acknowledgeable warnings before a workbook can be marked "Approved"; approval automatically snapshots an immutable version.
+- **Versioning built in** — every saved version is checksummed and comparable against any other, without needing external version control.
+- **PDF reporting** — a genuinely short executive summary and a full detailed report, both generated entirely client-side via the browser's print function.
+- **Encryption where you need it** — optional password-protected export (AES-GCM via the Web Crypto API) for sharing over channels you don't fully trust.
+- **29 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+
+## Getting started
+
+1. Download [`bcm-starter-kit.html`](bcm-starter-kit.html) (or clone this repository).
+2. Open the file in a modern desktop browser — double-click it, or drag it into a browser window.
+3. Accept the license notice on first launch.
+4. Either start with an empty workbook, or click **Load sample data** to explore a fictional demo company first.
+
+No server, no build step, no dependencies to install. See [`docs/quickstart.md`](docs/quickstart.md) for a full walkthrough in under ten minutes, or [`docs/user-guide.md`](docs/user-guide.md) for complete documentation.
+
+### Try the demo workbook
+
+[`examples/demo-workbook.json`](examples/demo-workbook.json) contains a fictional company ("Musterbau GmbH") with six fully worked-out processes. Open BCM Starter Kit, go to **Settings → Import**, and load it to see every feature populated with realistic (fictional) data. See [`examples/README.md`](examples/README.md).
+
+## Offline by design
+
+BCM Starter Kit makes no network requests of its own once loaded, and does not embed any analytics, telemetry, or third-party scripts. There is no server component — everything runs in your browser. See [`docs/data-storage-and-privacy.md`](docs/data-storage-and-privacy.md) for the full picture, including exactly what is stored where and what you are responsible for when sharing exported files.
+
+## Where your data lives
+
+By default, your workbook is kept in the browser's local storage on the device you're using. On Chromium-based browsers (Chrome, Edge, Opera, Brave) you can additionally link the app to a real file on disk via the File System Access API — every change is then written straight to that file, similar to a desktop word processor. On other browsers, use the built-in JSON export/import instead. Nothing is ever sent anywhere automatically.
+
+## Browser compatibility
+
+| Feature | Chrome / Edge / Opera / Brave | Firefox | Safari |
+|---|---|---|---|
+| Core application | ✅ | ✅ | ✅ |
+| Local storage autosave | ✅ | ✅ | ✅ |
+| Direct file linking (File System Access API) | ✅ | ❌ (use JSON export/import) | ❌ (use JSON export/import) |
+| PDF export (via browser print) | ✅ | ✅ | ✅ |
+| Encrypted export/import (Web Crypto API) | ✅ | ✅ | ✅ |
+
+A recent desktop browser is recommended; the interface is not optimized for small mobile screens.
+
+## License
+
+BCM Starter Kit is licensed under the [Apache License, Version 2.0](LICENSE.txt). You are free to use, modify, and redistribute it — including commercially — provided that copyright and license notices are preserved and that any files you change are marked as changed. See [NOTICE.txt](NOTICE.txt) for the required attribution notice.
+
+```
+Copyright © 2026 Marco Riemer
+Originally developed by Marco Riemer — https://www.riemer-consulting.de
+Licensed under the Apache License, Version 2.0.
+```
+
+## Contributing
+
+Contributions are welcome — bug reports, documentation improvements, and pull requests alike. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and note that **this project intentionally does not add fachlich (business-logic) features casually**: the data model and migration chain are treated as a stable contract. See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations.
+
+## Roadmap
+
+BCM Starter Kit is considered **functionally complete** for its original scope as of version 2.x. There is no committed roadmap of new business features. Future work is expected to focus on:
+
+- Documentation and translation improvements
+- Additional demo/example workbooks
+- Accessibility refinements
+- Community-contributed bug fixes
+
+Substantial changes to the data model or migration chain will always be treated as a major, carefully considered decision — see [`docs/architecture.md`](docs/architecture.md).
+
+## Supported versions
+
+| Version | Status |
+|---|---|
+| 2.x | ✅ Actively supported |
+| < 2.0 | ❌ No longer supported — please upgrade |
+
+See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md](SUPPORT.md) for how to get help.
+
+## Documentation
+
+- [Quickstart](docs/quickstart.md) — first ten minutes
+- [User Guide](docs/user-guide.md) — complete reference
+- [Architecture](docs/architecture.md) — how the application is built
+- [Data Storage & Privacy](docs/data-storage-and-privacy.md)
+- [Release Process](docs/release-process.md)
+- [FAQ](docs/faq.md)
+
+## Screenshots
+
+The following screenshots are referenced throughout this repository as placeholders (`assets/screenshots/*.png`). They need to be captured manually from a running instance — see the note in `assets/screenshots/README.md`.
+
+| | |
+|---|---|
+| Dashboard | `assets/screenshots/dashboard.png` |
+| Process record | `assets/screenshots/process-record.png` |
+| Measures catalog | `assets/screenshots/measures.png` |
+| Executive view | `assets/screenshots/executive-view.png` |
+| PDF report | `assets/screenshots/pdf-report.png` |
+| Settings | `assets/screenshots/settings.png` |
+| Startup screen | `assets/screenshots/startup-screen.png` |
+
+---
+
+<p align="center">
+  <sub>BCM Starter Kit – Open Source Edition · Originally developed by Marco Riemer · Apache License 2.0</sub>
+</p>
