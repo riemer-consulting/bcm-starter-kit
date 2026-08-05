@@ -31,18 +31,19 @@ The entire application lives in a single file: [`bcm-starter-kit.html`](bcm-star
 
 ## Tests and migrations
 
-- If your change affects any function covered by the built-in self-test suite, run it before submitting: open the file in a browser and press **Ctrl+Alt+T** (or navigate to `bcm-starter-kit.html#selftest`). All tests must still pass.
+- If your change affects any function covered by the built-in self-test suite, run it before submitting: open the file in a browser and press **Ctrl+Alt+T** (or navigate to `bcm-starter-kit.html#selftest`). All 57 tests must still pass.
 - If your change requires a schema migration, add a new step to `SCHEMA_MIGRATIONS`, bump `CURRENT_SCHEMA_VERSION`, and make sure the migration is purely additive (never destructive) and covered by at least one test case in your pull request description.
-- There is no automated CI test runner for the self-test suite yet (see [`docs/release-process.md`](docs/release-process.md)) — running it manually and reporting the result in your pull request is currently required.
+- There is no CI at all in this repository — no workflows, no automated checks (see [`docs/release-process.md`](docs/release-process.md)). Running the self-tests manually and reporting the result in your pull request is therefore required, not optional.
+- **If you add a field to the data model, do not add it to any import field list by hand.** `validateImportData()` derives the fields it carries over from `newProcess()`. A field enumerated separately somewhere is a field that will eventually be dropped on import without any error message — that is exactly how the dependency loss fixed in 2.2.0 happened. The self-test "Import erhält ALLE in newProcess() definierten Prozessfelder" compares against `newProcess()` for this reason; please keep it generic rather than listing field names in it.
 
 ## Pull requests
 
 1. Open an issue first for anything beyond a small, obvious fix.
 2. Keep pull requests focused — one logical change per PR.
 3. Update [`CHANGELOG.md`](CHANGELOG.md) under an "Unreleased" heading.
-4. Fill out the pull request template completely, including whether a migration is needed and whether you ran the self-tests.
+4. There is no pull request template in this repository, so please state the following in the description yourself: what the change does, whether a schema migration is needed, and the result of the self-test run (total / passed / failed).
 5. Be patient — this is a community-maintained project without guaranteed response times (see [SUPPORT.md](SUPPORT.md)).
 
 ## License of contributions
 
-By submitting a contribution, you agree that it will be licensed under the [Apache License, Version 2.0](LICENSE.txt), the same license as the rest of the project, without any additional terms or conditions (see License §5, "Submission of Contributions").
+By submitting a contribution, you agree that it will be licensed under the [Apache License, Version 2.0](LICENSE), the same license as the rest of the project, without any additional terms or conditions (see License §5, "Submission of Contributions").

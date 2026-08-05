@@ -25,12 +25,15 @@ A free, open source software tool. Nothing more.
 
 ## Where to get help
 
-- **Something broken? Found a bug?** Open a [GitHub Issue](../../issues)
-  using the Bug Report template. Include your version, browser, and
-  reproduction steps — see the template for the full checklist.
+- **Something broken? Found a bug?** Open a [GitHub Issue](../../issues).
+  There are no issue templates in this repository, so please include the
+  following yourself: the application version (in-app **About** dialog), your
+  browser and its version, what you expected, what happened instead, and the
+  steps to reproduce it. If an import is involved, a minimal example file
+  helps a great deal.
 - **Have an idea or a question about a feature?** Open a
-  [GitHub Discussion](../../discussions) if enabled, or a
-  [Feature Request issue](../../issues). Please read
+  [GitHub Discussion](../../discussions) if enabled, or a regular
+  [issue](../../issues). Please read
   [CONTRIBUTING.md](CONTRIBUTING.md) first — this project is intentionally
   feature-complete, and most feature requests will be declined rather than
   silently ignored, but they are still worth discussing.
@@ -46,7 +49,8 @@ A free, open source software tool. Nothing more.
 1. Check the [FAQ](docs/faq.md) — many common questions are answered there.
 2. Check whether an existing issue already covers it.
 3. Run the built-in self-tests (**Ctrl+Alt+T** in the app) if you suspect a
-   logic bug, and include the result in your report.
+   logic bug, and include the result in your report (it reports the total and
+   the number passed — 57 of 57 is the expected outcome in 2.2.0).
 4. Make sure you're on the latest 2.x release — see [SECURITY.md](SECURITY.md)
    for supported versions.
 

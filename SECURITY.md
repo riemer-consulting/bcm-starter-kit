@@ -53,14 +53,27 @@ not protect against:
   of dangerous object keys (such as `__proto__`), checked for ID uniqueness,
   validated against expected value ranges, and schema-migrated in a
   registered, auditable chain — see `validateImportData()` and
-  `migrateWorkbook()` in the source.
+  `migrateWorkbook()` in the source. Since 2.2.0 this also covers workbook
+  metadata (`meta.version`, `meta.accent`), version numbers rendered into
+  inline event handlers, entity IDs rendered into attributes, and list fields
+  that arrive as something other than a list — the last of which could
+  previously make the interface abort while rendering.
 - **URL scheme restriction.** Logo URLs and similar user-supplied links are
   restricted to safe schemes (`https:`, `http:`, `data:image/*`); dangerous
   schemes such as `javascript:` are rejected.
 - **Local-only cryptography.** The optional encrypted export feature uses
-  AES-GCM with a PBKDF2-derived key via the browser's native Web Crypto API.
-  The password is never transmitted or stored — losing it means the export
-  is unrecoverable by design.
+  AES-GCM with a PBKDF2-derived key (SHA-256, 600,000 iterations, a fresh
+  random salt and IV for every export) via the browser's native Web Crypto
+  API. The password is never transmitted or stored — losing it means the
+  export is unrecoverable by design. A minimum password length of 12
+  characters is enforced.
+- **Forward-compatible key derivation.** Since 2.2.0 the encrypted file
+  declares its own KDF parameters, so the iteration count can be raised
+  again later without making existing files unreadable. Files written by
+  earlier versions (250,000 iterations) still open; a self-test guards this.
+  An iteration count outside a plausible range is rejected rather than
+  honoured, so a tampered file can neither weaken key derivation nor hang the
+  browser.
 
 ### What is explicitly out of scope
 
@@ -69,6 +82,20 @@ not protect against:
   unencrypted workbook. If that is a concern for your environment, use the
   encrypted export feature and avoid leaving sensitive data in an
   unencrypted, linked file on a shared or unmanaged device.
+- **Local storage is shared by every tab and by any other page on the same
+  origin.** The application detects when another tab overwrites the workbook
+  and lets you choose which version to keep (2.2.0), but this is a
+  data-integrity aid, not a security boundary: it does not and cannot protect
+  against other code running in the same browser profile. Opening the file
+  from a location where untrusted scripts share the origin is outside the
+  threat model.
+- **No integrity protection for unencrypted files.** An unencrypted JSON
+  export or a linked file on disk can be modified by anyone who can write to
+  it. Import validation is built to keep a tampered file from harming the
+  application, and it will reject or repair structurally invalid data — but it
+  cannot tell you that a plausible-looking value was altered. The encrypted
+  export does provide integrity (AES-GCM is authenticated: a modified file
+  fails to decrypt rather than opening with altered content).
 - **Imported files are trusted once validated.** Import validation defends
   against malformed and maliciously crafted *data* (XSS payloads, oversized
   files, prototype pollution attempts). It does not and cannot verify the

@@ -10,17 +10,17 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE.txt"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-2.1.0-informational">
+  <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
+  <img alt="Version" src="https://img.shields.io/badge/version-2.2.0-informational">
   <img alt="No build step" src="https://img.shields.io/badge/build-none%20required-brightgreen">
   <img alt="Works offline" src="https://img.shields.io/badge/works-offline-brightgreen">
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/dashboard.png" alt="BCM Starter Kit dashboard" width="800">
+  <img src="assets/screenshots/dashboard.png" alt="Executive view of BCM Starter Kit with the demo workbook loaded" width="800">
 </p>
 
-*(Screenshot placeholder — see [Screenshots](#screenshots) below.)*
+*(Executive view, with the fictional demo workbook loaded. Further screenshots are still missing — see [Screenshots](#screenshots) below.)*
 
 ---
 
@@ -42,8 +42,8 @@ Most Business Continuity Management tooling falls into one of two categories: ex
 - **Release governance** — a configurable readiness check with hard blockers and acknowledgeable warnings before a workbook can be marked "Approved"; approval automatically snapshots an immutable version.
 - **Versioning built in** — every saved version is checksummed and comparable against any other, without needing external version control.
 - **PDF reporting** — a genuinely short executive summary and a full detailed report, both generated entirely client-side via the browser's print function.
-- **Encryption where you need it** — optional password-protected export (AES-GCM via the Web Crypto API) for sharing over channels you don't fully trust.
-- **29 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+- **Encryption where you need it** — optional password-protected export (AES-GCM with a PBKDF2-derived key, 600,000 iterations, via the Web Crypto API) for sharing over channels you don't fully trust. Files written by earlier versions remain readable.
+- **57 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
 
 ## Getting started
 
@@ -56,7 +56,7 @@ No server, no build step, no dependencies to install. See [`docs/quickstart.md`]
 
 ### Try the demo workbook
 
-[`examples/demo-workbook.json`](examples/demo-workbook.json) contains a fictional company ("Musterbau GmbH") with six fully worked-out processes. Open BCM Starter Kit, go to **Settings → Import**, and load it to see every feature populated with realistic (fictional) data. See [`examples/README.md`](examples/README.md).
+[`examples/demo-workbook.json`](examples/demo-workbook.json) contains a fictional company ("Musterbau GmbH") with six fully worked-out processes, eleven resources and nine structured dependencies. Open BCM Starter Kit, click **Import JSON** in the top bar, and load it to see every feature populated with realistic (fictional) data. See [`examples/README.md`](examples/README.md).
 
 ## Offline by design
 
@@ -80,7 +80,7 @@ A recent desktop browser is recommended; the interface is not optimized for smal
 
 ## License
 
-BCM Starter Kit is licensed under the [Apache License, Version 2.0](LICENSE.txt). You are free to use, modify, and redistribute it — including commercially — provided that copyright and license notices are preserved and that any files you change are marked as changed. See [NOTICE.txt](NOTICE.txt) for the required attribution notice.
+BCM Starter Kit is licensed under the [Apache License, Version 2.0](LICENSE). You are free to use, modify, and redistribute it — including commercially — provided that copyright and license notices are preserved and that any files you change are marked as changed. See [NOTICE](NOTICE) for the required attribution notice.
 
 ```
 Copyright © 2026 Marco Riemer
@@ -96,9 +96,10 @@ Contributions are welcome — bug reports, documentation improvements, and pull 
 
 BCM Starter Kit is considered **functionally complete** for its original scope as of version 2.x. There is no committed roadmap of new business features. Future work is expected to focus on:
 
-- Documentation and translation improvements
+- Documentation and translation improvements — the application's own interface is German-only, and there is no internationalization infrastructure in place today
 - Additional demo/example workbooks
-- Accessibility refinements
+- Remaining accessibility work — version 2.2.0 covered labelling, keyboard operability, dialog semantics and focus handling; screen-reader testing with real assistive technology and a formal WCAG conformance assessment have **not** been carried out
+- The missing screenshots listed below
 - Community-contributed bug fixes
 
 Substantial changes to the data model or migration chain will always be treated as a major, carefully considered decision — see [`docs/architecture.md`](docs/architecture.md).
@@ -123,17 +124,19 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md
 
 ## Screenshots
 
-The following screenshots are referenced throughout this repository as placeholders (`assets/screenshots/*.png`). They need to be captured manually from a running instance — see the note in `assets/screenshots/README.md`.
+One screenshot exists; the rest still need to be captured manually from a running instance — see the note in [`assets/screenshots/README.md`](assets/screenshots/README.md).
 
-| | |
-|---|---|
-| Dashboard | `assets/screenshots/dashboard.png` |
-| Process record | `assets/screenshots/process-record.png` |
-| Measures catalog | `assets/screenshots/measures.png` |
-| Executive view | `assets/screenshots/executive-view.png` |
-| PDF report | `assets/screenshots/pdf-report.png` |
-| Settings | `assets/screenshots/settings.png` |
-| Startup screen | `assets/screenshots/startup-screen.png` |
+| View | File | Present |
+|---|---|---|
+| Executive view (shown at the top of this README) | `assets/screenshots/dashboard.png` | ✅ |
+| Dashboard | — | ❌ still to capture |
+| Process record | `assets/screenshots/process-record.png` | ❌ still to capture |
+| Measures catalog | `assets/screenshots/measures.png` | ❌ still to capture |
+| PDF report | `assets/screenshots/pdf-report.png` | ❌ still to capture |
+| Settings | `assets/screenshots/settings.png` | ❌ still to capture |
+| Startup screen | `assets/screenshots/startup-screen.png` | ❌ still to capture |
+
+Note that the existing file is named `dashboard.png` but actually shows the **executive view**. The name is kept as-is because it is referenced from this README; renaming it would be a separate, deliberate change.
 
 ---
 

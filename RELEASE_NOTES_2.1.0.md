@@ -29,10 +29,14 @@ New in this release:
   processes, eleven resources, and five measures for a fictional company,
   generated through the application's own data-model functions and
   validated against the current schema.
-- GitHub issue and pull request templates, and a structural validation
-  workflow (`.github/workflows/validate.yml`) — see
-  [`docs/release-process.md`](docs/release-process.md) for exactly what it
-  checks (and doesn't).
+> **Correction added in 2.2.0:** these release notes originally also announced
+> "GitHub issue and pull request templates, and a structural validation
+> workflow (`.github/workflows/validate.yml`)". No `.github/` directory has ever
+> existed in this repository, so that item was inaccurate and has been removed.
+> There is no CI in this project — see
+> [`docs/release-process.md`](docs/release-process.md). This file is kept as the
+> historical record of the 2.1.0 release; the checksum below refers to the
+> 2.1.0 artifact and is unchanged.
 
 ## Getting started
 
@@ -42,8 +46,7 @@ you're running. No installation, no account, no server. See the
 
 ## License
 
-Apache License 2.0. See [LICENSE.txt](LICENSE.txt) and
-[NOTICE.txt](NOTICE.txt).
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 ```
 Copyright © 2026 Marco Riemer

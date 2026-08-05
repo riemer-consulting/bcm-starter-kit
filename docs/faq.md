@@ -26,12 +26,12 @@ yourself before relying on it.
 
 **Can I use this commercially?**
 Yes. The Apache License 2.0 explicitly permits commercial use, without
-royalties. See [LICENSE.txt](../LICENSE.txt).
+royalties. See [LICENSE](../LICENSE).
 
 **Can I modify it for my own organization?**
 Yes, that's expressly permitted — you just need to keep the copyright and
 license notices intact and mark any files you change as changed (License
-§4(b)). See [NOTICE.txt](../NOTICE.txt) for the required attribution.
+§4(b)). See [NOTICE](../NOTICE) for the required attribution.
 
 **Does it work on my browser?**
 Chrome, Edge, Firefox, and Safari are all supported for the core
@@ -54,8 +54,10 @@ export/import instead — it works identically everywhere and is fully
 supported.
 
 **I found a bug. What do I do?**
-Open a [GitHub Issue](../../issues) using the Bug Report template, including
-your browser, version, and reproduction steps. See [SUPPORT.md](../SUPPORT.md).
+Open a [GitHub Issue](../../issues) describing your browser, the application
+version (see the in-app **About** dialog), and the steps to reproduce it. There
+are no issue templates in this repository, so please include that information
+yourself. See [SUPPORT.md](../SUPPORT.md).
 
 **Can I request a new feature?**
 You can open an issue to discuss it, but be aware this project is
@@ -71,7 +73,7 @@ as possible for organizations that don't want to run infrastructure just to
 do BCM planning. See [`docs/architecture.md`](architecture.md).
 
 **What does the hidden "self-test" mode do?**
-It runs an internal suite of 29 tests against synthetic data to verify core
+It runs an internal suite of 57 tests against synthetic data to verify core
 logic still behaves correctly — useful for contributors, not needed for
 everyday use. Press **Ctrl+Alt+T** to open it. See the User Guide's
 [Self-tests](user-guide.md#self-tests-advanced) section.

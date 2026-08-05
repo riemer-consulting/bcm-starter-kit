@@ -7,16 +7,16 @@ in the environment this repository was prepared in (no headless browser with
 network access to fetch a browser binary was available) — see the final
 report from repository preparation for details.
 
-Loading `examples/demo-workbook.json` first (via **Settings → Import**) is
-recommended so screenshots show realistic, populated data rather than an
-empty workbook.
+Loading `examples/demo-workbook.json` first (via **Import JSON** in the top
+bar — note that Settings offers only the *encrypted* import) is recommended so
+screenshots show realistic, populated data rather than an empty workbook.
 
 | Filename | Capture |
 |---|---|
-| `dashboard.png` | The dashboard view after loading the demo workbook. |
+| `dashboard.png` | **Present, but mislabelled:** the file currently in this directory shows the *executive view* (GF-Ansicht), not the dashboard. It is used as the header image in `README.md` and described there accurately. A genuine dashboard screenshot is still missing. |
 | `process-record.png` | A process record's **Steckbrief** (fact sheet) tab — e.g. "Auftragserfassung". |
 | `measures.png` | The measures catalog (`Maßnahmenkatalog`), ideally with the "overdue only" filter cleared so multiple statuses are visible. |
-| `executive-view.png` | The executive view (**GF-Ansicht**), scrolled to show the compact management overview at the top. |
+| `executive-view.png` | The executive view (**GF-Ansicht**), scrolled to show the compact management overview at the top. (Not currently referenced by `README.md`, which uses `dashboard.png` for this — see above.) |
 | `pdf-report.png` | A rendered PDF page (e.g. the executive summary or a process detail page) opened from the generated print output. |
 | `settings.png` | The Settings view, showing the "Kunde & Branding" and "Über & Lizenz" cards. |
 | `startup-screen.png` | The startup/license screen shown on first launch (clear local storage or use a private/incognito window to trigger it again). |

@@ -5,13 +5,142 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] — Polish & Productivity
+
+Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,
+die Moderatoren und Teilnehmern jeweils ein paar Sekunden sparen. Keine neuen Features,
+sondern konsequente Nacharbeit an Texten, Labels, Platzhaltern und Interaktionsdetails.
+
+### Added
+- **Command-Palette (Strg+K).** Schneller Ein-Klick-Zugriff auf alle Funktionen, Ansichten und Prozessakten. Tastaturgesteuert mit Pfeil- und Eingabetaste, Freitextfilter.
+- **Willkommens-Karte für neue Benutzer.** Dashboard zeigt bei leerem Workbook eine Schritt-für-Schritt-Einführung mit direkten Aktionsbuttons.
+- **Klickbare KPI-Kacheln.** Dashboard-Statistiken navigieren direkt zur relevanten Ansicht.
+- **Breadcrumb-Navigation.** Prozessdetailansicht zeigt einen Zurück-Link zum Dashboard.
+- **Workshop-Button in Prozessdetail.** Direkt aus der Prozessakte den Workshop starten.
+- **Moderatoren-Notiz → Parkplatz.** Sitzungsnotizen mit einem Klick als Parkplatz-Eintrag sichern.
+- **Projekt-Unterstützung.** Dezenter Hinweis im Über-Dialog mit Links zur Projektwebsite und PayPal.
+- **Keyboard-Hinweis im Workshop.** „Tab ↹ zum Textfeld · Strg+K Schnellzugriff" am unteren Rand.
+- 4 neue Selbsttests (68 insgesamt): dashboardStats, klickbare statTile, qualityAndConsistencyCheck.processId, WORKSHOP_BLOCKS.
+
+### Changed — Texte gekürzt (Begründung: weniger Lesezeit im Workshop)
+- Steckbrief-Hilfstext: „Beschreiben Sie den Prozess so, dass ein neuer Geschäftsführer …" → „Kurzbeschreibung, die auch für Außenstehende verständlich ist."
+- Moderatoren-Notiz-Warnung: 2 Sätze → 1 Satz „Nur für diese Sitzung — wird nicht gespeichert oder exportiert."
+- Datei-Indikator: „Nur im Browser gespeichert (kein Datei-Export erfolgt)" → „Nur im Browser gespeichert".
+- Qualitätsprüfung-Subtitle: gekürzt auf „Prüft Vollständigkeit und Konsistenz der Dokumentation."
+- PDF-Hilfstext: 3 Sätze → 1 Satz „Es öffnet sich der Druckdialog — wählen Sie dort ‚Als PDF speichern'."
+- Legacy-Freitext-Warnung: „Alter Freitextwert aus einer früheren Version … dann Hinweis ausblenden" → kompakter.
+
+### Changed — Placeholder verbessert (Begründung: leere Felder geben keine Orientierung)
+- Workshop-Antwort: „Antwort der Teilnehmer…" → „Gemeinsame Antwort erfassen…"
+- Moderatoren-Notiz: „Persönliche Gedanken, Beobachtungen, Moderationshinweise…" → „Notiz für diese Sitzung…"
+- Neuer-Prozess-Modal: „z. B. Auftragsabwicklung B2B" → „z. B. Auftragsbearbeitung"
+- RTO/RPO/Recovery: „Zahl" → „z. B. 4"
+- Versionsnotiz: „Was wurde geändert?" → „z. B. Workshop-Ergebnisse dokumentiert"
+- Bearbeiter: „Name" → „Ihr Name"
+- 14 neue Placeholder in Ressourcen-Feldern (Alternative, Schwachstelle, Owner, Provider, Testergebnis) und Maßnahmen-Feldern (Verantwortlich, Nutzen, Bemerkung, Kosten, Risiko ohne/nach Maßnahme, Genehmiger, Wirksamkeit).
+
+### Changed — Labels klarer (Begründung: BCM-Jargon ist für Fachbereichsleiter oft unklar)
+- MTA-Label: ergänzt um „(max. tolerierbarer Ausfall)"
+- RTO-Label: „RTO (Recovery Time Objective)" → „RTO (Zeit bis Wiederherstellung)"
+- RPO-Label: „RPO (Recovery Point Objective)" → „RPO (max. Datenverlust)"
+- „Vorgelagerte Prozesse (Freitext, ergänzend)" → „Vorgelagerte Prozesse (Freitext)" — „ergänzend" war verwirrend.
+- Parkplatz „Prozessbezug" → „Zugehöriger Prozess", „Kein Bezug" → „– keiner –"
+- Parkplatz Block-Spalte: leerer Wert „–" → „Allgemein"
+
+### Changed — Button-Labels (Begründung: Buttons sollen Aktion beschreiben, nicht Funktion)
+- „Speichern (neue Version)" → „Version sichern" — weniger einschüchternd.
+- „Export JSON" → „Daten exportieren" — verständlich für Nicht-Techniker.
+- Workshop-Parkplatz „☐" → „+" — suggeriert Hinzufügen statt Abhaken.
+- „→ Maßnahme" → „In Maßnahme umwandeln" — klare Handlung statt Richtungspfeil.
+- „Erledigt" (Legacy-Warnung) → „Hinweis ausblenden" — sagt was passiert.
+- Parkplatz-Speichern: „Speichern" bei neuem Eintrag → „Anlegen".
+- Maßnahmen-Überführung: „Maßnahme anlegen" → „Maßnahme anlegen & Punkt schließen".
+- PDF-Kurzbericht: ergänzt um „(empfohlen nach Workshop)".
+
+### Changed — Tooltips ergänzt (Begründung: Buttons ohne Erklärung bremsen neue Benutzer)
+- Prozessdetail: „Duplizieren" und „Löschen" mit Tooltip-Erklärung.
+- „+ Ressource", „+ Maßnahme", „Hinzufügen" (Abhängigkeiten) mit Tooltip.
+- „Maßnahmen aus Checks erzeugen" mit Tooltip.
+- „Daten exportieren" im Topbar mit Tooltip.
+- Workshop „+ Parkplatz" mit Tooltip.
+
+### Changed — Workshop-UX (Begründung: Beamer-Sicht und Moderatoren-Effizienz)
+- Fortschrittsformat konsistent: „Frage X von Y" → „Frage X/Y".
+- Prozesswechsel merkt letzten Step pro Prozess (kein Reset mehr auf Frage 1).
+- Block-Tabs: erledigte Blöcke mit grünem Hintergrund statt nur grüner Schrift.
+- Prozess-Dropdown: „●" statt „✓" für abgeschlossene Prozesse (auf Beamer besser lesbar).
+- Workshop-Abschluss: Tabellen-Header „Workshop-Fortschritt / Gesamt-Fortschritt" → „Workshop-Fragen / Gesamtdokumentation".
+
+### Changed — Sonstige Verbesserungen
+- **Dashboard Quick Actions** neu sortiert, um Workshop und Qualitätsprüfung ergänzt.
+- **Sidebar** aufgeräumt: „Präsentation & Workshop" mit Tooltips; Prozessliste kollabierbar ab 8; Footer kompakter.
+- **Parkplatz-Formular:** Workshop-Block als Dropdown, automatisch vorausgefüllt.
+- **Parkplatz → Maßnahme:** Bearbeitungsformular statt Confirm-Dialog.
+- **Qualitätsprüfung:** Befunde mit „Bearbeiten"-Button zur Direkt-Navigation; Empty-State „Alle Prüfungen bestanden" statt „Glückwunsch!".
+- **Priorisierung:** 18px Schrift, kompaktere Spalten, Öffnen-Button pro Prozess.
+- **Textarea-Größen:** Parkplatz-Beschreibung 3→4 Zeilen, Abschlussnotiz 2→3 Zeilen.
+- **Empty-State Dashboard:** „Starten Sie mit der ersten Prozessakte" statt „Noch keine Prozesse erfasst."
+- Workshop-Prompt: erklärt jetzt, dass die Prozessakte automatisch angelegt wird.
+
+## [2.3.0] — Workshop Edition
+
+### Added
+- **Parkplatz (offene Punkte).** Neues persistiertes Datenobjekt (`parkplatz[]`, Schema v12) zum Sammeln von Rückfragen, aufgeschobenen Diskussionen und offenen Punkten. Einträge können angelegt, bearbeitet, gelöscht und in Maßnahmen überführt werden. Eigene Ansicht mit Filtern, Integration in Dashboard, Management Summary und Workshop-Modus.
+- **Erweiterter Workshop-Modus.** Die geführte Fragenfolge wurde von 10 auf 20 Fragen in 6 thematischen Blöcken (Prozessvorstellung, Unternehmensbewertung, Mindestfähigkeit, Kritische Ressourcen, Notbetrieb, Ergebnis) erweitert. Neue Block-Navigation (Tabs), Fortschrittsanzeige je Prozess, „Nächster Prozess"-Workflow und direkte Parkplatz-Schaltfläche.
+- **Transiente Moderatoren-Notiz.** Persönliche Sitzungsnotiz im Workshop-Modus, die beim Schließen des Tabs endgültig gelöscht wird — wird niemals in STATE, localStorage, Export oder PDF gespeichert.
+- **Qualitäts- und Konsistenzprüfung.** Neue Ansicht mit dokumentierbaren Regeln (Q1–Q13 für Vollständigkeit, C1–C9 für Datenwidersprüche). Prüft u. a. Prozessketten-RTO-Konsistenz (C2: RTO des vorgelagerten Prozesses darf nicht größer als RTO des abhängigen Prozesses sein), fehlende Verantwortliche, unversorgte rote Resilienz-Checks, Maßnahmen ohne Termin und SPOFs ohne Alternative.
+- **Priorisierungsansicht.** Beamertaugliches Overlay mit allen Prozessen, sortiert nach BIA-Score, inkl. Kritikalität, MTA und Bearbeitungsfortschritt — für die gemeinsame Priorisierung im Workshop.
+- **Workshop-Abschluss-Check.** Letzte Station des Workshop-Modus: fasst Bearbeitungsstand je Prozess, offene Parkplatz-Punkte und Qualitätsbefunde zusammen, bietet direkt Versionssicherung, PDF-Export und Parkplatz-Zugriff an.
+- **Management Summary erweitert.** Offene Parkplatz-Punkte und zugehörige Handlungsempfehlung werden in der Summary dargestellt.
+
+### Changed
+- Schema-Version von 11 auf 12 angehoben (Migration vollständig abwärtskompatibel, addiert ausschließlich `parkplatz: []`).
+- Dashboard zeigt offene Parkplatz-Punkte als Statistik-Kachel, wenn welche vorhanden sind.
+- Sidebar-Navigation um Parkplatz, Qualitätsprüfung und Priorisierung erweitert.
+- Workshop-Modus kann jetzt für einen bestimmten Prozess gestartet werden (Deep Link).
+
+## [2.2.0] — Correctness, Security & Accessibility
+
+### Fixed
+- **Critical, silent data loss on import: structured process dependencies were discarded.** `processes[].dependencies` was lost entirely and without any message on every import path (replace, merge, manual selection), and therefore on every exchange of a workbook between two installations. The cause was that `validateImportData()` re-enumerated the process fields to carry over instead of deriving them from `newProcess()`; `dependencies` was missing from that list. Because every analysis built on dependencies (cycle detection, critical chains, single-point-of-failure hints, release readiness) then simply found "no dependencies", the result was *quietly wrong* rather than visibly broken — an import reported success, and the loss was only discoverable by counting dependencies by hand. Dependencies are now also validated on import (self-references, duplicates, references to non-existent processes) and correctly remapped when a process is assigned a new ID, instead of pointing nowhere.
+- Search results, the executive view's KPI tiles and all choice cards were clickable `<div>` elements and thus unreachable by keyboard — you could search but not open a result.
+
+### Security
+- Metadata from imported files is now validated before reaching HTML: `meta.version` is coerced to an integer, `meta.accent` is accepted only as a colour value, and `bearbeitungsstand`/`vertraulichkeit` are escaped at every output site. The same applies to `versions[].nr` (rendered into an inline JavaScript context) and to process IDs (rendered into attribute context).
+- Non-list values in list fields (`dependencies`, `minfaehigkeit.*`, `resilienz`, `meta.releaseWarningAcceptances`) are normalised on import. Previously a manipulated file could make the interface abort while rendering, leaving the application unusable until local storage was cleared.
+- PBKDF2 iterations for the encrypted export raised from 250,000 to 600,000 (current OWASP recommendation for PBKDF2-HMAC-SHA256).
+- The encrypted export format now declares its own KDF parameters (payload `version: 2` plus a `kdf` block), so that future parameter changes cannot devalue existing files. **Files in the previous format (v1, without a `kdf` block) remain readable** using 250,000 iterations; this is guaranteed by a dedicated self-test. Implausible iteration counts in a file are rejected rather than obeyed, so a manipulated file can neither weaken key derivation nor block the browser.
+- Password quality is now enforced for the encrypted export: a hard minimum of 12 characters, plus non-blocking advice. Deliberately no requirement for particular character classes — that pushes people towards short, hard-to-remember passwords instead of long passphrases.
+
+### Added
+- **Detection of competing browser tabs.** Two tabs on the same browser storage previously overwrote each other ("last writer wins") with nothing indicating it had happened. A write from another tab is now surfaced explicitly, and both ways of resolving it automatically back up the version being discarded first. Deliberately no automatic merge: the application cannot know which version is the correct one, so it presents the conflict and the consequence of each option instead of guessing.
+- PDF reports covering more than one section now include a table of contents, and every section carries "Abschnitt X von Y" in its footer. Deliberately **not** page numbers — see "Deliberate deviations" below.
+- Accessibility groundwork: form fields are associated with their labels; modal dialogs and the full-screen overlays have a role, an accessible name, focus placement, a focus trap and Escape handling; navigation, process tabs, choice cards, KPI tiles and search results are real controls reachable by keyboard; toggle state is conveyed via `aria-pressed`/`aria-current` rather than colour alone; status messages use live regions. The focus outline is now only suppressed for mouse interaction, not for keyboard use.
+- Self-test suite extended from 29 to 57 tests: import fidelity (checked generically against `newProcess()`, so fields added in future are covered automatically), dependencies and multi-step chains, ID remapping on manual selection and merge, migration without data loss, import/export round-trip, the release gate, the security regressions listed above, backward compatibility of encrypted files, PDF structure, and accessibility invariants.
+
+### Changed
+- `dashboard.png` in the screenshot inventory is documented as what it actually shows (the executive view), rather than as the dashboard.
+
+### Documentation
+- Corrected references to `LICENSE.txt` and `NOTICE.txt`; the files are named `LICENSE` and `NOTICE`, so every one of those links was broken.
+- Corrected the claim that the unencrypted JSON import lives under **Settings → Import**; it is in the top bar (**Import JSON**). Settings contains only the *encrypted* import.
+- Removed the claim of a `.github/` directory with issue/PR templates and a validation workflow — see the correction note under 2.1.0.
+- Corrected the self-test count (29 → 57) everywhere it is stated.
+
+### Deliberate deviations
+- **No page numbers in PDF reports.** Real page numbers would have to come from the printer's pagination. The CSS margin boxes required for that (`@page { @bottom-center { content: counter(page) } }`) are not supported by any mainstream browser, and the page count additionally depends on paper size, margins and the scaling factor the user only chooses *in* the print dialog. A number rendered into the document would therefore be wrong on a regular basis — and in an audit record, a wrong page number is worse than none. Section numbering plus a table of contents delivers what page numbers are actually needed for in that context (spotting a missing sheet) and is always correct. Browsers' own print dialogs can add real sheet numbers via their "Headers and footers" option.
+- **No ARIA tab pattern for the process tabs and sidebar navigation.** `role="tab"` promises arrow-key navigation that does not exist here; a half-implemented ARIA role misleads more than none. `aria-current` states precisely what is true.
+
 ## [2.1.0] — Repository & Open Source Finalization
 
 ### Added
-- Complete GitHub repository structure: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, documentation set under `docs/`, a fictional demo workbook under `examples/`, and GitHub issue/PR templates and a validation workflow under `.github/`.
+- Complete GitHub repository structure: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, documentation set under `docs/`, and a fictional demo workbook under `examples/`.
 
 ### Changed
 - No changes to application behavior. This release is documentation and repository packaging only.
+
+### Correction (added in 2.2.0)
+- This entry originally also claimed "GitHub issue/PR templates and a validation workflow under `.github/`". **No such directory has ever existed in this repository.** The claim was inaccurate and has been removed rather than left standing; the documents that relied on it (`CONTRIBUTING.md`, `SUPPORT.md`, `docs/faq.md`, `docs/release-process.md`) were corrected in 2.2.0. This follows the same principle as the 2.0.1 entry below: a documentation claim that turns out to be false gets corrected in the open, not quietly rewritten.
 
 ## [2.0.2] — Branding & Open Source
 
