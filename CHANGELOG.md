@@ -5,6 +5,100 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] — Polish & Productivity
+
+Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,
+die Moderatoren und Teilnehmern jeweils ein paar Sekunden sparen. Keine neuen Features,
+sondern konsequente Nacharbeit an Texten, Labels, Platzhaltern und Interaktionsdetails.
+
+### Added
+- **Command-Palette (Strg+K).** Schneller Ein-Klick-Zugriff auf alle Funktionen, Ansichten und Prozessakten. Tastaturgesteuert mit Pfeil- und Eingabetaste, Freitextfilter.
+- **Willkommens-Karte für neue Benutzer.** Dashboard zeigt bei leerem Workbook eine Schritt-für-Schritt-Einführung mit direkten Aktionsbuttons.
+- **Klickbare KPI-Kacheln.** Dashboard-Statistiken navigieren direkt zur relevanten Ansicht.
+- **Breadcrumb-Navigation.** Prozessdetailansicht zeigt einen Zurück-Link zum Dashboard.
+- **Workshop-Button in Prozessdetail.** Direkt aus der Prozessakte den Workshop starten.
+- **Moderatoren-Notiz → Parkplatz.** Sitzungsnotizen mit einem Klick als Parkplatz-Eintrag sichern.
+- **Projekt-Unterstützung.** Dezenter Hinweis im Über-Dialog mit Links zur Projektwebsite und PayPal.
+- **Keyboard-Hinweis im Workshop.** „Tab ↹ zum Textfeld · Strg+K Schnellzugriff" am unteren Rand.
+- 4 neue Selbsttests (68 insgesamt): dashboardStats, klickbare statTile, qualityAndConsistencyCheck.processId, WORKSHOP_BLOCKS.
+
+### Changed — Texte gekürzt (Begründung: weniger Lesezeit im Workshop)
+- Steckbrief-Hilfstext: „Beschreiben Sie den Prozess so, dass ein neuer Geschäftsführer …" → „Kurzbeschreibung, die auch für Außenstehende verständlich ist."
+- Moderatoren-Notiz-Warnung: 2 Sätze → 1 Satz „Nur für diese Sitzung — wird nicht gespeichert oder exportiert."
+- Datei-Indikator: „Nur im Browser gespeichert (kein Datei-Export erfolgt)" → „Nur im Browser gespeichert".
+- Qualitätsprüfung-Subtitle: gekürzt auf „Prüft Vollständigkeit und Konsistenz der Dokumentation."
+- PDF-Hilfstext: 3 Sätze → 1 Satz „Es öffnet sich der Druckdialog — wählen Sie dort ‚Als PDF speichern'."
+- Legacy-Freitext-Warnung: „Alter Freitextwert aus einer früheren Version … dann Hinweis ausblenden" → kompakter.
+
+### Changed — Placeholder verbessert (Begründung: leere Felder geben keine Orientierung)
+- Workshop-Antwort: „Antwort der Teilnehmer…" → „Gemeinsame Antwort erfassen…"
+- Moderatoren-Notiz: „Persönliche Gedanken, Beobachtungen, Moderationshinweise…" → „Notiz für diese Sitzung…"
+- Neuer-Prozess-Modal: „z. B. Auftragsabwicklung B2B" → „z. B. Auftragsbearbeitung"
+- RTO/RPO/Recovery: „Zahl" → „z. B. 4"
+- Versionsnotiz: „Was wurde geändert?" → „z. B. Workshop-Ergebnisse dokumentiert"
+- Bearbeiter: „Name" → „Ihr Name"
+- 14 neue Placeholder in Ressourcen-Feldern (Alternative, Schwachstelle, Owner, Provider, Testergebnis) und Maßnahmen-Feldern (Verantwortlich, Nutzen, Bemerkung, Kosten, Risiko ohne/nach Maßnahme, Genehmiger, Wirksamkeit).
+
+### Changed — Labels klarer (Begründung: BCM-Jargon ist für Fachbereichsleiter oft unklar)
+- MTA-Label: ergänzt um „(max. tolerierbarer Ausfall)"
+- RTO-Label: „RTO (Recovery Time Objective)" → „RTO (Zeit bis Wiederherstellung)"
+- RPO-Label: „RPO (Recovery Point Objective)" → „RPO (max. Datenverlust)"
+- „Vorgelagerte Prozesse (Freitext, ergänzend)" → „Vorgelagerte Prozesse (Freitext)" — „ergänzend" war verwirrend.
+- Parkplatz „Prozessbezug" → „Zugehöriger Prozess", „Kein Bezug" → „– keiner –"
+- Parkplatz Block-Spalte: leerer Wert „–" → „Allgemein"
+
+### Changed — Button-Labels (Begründung: Buttons sollen Aktion beschreiben, nicht Funktion)
+- „Speichern (neue Version)" → „Version sichern" — weniger einschüchternd.
+- „Export JSON" → „Daten exportieren" — verständlich für Nicht-Techniker.
+- Workshop-Parkplatz „☐" → „+" — suggeriert Hinzufügen statt Abhaken.
+- „→ Maßnahme" → „In Maßnahme umwandeln" — klare Handlung statt Richtungspfeil.
+- „Erledigt" (Legacy-Warnung) → „Hinweis ausblenden" — sagt was passiert.
+- Parkplatz-Speichern: „Speichern" bei neuem Eintrag → „Anlegen".
+- Maßnahmen-Überführung: „Maßnahme anlegen" → „Maßnahme anlegen & Punkt schließen".
+- PDF-Kurzbericht: ergänzt um „(empfohlen nach Workshop)".
+
+### Changed — Tooltips ergänzt (Begründung: Buttons ohne Erklärung bremsen neue Benutzer)
+- Prozessdetail: „Duplizieren" und „Löschen" mit Tooltip-Erklärung.
+- „+ Ressource", „+ Maßnahme", „Hinzufügen" (Abhängigkeiten) mit Tooltip.
+- „Maßnahmen aus Checks erzeugen" mit Tooltip.
+- „Daten exportieren" im Topbar mit Tooltip.
+- Workshop „+ Parkplatz" mit Tooltip.
+
+### Changed — Workshop-UX (Begründung: Beamer-Sicht und Moderatoren-Effizienz)
+- Fortschrittsformat konsistent: „Frage X von Y" → „Frage X/Y".
+- Prozesswechsel merkt letzten Step pro Prozess (kein Reset mehr auf Frage 1).
+- Block-Tabs: erledigte Blöcke mit grünem Hintergrund statt nur grüner Schrift.
+- Prozess-Dropdown: „●" statt „✓" für abgeschlossene Prozesse (auf Beamer besser lesbar).
+- Workshop-Abschluss: Tabellen-Header „Workshop-Fortschritt / Gesamt-Fortschritt" → „Workshop-Fragen / Gesamtdokumentation".
+
+### Changed — Sonstige Verbesserungen
+- **Dashboard Quick Actions** neu sortiert, um Workshop und Qualitätsprüfung ergänzt.
+- **Sidebar** aufgeräumt: „Präsentation & Workshop" mit Tooltips; Prozessliste kollabierbar ab 8; Footer kompakter.
+- **Parkplatz-Formular:** Workshop-Block als Dropdown, automatisch vorausgefüllt.
+- **Parkplatz → Maßnahme:** Bearbeitungsformular statt Confirm-Dialog.
+- **Qualitätsprüfung:** Befunde mit „Bearbeiten"-Button zur Direkt-Navigation; Empty-State „Alle Prüfungen bestanden" statt „Glückwunsch!".
+- **Priorisierung:** 18px Schrift, kompaktere Spalten, Öffnen-Button pro Prozess.
+- **Textarea-Größen:** Parkplatz-Beschreibung 3→4 Zeilen, Abschlussnotiz 2→3 Zeilen.
+- **Empty-State Dashboard:** „Starten Sie mit der ersten Prozessakte" statt „Noch keine Prozesse erfasst."
+- Workshop-Prompt: erklärt jetzt, dass die Prozessakte automatisch angelegt wird.
+
+## [2.3.0] — Workshop Edition
+
+### Added
+- **Parkplatz (offene Punkte).** Neues persistiertes Datenobjekt (`parkplatz[]`, Schema v12) zum Sammeln von Rückfragen, aufgeschobenen Diskussionen und offenen Punkten. Einträge können angelegt, bearbeitet, gelöscht und in Maßnahmen überführt werden. Eigene Ansicht mit Filtern, Integration in Dashboard, Management Summary und Workshop-Modus.
+- **Erweiterter Workshop-Modus.** Die geführte Fragenfolge wurde von 10 auf 20 Fragen in 6 thematischen Blöcken (Prozessvorstellung, Unternehmensbewertung, Mindestfähigkeit, Kritische Ressourcen, Notbetrieb, Ergebnis) erweitert. Neue Block-Navigation (Tabs), Fortschrittsanzeige je Prozess, „Nächster Prozess"-Workflow und direkte Parkplatz-Schaltfläche.
+- **Transiente Moderatoren-Notiz.** Persönliche Sitzungsnotiz im Workshop-Modus, die beim Schließen des Tabs endgültig gelöscht wird — wird niemals in STATE, localStorage, Export oder PDF gespeichert.
+- **Qualitäts- und Konsistenzprüfung.** Neue Ansicht mit dokumentierbaren Regeln (Q1–Q13 für Vollständigkeit, C1–C9 für Datenwidersprüche). Prüft u. a. Prozessketten-RTO-Konsistenz (C2: RTO des vorgelagerten Prozesses darf nicht größer als RTO des abhängigen Prozesses sein), fehlende Verantwortliche, unversorgte rote Resilienz-Checks, Maßnahmen ohne Termin und SPOFs ohne Alternative.
+- **Priorisierungsansicht.** Beamertaugliches Overlay mit allen Prozessen, sortiert nach BIA-Score, inkl. Kritikalität, MTA und Bearbeitungsfortschritt — für die gemeinsame Priorisierung im Workshop.
+- **Workshop-Abschluss-Check.** Letzte Station des Workshop-Modus: fasst Bearbeitungsstand je Prozess, offene Parkplatz-Punkte und Qualitätsbefunde zusammen, bietet direkt Versionssicherung, PDF-Export und Parkplatz-Zugriff an.
+- **Management Summary erweitert.** Offene Parkplatz-Punkte und zugehörige Handlungsempfehlung werden in der Summary dargestellt.
+
+### Changed
+- Schema-Version von 11 auf 12 angehoben (Migration vollständig abwärtskompatibel, addiert ausschließlich `parkplatz: []`).
+- Dashboard zeigt offene Parkplatz-Punkte als Statistik-Kachel, wenn welche vorhanden sind.
+- Sidebar-Navigation um Parkplatz, Qualitätsprüfung und Priorisierung erweitert.
+- Workshop-Modus kann jetzt für einen bestimmten Prozess gestartet werden (Deep Link).
+
 ## [2.2.0] — Correctness, Security & Accessibility
 
 ### Fixed

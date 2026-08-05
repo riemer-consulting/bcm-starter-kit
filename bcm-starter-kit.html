@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- =========================================================================
      BCM Starter Kit — Open Source Edition
      Originally developed by Marco Riemer — https://www.riemer-consulting.de
@@ -219,7 +219,14 @@ input[type=range]{width:100%;}
 .tabbtn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
 /* ---------- Stat tiles ---------- */
-.stat-tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);}
+.stat-tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);text-align:left;}
+.stat-tile-link{cursor:pointer;transition:border-color .15s,box-shadow .15s;}.stat-tile-link:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.1);}
+/* v2.3.1: Command-Palette */
+.cmd-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:flex;align-items:flex-start;justify-content:center;padding-top:min(20vh,120px);}
+.cmd-box{background:var(--surface);border-radius:var(--radius-lg);box-shadow:0 8px 40px rgba(0,0,0,.25);width:min(520px,90vw);max-height:70vh;display:flex;flex-direction:column;overflow:hidden;}
+.cmd-input{border:none;border-bottom:1px solid var(--line);padding:14px 18px;font-size:15px;outline:none;width:100%;background:transparent;color:var(--ink);}
+.cmd-list{overflow-y:auto;padding:6px 0;}.cmd-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;font-size:13.5px;color:var(--ink);}.cmd-item:hover,.cmd-item.active{background:var(--accent);color:#fff;border-radius:0;}
+.cmd-item .cmd-ic{width:22px;text-align:center;flex-shrink:0;opacity:.7;}.cmd-item .cmd-label{flex:1;}.cmd-item .cmd-hint{font-size:11px;opacity:.5;}
 .stat-num{font-family:var(--font-display);font-size:32px;font-weight:700;line-height:1;}
 .stat-label{font-size:11.5px;color:var(--ink-faint);margin-top:8px;text-transform:uppercase;letter-spacing:.05em;}
 
@@ -783,7 +790,7 @@ button.rowcard:hover{border-color:var(--line-strong);}
 /* ---------------------------------------------------------------------
    1) KONSTANTEN / FACHLICHE REFERENZDATEN
    --------------------------------------------------------------------- */
-const APP_VERSION = '2.2.0';
+const APP_VERSION = '2.3.1';
 
 /* Lizenz — Version/Datum getrennt von APP_VERSION versioniert, damit eine
    künftige inhaltliche Änderung gezielt eine erneute Bestätigung erzwingen
@@ -1076,6 +1083,21 @@ function newMassnahme(over){
     nachweis:'', wirksamkeitGeprueftAm:'', wirksamkeitErgebnis:''}, over||{});
 }
 
+/** Erzeugt einen neuen Parkplatz-Eintrag (v2.3.0, Workshop Edition). @param {object} [over] @returns {object} */
+function newParkplatzItem(over){
+  return Object.assign({
+    id: uid('park'),
+    beschreibung: '',
+    prozessId: '',
+    workshopBlock: '',
+    verantwortlich: '',
+    termin: '',
+    status: 'offen',
+    erstelltAm: new Date().toISOString(),
+    abschlussNotiz: ''
+  }, over||{});
+}
+
 /* Riemer Consulting — Standard-Logo für neu geöffnete Workbooks (öffentlicher
    Download von riemer-consulting.de). Bleibt jederzeit änderbar unter
    Branding & Einstellungen; bereits individualisierte Workbooks (vorhandener
@@ -1098,6 +1120,7 @@ function defaultState(){
     processes: [],
     resources: [],
     massnahmen: [],
+    parkplatz: [],
     versions: [],
     ui: { route:'dashboard', processId:null, processTab:'steckbrief' }
   };
@@ -1108,7 +1131,7 @@ function defaultState(){
    Getrennt von APP_VERSION (Software-Version) — beschreibt die Form der
    gespeicherten Daten. Dateien ohne schemaVersion gelten als Schema 1.
    --------------------------------------------------------------------- */
-const CURRENT_SCHEMA_VERSION = 11;
+const CURRENT_SCHEMA_VERSION = 12;
 
 /** Schema-Migration 1->2: ergänzt Versions-Nachvollziehbarkeitsfelder und Resilienz-Empfehlungstexte. @param {object} data Rohdaten vor der Migration. @returns {{data:object, warnings:string[]}} */
 function migrateV1ToV2(data){
@@ -1304,7 +1327,15 @@ function migrateV10ToV11(data){
   return { data: d, warnings: before!==after ? ['Fehlende Metadaten-Felder (Freigabe-Historie) wurden ergänzt.'] : [] };
 }
 
-const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11 };
+/** Schema-Migration 11->12: ergänzt parkplatz[] additiv (v2.3.0, Workshop Edition). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV11ToV12(data){
+  const d = JSON.parse(JSON.stringify(data));
+  if(!Array.isArray(d.parkplatz)) d.parkplatz = [];
+  d.schemaVersion = 12;
+  return { data: d, warnings: [] };
+}
+
+const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12 };
 
 /** Zentrale Migrationsverkettung: wendet SCHEMA_MIGRATIONS schrittweise bis CURRENT_SCHEMA_VERSION an. Gibt NIE ok:true zurück, wenn eine Stufe fehlt oder das Ziel nicht exakt erreicht wird; lehnt neuere, unbekannte Schemas ab. @param {object} data Rohdaten (ggf. mit fehlendem/älterem schemaVersion). @returns {{ok:boolean, data?:object, warnings?:string[], error?:string, fromVersion?:number, toVersion?:number, migrated?:boolean}} */
 function migrateWorkbook(data){
@@ -1866,6 +1897,7 @@ const IMPORT_LIMITS = {
   maxProcesses: 1000,
   maxResources: 5000,
   maxMassnahmen: 10000,
+  maxParkplatz: 5000,
   maxVersions: 100,
   maxTextLength: 50000,
   maxShortTextLength: 1000,
@@ -2428,6 +2460,9 @@ function validateImportData(data){
   if(data.massnahmen!==undefined && !Array.isArray(data.massnahmen)){
     return { valid:false, errors:['Das Feld "massnahmen" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
   }
+  if(data.parkplatz!==undefined && !Array.isArray(data.parkplatz)){
+    return { valid:false, errors:['Das Feld "parkplatz" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
+  }
 
   // P5: Größenbegrenzungen — eine Datei mit z. B. 100.000 Prozessen wird
   // VOR der weiteren Verarbeitung abgewiesen (Denial-of-Service-Schutz).
@@ -2439,6 +2474,9 @@ function validateImportData(data){
   }
   if(Array.isArray(data.massnahmen) && data.massnahmen.length > IMPORT_LIMITS.maxMassnahmen){
     return { valid:false, errors:['Die Datei enthält '+data.massnahmen.length+' Maßnahmen — das Limit liegt bei '+IMPORT_LIMITS.maxMassnahmen+'.'], warnings:[], normalizedData:null };
+  }
+  if(Array.isArray(data.parkplatz) && data.parkplatz.length > IMPORT_LIMITS.maxParkplatz){
+    return { valid:false, errors:['Die Datei enthält '+data.parkplatz.length+' Parkplatz-Einträge — das Limit liegt bei '+IMPORT_LIMITS.maxParkplatz+'.'], warnings:[], normalizedData:null };
   }
   if(Array.isArray(data.versions) && data.versions.length > IMPORT_LIMITS.maxVersions){
     return { valid:false, errors:['Die Datei enthält '+data.versions.length+' Versionen — das Limit liegt bei '+IMPORT_LIMITS.maxVersions+'.'], warnings:[], normalizedData:null };
@@ -2454,6 +2492,7 @@ function validateImportData(data){
     versions: normalizeVersionsForImport(data.versions, warnings),
     resources: Array.isArray(data.resources) ? data.resources : [],
     massnahmen: Array.isArray(data.massnahmen) ? data.massnahmen : [],
+    parkplatz: [],
     processes: []
   };
   if(data.resources!==undefined && !Array.isArray(data.resources)) warnings.push('Ressourcen waren ungültig und wurden ignoriert.');
@@ -2662,6 +2701,41 @@ function validateImportData(data){
     return merged;
   }).filter(m=>m!==null);
 
+  // v2.3.0: Parkplatz-Einträge normalisieren
+  const rawParkplatz = Array.isArray(data.parkplatz) ? data.parkplatz : [];
+  const usedParkIds = new Set();
+  normalized.parkplatz = rawParkplatz.map((item, idx)=>{
+    if(!item || typeof item!=='object'){
+      warnings.push('Parkplatz-Eintrag an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
+      return null;
+    }
+    const template = newParkplatzItem();
+    const merged = Object.assign({}, template, item);
+    if(!isSafeEntityId(merged.id) || usedParkIds.has(merged.id)){
+      merged.id = uid('park');
+    }
+    usedParkIds.add(merged.id);
+    // Prozessreferenz auflösen
+    merged.prozessId = coerceString(merged.prozessId, '');
+    if(merged.prozessId){
+      const resolved = resolveProcessReference(merged.prozessId);
+      if(!resolved.ok){
+        warnings.push('Parkplatz-Eintrag "'+(coerceString(merged.beschreibung,'')||'(ohne Text)')+'": Verweis auf nicht vorhandenen Prozess wurde entfernt.');
+        merged.prozessId = '';
+      } else {
+        merged.prozessId = resolved.id;
+      }
+    }
+    merged.beschreibung = capText(coerceString(merged.beschreibung,''), IMPORT_LIMITS.maxTextLength, 'Parkplatz: Beschreibung', warnings);
+    merged.workshopBlock = capText(coerceString(merged.workshopBlock,''), IMPORT_LIMITS.maxShortTextLength, 'Parkplatz: Block', warnings);
+    merged.verantwortlich = capText(coerceString(merged.verantwortlich,''), IMPORT_LIMITS.maxShortTextLength, 'Parkplatz: Verantwortlich', warnings);
+    merged.termin = coerceString(merged.termin, '');
+    merged.status = capEnum(merged.status, ['offen','erledigt','massnahme'], 'offen', 'Parkplatz: Status', warnings);
+    merged.erstelltAm = coerceString(merged.erstelltAm, template.erstelltAm);
+    merged.abschlussNotiz = capText(coerceString(merged.abschlussNotiz,''), IMPORT_LIMITS.maxTextLength, 'Parkplatz: Abschlussnotiz', warnings);
+    return merged;
+  }).filter(p=>p!==null);
+
   // Schema-Migration: greift für JEDEN Importweg automatisch (readImportFile,
   // verschlüsselter Import, Datei öffnen), da alle validateImportData() nutzen.
   const migration = migrateWorkbook(Object.assign({schemaVersion: data.schemaVersion}, normalized));
@@ -2838,6 +2912,16 @@ function mergeImportData(importData, listMode){
     const existing = STATE.massnahmen.find(m=>m.id===im.id);
     if(!existing){ STATE.massnahmen.push(im); added++; }
     else { mergeMassnahmeInto(existing, im); updated++; }
+  });
+  // v2.3.0: Parkplatz-Einträge zusammenführen
+  (importData.parkplatz||[]).forEach(ip=>{
+    const existing = STATE.parkplatz.find(p=>p.id===ip.id);
+    if(!existing){ STATE.parkplatz.push(ip); added++; }
+    else {
+      mergeStringFields(existing, ip, ['beschreibung','verantwortlich','termin','abschlussNotiz','workshopBlock']);
+      if(!existing.prozessId && ip.prozessId) existing.prozessId = ip.prozessId;
+      updated++;
+    }
   });
   return {added, updated};
 }
@@ -3258,7 +3342,7 @@ function updateFileLinkIndicator(){
   if(!el) return;
   el.textContent = currentFileName ? ('Verknüpft mit: '+currentFileName) :
     pendingReconnectName ? ('Datei-Verknüpfung unterbrochen: '+pendingReconnectName) :
-    (FS_ACCESS_SUPPORTED ? 'Nur im Browser gespeichert (kein Datei-Export erfolgt)' : '');
+    (FS_ACCESS_SUPPORTED ? 'Nur im Browser gespeichert' : '');
 }
 /** Baut den kontextabhängigen Hinweistext, wo die Daten aktuell liegen (Browser vs. verknüpfte Datei). @returns {string} */
 function storageLocationNotice(){
@@ -3961,6 +4045,146 @@ function releaseReadinessCheck(){
 }
 
 
+/* ---------------------------------------------------------------------
+   v2.3.0 — QUALITÄTS- UND KONSISTENZPRÜFUNG
+   Prüft ausschließlich Dokumentationsqualität (Vollständigkeit, Nachvollziehbarkeit)
+   und belegbare Datenwidersprüche — niemals die fachliche Richtigkeit von
+   Entscheidungen. Jeder Befund nennt die konkreten Datenwerte.
+   --------------------------------------------------------------------- */
+/** v2.3.0: Liefert alle Qualitäts- und Konsistenzprüfungsbefunde. @returns {{quality:object[], consistency:object[]}} */
+function qualityAndConsistencyCheck(){
+  const quality = [];
+  const consistency = [];
+
+  STATE.processes.forEach(p=>{
+    const name = p.steckbrief.name || '(ohne Namen)';
+    const kritisch = isProcessKritisch(p);
+
+    // --- Qualitätsregeln (Dokumentationsvollständigkeit) ---
+
+    // Q1: Verantwortlicher fehlt
+    if(!String(p.steckbrief.verantwortlicher||'').trim()){
+      quality.push({process:name, processId:p.id, tab:'steckbrief', severity:'warnung', rule:'Q1', text:'Kein Verantwortlicher dokumentiert.'});
+    }
+    // Q3: MTA nicht dokumentiert (Warnung bei kritisch, Hinweis sonst)
+    if(String(p.steckbrief.mtaWert||'')===''){
+      quality.push({process:name, processId:p.id, tab:'steckbrief', severity:kritisch?'warnung':'hinweis', rule:'Q3', text:'Maximal tolerierbare Ausfallzeit (MTA) nicht dokumentiert.'});
+    }
+    // Q4: Mindestfähigkeit fehlt bei kritischem Prozess
+    if(kritisch && p.minfaehigkeit.muss.length===0 && !String(p.minfaehigkeit.mindestmenge||'').trim()){
+      quality.push({process:name, processId:p.id, tab:'minfaehigkeit', severity:'hinweis', rule:'Q4', text:'Mindestfähigkeit bei kritischem Prozess nicht dokumentiert.'});
+    }
+    // Q5: Notbetrieb ohne konkrete Schritte bei kritischem Prozess
+    if(kritisch && !String(p.notbetrieb.schritt1||'').trim()){
+      quality.push({process:name, processId:p.id, tab:'notbetrieb', severity:'hinweis', rule:'Q5', text:'Kein konkreter erster Schritt im Notbetrieb dokumentiert.'});
+    }
+    // Q6: Verantwortung Notbetrieb fehlt bei kritischem Prozess
+    if(kritisch && !String(p.notbetrieb.entscheidung||'').trim()){
+      quality.push({process:name, processId:p.id, tab:'notbetrieb', severity:'warnung', rule:'Q6', text:'Keine Entscheidungsverantwortung für den Notbetrieb dokumentiert.'});
+    }
+    // Q9: Rückkehr in Normalbetrieb fehlt
+    if(!String(p.notbetrieb.rueckkehr||'').trim()){
+      quality.push({process:name, processId:p.id, tab:'notbetrieb', severity:'hinweis', rule:'Q9', text:'Rückkehr in den Normalbetrieb nicht dokumentiert.'});
+    }
+    // Q13: Roter Resilienz-Check ohne offene Maßnahme
+    p.resilienz.filter(r=>r.status==='rot').forEach(r=>{
+      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && m.status!=='erledigt');
+      if(!hatMassnahme){
+        quality.push({process:name, processId:p.id, tab:'resilienz', severity:'warnung', rule:'Q13', text:'Roter Resilienz-Check "'+r.label+'" ohne offene Maßnahme.'});
+      }
+    });
+  });
+
+  // Q10: Kritische Ressource ohne Alternative
+  STATE.resources.filter(r=>r.alternative==='nein' && r.kritikalitaet==='hoch').forEach(r=>{
+    quality.push({process:'(Ressource)', severity:'warnung', rule:'Q10', text:'Ressource "'+(r.name||'(ohne Namen)')+'" ist kritisch und hat keine Alternative.'});
+  });
+  // Q11: Maßnahme ohne Verantwortlichen oder Termin
+  STATE.massnahmen.filter(m=>m.status==='offen').forEach(m=>{
+    if(!String(m.verantwortlich||'').trim() || !String(m.termin||'').trim()){
+      quality.push({process:processName(m.prozessId), severity:'warnung', rule:'Q11', text:'Offene Maßnahme "'+m.titel+'" ohne Verantwortlichen oder Termin.'});
+    }
+  });
+  // Q12: Erledigte Maßnahme ohne Wirksamkeitsnachweis
+  STATE.massnahmen.filter(m=>m.status==='erledigt' && !String(m.nachweis||'').trim()).forEach(m=>{
+    quality.push({process:processName(m.prozessId), severity:'hinweis', rule:'Q12', text:'Erledigte Maßnahme "'+m.titel+'" ohne Wirksamkeitsnachweis.'});
+  });
+
+  // --- Konsistenzregeln (Datenwidersprüche) ---
+
+  // C1: RTO > MTA (bestehende Logik, hier zusammengefasst)
+  STATE.processes.forEach(p=>{
+    const name = p.steckbrief.name || '(ohne Namen)';
+    const tp = timePlausibility(p);
+    tp.findings.filter(f=>f.type==='bad').forEach(f=>{
+      consistency.push({process:name, rule:'C1', text:'RTO überschreitet MTA: '+f.message});
+    });
+  });
+
+  // C2: Prozessketten-RTO-Konsistenz (NEU)
+  const chainFindings = chainRtoConsistency();
+  chainFindings.forEach(f=>consistency.push(f));
+
+  // C3: Ressourcen-Recovery langsamer als MTA
+  resourcesWithConflictingRecovery().forEach(c=>{
+    consistency.push({process:c.process.steckbrief.name||'–', rule:'C3',
+      text:'Ressource "'+(c.resource.name||'–')+'" braucht '+c.recoveryHours+'h zur Wiederherstellung, MTA von "'+
+        (c.process.steckbrief.name||'–')+'" ist '+c.mtaHours+'h.'});
+  });
+
+  // C4: Kritischer Prozess ohne Notbetrieb-Entscheidung
+  STATE.processes.filter(p=>isProcessKritisch(p) && !String(p.notbetrieb.entscheidung||'').trim()).forEach(p=>{
+    consistency.push({process:p.steckbrief.name||'–', rule:'C4', text:'Kritischer Prozess ohne dokumentierte Notbetrieb-Entscheidung.'});
+  });
+
+  // C6+C7: SPOFs ohne Alternative
+  singlePointOfFailureResources().filter(r=>r.alternative==='nein').forEach(r=>{
+    consistency.push({process:'(Ressource)', rule:'C7', text:'Single Point of Failure "'+(r.name||'–')+'" hat keine Alternative.'});
+  });
+
+  // C8: Kreisläufe in Abhängigkeiten
+  findDependencyCycles().forEach(cycle=>{
+    consistency.push({process:cycle[0], rule:'C8', text:'Kreislauf in Abhängigkeiten: '+cycle.join(' → ')});
+  });
+
+  // C9: Widersprüchliche Abhängigkeiten
+  contradictoryDependencies().forEach(c=>{
+    consistency.push({process:c.a.steckbrief.name, rule:'C9', text:'"'+c.a.steckbrief.name+'" und "'+c.b.steckbrief.name+'" bezeichnen sich gegenseitig als "'+c.type+'".'});
+  });
+
+  return {quality, consistency};
+}
+
+/** v2.3.0 (C2): Prüft Prozessketten auf unrealistische RTO-Abfolgen. @returns {object[]} */
+function chainRtoConsistency(){
+  const findings = [];
+  const graph = buildVorgelagertGraph();
+  // Für jedes Paar (A hat Abhängigkeit vorgelagert auf B): wenn RTO(B) > RTO(A), warnt
+  STATE.processes.forEach(procA=>{
+    const rtoA = durationToHours(procA.steckbrief.rto && procA.steckbrief.rto.wert, procA.steckbrief.rto && procA.steckbrief.rto.einheit);
+    if(rtoA===null) return;
+    (procA.dependencies||[]).filter(d=>d.type==='vorgelagert').forEach(dep=>{
+      const procB = getProcess(dep.processId);
+      if(!procB) return;
+      const rtoB = durationToHours(procB.steckbrief.rto && procB.steckbrief.rto.wert, procB.steckbrief.rto && procB.steckbrief.rto.einheit);
+      if(rtoB===null) return;
+      if(rtoB > rtoA){
+        findings.push({
+          process: procA.steckbrief.name||'–', rule:'C2',
+          text:'Vorgelagerter Prozess "'+(procB.steckbrief.name||'–')+'" hat RTO '+rtoB+'h, aber abhängiger Prozess "'+(procA.steckbrief.name||'–')+'" hat RTO '+rtoA+'h — der vorgelagerte Prozess liefert zu spät.'
+        });
+      }
+    });
+  });
+  // Mehrstufige Ketten: kumulative Prüfung über criticalDependencyChains
+  const chains = criticalDependencyChains();
+  // Die Ketten werden bereits in Flussrichtung (upstream→downstream) zurückgegeben
+  // Für jede Kette prüfen ob die RTOs ansteigen (upstream muss ≤ downstream sein)
+  // Die Ketten enthalten Prozessnamen, wir brauchen die IDs
+  // criticalDependencyChains() liefert Namens-Arrays, daher nutzen wir die Paar-Prüfung oben
+  return findings;
+}
+
 /** Berechnet den Bearbeitungsfortschritt eines Prozesses je Bereich und insgesamt. @param {object} process @returns {{sections:object, overall:number}} */
 function processProgress(process){
   const sections = {
@@ -4083,7 +4307,8 @@ function dashboardStats(){
   const kritisch = processes.filter(isProcessKritisch).length;
   const offeneMassnahmen = STATE.massnahmen.filter(m=>m.status==='offen'||m.status==='in_arbeit').length;
   const hoheRisiken = processes.reduce((sum,p)=>sum + resilienzSummary(p).rot, 0);
-  return { anzahlProzesse: processes.length, kritisch, offeneMassnahmen, hoheRisiken };
+  const offeneParkplatz = STATE.parkplatz.filter(p=>p.status==='offen').length;
+  return { anzahlProzesse: processes.length, kritisch, offeneMassnahmen, hoheRisiken, offeneParkplatz };
 }
 
 /** Erkennt automatisch offene Entscheidungspunkte eines Prozesses (fehlender Notbetrieb, Zeitwertkonflikt, fehlende Mindestfähigkeit bei kritischem Prozess usw.). @param {object} process @returns {string[]} */
@@ -4333,6 +4558,8 @@ function renderView(){
   if(r==='process' ) return viewProcessDetail(STATE.ui.processId);
   if(r==='cluster') return viewCluster();
   if(r==='massnahmen') return viewMassnahmenKatalog();
+  if(r==='parkplatz') return viewParkplatz();
+  if(r==='quality') return viewQualityCheck();
   if(r==='summary') return viewSummary();
   if(r==='versions') return viewVersions();
   if(r==='settings') return viewSettings();
@@ -4364,8 +4591,12 @@ function renderSidebar(){
   html += navItem('summary','◆','Management Summary');
   html += '</div>';
 
+  // v2.3.1: Prozessliste kollabierbar bei vielen Prozessen
+  const SIDEBAR_PROC_LIMIT = 8;
+  const procCollapsed = STATE.processes.length>SIDEBAR_PROC_LIMIT && !App._sidebarProcsExpanded;
+  const visibleProcs = procCollapsed ? STATE.processes.slice(0,SIDEBAR_PROC_LIMIT) : STATE.processes;
   html += '<div class="navgroup"><div class="navgroup-label">Prozessakten ('+STATE.processes.length+')</div>';
-  STATE.processes.forEach(p=>{
+  visibleProcs.forEach(p=>{
     const prog = processProgress(p).overall;
     const crit = isProcessKritisch(p);
     const active = STATE.ui.route==='process' && STATE.ui.processId===p.id;
@@ -4378,26 +4609,34 @@ function renderSidebar(){
     html += '<div class="process-nav-meta">'+Math.round(prog*100)+'% vollständig · '+escapeHtml(p.steckbrief.fachbereich||'kein Fachbereich')+'</div>';
     html += '</button>';
   });
+  if(procCollapsed){
+    html += '<button type="button" class="navitem small muted" onclick="App._sidebarProcsExpanded=true;render()">… '+(STATE.processes.length-SIDEBAR_PROC_LIMIT)+' weitere anzeigen</button>';
+  } else if(STATE.processes.length>SIDEBAR_PROC_LIMIT){
+    html += '<button type="button" class="navitem small muted" onclick="App._sidebarProcsExpanded=false;render()">Weniger anzeigen</button>';
+  }
   html += '<button type="button" class="navitem" style="margin-top:6px;color:var(--accent);" onclick="App.addProcess()"><span class="ic" aria-hidden="true">+</span> Neue Prozessakte</button>';
   html += '</div>';
 
   html += '<div class="navgroup"><div class="navgroup-label">Übergreifend</div>';
   html += navItem('cluster','▦','Abhängigkeitscluster');
   html += navItem('massnahmen','✓','Maßnahmenkatalog', stats.offeneMassnahmen);
+  html += navItem('parkplatz','☐','Parkplatz', STATE.parkplatz.filter(p=>p.status==='offen').length);
+  html += navItem('quality','◎','Qualitätsprüfung');
   html += navItem('versions','↻','Versionshistorie');
   html += navItem('settings','⚙','Branding & Einstellungen');
   html += '</div>';
 
-  html += '<div class="navgroup"><div class="navgroup-label">Spezialansichten</div>';
-  html += '<button type="button" class="navitem" onclick="App.openGfMode()"><span class="ic" aria-hidden="true">GF</span> GF-Ansicht</button>';
-  html += '<button type="button" class="navitem" onclick="App.openWorkshopMode()"><span class="ic" aria-hidden="true">▶</span> Workshop-Modus</button>';
+  html += '<div class="navgroup"><div class="navgroup-label">Präsentation & Workshop</div>';
+  html += '<button type="button" class="navitem" onclick="App.openGfMode()" title="Kompakte Entscheidungsvorlage für die Geschäftsführung"><span class="ic" aria-hidden="true">GF</span> Managementbericht</button>';
+  html += '<button type="button" class="navitem" onclick="App.openWorkshopMode()" title="Geführte Fragenfolge für die gemeinsame Prozessanalyse im Workshop"><span class="ic" aria-hidden="true">▶</span> Workshop-Modus</button>';
+  html += '<button type="button" class="navitem" onclick="App.openPrioView()" title="Beamertaugliche Übersicht aller Prozesse nach BIA-Score sortiert"><span class="ic" aria-hidden="true">▼</span> Priorisierung</button>';
   html += '</div>';
   html += '</nav>';
 
-  html += '<div class="sidebar-foot">Lokale Speicherung bedeutet: '+storageLocationNotice()+' Nutzen Sie Export/Bereinigung vor Weitergabe oder auf gemeinsam genutzten Geräten.'+
-    '<div style="margin-top:8px;opacity:.8;">'+escapeHtml(PROJECT_ATTRIBUTION_LINE)+'<br>'+escapeHtml(PROJECT_ORIGIN_LINE)+'</div>'+
-    '<a href="#" onclick="App.showFullTerms();return false;" style="color:var(--ink-faint);text-decoration:underline;">Lizenz</a> · '+
-    '<a href="#" onclick="App.showAboutDialog();return false;" style="color:var(--ink-faint);text-decoration:underline;">Über</a></div>';
+  html += '<div class="sidebar-foot" style="font-size:10.5px;">'+
+    '<div style="opacity:.7;">'+escapeHtml(PROJECT_ATTRIBUTION_LINE)+'</div>'+
+    '<div style="margin-top:4px;"><a href="#" onclick="App.showFullTerms();return false;" style="color:var(--ink-faint);text-decoration:underline;">Lizenz</a> · '+
+    '<a href="#" onclick="App.showAboutDialog();return false;" style="color:var(--ink-faint);text-decoration:underline;">Über</a></div></div>';
   html += '</div>';
   return html;
 }
@@ -4419,7 +4658,7 @@ function navItem(route, ic, label, count){
 /** Rendert die Kopfleiste (Titel, Speicherstatus, Datei-Aktionen, Suche). @returns {string} HTML */
 function renderTopbar(){
   const titles = {
-    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', massnahmen:'Maßnahmenkatalog',
+    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
     summary:'Management Summary', versions:'Versionshistorie', settings:'Branding & Einstellungen',
     process: STATE.ui.processId ? processName(STATE.ui.processId) : 'Prozess'
   };
@@ -4431,7 +4670,7 @@ function renderTopbar(){
   html += '<div class="small muted" id="file-link-indicator" style="margin-top:1px;">'+
     (currentFileName ? 'Verknüpft mit: '+escapeHtml(currentFileName) :
      pendingReconnectName ? 'Datei-Verknüpfung unterbrochen: '+escapeHtml(pendingReconnectName) :
-     (FS_ACCESS_SUPPORTED ? 'Nur im Browser gespeichert (kein Datei-Export erfolgt)' : ''))+
+     (FS_ACCESS_SUPPORTED ? 'Nur im Browser gespeichert' : ''))+
     '</div></div>';
 
   /* v2.2.0 (Barrierefreiheit): Das Suchfeld war ausschließlich über seinen
@@ -4451,9 +4690,9 @@ function renderTopbar(){
     html += '<button class="btn btn-sm" onclick="App.saveAsNewFile()">Speichern unter…</button>';
   }
   html += '<button class="btn btn-sm" onclick="App.openImport()">Import JSON</button>';
-  html += '<button class="btn btn-sm" onclick="App.exportJson()">Export JSON</button>';
+  html += '<button class="btn btn-sm" onclick="App.exportJson()" title="Alle Daten als JSON-Datei exportieren">Daten exportieren</button>';
   html += '<button class="btn btn-sm" onclick="App.openPdfModal()">PDF erzeugen</button>';
-  html += '<button class="btn btn-primary btn-sm" onclick="App.openSaveVersion()">Speichern (neue Version)</button>';
+  html += '<button class="btn btn-primary btn-sm" onclick="App.openSaveVersion()">Version sichern</button>';
   html += '</div></div>';
   return html;
 }
@@ -4765,7 +5004,7 @@ const App = {
     openModal(
       '<h3>Neue Prozessakte anlegen</h3>'+
       '<div class="field"><label>Prozessname <span class="req">*</span></label>'+
-      '<input type="text" id="np-name" placeholder="z. B. Auftragsabwicklung B2B"></div>'+
+      '<input type="text" id="np-name" placeholder="z. B. Auftragsbearbeitung"></div>'+
       '<div class="modal-actions">'+
       '<button class="btn" onclick="closeModal()">Abbrechen</button>'+
       '<button class="btn btn-primary" onclick="App.confirmAddProcess()">Anlegen</button>'+
@@ -5173,6 +5412,14 @@ const App = {
     html += '<tr><td><b>Projektwebsite</b></td><td><a href="'+escapeHtml(safeUrl(PROJECT_WEBSITE))+'" target="_blank" rel="noopener">'+escapeHtml(PROJECT_WEBSITE)+'</a></td></tr>';
     html += '</tbody></table>';
     html += '<p class="small muted" style="margin-top:14px;">'+escapeHtml(PROJECT_ORIGIN_LINE)+'. Dieses Projekt ist freie Software — private und kommerzielle Nutzung, Veränderung und Weitergabe sind unter den Bedingungen der '+escapeHtml(PROJECT_LICENSE_NAME)+' ausdrücklich erlaubt.</p>';
+    // v2.3.1: Dezenter Hinweis auf Projektunterstützung
+    html += '<div style="margin-top:16px;padding:12px 14px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--line);">';
+    html += '<div style="font-weight:600;font-size:13px;margin-bottom:4px;">Projekt unterstützen</div>';
+    html += '<p class="small muted" style="margin:0 0 8px;">Das BCM Starter Kit ist kostenlos und werbefrei. Wenn es Ihnen im Arbeitsalltag hilft, freuen wir uns über jede Form der Unterstützung:</p>';
+    html += '<div class="small" style="display:flex;gap:12px;flex-wrap:wrap;">';
+    html += '<a href="https://riemer-consulting.de" target="_blank" rel="noopener" style="color:var(--accent);">Website</a>';
+    html += '<a href="https://paypal.me/riemerconsulting" target="_blank" rel="noopener" style="color:var(--accent);">PayPal</a>';
+    html += '</div></div>';
     html += '<div class="modal-actions"><button class="btn" onclick="App.showFullTerms()">Vollständige Lizenz lesen</button><button class="btn btn-primary" onclick="closeModal()">Schließen</button></div>';
     openModal(html);
   },
@@ -5499,9 +5746,9 @@ const App = {
     openModal(
       '<h3>Neue Version speichern</h3>'+
       '<div class="field"><label>Bearbeiter <span class="req">*</span></label>'+
-      '<input type="text" id="sv-name" value="'+escapeHtml(STATE.meta.currentBearbeiter||'')+'" placeholder="Name"></div>'+
+      '<input type="text" id="sv-name" value="'+escapeHtml(STATE.meta.currentBearbeiter||'')+'" placeholder="Ihr Name"></div>'+
       '<div class="field"><label>Änderungsnotiz</label>'+
-      '<textarea id="sv-note" placeholder="Was wurde geändert?"></textarea></div>'+
+      '<textarea id="sv-note" placeholder="z. B. Workshop-Ergebnisse dokumentiert"></textarea></div>'+
       '<p class="small muted">Aktuelle Version: v'+escapeHtml(STATE.meta.version)+'. Bisherige Versionen bleiben unverändert erhalten.</p>'+
       '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
       '<button class="btn btn-primary" onclick="App.confirmSaveVersion()">Als v'+(STATE.versions.length+1)+' speichern</button></div>'
@@ -5612,10 +5859,20 @@ const App = {
     OVERLAY_RETURN_FOCUS = null;
     if(target && typeof target.focus==='function' && document.contains(target)) target.focus();
   },
-  /** Startet den Workshop-Modus für den ersten vorhandenen Prozess. @returns {void} */
-  openWorkshopMode(){
-    if(STATE.processes.length===0){ toast('Bitte zuerst eine Prozessakte anlegen.'); return; }
-    App.workshopProcessId = STATE.processes[0].id;
+  /** Startet den Workshop-Modus. Optional für einen bestimmten Prozess. Legt bei Bedarf eine neue Prozessakte an. @param {string} [processId] @returns {void} */
+  openWorkshopMode(processId){
+    if(STATE.processes.length===0){
+      const name = prompt('Für den Workshop wird mindestens eine Prozessakte benötigt.\nDiese wird automatisch angelegt.\n\nName des ersten Prozesses:');
+      if(!name || !name.trim()) return;
+      const p = newProcess(name.trim());
+      STATE.processes.push(p);
+      autosave();
+      render();
+      toast('Prozessakte "'+name.trim()+'" angelegt — Workshop startet.');
+      App.workshopProcessId = p.id;
+    } else {
+      App.workshopProcessId = processId && getProcess(processId) ? processId : STATE.processes[0].id;
+    }
     App.workshopStep = 0;
     renderWorkshopOverlay();
   },
@@ -5624,30 +5881,62 @@ const App = {
 /** Rendert die View "Dashboard". @returns {string} HTML */
 function viewDashboard(){
   const stats = dashboardStats();
+  const hasProcesses = STATE.processes.length>0;
   let html = '';
-  html += '<div class="privacy-note">🔒 Die Daten werden lokal verarbeitet, es findet keine Datenübertragung an externe Server statt. Wichtig: '+storageLocationNotice()+'</div>';
 
+  // v2.3.1: Erste-Schritte-Karte für neue Benutzer
+  if(!hasProcesses && STATE.versions.length===0){
+    html += '<div class="card" style="border-left:4px solid var(--accent);"><div class="card-head"><div class="card-title">Willkommen im BCM Starter Kit</div></div>';
+    html += '<p style="margin:0 0 12px;">Dieses Werkzeug unterstützt Sie bei der Dokumentation Ihres Business-Continuity-Managements — Schritt für Schritt.</p>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
+    html += '<button class="btn btn-primary" onclick="App.addProcess()">Prozessakte anlegen</button>';
+    html += '<button class="btn" onclick="App.loadSampleData()">Beispieldaten ergänzen</button>';
+    html += '<button class="btn" onclick="App.openWorkshopMode()">Workshop starten</button>';
+    html += '</div>';
+    html += '<ol class="small muted" style="margin:14px 0 0;padding-left:18px;line-height:1.9;">';
+    html += '<li>Geschäftsprozesse anlegen und Steckbriefe pflegen</li>';
+    html += '<li>Business Impact bewerten (Kritikalität, Ausfallzeiten)</li>';
+    html += '<li>Mindestfähigkeiten und kritische Ressourcen dokumentieren</li>';
+    html += '<li>Notbetrieb planen und Resilienz prüfen</li>';
+    html += '<li>Maßnahmen ableiten und nachverfolgen</li>';
+    html += '</ol></div>';
+  }
+
+  html += '<div class="privacy-note" style="font-size:11px;">🔒 Alle Daten bleiben lokal — keine Übertragung an externe Server. '+storageLocationNotice()+'</div>';
+
+  // v2.3.1: KPI-Tiles klickbar für Drill-Down
   html += '<div class="grid grid-4" style="margin-bottom:22px;">';
-  html += statTile(stats.anzahlProzesse, 'Dokumentierte Prozesse');
-  html += statTile(stats.kritisch, 'Kritische Prozesse', stats.kritisch>0?'bad':'ok');
-  html += statTile(stats.offeneMassnahmen, 'Offene Maßnahmen', stats.offeneMassnahmen>0?'warn':'ok');
-  html += statTile(stats.hoheRisiken, 'Hohe Risiken (rote Checks)', stats.hoheRisiken>0?'bad':'ok');
+  html += statTile(stats.anzahlProzesse, 'Dokumentierte Prozesse', undefined, hasProcesses?"go('dashboard')":undefined);
+  html += statTile(stats.kritisch, 'Kritische Prozesse', stats.kritisch>0?'bad':'ok', stats.kritisch>0?"go('dashboard')":undefined);
+  html += statTile(stats.offeneMassnahmen, 'Offene Maßnahmen', stats.offeneMassnahmen>0?'warn':'ok', "go('massnahmen')");
+  html += statTile(stats.hoheRisiken, 'Hohe Risiken (rote Checks)', stats.hoheRisiken>0?'bad':'ok', stats.hoheRisiken>0?"go('quality')":undefined);
   html += '</div>';
+  if(stats.offeneParkplatz>0){
+    html += '<div class="grid grid-4" style="margin-bottom:12px;">';
+    html += statTile(stats.offeneParkplatz, 'Offene Parkplatz-Punkte', 'warn', "go('parkplatz')");
+    html += '</div>';
+  }
 
+  // v2.3.1: Quick Actions neu sortiert und um Workshop erweitert
   html += '<div class="card"><div class="card-head"><div class="card-title">Schnellzugriffe</div></div>';
   html += '<div class="grid grid-3">';
   html += quickAction('Neue Prozessakte anlegen', 'Steckbrief, Business Impact und Notbetrieb erfassen.', "App.addProcess()");
-  html += quickAction('Bestehende JSON-Datei importieren', 'Ersetzen, zusammenführen oder gezielt einzelne Einträge übernehmen.', "App.openImport()");
+  html += quickAction('Workshop starten', 'Geführte Fragenfolge für die gemeinsame Prozessanalyse.', "App.openWorkshopMode()");
   html += quickAction('PDF erzeugen', 'Vollständiges Workbook oder Kurzbericht ausgeben.', "App.openPdfModal()");
   html += quickAction('Maßnahmenübersicht', 'Alle offenen und erledigten Maßnahmen.', "go('massnahmen')");
-  html += quickAction('Abhängigkeitsübersicht', 'Cluster über Ressourcen und Prozesse hinweg.', "go('cluster')");
-  html += quickAction('Beispieldaten laden', 'Demo-Prozess zur Orientierung einfügen.', "App.loadSampleData()");
+  html += quickAction('Parkplatz', 'Offene Punkte, Rückfragen und aufgeschobene Diskussionen.', "go('parkplatz')");
+  html += quickAction('Qualitätsprüfung', 'Vollständigkeit und Konsistenz der Dokumentation prüfen.', "go('quality')");
   html += '</div></div>';
 
   html += '<div class="card"><div class="card-head"><div class="card-title">Prozessübersicht</div>'+
     '<div class="small muted">Bearbeitungsstand: '+escapeHtml(STATE.meta.bearbeitungsstand)+'</div></div>';
-  if(STATE.processes.length===0){
-    html += emptyState('Noch keine Prozesse erfasst.', 'Legen Sie die erste Prozessakte an oder laden Sie Beispieldaten.');
+  if(!hasProcesses){
+    html += '<div style="text-align:center;padding:32px 20px;">'+
+      '<p class="muted">Starten Sie mit der ersten Prozessakte.</p>'+
+      '<div style="display:flex;gap:8px;justify-content:center;">'+
+      '<button class="btn btn-primary" onclick="App.addProcess()">Prozessakte anlegen</button>'+
+      '<button class="btn" onclick="App.loadSampleData()">Beispieldaten laden</button>'+
+      '</div></div>';
   } else {
     html += '<table class="dtable"><thead><tr><th>Prozess</th><th>Fachbereich</th><th>Kritikalität</th><th>BIA-Score</th><th>Ampel</th><th>Fortschritt</th><th>Resilienz</th><th></th></tr></thead><tbody>';
     STATE.processes.forEach(p=>{
@@ -5672,9 +5961,10 @@ function viewDashboard(){
   return html;
 }
 
-/** Rendert eine einzelne KPI-Kachel im Dashboard. @param {string|number} num @param {string} label @param {string} [tone] 'bad'|'warn'|'ok' für die Farbe. @returns {string} HTML */
-function statTile(num, label, tone){
+/** Rendert eine einzelne KPI-Kachel im Dashboard. Optional klickbar. @param {string|number} num @param {string} label @param {string} [tone] 'bad'|'warn'|'ok' für die Farbe. @param {string} [onclick] Optional: onclick-Handler für Drill-Down. @returns {string} HTML */
+function statTile(num, label, tone, onclick){
   const color = tone==='bad' ? 'var(--bad)' : tone==='warn' ? 'var(--warn)' : tone==='ok' ? 'var(--ok)' : 'var(--ink)';
+  if(onclick) return '<button type="button" class="stat-tile stat-tile-link" onclick="'+onclick+'" title="Klicken für Details"><div class="stat-num" style="color:'+color+'">'+num+'</div><div class="stat-label">'+label+'</div></button>';
   return '<div class="stat-tile"><div class="stat-num" style="color:'+color+'">'+num+'</div><div class="stat-label">'+label+'</div></div>';
 }
 /** Rendert eine Schnellzugriffs-Kachel im Dashboard. @param {string} title @param {string} desc @param {string} action onclick-JS als String. @returns {string} HTML */
@@ -5725,12 +6015,15 @@ function viewProcessDetail(id){
   const tab = STATE.ui.processTab || 'steckbrief';
   const prog = processProgress(p);
 
-  let html = '<div class="spread" style="margin-bottom:14px;">';
+  // v2.3.1: Breadcrumb für Navigation
+  let html = '<div class="small muted" style="margin-bottom:6px;"><a href="#" onclick="go(\'dashboard\');return false" style="color:var(--ink-faint);">Dashboard</a> › Prozessakte</div>';
+  html += '<div class="spread" style="margin-bottom:14px;">';
   html += '<div><div class="kicker">'+escapeHtml(p.steckbrief.fachbereich||'Kein Fachbereich')+'</div>'+
     '<h1 style="font-size:24px;">'+escapeHtml(p.steckbrief.name||'Unbenannter Prozess')+'</h1></div>';
   html += '<div class="flexrow">'+kritikalitaetBadge(p.steckbrief.kritikalitaet)+
-    '<button class="btn btn-sm" onclick="App.duplicateProcess(\''+safeJsString(p.id)+'\')">Duplizieren als neue Prozessakte</button>'+
-    '<button class="btn btn-sm btn-danger" onclick="App.deleteProcess(\''+safeJsString(p.id)+'\')">Löschen</button></div>';
+    '<button class="btn btn-sm" onclick="App.openWorkshopMode(\''+safeJsString(p.id)+'\')" title="Workshop für diesen Prozess starten">Workshop</button>'+
+    '<button class="btn btn-sm" onclick="App.duplicateProcess(\''+safeJsString(p.id)+'\')" title="Prozess inkl. aller Inhalte als neue Akte kopieren">Duplizieren</button>'+
+    '<button class="btn btn-sm btn-danger" onclick="App.deleteProcess(\''+safeJsString(p.id)+'\')" title="Prozessakte unwiderruflich löschen">Löschen</button></div>';
   html += '</div>';
 
   // Der Balken zeigt denselben Wert, der rechts daneben als Zahl steht — für
@@ -5830,7 +6123,7 @@ function dependenciesCardHtml(process){
       others.map(o=>'<option value="'+escapeHtml(o.id)+'">'+escapeHtml(o.steckbrief.name||'(ohne Namen)')+'</option>').join('')+'</select></div>';
     html += '<div class="field" style="margin-bottom:0;"><label for="'+depTypeId+'">Richtung</label><select id="'+depTypeId+'">'+
       '<option value="vorgelagert">Vorgelagert</option><option value="nachgelagert">Nachgelagert</option></select></div>';
-    html += '<div style="display:flex;align-items:flex-end;"><button class="btn btn-sm btn-primary" onclick="App.addDependency(\''+safeJsString(process.id)+'\')">Hinzufügen</button></div>';
+    html += '<div style="display:flex;align-items:flex-end;"><button class="btn btn-sm btn-primary" onclick="App.addDependency(\''+safeJsString(process.id)+'\')" title="Prozessabhängigkeit hinzufügen">Hinzufügen</button></div>';
     html += '</div></div>';
   }
 
@@ -5845,7 +6138,7 @@ function dependenciesCardHtml(process){
 /** Rendert den Steckbrief-Tab einer Prozessakte (Grunddaten, Kritikalität, Zeitwerte, Abhängigkeiten). @param {object} p @returns {string} HTML */
 function tabSteckbrief(p){
   const s = p.steckbrief, base = 'processes.'+STATE.processes.indexOf(p)+'.steckbrief.';
-  let html = '<div class="card"><div class="card-help">Beschreiben Sie den Prozess so, dass ein neuer Geschäftsführer versteht, warum dieser Prozess für das Unternehmen relevant ist.</div>';
+  let html = '<div class="card"><div class="card-help">Kurzbeschreibung, die auch für Außenstehende verständlich ist.</div>';
   html += '<div class="grid grid-2">';
   html += fieldInput(base+'name', s.name, 'Prozessname', {required:true});
   html += fieldInput(base+'fachbereich', s.fachbereich, 'Fachbereich', {required:true});
@@ -5858,8 +6151,8 @@ function tabSteckbrief(p){
   html += '<div class="grid grid-2">';
   html += fieldInput(base+'interneKunden', s.interneKunden, 'Interne Kunden');
   html += fieldInput(base+'externeKunden', s.externeKunden, 'Externe Kunden');
-  html += fieldInput(base+'vorgelagert', s.vorgelagert, 'Vorgelagerte Prozesse (Freitext, ergänzend)');
-  html += fieldInput(base+'nachgelagert', s.nachgelagert, 'Nachgelagerte Prozesse (Freitext, ergänzend)');
+  html += fieldInput(base+'vorgelagert', s.vorgelagert, 'Vorgelagerte Prozesse (Freitext)');
+  html += fieldInput(base+'nachgelagert', s.nachgelagert, 'Nachgelagerte Prozesse (Freitext)');
   html += '</div></div>';
 
   html += dependenciesCardHtml(p);
@@ -5868,13 +6161,13 @@ function tabSteckbrief(p){
   html += '<div class="grid grid-4">';
   html += fieldInput(base+'kritikalitaet', s.kritikalitaet, 'Kritikalität', {type:'select', required:true, rerender:true,
     options:[{value:'hoch',label:'Hoch'},{value:'mittel',label:'Mittel'},{value:'niedrig',label:'Niedrig'}]});
-  html += fieldInput(base+'mtaWert', s.mtaWert, 'MTA – Zeitwert', {required:true, placeholder:'z. B. 24', onblurRerender:true});
+  html += fieldInput(base+'mtaWert', s.mtaWert, 'MTA – Zeitwert <span class="small muted" style="font-weight:400;">(max. tolerierbarer Ausfall)</span>', {required:true, placeholder:'z. B. 24', onblurRerender:true});
   html += fieldInput(base+'mtaEinheit', s.mtaEinheit, 'MTA – Einheit', {type:'select', rerender:true,
     options:TIME_UNIT_OPTIONS});
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += structuredTimeFieldHtml(base+'rto', s.rto, 'RTO (Recovery Time Objective)');
-  html += structuredTimeFieldHtml(base+'rpo', s.rpo, 'RPO (Recovery Point Objective)');
+  html += structuredTimeFieldHtml(base+'rto', s.rto, 'RTO <span class="small muted" style="font-weight:400;">(Zeit bis Wiederherstellung)</span>');
+  html += structuredTimeFieldHtml(base+'rpo', s.rpo, 'RPO <span class="small muted" style="font-weight:400;">(max. Datenverlust)</span>');
   html += '</div>';
   html += fieldInput(base+'bemerkungen', s.bemerkungen, 'Bemerkungen', {type:'textarea'});
   html += plausibilityBox(timePlausibility(p));
@@ -5897,13 +6190,13 @@ function structuredTimeFieldHtml(fieldPath, valueObj, label){
   const plainLabel = String(label).replace(/<[^>]*>/g,'');
   let html = '<div class="field'+(isEmpty?' empty':'')+'" role="group" aria-label="'+escapeHtml(plainLabel)+'"><label for="'+baseId+'_wert">'+label+'</label>';
   html += '<div class="flexrow">';
-  html += '<input type="text" id="'+baseId+'_wert" style="flex:1;" value="'+escapeHtml(v.wert)+'" placeholder="Zahl" aria-label="'+escapeHtml(plainLabel+' – Zahl')+'" oninput="App.setField(\''+fieldPath+'.wert\', this.value)" onblur="render()">';
+  html += '<input type="text" id="'+baseId+'_wert" style="flex:1;" value="'+escapeHtml(v.wert)+'" placeholder="z. B. 4" aria-label="'+escapeHtml(plainLabel+' – Zahl')+'" oninput="App.setField(\''+fieldPath+'.wert\', this.value)" onblur="render()">';
   html += '<select id="'+baseId+'_einheit" style="flex:1;" aria-label="'+escapeHtml(plainLabel+' – Einheit')+'" onchange="App.setFieldAndRerender(\''+fieldPath+'.einheit\', this.value)">'+
     timeUnitOptionsHtml(v.einheit)+'</select>';
   html += '</div>';
   if(v.legacyText){
-    html += '<div class="small" style="margin-top:6px;color:var(--warn);">⚠ Alter Freitextwert aus einer früheren Version: „'+escapeHtml(v.legacyText)+'“ — bitte oben einen strukturierten Wert erfassen, dann Hinweis ausblenden. '+
-      '<button class="btn btn-sm" style="margin-left:6px;" onclick="App.clearLegacyText(\''+fieldPath+'\')">Erledigt</button></div>';
+    html += '<div class="small" style="margin-top:6px;color:var(--warn);">⚠ Alter Freitextwert aus einer früheren Version: „'+escapeHtml(v.legacyText)+'“ — bitte oben strukturiert erfassen. '+
+      '<button class="btn btn-sm" style="margin-left:6px;" onclick="App.clearLegacyText(\''+fieldPath+'\')">Hinweis ausblenden</button></div>';
   }
   html += '</div>';
   return html;
@@ -6073,7 +6366,7 @@ function canvasCol(p, idx, col, label, cls){
 function tabRessourcen(p){
   const linked = STATE.resources.filter(r=>r.prozesse.includes(p.id));
   let html = '<div class="card"><div class="card-head"><div class="card-title">Kritische Ressourcen dieses Prozesses</div>'+
-    '<button class="btn btn-sm btn-primary" onclick="App.addResource(\''+safeJsString(p.id)+'\')">+ Ressource</button></div>';
+    '<button class="btn btn-sm btn-primary" onclick="App.addResource(\''+safeJsString(p.id)+'\')" title="Neue kritische Ressource anlegen">+ Ressource</button></div>';
   html += '<div class="card-help">Ressourcen werden in einem gemeinsamen Pool verwaltet, damit Mehrfachnutzung über Prozesse hinweg im Abhängigkeitscluster sichtbar wird.</div>';
   if(linked.length===0){ html += emptyState('Keine Ressourcen verknüpft', 'Fügen Sie Personen, Systeme, Lieferanten oder andere kritische Ressourcen hinzu.'); }
   linked.forEach(r=>{ html += resourceRow(r); });
@@ -6096,8 +6389,8 @@ function resourceRow(r){
     ['ja','teilweise','nein'].map(c=>'<option value="'+c+'" '+(r.alternative===c?'selected':'')+'>'+c[0].toUpperCase()+c.slice(1)+'</option>').join('')+'</select></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += '<div class="field"><label>Beschreibung der Alternative</label><input type="text" value="'+escapeHtml(r.altBeschreibung)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'altBeschreibung\',this.value)"></div>';
-  html += '<div class="field"><label>Schwachstelle</label><input type="text" value="'+escapeHtml(r.schwachstelle)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'schwachstelle\',this.value)"></div>';
+  html += '<div class="field"><label>Beschreibung der Alternative</label><input type="text" value="'+escapeHtml(r.altBeschreibung)+'" placeholder="z. B. Ausweichstandort, Backup-System" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'altBeschreibung\',this.value)"></div>';
+  html += '<div class="field"><label>Schwachstelle</label><input type="text" value="'+escapeHtml(r.schwachstelle)+'" placeholder="z. B. Single Point of Failure" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'schwachstelle\',this.value)"></div>';
   html += '</div>';
   html += '<div class="field"><label>Maßnahme erforderlich</label><select onchange="resUpdate(\''+safeJsString(r.id)+'\',\'massnahmeNoetig\',this.value)">'+
     ['ja','nein'].map(c=>'<option value="'+c+'" '+(r.massnahmeNoetig===c?'selected':'')+'>'+c[0].toUpperCase()+c.slice(1)+'</option>').join('')+'</select></div>';
@@ -6108,8 +6401,8 @@ function resourceRow(r){
   const rr = r.recoveryRequirement || {wert:'', einheit:'Stunden'};
   html += '<div class="hr" style="margin:12px 0;"></div>';
   html += '<div class="grid grid-3">';
-  html += '<div class="field"><label>Verantwortlich'+resourceRecommendedMark(r,'owner')+'</label><input type="text" value="'+escapeHtml(r.owner)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'owner\',this.value)"></div>';
-  html += '<div class="field"><label>Anbieter / Vertragsbezug'+resourceRecommendedMark(r,'provider')+'</label><input type="text" value="'+escapeHtml(r.provider)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'provider\',this.value)"></div>';
+  html += '<div class="field"><label>Verantwortlich'+resourceRecommendedMark(r,'owner')+'</label><input type="text" value="'+escapeHtml(r.owner)+'" placeholder="Name oder Abteilung" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'owner\',this.value)"></div>';
+  html += '<div class="field"><label>Anbieter / Vertragsbezug'+resourceRecommendedMark(r,'provider')+'</label><input type="text" value="'+escapeHtml(r.provider)+'" placeholder="z. B. intern, Telekom" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'provider\',this.value)"></div>';
   html += '<div class="field"><label>Verfügbarkeitsanforderung'+resourceRecommendedMark(r,'availabilityRequirement')+'</label><input type="text" placeholder="z. B. 99,9 %" value="'+escapeHtml(r.availabilityRequirement)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'availabilityRequirement\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-3">';
@@ -6121,11 +6414,11 @@ function resourceRow(r){
   const rrId = 'res_'+safeAttribute(r.id).replace(/[^a-z0-9]/gi,'_')+'_recovery';
   const rrScope = 'Recovery-Anforderung'+(r.name ? ' für '+r.name : '');
   html += '<div class="field" role="group" aria-label="'+escapeHtml(rrScope)+'"><label for="'+rrId+'">Recovery-Anforderung'+resourceRecommendedMark(r,'recoveryRequirement')+'</label><div class="flexrow">'+
-    '<input type="text" id="'+rrId+'" style="flex:1;" value="'+escapeHtml(rr.wert)+'" placeholder="Zahl" aria-label="'+escapeHtml(rrScope+' – Zahl')+'" onchange="resUpdateNested(\''+safeJsString(r.id)+'\',\'recoveryRequirement\',\'wert\',this.value)">'+
+    '<input type="text" id="'+rrId+'" style="flex:1;" value="'+escapeHtml(rr.wert)+'" placeholder="z. B. 4" aria-label="'+escapeHtml(rrScope+' – Zahl')+'" onchange="resUpdateNested(\''+safeJsString(r.id)+'\',\'recoveryRequirement\',\'wert\',this.value)">'+
     '<select style="flex:1;" aria-label="'+escapeHtml(rrScope+' – Einheit')+'" onchange="resUpdateNested(\''+safeJsString(r.id)+'\',\'recoveryRequirement\',\'einheit\',this.value)">'+
     timeUnitOptionsHtml(rr.einheit)+'</select></div></div>';
   html += '<div class="field"><label>Ausweichlösung getestet am</label><input type="date" value="'+escapeHtml(r.fallbackTestedAt)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'fallbackTestedAt\',this.value)"></div>';
-  html += '<div class="field"><label>Testergebnis</label><input type="text" value="'+escapeHtml(r.fallbackTestResult)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'fallbackTestResult\',this.value)"></div>';
+  html += '<div class="field"><label>Testergebnis</label><input type="text" value="'+escapeHtml(r.fallbackTestResult)+'" placeholder="z. B. Erfolgreich, Verbesserungsbedarf" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'fallbackTestResult\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-3">';
   html += '<div class="field"><label>Datenklassifizierung</label><input type="text" placeholder="z. B. intern, vertraulich" value="'+escapeHtml(r.dataClassification)+'" onchange="resUpdate(\''+safeJsString(r.id)+'\',\'dataClassification\',this.value)"></div>';
@@ -6237,7 +6530,7 @@ function tabResilienz(p){
   let html = '<div class="card"><div class="spread"><div class="card-title">Resilienz-Check</div>'+
     '<div class="flexrow"><span class="badge b-bad">'+rs.rot+' rot</span><span class="badge b-warn">'+rs.gelb+' gelb</span><span class="badge b-ok">'+rs.gruen+' grün</span></div></div>';
   html += '<div class="card-help">Bewerten Sie jeden Punkt mit einer Ampel. Aus roten Punkten lassen sich automatisch Maßnahmen ableiten, optional auch aus gelben.</div>';
-  html += '<button class="btn btn-sm" onclick="App.generateMassnahmenFromResilienz(\''+safeJsString(p.id)+'\')">Maßnahmen aus Checks erzeugen</button>';
+  html += '<button class="btn btn-sm" onclick="App.generateMassnahmenFromResilienz(\''+safeJsString(p.id)+'\')" title="Erstellt Maßnahmen-Vorschläge für rote und gelbe Resilienz-Checks">Maßnahmen aus Checks erzeugen</button>';
   html += '</div>';
 
   p.resilienz.forEach(item=>{
@@ -6266,7 +6559,7 @@ function resilienzComment(pid, itemId, val){
 function tabMassnahmenTab(p){
   const list = STATE.massnahmen.filter(m=>m.prozessId===p.id);
   let html = '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen für diesen Prozess</div>'+
-    '<button class="btn btn-sm btn-primary" onclick="App.addMassnahme(\''+safeJsString(p.id)+'\')">+ Maßnahme</button></div>';
+    '<button class="btn btn-sm btn-primary" onclick="App.addMassnahme(\''+safeJsString(p.id)+'\')" title="Neue Maßnahme für diesen Prozess anlegen">+ Maßnahme</button></div>';
   if(list.length===0){ html += emptyState('Keine Maßnahmen erfasst', 'Maßnahmen können hier oder automatisch aus roten Resilienz-Checks erzeugt werden.'); }
   list.forEach(m=>{ html += massnahmeRow(m); });
   html += '</div>';
@@ -6294,12 +6587,12 @@ function massnahmeRow(m){
     [['offen','Offen'],['in_arbeit','In Arbeit'],['erledigt','Erledigt'],['zurueckgestellt','Zurückgestellt']].map(([v,l])=>'<option value="'+v+'" '+(m.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += '<div class="field"><label>Verantwortlich</label><input type="text" value="'+escapeHtml(m.verantwortlich)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'verantwortlich\',this.value)"></div>';
+  html += '<div class="field"><label>Verantwortlich</label><input type="text" value="'+escapeHtml(m.verantwortlich)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'verantwortlich\',this.value)"></div>';
   html += '<div class="field"><label>Termin</label><input type="date" value="'+escapeHtml(m.termin)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'termin\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += '<div class="field"><label>Erwarteter Nutzen</label><input type="text" value="'+escapeHtml(m.nutzen)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'nutzen\',this.value)"></div>';
-  html += '<div class="field"><label>Bemerkung</label><input type="text" value="'+escapeHtml(m.bemerkung)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'bemerkung\',this.value)"></div>';
+  html += '<div class="field"><label>Erwarteter Nutzen</label><input type="text" value="'+escapeHtml(m.nutzen)+'" placeholder="z. B. Ausfallrisiko um 50 % reduziert" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'nutzen\',this.value)"></div>';
+  html += '<div class="field"><label>Bemerkung</label><input type="text" value="'+escapeHtml(m.bemerkung)+'" placeholder="Zusätzliche Hinweise" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'bemerkung\',this.value)"></div>';
   html += '</div>';
 
   // v1.6.0 (P14): Aufwand, Risikoherkunft, Entscheidung, Wirksamkeit
@@ -6308,21 +6601,21 @@ function massnahmeRow(m){
   html += '<div class="grid grid-3">';
   html += '<div class="field"><label>Aufwand</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'aufwand\',this.value)">'+
     levelOptionsHtml(m.aufwand, LEVEL_ORDER_NIEDRIG_FIRST)+'</select></div>';
-  html += '<div class="field"><label>Kostenschätzung</label><input type="text" value="'+escapeHtml(m.kostenSchaetzung)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'kostenSchaetzung\',this.value)"></div>';
+  html += '<div class="field"><label>Kostenschätzung</label><input type="text" value="'+escapeHtml(m.kostenSchaetzung)+'" placeholder="z. B. 5.000 €, intern" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'kostenSchaetzung\',this.value)"></div>';
   html += '<div class="field"><label>Entscheidungsbedarf</label><input type="text" placeholder="z. B. Budgetfreigabe erforderlich" value="'+escapeHtml(m.entscheidungsbedarf)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'entscheidungsbedarf\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += '<div class="field"><label>Risiko ohne Maßnahme</label><input type="text" value="'+escapeHtml(m.risikoOhneMassnahme)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'risikoOhneMassnahme\',this.value)"></div>';
-  html += '<div class="field"><label>Risiko nach Maßnahme</label><input type="text" value="'+escapeHtml(m.risikoNachMassnahme)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'risikoNachMassnahme\',this.value)"></div>';
+  html += '<div class="field"><label>Risiko ohne Maßnahme</label><input type="text" value="'+escapeHtml(m.risikoOhneMassnahme)+'" placeholder="z. B. Umsatzverlust 10.000 €/Tag" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'risikoOhneMassnahme\',this.value)"></div>';
+  html += '<div class="field"><label>Risiko nach Maßnahme</label><input type="text" value="'+escapeHtml(m.risikoNachMassnahme)+'" placeholder="z. B. reduziert auf 1.000 €/Tag" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'risikoNachMassnahme\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
-  html += '<div class="field"><label>Genehmiger</label><input type="text" value="'+escapeHtml(m.genehmiger)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'genehmiger\',this.value)"></div>';
+  html += '<div class="field"><label>Genehmiger</label><input type="text" value="'+escapeHtml(m.genehmiger)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'genehmiger\',this.value)"></div>';
   html += '<div class="field"><label>Genehmigt am</label><input type="date" value="'+escapeHtml(m.genehmigtAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'genehmigtAm\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-3">';
   html += '<div class="field"><label>Nachweis</label><input type="text" placeholder="z. B. Protokoll, Testbericht" value="'+escapeHtml(m.nachweis)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'nachweis\',this.value)"></div>';
   html += '<div class="field"><label>Wirksamkeit geprüft am</label><input type="date" value="'+escapeHtml(m.wirksamkeitGeprueftAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitGeprueftAm\',this.value)"></div>';
-  html += '<div class="field"><label>Wirksamkeit — Ergebnis</label><input type="text" value="'+escapeHtml(m.wirksamkeitErgebnis)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitErgebnis\',this.value)"></div>';
+  html += '<div class="field"><label>Wirksamkeit — Ergebnis</label><input type="text" value="'+escapeHtml(m.wirksamkeitErgebnis)+'" placeholder="z. B. Wirksam, Teilweise" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitErgebnis\',this.value)"></div>';
   html += '</div>';
 
   html += massnahmeFindingsHtml(m);
@@ -6495,6 +6788,229 @@ function viewMassnahmenKatalog(){
   return html;
 }
 
+/* ---------------------------------------------------------------------
+   v2.3.0 — PARKPLATZ (offene Punkte, Workshop-Begleiter)
+   --------------------------------------------------------------------- */
+/** Filter-Zustand für die Parkplatz-Ansicht. */
+App.parkplatzFilter = { status:'', prozessId:'' };
+App._sidebarProcsExpanded = false;
+/** Setzt einen Parkplatz-Filter und rendert neu. @param {string} key @param {*} value @returns {void} */
+App.setParkplatzFilter = function(key, value){ App.parkplatzFilter[key] = value; render(); };
+
+/** Öffnet ein Modal zum Anlegen oder Bearbeiten eines Parkplatz-Eintrags. @param {string} [editId] Vorhandene ID zum Bearbeiten. @param {string} [vorauswahl] Vorausgewählte Prozess-ID (z.B. im Workshop). @param {string} [workshopBlock] Vorausgewählter Workshop-Block (v2.3.1). @returns {void} */
+App.openParkplatzForm = function(editId, vorauswahl, workshopBlock){
+  const existing = editId ? STATE.parkplatz.find(p=>p.id===editId) : null;
+  const item = existing || newParkplatzItem({prozessId: vorauswahl||'', workshopBlock: workshopBlock||''});
+  const title = existing ? 'Parkplatz-Eintrag bearbeiten' : 'Neuer Parkplatz-Eintrag';
+  // v2.3.1: Workshop-Block als Dropdown mit Freitext-Option
+  const blockOptions = [''].concat(WORKSHOP_BLOCKS);
+  openModal(
+    '<h3>'+escapeHtml(title)+'</h3>'+
+    '<div class="field"><label for="park-desc">Beschreibung <span class="req">*</span></label>'+
+      '<textarea id="park-desc" rows="4" placeholder="Offener Punkt, Frage, Rückfrage…">'+escapeHtml(item.beschreibung)+'</textarea></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="park-proc">Zugehöriger Prozess</label><select id="park-proc"><option value="">– keiner –</option>'+
+      STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(item.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label for="park-block">Workshop-Block</label><select id="park-block">'+
+      blockOptions.map(b=>'<option value="'+escapeHtml(b)+'" '+(item.workshopBlock===b?'selected':'')+'>'+escapeHtml(b||'Kein Block')+'</option>').join('')+'</select></div>'+
+    '</div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="park-resp">Verantwortlich</label><input type="text" id="park-resp" value="'+escapeHtml(item.verantwortlich)+'" placeholder="Name oder Rolle"></div>'+
+    '<div class="field"><label for="park-date">Termin</label><input type="date" id="park-date" value="'+escapeHtml(item.termin)+'"></div>'+
+    '</div>'+
+    (existing ? '<div class="field"><label for="park-status">Status</label><select id="park-status">'+
+      [['offen','Offen'],['erledigt','Erledigt'],['massnahme','In Maßnahme überführt']].map(([v,l])=>'<option value="'+v+'" '+(item.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label for="park-note">Abschlussnotiz</label><textarea id="park-note" rows="3">'+escapeHtml(item.abschlussNotiz)+'</textarea></div>' : '')+
+    '<div class="modal-actions">'+
+    '<button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.saveParkplatzItem(\''+safeJsString(existing?item.id:'')+'\')">'+(existing?'Speichern':'Anlegen')+'</button>'+
+    '</div>'
+  );
+};
+/** Speichert einen Parkplatz-Eintrag (neu oder Bearbeitung). @param {string} existingId Leer für neuen Eintrag. @returns {void} */
+App.saveParkplatzItem = function(existingId){
+  const desc = document.getElementById('park-desc').value.trim();
+  if(!desc){ toast('Bitte eine Beschreibung eingeben.'); return; }
+  const data = {
+    beschreibung: desc,
+    prozessId: document.getElementById('park-proc').value,
+    workshopBlock: document.getElementById('park-block').value.trim(),
+    verantwortlich: document.getElementById('park-resp').value.trim(),
+    termin: document.getElementById('park-date').value
+  };
+  if(existingId){
+    const item = STATE.parkplatz.find(p=>p.id===existingId);
+    if(item){
+      Object.assign(item, data);
+      const statusEl = document.getElementById('park-status');
+      if(statusEl) item.status = statusEl.value;
+      const noteEl = document.getElementById('park-note');
+      if(noteEl) item.abschlussNotiz = noteEl.value.trim();
+    }
+  } else {
+    STATE.parkplatz.push(newParkplatzItem(data));
+  }
+  closeModal();
+  autosave();
+  render();
+  toast(existingId ? 'Parkplatz-Eintrag aktualisiert.' : 'Parkplatz-Eintrag angelegt.');
+};
+/** Löscht einen Parkplatz-Eintrag nach Bestätigung. @param {string} id @returns {void} */
+App.deleteParkplatzItem = function(id){
+  if(!confirm('Diesen Parkplatz-Eintrag wirklich löschen?')) return;
+  STATE.parkplatz = STATE.parkplatz.filter(p=>p.id!==id);
+  autosave();
+  render();
+  toast('Parkplatz-Eintrag gelöscht.');
+};
+/** v2.3.1: Öffnet einen Bearbeitungsdialog zur Überführung eines Parkplatz-Eintrags in eine Maßnahme. @param {string} id @returns {void} */
+App.parkplatzToMassnahme = function(id){
+  const item = STATE.parkplatz.find(p=>p.id===id);
+  if(!item) return;
+  const titleDefault = item.beschreibung.substring(0, 200);
+  openModal(
+    '<h3>In Maßnahme überführen</h3>'+
+    '<p class="small muted">Der Parkplatz-Eintrag wird als „In Maßnahme überführt" markiert und eine neue Maßnahme angelegt.</p>'+
+    '<div class="field"><label for="p2m-title">Titel der Maßnahme</label><input type="text" id="p2m-title" value="'+escapeHtml(titleDefault)+'" style="width:100%;"></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="p2m-resp">Verantwortlich</label><input type="text" id="p2m-resp" value="'+escapeHtml(item.verantwortlich)+'"></div>'+
+    '<div class="field"><label for="p2m-date">Termin</label><input type="date" id="p2m-date" value="'+escapeHtml(item.termin)+'"></div>'+
+    '</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmParkplatzToMassnahme(\''+safeJsString(id)+'\')">Maßnahme anlegen & Punkt schließen</button></div>'
+  );
+};
+/** v2.3.1: Bestätigt die Überführung mit bearbeiteten Daten. @param {string} id @returns {void} */
+App.confirmParkplatzToMassnahme = function(id){
+  const item = STATE.parkplatz.find(p=>p.id===id);
+  if(!item) return;
+  const titel = document.getElementById('p2m-title').value.trim();
+  if(!titel){ toast('Bitte einen Titel eingeben.'); return; }
+  const m = newMassnahme({
+    titel: titel,
+    prozessId: item.prozessId,
+    verantwortlich: document.getElementById('p2m-resp').value.trim(),
+    termin: document.getElementById('p2m-date').value
+  });
+  STATE.massnahmen.push(m);
+  item.status = 'massnahme';
+  item.abschlussNotiz = 'Überführt in Maßnahme "'+titel+'" am '+new Date().toISOString().split('T')[0]+'.';
+  closeModal();
+  autosave();
+  render();
+  toast('Maßnahme "'+titel+'" angelegt.');
+};
+/** Rendert die View "Parkplatz" (offene Punkte). @returns {string} HTML */
+function viewParkplatz(){
+  const f = App.parkplatzFilter;
+  let list = STATE.parkplatz.slice();
+  if(f.status) list = list.filter(p=>p.status===f.status);
+  if(f.prozessId) list = list.filter(p=>p.prozessId===f.prozessId);
+  // Sortierung: offen zuerst, dann nach Erstelldatum (neueste zuerst)
+  const statusOrder = {offen:0, erledigt:1, massnahme:2};
+  list.sort((a,b)=>(statusOrder[a.status]||0)-(statusOrder[b.status]||0) || (b.erstelltAm||'').localeCompare(a.erstelltAm||''));
+
+  const offen = STATE.parkplatz.filter(p=>p.status==='offen').length;
+  const erledigt = STATE.parkplatz.filter(p=>p.status==='erledigt').length;
+  const alsMassnahme = STATE.parkplatz.filter(p=>p.status==='massnahme').length;
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Parkplatz — offene Punkte</div>'+
+    '<button class="btn btn-sm btn-primary" onclick="App.openParkplatzForm()">+ Neuer Eintrag</button></div>';
+
+  html += '<div class="grid grid-3" style="margin-bottom:12px;">';
+  html += statTile(offen, 'Offen', offen>0?'warn':'ok');
+  html += statTile(erledigt, 'Erledigt', 'ok');
+  html += statTile(alsMassnahme, 'In Maßnahme überführt', 'ok');
+  html += '</div>';
+
+  html += '<div class="grid grid-2" style="margin-bottom:12px;">';
+  html += '<div class="field"><label>Status</label><select onchange="App.setParkplatzFilter(\'status\',this.value)"><option value="">Alle</option>'+
+    [['offen','Offen'],['erledigt','Erledigt'],['massnahme','In Maßnahme überführt']].map(([v,l])=>'<option value="'+v+'" '+(f.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Prozess</label><select onchange="App.setParkplatzFilter(\'prozessId\',this.value)"><option value="">Alle</option>'+
+    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(f.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name)+'</option>').join('')+'</select></div>';
+  html += '</div>';
+
+  if(list.length===0){
+    html += '<div style="text-align:center;padding:32px 20px;">'+
+      '<p class="muted">Keine Parkplatz-Einträge'+(f.status||f.prozessId?' (Filter aktiv)':'')+'.</p>'+
+      '<div style="display:flex;gap:8px;justify-content:center;">'+
+      '<button class="btn btn-primary" onclick="App.openParkplatzForm()">Neuen Punkt erfassen</button>'+
+      '<button class="btn" onclick="App.openWorkshopMode()">Workshop starten</button>'+
+      '</div></div>';
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Beschreibung</th><th>Prozess</th><th>Block</th><th>Verantwortlich</th><th>Termin</th><th>Status</th><th></th></tr></thead><tbody>';
+    list.forEach(item=>{
+      const pBadge = item.status==='offen' ? '<span class="badge b-warn">Offen</span>' : item.status==='erledigt' ? '<span class="badge b-ok">Erledigt</span>' : '<span class="badge b-ok">→ Maßnahme</span>';
+      html += '<tr>';
+      html += '<td><b>'+escapeHtml(item.beschreibung.substring(0,120)+(item.beschreibung.length>120?'…':''))+'</b></td>';
+      html += '<td>'+escapeHtml(item.prozessId ? processName(item.prozessId) : '–')+'</td>';
+      html += '<td>'+escapeHtml(item.workshopBlock||'Allgemein')+'</td>';
+      html += '<td>'+escapeHtml(item.verantwortlich||'–')+'</td>';
+      html += '<td>'+fmtDateOnly(item.termin)+'</td>';
+      html += '<td>'+pBadge+'</td>';
+      html += '<td class="flexrow">'+
+        '<button class="btn btn-sm" onclick="App.openParkplatzForm(\''+safeJsString(item.id)+'\')">Bearbeiten</button>'+
+        (item.status==='offen'?' <button class="btn btn-sm" onclick="App.parkplatzToMassnahme(\''+safeJsString(item.id)+'\')">In Maßnahme umwandeln</button>':'')+
+        ' <button class="btn btn-sm btn-ghost" onclick="App.deleteParkplatzItem(\''+safeJsString(item.id)+'\')">Löschen</button>'+
+        '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/** v2.3.0: Rendert die View "Qualitäts- und Konsistenzprüfung". @returns {string} HTML */
+function viewQualityCheck(){
+  const {quality, consistency} = qualityAndConsistencyCheck();
+  const warnungen = quality.filter(f=>f.severity==='warnung');
+  const hinweise = quality.filter(f=>f.severity==='hinweis');
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Qualitäts- und Konsistenzprüfung</div>'+
+    '<div class="small muted">Prüft Vollständigkeit und Konsistenz der Dokumentation.</div></div>';
+
+  html += '<div class="grid grid-3" style="margin-bottom:16px;">';
+  html += statTile(warnungen.length, 'Warnungen', warnungen.length>0?'bad':'ok');
+  html += statTile(hinweise.length, 'Hinweise', hinweise.length>0?'warn':'ok');
+  html += statTile(consistency.length, 'Konsistenz', consistency.length>0?'bad':'ok');
+  html += '</div>';
+
+  // v2.3.1: Hilfsfunktion für Befund-Zeile mit Direkt-Link
+  function qualityRow(f, isBad){
+    const link = f.processId ? '<button class="btn btn-sm" style="margin-left:6px;white-space:nowrap;" onclick="go(\'process\',\''+safeJsString(f.processId)+'\',\''+(f.tab||'steckbrief')+'\')">Bearbeiten</button>' : '';
+    return '<tr'+(isBad?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(f.rule)+'</b></td><td>'+escapeHtml(f.process)+link+'</td><td>'+escapeHtml(f.text)+'</td></tr>';
+  }
+
+  if(consistency.length>0){
+    html += '<h4 style="margin:16px 0 8px;">Konsistenzbefunde</h4>';
+    html += '<table class="dtable"><thead><tr><th>Regel</th><th>Prozess</th><th>Befund</th></tr></thead><tbody>';
+    consistency.forEach(f=>{ html += qualityRow(f, true); });
+    html += '</tbody></table>';
+  }
+
+  if(warnungen.length>0){
+    html += '<h4 style="margin:16px 0 8px;">Warnungen</h4>';
+    html += '<table class="dtable"><thead><tr><th>Regel</th><th>Prozess</th><th>Befund</th></tr></thead><tbody>';
+    warnungen.forEach(f=>{ html += qualityRow(f, false); });
+    html += '</tbody></table>';
+  }
+
+  if(hinweise.length>0){
+    html += '<h4 style="margin:16px 0 8px;">Hinweise</h4>';
+    html += '<table class="dtable"><thead><tr><th>Regel</th><th>Prozess</th><th>Befund</th></tr></thead><tbody>';
+    hinweise.forEach(f=>{ html += qualityRow(f, false); });
+    html += '</tbody></table>';
+  }
+
+  if(quality.length===0 && consistency.length===0){
+    html += emptyState('Alle Prüfungen bestanden', 'Die dokumentierten Daten sind vollständig und konsistent.');
+  }
+
+  html += '</div>';
+  return html;
+}
+
 /** Rendert die View "Management Summary" (Wrapper um managementSummaryHtml). @returns {string} HTML */
 function viewSummary(){
   return managementSummaryHtml(false);
@@ -6662,6 +7178,20 @@ function managementSummaryHtml(forPrint){
     '</tbody></table>')
   );
 
+  // v2.3.0: Offene Parkplatz-Punkte in der Summary
+  const openParkSummary = STATE.parkplatz.filter(p=>p.status==='offen');
+  if(openParkSummary.length>0){
+    html += wrap(
+      '<h3 class="pp-h3" style="margin-top:0;">Offene Punkte (Parkplatz)</h3>'+
+      '<p class="small muted">'+openParkSummary.length+' offene Punkt'+(openParkSummary.length===1?'':'e')+' aus dem Workshop oder der laufenden Bearbeitung.</p>'+
+      '<table class="dtable"><thead><tr><th>Beschreibung</th><th>Prozess</th><th>Verantwortlich</th><th>Termin</th></tr></thead><tbody>'+
+      openParkSummary.slice(0,10).map(item=>'<tr><td>'+escapeHtml(item.beschreibung.substring(0,100))+'</td><td>'+escapeHtml(item.prozessId?processName(item.prozessId):'–')+'</td>'+
+        '<td>'+escapeHtml(item.verantwortlich||'–')+'</td><td>'+fmtDateOnly(item.termin)+'</td></tr>').join('')+
+      (openParkSummary.length>10 ? '<tr><td colspan="4" class="small muted">… und '+(openParkSummary.length-10)+' weitere</td></tr>' : '')+
+      '</tbody></table>'
+    );
+  }
+
   html += wrap(
     '<h3 class="pp-h3" style="margin-top:0;">Empfohlene nächste Schritte</h3>'+
     '<ul style="margin:0;padding-left:18px;line-height:1.85;">'+
@@ -6669,6 +7199,7 @@ function managementSummaryHtml(forPrint){
     (offeneRisiken>0 ? '<li>'+offeneRisiken+' rote Resilienz-Checks in konkrete Maßnahmen mit Termin und Verantwortlichem überführen.</li>' : '')+
     (cluster.length>0 ? '<li>Abhängigkeit von "'+escapeHtml(cluster[0].name||'zentraler Ressource')+'" durch Alternativen oder redundante Kapazitäten absichern.</li>' : '')+
     (stats.offeneMassnahmen>0 ? '<li>Fortschritt der '+stats.offeneMassnahmen+' offenen Maßnahmen im nächsten BCM-Review nachverfolgen.</li>' : '')+
+    (openParkSummary.length>0 ? '<li>'+openParkSummary.length+' offene Parkplatz-Punkt'+(openParkSummary.length===1?'':'e')+' klären und abarbeiten.</li>' : '')+
     (processes.length<5 ? '<li>Weitere geschäftskritische Prozesse in den Geltungsbereich des Workbooks aufnehmen.</li>' : '')+
     '</ul>'
   );
@@ -6915,7 +7446,7 @@ function viewSettings(){
   html += '<div class="card"><div class="card-title" style="margin-bottom:12px;">Daten & Bedienbarkeit</div>';
   html += '<div class="grid grid-3">';
   html += choiceCard('Beispieldaten laden', 'Demo-Prozess zur Orientierung ergänzen.', 'App.loadSampleData()');
-  html += choiceCard('Export JSON', 'Vollständigen Stand als Datei sichern.', 'App.exportJson()');
+  html += choiceCard('Daten exportieren (JSON)', 'Vollständigen Stand als Datei sichern.', 'App.exportJson()');
   html += choiceCard('Für Weitergabe bereinigen', 'Vor dem Verschicken/Veröffentlichen der Datei: erst sichern, dann lokal bereinigen — oder direkt bereinigen.', 'App.openCleanForHandoff()', {danger:true});
   html += choiceCard('Verschlüsselter Export', 'JSON-Export mit selbst gewähltem Passwort (AES-GCM).', 'App.openExportEncrypted()');
   html += choiceCard('Verschlüsselter Import', 'Passwortgeschützte JSON-Datei entschlüsseln und einlesen.', 'App.openImportEncrypted()');
@@ -7072,23 +7603,61 @@ function renderGfOverlay(){
   mountOverlay(el, 'GF-Ansicht: '+(STATE.meta.kundenname||'Workbook'));
 }
 
-/** Liefert die geführte Fragenfolge des Workshop-Modus für einen Prozess. @param {object} process @returns {{label:string, path:string}[]} */
+/** v2.3.0: Blockbezeichnungen für den erweiterten Workshop-Modus. */
+const WORKSHOP_BLOCKS = ['Prozessvorstellung','Unternehmensbewertung','Mindestfähigkeit','Kritische Ressourcen','Notbetrieb','Ergebnis'];
+
+/** Liefert die geführte Fragenfolge des Workshop-Modus für einen Prozess (v2.3.0: erweitert um Blöcke). @param {object} process @returns {{block:string, label:string, path:string}[]} */
 function workshopQuestions(process){
   const idx = STATE.processes.indexOf(process);
+  const p = 'processes.'+idx+'.';
   return [
-    {label:'Mein Prozess erzeugt folgenden Nutzen:', path:'processes.'+idx+'.sixty.nutzen'},
-    {label:'Im Normalbetrieb läuft der Prozess so:', path:'processes.'+idx+'.sixty.normalbetrieb'},
-    {label:'Kritisch wird der Prozess, weil:', path:'processes.'+idx+'.sixty.kritischWeil'},
-    {label:'Bei Ausfall passiert:', path:'processes.'+idx+'.sixty.beiAusfall'},
-    {label:'Unbedingt benötigt werden:', path:'processes.'+idx+'.sixty.benoetigt'},
-    {label:'Der heutige Notbetrieb sieht so aus:', path:'processes.'+idx+'.sixty.notbetriebHeute'},
-    {label:'Was ist der Auslöser für den Notbetrieb?', path:'processes.'+idx+'.notbetrieb.ausloeser'},
-    {label:'Wer entscheidet über den Notbetrieb?', path:'processes.'+idx+'.notbetrieb.entscheidung'},
-    {label:'Welche Leistung muss im Krisenfall zwingend erbracht werden?', path:'processes.'+idx+'.minfaehigkeit.mindestmenge'},
-    {label:'Welche offenen Lücken gibt es aktuell?', path:'processes.'+idx+'.notbetrieb.luecken'}
+    // Block 1: Prozessvorstellung (60-Sek-Vorstellung)
+    {block:'Prozessvorstellung', label:'Mein Prozess erzeugt folgenden Nutzen:', path:p+'sixty.nutzen'},
+    {block:'Prozessvorstellung', label:'Im Normalbetrieb läuft der Prozess so:', path:p+'sixty.normalbetrieb'},
+    {block:'Prozessvorstellung', label:'Kritisch wird der Prozess, weil:', path:p+'sixty.kritischWeil'},
+    {block:'Prozessvorstellung', label:'Bei Ausfall passiert:', path:p+'sixty.beiAusfall'},
+    {block:'Prozessvorstellung', label:'Unbedingt benötigt werden:', path:p+'sixty.benoetigt'},
+    {block:'Prozessvorstellung', label:'Der heutige Notbetrieb sieht so aus:', path:p+'sixty.notbetriebHeute'},
+    // Block 2: Unternehmensbewertung
+    {block:'Unternehmensbewertung', label:'Wie kritisch ist dieser Prozess aus Unternehmenssicht und warum?', path:p+'steckbrief.bemerkungen'},
+    {block:'Unternehmensbewertung', label:'Was genau passiert, wenn dieser Prozess länger als die MTA ausfällt?', path:p+'steckbrief.ergebnis'},
+    // Block 3: Mindestfähigkeit
+    {block:'Mindestfähigkeit', label:'Welche Leistung muss im Krisenfall zwingend erbracht werden?', path:p+'minfaehigkeit.mindestmenge'},
+    {block:'Mindestfähigkeit', label:'Wer entscheidet über den Umfang des Notbetriebs?', path:p+'minfaehigkeit.entscheidung'},
+    // Block 4: Kritische Ressourcen
+    {block:'Kritische Ressourcen', label:'Welche IT-Systeme, Unterlagen und Arbeitsmittel sind unverzichtbar?', path:p+'notbetrieb.unterlagen'},
+    {block:'Kritische Ressourcen', label:'Welche Kontaktlisten und Erreichbarkeiten müssen offline vorliegen?', path:p+'notbetrieb.kontaktlisten'},
+    // Block 5: Notbetrieb
+    {block:'Notbetrieb', label:'Was ist der Auslöser für den Notbetrieb?', path:p+'notbetrieb.ausloeser'},
+    {block:'Notbetrieb', label:'Wer entscheidet über den Notbetrieb?', path:p+'notbetrieb.entscheidung'},
+    {block:'Notbetrieb', label:'Was ist der erste Schritt im Notbetrieb?', path:p+'notbetrieb.schritt1'},
+    {block:'Notbetrieb', label:'Wer wird informiert und wie?', path:p+'notbetrieb.werInformiert'},
+    {block:'Notbetrieb', label:'Wie erfolgt die Rückkehr in den Normalbetrieb?', path:p+'notbetrieb.rueckkehr'},
+    // Block 6: Ergebnis
+    {block:'Ergebnis', label:'Welche offenen Lücken gibt es aktuell?', path:p+'notbetrieb.luecken'},
+    {block:'Ergebnis', label:'Welche Steuerungsmaßnahmen sind während des Notbetriebs vorgesehen?', path:p+'notbetrieb.steuerung'}
   ];
 }
-/** Baut und zeigt den Workshop-Modus (geführte Fragenfolge, große Schrift). @returns {void} */
+/** v2.3.0: Transiente Moderatoren-Notiz — wird beim Schließen des Tabs gelöscht, NIE in STATE, localStorage, Export oder PDF. */
+App._moderatorNotiz = '';
+App._workshopSteps = {}; // v2.3.1: merkt den letzten Step pro Prozess beim Prozesswechsel
+
+/** v2.3.0: Berechnet den Workshop-Fortschritt je Prozess (wie viele Fragen haben Daten). @param {object} process @returns {number} 0..1 */
+function workshopProcessProgress(process){
+  const qs = workshopQuestions(process);
+  const filled = qs.filter(q=>String(getPath(STATE, q.path)||'').trim()!=='').length;
+  return qs.length>0 ? filled/qs.length : 0;
+}
+/** v2.3.0: Ermittelt den aktuellen Blocknamen für den gegebenen Schritt. @param {{block:string}[]} questions @param {number} step @returns {string} */
+function workshopCurrentBlock(questions, step){
+  return questions[step] ? questions[step].block : '';
+}
+/** v2.3.0: Ermittelt den Index der ersten Frage eines Blocks. @param {{block:string}[]} questions @param {string} blockName @returns {number} */
+function workshopBlockStart(questions, blockName){
+  return questions.findIndex(q=>q.block===blockName);
+}
+
+/** Baut und zeigt den Workshop-Modus (geführte Fragenfolge, große Schrift — v2.3.0: Blöcke, Fortschritt, Parkplatz, Moderatoren-Notiz). @returns {void} */
 function renderWorkshopOverlay(){
   const old = document.getElementById('overlay-root'); if(old) old.remove();
   const el = document.createElement('div');
@@ -7098,29 +7667,69 @@ function renderWorkshopOverlay(){
   const questions = workshopQuestions(process);
   const q = questions[App.workshopStep];
   const currentValue = getPath(STATE, q.path) || '';
+  const currentBlock = workshopCurrentBlock(questions, App.workshopStep);
+  const procIdx = STATE.processes.indexOf(process);
+  const totalProcs = STATE.processes.length;
+  const openParkplatz = STATE.parkplatz.filter(p=>p.status==='offen').length;
 
-  let html = '<div class="gf-header">';
-  html += '<select aria-label="Prozess für den Workshop wählen" onchange="App.workshopProcessId=this.value;App.workshopStep=0;renderWorkshopOverlay()" style="max-width:280px;">'+
-    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(p.id===App.workshopProcessId?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select>';
+  // --- Header mit Cockpit ---
+  let html = '<div class="gf-header" style="flex-wrap:wrap;gap:8px;">';
+  html += '<div style="display:flex;align-items:center;gap:10px;">';
+  html += '<select aria-label="Prozess für den Workshop wählen" onchange="App._workshopSteps[App.workshopProcessId]=App.workshopStep;App.workshopProcessId=this.value;App.workshopStep=App._workshopSteps[this.value]||0;renderWorkshopOverlay()" style="max-width:260px;">';
+  STATE.processes.forEach((p,i)=>{
+    const prog = workshopProcessProgress(p);
+    const marker = prog>=0.8 ? '● ' : prog>0 ? '○ ' : '  ';
+    html += '<option value="'+escapeHtml(p.id)+'" '+(p.id===App.workshopProcessId?'selected':'')+'>'+escapeHtml(marker+(p.steckbrief.name||'Unbenannt'))+'</option>';
+  });
+  html += '</select>';
+  html += '<span class="small muted" style="white-space:nowrap;">Prozess '+(procIdx+1)+' von '+totalProcs+'</span>';
+  html += '</div>';
+  html += '<div style="display:flex;align-items:center;gap:8px;">';
+  html += '<button class="btn btn-sm" onclick="App.openWorkshopParkplatz()" title="Offenen Punkt auf den Parkplatz setzen">+ Parkplatz'+(openParkplatz>0?' ('+openParkplatz+')':'')+'</button>';
+  html += '<button class="btn btn-sm" onclick="App.openModeratorNotiz()" title="Persönliche Sitzungsnotiz – wird beim Schließen gelöscht">✎ Notiz</button>';
   html += '<button class="btn" onclick="App.closeOverlay()">Schließen ✕</button>';
   html += '</div>';
+  html += '</div>';
 
+  // --- Block-Navigation (Tabs) ---
+  html += '<div style="display:flex;gap:4px;padding:6px 32px;background:var(--sidebar-bg);overflow-x:auto;">';
+  WORKSHOP_BLOCKS.forEach(bName=>{
+    const isActive = currentBlock===bName;
+    const blockQs = questions.filter(bq=>bq.block===bName);
+    const filled = blockQs.filter(bq=>String(getPath(STATE, bq.path)||'').trim()!=='').length;
+    const done = filled===blockQs.length && blockQs.length>0;
+    html += '<button class="btn btn-sm'+(isActive?' btn-primary':'')+'" style="white-space:nowrap;font-size:12px;'+(done&&!isActive?'background:var(--ok-bg);color:var(--ok);border-color:var(--ok);':'')+'" '+
+      'onclick="App.workshopGoBlock(\''+safeJsString(bName)+'\')">'+
+      (done?'✓ ':'')+escapeHtml(bName)+'</button>';
+  });
+  html += '</div>';
+
+  // --- Stage ---
+  // v2.3.1: Block-Fortschritt in der Fortschrittsanzeige
+  const blockQsStage = questions.filter(bq=>bq.block===currentBlock);
+  const blockIdxStage = blockQsStage.indexOf(q)+1;
   html += '<div class="workshop-stage">';
-  html += '<div class="workshop-progress">Frage '+(App.workshopStep+1)+' von '+questions.length+' · '+escapeHtml(process.steckbrief.name||'Prozess')+'</div>';
-  // v2.2.0 (Barrierefreiheit): Die Frage ist der Name des Antwortfeldes. Ohne
-  // diese Verknüpfung landet der Fokus in einem Feld, das lediglich als
-  // "Textbereich" angekündigt wird — die eigentliche Frage bliebe ungehört.
+  html += '<div class="workshop-progress">'+escapeHtml(currentBlock)+' '+blockIdxStage+'/'+blockQsStage.length+' · Frage '+(App.workshopStep+1)+'/'+questions.length+' · '+escapeHtml(process.steckbrief.name||'Prozess')+'</div>';
+  // v2.2.0 (Barrierefreiheit): Die Frage ist der Name des Antwortfeldes.
   html += '<div class="workshop-q" id="workshop-question">'+escapeHtml(q.label)+'</div>';
-  html += '<textarea class="workshop-answer" id="workshop-input" aria-labelledby="workshop-question" placeholder="Antwort der Teilnehmer…">'+escapeHtml(currentValue)+'</textarea>';
+  html += '<textarea class="workshop-answer" id="workshop-input" aria-labelledby="workshop-question" placeholder="Gemeinsame Antwort erfassen…">'+escapeHtml(currentValue)+'</textarea>';
   html += '<div class="workshop-nav">';
   html += '<button class="btn" '+(App.workshopStep===0?'disabled':'')+' onclick="App.workshopPrev()">← Zurück</button>';
-  html += '<button class="btn btn-primary" onclick="App.workshopNext()">'+(App.workshopStep===questions.length-1?'Abschließen':'Weiter →')+'</button>';
-  html += '</div></div>';
+  if(App.workshopStep===questions.length-1){
+    // Letzter Schritt: "Nächster Prozess" oder "Abschluss-Check"
+    if(procIdx < totalProcs-1){
+      html += '<button class="btn btn-primary" onclick="App.workshopNextProcess()">Nächster Prozess →</button>';
+    } else {
+      html += '<button class="btn btn-primary" onclick="App.workshopFinish()">Abschluss-Check →</button>';
+    }
+  } else {
+    html += '<button class="btn btn-primary" onclick="App.workshopNext()">Weiter →</button>';
+  }
+  html += '</div>';
+  html += '<div class="small muted" style="text-align:center;margin-top:16px;opacity:.5;">Tab ↹ zum Textfeld · Strg+K Schnellzugriff</div>';
+  html += '</div>';
   el.innerHTML = html;
   mountOverlay(el, 'Workshop-Modus');
-  // Der Fokus gehört hier in das Antwortfeld, nicht auf das Overlay: der
-  // Workshop-Modus ist eine reine Eingabeansicht, die pro Frage neu aufgebaut
-  // wird — sonst müsste man sich bei jeder Frage erneut hineinnavigieren.
   document.getElementById('workshop-input').focus();
 }
 /** Speichert die aktuelle Workshop-Antwort im zugehörigen STATE-Feld. @returns {void} */
@@ -7132,27 +7741,209 @@ App.workshopSaveCurrent = function(){
   setPath(STATE, q.path, val);
   autosave();
 };
-/** Speichert die aktuelle Antwort und geht zur nächsten Workshop-Frage (oder schließt bei der letzten Frage ab). @returns {void} */
+/** Speichert die aktuelle Antwort und geht zur nächsten Workshop-Frage. @returns {void} */
 App.workshopNext = function(){
   App.workshopSaveCurrent();
   const process = getProcess(App.workshopProcessId);
   const questions = workshopQuestions(process);
   if(App.workshopStep < questions.length-1){ App.workshopStep++; renderWorkshopOverlay(); }
-  else { App.closeOverlay(); render(); toast('Workshop-Runde abgeschlossen und gespeichert.'); }
 };
 /** Speichert die aktuelle Antwort und geht zur vorherigen Workshop-Frage zurück. @returns {void} */
 App.workshopPrev = function(){
   App.workshopSaveCurrent();
   if(App.workshopStep>0){ App.workshopStep--; renderWorkshopOverlay(); }
 };
+/** v2.3.0: Springt zum ersten Schritt eines bestimmten Blocks. @param {string} blockName @returns {void} */
+App.workshopGoBlock = function(blockName){
+  App.workshopSaveCurrent();
+  const process = getProcess(App.workshopProcessId);
+  const questions = workshopQuestions(process);
+  const idx = workshopBlockStart(questions, blockName);
+  if(idx>=0){ App.workshopStep = idx; renderWorkshopOverlay(); toast('Block: '+blockName); }
+};
+/** v2.3.0: Wechselt zum nächsten Prozess. @returns {void} */
+App.workshopNextProcess = function(){
+  App.workshopSaveCurrent();
+  const currentIdx = STATE.processes.findIndex(p=>p.id===App.workshopProcessId);
+  if(currentIdx < STATE.processes.length-1){
+    App.workshopProcessId = STATE.processes[currentIdx+1].id;
+    App.workshopStep = 0;
+    renderWorkshopOverlay();
+    toast('Nächster Prozess: '+STATE.processes[currentIdx+1].steckbrief.name);
+  }
+};
+/** v2.3.0: Schließt den Workshop und zeigt den Abschluss-Check. @returns {void} */
+App.workshopFinish = function(){
+  App.workshopSaveCurrent();
+  renderWorkshopAbschluss();
+};
+/** v2.3.0: Öffnet das Parkplatz-Formular aus dem Workshop heraus (v2.3.1: Block wird auto-gefüllt). @returns {void} */
+App.openWorkshopParkplatz = function(){
+  App.workshopSaveCurrent();
+  const process = getProcess(App.workshopProcessId);
+  const questions = workshopQuestions(process);
+  const block = workshopCurrentBlock(questions, App.workshopStep);
+  App.openParkplatzForm('', App.workshopProcessId, block);
+};
+/** v2.3.0: Öffnet die transiente Moderatoren-Notiz. @returns {void} */
+App.openModeratorNotiz = function(){
+  openModal(
+    '<h3>Persönliche Sitzungsnotiz</h3>'+
+    '<p class="small muted" style="margin-bottom:8px;">Nur für diese Sitzung — wird nicht gespeichert oder exportiert.</p>'+
+    '<textarea id="mod-notiz" rows="8" style="width:100%;font-size:14px;" placeholder="Notiz für diese Sitzung…">'+escapeHtml(App._moderatorNotiz)+'</textarea>'+
+    '<div class="modal-actions">'+
+    '<button class="btn" onclick="App.moderatorNotizToParkplatz()" title="Notiz als Parkplatz-Eintrag sichern">Zum Parkplatz hinzufügen</button>'+
+    '<button class="btn btn-primary" onclick="App._moderatorNotiz=document.getElementById(\'mod-notiz\').value;closeModal();">Schließen</button></div>'
+  );
+};
+/** v2.3.1: Überträgt den Inhalt der Moderatoren-Notiz als Parkplatz-Eintrag. @returns {void} */
+App.moderatorNotizToParkplatz = function(){
+  const text = document.getElementById('mod-notiz').value.trim();
+  if(!text){ toast('Notiz ist leer.'); return; }
+  App._moderatorNotiz = text;
+  const item = newParkplatzItem({beschreibung: text.substring(0,500), prozessId: App.workshopProcessId||'', workshopBlock:'Moderatoren-Notiz'});
+  STATE.parkplatz.push(item);
+  autosave();
+  toast('Notiz als Parkplatz-Eintrag gesichert.');
+  closeModal();
+};
 
+/* ---------------------------------------------------------------------
+   v2.3.0 — WORKSHOP-ABSCHLUSS-CHECK
+   Letzte Station des Workshop-Modus: fasst zusammen, was dokumentiert
+   wurde, zeigt offene Punkte und bietet an, eine Version zu sichern.
+   --------------------------------------------------------------------- */
+/** v2.3.0: Rendert den Workshop-Abschluss-Check als Overlay. @returns {void} */
+function renderWorkshopAbschluss(){
+  const old = document.getElementById('overlay-root'); if(old) old.remove();
+  const el = document.createElement('div');
+  el.id = 'overlay-root';
+  el.className = 'gf-overlay';
+  const openPark = STATE.parkplatz.filter(p=>p.status==='offen');
+  const {quality, consistency} = qualityAndConsistencyCheck();
+
+  let html = '<div class="gf-header"><div><div class="kicker">Workshop-Abschluss</div>'+
+    '<h1 style="font-size:22px;">'+escapeHtml(STATE.meta.kundenname||'Workbook')+' · Ergebnisübersicht</h1></div>'+
+    '<button class="btn" onclick="App.closeOverlay()">Schließen ✕</button></div>';
+  html += '<div style="max-width:980px;margin:0 auto;padding:26px 32px 60px;">';
+
+  // Prozessfortschritt
+  html += '<h3>Bearbeitungsstand je Prozess</h3>';
+  if(STATE.processes.length===0){
+    html += '<div class="small muted">Keine Prozesse erfasst.</div>';
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Prozess</th><th>Workshop-Fragen</th><th>Gesamtdokumentation</th><th>Kritikalität</th></tr></thead><tbody>';
+    STATE.processes.forEach(p=>{
+      const wProg = workshopProcessProgress(p);
+      const gProg = processProgress(p).overall;
+      html += '<tr>';
+      html += '<td><b>'+escapeHtml(p.steckbrief.name||'–')+'</b></td>';
+      html += '<td><div class="rail" style="height:8px;display:inline-block;width:100px;vertical-align:middle;"><span style="width:'+Math.round(wProg*100)+'%;background:'+(wProg>=.8?'var(--ok)':wProg>=.4?'var(--warn)':'var(--bad)')+'"></span></div> '+Math.round(wProg*100)+'%</td>';
+      html += '<td><div class="rail" style="height:8px;display:inline-block;width:100px;vertical-align:middle;"><span style="width:'+Math.round(gProg*100)+'%;background:'+(gProg>=.8?'var(--ok)':gProg>=.4?'var(--warn)':'var(--bad)')+'"></span></div> '+Math.round(gProg*100)+'%</td>';
+      html += '<td>'+kritikalitaetBadge(p.steckbrief.kritikalitaet)+'</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  // Offene Parkplatz-Punkte
+  html += '<h3 style="margin-top:24px;">Offene Parkplatz-Punkte ('+openPark.length+')</h3>';
+  if(openPark.length===0){
+    html += '<div class="small muted" style="color:var(--ok);">Alle Parkplatz-Punkte erledigt oder überführt.</div>';
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Beschreibung</th><th>Prozess</th><th>Verantwortlich</th><th>Termin</th></tr></thead><tbody>';
+    openPark.forEach(item=>{
+      html += '<tr><td>'+escapeHtml(item.beschreibung.substring(0,120))+'</td><td>'+escapeHtml(item.prozessId ? processName(item.prozessId):'–')+'</td>'+
+        '<td>'+escapeHtml(item.verantwortlich||'–')+'</td><td>'+fmtDateOnly(item.termin)+'</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  // Qualitäts-Zusammenfassung
+  const warnungen = quality.filter(f=>f.severity==='warnung').length;
+  const konsistenz = consistency.length;
+  html += '<h3 style="margin-top:24px;">Qualitätsprüfung</h3>';
+  html += '<div class="grid grid-3" style="margin-bottom:12px;">';
+  html += statTile(warnungen, 'Warnungen', warnungen>0?'bad':'ok');
+  html += statTile(quality.filter(f=>f.severity==='hinweis').length, 'Hinweise', 'warn');
+  html += statTile(konsistenz, 'Konsistenzbefunde', konsistenz>0?'bad':'ok');
+  html += '</div>';
+  if(warnungen+konsistenz>0){
+    html += '<div class="small muted">Details finden Sie in der <a href="#" onclick="App.closeOverlay();go(\'quality\');return false;">Qualitätsprüfung</a>.</div>';
+  }
+
+  // Aktionen
+  html += '<div class="hr" style="margin:24px 0;"></div>';
+  html += '<div class="flexrow" style="gap:10px;">';
+  html += '<button class="btn btn-primary" onclick="App.closeOverlay();App.openSaveVersion();">Version speichern</button>';
+  html += '<button class="btn" onclick="App.closeOverlay();go(\'parkplatz\');">Parkplatz öffnen</button>';
+  html += '<button class="btn" onclick="App.closeOverlay();App.openPdfModal();">PDF erzeugen</button>';
+  html += '<button class="btn btn-ghost" onclick="App.closeOverlay();">Schließen</button>';
+  html += '</div>';
+
+  html += '</div>';
+  el.innerHTML = html;
+  mountOverlay(el, 'Workshop-Abschluss');
+}
+
+/* ---------------------------------------------------------------------
+   v2.3.0 — PRIORISIERUNGSANSICHT (beamertauglich)
+   Für Workshops: alle Prozesse in einer großen, nach BIA-Score sortierten
+   Übersicht, als Overlay zum Projizieren.
+   --------------------------------------------------------------------- */
+/** v2.3.0: Öffnet die Priorisierungsansicht als Overlay. @returns {void} */
+App.openPrioView = function(){
+  const old = document.getElementById('overlay-root'); if(old) old.remove();
+  const el = document.createElement('div');
+  el.id = 'overlay-root';
+  el.className = 'gf-overlay';
+  const sorted = STATE.processes.slice().sort((a,b)=>biaScore(b).avg-biaScore(a).avg);
+
+  let html = '<div class="gf-header"><div><div class="kicker">Priorisierung</div><h1 style="font-size:22px;">'+
+    escapeHtml(STATE.meta.kundenname||'Workbook')+' · Prozessprioritäten</h1></div>'+
+    '<button class="btn" onclick="App.closeOverlay()">Schließen ✕</button></div>';
+  html += '<div style="max-width:1100px;margin:0 auto;padding:26px 32px 60px;">';
+
+  // Statistik-Zeile
+  const krit = sorted.filter(p=>isProcessKritisch(p)).length;
+  html += '<div class="grid grid-3" style="margin-bottom:20px;">';
+  html += statTile(sorted.length, 'Prozesse gesamt', 'ok');
+  html += statTile(krit, 'Kritisch', krit>0?'bad':'ok');
+  html += statTile(sorted.length-krit, 'Nicht kritisch', 'ok');
+  html += '</div>';
+
+  // v2.3.1: Priorisierungstabelle — größere Schrift für Beamer, weniger Spalten, Aktionsbuttons
+  if(sorted.length===0){
+    html += '<div class="small muted">Keine Prozesse vorhanden.</div>';
+  } else {
+    html += '<table class="dtable" style="font-size:18px;"><thead><tr><th style="width:40px;">#</th><th>Prozess</th><th>Kritikalität</th><th>BIA-Score</th><th>Fortschritt</th><th></th></tr></thead><tbody>';
+    sorted.forEach((p, idx)=>{
+      const score = biaScore(p);
+      const prog = processProgress(p).overall;
+      const crit = isProcessKritisch(p);
+      html += '<tr'+(crit?' style="background:var(--bad-bg);border-left:4px solid var(--bad);"':'')+'>';
+      html += '<td><b>'+(idx+1)+'</b></td>';
+      html += '<td><b>'+escapeHtml(p.steckbrief.name||'(unbenannt)')+'</b><br><span class="small muted">'+escapeHtml(p.steckbrief.fachbereich||'–')+'</span></td>';
+      html += '<td>'+kritikalitaetBadge(p.steckbrief.kritikalitaet)+'</td>';
+      html += '<td style="font-weight:700;">'+score.avg.toFixed(1)+'</td>';
+      html += '<td><div class="rail" style="height:10px;"><span style="width:'+Math.round(prog*100)+'%;background:'+(prog>=.8?'var(--ok)':prog>=.4?'var(--warn)':'var(--bad)')+'"></span></div> '+Math.round(prog*100)+'%</td>';
+      html += '<td><button class="btn btn-sm" onclick="App.closeOverlay();go(\'process\',\''+safeJsString(p.id)+'\',\'steckbrief\')" style="font-size:13px;">Öffnen</button></td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  html += '</div>';
+  el.innerHTML = html;
+  mountOverlay(el, 'Priorisierungsansicht');
+};
 
 /** Öffnet den Dialog "PDF erzeugen" mit der Auswahl des Berichtsumfangs. @returns {void} */
 App.openPdfModal = function(){
   openModal(
     '<h3>PDF erzeugen</h3>'+
     '<div class="field"><label for="pdf-scope">Umfang</label><select id="pdf-scope">'+
-      '<option value="kurz">Kurzbericht (nur Management Summary)</option>'+
+      '<option value="kurz">Kurzbericht — Management Summary (empfohlen nach Workshop)</option>'+
       '<option value="vollstaendig" selected>Vollständiges Workbook</option>'+
       '<option value="massnahmen">Nur Maßnahmenplan</option>'+
       '<option value="einzelprozess">Nur einzelner Prozess</option>'+
@@ -7160,9 +7951,7 @@ App.openPdfModal = function(){
     '<div class="field" id="pdf-process-field" style="display:none;"><label for="pdf-process">Prozess</label><select id="pdf-process">'+
       STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'">'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+
     '</select></div>'+
-    '<p class="small muted">Es öffnet sich der Druckdialog Ihres Browsers. Dort können Sie „Als PDF speichern" wählen. '+
-      'Mehrteilige Berichte erhalten ein Inhaltsverzeichnis; jeder Abschnitt ist in der Fußzeile mit „Abschnitt X von Y" gekennzeichnet. '+
-      'Blattzahlen ergänzt der Druckdialog auf Wunsch über „Kopf- und Fußzeilen".</p>'+
+    '<p class="small muted">Es öffnet sich der Druckdialog — wählen Sie dort „Als PDF speichern".</p>'+
     '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
     '<button class="btn btn-primary" onclick="App.generatePdf()">PDF erzeugen</button></div>'
   );
@@ -7866,7 +8655,7 @@ function runSelfTests(){
         {id:'stC', steckbrief:{name:'C', ziel:'z', mtaWert:'12', verantwortlicher:'V', fachbereich:'F', kritikalitaet:'hoch'},
          dependencies:[]}
       ],
-      resources: [], massnahmen: [], versions: []
+      resources: [], massnahmen: [], parkplatz: [], versions: []
     };
   }
   /** Testhilfe: führt fn() mit einem synthetischen STATE aus und stellt den echten STATE danach IMMER wieder her. @param {object} syntheticState @param {function} fn @returns {*} */
@@ -8162,6 +8951,86 @@ function runSelfTests(){
     assertTrue(probe.querySelectorAll('[onclick]').length===2, 'Klickverhalten darf dabei nicht verloren gehen');
   });
 
+  /* ---- 19) v2.3.0 — Schema-Migration v11→v12 und Parkplatz ---- */
+  test('Schema-Migration v11→v12: parkplatz wird erzeugt, bestehende Daten bleiben erhalten', true, ()=>{
+    const v11 = {schemaVersion:11, meta:{kundenname:'Test'}, processes:[{id:'p1',steckbrief:{name:'X'}}], resources:[], massnahmen:[], versions:[]};
+    const r = migrateV11ToV12(v11);
+    assertEqual(r.data.schemaVersion, 12);
+    assertTrue(Array.isArray(r.data.parkplatz), 'parkplatz muss ein Array sein');
+    assertEqual(r.data.parkplatz.length, 0, 'parkplatz muss leer sein');
+    assertEqual(r.data.processes.length, 1, 'Prozesse müssen erhalten bleiben');
+    assertEqual(r.data.meta.kundenname, 'Test', 'Meta-Daten müssen erhalten bleiben');
+  });
+  test('Schema-Migration v1→v12: vollständige Durchmigration bis CURRENT_SCHEMA_VERSION', true, ()=>{
+    const r = migrateWorkbook({schemaVersion:1, processes:[], resources:[], massnahmen:[], versions:[]});
+    assertTrue(r.ok===true && r.toVersion===CURRENT_SCHEMA_VERSION, 'Migration sollte vollständig bis '+CURRENT_SCHEMA_VERSION+' laufen', r);
+    assertTrue(Array.isArray(r.data.parkplatz), 'parkplatz muss nach vollständiger Migration vorhanden sein');
+  });
+  test('newParkplatzItem: erzeugt Objekt mit allen erforderlichen Feldern', true, ()=>{
+    const item = newParkplatzItem();
+    const expectedKeys = ['id','beschreibung','prozessId','workshopBlock','verantwortlich','termin','status','erstelltAm','abschlussNotiz'];
+    assertEqual(Object.keys(item).sort(), expectedKeys.sort(), 'Feldliste weicht ab');
+    assertEqual(item.status, 'offen');
+    assertTrue(item.id.startsWith('park_'), 'ID-Präfix fehlt');
+  });
+  test('Import erhält ALLE in newParkplatzItem() definierten Parkplatz-Felder (generisch)', true, ()=>{
+    const fixture = chainFixture();
+    fixture.parkplatz = [newParkplatzItem({beschreibung:'Testpunkt', prozessId:'stA'})];
+    const r = validateImportData(fixture);
+    assertTrue(r.valid===true, 'Fixture sollte valide sein', r.errors);
+    assertEqual(r.normalizedData.parkplatz.length, 1, 'ein Parkplatz-Eintrag erwartet');
+    assertEqual(Object.keys(r.normalizedData.parkplatz[0]).sort(), Object.keys(newParkplatzItem()).sort(),
+      'Feldliste nach dem Import weicht von newParkplatzItem() ab');
+    assertEqual(r.normalizedData.parkplatz[0].beschreibung, 'Testpunkt');
+    assertEqual(r.normalizedData.parkplatz[0].prozessId, 'stA', 'Prozessbezug muss erhalten bleiben');
+  });
+  test('Import: parkplatz mit ungültigem Prozessbezug wird bereinigt', true, ()=>{
+    const fixture = chainFixture();
+    fixture.parkplatz = [newParkplatzItem({beschreibung:'Test', prozessId:'NICHT_VORHANDEN'})];
+    const r = validateImportData(fixture);
+    assertTrue(r.valid===true, 'Fixture sollte valide sein');
+    assertEqual(r.normalizedData.parkplatz[0].prozessId, '', 'ungültiger Prozessbezug muss entfernt werden');
+  });
+  test('Import: parkplatz ohne Array wird als leer behandelt', true, ()=>{
+    const fixture = chainFixture();
+    delete fixture.parkplatz;
+    const r = validateImportData(fixture);
+    assertTrue(r.valid===true, 'Import ohne parkplatz sollte valide sein');
+    assertTrue(Array.isArray(r.normalizedData.parkplatz), 'parkplatz muss nach Import ein Array sein');
+  });
+  test('defaultState: enthält parkplatz als leeres Array', true, ()=>{
+    const ds = defaultState();
+    assertTrue(Array.isArray(ds.parkplatz), 'defaultState().parkplatz fehlt');
+    assertEqual(ds.parkplatz.length, 0);
+  });
+
+  // v2.3.1: Tests für dashboardStats, qualityAndConsistencyCheck, statTile
+  test('dashboardStats: offeneParkplatz wird korrekt gezählt', false, ()=>{
+    const origPark = STATE.parkplatz;
+    STATE.parkplatz = [newParkplatzItem({status:'offen'}), newParkplatzItem({status:'erledigt'}), newParkplatzItem({status:'offen'})];
+    const stats = dashboardStats();
+    assertEqual(stats.offeneParkplatz, 2, 'Nur offene Parkplatz-Punkte zählen');
+    STATE.parkplatz = origPark;
+  });
+  test('statTile: klickbare Variante erzeugt button-Element', false, ()=>{
+    const html = statTile(5, 'Test', 'ok', "go('dashboard')");
+    assertTrue(html.includes('<button'), 'Klickbare Tile muss ein button sein');
+    assertTrue(html.includes('stat-tile-link'), 'Klickbare Tile muss stat-tile-link Klasse haben');
+  });
+  test('qualityAndConsistencyCheck: processId wird mitgeliefert', false, ()=>{
+    const origProcs = STATE.processes;
+    const p = newProcess('QualTestProz');
+    STATE.processes = [p];
+    const {quality} = qualityAndConsistencyCheck();
+    const withId = quality.filter(f=>f.processId===p.id);
+    assertTrue(withId.length>0, 'mindestens ein Finding sollte processId haben');
+    STATE.processes = origProcs;
+  });
+  test('WORKSHOP_BLOCKS: enthält 6 definierte Blöcke', false, ()=>{
+    assertEqual(WORKSHOP_BLOCKS.length, 6, 'Erwarte 6 Workshop-Blöcke');
+    assertTrue(WORKSHOP_BLOCKS.includes('Notbetrieb'), 'Notbetrieb-Block muss vorhanden sein');
+  });
+
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{
     const total = results.length;
     const passed = results.filter(r=>r.passed).length;
@@ -8172,11 +9041,80 @@ function runSelfTests(){
 }
 
 
+/* v2.3.1: Command-Palette — Strg+K öffnet eine schnelle Suche über alle Funktionen */
+function openCommandPalette(){
+  const existing = document.getElementById('cmd-palette'); if(existing) existing.remove();
+  const actions = [
+    {ic:'⌂', label:'Dashboard', action:()=>go('dashboard')},
+    {ic:'+', label:'Neue Prozessakte anlegen', action:()=>App.addProcess()},
+    {ic:'▶', label:'Workshop starten', action:()=>App.openWorkshopMode()},
+    {ic:'◆', label:'Management Summary', action:()=>go('summary')},
+    {ic:'✓', label:'Maßnahmenkatalog', action:()=>go('massnahmen')},
+    {ic:'☐', label:'Parkplatz (offene Punkte)', action:()=>go('parkplatz')},
+    {ic:'◎', label:'Qualitätsprüfung', action:()=>go('quality')},
+    {ic:'▼', label:'Priorisierungsansicht', action:()=>App.openPrioView()},
+    {ic:'GF', label:'Managementbericht (GF-Ansicht)', action:()=>App.openGfMode()},
+    {ic:'▦', label:'Abhängigkeitscluster', action:()=>go('cluster')},
+    {ic:'↻', label:'Versionshistorie', action:()=>go('versions')},
+    {ic:'⚙', label:'Einstellungen', action:()=>go('settings')},
+    {ic:'PDF', label:'PDF erzeugen', action:()=>App.openPdfModal()},
+    {ic:'↓', label:'Daten exportieren (JSON)', action:()=>App.exportJSON()},
+    {ic:'↑', label:'Daten importieren', action:()=>App.openImport()}
+  ];
+  // Dynamisch: Prozesse als Aktionen
+  STATE.processes.forEach(p=>{
+    actions.push({ic:'→', label:p.steckbrief.name||'Unbenannter Prozess', hint:'Prozessakte', action:()=>go('process',p.id,'steckbrief')});
+  });
+
+  const backdrop = document.createElement('div');
+  backdrop.id = 'cmd-palette'; backdrop.className = 'cmd-backdrop';
+  backdrop.onclick = function(e){ if(e.target===backdrop) backdrop.remove(); };
+  const box = document.createElement('div'); box.className = 'cmd-box';
+  const input = document.createElement('input'); input.className = 'cmd-input'; input.placeholder = 'Aktion suchen… (Esc zum Schließen)';
+  const list = document.createElement('div'); list.className = 'cmd-list';
+  box.appendChild(input); box.appendChild(list); backdrop.appendChild(box); document.body.appendChild(backdrop);
+
+  let activeIdx = 0;
+  function renderList(filter){
+    const q = (filter||'').toLowerCase();
+    const filtered = q ? actions.filter(a=>(a.label+' '+(a.hint||'')).toLowerCase().includes(q)) : actions;
+    if(activeIdx>=filtered.length) activeIdx = 0;
+    list.innerHTML = filtered.map((a,i)=>
+      '<div class="cmd-item'+(i===activeIdx?' active':'')+'" data-idx="'+i+'">'+
+      '<span class="cmd-ic">'+escapeHtml(a.ic)+'</span>'+
+      '<span class="cmd-label">'+escapeHtml(a.label)+'</span>'+
+      (a.hint?'<span class="cmd-hint">'+escapeHtml(a.hint)+'</span>':'')+
+      '</div>').join('');
+    list.querySelectorAll('.cmd-item').forEach((el,i)=>{
+      el.onmouseenter = function(){ activeIdx=i; renderList(input.value); };
+      el.onclick = function(){ if(filtered[i]){ backdrop.remove(); filtered[i].action(); } };
+    });
+    return filtered;
+  }
+  renderList('');
+  input.addEventListener('input', function(){ activeIdx=0; renderList(this.value); });
+  input.addEventListener('keydown', function(e){
+    const q = this.value.toLowerCase();
+    const filtered = q ? actions.filter(a=>(a.label+' '+(a.hint||'')).toLowerCase().includes(q)) : actions;
+    if(e.key==='ArrowDown'){ e.preventDefault(); activeIdx=Math.min(activeIdx+1, filtered.length-1); renderList(this.value); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); activeIdx=Math.max(activeIdx-1, 0); renderList(this.value); }
+    else if(e.key==='Enter'){ e.preventDefault(); if(filtered[activeIdx]){ backdrop.remove(); filtered[activeIdx].action(); } }
+    else if(e.key==='Escape'){ backdrop.remove(); }
+  });
+  input.focus();
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   // v1.6.0 (P18): versteckter Entwicklermodus — Strg+Alt+T öffnet die
   // integrierte Selbstprüfung. Bewusst nicht in der normalen Oberfläche
   // verlinkt (kein Button, kein Menüpunkt).
   document.addEventListener('keydown', function(e){
+    // v2.3.1: Command-Palette
+    if((e.ctrlKey||e.metaKey) && (e.key==='k' || e.key==='K')){
+      e.preventDefault();
+      openCommandPalette();
+      return;
+    }
     if(e.ctrlKey && e.altKey && (e.key==='t' || e.key==='T')){
       e.preventDefault();
       App.openSelfTestPanel();
