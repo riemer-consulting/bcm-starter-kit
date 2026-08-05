@@ -5,13 +5,48 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] — Correctness, Security & Accessibility
+
+### Fixed
+- **Critical, silent data loss on import: structured process dependencies were discarded.** `processes[].dependencies` was lost entirely and without any message on every import path (replace, merge, manual selection), and therefore on every exchange of a workbook between two installations. The cause was that `validateImportData()` re-enumerated the process fields to carry over instead of deriving them from `newProcess()`; `dependencies` was missing from that list. Because every analysis built on dependencies (cycle detection, critical chains, single-point-of-failure hints, release readiness) then simply found "no dependencies", the result was *quietly wrong* rather than visibly broken — an import reported success, and the loss was only discoverable by counting dependencies by hand. Dependencies are now also validated on import (self-references, duplicates, references to non-existent processes) and correctly remapped when a process is assigned a new ID, instead of pointing nowhere.
+- Search results, the executive view's KPI tiles and all choice cards were clickable `<div>` elements and thus unreachable by keyboard — you could search but not open a result.
+
+### Security
+- Metadata from imported files is now validated before reaching HTML: `meta.version` is coerced to an integer, `meta.accent` is accepted only as a colour value, and `bearbeitungsstand`/`vertraulichkeit` are escaped at every output site. The same applies to `versions[].nr` (rendered into an inline JavaScript context) and to process IDs (rendered into attribute context).
+- Non-list values in list fields (`dependencies`, `minfaehigkeit.*`, `resilienz`, `meta.releaseWarningAcceptances`) are normalised on import. Previously a manipulated file could make the interface abort while rendering, leaving the application unusable until local storage was cleared.
+- PBKDF2 iterations for the encrypted export raised from 250,000 to 600,000 (current OWASP recommendation for PBKDF2-HMAC-SHA256).
+- The encrypted export format now declares its own KDF parameters (payload `version: 2` plus a `kdf` block), so that future parameter changes cannot devalue existing files. **Files in the previous format (v1, without a `kdf` block) remain readable** using 250,000 iterations; this is guaranteed by a dedicated self-test. Implausible iteration counts in a file are rejected rather than obeyed, so a manipulated file can neither weaken key derivation nor block the browser.
+- Password quality is now enforced for the encrypted export: a hard minimum of 12 characters, plus non-blocking advice. Deliberately no requirement for particular character classes — that pushes people towards short, hard-to-remember passwords instead of long passphrases.
+
+### Added
+- **Detection of competing browser tabs.** Two tabs on the same browser storage previously overwrote each other ("last writer wins") with nothing indicating it had happened. A write from another tab is now surfaced explicitly, and both ways of resolving it automatically back up the version being discarded first. Deliberately no automatic merge: the application cannot know which version is the correct one, so it presents the conflict and the consequence of each option instead of guessing.
+- PDF reports covering more than one section now include a table of contents, and every section carries "Abschnitt X von Y" in its footer. Deliberately **not** page numbers — see "Deliberate deviations" below.
+- Accessibility groundwork: form fields are associated with their labels; modal dialogs and the full-screen overlays have a role, an accessible name, focus placement, a focus trap and Escape handling; navigation, process tabs, choice cards, KPI tiles and search results are real controls reachable by keyboard; toggle state is conveyed via `aria-pressed`/`aria-current` rather than colour alone; status messages use live regions. The focus outline is now only suppressed for mouse interaction, not for keyboard use.
+- Self-test suite extended from 29 to 57 tests: import fidelity (checked generically against `newProcess()`, so fields added in future are covered automatically), dependencies and multi-step chains, ID remapping on manual selection and merge, migration without data loss, import/export round-trip, the release gate, the security regressions listed above, backward compatibility of encrypted files, PDF structure, and accessibility invariants.
+
+### Changed
+- `dashboard.png` in the screenshot inventory is documented as what it actually shows (the executive view), rather than as the dashboard.
+
+### Documentation
+- Corrected references to `LICENSE.txt` and `NOTICE.txt`; the files are named `LICENSE` and `NOTICE`, so every one of those links was broken.
+- Corrected the claim that the unencrypted JSON import lives under **Settings → Import**; it is in the top bar (**Import JSON**). Settings contains only the *encrypted* import.
+- Removed the claim of a `.github/` directory with issue/PR templates and a validation workflow — see the correction note under 2.1.0.
+- Corrected the self-test count (29 → 57) everywhere it is stated.
+
+### Deliberate deviations
+- **No page numbers in PDF reports.** Real page numbers would have to come from the printer's pagination. The CSS margin boxes required for that (`@page { @bottom-center { content: counter(page) } }`) are not supported by any mainstream browser, and the page count additionally depends on paper size, margins and the scaling factor the user only chooses *in* the print dialog. A number rendered into the document would therefore be wrong on a regular basis — and in an audit record, a wrong page number is worse than none. Section numbering plus a table of contents delivers what page numbers are actually needed for in that context (spotting a missing sheet) and is always correct. Browsers' own print dialogs can add real sheet numbers via their "Headers and footers" option.
+- **No ARIA tab pattern for the process tabs and sidebar navigation.** `role="tab"` promises arrow-key navigation that does not exist here; a half-implemented ARIA role misleads more than none. `aria-current` states precisely what is true.
+
 ## [2.1.0] — Repository & Open Source Finalization
 
 ### Added
-- Complete GitHub repository structure: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, documentation set under `docs/`, a fictional demo workbook under `examples/`, and GitHub issue/PR templates and a validation workflow under `.github/`.
+- Complete GitHub repository structure: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, documentation set under `docs/`, and a fictional demo workbook under `examples/`.
 
 ### Changed
 - No changes to application behavior. This release is documentation and repository packaging only.
+
+### Correction (added in 2.2.0)
+- This entry originally also claimed "GitHub issue/PR templates and a validation workflow under `.github/`". **No such directory has ever existed in this repository.** The claim was inaccurate and has been removed rather than left standing; the documents that relied on it (`CONTRIBUTING.md`, `SUPPORT.md`, `docs/faq.md`, `docs/release-process.md`) were corrected in 2.2.0. This follows the same principle as the 2.0.1 entry below: a documentation claim that turns out to be false gets corrected in the open, not quietly rewritten.
 
 ## [2.0.2] — Branding & Open Source
 

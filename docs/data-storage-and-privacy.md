@@ -28,6 +28,12 @@ a shared or unmanaged device, for instance — prefer the encrypted export
 feature described below, and avoid leaving sensitive data sitting only in
 local storage on such a device.
 
+Because this storage belongs to the browser profile rather than to a tab, two
+tabs with the same workbook open write to the same place. Since version 2.2.0
+the application notices when another tab has saved and asks which version you
+want to keep, backing up the other one automatically either way. Keeping the
+workbook open in a single tab avoids the question entirely.
+
 ### 2. A linked file on disk (optional, Chromium browsers only)
 
 On Chrome, Edge, Opera, and other Chromium-based browsers, you can link the
@@ -41,18 +47,32 @@ Firefox and Safari do not support this API; use JSON export/import instead.
 
 ### 3. JSON export (any browser)
 
-**Settings → Export JSON** downloads a complete snapshot as a plain,
-human-readable JSON file. This file contains your full workbook content in
-clear text — treat it like any other sensitive document you're
-responsible for.
+**Export JSON** — available both in the top bar and under **Settings → Daten &
+Bedienbarkeit** — downloads a complete snapshot as a plain, human-readable JSON
+file. This file contains your full workbook content in clear text — treat it
+like any other sensitive document you're responsible for. It also carries no
+protection against modification: anyone who can write to the file can change
+its contents, and while the application will refuse structurally invalid data
+on import, it cannot tell you that a plausible value was altered.
 
 ### 4. Encrypted JSON export (any browser)
 
 **Settings → Verschlüsselter Export** produces the same snapshot, encrypted
-with a password you choose (AES-GCM, key derived via PBKDF2, entirely
-through the browser's native Web Crypto API). The password itself is never
-stored, transmitted, or included in the file — if you lose it, the export
-cannot be recovered by the application, the maintainer, or anyone else.
+with a password you choose (AES-GCM, key derived via PBKDF2 with SHA-256 and
+600,000 iterations, a fresh random salt and initialisation vector per export,
+entirely through the browser's native Web Crypto API). The password itself is
+never stored, transmitted, or included in the file — if you lose it, the export
+cannot be recovered by the application, the maintainer, or anyone else. A
+minimum length of 12 characters is required.
+
+Unlike the plain export, this format is also tamper-evident: AES-GCM is
+authenticated, so a modified file fails to decrypt rather than opening with
+altered content. (A wrong password and a modified file are indistinguishable
+from the outside, so both produce the same message.)
+
+Files encrypted by earlier versions of the application still open — the key
+derivation parameters were strengthened in 2.2.0 without breaking existing
+files, and this is covered by an automated test.
 
 Use this whenever you need to send a workbook over a channel you don't fully
 trust (email, a shared drive, etc.).

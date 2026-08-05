@@ -20,7 +20,7 @@ You have two options:
   two example processes so you can see every screen populated before
   touching your own data. (For a more complete, realistic example, see the
   fictional demo company in [`examples/`](../examples/README.md) instead —
-  import it via **Settings → Import**.)
+  import it via **Import JSON** in the top bar.)
 - **Start fresh:** click **+ Neue Prozessakte** ("+ New process record") in
   the sidebar to create your first real process record.
 
@@ -59,12 +59,17 @@ By default, your workbook is saved automatically to the browser's local
 storage as you work — there's nothing to click. For anything you want to
 keep safe outside the browser:
 
-- **Chrome/Edge/Opera/Brave:** use **"Datei verknüpfen"** ("Link file") in
-  Settings to link a real file on disk. Every change is written there
-  automatically from then on, like a word processor.
-  the top bar (**Speichern unter…**) also works before linking.
-- **Any browser:** use **Settings → Export JSON** to download a snapshot at
-  any time.
+- **Chrome/Edge/Opera/Brave:** use **"Jetzt Datei verknüpfen"** ("Link file
+  now") under **Settings → Datei-Verknüpfung** to link a real file on disk.
+  Every change is written there automatically from then on, like a word
+  processor. **Speichern unter…** in the top bar does the same thing.
+- **Any browser:** use **Settings → Export JSON**, or **Export JSON** in the
+  top bar, to download a snapshot at any time.
+
+If you have the same workbook open in two browser tabs, be aware that both
+write to the same browser storage. Since version 2.2.0 the application detects
+this and asks which version to keep — but the simplest way to avoid the
+question is to keep the workbook open in one tab only.
 
 See [`docs/data-storage-and-privacy.md`](data-storage-and-privacy.md) for
 exactly what is stored where.
@@ -75,6 +80,12 @@ From the top bar, click **PDF erzeugen** ("Generate PDF"), choose a scope
 (short executive summary, full report, measures only, or a single process),
 and confirm. This opens your browser's native print dialog — choose "Save as
 PDF" as the destination.
+
+Reports with more than one section start with a table of contents, and each
+section is marked "Abschnitt X von Y" in its footer so a missing sheet is easy
+to spot. If you also want actual sheet numbers, enable "Headers and footers" in
+the print dialog — the browser adds those, the application deliberately does
+not (see [Architecture](architecture.md#pdf-output)).
 
 ## Where to go next
 

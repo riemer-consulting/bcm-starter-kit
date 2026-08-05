@@ -73,6 +73,18 @@ Two independent persistence targets are tracked and reported separately via
 
 Neither path involves a server or any network request.
 
+Browser storage is shared per origin, which means two tabs with the same
+workbook write to the same place. Until 2.2.0 that meant "last writer wins"
+with no indication anything had been lost. `watchForeignTabWrites()` now
+listens for the `storage` event — which fires only in *other* tabs — and
+surfaces the conflict when another tab has actually written. Detection is
+deliberately event-based rather than a heartbeat: it reports a real conflict
+instead of warning pre-emptively about any second open tab, which would produce
+false alarms and train people to ignore the warning. Resolution is left to the
+user (both options back up the discarded version first); the application does
+not attempt an automatic merge, because it has no basis for deciding which
+version is correct.
+
 ## Schema versioning and migration
 
 `STATE.schemaVersion` is versioned independently of `APP_VERSION` (the
@@ -102,21 +114,104 @@ than guessed at, and no migration step silently discards information.
   restricted to `https:`, `http:`, and `data:image/*`.
 - **Cryptography.** ID generation uses `crypto.randomUUID()` with a
   `crypto.getRandomValues()`-based fallback. The optional encrypted export
-  uses AES-GCM with a PBKDF2-derived key, entirely through the browser's
-  native Web Crypto API — no cryptography is implemented from scratch.
+  uses AES-GCM with a PBKDF2-derived key (SHA-256, 600,000 iterations, fresh
+  salt and IV per export), entirely through the browser's native Web Crypto
+  API — no cryptography is implemented from scratch.
+
+  Since 2.2.0 the encrypted payload **declares its own KDF parameters**
+  (`version: 2` plus a `kdf` block). This exists so that the iteration count
+  can be raised again in future without making previously exported files
+  unreadable: `kdfIterationsForPayload()` reads the parameters from the file,
+  falling back to the historical 250,000 for payloads in the v1 format that
+  predate the block. Declared values outside a plausible range are rejected,
+  so a manipulated file can neither weaken key derivation nor stall the
+  browser with an absurd iteration count. Changing the parameters is
+  intentionally a one-constant change (`PBKDF2_ITERATIONS`) — that is the
+  designated extension point.
 
 See [SECURITY.md](../SECURITY.md) for the full picture, including what is
 explicitly out of scope.
 
+## Import fidelity
+
+`validateImportData()` derives the set of process fields it carries over from
+`newProcess()` rather than enumerating them. This is deliberate and load-
+bearing: until 2.2.0 the fields *were* enumerated separately, `dependencies`
+was missing from that list, and every import silently discarded all structured
+process dependencies. Nothing failed — the import reported success, and every
+analysis built on dependencies simply found none.
+
+The lesson generalises beyond that one field: **a list of field names kept in
+parallel to the factory function will drift, and when it drifts the failure
+mode is silent data loss rather than an error.** If you add a field to the data
+model, do not add it to an import list; make sure it comes from the factory
+function. The self-test *"Import erhält ALLE in newProcess() definierten
+Prozessfelder"* compares the imported record's key set against `newProcess()`
+precisely so that a future field is covered without anyone remembering to
+extend a test.
+
+## PDF output
+
+Reports are assembled by `pdfSections()` into a list of `{title, render}`
+descriptors, which `buildPrintRoot()` then renders into `#print-root` for the
+browser's own print function. Splitting the outline from the rendering means
+the table of contents and the section numbering come from one source and
+cannot disagree.
+
+There are deliberately **no page numbers**. Real ones would have to come from
+the printer's pagination: the CSS margin boxes needed for that
+(`@page { @bottom-center { content: counter(page) } }`) are not supported by any
+mainstream browser, and the page count also depends on paper size, margins and
+the scaling factor the user only picks *in* the print dialog. A number rendered
+into the document would therefore be wrong routinely, and a wrong page number
+in an audit record is worse than none. What the application does control is its
+own sections, so those are numbered ("Abschnitt X von Y") and listed in a table
+of contents — which is what page numbers are actually wanted for in this
+context. See the comment block at `pdfSectionLabel()`.
+
+## Accessibility
+
+Because the UI is built by string concatenation, accessibility is handled at
+the few places that generate markup rather than at each call site:
+
+- `fieldInput()` and `structuredTimeFieldHtml()` emit `label for=`,
+  `aria-describedby` for hints and `aria-required` themselves.
+- `associateOrphanLabels()` runs after every `render()` (and on every modal)
+  as a safety net: it links any `<label>` that still lacks a `for=` to the
+  single form control in its `.field` container. It deliberately does nothing
+  when a container holds more than one control — a guessed association is
+  worse than none, so those groups are named via `role="group"` +
+  `aria-label` at their call site instead.
+- `openModal()`/`closeModal()` and `mountOverlay()`/`App.closeOverlay()`
+  implement dialog semantics: role, accessible name from the dialog's heading,
+  focus moved in, focus returned to the triggering element, Escape to close,
+  and (for modals) a Tab/Shift+Tab focus cycle.
+- Anything clickable is a `<button>`, not a `div` with an `onclick`. The CSS
+  resets restore the previous appearance, so this is not a visual change.
+
+`aria-current` is used for the sidebar navigation and the process tabs rather
+than a `role="tab"` pattern, because arrow-key navigation between them does not
+exist — announcing a role whose expected keyboard behaviour is absent misleads
+more than saying nothing.
+
+What has **not** been done: testing with real screen readers, and any formal
+WCAG conformance assessment. The self-tests cover the two invariants that are
+machine-decidable (every field has an associated label; no clickable element
+lacks keyboard access) — they do not establish conformance.
+
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 57 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch
-global, non-workbook state (such as the linked-file handle), that state is
-saved before the test and restored immediately afterward, including on
-failure.
+global, non-workbook state (such as the linked-file handle, or `STATE` itself
+via the `withSyntheticState()` helper), that state is saved before the test and
+restored immediately afterward, including on failure.
+
+Tests are marked critical or non-critical; a failing critical test also blocks
+approval in `releaseReadinessCheck()`. There is no CI runner — see
+[Release Process](release-process.md).
 
 ## Release readiness check
 

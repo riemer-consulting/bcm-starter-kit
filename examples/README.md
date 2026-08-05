@@ -12,9 +12,11 @@ it is not based on any real organization.
   Auftragserfassung (order intake), Wareneingang (goods receipt),
   Lager & Kommissionierung (warehouse & picking), Einkauf (procurement),
   Rechnungsstellung (invoicing), and IT-Betrieb (IT operations).
-- **Structured dependencies** between all six processes, including a
-  realistic hub-and-spoke pattern around IT-Betrieb, which most other
-  processes depend on.
+- **9 structured dependencies**, declared by five of the six processes
+  (IT-Betrieb declares none of its own — it is the hub the others depend on).
+  Together these form a multi-step critical chain
+  (IT-Betrieb → Auftragserfassung → Lager & Kommissionierung) that the
+  executive view detects and reports.
 - **11 critical resources** across multiple categories (systems, people,
   suppliers, a service provider, data, a facility, and a communication
   channel), including deliberate single points of failure to demonstrate the
@@ -28,7 +30,8 @@ it is not based on any real organization.
 ## How to use it
 
 1. Open `bcm-starter-kit.html`.
-2. Go to **Settings → Import**.
+2. Click **Import JSON** in the top bar. (Settings offers only the *encrypted*
+   import — the plain one lives in the top bar.)
 3. Select `demo-workbook.json` and choose **"Vollständig ersetzen"**
    (replace everything) if starting from an empty workbook.
 4. Explore the dashboard, individual process records, the dependency cluster
@@ -37,7 +40,16 @@ it is not based on any real organization.
 
 This file was generated using the application's own data-model functions
 (not hand-written JSON) and validated with `validateImportData()` before
-being committed, so it is guaranteed to match the current schema version.
+being committed, so it matches the current schema version (11).
+
+> **If you are on version 2.1.0 or earlier:** the import will appear to succeed
+> but will silently discard all 9 dependencies, so the critical chain above
+> will not show up. This was a bug, fixed in 2.2.0 — see `CHANGELOG.md`.
+
+The workbook deliberately contains unresolved findings (data-quality hints and
+release blockers about the fictional company). Those are the point — they
+demonstrate the management view and the release gate — and are not import
+errors.
 
 ## A note on regenerating this file
 

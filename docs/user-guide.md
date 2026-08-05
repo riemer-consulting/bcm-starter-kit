@@ -17,7 +17,9 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 10. [Import & export](#import--export)
 11. [Release readiness](#release-readiness)
 12. [Workshop mode](#workshop-mode)
-13. [Self-tests (advanced)](#self-tests-advanced)
+13. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
+14. [Keyboard and accessibility](#keyboard-and-accessibility)
+15. [Self-tests (advanced)](#self-tests-advanced)
 
 ## Overview
 
@@ -128,21 +130,47 @@ itself creates a new version first so the history is never lost.
 Four scopes are available: a short executive summary, the full detailed
 report, a measures-only report, or a single process record. All generation
 happens client-side via your browser's native print function — choose "Save
-as PDF" in the print dialog. Every page carries your organization's name,
-workbook version, processing status, export date, and confidentiality label
-in a running header, and BCM Starter Kit's own attribution in a running
-footer.
+as PDF" in the print dialog.
+
+Every section carries your organization's name, workbook version, processing
+status, export date, and confidentiality label in a header, and BCM Starter
+Kit's own attribution in a footer. The cover page shows the same details in
+full instead.
+
+Reports containing more than one section additionally get a **table of
+contents**, and each section's footer is marked **"Abschnitt X von Y"**
+(section X of Y). There are deliberately no page numbers: browsers do not
+support the CSS features needed to render the printer's own page count, and the
+number of sheets also depends on the paper size and the scaling factor you
+choose in the print dialog — so any number printed into the document would
+regularly be wrong. Section numbering gives you the thing page numbers are
+usually wanted for here (noticing that a sheet is missing) and is always
+correct. If you do want sheet numbers, enable **"Headers and footers"** in your
+browser's print dialog; the browser adds them itself.
 
 ## Import & export
 
 - **JSON export** — a complete, human-readable snapshot of your workbook.
+  Available as **Export JSON** both in the top bar and in Settings.
 - **Encrypted JSON export** — the same snapshot, password-protected with
-  AES-GCM (Web Crypto API). The password is never stored anywhere; losing it
-  makes the export unrecoverable.
-- **Import** — reading a JSON file offers three strategies: replace
-  everything, merge with your current workbook, or manually pick which
-  processes/resources/measures to bring in. Imported data is validated,
-  size-limited, and sanitized before anything is applied.
+  AES-GCM (Web Crypto API), under **Settings → Verschlüsselter Export**. The
+  password is never stored anywhere; losing it makes the export unrecoverable.
+  A minimum of 12 characters is required, and you get feedback on password
+  quality as you type. Files exported by earlier versions can still be opened.
+- **Import** — **Import JSON** in the top bar. (Settings offers only the
+  *encrypted* import; the plain one lives in the top bar.) Reading a JSON file
+  offers three strategies: replace everything, merge with your current
+  workbook, or manually pick which processes/resources/measures to bring in.
+  Imported data is validated, size-limited, and sanitized before anything is
+  applied, and you get a summary of anything that was repaired or dropped.
+
+  Structured dependencies are carried over on all three paths, including when
+  an imported process has to be given a new ID — in which case the references
+  are rewritten to match. A dependency pointing at a process that isn't part of
+  the import is removed rather than guessed at, and reported. (In version 2.1.0
+  dependencies were lost entirely on import without any message; if you
+  exchanged workbooks using 2.1.0 or earlier, re-check the dependencies of the
+  imported processes.)
 
 ## Release readiness
 
@@ -158,16 +186,58 @@ automatically creates a new, immutable version.
 
 A guided, large-text question sequence for one process at a time, intended
 for use on a shared screen or projector during a facilitated workshop
-session — answers are saved as you move through the questions.
+session — answers are saved as you move through the questions. Note that this
+walks through **one process**, not the whole workbook: switch process using the
+selector at the top left, and close the mode with **Escape** or the close
+button.
+
+## Working in more than one browser tab
+
+The browser's storage belongs to the browser profile, not to a tab — so two
+tabs showing the same workbook write to the same place. If another tab saves
+while you have this one open, a notice appears offering two choices: load the
+other tab's version, or keep yours and overwrite theirs. Whichever you pick,
+the version being discarded is backed up automatically first (**Settings →
+Wiederherstellung und Sicherungen**), so a wrong choice is recoverable. The
+two versions are not merged automatically — the application has no way to know
+which one is right. The simplest way to avoid the situation is to keep the
+workbook open in a single tab.
+
+## Keyboard and accessibility
+
+The application is operable by keyboard: everything clickable is a real
+control, so Tab moves between them and Enter or Space activates them. Dialogs
+place the focus inside themselves when they open, keep Tab within the dialog,
+close on **Escape**, and return the focus to wherever it was. The executive
+view and workshop mode behave the same way. Form fields are associated with
+their labels, so clicking a label focuses its field and screen readers announce
+the field by name. Where a status is shown by colour (traffic lights,
+criticality dots, progress bars), the same information is also available as
+text.
+
+Being straightforward about the limits: this covers labelling, keyboard
+operability, dialog semantics and focus handling. It has **not** been tested
+with real screen-reader software, and no formal WCAG conformance assessment has
+been carried out — so this section describes what was implemented, not a
+certified level. The interface is also built for desktop screen sizes and is
+not adapted for small mobile screens. Reports of specific problems with
+assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite covering core
-logic (time-value parsing, plausibility checks, ID uniqueness, import
-validation, schema migration, XSS-safety of known payloads, version
-comparison, reference integrity, encrypted export/import round-tripping,
-corrupted-data recovery, and permission-denied file saves). It runs entirely
-against synthetic data and never touches your actual workbook.
+BCM Starter Kit includes a hidden, integrated self-test suite of 57 tests
+covering core logic (time-value parsing, plausibility checks, ID uniqueness,
+import validation and field-completeness, structured dependencies and
+multi-step chains, schema migration without data loss, import/export
+round-tripping, the release readiness gate, XSS-safety of known payloads,
+version comparison, reference integrity, encrypted export/import
+round-tripping including files from earlier versions, PDF structure, basic
+accessibility invariants, corrupted-data recovery, and permission-denied file
+saves). It runs entirely against synthetic data and never touches your actual
+workbook.
+
+Each test is marked critical or non-critical. A failing critical test also
+blocks setting the workbook status to "Approved".
 
 To run it: press **Ctrl+Alt+T** anywhere in the application, or open
 `bcm-starter-kit.html#selftest`. This is intended for contributors and
