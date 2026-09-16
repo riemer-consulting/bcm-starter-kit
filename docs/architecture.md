@@ -35,6 +35,11 @@ STATE = {
                  alternative, recoveryRequirement, singlePointOfFailure, ... } ],
   massnahmen: [ { id, titel, prozessId, kategorie, prioritaet, aufwand,
                   status, entscheidungsbedarf, wirksamkeitGeprueftAm, ... } ],
+  parkplatz: [ { id, beschreibung, prozessId, workshopBlock, verantwortlich,
+                 termin, status, erstelltAm, abschlussNotiz } ],
+  reviews: [ { id, prozessId, reviewart, geplantAm, gestartetAm,
+               abgeschlossenAm, verantwortlich, status, ergebnis,
+               naechsterReviewAm, massnahmenIds[], erstelltAm } ],  // since schema 13 (2.4.0-dev)
   versions: [ { nr, datum, bearbeiter, notiz, snapshot, source,
                 appVersion, schemaVersion, checksum } ],
   ui: { route, processId, processTab }   // not persisted
@@ -42,8 +47,27 @@ STATE = {
 ```
 
 Factory functions (`newProcess()`, `newResource()`, `newMassnahme()`,
-`defaultMeta()`, `defaultState()`) define the canonical shape of each record
-type and are the single source of truth for what fields exist.
+`newParkplatzItem()`, `newReview()`, `defaultMeta()`, `defaultState()`)
+define the canonical shape of each record type and are the single source of
+truth for what fields exist.
+
+### Reviews (`STATE.reviews[]`, since schema 13, 2.4.0-dev)
+
+A review is a concrete work/history instance, not a template — each planned,
+started or completed review is its own record. Its stored status is
+deliberately limited to three values (`geplant` / `in_bearbeitung` /
+`abgeschlossen`); due-date state ("overdue", "upcoming") is derived at read
+time by `reviewDueInfo()` from `geplantAm`, never persisted as a fourth
+status. This follows the same principle as `massnahmeIsOverdue()` for
+measures: a fact that can be computed from an existing date is not
+duplicated as separate stored state that could drift out of sync.
+
+Reviews reference processes by ID (`prozessId`) and, optionally, measures
+they gave rise to (`massnahmenIds[]`). Prioritization
+(`reviewCenterPriorityList()`) is a pure sort — overdue by days overdue,
+then upcoming by days remaining, then critical processes with zero review
+records — with no scoring function and no fachliche Bewertung of whether a
+review's outcome was adequate.
 
 ## Rendering
 
@@ -201,7 +225,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 57 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 79 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

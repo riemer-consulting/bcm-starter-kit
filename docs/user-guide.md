@@ -9,17 +9,18 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 2. [Dashboard](#dashboard)
 3. [Process records](#process-records)
 4. [Dependency cluster view](#dependency-cluster-view)
-5. [Measures catalog](#measures-catalog)
-6. [Management (executive) view](#management-executive-view)
-7. [Version history](#version-history)
-8. [Settings & branding](#settings--branding)
-9. [PDF reports](#pdf-reports)
-10. [Import & export](#import--export)
-11. [Release readiness](#release-readiness)
-12. [Workshop mode](#workshop-mode)
-13. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
-14. [Keyboard and accessibility](#keyboard-and-accessibility)
-15. [Self-tests (advanced)](#self-tests-advanced)
+5. [Review Center](#review-center) *(2.4.0-dev)*
+6. [Measures catalog](#measures-catalog)
+7. [Management (executive) view](#management-executive-view)
+8. [Version history](#version-history)
+9. [Settings & branding](#settings--branding)
+10. [PDF reports](#pdf-reports)
+11. [Import & export](#import--export)
+12. [Release readiness](#release-readiness)
+13. [Workshop mode](#workshop-mode)
+14. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
+15. [Keyboard and accessibility](#keyboard-and-accessibility)
+16. [Self-tests (advanced)](#self-tests-advanced)
 
 ## Overview
 
@@ -78,6 +79,39 @@ Recommended fields vary by resource category but are never enforced.
 A workbook-wide view of how resources and dependencies connect processes to
 each other — useful for spotting resources used by many processes at once,
 and potential duplicate resource entries (detected by name similarity).
+
+## Review Center
+
+*(Version 2.4.0-dev, under active development — not yet part of a stable release.)*
+
+The Review Center answers one question: **what does the person responsible
+for BCM need to do next?** It does not judge whether your BCM decisions are
+correct, sufficient or effective — it only tracks planning and due dates.
+
+A **review** is a concrete work/history record, not a template: it records a
+process, a review type (process review, BIA review, emergency-operations
+review, or resource review), planned/started/completed dates, an owner,
+a status (`planned` / `in progress` / `completed`), a result, the next
+review date, and links to measures that came out of it.
+
+Due dates are always **computed**, never stored as a separate status: a
+review becomes "overdue" purely because its planned date has passed and it
+isn't completed yet; "upcoming" means it falls due within the next 30 days.
+There is no fourth status value for this — it would duplicate information
+already implied by the planned date.
+
+The Review Center view shows:
+- how many reviews are overdue and how many are upcoming;
+- which **critical processes have no review planned at all** (of any type);
+- a single, deterministically ordered "what's next" list — overdue reviews
+  first (longest overdue first), then upcoming reviews (soonest first), then
+  critical processes without any review planning. Every position in that
+  list follows directly from its sort key; there is no hidden scoring.
+
+From a review you can start it, complete it (recording a result and,
+optionally, the next review date), or create a linked measure directly. Each
+process record also shows a compact review history in its Measures tab, with
+a link back to the full Review Center.
 
 ## Measures catalog
 
@@ -225,7 +259,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 57 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 79 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export

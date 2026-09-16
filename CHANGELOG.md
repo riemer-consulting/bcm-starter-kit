@@ -5,6 +5,37 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.4.0-dev] — Governance & Lifecycle (in Entwicklung, noch nicht final)
+
+> BCM endet nicht mit dem Workshop. Version 2.4 erweitert das BCM Starter Kit
+> vom Workshop-/Erfassungswerkzeug um Funktionen für den laufenden BCM-Betrieb.
+> Diese Version befindet sich in aktiver Entwicklung (`APP_VERSION = '2.4.0-dev'`)
+> auf dem Branch `feature/2.4-governance-lifecycle` und ist noch nicht final.
+
+### Added — AP1: Review Center
+- **Neues `STATE.reviews[]`** (Schema-Migration 12→13, rein additiv). Ein Review
+  ist eine konkrete Arbeits-/Historieninstanz mit Prozessbezug, Reviewart
+  (Prozess-/BIA-/Notbetriebs-/Ressourcenreview), geplantem/gestartetem/
+  abgeschlossenem Datum, Verantwortlichem, Status (nur `geplant` /
+  `in_bearbeitung` / `abgeschlossen`), Ergebnis, nächstem Reviewtermin und
+  Maßnahmenreferenzen.
+- **Neue Ansicht „Review Center"** (Sidebar unter „Übergreifend"): zeigt
+  überfällige und bald fällige Reviews, kritische Prozesse ohne jegliche
+  Reviewplanung, und eine deterministisch (nach Fälligkeit, nicht nach Score)
+  priorisierte „Was ist als Nächstes zu tun?"-Liste.
+- **Fälligkeit wird berechnet, nicht gespeichert** (`reviewDueInfo()`) — es
+  gibt bewusst keinen eigenen „überfällig"-Status.
+- **Review → Maßnahme:** aus einem Review kann direkt eine verknüpfte
+  Maßnahme angelegt werden (`review.massnahmenIds[]`).
+- **Reviewhistorie in der Prozessakte:** kompakte Übersicht aller Reviews
+  eines Prozesses im Maßnahmen-Tab, mit Link ins volle Review Center.
+- Import/Export/Migration/Merge/Selektiv-Import vollständig angebunden
+  (`normalizeReviewsForImport`, `IMPORT_LIMITS.maxReviews`).
+- 11 neue Selbsttests (79 insgesamt): Migration 12→13, `newReview()`-Form,
+  Fälligkeitsberechnung (überfällig/bald fällig/abgeschlossen), fehlende
+  Reviewplanung bei kritischen Prozessen, deterministische Priorisierung,
+  Import-Normalisierung und -Limits, Merge-Import.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

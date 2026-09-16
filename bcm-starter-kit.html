@@ -408,6 +408,23 @@ button.rowcard:hover{border-color:var(--line-strong);}
 
    CHANGELOG
    ---------
+   Version 2.4.0-dev — Governance & Lifecycle (in Entwicklung):
+   - AP1 Review Center: neues STATE.reviews[] (Schema 13, additiv). Ein Review
+     ist eine konkrete Arbeits-/Historieninstanz (nicht nur eine Vorlage) mit
+     Prozessbezug, Reviewart (Prozess-/BIA-/Notbetriebs-/Ressourcenreview,
+     REVIEW_ARTEN), geplantem/gestartetem/abgeschlossenem Datum,
+     Verantwortlichem, Status (nur geplant/in_bearbeitung/abgeschlossen —
+     bewusst KEIN eigener "überfällig"-Status, siehe reviewDueInfo()),
+     Ergebnis, nächstem Reviewtermin und Maßnahmenreferenzen
+     (massnahmenIds[]). Neue Ansicht "Review Center" (viewReviewCenter(),
+     Route 'reviews') beantwortet deterministisch und ohne Score: was ist
+     überfällig, was wird bald fällig (REVIEW_UPCOMING_WINDOW_DAYS=30 Tage),
+     welche kritischen Prozesse haben keine Reviewplanung, was sollte als
+     Nächstes bearbeitet werden (reviewCenterPriorityList(), Sortierung nach
+     Überfälligkeitsdauer, dann Fälligkeit, dann kritische Prozesse ohne
+     Planung — jede Einordnung ist über die Sortierkriterien nachvollziehbar,
+     keine Blackbox-Bewertung). Import/Export/Migration/Merge/Selektiv-Import
+     vollständig angebunden (normalizeReviewsForImport, IMPORT_LIMITS.maxReviews).
    Version 2.2.0 — Korrektheit, Sicherheit, Barrierefreiheit:
    - BEHOBEN (kritisch, Datenverlust): Beim Import gingen die strukturierten
      Prozessabhängigkeiten (processes[].dependencies) vollständig und ohne
@@ -790,7 +807,7 @@ button.rowcard:hover{border-color:var(--line-strong);}
 /* ---------------------------------------------------------------------
    1) KONSTANTEN / FACHLICHE REFERENZDATEN
    --------------------------------------------------------------------- */
-const APP_VERSION = '2.3.1';
+const APP_VERSION = '2.4.0-dev';
 
 /* Lizenz — Version/Datum getrennt von APP_VERSION versioniert, damit eine
    künftige inhaltliche Änderung gezielt eine erneute Bestätigung erzwingen
@@ -886,6 +903,19 @@ const RESILIENZ_ITEMS = [
 ];
 
 const MASSNAHMEN_KATEGORIEN = ['IT / Technik','Personal','Lieferkette','Dokumentation','Kommunikation','Organisation','Sonstiges'];
+
+/* v2.4.0 (AP1, Review Center): fest definierte Reviewarten. Jede Reviewart
+   besitzt in AP2 eine eigene Zykluspolicy (process.reviewConfig); hier nur
+   die Liste selbst plus Anzeigebeschriftung. */
+const REVIEW_ARTEN = ['prozess','bia','notbetrieb','ressourcen'];
+const REVIEW_ART_LABELS = { prozess:'Prozessreview', bia:'BIA-Review', notbetrieb:'Notbetriebsreview', ressourcen:'Ressourcenreview' };
+/* Gespeicherte Statuswerte bewusst nur diese drei — Fälligkeit/Überfälligkeit
+   werden aus geplantAm berechnet (siehe reviewDueInfo()), nicht als eigener
+   Status gespeichert. */
+const REVIEW_STATUS = ['geplant','in_bearbeitung','abgeschlossen'];
+const REVIEW_STATUS_LABELS = { geplant:'Geplant', in_bearbeitung:'In Bearbeitung', abgeschlossen:'Abgeschlossen' };
+/* Anzahl Tage, ab denen ein geplanter Review als "bald fällig" gilt (nicht überfällig). */
+const REVIEW_UPCOMING_WINDOW_DAYS = 30;
 
 const PROCESS_TABS = [
   {key:'steckbrief', label:'Steckbrief', ic:'01'},
@@ -1098,6 +1128,24 @@ function newParkplatzItem(over){
   }, over||{});
 }
 
+/** Erzeugt einen neuen Review (v2.4.0, AP1 Review Center). Reviews sind konkrete Arbeits-/Historieninstanzen, keine Vorlagen. @param {object} [over] Felder, die die Defaults überschreiben. @returns {object} */
+function newReview(over){
+  return Object.assign({
+    id: uid('rev'),
+    prozessId: '',
+    reviewart: REVIEW_ARTEN[0],
+    geplantAm: '',
+    gestartetAm: '',
+    abgeschlossenAm: '',
+    verantwortlich: '',
+    status: 'geplant',
+    ergebnis: '',
+    naechsterReviewAm: '',
+    massnahmenIds: [],
+    erstelltAm: new Date().toISOString()
+  }, over||{});
+}
+
 /* Riemer Consulting — Standard-Logo für neu geöffnete Workbooks (öffentlicher
    Download von riemer-consulting.de). Bleibt jederzeit änderbar unter
    Branding & Einstellungen; bereits individualisierte Workbooks (vorhandener
@@ -1121,6 +1169,7 @@ function defaultState(){
     resources: [],
     massnahmen: [],
     parkplatz: [],
+    reviews: [],
     versions: [],
     ui: { route:'dashboard', processId:null, processTab:'steckbrief' }
   };
@@ -1131,7 +1180,7 @@ function defaultState(){
    Getrennt von APP_VERSION (Software-Version) — beschreibt die Form der
    gespeicherten Daten. Dateien ohne schemaVersion gelten als Schema 1.
    --------------------------------------------------------------------- */
-const CURRENT_SCHEMA_VERSION = 12;
+const CURRENT_SCHEMA_VERSION = 13;
 
 /** Schema-Migration 1->2: ergänzt Versions-Nachvollziehbarkeitsfelder und Resilienz-Empfehlungstexte. @param {object} data Rohdaten vor der Migration. @returns {{data:object, warnings:string[]}} */
 function migrateV1ToV2(data){
@@ -1335,7 +1384,15 @@ function migrateV11ToV12(data){
   return { data: d, warnings: [] };
 }
 
-const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12 };
+/** Schema-Migration 12->13: ergänzt reviews[] additiv (v2.4.0, AP1 Review Center). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV12ToV13(data){
+  const d = JSON.parse(JSON.stringify(data));
+  if(!Array.isArray(d.reviews)) d.reviews = [];
+  d.schemaVersion = 13;
+  return { data: d, warnings: [] };
+}
+
+const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13 };
 
 /** Zentrale Migrationsverkettung: wendet SCHEMA_MIGRATIONS schrittweise bis CURRENT_SCHEMA_VERSION an. Gibt NIE ok:true zurück, wenn eine Stufe fehlt oder das Ziel nicht exakt erreicht wird; lehnt neuere, unbekannte Schemas ab. @param {object} data Rohdaten (ggf. mit fehlendem/älterem schemaVersion). @returns {{ok:boolean, data?:object, warnings?:string[], error?:string, fromVersion?:number, toVersion?:number, migrated?:boolean}} */
 function migrateWorkbook(data){
@@ -1898,6 +1955,7 @@ const IMPORT_LIMITS = {
   maxResources: 5000,
   maxMassnahmen: 10000,
   maxParkplatz: 5000,
+  maxReviews: 20000,
   maxVersions: 100,
   maxTextLength: 50000,
   maxShortTextLength: 1000,
@@ -2463,6 +2521,9 @@ function validateImportData(data){
   if(data.parkplatz!==undefined && !Array.isArray(data.parkplatz)){
     return { valid:false, errors:['Das Feld "parkplatz" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
   }
+  if(data.reviews!==undefined && !Array.isArray(data.reviews)){
+    return { valid:false, errors:['Das Feld "reviews" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
+  }
 
   // P5: Größenbegrenzungen — eine Datei mit z. B. 100.000 Prozessen wird
   // VOR der weiteren Verarbeitung abgewiesen (Denial-of-Service-Schutz).
@@ -2477,6 +2538,9 @@ function validateImportData(data){
   }
   if(Array.isArray(data.parkplatz) && data.parkplatz.length > IMPORT_LIMITS.maxParkplatz){
     return { valid:false, errors:['Die Datei enthält '+data.parkplatz.length+' Parkplatz-Einträge — das Limit liegt bei '+IMPORT_LIMITS.maxParkplatz+'.'], warnings:[], normalizedData:null };
+  }
+  if(Array.isArray(data.reviews) && data.reviews.length > IMPORT_LIMITS.maxReviews){
+    return { valid:false, errors:['Die Datei enthält '+data.reviews.length+' Reviews — das Limit liegt bei '+IMPORT_LIMITS.maxReviews+'.'], warnings:[], normalizedData:null };
   }
   if(Array.isArray(data.versions) && data.versions.length > IMPORT_LIMITS.maxVersions){
     return { valid:false, errors:['Die Datei enthält '+data.versions.length+' Versionen — das Limit liegt bei '+IMPORT_LIMITS.maxVersions+'.'], warnings:[], normalizedData:null };
@@ -2493,6 +2557,7 @@ function validateImportData(data){
     resources: Array.isArray(data.resources) ? data.resources : [],
     massnahmen: Array.isArray(data.massnahmen) ? data.massnahmen : [],
     parkplatz: [],
+    reviews: [],
     processes: []
   };
   if(data.resources!==undefined && !Array.isArray(data.resources)) warnings.push('Ressourcen waren ungültig und wurden ignoriert.');
@@ -2655,6 +2720,11 @@ function validateImportData(data){
 
   // Maßnahmen: Struktur ergänzen, verwaiste Prozessreferenz leeren statt zu verwerfen
   const usedMassnahmeIds = new Set();
+  // v2.4.0 (AP1): merkt sich für jede ursprüngliche Maßnahmen-ID die
+  // tatsächlich vergebene finale ID — reviews[].massnahmenIds referenzieren
+  // Maßnahmen und müssen diese Umschreibung nachvollziehen können (analog
+  // zu processIdRemap oben).
+  const massnahmeIdRecord = new Map();
   normalized.massnahmen = normalized.massnahmen.map((m, idx)=>{
     if(!m || typeof m!=='object'){
       warnings.push('Maßnahme an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
@@ -2663,12 +2733,14 @@ function validateImportData(data){
     const template = newMassnahme();
     const merged = Object.assign({}, template, m);
     const mname0 = coerceString(merged.titel,'') || '(ohne Titel)';
+    const originalMassnahmeId = (typeof m.id==='string' && m.id.trim()!=='') ? m.id : null;
     if(!isSafeEntityId(merged.id) || usedMassnahmeIds.has(merged.id)){
       if(merged.id && usedMassnahmeIds.has(merged.id)) warnings.push('Maßnahme "'+mname0+'": doppelte ID wurde durch eine neue ersetzt.');
       else if(merged.id!==undefined && !isSafeEntityId(merged.id)) warnings.push('Maßnahme "'+mname0+'": die ID enthielt unzulässige Zeichen und wurde technisch neu vergeben.');
       merged.id = uid('m');
     }
     usedMassnahmeIds.add(merged.id);
+    if(originalMassnahmeId) massnahmeIdRecord.set(originalMassnahmeId, merged.id);
     merged.prozessId = coerceString(merged.prozessId, '');
     if(merged.prozessId){
       const resolved = resolveProcessReference(merged.prozessId);
@@ -2735,6 +2807,57 @@ function validateImportData(data){
     merged.abschlussNotiz = capText(coerceString(merged.abschlussNotiz,''), IMPORT_LIMITS.maxTextLength, 'Parkplatz: Abschlussnotiz', warnings);
     return merged;
   }).filter(p=>p!==null);
+
+  // v2.4.0 (AP1): Reviews normalisieren. Muss NACH Prozessen UND Maßnahmen
+  // laufen, da reviews[].prozessId/massnahmenIds beides referenzieren.
+  const rawReviews = Array.isArray(data.reviews) ? data.reviews : [];
+  const usedReviewIds = new Set();
+  const validMassnahmeIds = new Set(normalized.massnahmen.map(m=>m.id));
+  normalized.reviews = rawReviews.map((item, idx)=>{
+    if(!item || typeof item!=='object'){
+      warnings.push('Review an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
+      return null;
+    }
+    const template = newReview();
+    const merged = Object.assign({}, template, item);
+    if(!isSafeEntityId(merged.id) || usedReviewIds.has(merged.id)){
+      merged.id = uid('rev');
+    }
+    usedReviewIds.add(merged.id);
+    merged.prozessId = coerceString(merged.prozessId, '');
+    if(merged.prozessId){
+      const resolved = resolveProcessReference(merged.prozessId);
+      if(!resolved.ok){
+        if(resolved.reason==='ambiguous'){
+          warnings.push('Review: Verweis auf die mehrfach vorhandene Prozess-ID "'+merged.prozessId+'" ist mehrdeutig und wurde entfernt.');
+          unclearReferences.push({ type:'review', name: REVIEW_ART_LABELS[merged.reviewart]||merged.reviewart, processId: merged.prozessId });
+        } else {
+          warnings.push('Review: Verweis auf nicht vorhandenen Prozess wurde entfernt.');
+        }
+        merged.prozessId = '';
+      } else {
+        merged.prozessId = resolved.id;
+      }
+    }
+    merged.reviewart = capEnum(merged.reviewart, REVIEW_ARTEN, REVIEW_ARTEN[0], 'Review: Reviewart', warnings);
+    merged.status = capEnum(merged.status, REVIEW_STATUS, 'geplant', 'Review: Status', warnings);
+    ['geplantAm','gestartetAm','abgeschlossenAm','naechsterReviewAm','erstelltAm'].forEach(f=>{
+      merged[f] = coerceString(merged[f], '');
+    });
+    merged.verantwortlich = capText(coerceString(merged.verantwortlich,''), IMPORT_LIMITS.maxShortTextLength, 'Review: Verantwortlich', warnings);
+    merged.ergebnis = capText(coerceString(merged.ergebnis,''), IMPORT_LIMITS.maxTextLength, 'Review: Ergebnis', warnings);
+    // Maßnahmenreferenzen auf die (ggf. umgeschriebenen) finalen Maßnahmen-IDs auflösen;
+    // unbekannte/entfernte Referenzen werden stillschweigend entfernt (nicht mehr rekonstruierbar).
+    const rawMassnahmenIds = coerceArray(merged.massnahmenIds, 'Review: Maßnahmenreferenzen', warnings);
+    let droppedRefs = 0;
+    merged.massnahmenIds = rawMassnahmenIds.map(mid=>{
+      const finalId = massnahmeIdRecord.get(mid) || (validMassnahmeIds.has(mid) ? mid : null);
+      if(!finalId) droppedRefs++;
+      return finalId;
+    }).filter(mid=>mid!==null);
+    if(droppedRefs>0) warnings.push('Review: '+droppedRefs+' Verweis(e) auf nicht vorhandene Maßnahmen wurden entfernt.');
+    return merged;
+  }).filter(r=>r!==null);
 
   // Schema-Migration: greift für JEDEN Importweg automatisch (readImportFile,
   // verschlüsselter Import, Datei öffnen), da alle validateImportData() nutzen.
@@ -2923,6 +3046,20 @@ function mergeImportData(importData, listMode){
       updated++;
     }
   });
+  // v2.4.0 (AP1): Reviews zusammenführen
+  (importData.reviews||[]).forEach(ir=>{
+    const existing = STATE.reviews.find(r=>r.id===ir.id);
+    if(!existing){ STATE.reviews.push(ir); added++; }
+    else {
+      mergeStringFields(existing, ir, ['verantwortlich','ergebnis']);
+      if(!existing.prozessId && ir.prozessId) existing.prozessId = ir.prozessId;
+      if(!existing.naechsterReviewAm && ir.naechsterReviewAm) existing.naechsterReviewAm = ir.naechsterReviewAm;
+      const set = new Set(existing.massnahmenIds||[]);
+      (ir.massnahmenIds||[]).forEach(mid=>set.add(mid));
+      existing.massnahmenIds = Array.from(set);
+      updated++;
+    }
+  });
   return {added, updated};
 }
 
@@ -2971,16 +3108,32 @@ function selectiveImportData(importData, processIds, resourceIds, massnahmeIds){
       cr++;
     }
   });
+  const massnahmeIdMap = {};
   (importData.massnahmen||[]).forEach(m=>{
     if(massnahmeIds.includes(m.id)){
       const copy = JSON.parse(JSON.stringify(m));
-      copy.id = uid('m');
+      const newMId = uid('m');
+      massnahmeIdMap[m.id] = newMId;
+      copy.id = newMId;
       copy.prozessId = idMap[m.prozessId] || '';
       STATE.massnahmen.push(copy);
       cm++;
     }
   });
-  return {processes:cp, resources:cr, massnahmen:cm};
+  // v2.4.0 (AP1): Reviews folgen automatisch ihrem Prozess (keine eigene
+  // Auswahlliste in der UI) — ein Review ohne mitausgewählten Prozess wird
+  // nicht übernommen, da er sonst ins Leere zeigen würde.
+  let cv = 0;
+  (importData.reviews||[]).forEach(r=>{
+    if(!idMap[r.prozessId]) return;
+    const copy = JSON.parse(JSON.stringify(r));
+    copy.id = uid('rev');
+    copy.prozessId = idMap[r.prozessId];
+    copy.massnahmenIds = (r.massnahmenIds||[]).filter(mid=>massnahmeIdMap[mid]).map(mid=>massnahmeIdMap[mid]);
+    STATE.reviews.push(copy);
+    cv++;
+  });
+  return {processes:cp, resources:cr, massnahmen:cm, reviews:cv};
 }
 
 
@@ -3854,6 +4007,61 @@ function massnahmeNeedsEffectivenessProof(m){
 }
 
 /* ---------------------------------------------------------------------
+   5l-a) REVIEW CENTER (v2.4.0, AP1)
+   Fälligkeit/Überfälligkeit werden hier BERECHNET, nie als eigener Status
+   gespeichert (siehe REVIEW_STATUS-Kommentar). Alle Sortier-/Priorisierungs-
+   regeln sind rein deterministisch (Datum, Kritikalität) — es gibt bewusst
+   keinen Score und keine fachliche Bewertung, ob ein Review "ausreichend"
+   war (das bleibt Sache des Anwenders/des Reviewergebnis-Freitexts).
+   --------------------------------------------------------------------- */
+/** Liefert alle Reviews eines Prozesses (alle Reviewarten, alle Status), neueste Planung zuerst. @param {string} prozessId @returns {object[]} */
+function reviewsForProcess(prozessId){
+  return STATE.reviews.filter(r=>r.prozessId===prozessId)
+    .slice().sort((a,b)=>(b.geplantAm||'').localeCompare(a.geplantAm||''));
+}
+/** Berechnet Fälligkeit/Überfälligkeit eines Reviews aus geplantAm — niemals aus einem gespeicherten Status. @param {object} r @returns {{state:'done'|'none'|'overdue'|'upcoming'|'ok', days:number|null}} */
+function reviewDueInfo(r){
+  if(r.status==='abgeschlossen') return { state:'done', days:null };
+  const due = String(r.geplantAm||'').trim();
+  if(!due) return { state:'none', days:null };
+  const dueDate = new Date(due); if(isNaN(dueDate.getTime())) return { state:'none', days:null };
+  dueDate.setHours(0,0,0,0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.round((dueDate.getTime()-today.getTime())/86400000);
+  if(days<0) return { state:'overdue', days:-days };
+  if(days<=REVIEW_UPCOMING_WINDOW_DAYS) return { state:'upcoming', days };
+  return { state:'ok', days };
+}
+/** true, wenn ein Review überfällig ist (siehe reviewDueInfo). @param {object} r @returns {boolean} */
+function reviewIsOverdue(r){ return reviewDueInfo(r).state==='overdue'; }
+/** Kritische Prozesse (isProcessKritisch) ohne jeglichen Review-Eintrag (keine Reviewart, kein Status) — signalisiert eine fehlende Reviewplanung, nicht deren fachliche Angemessenheit. @returns {object[]} */
+function processesWithoutReviewPlanning(){
+  return STATE.processes.filter(p=>isProcessKritisch(p) && reviewsForProcess(p.id).length===0);
+}
+/** Baut die deterministisch priorisierte "Was ist als Nächstes zu tun?"-Liste des Review Centers. Reihenfolge: überfällig (am längsten zuerst) -> bald fällig (am nächsten zuerst) -> kritische Prozesse ohne Reviewplanung (nach Prozessname). Kein Score, jede Position ist aus dem Sortierkriterium ableitbar. @returns {Array<{type:string, review?:object, process?:object, days?:number}>} */
+function reviewCenterPriorityList(){
+  const overdue = STATE.reviews.filter(reviewIsOverdue)
+    .map(r=>({type:'overdue', review:r, days:reviewDueInfo(r).days}))
+    .sort((a,b)=>b.days-a.days);
+  const upcoming = STATE.reviews.filter(r=>reviewDueInfo(r).state==='upcoming')
+    .map(r=>({type:'upcoming', review:r, days:reviewDueInfo(r).days}))
+    .sort((a,b)=>a.days-b.days);
+  const missingPlanning = processesWithoutReviewPlanning()
+    .slice().sort((a,b)=>(a.steckbrief.name||'').localeCompare(b.steckbrief.name||''))
+    .map(p=>({type:'missing_planning', process:p}));
+  return overdue.concat(upcoming, missingPlanning);
+}
+/** Aggregiert die Kennzahlen des Review Centers (für Kacheln/Badges). @returns {{overdue:object[], upcoming:object[], missingPlanning:object[], priorityList:Array}} */
+function reviewCenterData(){
+  return {
+    overdue: STATE.reviews.filter(reviewIsOverdue),
+    upcoming: STATE.reviews.filter(r=>reviewDueInfo(r).state==='upcoming'),
+    missingPlanning: processesWithoutReviewPlanning(),
+    priorityList: reviewCenterPriorityList()
+  };
+}
+
+/* ---------------------------------------------------------------------
    5l) MANAGEMENTSICHT AUF ENTSCHEIDUNGEN AUSGERICHTET (v1.6.0, P15)
    Trennt bewusst DATENQUALITÄT (fehlende/unklare Angaben) von tatsächlich
    BESTÄTIGTEM operativem Risiko — eine fehlende Angabe ist kein bestätigtes
@@ -4559,6 +4767,7 @@ function renderView(){
   if(r==='cluster') return viewCluster();
   if(r==='massnahmen') return viewMassnahmenKatalog();
   if(r==='parkplatz') return viewParkplatz();
+  if(r==='reviews') return viewReviewCenter();
   if(r==='quality') return viewQualityCheck();
   if(r==='summary') return viewSummary();
   if(r==='versions') return viewVersions();
@@ -4619,6 +4828,7 @@ function renderSidebar(){
 
   html += '<div class="navgroup"><div class="navgroup-label">Übergreifend</div>';
   html += navItem('cluster','▦','Abhängigkeitscluster');
+  html += navItem('reviews','↺','Review Center', reviewCenterData().overdue.length);
   html += navItem('massnahmen','✓','Maßnahmenkatalog', stats.offeneMassnahmen);
   html += navItem('parkplatz','☐','Parkplatz', STATE.parkplatz.filter(p=>p.status==='offen').length);
   html += navItem('quality','◎','Qualitätsprüfung');
@@ -4658,7 +4868,7 @@ function navItem(route, ic, label, count){
 /** Rendert die Kopfleiste (Titel, Speicherstatus, Datei-Aktionen, Suche). @returns {string} HTML */
 function renderTopbar(){
   const titles = {
-    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
+    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', reviews:'Review Center', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
     summary:'Management Summary', versions:'Versionshistorie', settings:'Branding & Einstellungen',
     process: STATE.ui.processId ? processName(STATE.ui.processId) : 'Prozess'
   };
@@ -5738,7 +5948,7 @@ const App = {
     const summary = selectiveImportData(PENDING_IMPORT, pIds, rIds, mIds);
     PENDING_IMPORT = null;
     autosave(); closeModal(); render();
-    toast(summary.processes+' Prozess(e), '+summary.resources+' Ressource(n), '+summary.massnahmen+' Maßnahme(n) hinzugefügt.');
+    toast(summary.processes+' Prozess(e), '+summary.resources+' Ressource(n), '+summary.massnahmen+' Maßnahme(n)'+(summary.reviews?', '+summary.reviews+' Review(s)':'')+' hinzugefügt.');
   },
 
   /** Öffnet den Dialog "Neue Version speichern". @returns {void} */
@@ -6557,11 +6767,34 @@ function resilienzComment(pid, itemId, val){
 
 /** Rendert den prozessbezogenen Maßnahmen-Tab. @param {object} p @returns {string} HTML */
 function tabMassnahmenTab(p){
+  let html = tabReviewHistoryCard(p);
   const list = STATE.massnahmen.filter(m=>m.prozessId===p.id);
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen für diesen Prozess</div>'+
+  html += '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen für diesen Prozess</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.addMassnahme(\''+safeJsString(p.id)+'\')" title="Neue Maßnahme für diesen Prozess anlegen">+ Maßnahme</button></div>';
   if(list.length===0){ html += emptyState('Keine Maßnahmen erfasst', 'Maßnahmen können hier oder automatisch aus roten Resilienz-Checks erzeugt werden.'); }
   list.forEach(m=>{ html += massnahmeRow(m); });
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP1): kompakte Reviewhistorie innerhalb der Prozessakte — Drill-down in die eigentlichen Review-Datensätze bleibt im Review Center. @param {object} p @returns {string} HTML */
+function tabReviewHistoryCard(p){
+  const list = reviewsForProcess(p.id);
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Reviews für diesen Prozess</div>'+
+    '<div class="flexrow">'+
+    '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>'+
+    '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(p.id)+'\')">+ Review planen</button>'+
+    '</div></div>';
+  if(list.length===0){
+    html += emptyState('Keine Reviews geplant', isProcessKritisch(p) ? 'Dieser Prozess ist kritisch und besitzt noch keine Reviewplanung.' : 'Für diesen Prozess wurden noch keine Reviews geplant.');
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Reviewart</th><th>Geplant am</th><th>Status</th><th>Fälligkeit</th><th>Ergebnis</th></tr></thead><tbody>';
+    list.forEach(r=>{
+      html += '<tr><td>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+'</td><td>'+fmtDateOnly(r.geplantAm)+'</td>'+
+        '<td>'+reviewStatusBadge(r.status)+'</td><td>'+(reviewDueBadge(r)||'–')+'</td>'+
+        '<td>'+(r.ergebnis?escapeHtml(r.ergebnis.substring(0,80)+(r.ergebnis.length>80?'…':'')):'–')+'</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
   html += '</div>';
   return html;
 }
@@ -6952,6 +7185,247 @@ function viewParkplatz(){
         '<button class="btn btn-sm" onclick="App.openParkplatzForm(\''+safeJsString(item.id)+'\')">Bearbeiten</button>'+
         (item.status==='offen'?' <button class="btn btn-sm" onclick="App.parkplatzToMassnahme(\''+safeJsString(item.id)+'\')">In Maßnahme umwandeln</button>':'')+
         ' <button class="btn btn-sm btn-ghost" onclick="App.deleteParkplatzItem(\''+safeJsString(item.id)+'\')">Löschen</button>'+
+        '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP1) — REVIEW CENTER
+   --------------------------------------------------------------------- */
+/** Badge für den gespeicherten Review-Status (nicht die berechnete Fälligkeit). @param {string} status @returns {string} HTML */
+function reviewStatusBadge(status){
+  const map = {geplant:'b-neutral', in_bearbeitung:'b-warn', abgeschlossen:'b-ok'};
+  return '<span class="badge '+(map[status]||'b-neutral')+'">'+escapeHtml(REVIEW_STATUS_LABELS[status]||status)+'</span>';
+}
+/** Badge für die berechnete Fälligkeit eines Reviews (reviewDueInfo) — getrennt vom gespeicherten Status. @param {object} r @returns {string} HTML */
+function reviewDueBadge(r){
+  const info = reviewDueInfo(r);
+  if(info.state==='overdue') return '<span class="badge b-bad">Überfällig ('+info.days+' Tag'+(info.days===1?'':'e')+')</span>';
+  if(info.state==='upcoming') return '<span class="badge b-warn">Bald fällig ('+info.days+' Tag'+(info.days===1?'':'e')+')</span>';
+  return '';
+}
+App.reviewFilter = { status:'', reviewart:'', prozessId:'' };
+/** Setzt einen Filter im Review Center und rendert neu. @param {string} key @param {*} val @returns {void} */
+App.setReviewFilter = function(key, val){ App.reviewFilter[key] = val; render(); };
+/** Öffnet ein Modal zum Anlegen oder Bearbeiten eines Reviews. @param {string} [editId] @param {string} [vorauswahlProzessId] @returns {void} */
+App.openReviewForm = function(editId, vorauswahlProzessId){
+  const existing = editId ? STATE.reviews.find(r=>r.id===editId) : null;
+  const item = existing || newReview({prozessId: vorauswahlProzessId||''});
+  const title = existing ? 'Review bearbeiten' : 'Neuen Review planen';
+  openModal(
+    '<h3>'+escapeHtml(title)+'</h3>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="rev-proc">Prozess <span class="req">*</span></label><select id="rev-proc"><option value="">– bitte wählen –</option>'+
+      STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(item.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label for="rev-art">Reviewart <span class="req">*</span></label><select id="rev-art">'+
+      REVIEW_ARTEN.map(a=>'<option value="'+a+'" '+(item.reviewart===a?'selected':'')+'>'+escapeHtml(REVIEW_ART_LABELS[a])+'</option>').join('')+'</select></div>'+
+    '</div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="rev-plan">Geplant am</label><input type="date" id="rev-plan" value="'+escapeHtml(item.geplantAm)+'"></div>'+
+    '<div class="field"><label for="rev-resp">Verantwortlich</label><input type="text" id="rev-resp" value="'+escapeHtml(item.verantwortlich)+'" placeholder="Name oder Rolle"></div>'+
+    '</div>'+
+    (existing ? '<div class="grid grid-2">'+
+      '<div class="field"><label for="rev-status">Status</label><select id="rev-status">'+
+        REVIEW_STATUS.map(s=>'<option value="'+s+'" '+(item.status===s?'selected':'')+'>'+escapeHtml(REVIEW_STATUS_LABELS[s])+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label for="rev-next">Nächster Reviewtermin</label><input type="date" id="rev-next" value="'+escapeHtml(item.naechsterReviewAm)+'"></div>'+
+      '</div>'+
+      '<div class="grid grid-2">'+
+      '<div class="field"><label for="rev-started">Gestartet am</label><input type="date" id="rev-started" value="'+escapeHtml(item.gestartetAm)+'"></div>'+
+      '<div class="field"><label for="rev-done">Abgeschlossen am</label><input type="date" id="rev-done" value="'+escapeHtml(item.abgeschlossenAm)+'"></div>'+
+      '</div>'+
+      '<div class="field"><label for="rev-result">Ergebnis</label><textarea id="rev-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(item.ergebnis)+'</textarea></div>'
+      : '')+
+    '<div class="modal-actions">'+
+    '<button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.saveReview(\''+safeJsString(existing?item.id:'')+'\')">'+(existing?'Speichern':'Anlegen')+'</button>'+
+    '</div>'
+  );
+};
+/** Speichert einen Review (neu oder Bearbeitung). @param {string} existingId Leer für neuen Review. @returns {void} */
+App.saveReview = function(existingId){
+  const prozessId = document.getElementById('rev-proc').value;
+  if(!prozessId){ toast('Bitte einen Prozess wählen.'); return; }
+  const data = {
+    prozessId,
+    reviewart: document.getElementById('rev-art').value,
+    geplantAm: document.getElementById('rev-plan').value,
+    verantwortlich: document.getElementById('rev-resp').value.trim()
+  };
+  if(existingId){
+    const item = STATE.reviews.find(r=>r.id===existingId);
+    if(item){
+      Object.assign(item, data);
+      const statusEl = document.getElementById('rev-status');
+      if(statusEl) item.status = statusEl.value;
+      const nextEl = document.getElementById('rev-next');
+      if(nextEl) item.naechsterReviewAm = nextEl.value;
+      const startedEl = document.getElementById('rev-started');
+      if(startedEl) item.gestartetAm = startedEl.value;
+      const doneEl = document.getElementById('rev-done');
+      if(doneEl) item.abgeschlossenAm = doneEl.value;
+      const resultEl = document.getElementById('rev-result');
+      if(resultEl) item.ergebnis = resultEl.value.trim();
+    }
+  } else {
+    STATE.reviews.push(newReview(data));
+  }
+  closeModal();
+  autosave();
+  render();
+  toast(existingId ? 'Review aktualisiert.' : 'Review geplant.');
+};
+/** Löscht einen Review nach Bestätigung. @param {string} id @returns {void} */
+App.deleteReview = function(id){
+  if(!confirm('Diesen Review wirklich löschen?')) return;
+  STATE.reviews = STATE.reviews.filter(r=>r.id!==id);
+  autosave();
+  render();
+  toast('Review gelöscht.');
+};
+/** Startet einen geplanten Review (Status -> in_bearbeitung, setzt gestartetAm falls leer). @param {string} id @returns {void} */
+App.startReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  r.status = 'in_bearbeitung';
+  if(!r.gestartetAm) r.gestartetAm = new Date().toISOString().split('T')[0];
+  autosave();
+  render();
+  toast('Review gestartet.');
+};
+/** Öffnet ein Modal zum Abschließen eines Reviews (Ergebnis + optional nächster Reviewtermin). @param {string} id @returns {void} */
+App.openCompleteReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  openModal(
+    '<h3>Review abschließen</h3>'+
+    '<p class="small muted">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' — '+escapeHtml(processName(r.prozessId))+'</p>'+
+    '<div class="field"><label for="rev-c-result">Ergebnis <span class="req">*</span></label><textarea id="rev-c-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(r.ergebnis)+'</textarea></div>'+
+    '<div class="field"><label for="rev-c-next">Nächster Reviewtermin (optional, manuell)</label><input type="date" id="rev-c-next" value="'+escapeHtml(r.naechsterReviewAm)+'"></div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmCompleteReview(\''+safeJsString(id)+'\')">Review abschließen</button></div>'
+  );
+};
+/** Bestätigt den Abschluss eines Reviews. @param {string} id @returns {void} */
+App.confirmCompleteReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  const ergebnis = document.getElementById('rev-c-result').value.trim();
+  if(!ergebnis){ toast('Bitte ein Ergebnis eintragen.'); return; }
+  r.ergebnis = ergebnis;
+  r.naechsterReviewAm = document.getElementById('rev-c-next').value;
+  r.status = 'abgeschlossen';
+  r.abgeschlossenAm = new Date().toISOString().split('T')[0];
+  closeModal();
+  autosave();
+  render();
+  toast('Review abgeschlossen.');
+};
+/** v2.4.0 (AP1): legt aus einem Review eine neue Maßnahme an und verknüpft sie über review.massnahmenIds. @param {string} reviewId @returns {void} */
+App.reviewToMassnahme = function(reviewId){
+  const r = STATE.reviews.find(r=>r.id===reviewId);
+  if(!r) return;
+  openModal(
+    '<h3>Maßnahme aus Review anlegen</h3>'+
+    '<div class="field"><label for="r2m-title">Titel der Maßnahme <span class="req">*</span></label><input type="text" id="r2m-title" style="width:100%;" placeholder="z. B. Feststellung aus '+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' beheben"></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="r2m-resp">Verantwortlich</label><input type="text" id="r2m-resp" value="'+escapeHtml(r.verantwortlich)+'"></div>'+
+    '<div class="field"><label for="r2m-date">Termin</label><input type="date" id="r2m-date"></div>'+
+    '</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmReviewToMassnahme(\''+safeJsString(reviewId)+'\')">Maßnahme anlegen</button></div>'
+  );
+};
+/** Bestätigt die Erzeugung einer Maßnahme aus einem Review. @param {string} reviewId @returns {void} */
+App.confirmReviewToMassnahme = function(reviewId){
+  const r = STATE.reviews.find(r=>r.id===reviewId);
+  if(!r) return;
+  const titel = document.getElementById('r2m-title').value.trim();
+  if(!titel){ toast('Bitte einen Titel eingeben.'); return; }
+  const m = newMassnahme({
+    titel,
+    prozessId: r.prozessId,
+    verantwortlich: document.getElementById('r2m-resp').value.trim(),
+    termin: document.getElementById('r2m-date').value
+  });
+  STATE.massnahmen.push(m);
+  if(!r.massnahmenIds.includes(m.id)) r.massnahmenIds.push(m.id);
+  closeModal();
+  autosave();
+  render();
+  toast('Maßnahme "'+titel+'" angelegt und mit Review verknüpft.');
+};
+/** Rendert die View "Review Center". @returns {string} HTML */
+function viewReviewCenter(){
+  const data = reviewCenterData();
+  const f = App.reviewFilter;
+  let list = STATE.reviews.slice();
+  if(f.status) list = list.filter(r=>r.status===f.status);
+  if(f.reviewart) list = list.filter(r=>r.reviewart===f.reviewart);
+  if(f.prozessId) list = list.filter(r=>r.prozessId===f.prozessId);
+  list.sort((a,b)=>(a.geplantAm||'9999').localeCompare(b.geplantAm||'9999'));
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Review Center</div>'+
+    '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm()">+ Review planen</button></div>';
+  html += '<div class="grid grid-3" style="margin-bottom:12px;">';
+  html += statTile(data.overdue.length, 'Überfällig', data.overdue.length>0?'bad':'ok');
+  html += statTile(data.upcoming.length, 'Bald fällig (≤'+REVIEW_UPCOMING_WINDOW_DAYS+' Tage)', data.upcoming.length>0?'warn':'ok');
+  html += statTile(data.missingPlanning.length, 'Kritische Prozesse ohne Reviewplanung', data.missingPlanning.length>0?'bad':'ok');
+  html += '</div>';
+
+  html += '<div class="card-title" style="font-size:13.5px;margin-bottom:8px;">Was ist als Nächstes zu tun?</div>';
+  if(data.priorityList.length===0){
+    html += '<div class="small muted" style="margin-bottom:16px;">Keine überfälligen oder bald fälligen Reviews, keine kritischen Prozesse ohne Reviewplanung.</div>';
+  } else {
+    html += '<div style="margin-bottom:16px;">';
+    data.priorityList.slice(0,15).forEach(item=>{
+      if(item.type==='missing_planning'){
+        html += '<div class="rowcard"><div class="spread"><div><span class="badge b-bad">Keine Reviewplanung</span> <b>'+escapeHtml(item.process.steckbrief.name||'(ohne Namen)')+'</b>'+
+          '<div class="small muted">Kritischer Prozess ohne jeglichen Review-Eintrag.</div></div>'+
+          '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(item.process.id)+'\')">Review planen</button></div></div>';
+      } else {
+        const r = item.review;
+        html += '<div class="rowcard"><div class="spread"><div>'+reviewDueBadge(r)+' <b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+'</b> — '+escapeHtml(processName(r.prozessId))+
+          '<div class="small muted">Geplant am '+fmtDateOnly(r.geplantAm)+(r.verantwortlich?' · '+escapeHtml(r.verantwortlich):'')+'</div></div>'+
+          '<div class="flexrow">'+(r.status==='geplant'?'<button class="btn btn-sm" onclick="App.startReview(\''+safeJsString(r.id)+'\')">Starten</button>':'')+
+          ' <button class="btn btn-sm btn-primary" onclick="App.openCompleteReview(\''+safeJsString(r.id)+'\')">Abschließen</button></div></div></div>';
+      }
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="grid grid-3" style="margin-bottom:16px;">';
+  html += '<div class="field"><label>Status</label><select onchange="App.setReviewFilter(\'status\',this.value)"><option value="">Alle</option>'+
+    REVIEW_STATUS.map(s=>'<option value="'+s+'" '+(f.status===s?'selected':'')+'>'+escapeHtml(REVIEW_STATUS_LABELS[s])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Reviewart</label><select onchange="App.setReviewFilter(\'reviewart\',this.value)"><option value="">Alle</option>'+
+    REVIEW_ARTEN.map(a=>'<option value="'+a+'" '+(f.reviewart===a?'selected':'')+'>'+escapeHtml(REVIEW_ART_LABELS[a])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Prozess</label><select onchange="App.setReviewFilter(\'prozessId\',this.value)"><option value="">Alle</option>'+
+    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(f.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name)+'</option>').join('')+'</select></div>';
+  html += '</div>';
+
+  if(list.length===0){
+    html += emptyState('Keine Reviews gefunden', 'Passen Sie die Filter an oder planen Sie einen neuen Review.');
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Reviewart</th><th>Prozess</th><th>Geplant am</th><th>Verantwortlich</th><th>Status</th><th>Fälligkeit</th><th>Maßnahmen</th><th></th></tr></thead><tbody>';
+    list.forEach(r=>{
+      html += '<tr>';
+      html += '<td><b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+'</b></td>';
+      html += '<td>'+escapeHtml(processName(r.prozessId))+'</td>';
+      html += '<td>'+fmtDateOnly(r.geplantAm)+'</td>';
+      html += '<td>'+escapeHtml(r.verantwortlich||'–')+'</td>';
+      html += '<td>'+reviewStatusBadge(r.status)+'</td>';
+      html += '<td>'+(reviewDueBadge(r)||'–')+'</td>';
+      html += '<td>'+(r.massnahmenIds.length||'–')+'</td>';
+      html += '<td class="flexrow">'+
+        '<button class="btn btn-sm" onclick="App.openReviewForm(\''+safeJsString(r.id)+'\')">Bearbeiten</button>'+
+        (r.status==='geplant'?' <button class="btn btn-sm" onclick="App.startReview(\''+safeJsString(r.id)+'\')">Starten</button>':'')+
+        (r.status!=='abgeschlossen'?' <button class="btn btn-sm" onclick="App.openCompleteReview(\''+safeJsString(r.id)+'\')">Abschließen</button>':'')+
+        ' <button class="btn btn-sm" onclick="App.reviewToMassnahme(\''+safeJsString(r.id)+'\')">+ Maßnahme</button>'+
+        ' <button class="btn btn-sm btn-ghost" onclick="App.deleteReview(\''+safeJsString(r.id)+'\')">Löschen</button>'+
         '</td>';
       html += '</tr>';
     });
@@ -9031,6 +9505,96 @@ function runSelfTests(){
     assertTrue(WORKSHOP_BLOCKS.includes('Notbetrieb'), 'Notbetrieb-Block muss vorhanden sein');
   });
 
+  /* ---- v2.4.0 (AP1): Review Center ---- */
+  test('defaultState: enthält reviews als leeres Array', true, ()=>{
+    const ds = defaultState();
+    assertTrue(Array.isArray(ds.reviews), 'defaultState().reviews fehlt');
+    assertEqual(ds.reviews.length, 0);
+  });
+  test('newReview: enthält alle Basisfelder mit Default-Status "geplant"', true, ()=>{
+    const r = newReview();
+    assertEqual(r.status, 'geplant');
+    assertTrue(Array.isArray(r.massnahmenIds), 'massnahmenIds muss ein Array sein');
+    ['id','prozessId','reviewart','geplantAm','gestartetAm','abgeschlossenAm','verantwortlich','ergebnis','naechsterReviewAm','erstelltAm'].forEach(f=>{
+      assertTrue(Object.prototype.hasOwnProperty.call(r,f), 'newReview() fehlt Feld "'+f+'"');
+    });
+  });
+  test('Migration 12->13: ergänzt reviews[] additiv, verändert Bestehendes nicht', true, ()=>{
+    const legacy = { schemaVersion:12, processes:[newProcess('Legacy')], resources:[], massnahmen:[], parkplatz:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 12->13 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    assertTrue(Array.isArray(result.data.reviews), 'reviews[] fehlt nach Migration 12->13');
+    assertEqual(result.data.reviews.length, 0);
+    assertEqual(result.data.processes[0].steckbrief.name, 'Legacy', 'Prozessname nach Migration verändert');
+  });
+  test('reviewDueInfo: vergangenes geplantAm bei offenem Review -> overdue', true, ()=>{
+    const past = new Date(); past.setDate(past.getDate()-5);
+    const r = newReview({geplantAm: past.toISOString().split('T')[0], status:'geplant'});
+    const info = reviewDueInfo(r);
+    assertEqual(info.state, 'overdue');
+    assertEqual(info.days, 5);
+  });
+  test('reviewDueInfo: geplantAm innerhalb des Fenster -> upcoming', false, ()=>{
+    const soon = new Date(); soon.setDate(soon.getDate()+10);
+    const r = newReview({geplantAm: soon.toISOString().split('T')[0], status:'geplant'});
+    assertEqual(reviewDueInfo(r).state, 'upcoming');
+  });
+  test('reviewDueInfo: abgeschlossener Review ist nie überfällig, unabhängig vom Datum', true, ()=>{
+    const past = new Date(); past.setDate(past.getDate()-100);
+    const r = newReview({geplantAm: past.toISOString().split('T')[0], status:'abgeschlossen'});
+    assertEqual(reviewDueInfo(r).state, 'done');
+  });
+  test('processesWithoutReviewPlanning: erkennt kritischen Prozess ohne jeglichen Review', false, ()=>{
+    const origProcs = STATE.processes, origReviews = STATE.reviews;
+    const p = newProcess('KritischOhneReview'); p.steckbrief.kritikalitaet = 'hoch';
+    STATE.processes = [p]; STATE.reviews = [];
+    const missing = processesWithoutReviewPlanning();
+    assertTrue(missing.some(x=>x.id===p.id), 'kritischer Prozess ohne Review wurde nicht erkannt');
+    STATE.processes = origProcs; STATE.reviews = origReviews;
+  });
+  test('reviewCenterPriorityList: überfällig vor bald-fällig vor fehlender Planung', false, ()=>{
+    const origProcs = STATE.processes, origReviews = STATE.reviews;
+    const pCrit = newProcess('PrioTestKritisch'); pCrit.steckbrief.kritikalitaet = 'hoch';
+    const pNorm = newProcess('PrioTestNormal');
+    const past = new Date(); past.setDate(past.getDate()-3);
+    const soon = new Date(); soon.setDate(soon.getDate()+3);
+    const overdueReview = newReview({prozessId:pNorm.id, geplantAm: past.toISOString().split('T')[0]});
+    const upcomingReview = newReview({prozessId:pNorm.id, geplantAm: soon.toISOString().split('T')[0]});
+    STATE.processes = [pCrit, pNorm]; STATE.reviews = [upcomingReview, overdueReview];
+    const list = reviewCenterPriorityList();
+    assertEqual(list.map(i=>i.type), ['overdue','upcoming','missing_planning']);
+    STATE.processes = origProcs; STATE.reviews = origReviews;
+  });
+  test('Import: reviews werden normalisiert, Prozessreferenz aufgelöst, unbekannte Maßnahmenreferenz entfernt', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pX', steckbrief:{name:'ReviewImportProzess'}}],
+      resources:[], massnahmen:[{id:'mX', titel:'Import-Maßnahme', prozessId:'pX'}], parkplatz:[],
+      reviews:[{id:'rX', prozessId:'pX', reviewart:'bia', status:'geplant', massnahmenIds:['mX','unbekannt']}], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid, 'Importdatei mit Reviews sollte gültig sein');
+    assertEqual(r.normalizedData.reviews.length, 1);
+    assertEqual(r.normalizedData.reviews[0].prozessId, 'pX');
+    assertEqual(r.normalizedData.reviews[0].massnahmenIds.length, 1, 'unbekannte Maßnahmenreferenz hätte entfernt werden müssen');
+  });
+  test('Import: zu viele Reviews werden abgelehnt (IMPORT_LIMITS.maxReviews)', true, ()=>{
+    const tooMany = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[], resources:[], massnahmen:[], parkplatz:[],
+      reviews: new Array(IMPORT_LIMITS.maxReviews+1).fill(0).map(()=>({id:uid('rev')})), versions:[] };
+    const r = validateImportData(tooMany);
+    assertTrue(!r.valid, 'Import mit zu vielen Reviews hätte abgelehnt werden müssen');
+  });
+  test('mergeImportData: neuer Review wird hinzugefügt, bestehender zusammengeführt', false, ()=>{
+    const origReviews = STATE.reviews;
+    const existing = newReview({id:'revMerge', ergebnis:''});
+    STATE.reviews = [existing];
+    const summary = mergeImportData({ processes:[], resources:[], massnahmen:[], parkplatz:[],
+      reviews:[ newReview({id:'revMerge', ergebnis:'Aus Import'}), newReview({id:'revNeu'}) ] }, 'ergaenzen');
+    assertEqual(summary.added, 1);
+    assertEqual(summary.updated, 1);
+    assertEqual(STATE.reviews.find(r=>r.id==='revMerge').ergebnis, 'Aus Import', 'leeres Ergebnis hätte übernommen werden müssen');
+    assertTrue(!!STATE.reviews.find(r=>r.id==='revNeu'), 'neuer Review wurde nicht hinzugefügt');
+    STATE.reviews = origReviews;
+  });
+
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{
     const total = results.length;
     const passed = results.filter(r=>r.passed).length;
@@ -9051,6 +9615,7 @@ function openCommandPalette(){
     {ic:'◆', label:'Management Summary', action:()=>go('summary')},
     {ic:'✓', label:'Maßnahmenkatalog', action:()=>go('massnahmen')},
     {ic:'☐', label:'Parkplatz (offene Punkte)', action:()=>go('parkplatz')},
+    {ic:'↺', label:'Review Center', action:()=>go('reviews')},
     {ic:'◎', label:'Qualitätsprüfung', action:()=>go('quality')},
     {ic:'▼', label:'Priorisierungsansicht', action:()=>App.openPrioView()},
     {ic:'GF', label:'Managementbericht (GF-Ansicht)', action:()=>App.openGfMode()},

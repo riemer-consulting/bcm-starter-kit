@@ -43,7 +43,8 @@ Most Business Continuity Management tooling falls into one of two categories: ex
 - **Versioning built in** — every saved version is checksummed and comparable against any other, without needing external version control.
 - **PDF reporting** — a genuinely short executive summary and a full detailed report, both generated entirely client-side via the browser's print function.
 - **Encryption where you need it** — optional password-protected export (AES-GCM with a PBKDF2-derived key, 600,000 iterations, via the Web Crypto API) for sharing over channels you don't fully trust. Files written by earlier versions remain readable.
-- **57 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+- **79 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+- **Review Center** *(2.4.0-dev, in development on `feature/2.4-governance-lifecycle`)* — plans, tracks and prioritizes recurring reviews (process, BIA, emergency operations, resources) per process, with deterministically computed overdue/upcoming flags and no opaque scoring.
 
 ## Getting started
 
