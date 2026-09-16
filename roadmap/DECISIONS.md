@@ -133,6 +133,73 @@ additives Feldmodell zum Zeitpunkt von AP4 bereits abgeschlossen war.
 Siehe Abschlussbericht für eine Empfehlung, dies bei Bedarf gezielt in
 einem künftigen Arbeitspaket nachzuholen.
 
+## AP5 — Keine neue Persistenz, keine neue Schema-Version
+
+Entscheidung:
+`computeGovernanceDashboard()` ist eine reine Berechnungsfunktion, die bei
+jedem Rendern neu aufgerufen wird. Es gibt kein `STATE.dashboard[]`, keine
+gespeicherten Kennzahlen, keine gespeicherten Prioritäten.
+`CURRENT_SCHEMA_VERSION` bleibt bei 15.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung. Alle für das Dashboard
+benötigten Informationen liegen bereits in AP1–AP4 vor; eine zusätzliche
+Persistenzschicht hätte nur eine weitere Stelle geschaffen, die mit den
+eigentlichen Datensätzen synchron gehalten werden müsste.
+
+## AP5 — Wiederverwendung statt zweiter Fachlogik
+
+Entscheidung:
+Jede Governance-Aussage stützt sich ausschließlich auf bereits bestehende
+Funktionen (`reviewCenterData()`, die AP3-Maßnahmenprädikate,
+`qualityAndConsistencyCheck()`, `buildTimelineEvents()`). Neu geschriebene
+Funktionen (`massnahmeGovernanceData()`, `openManagementDecisions()`,
+`changesSinceLastRelease()`, `governanceQualityHighlights()`) filtern oder
+gruppieren ausschließlich deren Ergebnisse, berechnen aber nichts neu.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung ("keine zweite Reviewberechnung
+aufbauen", "keine zweite Maßnahmenlogik aufbauen", "keine zweite Quality
+Engine bauen"). Eine parallele Implementierung hätte zwangsläufig
+auseinanderlaufen können (z. B. eine andere Definition von "überfällig").
+
+## AP5 — Priorisierungsreihenfolge um zwei Punkte erweitert (11 statt 10 Stufen)
+
+Entscheidung:
+`governancePriorityList()` ergänzt die in der Aufgabenstellung genannte
+10-Punkte-Beispielreihenfolge um eine eigene Stufe 7 ("offener
+Managemententscheidungsbedarf") und fasst "bald fälliger Review eines
+sonstigen Prozesses", "blockierte Maßnahme ohne hohe Relevanz" und
+"fällige Wiedervorlage" in einer Sammelstufe 11 zusammen.
+
+Begründung:
+"Offene Managemententscheidungen" ist einer der acht Kernpunkte im
+Abschnitt "Fachliches Ziel" der Aufgabenstellung, fehlt aber in der
+10-Punkte-Beispielreihenfolge — die Aufgabenstellung selbst fordert
+ausdrücklich, die Reihenfolge "gegen das tatsächlich vorhandene
+Datenmodell zu prüfen" und "nicht blind zu übernehmen". Eine offene
+Entscheidung blockiert typischerweise weitere Schritte und wurde daher
+zwischen Wirksamkeitsprüfung (Stufe 6) und Konsistenzbefund (jetzt Stufe
+8) eingeordnet. "Wiedervorlagen, sofern fällig" wird in Abschnitt 4
+("Maßnahmen-Governance") der Aufgabenstellung ebenfalls explizit gefordert,
+ohne einer Stufe zugeordnet zu sein — sie erhält daher die am wenigsten
+dringliche Sammelstufe 11, zusammen mit den beiden anderen in der
+Aufgabenstellung erwähnten, aber nicht einsortierten Fällen.
+
+## AP5 — "Hohe Relevanz" bei blockierten Maßnahmen definiert
+
+Entscheidung:
+"Blockierte Maßnahme hoher Relevanz" (Stufe 3) wird als `prioritaet==='hoch'
+ODER Bezug zu einem kritischen Prozess` definiert (`massnahmeHatHoheRelevanz()`).
+
+Begründung:
+Die Aufgabenstellung nennt "hoher Relevanz" ohne Definition (im
+Unterschied zu "hoher Priorität" bei Maßnahmen in Stufe 2, wo das Feld
+`prioritaet` eindeutig ist). Da Relevanz im gesamten Datenmodell sowohl
+über die Maßnahmenpriorität als auch über die Prozesskritikalität
+ausgedrückt wird, wird hier bewusst die Vereinigung beider bestehender
+Signale verwendet, statt ein neues Relevanzfeld einzuführen.
+
 ## AP1 — Kein Score, keine fachliche Bewertung
 
 Entscheidung:

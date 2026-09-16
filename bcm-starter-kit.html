@@ -4728,6 +4728,300 @@ function isProcessKritisch(process){
   return process.steckbrief.kritikalitaet === 'hoch' || biaScore(process).klasse === 'Hoch';
 }
 
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP5) — GOVERNANCE DASHBOARD
+   Reine Berechnungsfunktionen auf Basis von AP1–AP4 (Review Center,
+   Reviewzyklen, Maßnahmenmanagement 2.0, BCM Timeline). Bewusst KEIN
+   STATE.dashboard[] und keine gespeicherten Kennzahlen/Scores/
+   Prioritäten — computeGovernanceDashboard() wird bei jedem Rendern neu
+   berechnet, verändert STATE nie und speichert nichts. Beantwortet "Was
+   muss ein BCM-Verantwortlicher als Nächstes tun?" rein deterministisch
+   (Sortierung nach Fälligkeit/Kritikalität/Priorität) — kein Score,
+   keine KI, keine fachliche Bewertung der BCM-Entscheidungen des
+   Anwenders.
+   --------------------------------------------------------------------- */
+/** v2.4.0 (AP5): true, wenn eine Maßnahme aus Governance-Sicht "hohe Relevanz" hat — hohe Priorität ODER Bezug zu einem kritischen Prozess. Reine Ableitung aus vorhandenen Feldern, keine neue Bewertung. @param {object} m @returns {boolean} */
+function massnahmeHatHoheRelevanz(m){
+  if(m.prioritaet==='hoch') return true;
+  const p = getProcess(m.prozessId);
+  return !!p && isProcessKritisch(p);
+}
+/** v2.4.0 (AP5): Tage seit dem überschrittenen Termin einer Maßnahme, oder null, wenn kein überschrittener Termin vorliegt. @param {object} m @returns {number|null} */
+function massnahmeUeberfaelligkeitTage(m){
+  if(!massnahmeIsOverdue(m)) return null;
+  const t = new Date(m.termin); const today = new Date();
+  t.setHours(0,0,0,0); today.setHours(0,0,0,0);
+  return Math.round((today.getTime()-t.getTime())/86400000);
+}
+/** v2.4.0 (AP5): offene Maßnahmen, deren Wiedervorlagedatum erreicht oder überschritten ist. @returns {object[]} */
+function massnahmenMitFaelligerWiedervorlage(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  return STATE.massnahmen.filter(m=>{
+    if(!massnahmeIsOpen(m) || !String(m.wiedervorlageAm||'').trim()) return false;
+    const d = new Date(m.wiedervorlageAm); if(isNaN(d.getTime())) return false;
+    d.setHours(0,0,0,0);
+    return d.getTime() <= today.getTime();
+  });
+}
+/** v2.4.0 (AP5): kompakte Maßnahmen-Governance-Sicht, analog zu reviewCenterData() — reine Filterung über die bestehenden AP3-Prädikate, keine zweite Maßnahmenlogik. @returns {{overdue:object[], blocked:object[], openHighPriority:object[], needsEffectivenessProof:object[], dueFollowup:object[]}} */
+function massnahmeGovernanceData(){
+  return {
+    overdue: STATE.massnahmen.filter(massnahmeIsOverdue),
+    blocked: STATE.massnahmen.filter(m=>m.status==='blockiert'),
+    openHighPriority: STATE.massnahmen.filter(m=>massnahmeIsOpen(m) && m.prioritaet==='hoch'),
+    needsEffectivenessProof: STATE.massnahmen.filter(massnahmeNeedsEffectivenessProof),
+    dueFollowup: massnahmenMitFaelligerWiedervorlage()
+  };
+}
+/** v2.4.0 (AP5): Maßnahmen mit offenem, noch nicht erledigtem Entscheidungsbedarf — nutzt ausschließlich das bestehende Feld massnahme.entscheidungsbedarf, führt keine neue Entscheidungs-Entität ein. @returns {object[]} */
+function openManagementDecisions(){
+  return STATE.massnahmen.filter(m=>massnahmeIsOpen(m) && String(m.entscheidungsbedarf||'').trim()!=='');
+}
+/** v2.4.0 (AP5): die zuletzt tatsächlich erzeugte Freigabe-Version (STATE.versions[].source==='release'), oder null, wenn noch keine Freigabe existiert. @returns {object|null} */
+function lastReleaseVersion(){
+  const releases = STATE.versions.filter(v=>v.source==='release').sort((a,b)=>b.nr-a.nr);
+  return releases.length>0 ? releases[0] : null;
+}
+/** v2.4.0 (AP5): fachlich relevante Ereignisse seit der letzten Freigabe, abgeleitet über buildTimelineEvents() (AP4) — keine neue Persistenz. Kommuniziert transparent, wenn noch keine Freigabe existiert, statt einen Referenzzeitpunkt zu erfinden. @returns {{hasRelease:boolean, release?:object, events?:Array}} */
+function changesSinceLastRelease(){
+  const release = lastReleaseVersion();
+  if(!release) return { hasRelease:false };
+  const relevantTypes = ['kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert','review_abgeschlossen','massnahme_abgeschlossen','wirksamkeit_geprueft'];
+  const events = buildTimelineEvents()
+    .filter(e=>relevantTypes.includes(e.type) && String(e.timestamp)>String(release.datum))
+    .sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
+  return { hasRelease:true, release, events };
+}
+/** v2.4.0 (AP5): auf das Dashboard zugeschnittene Qualitäts-/Konsistenzbefunde — nur Warnungen (nicht die bloßen Hinweise) plus alle Konsistenzbefunde, nicht die vollständige Liste (dafür gibt es die Qualitätsprüfung). Ruft ausschließlich die bestehende qualityAndConsistencyCheck() auf, keine zweite Quality Engine. @returns {{warnungen:object[], consistency:object[]}} */
+function governanceQualityHighlights(){
+  const {quality, consistency} = qualityAndConsistencyCheck();
+  return { warnungen: quality.filter(f=>f.severity==='warnung'), consistency };
+}
+/** v2.4.0 (AP5): grobe Anzeige-Tonalität einer Governance-Aufgabe (rot/gelb) — rein abgeleitet aus der bereits bestimmten Kategorie, kein zusätzlicher Score. @param {object} entry @returns {'bad'|'warn'} */
+function governanceEntryTone(entry){
+  return /overdue|blocked|missing/.test(entry.category) ? 'bad' : 'warn';
+}
+/**
+ * v2.4.0 (AP5): zentrale, deterministische Governance-Priorisierung
+ * ("Was muss ich als Nächstes tun?"). Reine Sortierung nach Fälligkeit,
+ * Kritikalität und Priorität — kein Score, keine KI, keine fachliche
+ * Bewertung, ob eine BCM-Entscheidung richtig/ausreichend/wirksam war.
+ *
+ * Reihenfolge (Stufen), an das tatsächliche Datenmodell angepasst:
+ *   1. überfälliger Review eines kritischen Prozesses
+ *   2. überfällige Maßnahme hoher Priorität
+ *   3. blockierte Maßnahme mit hoher Relevanz (hohe Priorität ODER kritischer Prozess)
+ *   4. kritischer Prozess ohne jegliche Reviewplanung
+ *   5. bald fälliger Review eines kritischen Prozesses
+ *   6. erledigte Maßnahme ohne dokumentierte Wirksamkeitsprüfung
+ *   7. offener Managemententscheidungsbedarf (massnahme.entscheidungsbedarf)
+ *      — in der Aufgabenstellung als eigener Fachbereich genannt, aber
+ *      nicht in der 10-Punkte-Beispielreihenfolge enthalten; hier bewusst
+ *      zwischen Wirksamkeitsprüfung und Konsistenzbefunden eingeordnet,
+ *      da eine offene Entscheidung typischerweise weitere Schritte blockiert.
+ *   8. wesentlicher offener Konsistenz-/Qualitätsbefund (alle
+ *      Konsistenzbefunde + Qualitätsbefunde der Stufe "warnung"; reine
+ *      "Hinweise" gelten hier nicht als "wesentlich" und bleiben der
+ *      Qualitätsprüfung vorbehalten)
+ *   9. überfälliger Review eines sonstigen (nicht kritischen) Prozesses
+ *  10. sonstige überfällige Maßnahme (nicht hohe Priorität)
+ *  11. sonstige fällige Governance-Aufgabe — bald fälliger Review eines
+ *      sonstigen Prozesses, blockierte Maßnahme ohne hohe Relevanz, oder
+ *      fällige Wiedervorlage einer offenen Maßnahme (Abschnitt 4 der
+ *      Aufgabenstellung nennt "Wiedervorlagen, sofern fällig" explizit,
+ *      ohne sie in die 10-Punkte-Reihenfolge einzuordnen — hier daher als
+ *      Sammelstufe am Ende).
+ *
+ * Innerhalb jeder Stufe wird nach Dringlichkeit sortiert (Tage überfällig
+ * absteigend bzw. Tage bis fällig aufsteigend), mit der Datensatz-ID als
+ * stabilem Tie-Breaker — bei unveränderten Daten daher immer dieselbe
+ * Reihenfolge.
+ * @returns {Array<{tier:number, category:string, title:string, reason:string, context:string, object:object}>}
+ */
+function governancePriorityList(){
+  const entries = [];
+  const rc = reviewCenterData();
+
+  rc.overdue
+    .filter(r=>{ const p=getProcess(r.prozessId); return p && isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(b).days-reviewDueInfo(a).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:1, category:'review_overdue_critical',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' überfällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig. Der Prozess ist als kritisch eingestuft.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(m=>massnahmeIsOverdue(m) && m.prioritaet==='hoch')
+    .sort((a,b)=> massnahmeUeberfaelligkeitTage(b)-massnahmeUeberfaelligkeitTage(a) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      const days = massnahmeUeberfaelligkeitTage(m);
+      entries.push({ tier:2, category:'massnahme_overdue_high',
+        title:'Maßnahme überfällig (hohe Priorität)',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig und hat hohe Priorität.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  STATE.massnahmen.filter(m=>m.status==='blockiert' && massnahmeHatHoheRelevanz(m))
+    .sort((a,b)=>{
+      const aFehlt = massnahmeIsBlockedWithoutReason(a), bFehlt = massnahmeIsBlockedWithoutReason(b);
+      if(aFehlt!==bFehlt) return aFehlt ? -1 : 1;
+      return a.id.localeCompare(b.id);
+    })
+    .forEach(m=>{
+      const fehlendeBegruendung = massnahmeIsBlockedWithoutReason(m);
+      entries.push({ tier:3, category:'massnahme_blocked_relevant',
+        title:'Blockierte Maßnahme (hohe Relevanz)',
+        reason: fehlendeBegruendung
+          ? 'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert, eine Begründung ist noch nicht dokumentiert.'
+          : 'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert: '+m.blockiertGrund,
+        context:'Blockiert',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  reviewCenterData().missingPlanning
+    .slice().sort((a,b)=>(a.steckbrief.name||'').localeCompare(b.steckbrief.name||'') || a.id.localeCompare(b.id))
+    .forEach(p=>{
+      entries.push({ tier:4, category:'process_missing_review_planning',
+        title:'Keine Reviewplanung',
+        reason:'Kritischer Prozess "'+(p.steckbrief.name||'(ohne Namen)')+'" besitzt noch keinen einzigen geplanten, gestarteten oder abgeschlossenen Review.',
+        context:'Keine Reviewplanung',
+        object:{type:'process', id:p.id, prozessId:p.id, label:p.steckbrief.name||'(ohne Namen)'} });
+    });
+
+  rc.upcoming
+    .filter(r=>{ const p=getProcess(r.prozessId); return p && isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(a).days-reviewDueInfo(b).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:5, category:'review_upcoming_critical',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' bald fällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist in '+days+' Tag'+(days===1?'':'en')+' fällig. Der Prozess ist als kritisch eingestuft.',
+        context:'Fällig in '+days+' Tag'+(days===1?'':'en'),
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(massnahmeNeedsEffectivenessProof)
+    .sort((a,b)=> String(a.abgeschlossenAm||'').localeCompare(String(b.abgeschlossenAm||'')) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:6, category:'massnahme_needs_effectiveness_proof',
+        title:'Wirksamkeitsprüfung fehlt',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist abgeschlossen'+(m.abgeschlossenAm?' (seit '+fmtDateOnly(m.abgeschlossenAm)+')':'')+', aber die Wirksamkeitsprüfung ist noch nicht dokumentiert.',
+        context: m.abgeschlossenAm ? 'Abgeschlossen am '+fmtDateOnly(m.abgeschlossenAm) : 'Abgeschlossen',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  openManagementDecisions()
+    .slice().sort((a,b)=>a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:7, category:'open_management_decision',
+        title:'Entscheidung erforderlich',
+        reason:'Für Maßnahme "'+(m.titel||'(ohne Titel)')+'" besteht offener Entscheidungsbedarf: '+m.entscheidungsbedarf,
+        context:'Entscheidung offen',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  const qh = governanceQualityHighlights();
+  qh.consistency.slice().sort((a,b)=>(a.rule+a.process).localeCompare(b.rule+b.process)).forEach(f=>{
+    entries.push({ tier:8, category:'consistency_finding',
+      title:'Konsistenzbefund ('+f.rule+')', reason:f.text, context:f.process,
+      object:{type:'quality', id:f.rule+'|'+f.process, prozessId:null, label:f.process} });
+  });
+  qh.warnungen.slice().sort((a,b)=>(a.rule+(a.processId||'')).localeCompare(b.rule+(b.processId||''))).forEach(f=>{
+    entries.push({ tier:8, category:'quality_finding',
+      title:'Qualitätsbefund ('+f.rule+')', reason:f.text, context:f.process,
+      object:{type:'quality', id:f.rule+'|'+(f.processId||''), prozessId:f.processId||null, label:f.process, tab:f.tab} });
+  });
+
+  rc.overdue
+    .filter(r=>{ const p=getProcess(r.prozessId); return !p || !isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(b).days-reviewDueInfo(a).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:9, category:'review_overdue_other',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' überfällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(m=>massnahmeIsOverdue(m) && m.prioritaet!=='hoch')
+    .sort((a,b)=> massnahmeUeberfaelligkeitTage(b)-massnahmeUeberfaelligkeitTage(a) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      const days = massnahmeUeberfaelligkeitTage(m);
+      entries.push({ tier:10, category:'massnahme_overdue_other',
+        title:'Maßnahme überfällig',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  rc.upcoming
+    .filter(r=>{ const p=getProcess(r.prozessId); return !p || !isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(a).days-reviewDueInfo(b).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:11, category:'review_upcoming_other',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' bald fällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist in '+days+' Tag'+(days===1?'':'en')+' fällig.',
+        context:'Fällig in '+days+' Tag'+(days===1?'':'en'),
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+  STATE.massnahmen.filter(m=>m.status==='blockiert' && !massnahmeHatHoheRelevanz(m))
+    .sort((a,b)=>a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:11, category:'massnahme_blocked_other',
+        title:'Blockierte Maßnahme',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert'+(m.blockiertGrund?': '+m.blockiertGrund:', eine Begründung ist noch nicht dokumentiert.'),
+        context:'Blockiert',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+  massnahmenMitFaelligerWiedervorlage()
+    .slice().sort((a,b)=>String(a.wiedervorlageAm).localeCompare(String(b.wiedervorlageAm)) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:11, category:'massnahme_followup_due',
+        title:'Wiedervorlage fällig',
+        reason:'Für Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist die Wiedervorlage zum '+fmtDateOnly(m.wiedervorlageAm)+' fällig.',
+        context:'Wiedervorlage '+fmtDateOnly(m.wiedervorlageAm),
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  return entries;
+}
+/** v2.4.0 (AP5): zentrale, reine Berechnungsfunktion des Governance Dashboards. Führt AP1–AP4 zusammen, verändert STATE nie und speichert nichts — wird bei jedem Rendern neu berechnet (keine gespeicherten Kennzahlen/Scores). @returns {object} */
+function computeGovernanceDashboard(){
+  const hasProcesses = STATE.processes.length>0;
+  const priorityList = hasProcesses ? governancePriorityList() : [];
+  const rc = reviewCenterData();
+  const mg = massnahmeGovernanceData();
+  const decisions = openManagementDecisions();
+  const releaseInfo = changesSinceLastRelease();
+  const quality = governanceQualityHighlights();
+  return {
+    hasProcesses,
+    hasAnyReviews: STATE.reviews.length>0,
+    priorityList,
+    reviewGovernance: rc,
+    massnahmeGovernance: mg,
+    openDecisions: decisions,
+    changesSinceRelease: releaseInfo,
+    qualityHighlights: quality,
+    kpis: {
+      reviewsOverdue: rc.overdue.length,
+      reviewsUpcoming: rc.upcoming.length,
+      massnahmenOverdue: mg.overdue.length,
+      massnahmenBlocked: mg.blocked.length,
+      wirksamkeitOffen: mg.needsEffectivenessProof.length,
+      kritischeProzesseOhnePlanung: rc.missingPlanning.length,
+      offeneEntscheidungen: decisions.length,
+      aenderungenSeitFreigabe: releaseInfo.hasRelease ? releaseInfo.events.length : null
+    }
+  };
+}
+
 /* Abhängigkeitscluster: Ressourcen die in mehreren Prozessen vorkommen,
    gruppiert nach Kategorie, priorisiert nach Häufigkeit × Kritikalität. */
 function buildClusters(){
@@ -6400,6 +6694,167 @@ const App = {
   },
 };
 
+/** v2.4.0 (AP5): Deep-Link-Button für ein Governance-Objekt (Review/Prozess/Maßnahme/Qualitätsbefund/Version). Führt immer in eine bestehende Ansicht, nie in eine neue Detailansicht. @param {{type:string,id:*,prozessId:?string,tab?:string}} obj @returns {string} HTML */
+function governanceDrilldownHtml(obj){
+  if(!obj) return '';
+  if(obj.type==='review') return '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>';
+  if(obj.type==='process') return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(obj.id)+'\',\'steckbrief\')">Prozessakte öffnen</button>';
+  if(obj.type==='massnahme') return '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button>';
+  if(obj.type==='quality'){
+    if(obj.prozessId) return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(obj.prozessId)+'\',\''+(obj.tab||'steckbrief')+'\')">Prozessakte öffnen</button>';
+    return '<button class="btn btn-sm" onclick="go(\'quality\')">Qualitätsprüfung öffnen</button>';
+  }
+  if(obj.type==='version') return '<button class="btn btn-sm" onclick="go(\'timeline\')">Timeline öffnen</button>';
+  return '';
+}
+/** v2.4.0 (AP5): rendert eine einzelne priorisierte Governance-Aufgabe. @param {object} entry @returns {string} HTML */
+function governancePriorityRowHtml(entry){
+  return '<div class="rowcard"><div class="spread"><div>'+
+    '<span class="badge b-'+governanceEntryTone(entry)+'">'+escapeHtml(entry.title)+'</span> '+
+    (entry.context?'<span class="small muted">'+escapeHtml(entry.context)+'</span>':'')+
+    '<div style="margin-top:4px;">'+escapeHtml(entry.reason)+'</div></div>'+
+    governanceDrilldownHtml(entry.object)+'</div></div>';
+}
+/** v2.4.0 (AP5): kompakte Review-Governance-Karte — reine Darstellung von reviewCenterData() (AP1), keine zweite Reviewberechnung. @param {object} rc @returns {string} HTML */
+function governanceReviewSectionHtml(rc){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Review-Governance</div>'+
+    '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button></div>';
+  if(rc.overdue.length===0 && rc.upcoming.length===0 && rc.missingPlanning.length===0){
+    html += '<div class="small muted">Keine überfälligen oder bald fälligen Reviews, keine kritischen Prozesse ohne Reviewplanung.</div>';
+  } else {
+    const section = (title, list, renderItem)=>{
+      if(list.length===0) return '';
+      let h = '<div class="small muted" style="font-weight:700;margin:8px 0 4px;">'+title+' ('+list.length+')</div>';
+      list.slice(0,3).forEach(item=>{ h += renderItem(item); });
+      if(list.length>3) h += '<div class="small muted">… und '+(list.length-3)+' weitere</div>';
+      return h;
+    };
+    html += section('Überfällig', rc.overdue, r=>'<div class="small">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' — '+escapeHtml(processName(r.prozessId))+'</div>');
+    html += section('Bald fällig', rc.upcoming, r=>'<div class="small">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' — '+escapeHtml(processName(r.prozessId))+'</div>');
+    html += section('Ohne Reviewplanung', rc.missingPlanning, p=>'<div class="small">'+escapeHtml(p.steckbrief.name||'(ohne Namen)')+'</div>');
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): kompakte Maßnahmen-Governance-Karte — reine Darstellung von massnahmeGovernanceData() (AP3), keine zweite Maßnahmenlogik. @param {object} mg @returns {string} HTML */
+function governanceMassnahmenSectionHtml(mg){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen-Governance</div>'+
+    '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div>';
+  const total = mg.overdue.length+mg.blocked.length+mg.openHighPriority.length+mg.needsEffectivenessProof.length+mg.dueFollowup.length;
+  if(total===0){
+    html += '<div class="small muted">Keine überfälligen, blockierten oder wirksamkeitsungeprüften Maßnahmen, keine fälligen Wiedervorlagen.</div>';
+  } else {
+    const row = (label, count)=> count>0 ? '<div class="small" style="margin:2px 0;">'+count+'× '+label+'</div>' : '';
+    html += row('überfällig', mg.overdue.length);
+    html += row('blockiert', mg.blocked.length);
+    html += row('offen, hohe Priorität', mg.openHighPriority.length);
+    html += row('erledigt ohne Wirksamkeitsnachweis', mg.needsEffectivenessProof.length);
+    html += row('Wiedervorlage fällig', mg.dueFollowup.length);
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Änderungen seit letzter Freigabe" — reine Darstellung von changesSinceLastRelease() (AP4-Ableitung), kommuniziert transparent, wenn noch keine Freigabe existiert. @param {object} info @returns {string} HTML */
+function governanceReleaseSectionHtml(info){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Änderungen seit letzter Freigabe</div>'+
+    '<button class="btn btn-sm" onclick="go(\'timeline\')">Timeline öffnen</button></div>';
+  if(!info.hasRelease){
+    html += emptyState('Noch keine Freigabe', 'Es wurde noch keine Freigabe erzeugt — es gibt daher noch keinen Bezugspunkt für Änderungen seit der letzten Freigabe.');
+  } else if(info.events.length===0){
+    html += '<div class="small muted">Keine fachlich relevanten Änderungen seit der Freigabe vom '+fmtDate(info.release.datum)+' (Version '+info.release.nr+').</div>';
+  } else {
+    html += '<div class="small muted" style="margin-bottom:6px;">Seit Freigabe vom '+fmtDate(info.release.datum)+' (Version '+info.release.nr+'):</div>';
+    info.events.slice(0,5).forEach(e=>{
+      html += '<div class="small" style="margin:2px 0;">'+escapeHtml(TIMELINE_EVENT_LABELS[e.type]||e.type)+' — '+escapeHtml(e.description)+'</div>';
+    });
+    if(info.events.length>5) html += '<div class="small muted">… und '+(info.events.length-5)+' weitere</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Offene Managemententscheidungen" — reine Darstellung von openManagementDecisions() (nutzt ausschließlich massnahme.entscheidungsbedarf). @param {object[]} decisions @returns {string} HTML */
+function governanceDecisionsSectionHtml(decisions){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Offene Managemententscheidungen</div>'+
+    '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div>';
+  if(decisions.length===0){
+    html += '<div class="small muted">Keine offenen Entscheidungsbedarfe dokumentiert.</div>';
+  } else {
+    decisions.slice(0,5).forEach(m=>{
+      html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(m.titel||'(ohne Titel)')+'</b>: '+escapeHtml(m.entscheidungsbedarf)+'</div>';
+    });
+    if(decisions.length>5) html += '<div class="small muted">… und '+(decisions.length-5)+' weitere</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Datenqualität & Konsistenz" — reine Darstellung von governanceQualityHighlights() (nutzt ausschließlich die bestehende qualityAndConsistencyCheck()). Keine Aussage über die fachliche Richtigkeit der zugrundeliegenden BCM-Entscheidung. @param {object} q @returns {string} HTML */
+function governanceQualitySectionHtml(q){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Datenqualität &amp; Konsistenz</div>'+
+    '<button class="btn btn-sm" onclick="go(\'quality\')">Qualitätsprüfung öffnen</button></div>';
+  const total = q.warnungen.length+q.consistency.length;
+  if(total===0){
+    html += '<div class="small muted">Keine wesentlichen Qualitäts- oder Konsistenzbefunde.</div>';
+  } else {
+    q.consistency.slice(0,3).forEach(f=>{ html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(f.rule)+'</b> — '+escapeHtml(f.text)+'</div>'; });
+    q.warnungen.slice(0,3).forEach(f=>{ html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(f.rule)+'</b> — '+escapeHtml(f.text)+'</div>'; });
+    if(total>6) html += '<div class="small muted">… und '+(total-6)+' weitere in der Qualitätsprüfung</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): rendert den vollständigen Governance-Dashboard-Bereich (Prioritätsliste, Kennzahlen, kompakte Review-/Maßnahmen-/Freigabe-/Entscheidungs-/Qualitätsübersicht). Reine Darstellung über computeGovernanceDashboard() — keine eigene Berechnung, keine Mutation. @returns {string} HTML */
+function governanceDashboardHtml(){
+  const gd = computeGovernanceDashboard();
+
+  if(!gd.hasProcesses){
+    // Die Willkommenskarte deckt "ganz neues Workbook" bereits ab; dieser
+    // Zweig greift nur, wenn Prozesse zwischenzeitlich wieder entfernt
+    // wurden, aber schon Versionen existieren (Willkommenskarte erscheint dann nicht mehr).
+    if(STATE.versions.length===0) return '';
+    return '<div class="card"><div class="card-head"><div class="card-title">Governance-Übersicht</div></div>'+
+      emptyState('Noch keine Prozesse dokumentiert', 'Beginnen Sie mit der Prozessaufnahme, um Governance-Aussagen zu erhalten.')+'</div>';
+  }
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Was ist als Nächstes zu tun?</div>'+
+    '<div class="small muted">Deterministisch nach Fälligkeit, Kritikalität und Priorität sortiert — kein Score.</div></div>';
+  if(gd.priorityList.length===0){
+    html += gd.hasAnyReviews
+      ? emptyState('Keine dringenden Aufgaben', 'Aktuell keine dringenden Governance-Aufgaben erkannt.')
+      : emptyState('Reviewplanung fehlt', 'Für diese Prozesse ist noch keine Reviewplanung hinterlegt.');
+  } else {
+    html += '<div>';
+    gd.priorityList.forEach(entry=>{ html += governancePriorityRowHtml(entry); });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  const k = gd.kpis;
+  html += '<div class="grid grid-4" style="margin:16px 0 0;">';
+  html += statTile(k.reviewsOverdue, 'Reviews überfällig', k.reviewsOverdue>0?'bad':'ok', "go('reviews')");
+  html += statTile(k.reviewsUpcoming, 'Reviews bald fällig', k.reviewsUpcoming>0?'warn':'ok', "go('reviews')");
+  html += statTile(k.massnahmenOverdue, 'Maßnahmen überfällig', k.massnahmenOverdue>0?'bad':'ok', "go('massnahmen')");
+  html += statTile(k.massnahmenBlocked, 'Maßnahmen blockiert', k.massnahmenBlocked>0?'warn':'ok', "go('massnahmen')");
+  html += '</div>';
+  html += '<div class="grid grid-4" style="margin:8px 0 22px;">';
+  html += statTile(k.wirksamkeitOffen, 'Wirksamkeitsprüfungen offen', k.wirksamkeitOffen>0?'warn':'ok', "go('massnahmen')");
+  html += statTile(k.kritischeProzesseOhnePlanung, 'Kritische Prozesse ohne Reviewplanung', k.kritischeProzesseOhnePlanung>0?'bad':'ok', "go('reviews')");
+  html += statTile(k.offeneEntscheidungen, 'Offene Managemententscheidungen', k.offeneEntscheidungen>0?'warn':'ok', "go('massnahmen')");
+  html += statTile(k.aenderungenSeitFreigabe===null?'–':k.aenderungenSeitFreigabe, 'Änderungen seit letzter Freigabe', undefined, "go('timeline')");
+  html += '</div>';
+
+  html += '<div class="grid grid-2" style="margin-bottom:16px;">';
+  html += governanceReviewSectionHtml(gd.reviewGovernance);
+  html += governanceMassnahmenSectionHtml(gd.massnahmeGovernance);
+  html += '</div>';
+  html += '<div class="grid grid-2" style="margin-bottom:16px;">';
+  html += governanceReleaseSectionHtml(gd.changesSinceRelease);
+  html += governanceDecisionsSectionHtml(gd.openDecisions);
+  html += '</div>';
+  html += governanceQualitySectionHtml(gd.qualityHighlights);
+
+  return html;
+}
+
 /** Rendert die View "Dashboard". @returns {string} HTML */
 function viewDashboard(){
   const stats = dashboardStats();
@@ -6423,6 +6878,14 @@ function viewDashboard(){
     html += '<li>Maßnahmen ableiten und nachverfolgen</li>';
     html += '</ol></div>';
   }
+
+  // v2.4.0 (AP5): Governance Dashboard — steht bewusst vor den generischen
+  // KPI-Tiles/Schnellzugriffen, da die konkrete Arbeitsliste laut
+  // Aufgabenstellung das wichtigste Element der Ansicht sein muss.
+  // governanceDashboardHtml() entscheidet selbst, ob (und welcher)
+  // Empty-State bei fehlenden Prozessen sinnvoll ist — bei einem ganz
+  // neuen Workbook übernimmt bereits die Willkommenskarte oben diese Rolle.
+  html += governanceDashboardHtml();
 
   html += '<div class="privacy-note" style="font-size:11px;">🔒 Alle Daten bleiben lokal — keine Übertragung an externe Server. '+storageLocationNotice()+'</div>';
 
@@ -10348,6 +10811,200 @@ function runSelfTests(){
     });
 
     STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen; STATE.versions = origVersions;
+  })();
+
+  /* ---- v2.4.0 (AP5): Governance Dashboard ---- */
+  (function(){
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen,
+      origVersions = STATE.versions, origResources = STATE.resources;
+
+    test('governancePriorityList: überfälliger Review eines kritischen Prozesses -> Stufe 1', true, ()=>{
+      const p = newProcess('GovKritischOverdue'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-5);
+      const r = newReview({prozessId:p.id, reviewart:'prozess', geplantAm: past.toISOString().split('T')[0], status:'geplant'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===1 && e.category==='review_overdue_critical' && e.object.id===r.id), 'überfälliger Review eines kritischen Prozesses fehlt in Stufe 1', list);
+    });
+
+    test('governancePriorityList: überfällige Maßnahme hoher Priorität -> Stufe 2', true, ()=>{
+      const p = newProcess('GovMassnahmeHoch');
+      const m = newMassnahme({prozessId:p.id, titel:'Hohe Prio überfällig', prioritaet:'hoch', status:'offen', termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===2 && e.category==='massnahme_overdue_high' && e.object.id===m.id), 'überfällige Maßnahme hoher Priorität fehlt in Stufe 2', list);
+    });
+
+    test('governancePriorityList: blockierte Maßnahme mit hoher Relevanz -> Stufe 3', true, ()=>{
+      const p = newProcess('GovBlockiert'); p.steckbrief.kritikalitaet = 'hoch';
+      const m = newMassnahme({prozessId:p.id, titel:'Blockiert kritisch', status:'blockiert', blockiertGrund:''});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===3 && e.category==='massnahme_blocked_relevant' && e.object.id===m.id), 'blockierte Maßnahme mit hoher Relevanz fehlt in Stufe 3', list);
+    });
+
+    test('governancePriorityList: kritischer Prozess ohne Reviewplanung -> Stufe 4', true, ()=>{
+      const p = newProcess('GovOhnePlanung'); p.steckbrief.kritikalitaet = 'hoch';
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===4 && e.category==='process_missing_review_planning' && e.object.id===p.id), 'kritischer Prozess ohne Reviewplanung fehlt in Stufe 4', list);
+    });
+
+    test('governancePriorityList: bald fälliger Review eines kritischen Prozesses -> Stufe 5', false, ()=>{
+      const p = newProcess('GovBaldFaellig'); p.steckbrief.kritikalitaet = 'hoch';
+      const soon = new Date(); soon.setDate(soon.getDate()+5);
+      const r = newReview({prozessId:p.id, reviewart:'bia', geplantAm: soon.toISOString().split('T')[0], status:'geplant'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===5 && e.category==='review_upcoming_critical' && e.object.id===r.id), 'bald fälliger Review eines kritischen Prozesses fehlt in Stufe 5', list);
+    });
+
+    test('governancePriorityList: erledigte Maßnahme ohne Wirksamkeitsprüfung -> Stufe 6', true, ()=>{
+      const p = newProcess('GovWirksamkeit');
+      const m = newMassnahme({prozessId:p.id, titel:'Erledigt ohne Nachweis', status:'erledigt', abgeschlossenAm:'2026-01-01', wirksamkeitGeprueftAm:''});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===6 && e.category==='massnahme_needs_effectiveness_proof' && e.object.id===m.id), 'erledigte Maßnahme ohne Wirksamkeitsprüfung fehlt in Stufe 6', list);
+    });
+
+    test('governancePriorityList: offener Managemententscheidungsbedarf -> Stufe 7', true, ()=>{
+      const p = newProcess('GovEntscheidung');
+      const m = newMassnahme({prozessId:p.id, titel:'Entscheidung nötig', status:'offen', entscheidungsbedarf:'Budgetfreigabe erforderlich'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===7 && e.category==='open_management_decision' && e.object.id===m.id), 'offener Managemententscheidungsbedarf fehlt in Stufe 7', list);
+      assertEqual(openManagementDecisions().length, 1);
+    });
+    test('openManagementDecisions: erledigte/verworfene Maßnahmen mit Entscheidungsbedarf gelten nicht als offen', false, ()=>{
+      const p = newProcess('GovEntscheidungErledigt');
+      const m = newMassnahme({prozessId:p.id, status:'erledigt', entscheidungsbedarf:'Bereits entschieden', abgeschlossenAm:'2026-01-01', wirksamkeitGeprueftAm:'2026-01-02'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      assertEqual(openManagementDecisions().length, 0);
+    });
+
+    test('governancePriorityList: wesentlicher Qualitätsbefund (Warnung) -> Stufe 8', false, ()=>{
+      const r = newResource(); r.name = 'GovKritischeRessourceOhneAlternative'; r.kritikalitaet = 'hoch'; r.alternative = 'nein';
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [r];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===8 && e.category==='quality_finding'), 'Qualitätsbefund (Q10) fehlt in Stufe 8', list);
+    });
+
+    test('governancePriorityList: Sortierung ist über alle Stufen hinweg monoton (Stufe steigt nie rückwärts)', true, ()=>{
+      const pCrit = newProcess('GovMonoKritisch'); pCrit.steckbrief.kritikalitaet = 'hoch';
+      const pCrit2 = newProcess('GovMonoKritischOhnePlanung'); pCrit2.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-3);
+      const r1 = newReview({prozessId:pCrit.id, geplantAm:past.toISOString().split('T')[0]});
+      const m1 = newMassnahme({prozessId:pCrit.id, titel:'MonoHochUeberfaellig', prioritaet:'hoch', termin:'2000-01-01'});
+      const m2 = newMassnahme({prozessId:pCrit.id, titel:'MonoBlockiert', status:'blockiert'});
+      const m3 = newMassnahme({prozessId:pCrit.id, titel:'MonoErledigt', status:'erledigt', abgeschlossenAm:'2026-01-01'});
+      const m4 = newMassnahme({prozessId:pCrit.id, titel:'MonoEntscheidung', entscheidungsbedarf:'Test'});
+      const r = newResource(); r.kritikalitaet = 'hoch'; r.alternative = 'nein';
+      STATE.processes = [pCrit, pCrit2]; STATE.reviews = [r1]; STATE.massnahmen = [m1,m2,m3,m4]; STATE.versions = []; STATE.resources = [r];
+      const list = governancePriorityList();
+      for(let i=1;i<list.length;i++){
+        assertTrue(list[i].tier>=list[i-1].tier, 'Stufe ist an Position '+i+' rückläufig ('+list[i-1].tier+' -> '+list[i].tier+')', list.map(e=>e.tier));
+      }
+    });
+
+    test('governancePriorityList: gleiche Daten erzeugen bei wiederholtem Aufruf dieselbe Reihenfolge (deterministisch)', true, ()=>{
+      const p = newProcess('GovDeterministisch'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-7);
+      const r = newReview({prozessId:p.id, geplantAm: past.toISOString().split('T')[0]});
+      const m = newMassnahme({prozessId:p.id, titel:'DetMassnahme', prioritaet:'hoch', termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const first = governancePriorityList();
+      const second = governancePriorityList();
+      assertEqual(JSON.stringify(first), JSON.stringify(second), 'governancePriorityList() sollte bei unverändertem STATE deterministisch identisch sein');
+    });
+
+    test('changesSinceLastRelease: findet Ereignisse nach der letzten Freigabe, ignoriert keine Freigabe existierende Ereignisse davor', false, ()=>{
+      const p = newProcess('GovFreigabeProzess');
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'},
+        {nr:2, datum:'2026-02-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'release'}
+      ];
+      const m = newMassnahme({prozessId:p.id, titel:'NachFreigabeAbgeschlossen', status:'erledigt', abgeschlossenAm:'2026-03-01'});
+      STATE.massnahmen = [m]; STATE.resources = [];
+      const info = changesSinceLastRelease();
+      assertTrue(info.hasRelease, 'hasRelease sollte true sein');
+      assertEqual(info.release.nr, 2);
+      assertTrue(info.events.some(e=>e.type==='massnahme_abgeschlossen' && e.timestamp==='2026-03-01'), 'Ereignis nach der Freigabe fehlt', info.events);
+    });
+    test('changesSinceLastRelease: kommuniziert transparent, wenn noch keine Freigabe existiert', true, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'}
+      ]; STATE.resources = [];
+      const info = changesSinceLastRelease();
+      assertEqual(info.hasRelease, false, 'ohne Freigabe-Version sollte kein Referenzzeitpunkt erfunden werden');
+      assertTrue(info.events===undefined, 'events sollte bei fehlender Freigabe nicht gesetzt sein');
+    });
+
+    test('computeGovernanceDashboard: leeres Workbook liefert hasProcesses:false und eine leere Prioritätsliste', true, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const gd = computeGovernanceDashboard();
+      assertEqual(gd.hasProcesses, false);
+      assertEqual(gd.priorityList.length, 0);
+    });
+
+    test('computeGovernanceDashboard: Kennzahlen entsprechen den tatsächlich gefilterten Datensätzen', false, ()=>{
+      const p = newProcess('GovKpiProzess'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-2);
+      const rOverdue = newReview({prozessId:p.id, geplantAm: past.toISOString().split('T')[0]});
+      const mOverdue = newMassnahme({prozessId:p.id, termin:'2000-01-01', status:'offen'});
+      const mBlocked = newMassnahme({prozessId:p.id, status:'blockiert'});
+      const mNeedsProof = newMassnahme({prozessId:p.id, status:'erledigt', abgeschlossenAm:'2026-01-01'});
+      const mDecision = newMassnahme({prozessId:p.id, entscheidungsbedarf:'Klären'});
+      STATE.processes = [p]; STATE.reviews = [rOverdue]; STATE.massnahmen = [mOverdue, mBlocked, mNeedsProof, mDecision]; STATE.versions = []; STATE.resources = [];
+      const gd = computeGovernanceDashboard();
+      assertEqual(gd.kpis.reviewsOverdue, 1);
+      assertEqual(gd.kpis.massnahmenOverdue, 1);
+      assertEqual(gd.kpis.massnahmenBlocked, 1);
+      assertEqual(gd.kpis.wirksamkeitOffen, 1);
+      assertEqual(gd.kpis.offeneEntscheidungen, 1);
+      assertEqual(gd.kpis.aenderungenSeitFreigabe, null, 'ohne Freigabe sollte kein Zählwert erfunden werden');
+    });
+
+    test('computeGovernanceDashboard: verändert STATE nicht (reine Berechnung)', true, ()=>{
+      const p = newProcess('GovKeineMutation'); p.steckbrief.kritikalitaet = 'hoch';
+      const m = newMassnahme({prozessId:p.id, termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const before = JSON.stringify(STATE);
+      computeGovernanceDashboard();
+      const after = JSON.stringify(STATE);
+      assertEqual(after, before, 'computeGovernanceDashboard() darf STATE nicht verändern');
+    });
+
+    test('governanceDrilldownHtml: erzeugt für jeden Objekttyp einen sinnvollen Deep Link', false, ()=>{
+      assertTrue(governanceDrilldownHtml({type:'review'}).includes("go('reviews')"), 'Review-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'process', id:'p1'}).includes("go('process','p1','steckbrief')"), 'Prozess-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'massnahme'}).includes("go('massnahmen')"), 'Maßnahmen-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'quality', prozessId:'p1', tab:'bia'}).includes("go('process','p1','bia')"), 'Qualitätsbefund-Deep-Link mit Prozessbezug fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'quality', prozessId:null}).includes("go('quality')"), 'Qualitätsbefund-Deep-Link ohne Prozessbezug fehlerhaft');
+    });
+
+    test('massnahmeHatHoheRelevanz: hohe Priorität ODER kritischer Prozess, sonst nicht', false, ()=>{
+      const pKrit = newProcess('GovRelevanzKritisch'); pKrit.steckbrief.kritikalitaet = 'hoch';
+      const pNorm = newProcess('GovRelevanzNormal');
+      STATE.processes = [pKrit, pNorm];
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pNorm.id, prioritaet:'hoch'})), true);
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pKrit.id, prioritaet:'niedrig'})), true);
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pNorm.id, prioritaet:'niedrig'})), false);
+    });
+
+    test('massnahmenMitFaelligerWiedervorlage: erkennt fällige Wiedervorlage nur bei offenen Maßnahmen', false, ()=>{
+      const past = new Date(); past.setDate(past.getDate()-1);
+      const mOffenFaellig = newMassnahme({status:'offen', wiedervorlageAm: past.toISOString().split('T')[0]});
+      const mErledigtFaellig = newMassnahme({status:'erledigt', abgeschlossenAm:'2026-01-01', wiedervorlageAm: past.toISOString().split('T')[0]});
+      const future = new Date(); future.setDate(future.getDate()+30);
+      const mOffenZukunft = newMassnahme({status:'offen', wiedervorlageAm: future.toISOString().split('T')[0]});
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [mOffenFaellig, mErledigtFaellig, mOffenZukunft]; STATE.versions = []; STATE.resources = [];
+      const due = massnahmenMitFaelligerWiedervorlage();
+      assertEqual(due.map(m=>m.id), [mOffenFaellig.id]);
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+    STATE.versions = origVersions; STATE.resources = origResources;
   })();
 
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{

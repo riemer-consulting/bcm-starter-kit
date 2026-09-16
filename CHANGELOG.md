@@ -117,6 +117,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Versionsdiffs, Unterscheidung Version/Freigabe, Duplikatfreiheit
   (deterministische, idempotente Ableitung), Filter- und Sortierverhalten.
 
+### Added — AP5: Governance Dashboard
+- **Neuer, prominenter Bereich auf dem Dashboard** ("Was ist als Nächstes
+  zu tun?") — beantwortet direkt beim Öffnen der Anwendung, welche
+  Review-, Maßnahmen-, Entscheidungs- und Qualitätsaufgaben Aufmerksamkeit
+  brauchen. **Keine neue Persistenz und keine neue Schema-Version** —
+  `computeGovernanceDashboard()` führt ausschließlich bereits vorhandene
+  AP1–AP4-Funktionen zusammen (`reviewCenterData()`,
+  `massnahmeIsOverdue()`/`massnahmeIsOpen()`/`massnahmeNeedsEffectivenessProof()`,
+  `qualityAndConsistencyCheck()`, `buildTimelineEvents()`) und wird bei
+  jedem Rendern neu berechnet, ohne STATE zu verändern.
+- **Deterministische 11-Stufen-Priorisierung** (`governancePriorityList()`):
+  überfälliger Review eines kritischen Prozesses → überfällige Maßnahme
+  hoher Priorität → blockierte Maßnahme hoher Relevanz → kritischer
+  Prozess ohne Reviewplanung → bald fälliger Review eines kritischen
+  Prozesses → erledigte Maßnahme ohne Wirksamkeitsprüfung → offener
+  Managemententscheidungsbedarf → wesentlicher Konsistenz-/Qualitätsbefund
+  → überfälliger Review eines sonstigen Prozesses → sonstige überfällige
+  Maßnahme → sonstige fällige Governance-Aufgabe (bald fälliger Review
+  eines sonstigen Prozesses, sonstige blockierte Maßnahme, fällige
+  Wiedervorlage). Jeder Eintrag nennt Aufgabe, betroffenen Datensatz,
+  Grund im Klartext, zeitlichen Kontext und einen direkten Deep Link.
+  Kein Score, keine KI, keine fachliche Bewertung der BCM-Entscheidung.
+- **Kompakte Kennzahlenreihe** (8 Kacheln: überfällige/bald fällige
+  Reviews, überfällige/blockierte Maßnahmen, offene
+  Wirksamkeitsprüfungen, kritische Prozesse ohne Reviewplanung, offene
+  Managemententscheidungen, Änderungen seit letzter Freigabe) sowie
+  kompakte Detailkarten für Review-Governance, Maßnahmen-Governance,
+  Änderungen seit letzter Freigabe, offene Managemententscheidungen und
+  Datenqualität/Konsistenz — jede Karte reine Darstellung bestehender
+  Funktionen, keine zweite Fachlogik.
+- **"Änderungen seit letzter Freigabe"** ermittelt die letzte tatsächlich
+  erzeugte Freigabe-Version (`STATE.versions[].source==='release'`) und
+  zeigt fachlich relevante Timeline-Ereignisse seit diesem Zeitpunkt
+  (`changesSinceLastRelease()`, reine AP4-Ableitung). Existiert noch keine
+  Freigabe, wird das transparent kommuniziert — es wird kein
+  Referenzzeitpunkt erfunden.
+- **"Offene Managemententscheidungen"** nutzt ausschließlich das bereits
+  vorhandene Feld `massnahme.entscheidungsbedarf` — keine neue
+  Entscheidungs-Entität.
+- **Empty States statt "alles grün"**: ein leeres Workbook zeigt weiterhin
+  nur die bestehende Willkommenskarte (keine Governance-Kennzahlen mit
+  lauter Nullen); Prozesse ohne jegliche Reviewplanung erhalten eine
+  eigene, transparente Meldung statt einer positiven Pauschalaussage.
+- 19 neue Selbsttests (126 insgesamt): jede Prioritätsstufe einzeln,
+  stufenübergreifende Sortierreihenfolge, Determinismus bei wiederholtem
+  Aufruf, keine Mutation von STATE, Kennzahlen-Korrektheit, Deep Links,
+  Freigabe-/Kein-Freigabe-Fall, leeres Workbook.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

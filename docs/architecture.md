@@ -155,6 +155,49 @@ version-comparison UI, which only ever read `.name`/`.changes`.
 date-range filtering and returns events sorted newest-first; the view layer
 (`viewTimeline()`) never talks to `buildTimelineEvents()` directly.
 
+### Governance Dashboard (`computeGovernanceDashboard()`, 2.4.0-dev)
+
+Answers "what does a BCM owner need to do next?" by combining AP1–AP4
+outputs — no new persistence, no `STATE.dashboard[]`, no stored KPI or
+priority values. `computeGovernanceDashboard()` (and everything it calls)
+is a pure function: called fresh on every render of the Dashboard view,
+reads `STATE`, returns a plain object, and never mutates anything. It
+delegates entirely to existing functions rather than recomputing anything:
+`reviewCenterData()` (AP1), `massnahmeIsOverdue()`/`massnahmeIsOpen()`/
+`massnahmeIsBlockedWithoutReason()`/`massnahmeNeedsEffectivenessProof()`
+(AP3), `qualityAndConsistencyCheck()` (pre-2.4), and `buildTimelineEvents()`
+(AP4). A handful of small new aggregators (`massnahmeGovernanceData()`,
+`openManagementDecisions()`, `changesSinceLastRelease()`,
+`governanceQualityHighlights()`) only filter/group the outputs of those
+existing functions — none of them introduce a second copy of any
+computation.
+
+**`governancePriorityList()`** is the deterministic core: a fixed sequence
+of 11 tiers, each a plain filter+sort over `STATE`/existing predicates,
+with the record's own `id` as a stable tie-breaker so identical data always
+produces an identical order (verified directly by self-tests: two calls
+with unchanged `STATE` must return byte-identical JSON). Tiers 1–6, 8–10
+follow the task's example ordering directly; two additions were needed
+against the actual data model and are called out explicitly in code
+comments and `roadmap/DECISIONS.md`: tier 7 (open management decisions,
+`massnahme.entscheidungsbedarf`) has no place in the original 10-item
+example list despite being one of the dashboard's required questions, and
+tier 11 folds in "upcoming review of a non-critical process", "blocked
+measure without high relevance", and "due follow-up" (`wiedervorlageAm`)
+— three items the task mentions elsewhere but never assigns a tier to.
+Every entry carries a plain-language `reason` string (never just a
+severity label) and an `object` describing its drill-down target, rendered
+by `governanceDrilldownHtml()` — the same `{type, id, prozessId}` shape
+`buildTimelineEvents()` already uses for its own drill-down, reused rather
+than reinvented, extended with a `'quality'` type for findings that have
+no natural single-record target.
+
+No color, count, or ordering here is an invented score: every badge tone
+(`governanceEntryTone()`) and every KPI number is a direct, transparent
+read of an already-deterministic classification (overdue/blocked/missing
+vs. everything else) — never a weighted or normalized index, and never a
+percentage claiming "maturity" or "health".
+
 ## Rendering
 
 Rendering is plain HTML string generation — there is no virtual DOM and no
@@ -311,7 +354,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 107 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 126 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

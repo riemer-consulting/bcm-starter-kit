@@ -6,7 +6,7 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 ## Contents
 
 1. [Overview](#overview)
-2. [Dashboard](#dashboard)
+2. [Dashboard](#dashboard) — including the [Governance Dashboard](#governance-dashboard) *(2.4.0-dev)*
 3. [Process records](#process-records)
 4. [Dependency cluster view](#dependency-cluster-view)
 5. [Review Center](#review-center) *(2.4.0-dev)*
@@ -41,6 +41,56 @@ records, resources, and measures.
 The landing view. Shows overall counts (processes, critical processes, open
 measures, high risks) and quick actions. Use it as a jumping-off point to any
 process record or the sample-data loader.
+
+### Governance Dashboard *(2.4.0-dev)*
+
+As soon as at least one process exists, the Dashboard leads with a
+**Governance Dashboard** section, above the general counts — because
+answering "what do I need to do next?" matters more than a count of how
+many processes you have documented.
+
+**"What's next"** is a single, deterministically ordered list. Each entry
+states the task, the record it concerns, a plain-language reason (never
+just a severity label), when it's due, and a button that opens the exact
+record — never a vague pointer you have to go find yourself. The order is
+fixed and explainable: overdue reviews and measures on critical
+processes/of high priority first, then planning gaps, then upcoming
+reviews, effectiveness checks, open decisions, and quality/consistency
+findings, then the same categories for everything else. Nothing here is a
+score — the position of every entry follows directly from its category and
+how overdue or soon-due it is, and identical data always produces the
+identical order.
+
+Below that, a small set of counted tiles (reviews overdue/upcoming,
+measures overdue/blocked, effectiveness checks pending, critical processes
+without review planning, open management decisions, changes since the
+last release) and compact cards for **Review Governance**, **Measures
+Governance**, **Changes since the last release**, **Open management
+decisions**, and **Data quality & consistency** — each one a condensed,
+linked view of information the corresponding full view (Review Center,
+Measures catalog, Timeline, Quality check) already computes. None of this
+introduces a second copy of that logic; it's the same functions, presented
+together.
+
+**"Changes since the last release"** looks at your most recent Freigabe
+(release) version and lists what changed since then — criticality,
+MTA/RTO/RPO, emergency-operations, or critical-resource changes, plus
+reviews and measures completed and effectiveness checks done. If you have
+never created a release, it says so plainly instead of guessing a
+reference point.
+
+**Open management decisions** reuses the existing "decision needed" field
+on measures — it is not a new kind of record.
+
+An empty workbook shows only the existing welcome card, never a wall of
+zeroes that could read as "everything is fine." If you have processes but
+haven't planned any reviews at all, the Governance Dashboard says so
+directly rather than showing an empty "no urgent tasks" list.
+
+**What this is not:** a management report, a compliance dashboard, a
+maturity score, or a risk score. It never states that a BCM decision was
+right, sufficient, or effective — only what needs attention and why, based
+on dates, status, and criticality you already entered.
 
 ## Process records
 
@@ -309,7 +359,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 107 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 126 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export

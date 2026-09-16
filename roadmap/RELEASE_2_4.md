@@ -159,11 +159,68 @@ gewünscht, ist das für AP5 nachholbar (siehe Empfehlung im Abschlussbericht).
 
 ### AP5 – Governance Dashboard
 
+**Status: umgesetzt (2.4.0-dev)**
+
 - Ziel
+  Beim Öffnen der Anwendung innerhalb weniger Sekunden beantworten: "Was
+  muss ich als Nächstes tun?" — als operative Arbeits-/Steuerungsansicht,
+  nicht als Managementreport, Compliance-Dashboard oder Reifegradmodell.
 - Fachlicher Nutzen
+  Führt Review-Fälligkeit (AP1/AP2), Maßnahmenstatus/-priorität/-blockade/
+  Wirksamkeitsprüfung (AP3), Qualitäts-/Konsistenzbefunde und
+  Versionsänderungen seit der letzten Freigabe (AP4) in einer einzigen,
+  deterministisch priorisierten Liste zusammen. Jeder Eintrag nennt
+  Aufgabe, betroffenen Datensatz, Grund im Klartext, zeitlichen Kontext
+  und einen direkten Deep Link — nie nur "Hohe Priorität" ohne Begründung.
 - UX-Auswirkungen
+  Neuer, prominenter Bereich am Anfang des bestehenden Dashboards (kein
+  neuer Menüpunkt, kein Redesign) — die Willkommenskarte für ein leeres
+  Workbook bleibt unverändert davor. Darunter eine kompakte
+  Kennzahlenreihe (8 Kacheln) sowie fünf kompakte Detailkarten
+  (Review-Governance, Maßnahmen-Governance, Änderungen seit letzter
+  Freigabe, offene Managemententscheidungen, Datenqualität/Konsistenz).
+  Kritische Prozesse werden NICHT als eigene Liste gezeigt, sondern nur
+  dort, wo aus ihnen tatsächlich eine Governance-Aufgabe entsteht. Leere
+  Workbooks bzw. Workbooks ohne jegliche Reviewplanung erhalten eigene,
+  transparente Meldungen statt eines "alles grün"-Eindrucks.
 - Architektur
+  `computeGovernanceDashboard()` als reine, bei jedem Rendern neu
+  aufgerufene Berechnungsfunktion — kein `STATE.dashboard[]`, keine
+  gespeicherten Kennzahlen/Scores/Prioritäten, **keine neue
+  Schema-Version** (`CURRENT_SCHEMA_VERSION` bleibt 15). Nutzt
+  ausschließlich bestehende AP1–AP4-Funktionen
+  (`reviewCenterData()`, `massnahmeIsOverdue()`/`massnahmeIsOpen()`/
+  `massnahmeIsBlockedWithoutReason()`/`massnahmeNeedsEffectivenessProof()`,
+  `qualityAndConsistencyCheck()`, `buildTimelineEvents()`) sowie wenige
+  neue, ausschließlich filternde Aggregatoren
+  (`massnahmeGovernanceData()`, `openManagementDecisions()`,
+  `changesSinceLastRelease()`, `governanceQualityHighlights()`).
+  `governancePriorityList()` ist eine deterministische 11-Stufen-Sortierung
+  mit Datensatz-ID als Tie-Breaker.
 - Tests
+  19 neue Selbsttests (126 insgesamt): jede Prioritätsstufe einzeln
+  geprüft, stufenübergreifende Sortierreihenfolge, Determinismus bei
+  wiederholtem Aufruf, keine Mutation von STATE, Kennzahlen-Korrektheit,
+  Deep-Link-Erzeugung, Freigabe-/Kein-Freigabe-Fall, leeres Workbook.
+  Browser-Verifikation (Playwright/Chromium): leeres Workbook zeigt nur
+  Willkommenskarte, kritischer Prozess ohne Reviewplanung erscheint korrekt
+  in der Prioritätsliste, Deep-Link-Klick navigiert korrekt, alle
+  Detailkarten rendern — durchgehend 0 Konsolenfehler. Vollständige
+  Regression AP1–AP4 sowie Import/Export, verschlüsselter Roundtrip und
+  Reload/Persistenz anhand des echten Demo-Workbooks (Schema-Migration
+  11→15) erneut bestätigt.
+
+**Abweichung von der Aufgabenstellung:** die 10-Punkte-Beispielreihenfolge
+aus der Aufgabenstellung wurde um eine zusätzliche Stufe ergänzt (11 statt
+10 Stufen). "Offene Managemententscheidung" ist einer der acht in Abschnitt
+"Fachliches Ziel" genannten Kernpunkte, kommt in der 10-Punkte-Beispielliste
+aber nicht vor — sie wurde als Stufe 7 (zwischen Wirksamkeitsprüfung und
+Konsistenzbefund) ergänzt. Ebenso nennt Abschnitt 4 ("Maßnahmen-Governance")
+explizit "Wiedervorlagen, sofern fällig", ohne sie einzuordnen — diese
+wurden zusammen mit "bald fälliger Review eines sonstigen Prozesses" und
+"blockierte Maßnahme ohne hohe Relevanz" als Sammelstufe 11 ("sonstige
+fällige Governance-Aufgabe") ergänzt. Beide Ergänzungen sind in
+`roadmap/DECISIONS.md` begründet.
 
 ### AP6 – Prozessreife
 
