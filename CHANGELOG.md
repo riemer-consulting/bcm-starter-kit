@@ -58,6 +58,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `computeNextReviewDate()` (keine Policy, ereignisbezogen, fest/individuell),
   gleichzeitig offene Reviewarten, Import-Normalisierung, Merge-Verhalten.
 
+### Added — AP3: Maßnahmenmanagement 2.0
+- **Erweitertes Maßnahmenmodell** (Schema-Migration 14→15, additiv):
+  `sourceType`/`sourceId`/`sourceLabel`/`reviewId` (Herkunft nachvollziehbar
+  — Review, Parkplatz, Qualitätsbefund, Resilienz-Check oder manuell),
+  `erstelltAm`/`abgeschlossenAm` (Zeitachse), `wirksamkeitPruefer` (getrennt
+  vom bestehenden `wirksamkeitGeprueftAm`/`wirksamkeitErgebnis`),
+  `wiedervorlageAm`, `blockiertGrund`. Bei Altdatensätzen wird die Herkunft
+  nie rückwirkend erfunden — sie erhalten `sourceType:'unbekannt'` und einen
+  leeren, nicht geratenen Anlagezeitpunkt.
+- **Erweitertes Statusmodell:** `offen`, `geplant`, `in_arbeit` (jetzt "In
+  Umsetzung" beschriftet), `blockiert`, `erledigt`, `verworfen`. Der frühere
+  Wert `zurueckgestellt` bleibt für Bestandsdaten lesbar, wird im UI aber
+  nicht mehr neu angeboten. **"Erledigt" bedeutet weiterhin ausdrücklich
+  nicht "wirksam"** — die Wirksamkeitsprüfung bleibt ein separater Vorgang.
+- **Herkunft ist jetzt an drei Stellen aktiv nachvollziehbar:** Parkplatz →
+  Maßnahme (bestehende Funktion, jetzt mit Herkunftskennzeichnung), Review →
+  Maßnahme (vollständig bidirektional über `reviewId` und
+  `review.massnahmenIds[]`), Qualitäts-/Konsistenzbefund → Maßnahme (neu, in
+  der Qualitätsprüfung), sowie automatisch aus roten/gelben Resilienz-Checks.
+  Ein Herkunfts-Filter im Maßnahmenkatalog macht die Verteilung sichtbar.
+- **Neue Plausibilitätshinweise** (Dokumentationsqualität, keine fachliche
+  Bewertung): "Blockiert ohne Begründung" und "Erledigt ohne
+  Wirksamkeitsnachweis" (bereits vorhanden, jetzt zusätzlich in
+  `validateMassnahme()`); im Review Center zusätzlich "abgeschlossene
+  Reviews mit noch offenen Maßnahmen".
+- `abgeschlossenAm` wird beim Wechsel auf „Erledigt" einmalig automatisch
+  gesetzt und beim erneuten Öffnen/Schließen nicht überschrieben.
+- 10 neue Selbsttests (98 insgesamt): Migration 14→15, Statusklassifikation,
+  Blockade-ohne-Begründung, Wirksamkeitsnachweis-Hinweis, automatisches
+  `abgeschlossenAm`, offene Folgemaßnahmen abgeschlossener Reviews,
+  Import-Normalisierung von Herkunft/Review-Verknüpfung.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

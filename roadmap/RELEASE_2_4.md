@@ -74,11 +74,40 @@ Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvisio
 
 ### AP3 – Maßnahmenmanagement 2.0
 
+**Status: umgesetzt (2.4.0-dev)**
+
 - Ziel
+  Herkunft, Zeitachse und Wirksamkeitsprüfung von Maßnahmen nachvollziehbar
+  machen, ohne eine zweite Maßnahmenstruktur einzuführen.
 - Fachlicher Nutzen
+  Sichtbar, WOHER eine Maßnahme kam (Review, Parkplatz, Qualitätsbefund,
+  Resilienz-Check, manuell) und WANN was passierte. "Erledigt" wird
+  weiterhin klar von "wirksam" getrennt. Plausibilitätshinweise
+  (Blockade ohne Begründung, Abschluss ohne Wirksamkeitsnachweis,
+  abgeschlossene Reviews mit noch offenen Folgemaßnahmen) machen
+  Dokumentationslücken sichtbar, ohne die Maßnahme selbst zu bewerten.
 - UX-Auswirkungen
+  Bestehendes Maßnahmenformular um Herkunftszeile (nicht editierbar),
+  Prüfer/Wiedervorlage und eine bedingt eingeblendete
+  Blockade-Begründung erweitert. Herkunfts-Filter und -Spalte im
+  Maßnahmenkatalog. Neuer "+ Maßnahme"-Knopf direkt in der
+  Qualitätsprüfung. Status-Dropdown zeigt jetzt sechs statt vier Werte.
 - Architektur
+  Additive Migration 14→15 auf dem bestehenden `massnahmen[]`-Array (keine
+  zweite Struktur). `ENUM_MASSNAHMEN_STATUS` additiv erweitert,
+  `zurueckgestellt` bleibt für Altdaten lesbar. `massnahmeIsOpen()` löst
+  mehrere zuvor verstreute `status==='offen'||status==='in_arbeit'`-Prüfungen
+  ab. Herkunft wird an allen vier Entstehungspunkten (Parkplatz-, Review-,
+  Qualitätsbefund-, Resilienz-Konvertierung) gesetzt; die Review-Verknüpfung
+  ist über `reviewId`/`massnahmenIds[]` vollständig bidirektional und
+  überlebt Import/Merge/Selektiv-Import inklusive ID-Remapping.
 - Tests
+  10 neue Selbsttests (Migration, Statusklassifikation, Plausibilitäts-
+  regeln, automatisches Abschlussdatum, offene Folgemaßnahmen,
+  Import-Normalisierung von Herkunft und Review-Verknüpfung) sowie eine
+  Browser-Verifikation (Blockade-Badge erscheint/verschwindet korrekt,
+  Wirksamkeitsnachweis-Hinweis, Qualitätsbefund → Maßnahme, Herkunfts-
+  Spalte im Katalog) ohne Konsolenfehler.
 
 ### AP4 – BCM Timeline
 

@@ -73,7 +73,7 @@ as possible for organizations that don't want to run infrastructure just to
 do BCM planning. See [`docs/architecture.md`](architecture.md).
 
 **What does the hidden "self-test" mode do?**
-It runs an internal suite of 88 tests against synthetic data to verify core
+It runs an internal suite of 98 tests against synthetic data to verify core
 logic still behaves correctly — useful for contributors, not needed for
 everyday use. Press **Ctrl+Alt+T** to open it. See the User Guide's
 [Self-tests](user-guide.md#self-tests-advanced) section.

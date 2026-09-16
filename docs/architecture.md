@@ -85,6 +85,43 @@ valid `intervalMonths` all return `null` rather than a guessed date. This is
 enforced by dedicated self-tests, since "never invent a date" is a hard
 product requirement, not just a preference.
 
+### Measures management 2.0 (`massnahmen[]` extensions, since schema 15, 2.4.0-dev)
+
+Measures were extended additively rather than given a second, parallel
+structure. New fields: `sourceType`/`sourceId`/`sourceLabel`/`reviewId`
+(where a measure came from — `manuell`/`review`/`parkplatz`/`qualitaet`/
+`resilienz`, plus an opaque reference to the originating record),
+`erstelltAm`/`abgeschlossenAm` (timeline), `wirksamkeitPruefer` (who
+checked effectiveness, alongside the existing `wirksamkeitGeprueftAm`/
+`wirksamkeitErgebnis`), `wiedervorlageAm`, and `blockiertGrund`.
+
+Migrated (pre-2.4) measures get `sourceType: 'unbekannt'` and an empty
+`erstelltAm` — their real origin and creation date are genuinely unknown
+and are never backfilled with a guess.
+
+`ENUM_MASSNAHMEN_STATUS` was extended from four values
+(`offen`/`in_arbeit`/`erledigt`/`zurueckgestellt`) to seven
+(`offen`/`geplant`/`in_arbeit`/`blockiert`/`erledigt`/`verworfen`, plus the
+legacy `zurueckgestellt`, which remains valid on import/read but is no
+longer offered in the status dropdown — `MASSNAHMEN_STATUS_UI_OPTIONS`).
+`massnahmeIsOpen(m)` (`status` not in `{erledigt, verworfen}`) replaced
+several ad-hoc `status==='offen'||status==='in_arbeit'` checks across the
+dashboard, GF view, and quality checks, so the new intermediate statuses
+(`geplant`, `blockiert`) are counted consistently as still-open work
+wherever "open measures" is meant.
+
+"Done" (`erledigt`) still never implies "effective" — that distinction
+predates 2.4.0 (`wirksamkeitGeprueftAm`/`wirksamkeitErgebnis`,
+`massnahmeNeedsEffectivenessProof()`) and 2.4.0 only adds who checked it
+(`wirksamkeitPruefer`) and a follow-up date (`wiedervorlageAm`).
+
+Three existing conversion flows (Parkplatz → measure, Review → measure,
+and the automatic resilience-check → measure generator) now stamp
+`sourceType`/`sourceId`/`sourceLabel` on the measure they create; a fourth,
+new one lets a quality/consistency finding (`qualityAndConsistencyCheck()`)
+become a measure the same way. The review link is fully bidirectional:
+`review.massnahmenIds[]` and `massnahme.reviewId` both point at each other.
+
 ## Rendering
 
 Rendering is plain HTML string generation — there is no virtual DOM and no
@@ -241,7 +278,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 88 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 98 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

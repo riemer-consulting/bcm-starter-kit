@@ -1125,7 +1125,15 @@ function newMassnahme(over){
     // v1.6.0 (P14): Aufwand, Risikoherkunft, Entscheidung, Wirksamkeit
     aufwand:'mittel', kostenSchaetzung:'', risikoOhneMassnahme:'', risikoNachMassnahme:'',
     entscheidungsbedarf:'', genehmiger:'', genehmigtAm:'', abhaengigkeiten:[],
-    nachweis:'', wirksamkeitGeprueftAm:'', wirksamkeitErgebnis:''}, over||{});
+    nachweis:'', wirksamkeitGeprueftAm:'', wirksamkeitErgebnis:'',
+    // v2.4.0 (AP3, Maßnahmenmanagement 2.0): Herkunft, Zeitachse, erweiterte
+    // Wirksamkeitsprüfung. sourceType 'manuell' ist hier der Default, weil
+    // newMassnahme() bei bekannter Herkunft (Review/Parkplatz/Qualitätsbefund/
+    // Resilienz-Check) explizit mit `over` überschrieben wird — nur eine
+    // Migration bestehender Altdatensätze setzt stattdessen 'unbekannt'.
+    sourceType:'manuell', sourceId:'', sourceLabel:'', reviewId:'',
+    erstelltAm: new Date().toISOString(), abgeschlossenAm:'',
+    wirksamkeitPruefer:'', wiedervorlageAm:'', blockiertGrund:''}, over||{});
 }
 
 /** Erzeugt einen neuen Parkplatz-Eintrag (v2.3.0, Workshop Edition). @param {object} [over] @returns {object} */
@@ -1195,7 +1203,7 @@ function defaultState(){
    Getrennt von APP_VERSION (Software-Version) — beschreibt die Form der
    gespeicherten Daten. Dateien ohne schemaVersion gelten als Schema 1.
    --------------------------------------------------------------------- */
-const CURRENT_SCHEMA_VERSION = 14;
+const CURRENT_SCHEMA_VERSION = 15;
 
 /** Schema-Migration 1->2: ergänzt Versions-Nachvollziehbarkeitsfelder und Resilienz-Empfehlungstexte. @param {object} data Rohdaten vor der Migration. @returns {{data:object, warnings:string[]}} */
 function migrateV1ToV2(data){
@@ -1423,7 +1431,26 @@ function migrateV13ToV14(data){
   return { data: d, warnings: fieldsAdded>0 ? [fieldsAdded+' Prozess(e) erhielten beim Wechsel von Schema 13 auf Schema 14 eine leere Reviewzyklen-Konfiguration (keine Policy erfunden).'] : [] };
 }
 
-const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13, 13: migrateV13ToV14 };
+/** Schema-Migration 14->15: ergänzt Herkunfts-, Zeitachsen- und erweiterte Wirksamkeitsfelder je Maßnahme additiv (v2.4.0, AP3 Maßnahmenmanagement 2.0). Herkunft/Anlagezeitpunkt von Altdatensätzen sind nicht mehr rekonstruierbar und werden NICHT erfunden ("unbekannt" bzw. leer). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV14ToV15(data){
+  const d = JSON.parse(JSON.stringify(data));
+  let fieldsAdded = 0;
+  (d.massnahmen||[]).forEach(m=>{
+    if(m.sourceType===undefined){ m.sourceType = 'unbekannt'; fieldsAdded++; }
+    if(m.sourceId===undefined){ m.sourceId = ''; fieldsAdded++; }
+    if(m.sourceLabel===undefined){ m.sourceLabel = ''; fieldsAdded++; }
+    if(m.reviewId===undefined){ m.reviewId = ''; fieldsAdded++; }
+    if(m.erstelltAm===undefined){ m.erstelltAm = ''; fieldsAdded++; } // unbekannter Altzeitpunkt bleibt unbekannt, statt "jetzt" zu erfinden
+    if(m.abgeschlossenAm===undefined){ m.abgeschlossenAm = ''; fieldsAdded++; }
+    if(m.wirksamkeitPruefer===undefined){ m.wirksamkeitPruefer = ''; fieldsAdded++; }
+    if(m.wiedervorlageAm===undefined){ m.wiedervorlageAm = ''; fieldsAdded++; }
+    if(m.blockiertGrund===undefined){ m.blockiertGrund = ''; fieldsAdded++; }
+  });
+  d.schemaVersion = 15;
+  return { data: d, warnings: fieldsAdded>0 ? [fieldsAdded+' fehlende Felder wurden beim Wechsel von Schema 14 auf Schema 15 ergänzt (Herkunft "unbekannt", keine erfundenen Zeitpunkte).'] : [] };
+}
+
+const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13, 13: migrateV13ToV14, 14: migrateV14ToV15 };
 
 /** Zentrale Migrationsverkettung: wendet SCHEMA_MIGRATIONS schrittweise bis CURRENT_SCHEMA_VERSION an. Gibt NIE ok:true zurück, wenn eine Stufe fehlt oder das Ziel nicht exakt erreicht wird; lehnt neuere, unbekannte Schemas ab. @param {object} data Rohdaten (ggf. mit fehlendem/älterem schemaVersion). @returns {{ok:boolean, data?:object, warnings?:string[], error?:string, fromVersion?:number, toVersion?:number, migrated?:boolean}} */
 function migrateWorkbook(data){
@@ -2046,7 +2073,19 @@ function timeUnitOptionsHtml(selected){
 const ENUM_RESILIENZ_STATUS = ['rot','gelb','gruen'];
 const ENUM_ALTERNATIVE = ['ja','teilweise','nein'];
 const ENUM_JA_NEIN = ['ja','nein'];
-const ENUM_MASSNAHMEN_STATUS = ['offen','in_arbeit','erledigt','zurueckgestellt'];
+/* v2.4.0 (AP3): additiv um 'geplant'/'blockiert'/'verworfen' erweitert (das
+   Zielstatusmodell aus AP3), 'zurueckgestellt' bleibt für Altdaten gültig
+   (Rückwärtskompatibilität), wird aber im UI nicht mehr als neue Auswahl
+   angeboten — siehe MASSNAHMEN_STATUS_UI_OPTIONS. */
+const ENUM_MASSNAHMEN_STATUS = ['offen','geplant','in_arbeit','blockiert','erledigt','verworfen','zurueckgestellt'];
+/* Im UI angebotene Statuswerte (AP3-Zielmodell) — 'zurueckgestellt' bewusst
+   nicht enthalten, bleibt aber via ENUM_MASSNAHMEN_STATUS importierbar/lesbar. */
+const MASSNAHMEN_STATUS_UI_OPTIONS = ['offen','geplant','in_arbeit','blockiert','erledigt','verworfen'];
+const MASSNAHMEN_STATUS_LABELS = { offen:'Offen', geplant:'Geplant', in_arbeit:'In Umsetzung', blockiert:'Blockiert', erledigt:'Erledigt', verworfen:'Verworfen', zurueckgestellt:'Zurückgestellt' };
+/* v2.4.0 (AP3): Herkunft einer Maßnahme — 'unbekannt' ausschließlich für
+   Altdatensätze aus der Migration (Herkunft nie rückwirkend erfunden). */
+const ENUM_MASSNAHME_SOURCE_TYPE = ['manuell','review','parkplatz','qualitaet','resilienz','unbekannt'];
+const MASSNAHME_SOURCE_LABELS = { manuell:'Manuell angelegt', review:'Aus Review', parkplatz:'Aus Parkplatz', qualitaet:'Aus Qualitätsbefund', resilienz:'Aus Resilienz-Check', unbekannt:'Unbekannt (Altdatensatz)' };
 /* v2.2.0: bislang nur implizit im UI vorhandene Wertemengen jetzt auch als
    Import-Enums geführt, damit eine manipulierte Datei keine unbekannten
    Zustände in die Fachlogik einschleusen kann (siehe normalizeMetaForImport
@@ -2829,6 +2868,15 @@ function validateImportData(data){
      'entscheidungsbedarf','genehmiger','genehmigtAm','nachweis','wirksamkeitGeprueftAm','wirksamkeitErgebnis'].forEach(f=>{
       merged[f] = capText(coerceString(merged[f],''), IMPORT_LIMITS.maxTextLength, 'Maßnahme "'+mname+'": Feld "'+f+'"', warnings);
     });
+    // v2.4.0 (AP3): Herkunft, Zeitachse, erweiterte Wirksamkeitsprüfung.
+    // reviewId wird hier nur als Text übernommen — reviews[] ist an dieser
+    // Stelle noch nicht normalisiert (siehe Auflösung weiter unten,
+    // nachdem reviews[] verarbeitet wurde).
+    merged.sourceType = capEnum(merged.sourceType, ENUM_MASSNAHME_SOURCE_TYPE, 'unbekannt', 'Maßnahme "'+mname+'": Herkunft', warnings);
+    ['sourceId','sourceLabel','erstelltAm','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund'].forEach(f=>{
+      merged[f] = capText(coerceString(merged[f],''), IMPORT_LIMITS.maxShortTextLength, 'Maßnahme "'+mname+'": Feld "'+f+'"', warnings);
+    });
+    merged.reviewId = coerceString(merged.reviewId, '');
     return merged;
   }).filter(m=>m!==null);
 
@@ -2872,6 +2920,11 @@ function validateImportData(data){
   const rawReviews = Array.isArray(data.reviews) ? data.reviews : [];
   const usedReviewIds = new Set();
   const validMassnahmeIds = new Set(normalized.massnahmen.map(m=>m.id));
+  // v2.4.0 (AP3): merkt für jede ursprüngliche Review-ID die tatsächlich
+  // vergebene finale ID — massnahmen[].reviewId referenziert Reviews und
+  // muss diese Umschreibung nachvollziehen können (analog zu
+  // massnahmeIdRecord/processIdRemap oben).
+  const reviewIdRecord = new Map();
   normalized.reviews = rawReviews.map((item, idx)=>{
     if(!item || typeof item!=='object'){
       warnings.push('Review an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
@@ -2879,10 +2932,12 @@ function validateImportData(data){
     }
     const template = newReview();
     const merged = Object.assign({}, template, item);
+    const originalReviewId = (typeof item.id==='string' && item.id.trim()!=='') ? item.id : null;
     if(!isSafeEntityId(merged.id) || usedReviewIds.has(merged.id)){
       merged.id = uid('rev');
     }
     usedReviewIds.add(merged.id);
+    if(originalReviewId) reviewIdRecord.set(originalReviewId, merged.id);
     merged.prozessId = coerceString(merged.prozessId, '');
     if(merged.prozessId){
       const resolved = resolveProcessReference(merged.prozessId);
@@ -2917,6 +2972,17 @@ function validateImportData(data){
     if(droppedRefs>0) warnings.push('Review: '+droppedRefs+' Verweis(e) auf nicht vorhandene Maßnahmen wurden entfernt.');
     return merged;
   }).filter(r=>r!==null);
+
+  // v2.4.0 (AP3): massnahmen[].reviewId auf die finalen Review-IDs auflösen
+  // (musste warten, bis reviews[] oben normalisiert war). Unauflösbare
+  // Referenzen werden geleert statt geraten.
+  const validReviewIds = new Set(normalized.reviews.map(r=>r.id));
+  normalized.massnahmen.forEach(m=>{
+    if(!m.reviewId) return;
+    const finalId = reviewIdRecord.get(m.reviewId) || (validReviewIds.has(m.reviewId) ? m.reviewId : '');
+    if(!finalId) warnings.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'": Verweis auf nicht vorhandenes Review wurde entfernt.');
+    m.reviewId = finalId;
+  });
 
   // Schema-Migration: greift für JEDEN Importweg automatisch (readImportFile,
   // verschlüsselter Import, Datei öffnen), da alle validateImportData() nutzen.
@@ -3086,6 +3152,10 @@ function mergeResourceInto(existing, imported, listMode){
 /** Merged eine importierte Maßnahme in eine bestehende hinein (befüllt nur leere Felder). Mutiert existing. @param {object} existing @param {object} imported @returns {void} */
 function mergeMassnahmeInto(existing, imported){
   mergeStringFields(existing, imported, ['titel','verantwortlich','termin','nutzen','bemerkung']);
+  // v2.4.0 (AP3): Herkunft/Zeitachse nur auffüllen, wenn im Ziel noch nicht
+  // bekannt — nie eine bereits bekannte Herkunft überschreiben.
+  mergeStringFields(existing, imported, ['sourceId','sourceLabel','reviewId','erstelltAm','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund']);
+  if((!existing.sourceType || existing.sourceType==='unbekannt') && imported.sourceType) existing.sourceType = imported.sourceType;
 }
 
 /** Führt eine validierte Importdatei mit dem aktuellen STATE zusammen (Strategie "Zusammenführen"). Mutiert STATE. @param {object} importData Normalisierte Importdaten. @param {string} listMode 'ergaenzen'|'ueberschreiben' @returns {{added:number, updated:number}} */
@@ -3179,6 +3249,7 @@ function selectiveImportData(importData, processIds, resourceIds, massnahmeIds){
     }
   });
   const massnahmeIdMap = {};
+  const importedMassnahmeCopies = []; // v2.4.0 (AP3): für die nachgelagerte reviewId-Auflösung
   (importData.massnahmen||[]).forEach(m=>{
     if(massnahmeIds.includes(m.id)){
       const copy = JSON.parse(JSON.stringify(m));
@@ -3187,6 +3258,7 @@ function selectiveImportData(importData, processIds, resourceIds, massnahmeIds){
       copy.id = newMId;
       copy.prozessId = idMap[m.prozessId] || '';
       STATE.massnahmen.push(copy);
+      importedMassnahmeCopies.push(copy);
       cm++;
     }
   });
@@ -3194,14 +3266,23 @@ function selectiveImportData(importData, processIds, resourceIds, massnahmeIds){
   // Auswahlliste in der UI) — ein Review ohne mitausgewählten Prozess wird
   // nicht übernommen, da er sonst ins Leere zeigen würde.
   let cv = 0;
+  const reviewIdMap = {};
   (importData.reviews||[]).forEach(r=>{
     if(!idMap[r.prozessId]) return;
     const copy = JSON.parse(JSON.stringify(r));
-    copy.id = uid('rev');
+    const newRId = uid('rev');
+    reviewIdMap[r.id] = newRId;
+    copy.id = newRId;
     copy.prozessId = idMap[r.prozessId];
     copy.massnahmenIds = (r.massnahmenIds||[]).filter(mid=>massnahmeIdMap[mid]).map(mid=>massnahmeIdMap[mid]);
     STATE.reviews.push(copy);
     cv++;
+  });
+  // v2.4.0 (AP3): massnahmen[].reviewId auf die neuen Review-IDs umschreiben;
+  // wurde das referenzierte Review nicht mitübernommen, wird die Referenz
+  // geleert statt auf ein fremdes Review im Zielworkbook zu raten.
+  importedMassnahmeCopies.forEach(copy=>{
+    if(copy.reviewId) copy.reviewId = reviewIdMap[copy.reviewId] || '';
   });
   return {processes:cp, resources:cr, massnahmen:cm, reviews:cv};
 }
@@ -4035,6 +4116,15 @@ function validateMassnahme(m){
   if(!String(m.prozessId||'').trim()){
     findings.push({type:'warn', field:'prozessId', message:'Kein Prozessbezug vorhanden.'});
   }
+  // v2.4.0 (AP3): Plausibilitätsregeln des erweiterten Statusmodells. Reine
+  // Dokumentationsqualität — keine Aussage darüber, ob die Blockade oder die
+  // Wirksamkeit fachlich zutreffend ist.
+  if(m.status==='blockiert' && !String(m.blockiertGrund||'').trim()){
+    findings.push({type:'bad', field:'blockiertGrund', message:'Blockiert ohne Begründung.'});
+  }
+  if(isErledigt && !String(m.wirksamkeitGeprueftAm||'').trim()){
+    findings.push({type:'warn', field:'wirksamkeitGeprueftAm', message:'Erledigt ohne Wirksamkeitsnachweis.'});
+  }
 
   const valid = !findings.some(f=>f.type==='bad');
   return { valid, findings };
@@ -4065,15 +4155,30 @@ const MASSNAHME_MATRIX_LABELS = {
   'niedrig-niedrig': 'Kann warten (niedriger Nutzen, niedriger Aufwand)',
   'niedrig-hoch': 'Infrage stellen (niedriger Nutzen, hoher Aufwand)'
 };
-/** P14: true, wenn eine Maßnahme einen vergangenen Termin hat und nicht erledigt ist. @param {object} m @returns {boolean} */
+/** P14: true, wenn eine Maßnahme einen vergangenen Termin hat und nicht abgeschlossen (erledigt/verworfen) ist. @param {object} m @returns {boolean} */
 function massnahmeIsOverdue(m){
-  if(m.status==='erledigt' || !m.termin) return false;
+  if(m.status==='erledigt' || m.status==='verworfen' || !m.termin) return false;
   const t = new Date(m.termin); const today = new Date(); today.setHours(0,0,0,0);
   return !isNaN(t.getTime()) && t.getTime() < today.getTime();
 }
-/** P14: true, wenn eine Maßnahme als erledigt markiert ist, aber kein Wirksamkeitsnachweis-Datum hinterlegt wurde. @param {object} m @returns {boolean} */
+/** P14: true, wenn eine Maßnahme als erledigt markiert ist, aber kein Wirksamkeitsnachweis-Datum hinterlegt wurde. Erledigt bedeutet NICHT automatisch wirksam — genau diese Lücke wird hier sichtbar gemacht. @param {object} m @returns {boolean} */
 function massnahmeNeedsEffectivenessProof(m){
   return m.status==='erledigt' && !String(m.wirksamkeitGeprueftAm||'').trim();
+}
+/** v2.4.0 (AP3): true, wenn eine Maßnahme "offen" im Sinne noch ausstehender Bearbeitung ist (alles außer erledigt/verworfen). @param {object} m @returns {boolean} */
+function massnahmeIsOpen(m){
+  return m.status!=='erledigt' && m.status!=='verworfen';
+}
+/** v2.4.0 (AP3): true, wenn eine Maßnahme blockiert ist, aber keine Begründung hinterlegt wurde. @param {object} m @returns {boolean} */
+function massnahmeIsBlockedWithoutReason(m){
+  return m.status==='blockiert' && !String(m.blockiertGrund||'').trim();
+}
+/** v2.4.0 (AP3): Reviews, die abgeschlossen sind, aber deren verknüpfte Maßnahmen noch nicht abgeschlossen (erledigt/verworfen) sind. @returns {object[]} */
+function reviewsWithOpenFollowupMassnahmen(){
+  return STATE.reviews.filter(r=>r.status==='abgeschlossen' && (r.massnahmenIds||[]).some(mid=>{
+    const m = STATE.massnahmen.find(x=>x.id===mid);
+    return m && massnahmeIsOpen(m);
+  }));
 }
 
 /* ---------------------------------------------------------------------
@@ -4127,7 +4232,11 @@ function reviewCenterData(){
     overdue: STATE.reviews.filter(reviewIsOverdue),
     upcoming: STATE.reviews.filter(r=>reviewDueInfo(r).state==='upcoming'),
     missingPlanning: processesWithoutReviewPlanning(),
-    priorityList: reviewCenterPriorityList()
+    priorityList: reviewCenterPriorityList(),
+    // v2.4.0 (AP3): Reviews sind formal abgeschlossen, aber die daraus
+    // entstandenen Maßnahmen sind es noch nicht — ein Governance-Hinweis,
+    // keine Aussage darüber, ob das Review inhaltlich unzureichend war.
+    openFollowupMassnahmen: reviewsWithOpenFollowupMassnahmen()
   };
 }
 
@@ -4172,7 +4281,7 @@ function criticalTimeConflictCount(){
 }
 /** P15: Anzahl offener Maßnahmen mit hoher Priorität. @returns {number} */
 function openCriticalMassnahmenCount(){
-  return STATE.massnahmen.filter(m=>m.prioritaet==='hoch' && m.status!=='erledigt').length;
+  return STATE.massnahmen.filter(m=>m.prioritaet==='hoch' && massnahmeIsOpen(m)).length;
 }
 /** P15: Anzahl überfälliger Maßnahmen (workbookweit). @returns {number} */
 function overdueMassnahmenCount(){
@@ -4312,7 +4421,7 @@ function releaseReadinessCheck(){
       findings.criticalProcessesNoFallback.push('Kritischer Prozess "'+name+'" hat keinen definierten Notbetrieb.');
     }
     p.resilienz.filter(r=>r.status==='rot').forEach(r=>{
-      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && m.status!=='erledigt');
+      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && massnahmeIsOpen(m));
       if(!hatMassnahme){
         findings.redResilienceNoMeasure.push('Prozess "'+name+'": roter Resilienzpunkt "'+r.label+'" ohne offene Maßnahme.');
       }
@@ -4390,7 +4499,7 @@ function qualityAndConsistencyCheck(){
     }
     // Q13: Roter Resilienz-Check ohne offene Maßnahme
     p.resilienz.filter(r=>r.status==='rot').forEach(r=>{
-      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && m.status!=='erledigt');
+      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && massnahmeIsOpen(m));
       if(!hatMassnahme){
         quality.push({process:name, processId:p.id, tab:'resilienz', severity:'warnung', rule:'Q13', text:'Roter Resilienz-Check "'+r.label+'" ohne offene Maßnahme.'});
       }
@@ -4607,7 +4716,7 @@ function allPotentialDuplicateResourcePairs(){
 function dashboardStats(){
   const processes = STATE.processes;
   const kritisch = processes.filter(isProcessKritisch).length;
-  const offeneMassnahmen = STATE.massnahmen.filter(m=>m.status==='offen'||m.status==='in_arbeit').length;
+  const offeneMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).length;
   const hoheRisiken = processes.reduce((sum,p)=>sum + resilienzSummary(p).rot, 0);
   const offeneParkplatz = STATE.parkplatz.filter(p=>p.status==='offen').length;
   return { anzahlProzesse: processes.length, kritisch, offeneMassnahmen, hoheRisiken, offeneParkplatz };
@@ -4715,7 +4824,7 @@ function processAmpel(process){
     rotGruende.push('Roter Resilienzpunkt ohne Maßnahme');
   }
 
-  const offeneMassnahmen = STATE.massnahmen.some(m=>m.prozessId===process.id && (m.status==='offen'||m.status==='in_arbeit'));
+  const offeneMassnahmen = STATE.massnahmen.some(m=>m.prozessId===process.id && massnahmeIsOpen(m));
   if(offeneMassnahmen){
     gelbGruende.push('Offene Maßnahmen vorhanden');
   }
@@ -5428,7 +5537,9 @@ const App = {
       STATE.massnahmen.push(newMassnahme({
         titel: titelPrefix+i.label,
         prozessId: processId, kategorie:'Organisation', prioritaet: i.status==='rot' ? 'hoch' : 'mittel',
-        bemerkung: bemerkungTeile.length ? bemerkungTeile.join(' — ') : ('Automatisch aus '+(i.status==='rot'?'rotem':'gelbem')+' Resilienz-Check erzeugt.')
+        bemerkung: bemerkungTeile.length ? bemerkungTeile.join(' — ') : ('Automatisch aus '+(i.status==='rot'?'rotem':'gelbem')+' Resilienz-Check erzeugt.'),
+        // v2.4.0 (AP3): Herkunft nachvollziehbar
+        sourceType:'resilienz', sourceId: i.id, sourceLabel: i.label
       }));
       created++;
     });
@@ -5447,7 +5558,7 @@ const App = {
     STATE.massnahmen = STATE.massnahmen.filter(m=>m.id!==id);
     autosave(); render();
   },
-  massnahmenFilter:{status:'', prioritaet:'', prozessId:'', aufwand:'', verantwortlich:'', ueberfaellig:false, sort:'termin'},
+  massnahmenFilter:{status:'', prioritaet:'', prozessId:'', aufwand:'', verantwortlich:'', sourceType:'', ueberfaellig:false, sort:'termin'},
   /** Setzt einen Filter im Maßnahmenkatalog und rendert neu. @param {string} key @param {*} val @returns {void} */
   setMassnahmenFilter(key, val){ App.massnahmenFilter[key]=val; render(); },
   /** Exportiert den aktuell gefilterten Maßnahmenkatalog als CSV-Datei. @returns {void} */
@@ -6294,11 +6405,16 @@ function kritikalitaetBadge(level){
   const labelMap = {hoch:'Hoch', mittel:'Mittel', niedrig:'Niedrig'};
   return '<span class="badge '+(map[level]||'b-neutral')+'">'+(labelMap[level]||level)+'</span>';
 }
+/** v2.4.0 (AP3): baut <option>-HTML für Maßnahmen-Status-Selects aus MASSNAHMEN_STATUS_UI_OPTIONS. Zeigt einen ausgewählten, aber nicht mehr angebotenen Altwert (z. B. 'zurueckgestellt') zusätzlich an, statt ihn optisch verschwinden zu lassen. @param {string} selected @returns {string} HTML */
+function massnahmenStatusOptionsHtml(selected){
+  const options = MASSNAHMEN_STATUS_UI_OPTIONS.includes(selected) || !selected ? MASSNAHMEN_STATUS_UI_OPTIONS : MASSNAHMEN_STATUS_UI_OPTIONS.concat([selected]);
+  return options.map(v=>'<option value="'+v+'" '+(selected===v?'selected':'')+'>'+escapeHtml(MASSNAHMEN_STATUS_LABELS[v]||v)+'</option>').join('');
+}
 /** Rendert ein Farbbadge für den Maßnahmen-Status. @param {string} status @returns {string} HTML */
 function statusBadge(status){
-  const map = {offen:'b-bad', in_arbeit:'b-warn', erledigt:'b-ok', zurueckgestellt:'b-neutral'};
-  const labelMap = {offen:'Offen', in_arbeit:'In Arbeit', erledigt:'Erledigt', zurueckgestellt:'Zurückgestellt'};
-  return '<span class="badge '+(map[status]||'b-neutral')+'">'+(labelMap[status]||status)+'</span>';
+  // v2.4.0 (AP3): um geplant/blockiert/verworfen erweitert; zurueckgestellt bleibt für Altdaten lesbar.
+  const map = {offen:'b-bad', geplant:'b-neutral', in_arbeit:'b-warn', blockiert:'b-bad', erledigt:'b-ok', verworfen:'b-neutral', zurueckgestellt:'b-neutral'};
+  return '<span class="badge '+(map[status]||'b-neutral')+'">'+(MASSNAHMEN_STATUS_LABELS[status]||status)+'</span>';
 }
 /** Rendert das Qualitäts-Badge einer Maßnahme (basierend auf validateMassnahme). @param {object} m @returns {string} HTML */
 function massnahmeQualityBadge(m){
@@ -6940,7 +7056,13 @@ function massnahmeRow(m){
   if(massnahmeIsOverdue(m)) badges.push('<span class="badge b-bad">Überfällig</span>');
   if(massnahmeNeedsEffectivenessProof(m)) badges.push('<span class="badge b-warn">Kein Wirksamkeitsnachweis</span>');
   if(String(m.entscheidungsbedarf||'').trim()) badges.push('<span class="badge b-warn">Entscheidung erforderlich</span>');
+  if(massnahmeIsBlockedWithoutReason(m)) badges.push('<span class="badge b-bad">Blockiert ohne Begründung</span>');
   if(badges.length>0){ html += '<div style="margin-bottom:8px;">'+badges.join(' ')+'</div>'; }
+  // v2.4.0 (AP3): Herkunft nachvollziehbar machen — nie editierbar, da sie
+  // beschreibt, WIE die Maßnahme entstanden ist.
+  html += '<div class="small muted" style="margin-bottom:8px;">Herkunft: '+escapeHtml(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+
+    (m.sourceLabel?' — '+escapeHtml(m.sourceLabel):'')+
+    (m.erstelltAm?' · angelegt '+fmtDateOnly(m.erstelltAm):'')+'</div>';
   html += '<div class="grid grid-4">';
   html += '<div class="field"><label>Prozess</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'prozessId\',this.value)"><option value="">– kein Bezug –</option>'+
     STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(m.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'(ohne Namen)')+'</option>').join('')+'</select></div>';
@@ -6949,7 +7071,7 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Priorität</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'prioritaet\',this.value)">'+
     levelOptionsHtml(m.prioritaet, LEVEL_ORDER_HOCH_FIRST)+'</select></div>';
   html += '<div class="field"><label>Status</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'status\',this.value)">'+
-    [['offen','Offen'],['in_arbeit','In Arbeit'],['erledigt','Erledigt'],['zurueckgestellt','Zurückgestellt']].map(([v,l])=>'<option value="'+v+'" '+(m.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+    massnahmenStatusOptionsHtml(m.status)+'</select></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
   html += '<div class="field"><label>Verantwortlich</label><input type="text" value="'+escapeHtml(m.verantwortlich)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'verantwortlich\',this.value)"></div>';
@@ -6982,6 +7104,15 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Wirksamkeit geprüft am</label><input type="date" value="'+escapeHtml(m.wirksamkeitGeprueftAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitGeprueftAm\',this.value)"></div>';
   html += '<div class="field"><label>Wirksamkeit — Ergebnis</label><input type="text" value="'+escapeHtml(m.wirksamkeitErgebnis)+'" placeholder="z. B. Wirksam, Teilweise" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitErgebnis\',this.value)"></div>';
   html += '</div>';
+  // v2.4.0 (AP3): Prüfer der Wirksamkeit getrennt vom Ergebnis erfassbar —
+  // "erledigt" heißt nicht "wirksam", und "wirksam" heißt nicht "von wem geprüft".
+  html += '<div class="grid grid-2">';
+  html += '<div class="field"><label>Wirksamkeit — Prüfer</label><input type="text" value="'+escapeHtml(m.wirksamkeitPruefer)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitPruefer\',this.value)"></div>';
+  html += '<div class="field"><label>Wiedervorlage</label><input type="date" value="'+escapeHtml(m.wiedervorlageAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wiedervorlageAm\',this.value)"></div>';
+  html += '</div>';
+  if(m.status==='blockiert'){
+    html += '<div class="field"><label>Begründung für Blockade <span class="req">*</span></label><input type="text" value="'+escapeHtml(m.blockiertGrund)+'" placeholder="Warum ist diese Maßnahme blockiert?" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'blockiertGrund\',this.value)"></div>';
+  }
 
   html += massnahmeFindingsHtml(m);
   return html;
@@ -7004,6 +7135,12 @@ function massnahmeFindingsHtml(m){
 function massUpdate(id, key, val){
   const m = STATE.massnahmen.find(m=>m.id===id);
   m[key]=val;
+  // v2.4.0 (AP3): abgeschlossenAm wird beim Wechsel auf "erledigt" einmalig
+  // gesetzt, nie automatisch wieder entfernt (fachlicher Zeitpunkt bleibt
+  // erhalten, auch wenn die Maßnahme später erneut geöffnet wird).
+  if(key==='status' && val==='erledigt' && !m.abgeschlossenAm){
+    m.abgeschlossenAm = new Date().toISOString().split('T')[0];
+  }
   autosave();
   render();
 }
@@ -7096,6 +7233,7 @@ function viewMassnahmenKatalog(){
   if(f.prozessId) list = list.filter(m=>m.prozessId===f.prozessId);
   if(f.aufwand) list = list.filter(m=>m.aufwand===f.aufwand);
   if(f.verantwortlich) list = list.filter(m=>m.verantwortlich===f.verantwortlich);
+  if(f.sourceType) list = list.filter(m=>m.sourceType===f.sourceType);
   if(f.ueberfaellig) list = list.filter(massnahmeIsOverdue);
   const sorters = {
     termin:(a,b)=>(a.termin||'9999').localeCompare(b.termin||'9999'),
@@ -7116,7 +7254,7 @@ function viewMassnahmenKatalog(){
 
   html += '<div class="grid grid-4" style="margin-bottom:10px;">';
   html += '<div class="field"><label>Status</label><select onchange="App.setMassnahmenFilter(\'status\',this.value)"><option value="">Alle</option>'+
-    [['offen','Offen'],['in_arbeit','In Arbeit'],['erledigt','Erledigt'],['zurueckgestellt','Zurückgestellt']].map(([v,l])=>'<option value="'+v+'" '+(f.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+    massnahmenStatusOptionsHtml(f.status)+'</select></div>';
   html += '<div class="field"><label>Priorität</label><select onchange="App.setMassnahmenFilter(\'prioritaet\',this.value)"><option value="">Alle</option>'+
     levelOptionsHtml(f.prioritaet, LEVEL_ORDER_HOCH_FIRST)+'</select></div>';
   html += '<div class="field"><label>Aufwand</label><select onchange="App.setMassnahmenFilter(\'aufwand\',this.value)"><option value="">Alle</option>'+
@@ -7129,22 +7267,27 @@ function viewMassnahmenKatalog(){
     verantwortlicheOptions.map(v=>'<option value="'+escapeHtml(v)+'" '+(f.verantwortlich===v?'selected':'')+'>'+escapeHtml(v)+'</option>').join('')+'</select></div>';
   html += '<div class="field"><label>Sortierung</label><select onchange="App.setMassnahmenFilter(\'sort\',this.value)">'+
     [['termin','Termin'],['prioritaet','Priorität'],['aufwand','Aufwand'],['status','Status']].map(([v,l])=>'<option value="'+v+'" '+(f.sort===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Herkunft</label><select onchange="App.setMassnahmenFilter(\'sourceType\',this.value)"><option value="">Alle</option>'+
+    ENUM_MASSNAHME_SOURCE_TYPE.map(v=>'<option value="'+v+'" '+(f.sourceType===v?'selected':'')+'>'+escapeHtml(MASSNAHME_SOURCE_LABELS[v])+'</option>').join('')+'</select></div>';
   html += '<div class="field" style="display:flex;align-items:flex-end;"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" '+(f.ueberfaellig?'checked':'')+' onchange="App.setMassnahmenFilter(\'ueberfaellig\',this.checked)" style="width:auto;"> Nur überfällige anzeigen</label></div>';
   html += '</div>';
 
   if(list.length===0){ html += emptyState('Keine Maßnahmen gefunden', 'Passen Sie die Filter an oder legen Sie eine neue Maßnahme an.'); }
   else {
-    html += '<table class="dtable"><thead><tr><th>Maßnahme</th><th>Prozess</th><th>Kategorie</th><th>Priorität</th><th>Aufwand</th><th>Verantwortlich</th><th>Termin</th><th>Status</th><th>Qualität</th></tr></thead><tbody>';
+    html += '<table class="dtable"><thead><tr><th>Maßnahme</th><th>Prozess</th><th>Kategorie</th><th>Priorität</th><th>Aufwand</th><th>Verantwortlich</th><th>Termin</th><th>Status</th><th>Herkunft</th><th>Qualität</th></tr></thead><tbody>';
     list.forEach(m=>{
       const overdue = massnahmeIsOverdue(m);
       const needsProof = massnahmeNeedsEffectivenessProof(m);
+      const blockedNoReason = massnahmeIsBlockedWithoutReason(m);
       html += '<tr'+(overdue?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(m.titel||'(ohne Titel)')+'</b>'+
         (overdue?' <span class="badge b-bad">Überfällig</span>':'')+
         (needsProof?' <span class="badge b-warn">Kein Nachweis</span>':'')+
+        (blockedNoReason?' <span class="badge b-bad">Ohne Begründung</span>':'')+
         '</td><td>'+escapeHtml(processName(m.prozessId))+'</td>'+
         '<td>'+escapeHtml(m.kategorie)+'</td><td>'+kritikalitaetBadge(m.prioritaet)+'</td>'+
         '<td>'+kritikalitaetBadge(m.aufwand)+'</td>'+
         '<td>'+escapeHtml(m.verantwortlich||'–')+'</td><td>'+fmtDateOnly(m.termin)+'</td><td>'+statusBadge(m.status)+'</td>'+
+        '<td class="small muted">'+escapeHtml(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+'</td>'+
         '<td>'+massnahmeQualityBadge(m)+'</td></tr>';
     });
     html += '</tbody></table>';
@@ -7255,7 +7398,9 @@ App.confirmParkplatzToMassnahme = function(id){
     titel: titel,
     prozessId: item.prozessId,
     verantwortlich: document.getElementById('p2m-resp').value.trim(),
-    termin: document.getElementById('p2m-date').value
+    termin: document.getElementById('p2m-date').value,
+    // v2.4.0 (AP3): Herkunft nachvollziehbar
+    sourceType:'parkplatz', sourceId: item.id, sourceLabel: item.beschreibung.substring(0,120)
   });
   STATE.massnahmen.push(m);
   item.status = 'massnahme';
@@ -7492,7 +7637,11 @@ App.confirmReviewToMassnahme = function(reviewId){
     titel,
     prozessId: r.prozessId,
     verantwortlich: document.getElementById('r2m-resp').value.trim(),
-    termin: document.getElementById('r2m-date').value
+    termin: document.getElementById('r2m-date').value,
+    // v2.4.0 (AP3): vollständig bidirektionale Herkunft — reviewId zusätzlich
+    // zu sourceId, damit "welche Maßnahmen kamen aus welchem Review" ohne
+    // Umweg über sourceType geprüft werden kann.
+    sourceType:'review', sourceId: r.id, sourceLabel: REVIEW_ART_LABELS[r.reviewart]+' — '+processName(r.prozessId), reviewId: r.id
   });
   STATE.massnahmen.push(m);
   if(!r.massnahmenIds.includes(m.id)) r.massnahmenIds.push(m.id);
@@ -7513,11 +7662,23 @@ function viewReviewCenter(){
 
   let html = '<div class="card"><div class="card-head"><div class="card-title">Review Center</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm()">+ Review planen</button></div>';
-  html += '<div class="grid grid-3" style="margin-bottom:12px;">';
+  html += '<div class="grid grid-4" style="margin-bottom:12px;">';
   html += statTile(data.overdue.length, 'Überfällig', data.overdue.length>0?'bad':'ok');
   html += statTile(data.upcoming.length, 'Bald fällig (≤'+REVIEW_UPCOMING_WINDOW_DAYS+' Tage)', data.upcoming.length>0?'warn':'ok');
   html += statTile(data.missingPlanning.length, 'Kritische Prozesse ohne Reviewplanung', data.missingPlanning.length>0?'bad':'ok');
+  html += statTile(data.openFollowupMassnahmen.length, 'Abgeschlossene Reviews mit offenen Maßnahmen', data.openFollowupMassnahmen.length>0?'warn':'ok', "go('reviews')");
   html += '</div>';
+  if(data.openFollowupMassnahmen.length>0){
+    html += '<div class="card-title" style="font-size:13.5px;margin-bottom:8px;">Abgeschlossene Reviews mit noch offenen Maßnahmen</div>';
+    html += '<div style="margin-bottom:16px;">';
+    data.openFollowupMassnahmen.forEach(r=>{
+      const openCount = (r.massnahmenIds||[]).filter(mid=>{ const m=STATE.massnahmen.find(x=>x.id===mid); return m && massnahmeIsOpen(m); }).length;
+      html += '<div class="rowcard"><div class="spread"><div><b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+'</b> — '+escapeHtml(processName(r.prozessId))+
+        '<div class="small muted">Abgeschlossen am '+fmtDateOnly(r.abgeschlossenAm)+' · '+openCount+' Maßnahme(n) noch nicht abgeschlossen</div></div>'+
+        '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div></div>';
+    });
+    html += '</div>';
+  }
 
   html += '<div class="card-title" style="font-size:13.5px;margin-bottom:8px;">Was ist als Nächstes zu tun?</div>';
   if(data.priorityList.length===0){
@@ -7578,6 +7739,40 @@ function viewReviewCenter(){
 }
 
 /** v2.3.0: Rendert die View "Qualitäts- und Konsistenzprüfung". @returns {string} HTML */
+/** v2.4.0 (AP3): öffnet ein Modal, um aus einem Qualitäts-/Konsistenzbefund eine Maßnahme anzulegen. @param {string} rule Regelcode (z. B. "Q13"). @param {string} processId Leer, wenn der Befund keinen Prozessbezug hat. @param {string} text Befundtext, dient als Titel-Vorschlag. @returns {void} */
+App.qualityFindingToMassnahme = function(rule, processId, text){
+  openModal(
+    '<h3>Maßnahme aus Qualitätsbefund anlegen</h3>'+
+    '<p class="small muted">Regel '+escapeHtml(rule)+(processId?' — '+escapeHtml(processName(processId)):'')+'</p>'+
+    '<div class="field"><label for="q2m-title">Titel der Maßnahme <span class="req">*</span></label><input type="text" id="q2m-title" style="width:100%;" value="'+escapeHtml(text.substring(0,200))+'"></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="q2m-resp">Verantwortlich</label><input type="text" id="q2m-resp"></div>'+
+    '<div class="field"><label for="q2m-date">Termin</label><input type="date" id="q2m-date"></div>'+
+    '</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmQualityFindingToMassnahme(\''+safeJsString(rule)+'\',\''+safeJsString(processId)+'\',\''+safeJsString(text)+'\')">Maßnahme anlegen</button></div>'
+  );
+};
+/** Bestätigt die Erzeugung einer Maßnahme aus einem Qualitäts-/Konsistenzbefund. @param {string} rule @param {string} processId @param {string} text @returns {void} */
+App.confirmQualityFindingToMassnahme = function(rule, processId, text){
+  const titel = document.getElementById('q2m-title').value.trim();
+  if(!titel){ toast('Bitte einen Titel eingeben.'); return; }
+  const m = newMassnahme({
+    titel,
+    prozessId: processId||'',
+    verantwortlich: document.getElementById('q2m-resp').value.trim(),
+    termin: document.getElementById('q2m-date').value,
+    // v2.4.0 (AP3): Herkunft nachvollziehbar. sourceId ist die Regel+Prozess-
+    // Kombination — Qualitätsbefunde besitzen sonst keine eigene ID.
+    sourceType:'qualitaet', sourceId: rule+(processId?'|'+processId:''), sourceLabel: rule+': '+text.substring(0,150)
+  });
+  STATE.massnahmen.push(m);
+  closeModal();
+  autosave();
+  render();
+  toast('Maßnahme "'+titel+'" angelegt.');
+};
+/** v2.3.0: Rendert die View "Qualitäts- und Konsistenzprüfung". @returns {string} HTML */
 function viewQualityCheck(){
   const {quality, consistency} = qualityAndConsistencyCheck();
   const warnungen = quality.filter(f=>f.severity==='warnung');
@@ -7593,9 +7788,12 @@ function viewQualityCheck(){
   html += '</div>';
 
   // v2.3.1: Hilfsfunktion für Befund-Zeile mit Direkt-Link
+  // v2.4.0 (AP3): zusätzlich "+ Maßnahme" — ein Qualitäts-/Konsistenzbefund
+  // ist damit direkt in eine nachvollziehbare Maßnahme überführbar.
   function qualityRow(f, isBad){
     const link = f.processId ? '<button class="btn btn-sm" style="margin-left:6px;white-space:nowrap;" onclick="go(\'process\',\''+safeJsString(f.processId)+'\',\''+(f.tab||'steckbrief')+'\')">Bearbeiten</button>' : '';
-    return '<tr'+(isBad?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(f.rule)+'</b></td><td>'+escapeHtml(f.process)+link+'</td><td>'+escapeHtml(f.text)+'</td></tr>';
+    const toMassnahme = '<button class="btn btn-sm" style="margin-left:6px;white-space:nowrap;" onclick="App.qualityFindingToMassnahme(\''+safeJsString(f.rule)+'\',\''+safeJsString(f.processId||'')+'\',\''+safeJsString(f.text)+'\')">+ Maßnahme</button>';
+    return '<tr'+(isBad?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(f.rule)+'</b></td><td>'+escapeHtml(f.process)+link+'</td><td>'+escapeHtml(f.text)+toMassnahme+'</td></tr>';
   }
 
   if(consistency.length>0){
@@ -7636,7 +7834,7 @@ function managementSummaryHtml(forPrint){
   const stats = dashboardStats();
   const processes = STATE.processes;
   const kritischste = processes.slice().sort((a,b)=>biaScore(b).avg-biaScore(a).avg).slice(0,5);
-  const topMassnahmen = STATE.massnahmen.filter(m=>m.status!=='erledigt').sort((a,b)=>
+  const topMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).sort((a,b)=>
     ({hoch:0,mittel:1,niedrig:2}[a.prioritaet]-{hoch:0,mittel:1,niedrig:2}[b.prioritaet])
   ).slice(0,5);
   const cluster = buildClusters().slice(0,5);
@@ -8186,7 +8384,7 @@ function renderGfOverlay(){
   const stats = dashboardStats();
   const kritischste = STATE.processes.slice().sort((a,b)=>biaScore(b).avg-biaScore(a).avg).slice(0,5);
   const cluster = buildClusters().slice(0,5);
-  const topMassnahmen = STATE.massnahmen.filter(m=>m.status!=='erledigt').sort((a,b)=>
+  const topMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).sort((a,b)=>
     ({hoch:0,mittel:1,niedrig:2}[a.prioritaet]-{hoch:0,mittel:1,niedrig:2}[b.prioritaet])).slice(0,5);
   const offeneEntscheidungen = STATE.processes.filter(p=>!p.notbetrieb.entscheidung.trim());
 
@@ -9803,6 +10001,88 @@ function runSelfTests(){
     mergeProcessInto(existing, imported, 'ergaenzen');
     assertEqual(existing.reviewConfig.prozess, {intervalType:'12m', intervalMonths:null}, 'bestehende Policy hätte nicht überschrieben werden dürfen');
     assertEqual(existing.reviewConfig.bia, {intervalType:'6m', intervalMonths:null}, 'leere Policy hätte ergänzt werden sollen');
+  });
+
+  /* ---- v2.4.0 (AP3): Maßnahmenmanagement 2.0 ---- */
+  test('newMassnahme: enthält Herkunfts-/Zeitachsen-/Wirksamkeitsfelder mit sinnvollen Defaults', true, ()=>{
+    const m = newMassnahme();
+    assertEqual(m.sourceType, 'manuell');
+    assertTrue(!!m.erstelltAm, 'erstelltAm sollte bei neuer Maßnahme gesetzt sein');
+    ['sourceId','sourceLabel','reviewId','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund'].forEach(f=>{
+      assertEqual(m[f], '', 'newMassnahme().'+f+' sollte leer starten');
+    });
+  });
+  test('Migration 14->15: ergänzt Maßnahmenfelder additiv, Herkunft "unbekannt" statt erfunden, kein Zeitpunkt erfunden', true, ()=>{
+    const legacyMassnahme = { id:'mLegacy', titel:'Alte Maßnahme', prozessId:'', status:'offen' };
+    const legacy = { schemaVersion:14, processes:[], resources:[], massnahmen:[legacyMassnahme], parkplatz:[], reviews:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 14->15 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    const m = result.data.massnahmen[0];
+    assertEqual(m.sourceType, 'unbekannt', 'Herkunft von Altdaten darf nicht erfunden werden');
+    assertEqual(m.erstelltAm, '', 'Anlagezeitpunkt von Altdaten darf nicht erfunden werden');
+    assertEqual(m.abgeschlossenAm, '');
+  });
+  test('massnahmeIsOpen: klassifiziert alle Statuswerte korrekt', false, ()=>{
+    assertEqual(['offen','geplant','in_arbeit','blockiert'].map(s=>massnahmeIsOpen(newMassnahme({status:s}))), [true,true,true,true]);
+    assertEqual(['erledigt','verworfen'].map(s=>massnahmeIsOpen(newMassnahme({status:s}))), [false,false]);
+  });
+  test('massnahmeIsOverdue: verworfene Maßnahme ist nie überfällig', true, ()=>{
+    const m = newMassnahme({status:'verworfen', termin:'2000-01-01'});
+    assertEqual(massnahmeIsOverdue(m), false);
+  });
+  test('massnahmeIsBlockedWithoutReason: erkennt blockiert ohne Begründung, nicht bei vorhandener Begründung', false, ()=>{
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'blockiert', blockiertGrund:''})), true);
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'blockiert', blockiertGrund:'Wartet auf Budgetfreigabe'})), false);
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'offen'})), false);
+  });
+  test('massUpdate: setzt abgeschlossenAm einmalig beim Wechsel auf "erledigt"', false, ()=>{
+    const origMassnahmen = STATE.massnahmen;
+    const m = newMassnahme({status:'offen'});
+    STATE.massnahmen = [m];
+    massUpdate(m.id, 'status', 'erledigt');
+    assertTrue(!!m.abgeschlossenAm, 'abgeschlossenAm hätte gesetzt werden müssen');
+    const firstDate = m.abgeschlossenAm;
+    massUpdate(m.id, 'status', 'offen');
+    massUpdate(m.id, 'status', 'erledigt');
+    assertEqual(m.abgeschlossenAm, firstDate, 'abgeschlossenAm hätte beim erneuten Abschluss nicht überschrieben werden dürfen');
+    STATE.massnahmen = origMassnahmen;
+  });
+  test('validateMassnahme: blockiert ohne Begründung ist kritisch, erledigt ohne Wirksamkeitsnachweis ist Warnung', true, ()=>{
+    const blocked = validateMassnahme(newMassnahme({titel:'X', status:'blockiert'}));
+    assertTrue(blocked.findings.some(f=>f.field==='blockiertGrund' && f.type==='bad'), 'blockiert ohne Begründung hätte "bad" sein müssen');
+    const doneNoProof = validateMassnahme(newMassnahme({titel:'X', status:'erledigt', verantwortlich:'A', termin:'2020-01-01'}));
+    assertTrue(doneNoProof.findings.some(f=>f.field==='wirksamkeitGeprueftAm' && f.type==='warn'), 'erledigt ohne Wirksamkeitsnachweis hätte "warn" sein müssen');
+  });
+  test('reviewsWithOpenFollowupMassnahmen: findet abgeschlossenes Review mit offener Maßnahme, nicht bei abgeschlossener Maßnahme', false, ()=>{
+    const origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen;
+    const mOffen = newMassnahme({status:'offen'});
+    const mErledigt = newMassnahme({status:'erledigt'});
+    const rOffen = newReview({status:'abgeschlossen', massnahmenIds:[mOffen.id]});
+    const rErledigt = newReview({status:'abgeschlossen', massnahmenIds:[mErledigt.id]});
+    STATE.massnahmen = [mOffen, mErledigt];
+    STATE.reviews = [rOffen, rErledigt];
+    const result = reviewsWithOpenFollowupMassnahmen();
+    assertEqual(result.map(r=>r.id), [rOffen.id]);
+    STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+  });
+  test('Import: Maßnahmen-Herkunft und Review-Verknüpfung werden normalisiert und aufgelöst', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pM', steckbrief:{name:'ImportMassnahmenHerkunft'}}],
+      resources:[], parkplatz:[],
+      massnahmen:[{id:'mSrc', titel:'Aus Review', prozessId:'pM', sourceType:'review', reviewId:'rSrc'}, {id:'mBad', titel:'Ungültige Herkunft', sourceType:'unsinn'}],
+      reviews:[{id:'rSrc', prozessId:'pM', reviewart:'bia', status:'geplant', massnahmenIds:['mSrc']}], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid);
+    const m1 = r.normalizedData.massnahmen.find(m=>m.titel==='Aus Review');
+    assertEqual(m1.sourceType, 'review');
+    assertEqual(m1.reviewId, r.normalizedData.reviews[0].id, 'reviewId hätte auf die finale Review-ID aufgelöst werden müssen');
+    const m2 = r.normalizedData.massnahmen.find(m=>m.titel==='Ungültige Herkunft');
+    assertEqual(m2.sourceType, 'unbekannt', 'ungültige Herkunft hätte auf "unbekannt" zurückgesetzt werden müssen');
+  });
+  test('ENUM_MASSNAHMEN_STATUS: neue Zielstatuswerte sind gültig, Altwert "zurueckgestellt" bleibt importierbar', false, ()=>{
+    ['geplant','blockiert','verworfen','zurueckgestellt'].forEach(s=>{
+      assertTrue(ENUM_MASSNAHMEN_STATUS.includes(s), 'Status "'+s+'" fehlt im Enum');
+    });
   });
 
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{

@@ -130,11 +130,27 @@ directly, already planned.
 ## Measures catalog
 
 All measures across the whole workbook, filterable by status, priority,
-effort, owner, and an "overdue only" toggle. Each measure can track effort
-level, cost estimate, risk before/after, a decision requirement with an
-approver, evidence of implementation, and an effectiveness review date.
+effort, owner, origin, and an "overdue only" toggle. Each measure can track
+effort level, cost estimate, risk before/after, a decision requirement with
+an approver, evidence of implementation, and an effectiveness review date.
 Overdue measures and measures marked complete without an effectiveness
 review are visually flagged throughout the application.
+
+### Origin and status *(2.4.0-dev)*
+
+Every measure records where it came from — created manually, converted
+from a review, from a parking-lot item, from a quality/consistency finding,
+or generated automatically from a red/yellow resilience check — shown as a
+non-editable "Origin" line and filterable in the catalog. A measure created
+from a review stays linked to it in both directions.
+
+Status now has six values: open, planned, in progress, blocked, done,
+discarded. **Marking a measure "done" is still not the same as marking it
+"effective"** — effectiveness is checked separately (who checked it, when,
+and the result), exactly as before 2.4.0. A measure marked "blocked"
+without a stated reason, or "done" without an effectiveness check, is
+flagged — this checks documentation completeness only, never whether the
+block or the outcome itself was actually justified.
 
 ## Management (executive) view
 
@@ -273,7 +289,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 88 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 98 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export

@@ -65,6 +65,43 @@ Begründung:
 Dieselbe Regel gilt bereits für `minimumCapability.mode` — eine bewusst
 getroffene fachliche Entscheidung darf ein additiver Import nie stillschweigend ändern.
 
+## AP3 — Erweiterung des bestehenden Maßnahmenmodells statt zweiter Struktur
+
+Entscheidung:
+Alle neuen Felder (Herkunft, Zeitachse, erweiterte Wirksamkeitsprüfung)
+werden additiv auf `massnahmen[]` ergänzt (Migration 14→15). Es entsteht
+keine zweite, parallele "Maßnahme 2.0"-Struktur.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung ("Keine zweite Maßnahmenstruktur
+bauen"). Zwei Strukturen für dasselbe fachliche Konzept hätten jede
+bestehende Auswertung (Qualitätsprüfung, GF-Ansicht, PDF, Freigabeprüfung)
+doppelt pflegepflichtig gemacht.
+
+## AP3 — Herkunft von Altdaten wird nie erfunden
+
+Entscheidung:
+Bei der Migration 14→15 erhalten bestehende Maßnahmen `sourceType:
+'unbekannt'` und ein leeres `erstelltAm` statt eines geratenen Werts
+(z. B. "manuell" oder des Migrationszeitpunkts als Anlagedatum).
+
+Begründung:
+Dieselbe Leitlinie wie bei den Reviewzyklen (AP2): ein erfundener Wert
+würde wie eine echte, geprüfte Aussage wirken, obwohl er keine ist.
+"Unbekannt" ist ehrlich, "manuell" wäre eine Vermutung.
+
+## AP3 — "Erledigt" bleibt getrennt von "wirksam"
+
+Entscheidung:
+Der Statuswert `erledigt` löst keine automatische Aussage zur Wirksamkeit
+aus. Wirksamkeit wird ausschließlich über die separaten Felder
+`wirksamkeitGeprueftAm`/`wirksamkeitPruefer`/`wirksamkeitErgebnis` erfasst.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung. Diese Trennung existierte
+bereits vor 2.4.0 (`massnahmeNeedsEffectivenessProof()`); AP3 erweitert sie
+nur um den Prüfer, ändert die Grundregel aber nicht.
+
 ## AP1 — Kein Score, keine fachliche Bewertung
 
 Entscheidung:
