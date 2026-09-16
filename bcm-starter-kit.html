@@ -917,6 +917,16 @@ const REVIEW_STATUS_LABELS = { geplant:'Geplant', in_bearbeitung:'In Bearbeitung
 /* Anzahl Tage, ab denen ein geplanter Review als "bald fällig" gilt (nicht überfällig). */
 const REVIEW_UPCOMING_WINDOW_DAYS = 30;
 
+/* v2.4.0 (AP2): unterstützte Reviewintervalle je Reviewart. 'individuell'
+   verlangt zusätzlich eine eigene Monatsangabe (reviewConfig.intervalMonths);
+   'ereignisbezogen' hat bewusst KEIN Intervall — der nächste Termin wird nie
+   automatisch berechnet, sondern entsteht ausschließlich aus einem Ereignis. */
+const REVIEW_INTERVALS = ['3m','6m','12m','24m','individuell','ereignisbezogen'];
+const REVIEW_INTERVAL_LABELS = { '3m':'3 Monate', '6m':'6 Monate', '12m':'12 Monate', '24m':'24 Monate', individuell:'Individuell', ereignisbezogen:'Ereignisbezogen' };
+/* Feste Monatszahl je Standardintervall — 'individuell' liest stattdessen
+   reviewConfig.intervalMonths, 'ereignisbezogen' hat keinen Eintrag. */
+const REVIEW_INTERVAL_MONTHS = { '3m':3, '6m':6, '12m':12, '24m':24 };
+
 const PROCESS_TABS = [
   {key:'steckbrief', label:'Steckbrief', ic:'01'},
   {key:'sixty', label:'60-Sek.-Vorstellung', ic:'02'},
@@ -1086,8 +1096,13 @@ function newProcess(name){
       empfehlung: (typeof item==='object' && item.empfehlung) || ''
     })),
     dependencies: [], // v1.5.0 (P11): strukturierte Prozessabhängigkeiten über IDs
+    reviewConfig: defaultReviewConfig(), // v2.4.0 (AP2): Reviewzyklen je Reviewart, je Art optional (null = keine Policy)
     createdAt: new Date().toISOString()
   };
+}
+/** v2.4.0 (AP2): liefert die Default-Reviewpolicy-Struktur eines Prozesses — je Reviewart zunächst KEINE Policy (null), damit nie ein Termin erfunden wird. @returns {object} */
+function defaultReviewConfig(){
+  return REVIEW_ARTEN.reduce((acc,a)=>{ acc[a] = null; return acc; }, {});
 }
 
 /** Erstellt eine leere Ressource mit allen Feldern (inkl. P12-Erweiterungen: Verantwortlich, Recovery-Anforderung, SPOF-Flag etc.). @returns {object} */
@@ -1180,7 +1195,7 @@ function defaultState(){
    Getrennt von APP_VERSION (Software-Version) — beschreibt die Form der
    gespeicherten Daten. Dateien ohne schemaVersion gelten als Schema 1.
    --------------------------------------------------------------------- */
-const CURRENT_SCHEMA_VERSION = 13;
+const CURRENT_SCHEMA_VERSION = 14;
 
 /** Schema-Migration 1->2: ergänzt Versions-Nachvollziehbarkeitsfelder und Resilienz-Empfehlungstexte. @param {object} data Rohdaten vor der Migration. @returns {{data:object, warnings:string[]}} */
 function migrateV1ToV2(data){
@@ -1392,7 +1407,23 @@ function migrateV12ToV13(data){
   return { data: d, warnings: [] };
 }
 
-const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13 };
+/** Schema-Migration 13->14: ergänzt process.reviewConfig additiv, je Reviewart zunächst ohne Policy (null) — erfindet nie einen Termin (v2.4.0, AP2 Reviewzyklen). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV13ToV14(data){
+  const d = JSON.parse(JSON.stringify(data));
+  let fieldsAdded = 0;
+  (d.processes||[]).forEach(p=>{
+    if(!p.reviewConfig || typeof p.reviewConfig!=='object'){
+      p.reviewConfig = defaultReviewConfig();
+      fieldsAdded++;
+    } else {
+      REVIEW_ARTEN.forEach(a=>{ if(!(a in p.reviewConfig)){ p.reviewConfig[a] = null; fieldsAdded++; } });
+    }
+  });
+  d.schemaVersion = 14;
+  return { data: d, warnings: fieldsAdded>0 ? [fieldsAdded+' Prozess(e) erhielten beim Wechsel von Schema 13 auf Schema 14 eine leere Reviewzyklen-Konfiguration (keine Policy erfunden).'] : [] };
+}
+
+const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13, 13: migrateV13ToV14 };
 
 /** Zentrale Migrationsverkettung: wendet SCHEMA_MIGRATIONS schrittweise bis CURRENT_SCHEMA_VERSION an. Gibt NIE ok:true zurück, wenn eine Stufe fehlt oder das Ziel nicht exakt erreicht wird; lehnt neuere, unbekannte Schemas ab. @param {object} data Rohdaten (ggf. mit fehlendem/älterem schemaVersion). @returns {{ok:boolean, data?:object, warnings?:string[], error?:string, fromVersion?:number, toVersion?:number, migrated?:boolean}} */
 function migrateWorkbook(data){
@@ -2414,7 +2445,35 @@ function normalizeProcessForImport(raw, finalId, warnings){
   merged.minfaehigkeit = normalizeMinfaehigkeitForImport(raw.minfaehigkeit, template.minfaehigkeit, pname, warnings);
   merged.resilienz = normalizeResilienzForImport(raw.resilienz, template.resilienz, pname, warnings);
   merged.dependencies = normalizeDependenciesForImport(raw.dependencies, pname, warnings);
+  // v2.4.0 (AP2): Reviewzyklen-Policy je Reviewart — ungültige/unbekannte
+  // Einträge werden auf "keine Policy" (null) zurückgesetzt, NIE geraten.
+  merged.reviewConfig = normalizeReviewConfigForImport(raw.reviewConfig, pname, warnings);
   return merged;
+}
+/** v2.4.0 (AP2): härtet die Reviewzyklen-Policy eines Prozesses beim Import. Ungültige Einträge werden zu null (keine Policy), nie zu einem geratenen Intervall. @param {*} rawConfig @param {string} pname @param {string[]} warnings @returns {object} */
+function normalizeReviewConfigForImport(rawConfig, pname, warnings){
+  const src = coercePlainObject(rawConfig);
+  const out = defaultReviewConfig();
+  REVIEW_ARTEN.forEach(a=>{
+    const entry = src[a];
+    if(entry===null || entry===undefined) return; // bleibt bei "keine Policy"
+    const obj = coercePlainObject(entry);
+    if(!REVIEW_INTERVALS.includes(obj.intervalType)){
+      warnings.push('Prozess "'+pname+'": Reviewzyklen-Policy "'+REVIEW_ART_LABELS[a]+'" hatte ein unbekanntes Intervall und wurde entfernt.');
+      return;
+    }
+    let intervalMonths = null;
+    if(obj.intervalType==='individuell'){
+      const n = Number(obj.intervalMonths);
+      if(Number.isFinite(n) && n>0){ intervalMonths = n; }
+      else {
+        warnings.push('Prozess "'+pname+'": individuelles Reviewintervall "'+REVIEW_ART_LABELS[a]+'" ohne gültige Monatsangabe wurde entfernt.');
+        return;
+      }
+    }
+    out[a] = { intervalType: obj.intervalType, intervalMonths };
+  });
+  return out;
 }
 
 const ENUM_VERSION_SOURCE = ['manual','import','restore','migration','cleanup','release','legacy'];
@@ -2996,6 +3055,17 @@ function mergeProcessInto(existing, imported, listMode){
       if(seenPairs.has(key)) return;
       existing.dependencies.push(Object.assign({}, d, {id: uid('dep')}));
       seenPairs.add(key);
+    });
+  }
+
+  // v2.4.0 (AP2): Reviewzyklen-Policy je Reviewart nur übernehmen, wenn im
+  // Ziel noch KEINE Policy gesetzt ist — eine bewusste fachliche Entscheidung
+  // wird beim Zusammenführen nie automatisch überschrieben (analog zu
+  // minimumCapability.mode oben).
+  if(!existing.reviewConfig) existing.reviewConfig = defaultReviewConfig();
+  if(imported.reviewConfig){
+    REVIEW_ARTEN.forEach(a=>{
+      if(!existing.reviewConfig[a] && imported.reviewConfig[a]) existing.reviewConfig[a] = imported.reviewConfig[a];
     });
   }
 }
@@ -4059,6 +4129,30 @@ function reviewCenterData(){
     missingPlanning: processesWithoutReviewPlanning(),
     priorityList: reviewCenterPriorityList()
   };
+}
+
+/* ---------------------------------------------------------------------
+   5l-b) REVIEWZYKLEN JE REVIEWART (v2.4.0, AP2)
+   Jede Reviewart besitzt eine eigene, optionale Zykluspolicy auf dem
+   Prozess (process.reviewConfig[reviewart]). Ist keine Policy definiert
+   (null), wird NIE ein Termin erfunden — computeNextReviewDate() liefert
+   dann konsequent null, nicht etwa einen geschätzten Standardwert.
+   --------------------------------------------------------------------- */
+/** Liefert die Reviewpolicy eines Prozesses für eine Reviewart, oder null, wenn keine definiert ist. @param {object} process @param {string} reviewart @returns {{intervalType:string, intervalMonths?:number}|null} */
+function reviewConfigFor(process, reviewart){
+  if(!process || !process.reviewConfig) return null;
+  return process.reviewConfig[reviewart] || null;
+}
+/** Berechnet den nächsten Reviewtermin aus der Policy einer Reviewart — liefert null, wenn keine Policy definiert ist oder die Reviewart ereignisbezogen ist (nie erfunden). @param {object} process @param {string} reviewart @param {string} fromDateStr ISO-Datum (YYYY-MM-DD), z. B. der Abschlusstermin des vorangegangenen Reviews. @returns {string|null} ISO-Datum (YYYY-MM-DD) oder null. */
+function computeNextReviewDate(process, reviewart, fromDateStr){
+  const config = reviewConfigFor(process, reviewart);
+  if(!config || config.intervalType==='ereignisbezogen') return null;
+  const months = config.intervalType==='individuell' ? Number(config.intervalMonths) : REVIEW_INTERVAL_MONTHS[config.intervalType];
+  if(!Number.isFinite(months) || months<=0) return null;
+  const from = String(fromDateStr||'').trim() ? new Date(fromDateStr) : new Date();
+  if(isNaN(from.getTime())) return null;
+  from.setMonth(from.getMonth()+months);
+  return from.toISOString().split('T')[0];
 }
 
 /* ---------------------------------------------------------------------
@@ -6784,6 +6878,7 @@ function tabReviewHistoryCard(p){
     '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>'+
     '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(p.id)+'\')">+ Review planen</button>'+
     '</div></div>';
+  html += reviewConfigEditorHtml(p);
   if(list.length===0){
     html += emptyState('Keine Reviews geplant', isProcessKritisch(p) ? 'Dieser Prozess ist kritisch und besitzt noch keine Reviewplanung.' : 'Für diesen Prozess wurden noch keine Reviews geplant.');
   } else {
@@ -6798,6 +6893,43 @@ function tabReviewHistoryCard(p){
   html += '</div>';
   return html;
 }
+/** v2.4.0 (AP2): kompakter Editor für die Reviewzyklen-Policy eines Prozesses, je Reviewart ein Intervall-Select. @param {object} p @returns {string} HTML */
+function reviewConfigEditorHtml(p){
+  const cfg = p.reviewConfig || defaultReviewConfig();
+  let html = '<div class="small muted" style="font-weight:700;margin:10px 0 6px;">Reviewzyklen je Reviewart</div>';
+  html += '<div class="grid grid-4" style="margin-bottom:6px;">';
+  REVIEW_ARTEN.forEach(a=>{
+    const entry = cfg[a];
+    const intervalType = entry ? entry.intervalType : '';
+    html += '<div class="field"><label>'+escapeHtml(REVIEW_ART_LABELS[a])+'</label>'+
+      '<select onchange="App.setReviewConfig(\''+safeJsString(p.id)+'\',\''+a+'\',this.value)">'+
+      '<option value="">– keine Policy –</option>'+
+      REVIEW_INTERVALS.map(iv=>'<option value="'+iv+'" '+(intervalType===iv?'selected':'')+'>'+escapeHtml(REVIEW_INTERVAL_LABELS[iv])+'</option>').join('')+
+      '</select>'+
+      (intervalType==='individuell' ? '<input type="number" min="1" placeholder="Monate" value="'+escapeHtml(entry&&entry.intervalMonths||'')+'" style="margin-top:4px;" onchange="App.setReviewConfigMonths(\''+safeJsString(p.id)+'\',\''+a+'\',this.value)">' : '')+
+      '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+/** Setzt die Reviewzyklen-Policy einer Reviewart auf dem Prozess (oder entfernt sie bei leerem Wert — dann wird nie ein Termin erfunden). @param {string} processId @param {string} reviewart @param {string} intervalType @returns {void} */
+App.setReviewConfig = function(processId, reviewart, intervalType){
+  const p = getProcess(processId);
+  if(!p) return;
+  if(!p.reviewConfig) p.reviewConfig = defaultReviewConfig();
+  p.reviewConfig[reviewart] = intervalType ? { intervalType, intervalMonths: intervalType==='individuell' ? (p.reviewConfig[reviewart]&&p.reviewConfig[reviewart].intervalMonths||null) : null } : null;
+  autosave();
+  render();
+};
+/** Setzt die individuelle Monatsangabe einer 'individuell'-Reviewpolicy. @param {string} processId @param {string} reviewart @param {string} monthsValue @returns {void} */
+App.setReviewConfigMonths = function(processId, reviewart, monthsValue){
+  const p = getProcess(processId);
+  if(!p || !p.reviewConfig || !p.reviewConfig[reviewart]) return;
+  const months = Number(monthsValue);
+  p.reviewConfig[reviewart].intervalMonths = Number.isFinite(months) && months>0 ? months : null;
+  autosave();
+  render();
+};
 /** Rendert eine einzelne Maßnahmenzeile mit allen Feldern inkl. P14-Erweiterungen, Matrix-Einordnung und Überfälligkeits-/Nachweis-Badges. @param {object} m @returns {string} HTML */
 function massnahmeRow(m){
   let html = '<div class="rowcard"><div class="rowcard-head">';
@@ -7297,20 +7429,24 @@ App.startReview = function(id){
   render();
   toast('Review gestartet.');
 };
-/** Öffnet ein Modal zum Abschließen eines Reviews (Ergebnis + optional nächster Reviewtermin). @param {string} id @returns {void} */
+/** Öffnet ein Modal zum Abschließen eines Reviews (Ergebnis + optional nächster Reviewtermin). Schlägt bei definierter Reviewzyklen-Policy (AP2) den nächsten Termin vor und bietet an, den Folgereview direkt anzulegen. @param {string} id @returns {void} */
 App.openCompleteReview = function(id){
   const r = STATE.reviews.find(r=>r.id===id);
   if(!r) return;
+  const process = getProcess(r.prozessId);
+  const today = new Date().toISOString().split('T')[0];
+  const suggested = process ? computeNextReviewDate(process, r.reviewart, today) : null;
   openModal(
     '<h3>Review abschließen</h3>'+
     '<p class="small muted">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' — '+escapeHtml(processName(r.prozessId))+'</p>'+
     '<div class="field"><label for="rev-c-result">Ergebnis <span class="req">*</span></label><textarea id="rev-c-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(r.ergebnis)+'</textarea></div>'+
-    '<div class="field"><label for="rev-c-next">Nächster Reviewtermin (optional, manuell)</label><input type="date" id="rev-c-next" value="'+escapeHtml(r.naechsterReviewAm)+'"></div>'+
+    '<div class="field"><label for="rev-c-next">Nächster Reviewtermin'+(suggested?' (aus Reviewzyklen-Policy vorgeschlagen)':' (optional, manuell — keine Policy definiert)')+'</label><input type="date" id="rev-c-next" value="'+escapeHtml(suggested||r.naechsterReviewAm)+'"></div>'+
+    (suggested ? '<div class="field"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rev-c-followup" checked style="width:auto;"> Folgereview automatisch als „Geplant" anlegen</label></div>' : '')+
     '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
     '<button class="btn btn-primary" onclick="App.confirmCompleteReview(\''+safeJsString(id)+'\')">Review abschließen</button></div>'
   );
 };
-/** Bestätigt den Abschluss eines Reviews. @param {string} id @returns {void} */
+/** Bestätigt den Abschluss eines Reviews; legt bei entsprechender Policy und aktivierter Checkbox automatisch den Folgereview an. @param {string} id @returns {void} */
 App.confirmCompleteReview = function(id){
   const r = STATE.reviews.find(r=>r.id===id);
   if(!r) return;
@@ -7320,10 +7456,16 @@ App.confirmCompleteReview = function(id){
   r.naechsterReviewAm = document.getElementById('rev-c-next').value;
   r.status = 'abgeschlossen';
   r.abgeschlossenAm = new Date().toISOString().split('T')[0];
+  const followupEl = document.getElementById('rev-c-followup');
+  let followupCreated = false;
+  if(followupEl && followupEl.checked && r.naechsterReviewAm){
+    STATE.reviews.push(newReview({ prozessId:r.prozessId, reviewart:r.reviewart, geplantAm:r.naechsterReviewAm, verantwortlich:r.verantwortlich }));
+    followupCreated = true;
+  }
   closeModal();
   autosave();
   render();
-  toast('Review abgeschlossen.');
+  toast('Review abgeschlossen.'+(followupCreated?' Folgereview am '+fmtDateOnly(r.naechsterReviewAm)+' angelegt.':''));
 };
 /** v2.4.0 (AP1): legt aus einem Review eine neue Maßnahme an und verknüpft sie über review.massnahmenIds. @param {string} reviewId @returns {void} */
 App.reviewToMassnahme = function(reviewId){
@@ -9593,6 +9735,74 @@ function runSelfTests(){
     assertEqual(STATE.reviews.find(r=>r.id==='revMerge').ergebnis, 'Aus Import', 'leeres Ergebnis hätte übernommen werden müssen');
     assertTrue(!!STATE.reviews.find(r=>r.id==='revNeu'), 'neuer Review wurde nicht hinzugefügt');
     STATE.reviews = origReviews;
+  });
+
+  /* ---- v2.4.0 (AP2): Reviewzyklen je Reviewart ---- */
+  test('newProcess: reviewConfig enthält alle Reviewarten, zunächst ohne Policy', true, ()=>{
+    const p = newProcess('RC-Test');
+    REVIEW_ARTEN.forEach(a=>{ assertEqual(p.reviewConfig[a], null, 'reviewConfig.'+a+' sollte initial null sein'); });
+  });
+  test('Migration 13->14: ergänzt reviewConfig additiv, erfindet keine Policy', true, ()=>{
+    const legacyProcess = newProcess('LegacyOhneReviewConfig');
+    delete legacyProcess.reviewConfig;
+    const legacy = { schemaVersion:13, processes:[legacyProcess], resources:[], massnahmen:[], parkplatz:[], reviews:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 13->14 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    REVIEW_ARTEN.forEach(a=>{ assertEqual(result.data.processes[0].reviewConfig[a], null, 'reviewConfig.'+a+' hätte null bleiben müssen (keine erfundene Policy)'); });
+  });
+  test('computeNextReviewDate: liefert null, wenn keine Policy definiert ist', true, ()=>{
+    const p = newProcess('OhnePolicy');
+    assertEqual(computeNextReviewDate(p, 'bia', '2024-01-01'), null);
+  });
+  test('computeNextReviewDate: liefert null bei "ereignisbezogen" (kein erfundenes Intervall)', true, ()=>{
+    const p = newProcess('Ereignisbezogen');
+    p.reviewConfig.notbetrieb = { intervalType:'ereignisbezogen', intervalMonths:null };
+    assertEqual(computeNextReviewDate(p, 'notbetrieb', '2024-01-01'), null);
+  });
+  test('computeNextReviewDate: 6-Monats-Intervall wird korrekt berechnet', false, ()=>{
+    const p = newProcess('SechsMonate');
+    p.reviewConfig.bia = { intervalType:'6m', intervalMonths:null };
+    assertEqual(computeNextReviewDate(p, 'bia', '2024-01-15'), '2024-07-15');
+  });
+  test('computeNextReviewDate: individuelles Intervall nutzt intervalMonths', false, ()=>{
+    const p = newProcess('Individuell');
+    p.reviewConfig.ressourcen = { intervalType:'individuell', intervalMonths:9 };
+    assertEqual(computeNextReviewDate(p, 'ressourcen', '2024-01-15'), '2024-10-15');
+  });
+  test('Mehrere offene Reviewarten desselben Prozesses können gleichzeitig bestehen', false, ()=>{
+    const origReviews = STATE.reviews;
+    const p = newProcess('MehrereReviewarten');
+    STATE.reviews = [
+      newReview({prozessId:p.id, reviewart:'prozess', status:'geplant'}),
+      newReview({prozessId:p.id, reviewart:'bia', status:'in_bearbeitung'})
+    ];
+    const list = reviewsForProcess(p.id);
+    assertEqual(list.length, 2);
+    assertEqual(new Set(list.map(r=>r.reviewart)).size, 2, 'beide Reviewarten sollten unabhängig nebeneinander bestehen');
+    STATE.reviews = origReviews;
+  });
+  test('Import: reviewConfig wird normalisiert, ungültiges Intervall auf "keine Policy" zurückgesetzt', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pRC', steckbrief:{name:'ImportReviewConfig'},
+      reviewConfig:{ prozess:{intervalType:'12m'}, bia:{intervalType:'unsinn'}, notbetrieb:{intervalType:'individuell', intervalMonths:-5}, ressourcen:null }
+    }], resources:[], massnahmen:[], parkplatz:[], reviews:[], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid);
+    const rc = r.normalizedData.processes[0].reviewConfig;
+    assertEqual(rc.prozess, {intervalType:'12m', intervalMonths:null});
+    assertEqual(rc.bia, null, 'unbekanntes Intervall hätte zu "keine Policy" werden müssen');
+    assertEqual(rc.notbetrieb, null, 'individuell ohne gültige Monatsangabe hätte zu "keine Policy" werden müssen');
+    assertEqual(rc.ressourcen, null);
+  });
+  test('mergeProcessInto: reviewConfig überschreibt bestehende fachliche Entscheidung nicht', false, ()=>{
+    const existing = newProcess('MergeReviewConfig');
+    existing.reviewConfig.prozess = { intervalType:'12m', intervalMonths:null };
+    const imported = newProcess('MergeReviewConfigImport');
+    imported.reviewConfig.prozess = { intervalType:'3m', intervalMonths:null };
+    imported.reviewConfig.bia = { intervalType:'6m', intervalMonths:null };
+    mergeProcessInto(existing, imported, 'ergaenzen');
+    assertEqual(existing.reviewConfig.prozess, {intervalType:'12m', intervalMonths:null}, 'bestehende Policy hätte nicht überschrieben werden dürfen');
+    assertEqual(existing.reviewConfig.bia, {intervalType:'6m', intervalMonths:null}, 'leere Policy hätte ergänzt werden sollen');
   });
 
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{

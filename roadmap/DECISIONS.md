@@ -42,6 +42,29 @@ Status persistiert werden — sonst könnten beide auseinanderlaufen (z. B.
 wenn die Anwendung nicht geöffnet wird, während ein Termin verstreicht).
 Dasselbe Prinzip gilt bereits für `massnahmeIsOverdue()` bei Maßnahmen.
 
+## AP2 — Keine Policy bedeutet keinen erfundenen Termin
+
+Entscheidung:
+`process.reviewConfig[reviewart]` ist standardmäßig `null` (auch nach
+Migration bestehender Prozesse). `computeNextReviewDate()` liefert in
+diesem Fall, bei `ereignisbezogen` und bei ungültigem `individuell`-Wert
+konsequent `null` statt eines geschätzten Datums.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung. Ein erfundener Termin würde als
+scheinbar verlässliche Systemaussage wahrgenommen, obwohl er keine fachliche
+Grundlage hat — das wäre irreführender als gar kein Vorschlag.
+
+## AP2 — Policy wird beim Zusammenführen nie automatisch überschrieben
+
+Entscheidung:
+`mergeProcessInto()` übernimmt eine importierte Reviewzyklen-Policy je
+Reviewart nur, wenn im Ziel noch keine gesetzt ist.
+
+Begründung:
+Dieselbe Regel gilt bereits für `minimumCapability.mode` — eine bewusst
+getroffene fachliche Entscheidung darf ein additiver Import nie stillschweigend ändern.
+
 ## AP1 — Kein Score, keine fachliche Bewertung
 
 Entscheidung:

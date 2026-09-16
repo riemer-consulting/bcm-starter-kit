@@ -69,6 +69,22 @@ then upcoming by days remaining, then critical processes with zero review
 records — with no scoring function and no fachliche Bewertung of whether a
 review's outcome was adequate.
 
+### Review cycles (`process.reviewConfig`, since schema 14, 2.4.0-dev)
+
+Each process carries an optional, per-review-type cycle policy:
+`process.reviewConfig = { prozess, bia, notbetrieb, ressourcen }`, each
+entry either `null` (no policy — the default for every process, including
+ones migrated from earlier schemas) or `{ intervalType, intervalMonths }`.
+`intervalType` is one of `3m`/`6m`/`12m`/`24m`/`individuell`/`ereignisbezogen`;
+`intervalMonths` is only meaningful for `individuell`.
+
+`computeNextReviewDate(process, reviewart, fromDateStr)` is the single place
+that turns a policy into an actual date, and it is deliberately strict: no
+policy, an `ereignisbezogen` policy, or an `individuell` policy without a
+valid `intervalMonths` all return `null` rather than a guessed date. This is
+enforced by dedicated self-tests, since "never invent a date" is a hard
+product requirement, not just a preference.
+
 ## Rendering
 
 Rendering is plain HTML string generation — there is no virtual DOM and no
@@ -225,7 +241,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 79 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 88 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

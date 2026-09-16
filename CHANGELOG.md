@@ -36,6 +36,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Reviewplanung bei kritischen Prozessen, deterministische Priorisierung,
   Import-Normalisierung und -Limits, Merge-Import.
 
+### Added — AP2: Reviewzyklen je Reviewart
+- **`process.reviewConfig`** (Schema-Migration 13→14, additiv): je Reviewart
+  eine eigene, optionale Zykluspolicy (`{prozess, bia, notbetrieb,
+  ressourcen}`). Unterstützte Intervalle: 3/6/12/24 Monate, individuell
+  (eigene Monatsangabe) und ereignisbezogen (bewusst ohne Intervall). **Ist
+  keine Policy definiert, wird nie ein Termin erfunden** —
+  `computeNextReviewDate()` liefert dann konsequent `null`.
+  Mehrere Reviewarten desselben Prozesses können unabhängig voneinander
+  gleichzeitig offen sein.
+- **Kompakter Policy-Editor** direkt in der Prozessakte (Maßnahmen-Tab, neben
+  der Reviewhistorie) — je Reviewart ein Intervall-Select.
+- **Folgereview nach Abschluss:** hat eine Reviewart eine definierte Policy,
+  schlägt der Abschlussdialog automatisch den nächsten Termin vor und kann
+  optional direkt einen neuen, geplanten Folgereview anlegen.
+- Import/Merge berücksichtigen `reviewConfig`: ungültige Intervalle werden
+  beim Import auf "keine Policy" zurückgesetzt statt geraten; beim
+  Zusammenführen wird eine bereits gesetzte Policy nie automatisch
+  überschrieben (analog zur bestehenden Regel bei `minimumCapability.mode`).
+- 9 neue Selbsttests (88 insgesamt): Migration 13→14, `newProcess()`-Form,
+  `computeNextReviewDate()` (keine Policy, ereignisbezogen, fest/individuell),
+  gleichzeitig offene Reviewarten, Import-Normalisierung, Merge-Verhalten.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

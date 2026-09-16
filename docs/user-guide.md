@@ -113,6 +113,20 @@ optionally, the next review date), or create a linked measure directly. Each
 process record also shows a compact review history in its Measures tab, with
 a link back to the full Review Center.
 
+### Review cycles per review type
+
+Each review type can have its own optional review-cycle policy, set per
+process (in the process record's Measures tab, next to its review history):
+3, 6, 12 or 24 months, a custom number of months, or "event-driven" (no
+fixed interval at all — the emergency-operations review type typically uses
+this). **If no policy is set for a review type, the application never
+invents a due date.** Different review types on the same process can be on
+entirely different cycles and can be open at the same time.
+
+When you complete a review whose type has a policy, the completion dialog
+suggests the next due date and offers to create the follow-up review
+directly, already planned.
+
 ## Measures catalog
 
 All measures across the whole workbook, filterable by status, priority,
@@ -259,7 +273,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 79 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 88 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export
