@@ -111,11 +111,51 @@ Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvisio
 
 ### AP4 – BCM Timeline
 
+**Status: umgesetzt (2.4.0-dev)**
+
 - Ziel
+  Fachlich relevante BCM-Ereignisse chronologisch sichtbar machen, ohne
+  ein neues Persistenzformat (Audit-Log/Event-Sourcing) einzuführen.
 - Fachlicher Nutzen
+  "Was ist wann passiert?" wird beantwortbar, ohne durch Prozessakten,
+  Review Center, Maßnahmenkatalog und Versionshistorie einzeln zu
+  navigieren. Filter nach Prozess/Ereignistyp/Zeitraum, Drill-down in die
+  jeweilige Fachansicht.
+  Wichtig geprüft und bestätigt: alle in der Aufgabenstellung genannten
+  Beispiel-Ereignisse ließen sich bis auf zwei aus vorhandenen Daten
+  ableiten — siehe "Abweichungen" unten.
 - UX-Auswirkungen
+  Neue Sidebar-Ansicht "BCM Timeline" (Gruppe "Übergreifend"). Kompakter
+  "Timeline anzeigen"-Link in der Prozessakte (vorgefiltert). Keine
+  Änderung an bestehenden Ansichten außer der zusätzlichen `id` in
+  `compareVersions().processChanges` (rein additiv, UI unverändert).
 - Architektur
+  **Kein `STATE.timeline[]`.** `buildTimelineEvents()` leitet jedes
+  Ereignis aus bereits vorhandenen Zeitstempeln
+  (`createdAt`/`erstelltAm`/`gestartetAm`/`abgeschlossenAm`/
+  `wirksamkeitGeprueftAm`) und aus paarweisen `compareVersions()`-Diffs
+  zwischen unmittelbar aufeinanderfolgenden Versionen ab — reine, seiteneffektfreie
+  Ableitung, nichts wird zusätzlich gespeichert. `compareVersions()` um
+  eine Notbetrieb-Änderungserkennung (operative Kernfelder) und
+  Prozess-IDs in `processChanges` erweitert.
 - Tests
+  9 neue Selbsttests (keine erfundenen Zeitstempel, korrekte Ableitung aus
+  Versionsdiffs, Version-vs-Freigabe-Unterscheidung, Duplikatfreiheit/
+  Determinismus, Filter- und Sortierverhalten) sowie eine Browser-
+  Verifikation (Timeline zeigt Prozessanlage, Filter nach Ereignistyp
+  funktioniert, Drill-down aus der Prozessakte) ohne Konsolenfehler.
+
+**Abweichung von der Aufgabenstellung:** die Beispiel-Ereignisse "Maßnahme
+gestartet" und "Maßnahme blockiert" wurden NICHT umgesetzt. Das
+Datenmodell speichert für diese Statuswechsel keinen eigenen Zeitstempel
+(anders als bei `erstelltAm`/`abgeschlossenAm`); ein Timeline-Ereignis
+dafür hätte einen Zeitpunkt erfinden statt ableiten müssen — ausdrücklich
+untersagt ("Ableitung vor Persistenz", "keine Ereignisse für Funktionen
+erfinden, die im Produkt nicht existieren"). Bewusst keine zusätzliche
+Persistenz (z. B. ein `gestartetAm`/`blockiertAm`-Feld auf Maßnahmen)
+eingeführt, um dieses eine Ereignispaar zu ermöglichen — das hätte AP3s
+bereits abgeschlossenes, additives Feldmodell nachträglich erweitert. Falls
+gewünscht, ist das für AP5 nachholbar (siehe Empfehlung im Abschlussbericht).
 
 ### AP5 – Governance Dashboard
 

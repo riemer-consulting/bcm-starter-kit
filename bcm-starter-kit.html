@@ -927,6 +927,22 @@ const REVIEW_INTERVAL_LABELS = { '3m':'3 Monate', '6m':'6 Monate', '12m':'12 Mon
    reviewConfig.intervalMonths, 'ereignisbezogen' hat keinen Eintrag. */
 const REVIEW_INTERVAL_MONTHS = { '3m':3, '6m':6, '12m':12, '24m':24 };
 
+/* v2.4.0 (AP4, BCM Timeline): fest definierte, tatsächlich vorkommende
+   Ereignistypen. Bewusst NICHT enthalten: "Maßnahme gestartet"/"Maßnahme
+   blockiert" — das Produkt speichert für diese Übergänge keinen eigenen
+   Zeitstempel, ein Zeitpunkt würde also erfunden statt abgeleitet. Siehe
+   docs/handbook/timeline.md für die vollständige Herleitung je Ereignistyp. */
+const TIMELINE_EVENT_TYPES = ['prozess_angelegt','review_geplant','review_gestartet','review_abgeschlossen',
+  'massnahme_erstellt','massnahme_abgeschlossen','wirksamkeit_geprueft',
+  'kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert',
+  'version_gespeichert','freigabe_erzeugt'];
+const TIMELINE_EVENT_LABELS = {
+  prozess_angelegt:'Prozess angelegt', review_geplant:'Review geplant', review_gestartet:'Review gestartet', review_abgeschlossen:'Review abgeschlossen',
+  massnahme_erstellt:'Maßnahme erstellt', massnahme_abgeschlossen:'Maßnahme abgeschlossen', wirksamkeit_geprueft:'Wirksamkeit geprüft',
+  kritikalitaet_geaendert:'Kritikalität geändert', zeitwerte_geaendert:'MTA/RTO/RPO geändert', notbetrieb_geaendert:'Notbetrieb wesentlich geändert', ressourcen_geaendert:'Kritische Ressourcen geändert',
+  version_gespeichert:'Version gespeichert', freigabe_erzeugt:'Freigabe erzeugt'
+};
+
 const PROCESS_TABS = [
   {key:'steckbrief', label:'Steckbrief', ic:'01'},
   {key:'sixty', label:'60-Sek.-Vorstellung', ic:'02'},
@@ -1925,7 +1941,13 @@ function compareVersions(versionA, versionB){
       const vb = pb.bia && pb.bia[c.key] && pb.bia[c.key].bewertung;
       if(va!==vb) changes.push('BIA "'+c.label+'" geändert ('+va+' → '+vb+')');
     });
-    if(changes.length>0) diff.processChanges.push({ name: pb.steckbrief.name||pa.steckbrief.name||'(ohne Namen)', changes });
+    // v2.4.0 (AP4): "wesentliche" Notbetrieb-Änderung — bewusst nur die
+    // operativen Kernfelder, nicht jedes Freitextfeld (sonst würde die
+    // Timeline von belanglosen Formulierungsänderungen überflutet).
+    const NOTBETRIEB_WESENTLICH_FELDER = ['ausloeser','entscheidung','werInformiert','steuerung','schritt1','schritt2','schritt3','schritt4','rueckkehr'];
+    const notbetriebChanged = NOTBETRIEB_WESENTLICH_FELDER.some(f=>(pa.notbetrieb||{})[f]!==(pb.notbetrieb||{})[f]);
+    if(notbetriebChanged) changes.push('Notbetrieb wesentlich geändert');
+    if(changes.length>0) diff.processChanges.push({ id, name: pb.steckbrief.name||pa.steckbrief.name||'(ohne Namen)', changes });
   });
 
   const aResMap = new Map((a.resources||[]).map(r=>[r.id,r]));
@@ -1946,6 +1968,89 @@ function compareVersions(versionA, versionB){
   });
 
   return diff;
+}
+
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP4) — BCM TIMELINE
+   Bewusst KEIN STATE.timeline[]. Jedes Ereignis wird aus bereits
+   vorhandenen, ohnehin gespeicherten Zeitstempeln und Versions-Snapshots
+   abgeleitet (Ableitung vor Persistenz) — kein Audit-Log, kein Event-
+   Sourcing, keine Aufzeichnung jeder Feldänderung. Nur die in
+   TIMELINE_EVENT_TYPES gelisteten, fachlich relevanten Ereignistypen.
+   --------------------------------------------------------------------- */
+/** Baut die vollständige, unsortierte Liste aller ableitbaren Timeline-Ereignisse. Reine Ableitung aus STATE — erzeugt oder verändert nichts. @returns {Array<{type:string, timestamp:string, description:string, object:object|null, bearbeiter:string}>} */
+function buildTimelineEvents(){
+  const events = [];
+  /** @param {string} type @param {string} timestamp @param {string} description @param {object} obj @param {string} [bearbeiter] */
+  function add(type, timestamp, description, obj, bearbeiter){
+    if(!String(timestamp||'').trim()) return; // nie ein Ereignis ohne echten, vorhandenen Zeitstempel erzeugen
+    events.push({ type, timestamp, description, object: obj||null, bearbeiter: bearbeiter||'' });
+  }
+
+  STATE.processes.forEach(p=>{
+    const name = p.steckbrief.name||'(ohne Namen)';
+    add('prozess_angelegt', p.createdAt, 'Prozess "'+name+'" angelegt.', {type:'process', id:p.id, prozessId:p.id, label:name});
+  });
+
+  STATE.reviews.forEach(r=>{
+    const pname = processName(r.prozessId);
+    const art = REVIEW_ART_LABELS[r.reviewart]||r.reviewart;
+    const obj = {type:'review', id:r.id, prozessId:r.prozessId, label:art+' — '+pname};
+    add('review_geplant', r.erstelltAm, art+' für "'+pname+'" geplant'+(r.geplantAm?' (Termin '+fmtDateOnly(r.geplantAm)+')':'')+'.', obj, r.verantwortlich);
+    add('review_gestartet', r.gestartetAm, art+' für "'+pname+'" gestartet.', obj, r.verantwortlich);
+    add('review_abgeschlossen', r.abgeschlossenAm, art+' für "'+pname+'" abgeschlossen.', obj, r.verantwortlich);
+  });
+
+  STATE.massnahmen.forEach(m=>{
+    const titel = m.titel||'(ohne Titel)';
+    const obj = {type:'massnahme', id:m.id, prozessId:m.prozessId, label:titel};
+    add('massnahme_erstellt', m.erstelltAm, 'Maßnahme "'+titel+'" erstellt ('+(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+').', obj, m.verantwortlich);
+    add('massnahme_abgeschlossen', m.abgeschlossenAm, 'Maßnahme "'+titel+'" abgeschlossen.', obj, m.verantwortlich);
+    add('wirksamkeit_geprueft', m.wirksamkeitGeprueftAm, 'Wirksamkeit von "'+titel+'" geprüft'+(m.wirksamkeitErgebnis?' — '+m.wirksamkeitErgebnis:'')+'.', obj, m.wirksamkeitPruefer);
+  });
+
+  const sortedVersions = STATE.versions.slice().sort((a,b)=>a.nr-b.nr);
+  sortedVersions.forEach(v=>{
+    const isRelease = v.source==='release';
+    add(isRelease?'freigabe_erzeugt':'version_gespeichert', v.datum,
+      isRelease ? 'Freigabe erzeugt (Version '+v.nr+').' : 'Version '+v.nr+' gespeichert'+(v.notiz?': '+v.notiz:'')+'.',
+      {type:'version', id:v.nr, prozessId:null, label:'Version '+v.nr}, v.bearbeiter);
+  });
+
+  // Versionsdiffs NUR zwischen unmittelbar aufeinanderfolgenden Versionen —
+  // ein Vergleich nicht-konsekutiver Versionen würde Zwischenänderungen
+  // verschlucken oder (bei allen Paaren) Änderungen vervielfacht melden.
+  for(let i=1;i<sortedVersions.length;i++){
+    const vPrev = sortedVersions[i-1], vCur = sortedVersions[i];
+    let diff;
+    try{ diff = compareVersions(vPrev, vCur); } catch(e){ continue; } // beschädigter Snapshot -> keine Ableitung, kein Absturz
+    diff.processChanges.forEach(pc=>{
+      const p = getProcess(pc.id);
+      const label = p ? (p.steckbrief.name||pc.name) : pc.name;
+      const obj = {type:'process', id:pc.id, prozessId:pc.id, label};
+      if(pc.changes.some(c=>c.indexOf('Kritikalität')===0)) add('kritikalitaet_geaendert', vCur.datum, 'Kritikalität von "'+label+'" geändert.', obj, vCur.bearbeiter);
+      if(pc.changes.some(c=>c.indexOf('MTA')===0||c.indexOf('RTO')===0||c.indexOf('RPO')===0)) add('zeitwerte_geaendert', vCur.datum, 'MTA/RTO/RPO von "'+label+'" geändert.', obj, vCur.bearbeiter);
+      if(pc.changes.some(c=>c.indexOf('Notbetrieb')===0)) add('notbetrieb_geaendert', vCur.datum, 'Notbetrieb von "'+label+'" wesentlich geändert.', obj, vCur.bearbeiter);
+    });
+    if(diff.resourcesAdded.length>0 || diff.resourcesRemoved.length>0){
+      const parts = [];
+      if(diff.resourcesAdded.length>0) parts.push(diff.resourcesAdded.length+' hinzugefügt ('+diff.resourcesAdded.join(', ')+')');
+      if(diff.resourcesRemoved.length>0) parts.push(diff.resourcesRemoved.length+' entfernt ('+diff.resourcesRemoved.join(', ')+')');
+      add('ressourcen_geaendert', vCur.datum, 'Kritische Ressourcen geändert: '+parts.join('; ')+'.', {type:'version', id:vCur.nr, prozessId:null, label:'Version '+vCur.nr}, vCur.bearbeiter);
+    }
+  }
+
+  return events;
+}
+/** Liefert die gefilterte, absteigend nach Zeitpunkt sortierte Timeline. @param {{prozessId?:string, type?:string, from?:string, to?:string}} [filters] @returns {Array} */
+function timelineEvents(filters){
+  filters = filters || {};
+  let list = buildTimelineEvents();
+  if(filters.prozessId) list = list.filter(e=>e.object && e.object.prozessId===filters.prozessId);
+  if(filters.type) list = list.filter(e=>e.type===filters.type);
+  if(filters.from) list = list.filter(e=>String(e.timestamp)>=filters.from);
+  if(filters.to) list = list.filter(e=>String(e.timestamp)<=filters.to+'T23:59:59.999Z');
+  return list.sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
 }
 
 /* Prüfsummen-Verifizierung im Hintergrund (Web Crypto ist immer async).
@@ -4971,6 +5076,7 @@ function renderView(){
   if(r==='massnahmen') return viewMassnahmenKatalog();
   if(r==='parkplatz') return viewParkplatz();
   if(r==='reviews') return viewReviewCenter();
+  if(r==='timeline') return viewTimeline();
   if(r==='quality') return viewQualityCheck();
   if(r==='summary') return viewSummary();
   if(r==='versions') return viewVersions();
@@ -5032,6 +5138,7 @@ function renderSidebar(){
   html += '<div class="navgroup"><div class="navgroup-label">Übergreifend</div>';
   html += navItem('cluster','▦','Abhängigkeitscluster');
   html += navItem('reviews','↺','Review Center', reviewCenterData().overdue.length);
+  html += navItem('timeline','▤','BCM Timeline');
   html += navItem('massnahmen','✓','Maßnahmenkatalog', stats.offeneMassnahmen);
   html += navItem('parkplatz','☐','Parkplatz', STATE.parkplatz.filter(p=>p.status==='offen').length);
   html += navItem('quality','◎','Qualitätsprüfung');
@@ -5071,7 +5178,7 @@ function navItem(route, ic, label, count){
 /** Rendert die Kopfleiste (Titel, Speicherstatus, Datei-Aktionen, Suche). @returns {string} HTML */
 function renderTopbar(){
   const titles = {
-    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', reviews:'Review Center', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
+    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', reviews:'Review Center', timeline:'BCM Timeline', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
     summary:'Management Summary', versions:'Versionshistorie', settings:'Branding & Einstellungen',
     process: STATE.ui.processId ? processName(STATE.ui.processId) : 'Prozess'
   };
@@ -6992,6 +7099,7 @@ function tabReviewHistoryCard(p){
   let html = '<div class="card"><div class="card-head"><div class="card-title">Reviews für diesen Prozess</div>'+
     '<div class="flexrow">'+
     '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>'+
+    '<button class="btn btn-sm" onclick="App.timelineFilter.prozessId=\''+safeJsString(p.id)+'\';go(\'timeline\')" title="BCM Timeline, gefiltert auf diesen Prozess">Timeline anzeigen</button>'+
     '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(p.id)+'\')">+ Review planen</button>'+
     '</div></div>';
   html += reviewConfigEditorHtml(p);
@@ -7738,7 +7846,64 @@ function viewReviewCenter(){
   return html;
 }
 
-/** v2.3.0: Rendert die View "Qualitäts- und Konsistenzprüfung". @returns {string} HTML */
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP4) — VIEW: BCM TIMELINE
+   --------------------------------------------------------------------- */
+App.timelineFilter = { prozessId:'', type:'', from:'', to:'' };
+/** Setzt einen Filter der BCM Timeline und rendert neu. @param {string} key @param {string} val @returns {void} */
+App.setTimelineFilter = function(key, val){ App.timelineFilter[key] = val; render(); };
+/** Rendert einen Icon-/Farb-Hinweis je Timeline-Ereignistyp (rein dekorativ, keine fachliche Bewertung). @param {string} type @returns {string} HTML */
+function timelineEventBadge(type){
+  const toneMap = {
+    prozess_angelegt:'b-neutral', review_geplant:'b-neutral', review_gestartet:'b-warn', review_abgeschlossen:'b-ok',
+    massnahme_erstellt:'b-neutral', massnahme_abgeschlossen:'b-ok', wirksamkeit_geprueft:'b-ok',
+    kritikalitaet_geaendert:'b-warn', zeitwerte_geaendert:'b-warn', notbetrieb_geaendert:'b-warn', ressourcen_geaendert:'b-warn',
+    version_gespeichert:'b-neutral', freigabe_erzeugt:'b-ok'
+  };
+  return '<span class="badge '+(toneMap[type]||'b-neutral')+'">'+escapeHtml(TIMELINE_EVENT_LABELS[type]||type)+'</span>';
+}
+/** Baut den Drill-down-Link eines Timeline-Ereignisses zur passenden bestehenden Ansicht (Prozess/Review Center/Maßnahmenkatalog/Versionshistorie). @param {object} e @returns {string} HTML */
+function timelineDrilldownHtml(e){
+  if(!e.object) return '';
+  const o = e.object;
+  if(o.type==='process') return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(o.id)+'\',\'steckbrief\')">Prozessakte öffnen</button>';
+  if(o.type==='review') return '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>';
+  if(o.type==='massnahme') return '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button>';
+  if(o.type==='version') return '<button class="btn btn-sm" onclick="go(\'versions\')">Versionshistorie öffnen</button>';
+  return '';
+}
+/** Rendert die View "BCM Timeline". @returns {string} HTML */
+function viewTimeline(){
+  const f = App.timelineFilter;
+  const list = timelineEvents(f);
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">BCM Timeline</div>'+
+    '<div class="small muted">Fachlich relevante BCM-Ereignisse, abgeleitet aus vorhandenen Daten — kein Audit-Log, keine Aufzeichnung jeder Feldänderung.</div></div>';
+
+  html += '<div class="grid grid-4" style="margin-bottom:16px;">';
+  html += '<div class="field"><label>Prozess</label><select onchange="App.setTimelineFilter(\'prozessId\',this.value)"><option value="">Alle</option>'+
+    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(f.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Ereignistyp</label><select onchange="App.setTimelineFilter(\'type\',this.value)"><option value="">Alle</option>'+
+    TIMELINE_EVENT_TYPES.map(t=>'<option value="'+t+'" '+(f.type===t?'selected':'')+'>'+escapeHtml(TIMELINE_EVENT_LABELS[t])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Zeitraum von</label><input type="date" value="'+escapeHtml(f.from)+'" onchange="App.setTimelineFilter(\'from\',this.value)"></div>';
+  html += '<div class="field"><label>Zeitraum bis</label><input type="date" value="'+escapeHtml(f.to)+'" onchange="App.setTimelineFilter(\'to\',this.value)"></div>';
+  html += '</div>';
+
+  if(list.length===0){
+    html += emptyState('Keine Ereignisse gefunden', 'Passen Sie die Filter an, oder es liegen noch keine ableitbaren Ereignisse vor (z. B. noch keine gespeicherte Version).');
+  } else {
+    html += '<div>';
+    list.forEach(e=>{
+      html += '<div class="rowcard"><div class="spread"><div>'+timelineEventBadge(e.type)+' '+fmtDate(e.timestamp)+
+        '<div style="margin-top:4px;">'+escapeHtml(e.description)+(e.bearbeiter?' <span class="small muted">— '+escapeHtml(e.bearbeiter)+'</span>':'')+'</div></div>'+
+        timelineDrilldownHtml(e)+'</div></div>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
 /** v2.4.0 (AP3): öffnet ein Modal, um aus einem Qualitäts-/Konsistenzbefund eine Maßnahme anzulegen. @param {string} rule Regelcode (z. B. "Q13"). @param {string} processId Leer, wenn der Befund keinen Prozessbezug hat. @param {string} text Befundtext, dient als Titel-Vorschlag. @returns {void} */
 App.qualityFindingToMassnahme = function(rule, processId, text){
   openModal(
@@ -10085,6 +10250,106 @@ function runSelfTests(){
     });
   });
 
+  /* ---- v2.4.0 (AP4): BCM Timeline ---- */
+  (function(){
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen, origVersions = STATE.versions;
+
+    test('buildTimelineEvents: Prozessanlage erzeugt genau ein Ereignis mit dem echten Anlagezeitpunkt', true, ()=>{
+      const p = newProcess('TimelineProzess');
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.type==='prozess_angelegt');
+      assertEqual(events.length, 1);
+      assertEqual(events[0].timestamp, p.createdAt);
+    });
+
+    test('buildTimelineEvents: Review mit nur geplantAm erzeugt genau ein Ereignis, kein erfundener Start/Abschluss', true, ()=>{
+      const p = newProcess('TimelineReviewProzess');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01'}); // gestartetAm/abgeschlossenAm bewusst leer
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===r.id);
+      assertEqual(events.length, 1);
+      assertEqual(events[0].type, 'review_geplant');
+    });
+
+    test('buildTimelineEvents: vollständig durchlaufener Review erzeugt genau drei Ereignisse', false, ()=>{
+      const p = newProcess('TimelineReviewVollstaendig');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01', gestartetAm:'2026-01-05', abgeschlossenAm:'2026-01-10', status:'abgeschlossen'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===r.id);
+      assertEqual(events.map(e=>e.type).sort(), ['review_abgeschlossen','review_geplant','review_gestartet']);
+    });
+
+    test('buildTimelineEvents: Maßnahme ohne bekannten Anlagezeitpunkt (Altdatensatz) erzeugt kein "massnahme_erstellt"-Ereignis', true, ()=>{
+      const legacyMassnahme = newMassnahme({titel:'Altmaßnahme', erstelltAm:''}); // simuliert Migration 14->15
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [legacyMassnahme]; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===legacyMassnahme.id);
+      assertTrue(!events.some(e=>e.type==='massnahme_erstellt'), 'Ein Anlage-Ereignis ohne echten Zeitstempel wäre erfunden');
+    });
+
+    test('buildTimelineEvents: Versionsdiff leitet Kritikalitäts-, Zeitwert-, Notbetrieb- und Ressourcenänderungen ab', false, ()=>{
+      const snapA = JSON.stringify({processes:[{id:'tx', steckbrief:{name:'TX', kritikalitaet:'mittel', mtaWert:'4', mtaEinheit:'Stunden', rto:{wert:2,einheit:'Stunden'}, rpo:{wert:1,einheit:'Stunden'}}, bia:{}, notbetrieb:{entscheidung:'Alt'}}], resources:[], massnahmen:[]});
+      const snapB = JSON.stringify({processes:[{id:'tx', steckbrief:{name:'TX', kritikalitaet:'hoch', mtaWert:'2', mtaEinheit:'Stunden', rto:{wert:2,einheit:'Stunden'}, rpo:{wert:1,einheit:'Stunden'}}, bia:{}, notbetrieb:{entscheidung:'Neu'}}], resources:[{id:'rx', name:'Neue Ressource'}], massnahmen:[]});
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:snapA, source:'manual'},
+        {nr:2, datum:'2026-02-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:snapB, source:'manual'}
+      ];
+      const events = buildTimelineEvents();
+      ['kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert'].forEach(t=>{
+        assertTrue(events.some(e=>e.type===t && e.timestamp==='2026-02-01T00:00:00.000Z'), 'Ereignis "'+t+'" wurde nicht abgeleitet', events.map(e=>e.type));
+      });
+    });
+
+    test('buildTimelineEvents: unterscheidet "Version gespeichert" von "Freigabe erzeugt" anhand version.source', false, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'},
+        {nr:2, datum:'2026-01-02T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'release'}
+      ];
+      const events = buildTimelineEvents();
+      assertTrue(events.some(e=>e.type==='version_gespeichert' && e.object.id===1), 'Version 1 hätte "version_gespeichert" sein müssen');
+      assertTrue(events.some(e=>e.type==='freigabe_erzeugt' && e.object.id===2), 'Version 2 (Freigabe) hätte "freigabe_erzeugt" sein müssen');
+    });
+
+    test('buildTimelineEvents: liefert bei unverändertem STATE bei wiederholtem Aufruf identische Ereignisse (keine Duplikate/Nichtdeterminismus)', true, ()=>{
+      const p = newProcess('TimelineDedup');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01', gestartetAm:'2026-01-02', abgeschlossenAm:'2026-01-03'});
+      const m = newMassnahme({titel:'DedupMassnahme', prozessId:p.id});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = [m]; STATE.versions = [];
+      const first = buildTimelineEvents();
+      const second = buildTimelineEvents();
+      assertEqual(JSON.stringify(first), JSON.stringify(second), 'buildTimelineEvents() sollte bei unverändertem STATE deterministisch identische Ergebnisse liefern');
+      const keys = first.map(e=>e.type+'|'+(e.object?e.object.id:'')+'|'+e.timestamp);
+      assertEqual(keys.length, new Set(keys).size, 'buildTimelineEvents() enthält doppelte Ereignisse für dasselbe Objekt/denselben Zeitpunkt/Typ');
+    });
+
+    test('timelineEvents: Filter nach Prozess, Ereignistyp und Zeitraum grenzen korrekt ein', false, ()=>{
+      const p1 = newProcess('TimelineFilterA');
+      const p2 = newProcess('TimelineFilterB');
+      STATE.processes = [p1, p2]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [];
+      const byProcess = timelineEvents({prozessId:p1.id});
+      assertTrue(byProcess.every(e=>e.object && e.object.prozessId===p1.id), 'Prozessfilter hat fremde Ereignisse durchgelassen');
+      const byType = timelineEvents({type:'prozess_angelegt'});
+      assertTrue(byType.every(e=>e.type==='prozess_angelegt'), 'Typfilter hat andere Ereignistypen durchgelassen');
+      const byRangeFuture = timelineEvents({from:'2999-01-01'});
+      assertEqual(byRangeFuture.length, 0, 'Zeitraumfilter in der Zukunft hätte keine Treffer liefern sollen');
+    });
+
+    test('timelineEvents: absteigend nach Zeitpunkt sortiert', false, ()=>{
+      const p = newProcess('TimelineSort');
+      p.createdAt = '2020-01-01T00:00:00.000Z';
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01'});
+      r.erstelltAm = '2025-01-01T00:00:00.000Z';
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = timelineEvents();
+      for(let i=1;i<events.length;i++){
+        assertTrue(String(events[i-1].timestamp) >= String(events[i].timestamp), 'Timeline nicht absteigend sortiert');
+      }
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen; STATE.versions = origVersions;
+  })();
+
   return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{
     const total = results.length;
     const passed = results.filter(r=>r.passed).length;
@@ -10106,6 +10371,7 @@ function openCommandPalette(){
     {ic:'✓', label:'Maßnahmenkatalog', action:()=>go('massnahmen')},
     {ic:'☐', label:'Parkplatz (offene Punkte)', action:()=>go('parkplatz')},
     {ic:'↺', label:'Review Center', action:()=>go('reviews')},
+    {ic:'▤', label:'BCM Timeline', action:()=>go('timeline')},
     {ic:'◎', label:'Qualitätsprüfung', action:()=>go('quality')},
     {ic:'▼', label:'Priorisierungsansicht', action:()=>App.openPrioView()},
     {ic:'GF', label:'Managementbericht (GF-Ansicht)', action:()=>App.openGfMode()},

@@ -17,3 +17,4 @@ erklärt werden müssen, als es im laufenden User Guide sinnvoll ist.
 
 1. [Review Center](review-center.md) *(AP1/AP2, 2.4.0-dev)*
 2. [Maßnahmenmanagement 2.0](massnahmenmanagement.md) *(AP3, 2.4.0-dev)*
+3. [BCM Timeline](timeline.md) *(AP4, 2.4.0-dev)*

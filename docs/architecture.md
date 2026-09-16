@@ -122,6 +122,39 @@ new one lets a quality/consistency finding (`qualityAndConsistencyCheck()`)
 become a measure the same way. The review link is fully bidirectional:
 `review.massnahmenIds[]` and `massnahme.reviewId` both point at each other.
 
+### BCM Timeline (`buildTimelineEvents()`, 2.4.0-dev)
+
+Deliberately **not** a new `STATE.timeline[]` array. The timeline is
+computed on demand from data that was already being stored for other
+reasons: `process.createdAt`; each review's `erstelltAm`/`gestartetAm`/
+`abgeschlossenAm`; each measure's `erstelltAm`/`abgeschlossenAm`/
+`wirksamkeitGeprueftAm`; and `STATE.versions[]`, including pairwise
+`compareVersions()` diffs between *consecutive* versions (never all pairs —
+that would double-count or miss intermediate changes).
+
+`buildTimelineEvents()` is a pure function: it reads `STATE`, returns an
+array, and never mutates anything or persists a result. An event is only
+ever emitted when a genuine timestamp exists for it — a review that was
+only planned (no `gestartetAm`/`abgeschlossenAm`) contributes exactly one
+event, not three with two guessed dates. `TIMELINE_EVENT_TYPES` lists
+every event type the timeline can produce; deliberately absent are
+"measure started" and "measure blocked" — the data model has no
+timestamp for either status transition, so an event for them would invent
+a date rather than derive one.
+
+`compareVersions()` gained one additive capability for this: it now also
+flags a "Notbetrieb wesentlich geändert" change (comparing the operational
+core fields — trigger, decision authority, the four response steps,
+return-to-normal — not every free-text field, so minor wording edits don't
+flood the timeline) and includes each changed process's `id` in
+`processChanges` entries (previously name-only), which the timeline needs
+for drill-down and process filtering. Neither change affects the existing
+version-comparison UI, which only ever read `.name`/`.changes`.
+
+`timelineEvents(filters)` wraps `buildTimelineEvents()` with process/type/
+date-range filtering and returns events sorted newest-first; the view layer
+(`viewTimeline()`) never talks to `buildTimelineEvents()` directly.
+
 ## Rendering
 
 Rendering is plain HTML string generation — there is no virtual DOM and no
@@ -278,7 +311,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 98 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 107 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

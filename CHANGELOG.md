@@ -90,6 +90,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `abgeschlossenAm`, offene Folgemaßnahmen abgeschlossener Reviews,
   Import-Normalisierung von Herkunft/Review-Verknüpfung.
 
+### Added — AP4: BCM Timeline
+- **Neue Ansicht "BCM Timeline"** — filterbar nach Prozess, Ereignistyp und
+  Zeitraum, mit Drill-down in Prozessakte/Review Center/Maßnahmenkatalog/
+  Versionshistorie. **Bewusst kein neues `STATE.timeline[]`** — jedes
+  Ereignis wird aus bereits vorhandenen Zeitstempeln und
+  Versions-Snapshots abgeleitet (`buildTimelineEvents()`), nicht separat
+  gespeichert. Kein Audit-Log, kein Event-Sourcing, keine Aufzeichnung
+  jeder Feldänderung.
+- Abgeleitete Ereignistypen: Prozess angelegt; Review geplant/gestartet/
+  abgeschlossen; Maßnahme erstellt/abgeschlossen; Wirksamkeit geprüft;
+  Kritikalität geändert; MTA/RTO/RPO geändert; Notbetrieb wesentlich
+  geändert; kritische Ressourcen geändert; Version gespeichert; Freigabe
+  erzeugt. Bewusst NICHT enthalten: "Maßnahme gestartet"/"Maßnahme
+  blockiert" — für diese Übergänge speichert die Anwendung keinen eigenen
+  Zeitstempel, ein Ereignis dafür würde einen Zeitpunkt erfinden statt ihn
+  abzuleiten.
+- `compareVersions()` erkennt jetzt zusätzlich wesentliche
+  Notbetrieb-Änderungen (Auslöser, Entscheidung, Schritte, Rückkehr) und
+  liefert je Prozessänderung zusätzlich dessen ID (rein additiv, bestehende
+  Versionsvergleich-Ansicht unverändert).
+- Kompakter "Timeline anzeigen"-Link direkt in der Prozessakte (vorgefiltert
+  auf den jeweiligen Prozess).
+- 9 neue Selbsttests (107 insgesamt): keine erfundenen Zeitstempel bei
+  unvollständigen Reviews/Altmaßnahmen, korrekte Ableitung aus
+  Versionsdiffs, Unterscheidung Version/Freigabe, Duplikatfreiheit
+  (deterministische, idempotente Ableitung), Filter- und Sortierverhalten.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

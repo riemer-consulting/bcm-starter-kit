@@ -11,16 +11,17 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 4. [Dependency cluster view](#dependency-cluster-view)
 5. [Review Center](#review-center) *(2.4.0-dev)*
 6. [Measures catalog](#measures-catalog)
-7. [Management (executive) view](#management-executive-view)
-8. [Version history](#version-history)
-9. [Settings & branding](#settings--branding)
-10. [PDF reports](#pdf-reports)
-11. [Import & export](#import--export)
-12. [Release readiness](#release-readiness)
-13. [Workshop mode](#workshop-mode)
-14. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
-15. [Keyboard and accessibility](#keyboard-and-accessibility)
-16. [Self-tests (advanced)](#self-tests-advanced)
+7. [BCM Timeline](#bcm-timeline) *(2.4.0-dev)*
+8. [Management (executive) view](#management-executive-view)
+9. [Version history](#version-history)
+10. [Settings & branding](#settings--branding)
+11. [PDF reports](#pdf-reports)
+12. [Import & export](#import--export)
+13. [Release readiness](#release-readiness)
+14. [Workshop mode](#workshop-mode)
+15. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
+16. [Keyboard and accessibility](#keyboard-and-accessibility)
+17. [Self-tests (advanced)](#self-tests-advanced)
 
 ## Overview
 
@@ -151,6 +152,25 @@ and the result), exactly as before 2.4.0. A measure marked "blocked"
 without a stated reason, or "done" without an effectiveness check, is
 flagged — this checks documentation completeness only, never whether the
 block or the outcome itself was actually justified.
+
+## BCM Timeline
+
+*(Version 2.4.0-dev, under active development — not yet part of a stable release.)*
+
+A chronological, filterable view of business-relevant BCM events — process
+created; reviews planned/started/completed; measures created/completed;
+effectiveness checked; criticality, MTA/RTO/RPO, or emergency-operations
+changes; versions saved; releases created. Filter by process, event type,
+or date range; each entry links back to the relevant process record,
+Review Center, measures catalog, or version history.
+
+This is **not** an audit log and does not record every field edit — only
+the event types listed above, and only when the application already has a
+real timestamp for them. Nothing is stored specifically for the timeline;
+every entry is computed from data you already see elsewhere (creation
+dates, review/measure dates, saved versions). A process record's Measures
+tab has a "Timeline anzeigen" shortcut that opens the timeline pre-filtered
+to that process.
 
 ## Management (executive) view
 
@@ -289,7 +309,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 98 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 107 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export

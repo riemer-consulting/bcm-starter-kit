@@ -102,6 +102,37 @@ Ausdrückliche Vorgabe der Aufgabenstellung. Diese Trennung existierte
 bereits vor 2.4.0 (`massnahmeNeedsEffectivenessProof()`); AP3 erweitert sie
 nur um den Prüfer, ändert die Grundregel aber nicht.
 
+## AP4 — Kein STATE.timeline[], Ableitung statt Persistenz
+
+Entscheidung:
+Die BCM Timeline führt keine eigene, persistierte Ereignisliste ein.
+`buildTimelineEvents()` leitet alle Ereignisse bei jedem Aufruf frisch aus
+`STATE.processes`/`STATE.reviews`/`STATE.massnahmen`/`STATE.versions` ab.
+
+Begründung:
+Ausdrückliche Vorgabe der Aufgabenstellung. Ein zusätzliches
+Persistenzformat hätte dauerhaft mit den eigentlichen Datensätzen
+synchron gehalten werden müssen (Migrationen, Import/Export, Merge) —
+für Daten, die bereits vollständig anderswo vorliegen.
+
+## AP4 — "Maßnahme gestartet"/"Maßnahme blockiert" nicht umgesetzt
+
+Entscheidung:
+Diese beiden in der Aufgabenstellung als Beispiel genannten Ereignistypen
+fehlen in `TIMELINE_EVENT_TYPES`. Es wurde auch KEIN neues Zeitstempelfeld
+auf Maßnahmen ergänzt, um sie nachträglich ableitbar zu machen.
+
+Begründung:
+Für den Wechsel auf `in_arbeit` oder `blockiert` speichert das Datenmodell
+keinen Zeitpunkt. Ein Timeline-Ereignis dafür hätte einen Zeitpunkt
+erfinden müssen (z. B. den Zeitpunkt der Ableitung selbst) — das
+widerspricht direkt "Ableitung vor Persistenz" und "keine Ereignisse für
+Funktionen erfinden, die im Produkt nicht existieren". Eine zusätzliche
+Persistenzerweiterung dafür hätte zudem AP3 nachträglich angefasst, dessen
+additives Feldmodell zum Zeitpunkt von AP4 bereits abgeschlossen war.
+Siehe Abschlussbericht für eine Empfehlung, dies bei Bedarf gezielt in
+einem künftigen Arbeitspaket nachzuholen.
+
 ## AP1 — Kein Score, keine fachliche Bewertung
 
 Entscheidung:
