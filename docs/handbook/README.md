@@ -1,31 +1,30 @@
 # BCM Starter Kit — Handbuch (Markdown-Quelle)
 
-Dieses Verzeichnis ist die fortlaufend gepflegte Markdown-Quelle für das
-Anwenderhandbuch. Es wird während der Entwicklung von Version 2.4
-("Governance & Lifecycle") kapitelweise ergänzt.
+Dieses Verzeichnis ist die gepflegte Markdown-Quelle für das
+Anwenderhandbuch zu Version 2.4.0 ("Governance & Lifecycle"). Es wurde
+während der Entwicklung von Version 2.4.0 kapitelweise ergänzt und ist mit
+dem Release vollständig.
 
-**Wichtig:** Ein finales PDF-Handbuch war für den Abschluss von Version 2.4
-(AP6, siehe `roadmap/RELEASE_2_4.md`) vorgesehen. Bei der Umsetzung von AP6
-wurde geprüft, wie ein solches PDF erzeugt werden könnte — es existiert weder
-ein bereits vorhandenes PDF-Handbuch noch ein dokumentierter Erzeugungsweg
-dafür in diesem Repository (die eingebaute "PDF erzeugen"-Funktion der
-Anwendung erzeugt Berichte aus den Workbook-Daten, keine Dokumentation aus
-Markdown-Dateien). Bewusst wurde dafür **keine neue Build-Pipeline**
-eingeführt — das wäre über den Scope von AP6 hinausgegangen. Dieses
-Verzeichnis bleibt deshalb die maßgebliche Quelle; ein PDF-Handbuch ist ein
-offener, im AP6-Abschlussbericht dokumentierter Punkt.
+**PDF-Handbuch:** Aus diesen Kapiteln wurde
+[`docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`](../BCM-Starter-Kit_Benutzerhandbuch.pdf)
+erzeugt (Version 2.4.0, Titelseite, Inhaltsverzeichnis mit Sprungmarken,
+Seitenzahlen, Kapitel 1–4, Anhang: Glossar). Dieses Verzeichnis bleibt die
+maßgebliche, fortlaufend gepflegte Quelle — das PDF ist ein daraus erzeugter,
+einmaliger Snapshot für den Release, kein eigenständig gepflegtes Dokument.
+Bei einer künftigen inhaltlichen Änderung dieser Kapitel muss das PDF erneut
+erzeugt werden, um konsistent zu bleiben.
 
-Für Anwender der aktuell stabilen Version siehe stattdessen
-[docs/user-guide.md](../user-guide.md) — dieses Handbuch ergänzt dort, wo
-neue, noch in Entwicklung befindliche Funktionen (2.4.0-dev) ausführlicher
-erklärt werden müssen, als es im laufenden User Guide sinnvoll ist.
+Für Anwender siehe außerdem [docs/user-guide.md](../user-guide.md) — dieses
+Handbuch ergänzt dort, wo die mit Version 2.4.0 hinzugekommenen Funktionen
+ausführlicher erklärt werden müssen, als es im laufenden User Guide sinnvoll
+ist.
 
 ## Kapitel
 
-1. [Review Center](review-center.md) *(AP1/AP2, 2.4.0-dev)*
-2. [Maßnahmenmanagement 2.0](massnahmenmanagement.md) *(AP3, 2.4.0-dev)*
-3. [BCM Timeline](timeline.md) *(AP4, 2.4.0-dev)*
-4. [Governance Dashboard](governance-dashboard.md) *(AP5, 2.4.0-dev)*
+1. [Review Center](review-center.md) *(AP1/AP2, Version 2.4.0)*
+2. [Maßnahmenmanagement 2.0](massnahmenmanagement.md) *(AP3, Version 2.4.0)*
+3. [BCM Timeline](timeline.md) *(AP4, Version 2.4.0)*
+4. [Governance Dashboard](governance-dashboard.md) *(AP5, Version 2.4.0)*
 
 ## Glossar
 
@@ -50,8 +49,14 @@ Erklärung jeweils im zugehörigen Kapitel.
 
 ## Versionsgeschichte dieses Handbuchs
 
-- **AP1/AP2** (2.4.0-dev): Kapitel "Review Center" angelegt.
-- **AP3** (2.4.0-dev): Kapitel "Maßnahmenmanagement 2.0" ergänzt.
-- **AP4** (2.4.0-dev): Kapitel "BCM Timeline" ergänzt.
-- **AP5** (2.4.0-dev): Kapitel "Governance Dashboard" ergänzt; Glossar und
-  diese Versionsgeschichte neu eingeführt.
+- **AP1/AP2** (während der Entwicklung, damals 2.4.0-dev): Kapitel "Review
+  Center" angelegt.
+- **AP3** (während der Entwicklung, damals 2.4.0-dev): Kapitel
+  "Maßnahmenmanagement 2.0" ergänzt.
+- **AP4** (während der Entwicklung, damals 2.4.0-dev): Kapitel "BCM
+  Timeline" ergänzt.
+- **AP5** (während der Entwicklung, damals 2.4.0-dev): Kapitel "Governance
+  Dashboard" ergänzt; Glossar und diese Versionsgeschichte neu eingeführt.
+- **AP6/Release Candidate** (Version 2.4.0): Sprache auf den finalen
+  Releasezustand aktualisiert, Glossar um Wiedervorlage/"Blockiert ohne
+  Begründung"/Plausibilitätshinweis ergänzt, PDF-Handbuch erzeugt.

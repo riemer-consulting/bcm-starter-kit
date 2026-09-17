@@ -1,6 +1,6 @@
 # Governance Dashboard
 
-*Arbeitspaket AP5, Version 2.4.0-dev — in Entwicklung.*
+*Arbeitspaket AP5, Version 2.4.0.*
 
 ## Zweck
 

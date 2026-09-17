@@ -2,15 +2,19 @@
 
 > BCM endet nicht mit dem Workshop.
 
+**Status: Version 2.4.0 — AP1–AP6 abgeschlossen.** Keine offenen
+Arbeitspakete für 2.4; Reporting & Compliance folgt mit 2.5 (siehe
+`roadmap/RELEASE_2_5.md`).
+
 ## Ziel
 
 Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvision.
 
-## Geplante Arbeitspakete
+## Arbeitspakete
 
 ### AP1 – Review Center
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Beantwortet "Was muss als Nächstes getan werden?" für Reviews, ohne dem
@@ -42,7 +46,7 @@ Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvisio
 
 ### AP2 – Reviewzyklen
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Jede Reviewart erhält eine eigene, optionale Zykluspolicy, damit nach
@@ -74,7 +78,7 @@ Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvisio
 
 ### AP3 – Maßnahmenmanagement 2.0
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Herkunft, Zeitachse und Wirksamkeitsprüfung von Maßnahmen nachvollziehbar
@@ -111,7 +115,7 @@ Dieses Release erweitert das BCM Starter Kit konsequent entlang der Produktvisio
 
 ### AP4 – BCM Timeline
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Fachlich relevante BCM-Ereignisse chronologisch sichtbar machen, ohne
@@ -159,7 +163,7 @@ gewünscht, ist das für AP5 nachholbar (siehe Empfehlung im Abschlussbericht).
 
 ### AP5 – Governance Dashboard
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Beim Öffnen der Anwendung innerhalb weniger Sekunden beantworten: "Was
@@ -224,7 +228,7 @@ fällige Governance-Aufgabe") ergänzt. Beide Ergänzungen sind in
 
 ### AP6 – Release Completion
 
-**Status: umgesetzt (2.4.0-dev)**
+**Status: umgesetzt (2.4.0)**
 
 - Ziel
   Kein neues fachliches Arbeitspaket, sondern der kontrollierte Abschluss

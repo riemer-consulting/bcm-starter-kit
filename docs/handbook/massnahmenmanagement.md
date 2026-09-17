@@ -1,6 +1,6 @@
 # Maßnahmenmanagement 2.0
 
-*Arbeitspaket AP3, Version 2.4.0-dev — in Entwicklung.*
+*Arbeitspaket AP3, Version 2.4.0.*
 
 ## Zweck
 

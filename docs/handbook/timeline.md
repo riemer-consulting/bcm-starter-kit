@@ -1,6 +1,6 @@
 # BCM Timeline
 
-*Arbeitspaket AP4, Version 2.4.0-dev — in Entwicklung.*
+*Arbeitspaket AP4, Version 2.4.0.*
 
 ## Zweck
 

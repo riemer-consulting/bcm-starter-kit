@@ -1,6 +1,6 @@
 # Review Center
 
-*Arbeitspaket AP1, Version 2.4.0-dev — in Entwicklung.*
+*Arbeitspaket AP1, Version 2.4.0.*
 
 ## Zweck
 

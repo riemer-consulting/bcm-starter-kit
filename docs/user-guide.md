@@ -6,12 +6,12 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 ## Contents
 
 1. [Overview](#overview)
-2. [Dashboard](#dashboard) — including the [Governance Dashboard](#governance-dashboard) *(2.4.0-dev)*
+2. [Dashboard](#dashboard) — including the [Governance Dashboard](#governance-dashboard)
 3. [Process records](#process-records)
 4. [Dependency cluster view](#dependency-cluster-view)
-5. [Review Center](#review-center) *(2.4.0-dev)*
+5. [Review Center](#review-center)
 6. [Measures catalog](#measures-catalog)
-7. [BCM Timeline](#bcm-timeline) *(2.4.0-dev)*
+7. [BCM Timeline](#bcm-timeline)
 8. [Management (executive) view](#management-executive-view)
 9. [Version history](#version-history)
 10. [Settings & branding](#settings--branding)
@@ -42,7 +42,7 @@ The landing view. Shows overall counts (processes, critical processes, open
 measures, high risks) and quick actions. Use it as a jumping-off point to any
 process record or the sample-data loader.
 
-### Governance Dashboard *(2.4.0-dev)*
+### Governance Dashboard
 
 *(See the German [Governance Dashboard handbook chapter](handbook/governance-dashboard.md)
 for a deeper walkthrough, including the full 11-tier priority order.)*
@@ -139,9 +139,8 @@ and potential duplicate resource entries (detected by name similarity).
 
 ## Review Center
 
-*(Version 2.4.0-dev, under active development — not yet part of a stable release.
-See the German [Review Center handbook chapter](handbook/review-center.md) for
-a deeper walkthrough.)*
+*(See the German [Review Center handbook chapter](handbook/review-center.md)
+for a deeper walkthrough.)*
 
 The Review Center answers one question: **what does the person responsible
 for BCM need to do next?** It does not judge whether your BCM decisions are
@@ -196,7 +195,7 @@ an approver, evidence of implementation, and an effectiveness review date.
 Overdue measures and measures marked complete without an effectiveness
 review are visually flagged throughout the application.
 
-### Origin and status *(2.4.0-dev)*
+### Origin and status
 
 *(See the German [Maßnahmenmanagement 2.0 handbook chapter](handbook/massnahmenmanagement.md)
 for a deeper walkthrough.)*
@@ -217,8 +216,7 @@ block or the outcome itself was actually justified.
 
 ## BCM Timeline
 
-*(Version 2.4.0-dev, under active development — not yet part of a stable release.
-See the German [BCM Timeline handbook chapter](handbook/timeline.md) for a
+*(See the German [BCM Timeline handbook chapter](handbook/timeline.md) for a
 deeper walkthrough.)*
 
 A chronological, filterable view of business-relevant BCM events — process
@@ -350,7 +348,7 @@ button.
 Workshop mode covers the foundational BCM work for a process (impact,
 minimum capability, resilience, emergency operations) — it deliberately does
 **not** walk through Review Center, Measures catalog, BCM Timeline, or the
-Governance Dashboard *(2.4.0-dev)*: those are where the *ongoing* governance
+Governance Dashboard: those are where the *ongoing* governance
 work happens once the foundational workshop is done, and mixing an ongoing,
 multi-process view into a single-process, one-sitting workshop would work
 against its purpose. After a workshop, continue there — see

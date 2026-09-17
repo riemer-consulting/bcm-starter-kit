@@ -5,12 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [2.4.0-dev] — Governance & Lifecycle (in Entwicklung, noch nicht final)
+## [2.4.0] — Governance & Lifecycle
 
-> BCM endet nicht mit dem Workshop. Version 2.4 erweitert das BCM Starter Kit
-> vom Workshop-/Erfassungswerkzeug um Funktionen für den laufenden BCM-Betrieb.
-> Diese Version befindet sich in aktiver Entwicklung (`APP_VERSION = '2.4.0-dev'`)
-> auf dem Branch `feature/2.4-governance-lifecycle` und ist noch nicht final.
+> BCM endet nicht mit dem Workshop. Version 2.4.0 erweitert das BCM Starter
+> Kit vom Workshop-/Erfassungswerkzeug um Funktionen für den laufenden
+> BCM-Betrieb: Review Center, Reviewzyklen, Maßnahmenmanagement 2.0, BCM
+> Timeline und Governance Dashboard (AP1–AP5), abgeschlossen durch AP6
+> (Release Completion).
 
 ### Added — AP1: Review Center
 - **Neues `STATE.reviews[]`** (Schema-Migration 12→13, rein additiv). Ein Review
@@ -237,6 +238,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   jedem Zustand ein fachlich nachvollziehbares, korrekt begründetes
   Ergebnis — ein vollständig dokumentierter Prozess ohne offene Risiken
   wird korrekt Gelb/Grün, nicht Rot. Keine Codeänderung.
+
+### Added — Release Candidate Finalization
+- **PDF-Handbuch erzeugt:** `docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`
+  (Titelseite, Inhaltsverzeichnis mit Sprungmarken, Kapitel 1–4, Anhang:
+  Glossar, Seitenzahlen im Fußbereich, Version 2.4.0) aus den bestehenden
+  `docs/handbook/*.md`-Kapiteln erzeugt. Kein neues dauerhaftes
+  Repository-Dependency — die Konvertierung lief einmalig über ein
+  Werkzeug außerhalb des Repositories (Markdown→HTML, anschließend
+  HTML→PDF per Headless-Chromium-Druckfunktion, wie sie in diesem Projekt
+  bereits für Browser-Tests verwendet wird); im Repository landet nur das
+  fertige PDF.
+
+### Changed — Release Candidate Finalization
+- Sprache in README.md, CHANGELOG.md, docs/user-guide.md,
+  docs/handbook/*, roadmap/RELEASE_2_4.md auf den finalen Releasezustand
+  vereinheitlicht: keine "in Entwicklung"/"2.4.0-dev"/"geplant"-Formulierungen
+  mehr, sofern sie den aktuellen Stand beschreiben (historische Einträge in
+  CHANGELOG/Handbuch-Versionsgeschichte bleiben als solche gekennzeichnet
+  erhalten). `roadmap/RELEASE_2_4.md` erhält eine Status-Kopfzeile
+  ("AP1–AP6 abgeschlossen").
 
 ## [2.3.1] — Polish & Productivity
 
