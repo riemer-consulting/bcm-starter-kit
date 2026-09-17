@@ -35,6 +35,11 @@ STATE = {
                  alternative, recoveryRequirement, singlePointOfFailure, ... } ],
   massnahmen: [ { id, titel, prozessId, kategorie, prioritaet, aufwand,
                   status, entscheidungsbedarf, wirksamkeitGeprueftAm, ... } ],
+  parkplatz: [ { id, beschreibung, prozessId, workshopBlock, verantwortlich,
+                 termin, status, erstelltAm, abschlussNotiz } ],
+  reviews: [ { id, prozessId, reviewart, geplantAm, gestartetAm,
+               abgeschlossenAm, verantwortlich, status, ergebnis,
+               naechsterReviewAm, massnahmenIds[], erstelltAm } ],  // since schema 13 (2.4.0-dev)
   versions: [ { nr, datum, bearbeiter, notiz, snapshot, source,
                 appVersion, schemaVersion, checksum } ],
   ui: { route, processId, processTab }   // not persisted
@@ -42,8 +47,156 @@ STATE = {
 ```
 
 Factory functions (`newProcess()`, `newResource()`, `newMassnahme()`,
-`defaultMeta()`, `defaultState()`) define the canonical shape of each record
-type and are the single source of truth for what fields exist.
+`newParkplatzItem()`, `newReview()`, `defaultMeta()`, `defaultState()`)
+define the canonical shape of each record type and are the single source of
+truth for what fields exist.
+
+### Reviews (`STATE.reviews[]`, since schema 13, 2.4.0-dev)
+
+A review is a concrete work/history instance, not a template — each planned,
+started or completed review is its own record. Its stored status is
+deliberately limited to three values (`geplant` / `in_bearbeitung` /
+`abgeschlossen`); due-date state ("overdue", "upcoming") is derived at read
+time by `reviewDueInfo()` from `geplantAm`, never persisted as a fourth
+status. This follows the same principle as `massnahmeIsOverdue()` for
+measures: a fact that can be computed from an existing date is not
+duplicated as separate stored state that could drift out of sync.
+
+Reviews reference processes by ID (`prozessId`) and, optionally, measures
+they gave rise to (`massnahmenIds[]`). Prioritization
+(`reviewCenterPriorityList()`) is a pure sort — overdue by days overdue,
+then upcoming by days remaining, then critical processes with zero review
+records — with no scoring function and no fachliche Bewertung of whether a
+review's outcome was adequate.
+
+### Review cycles (`process.reviewConfig`, since schema 14, 2.4.0-dev)
+
+Each process carries an optional, per-review-type cycle policy:
+`process.reviewConfig = { prozess, bia, notbetrieb, ressourcen }`, each
+entry either `null` (no policy — the default for every process, including
+ones migrated from earlier schemas) or `{ intervalType, intervalMonths }`.
+`intervalType` is one of `3m`/`6m`/`12m`/`24m`/`individuell`/`ereignisbezogen`;
+`intervalMonths` is only meaningful for `individuell`.
+
+`computeNextReviewDate(process, reviewart, fromDateStr)` is the single place
+that turns a policy into an actual date, and it is deliberately strict: no
+policy, an `ereignisbezogen` policy, or an `individuell` policy without a
+valid `intervalMonths` all return `null` rather than a guessed date. This is
+enforced by dedicated self-tests, since "never invent a date" is a hard
+product requirement, not just a preference.
+
+### Measures management 2.0 (`massnahmen[]` extensions, since schema 15, 2.4.0-dev)
+
+Measures were extended additively rather than given a second, parallel
+structure. New fields: `sourceType`/`sourceId`/`sourceLabel`/`reviewId`
+(where a measure came from — `manuell`/`review`/`parkplatz`/`qualitaet`/
+`resilienz`, plus an opaque reference to the originating record),
+`erstelltAm`/`abgeschlossenAm` (timeline), `wirksamkeitPruefer` (who
+checked effectiveness, alongside the existing `wirksamkeitGeprueftAm`/
+`wirksamkeitErgebnis`), `wiedervorlageAm`, and `blockiertGrund`.
+
+Migrated (pre-2.4) measures get `sourceType: 'unbekannt'` and an empty
+`erstelltAm` — their real origin and creation date are genuinely unknown
+and are never backfilled with a guess.
+
+`ENUM_MASSNAHMEN_STATUS` was extended from four values
+(`offen`/`in_arbeit`/`erledigt`/`zurueckgestellt`) to seven
+(`offen`/`geplant`/`in_arbeit`/`blockiert`/`erledigt`/`verworfen`, plus the
+legacy `zurueckgestellt`, which remains valid on import/read but is no
+longer offered in the status dropdown — `MASSNAHMEN_STATUS_UI_OPTIONS`).
+`massnahmeIsOpen(m)` (`status` not in `{erledigt, verworfen}`) replaced
+several ad-hoc `status==='offen'||status==='in_arbeit'` checks across the
+dashboard, GF view, and quality checks, so the new intermediate statuses
+(`geplant`, `blockiert`) are counted consistently as still-open work
+wherever "open measures" is meant.
+
+"Done" (`erledigt`) still never implies "effective" — that distinction
+predates 2.4.0 (`wirksamkeitGeprueftAm`/`wirksamkeitErgebnis`,
+`massnahmeNeedsEffectivenessProof()`) and 2.4.0 only adds who checked it
+(`wirksamkeitPruefer`) and a follow-up date (`wiedervorlageAm`).
+
+Three existing conversion flows (Parkplatz → measure, Review → measure,
+and the automatic resilience-check → measure generator) now stamp
+`sourceType`/`sourceId`/`sourceLabel` on the measure they create; a fourth,
+new one lets a quality/consistency finding (`qualityAndConsistencyCheck()`)
+become a measure the same way. The review link is fully bidirectional:
+`review.massnahmenIds[]` and `massnahme.reviewId` both point at each other.
+
+### BCM Timeline (`buildTimelineEvents()`, 2.4.0-dev)
+
+Deliberately **not** a new `STATE.timeline[]` array. The timeline is
+computed on demand from data that was already being stored for other
+reasons: `process.createdAt`; each review's `erstelltAm`/`gestartetAm`/
+`abgeschlossenAm`; each measure's `erstelltAm`/`abgeschlossenAm`/
+`wirksamkeitGeprueftAm`; and `STATE.versions[]`, including pairwise
+`compareVersions()` diffs between *consecutive* versions (never all pairs —
+that would double-count or miss intermediate changes).
+
+`buildTimelineEvents()` is a pure function: it reads `STATE`, returns an
+array, and never mutates anything or persists a result. An event is only
+ever emitted when a genuine timestamp exists for it — a review that was
+only planned (no `gestartetAm`/`abgeschlossenAm`) contributes exactly one
+event, not three with two guessed dates. `TIMELINE_EVENT_TYPES` lists
+every event type the timeline can produce; deliberately absent are
+"measure started" and "measure blocked" — the data model has no
+timestamp for either status transition, so an event for them would invent
+a date rather than derive one.
+
+`compareVersions()` gained one additive capability for this: it now also
+flags a "Notbetrieb wesentlich geändert" change (comparing the operational
+core fields — trigger, decision authority, the four response steps,
+return-to-normal — not every free-text field, so minor wording edits don't
+flood the timeline) and includes each changed process's `id` in
+`processChanges` entries (previously name-only), which the timeline needs
+for drill-down and process filtering. Neither change affects the existing
+version-comparison UI, which only ever read `.name`/`.changes`.
+
+`timelineEvents(filters)` wraps `buildTimelineEvents()` with process/type/
+date-range filtering and returns events sorted newest-first; the view layer
+(`viewTimeline()`) never talks to `buildTimelineEvents()` directly.
+
+### Governance Dashboard (`computeGovernanceDashboard()`, 2.4.0-dev)
+
+Answers "what does a BCM owner need to do next?" by combining AP1–AP4
+outputs — no new persistence, no `STATE.dashboard[]`, no stored KPI or
+priority values. `computeGovernanceDashboard()` (and everything it calls)
+is a pure function: called fresh on every render of the Dashboard view,
+reads `STATE`, returns a plain object, and never mutates anything. It
+delegates entirely to existing functions rather than recomputing anything:
+`reviewCenterData()` (AP1), `massnahmeIsOverdue()`/`massnahmeIsOpen()`/
+`massnahmeIsBlockedWithoutReason()`/`massnahmeNeedsEffectivenessProof()`
+(AP3), `qualityAndConsistencyCheck()` (pre-2.4), and `buildTimelineEvents()`
+(AP4). A handful of small new aggregators (`massnahmeGovernanceData()`,
+`openManagementDecisions()`, `changesSinceLastRelease()`,
+`governanceQualityHighlights()`) only filter/group the outputs of those
+existing functions — none of them introduce a second copy of any
+computation.
+
+**`governancePriorityList()`** is the deterministic core: a fixed sequence
+of 11 tiers, each a plain filter+sort over `STATE`/existing predicates,
+with the record's own `id` as a stable tie-breaker so identical data always
+produces an identical order (verified directly by self-tests: two calls
+with unchanged `STATE` must return byte-identical JSON). Tiers 1–6, 8–10
+follow the task's example ordering directly; two additions were needed
+against the actual data model and are called out explicitly in code
+comments and `roadmap/DECISIONS.md`: tier 7 (open management decisions,
+`massnahme.entscheidungsbedarf`) has no place in the original 10-item
+example list despite being one of the dashboard's required questions, and
+tier 11 folds in "upcoming review of a non-critical process", "blocked
+measure without high relevance", and "due follow-up" (`wiedervorlageAm`)
+— three items the task mentions elsewhere but never assigns a tier to.
+Every entry carries a plain-language `reason` string (never just a
+severity label) and an `object` describing its drill-down target, rendered
+by `governanceDrilldownHtml()` — the same `{type, id, prozessId}` shape
+`buildTimelineEvents()` already uses for its own drill-down, reused rather
+than reinvented, extended with a `'quality'` type for findings that have
+no natural single-record target.
+
+No color, count, or ordering here is an invented score: every badge tone
+(`governanceEntryTone()`) and every KPI number is a direct, transparent
+read of an already-deterministic classification (overdue/blocked/missing
+vs. everything else) — never a weighted or normalized index, and never a
+percentage claiming "maturity" or "health".
 
 ## Rendering
 
@@ -201,7 +354,7 @@ lacks keyboard access) — they do not establish conformance.
 
 ## Self-tests
 
-A hidden, integrated self-test suite (`runSelfTests()`, 57 tests, reachable via
+A hidden, integrated self-test suite (`runSelfTests()`, 126 tests, reachable via
 **Ctrl+Alt+T** or the `#selftest` URL fragment) exercises core logic against
 synthetic data only. It is designed so that running it **never mutates the
 active workbook** — anywhere a function under test would normally touch

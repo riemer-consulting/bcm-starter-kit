@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-2.2.0-informational">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.4.0-informational">
   <img alt="No build step" src="https://img.shields.io/badge/build-none%20required-brightgreen">
   <img alt="Works offline" src="https://img.shields.io/badge/works-offline-brightgreen">
 </p>
@@ -43,7 +43,11 @@ Most Business Continuity Management tooling falls into one of two categories: ex
 - **Versioning built in** — every saved version is checksummed and comparable against any other, without needing external version control.
 - **PDF reporting** — a genuinely short executive summary and a full detailed report, both generated entirely client-side via the browser's print function.
 - **Encryption where you need it** — optional password-protected export (AES-GCM with a PBKDF2-derived key, 600,000 iterations, via the Web Crypto API) for sharing over channels you don't fully trust. Files written by earlier versions remain readable.
-- **57 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+- **126 built-in self-tests** — a hidden self-check suite validates core logic using synthetic data only, without ever touching your workbook.
+- **Review Center** *(2.4.0)* — plans, tracks and prioritizes recurring reviews (process, BIA, emergency operations, resources) per process, with deterministically computed overdue/upcoming flags and no opaque scoring. Each review type can have its own optional review-cycle policy (3/6/12/24 months, custom, or event-driven) — no due date is ever invented when no policy is set.
+- **Measures management 2.0** *(2.4.0)* — measures now track where they came from (review, parking lot, quality finding, resilience check, or manual), a six-value status model (open/planned/in progress/blocked/done/discarded — "done" still never implies "effective"), and plausibility hints (blocked without a reason, done without effectiveness proof).
+- **BCM Timeline** *(2.4.0)* — a filterable, chronological view of business-relevant BCM events (process created, reviews planned/started/completed, measures created/completed, effectiveness checked, criticality/MTA/RTO/RPO/emergency-operations changes, versions and releases), derived entirely from existing timestamped data rather than a separate audit log.
+- **Governance Dashboard** *(2.4.0)* — a deterministic, explained "what do I need to do next?" list on the landing page, combining review, measure, decision, and data-quality signals with no score, no AI, and no stored KPIs — everything is recomputed from existing data on every render.
 
 ## Getting started
 
@@ -94,7 +98,7 @@ Contributions are welcome — bug reports, documentation improvements, and pull 
 
 ## Roadmap
 
-BCM Starter Kit is considered **functionally complete** for its original scope as of version 2.x. There is no committed roadmap of new business features. Future work is expected to focus on:
+BCM Starter Kit was considered **functionally complete** for its original 2.x scope. Version **2.4.0 "Governance & Lifecycle"** completes the ongoing BCM lifecycle on top of that — Review Center, review cycles, Measures management 2.0, BCM Timeline, and the Governance Dashboard — see [`roadmap/RELEASE_2_4.md`](roadmap/RELEASE_2_4.md). Beyond 2.4, there is no committed roadmap of further new business features; a possible 2.5 is scoped to Reporting & Compliance only (see [`roadmap/RELEASE_2_5.md`](roadmap/RELEASE_2_5.md)). Other future work is expected to focus on:
 
 - Documentation and translation improvements — the application's own interface is German-only, and there is no internationalization infrastructure in place today
 - Additional demo/example workbooks
@@ -117,6 +121,7 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md
 
 - [Quickstart](docs/quickstart.md) — first ten minutes
 - [User Guide](docs/user-guide.md) — complete reference
+- [Benutzerhandbuch (PDF, German)](docs/BCM-Starter-Kit_Benutzerhandbuch.pdf) — Review Center, Maßnahmenmanagement 2.0, BCM Timeline, Governance Dashboard
 - [Architecture](docs/architecture.md) — how the application is built
 - [Data Storage & Privacy](docs/data-storage-and-privacy.md)
 - [Release Process](docs/release-process.md)
@@ -124,19 +129,21 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md
 
 ## Screenshots
 
-One screenshot exists; the rest still need to be captured manually from a running instance — see the note in [`assets/screenshots/README.md`](assets/screenshots/README.md).
+Four screenshots exist; the rest still need to be captured manually from a running instance — see the note in [`assets/screenshots/README.md`](assets/screenshots/README.md).
 
 | View | File | Present |
 |---|---|---|
 | Executive view (shown at the top of this README) | `assets/screenshots/dashboard.png` | ✅ |
-| Dashboard | — | ❌ still to capture |
-| Process record | `assets/screenshots/process-record.png` | ❌ still to capture |
-| Measures catalog | `assets/screenshots/measures.png` | ❌ still to capture |
-| PDF report | `assets/screenshots/pdf-report.png` | ❌ still to capture |
-| Settings | `assets/screenshots/settings.png` | ❌ still to capture |
-| Startup screen | `assets/screenshots/startup-screen.png` | ❌ still to capture |
+| Dashboard — Governance Dashboard | `assets/screenshots/governance-dashboard.png` | ✅ |
+| Review Center | `assets/screenshots/review-center.png` | ✅ |
+| BCM Timeline | `assets/screenshots/timeline.png` | ✅ |
+| Process record | `assets/screenshots/process-record.png` | ❌ still to capture (documentation maintenance, not a release blocker) |
+| Measures catalog | `assets/screenshots/measures.png` | ❌ still to capture (documentation maintenance, not a release blocker) |
+| PDF report | `assets/screenshots/pdf-report.png` | ❌ still to capture (documentation maintenance, not a release blocker) |
+| Settings | `assets/screenshots/settings.png` | ❌ still to capture (documentation maintenance, not a release blocker) |
+| Startup screen | `assets/screenshots/startup-screen.png` | ❌ still to capture (documentation maintenance, not a release blocker) |
 
-Note that the existing file is named `dashboard.png` but actually shows the **executive view**. The name is kept as-is because it is referenced from this README; renaming it would be a separate, deliberate change.
+Note that the existing file is named `dashboard.png` but actually shows the **executive view**. The name is kept as-is because it is referenced from this README; renaming it would be a separate, deliberate change. The three Governance Dashboard/Review Center/BCM Timeline screenshots above were captured headlessly (Chromium via Playwright) against the demo workbook, at 1440×1000; the remaining ones still need manual capture in a desktop browser, as this environment cannot drive dialogs that depend on OS-level chrome (e.g. the native print dialog for the PDF report screenshot).
 
 ---
 

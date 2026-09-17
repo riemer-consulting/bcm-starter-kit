@@ -6,20 +6,22 @@ Complete reference for BCM Starter Kit. For a faster first pass, see the
 ## Contents
 
 1. [Overview](#overview)
-2. [Dashboard](#dashboard)
+2. [Dashboard](#dashboard) — including the [Governance Dashboard](#governance-dashboard)
 3. [Process records](#process-records)
 4. [Dependency cluster view](#dependency-cluster-view)
-5. [Measures catalog](#measures-catalog)
-6. [Management (executive) view](#management-executive-view)
-7. [Version history](#version-history)
-8. [Settings & branding](#settings--branding)
-9. [PDF reports](#pdf-reports)
-10. [Import & export](#import--export)
-11. [Release readiness](#release-readiness)
-12. [Workshop mode](#workshop-mode)
-13. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
-14. [Keyboard and accessibility](#keyboard-and-accessibility)
-15. [Self-tests (advanced)](#self-tests-advanced)
+5. [Review Center](#review-center)
+6. [Measures catalog](#measures-catalog)
+7. [BCM Timeline](#bcm-timeline)
+8. [Management (executive) view](#management-executive-view)
+9. [Version history](#version-history)
+10. [Settings & branding](#settings--branding)
+11. [PDF reports](#pdf-reports)
+12. [Import & export](#import--export)
+13. [Release readiness](#release-readiness)
+14. [Workshop mode](#workshop-mode)
+15. [Working in more than one browser tab](#working-in-more-than-one-browser-tab)
+16. [Keyboard and accessibility](#keyboard-and-accessibility)
+17. [Self-tests (advanced)](#self-tests-advanced)
 
 ## Overview
 
@@ -39,6 +41,62 @@ records, resources, and measures.
 The landing view. Shows overall counts (processes, critical processes, open
 measures, high risks) and quick actions. Use it as a jumping-off point to any
 process record or the sample-data loader.
+
+### Governance Dashboard
+
+*(See the German [Governance Dashboard handbook chapter](handbook/governance-dashboard.md)
+for a deeper walkthrough, including the full 11-tier priority order.)*
+
+As soon as at least one process exists, the Dashboard leads with a
+**Governance Dashboard** section, above the general counts — because
+answering "what do I need to do next?" matters more than a count of how
+many processes you have documented.
+
+**"What's next"** is a single, deterministically ordered list. Each entry
+states the task, the record it concerns, a plain-language reason (never
+just a severity label), when it's due, and a button that opens the exact
+record — never a vague pointer you have to go find yourself. The order is
+fixed and explainable: overdue reviews and measures on critical
+processes/of high priority first, then blocked measures with high
+relevance (high priority or a critical process), then planning gaps, then
+upcoming reviews, effectiveness checks, open decisions, and
+quality/consistency findings, then the same categories for everything
+else. Nothing here is a
+score — the position of every entry follows directly from its category and
+how overdue or soon-due it is, and identical data always produces the
+identical order.
+
+Below that, a small set of counted tiles (reviews overdue/upcoming,
+measures overdue/blocked, effectiveness checks pending, critical processes
+without review planning, open management decisions, changes since the
+last release) and compact cards for **Review Governance**, **Measures
+Governance**, **Changes since the last release**, **Open management
+decisions**, and **Data quality & consistency** — each one a condensed,
+linked view of information the corresponding full view (Review Center,
+Measures catalog, Timeline, Quality check) already computes. None of this
+introduces a second copy of that logic; it's the same functions, presented
+together.
+
+**"Changes since the last release"** looks at your most recent Freigabe
+(release) version and lists what changed since then — criticality,
+MTA (maximum tolerable downtime), RTO (recovery time objective), RPO
+(recovery point objective), emergency-operations, or critical-resource
+changes, plus reviews and measures completed and effectiveness checks
+done. If you have never created a release, it says so plainly instead of
+guessing a reference point.
+
+**Open management decisions** reuses the existing "decision needed" field
+on measures — it is not a new kind of record.
+
+An empty workbook shows only the existing welcome card, never a wall of
+zeroes that could read as "everything is fine." If you have processes but
+haven't planned any reviews at all, the Governance Dashboard says so
+directly rather than showing an empty "no urgent tasks" list.
+
+**What this is not:** a management report, a compliance dashboard, a
+maturity score, or a risk score. It never states that a BCM decision was
+right, sufficient, or effective — only what needs attention and why, based
+on dates, status, and criticality you already entered.
 
 ## Process records
 
@@ -79,14 +137,110 @@ A workbook-wide view of how resources and dependencies connect processes to
 each other — useful for spotting resources used by many processes at once,
 and potential duplicate resource entries (detected by name similarity).
 
+## Review Center
+
+*(See the German [Review Center handbook chapter](handbook/review-center.md)
+for a deeper walkthrough.)*
+
+The Review Center answers one question: **what does the person responsible
+for BCM need to do next?** It does not judge whether your BCM decisions are
+correct, sufficient or effective — it only tracks planning and due dates.
+
+A **review** is a concrete work/history record, not a template: it records a
+process, a review type (process review, BIA — Business Impact Analysis —
+review, emergency-operations review, or resource review),
+planned/started/completed dates, an owner,
+a status (`planned` / `in progress` / `completed`), a result, the next
+review date, and links to measures that came out of it.
+
+Due dates are always **computed**, never stored as a separate status: a
+review becomes "overdue" purely because its planned date has passed and it
+isn't completed yet; "upcoming" means it falls due within the next 30 days.
+There is no fourth status value for this — it would duplicate information
+already implied by the planned date.
+
+The Review Center view shows:
+- how many reviews are overdue and how many are upcoming;
+- which **critical processes have no review planned at all** (of any type);
+- a single, deterministically ordered "what's next" list — overdue reviews
+  first (longest overdue first), then upcoming reviews (soonest first), then
+  critical processes without any review planning. Every position in that
+  list follows directly from its sort key; there is no hidden scoring.
+
+From a review you can start it, complete it (recording a result and,
+optionally, the next review date), or create a linked measure directly. Each
+process record also shows a compact review history in its Measures tab, with
+a link back to the full Review Center.
+
+### Review cycles per review type
+
+Each review type can have its own optional review-cycle policy, set per
+process (in the process record's Measures tab, next to its review history):
+3, 6, 12 or 24 months, a custom number of months, or "event-driven" (no
+fixed interval at all — the emergency-operations review type typically uses
+this). **If no policy is set for a review type, the application never
+invents a due date.** Different review types on the same process can be on
+entirely different cycles and can be open at the same time.
+
+When you complete a review whose type has a policy, the completion dialog
+suggests the next due date and offers to create the follow-up review
+directly, already planned.
+
 ## Measures catalog
 
 All measures across the whole workbook, filterable by status, priority,
-effort, owner, and an "overdue only" toggle. Each measure can track effort
-level, cost estimate, risk before/after, a decision requirement with an
-approver, evidence of implementation, and an effectiveness review date.
+effort, owner, origin, and an "overdue only" toggle. Each measure can track
+effort level, cost estimate, risk before/after, a decision requirement with
+an approver, evidence of implementation, and an effectiveness review date.
 Overdue measures and measures marked complete without an effectiveness
 review are visually flagged throughout the application.
+
+### Origin and status
+
+*(See the German [Maßnahmenmanagement 2.0 handbook chapter](handbook/massnahmenmanagement.md)
+for a deeper walkthrough.)*
+
+Every measure records where it came from — created manually, converted
+from a review, from a parking-lot item, from a quality/consistency finding,
+or generated automatically from a red/yellow resilience check — shown as a
+non-editable "Origin" line and filterable in the catalog. A measure created
+from a review stays linked to it in both directions.
+
+Status now has six values: open, planned, in progress, blocked, done,
+discarded. **Marking a measure "done" is still not the same as marking it
+"effective"** — effectiveness is checked separately (who checked it, when,
+and the result), exactly as before 2.4.0. A measure marked "blocked"
+without a stated reason, or "done" without an effectiveness check, is
+flagged — this checks documentation completeness only, never whether the
+block or the outcome itself was actually justified.
+
+## BCM Timeline
+
+*(See the German [BCM Timeline handbook chapter](handbook/timeline.md) for a
+deeper walkthrough.)*
+
+A chronological, filterable view of business-relevant BCM events — process
+created; reviews planned/started/completed; measures created/completed;
+effectiveness checked; criticality, MTA/RTO/RPO, emergency-operations, or
+critical-resource changes; versions saved; releases created. Filter by
+process, event type, or date range; each entry links back to the relevant
+process record, Review Center, measures catalog, or version history.
+
+This is **not** an audit log and does not record every field edit — only
+the event types listed above, and only when the application already has a
+real timestamp for them. Nothing is stored specifically for the timeline;
+every entry is computed from data you already see elsewhere (creation
+dates, review/measure dates, saved versions). A process record's Measures
+tab has a "Timeline anzeigen" shortcut that opens the timeline pre-filtered
+to that process.
+
+**Field edits alone never appear here.** Criticality, MTA/RTO/RPO,
+emergency-operations, and critical-resource changes are derived by
+comparing two consecutive *saved versions* — so if you edit one of these
+fields, that change only shows up in the Timeline after you next save a
+version (**Version speichern**) or create a release. Editing a field and
+checking the Timeline immediately afterwards, without saving a version in
+between, will correctly show nothing yet.
 
 ## Management (executive) view
 
@@ -191,6 +345,16 @@ walks through **one process**, not the whole workbook: switch process using the
 selector at the top left, and close the mode with **Escape** or the close
 button.
 
+Workshop mode covers the foundational BCM work for a process (impact,
+minimum capability, resilience, emergency operations) — it deliberately does
+**not** walk through Review Center, Measures catalog, BCM Timeline, or the
+Governance Dashboard: those are where the *ongoing* governance
+work happens once the foundational workshop is done, and mixing an ongoing,
+multi-process view into a single-process, one-sitting workshop would work
+against its purpose. After a workshop, continue there — see
+[Review Center](#review-center), [Measures catalog](#measures-catalog),
+[BCM Timeline](#bcm-timeline), and the [Governance Dashboard](#governance-dashboard).
+
 ## Working in more than one browser tab
 
 The browser's storage belongs to the browser profile, not to a tab — so two
@@ -225,7 +389,7 @@ assistive technology are welcome (see [SUPPORT.md](../SUPPORT.md)).
 
 ## Self-tests (advanced)
 
-BCM Starter Kit includes a hidden, integrated self-test suite of 57 tests
+BCM Starter Kit includes a hidden, integrated self-test suite of 126 tests
 covering core logic (time-value parsing, plausibility checks, ID uniqueness,
 import validation and field-completeness, structured dependencies and
 multi-step chains, schema migration without data loss, import/export

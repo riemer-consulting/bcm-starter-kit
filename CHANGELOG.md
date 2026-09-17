@@ -5,6 +5,260 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.4.0] — Governance & Lifecycle
+
+> BCM endet nicht mit dem Workshop. Version 2.4.0 erweitert das BCM Starter
+> Kit vom Workshop-/Erfassungswerkzeug um Funktionen für den laufenden
+> BCM-Betrieb: Review Center, Reviewzyklen, Maßnahmenmanagement 2.0, BCM
+> Timeline und Governance Dashboard (AP1–AP5), abgeschlossen durch AP6
+> (Release Completion).
+
+### Added — AP1: Review Center
+- **Neues `STATE.reviews[]`** (Schema-Migration 12→13, rein additiv). Ein Review
+  ist eine konkrete Arbeits-/Historieninstanz mit Prozessbezug, Reviewart
+  (Prozess-/BIA-/Notbetriebs-/Ressourcenreview), geplantem/gestartetem/
+  abgeschlossenem Datum, Verantwortlichem, Status (nur `geplant` /
+  `in_bearbeitung` / `abgeschlossen`), Ergebnis, nächstem Reviewtermin und
+  Maßnahmenreferenzen.
+- **Neue Ansicht „Review Center"** (Sidebar unter „Übergreifend"): zeigt
+  überfällige und bald fällige Reviews, kritische Prozesse ohne jegliche
+  Reviewplanung, und eine deterministisch (nach Fälligkeit, nicht nach Score)
+  priorisierte „Was ist als Nächstes zu tun?"-Liste.
+- **Fälligkeit wird berechnet, nicht gespeichert** (`reviewDueInfo()`) — es
+  gibt bewusst keinen eigenen „überfällig"-Status.
+- **Review → Maßnahme:** aus einem Review kann direkt eine verknüpfte
+  Maßnahme angelegt werden (`review.massnahmenIds[]`).
+- **Reviewhistorie in der Prozessakte:** kompakte Übersicht aller Reviews
+  eines Prozesses im Maßnahmen-Tab, mit Link ins volle Review Center.
+- Import/Export/Migration/Merge/Selektiv-Import vollständig angebunden
+  (`normalizeReviewsForImport`, `IMPORT_LIMITS.maxReviews`).
+- 11 neue Selbsttests (79 insgesamt): Migration 12→13, `newReview()`-Form,
+  Fälligkeitsberechnung (überfällig/bald fällig/abgeschlossen), fehlende
+  Reviewplanung bei kritischen Prozessen, deterministische Priorisierung,
+  Import-Normalisierung und -Limits, Merge-Import.
+
+### Added — AP2: Reviewzyklen je Reviewart
+- **`process.reviewConfig`** (Schema-Migration 13→14, additiv): je Reviewart
+  eine eigene, optionale Zykluspolicy (`{prozess, bia, notbetrieb,
+  ressourcen}`). Unterstützte Intervalle: 3/6/12/24 Monate, individuell
+  (eigene Monatsangabe) und ereignisbezogen (bewusst ohne Intervall). **Ist
+  keine Policy definiert, wird nie ein Termin erfunden** —
+  `computeNextReviewDate()` liefert dann konsequent `null`.
+  Mehrere Reviewarten desselben Prozesses können unabhängig voneinander
+  gleichzeitig offen sein.
+- **Kompakter Policy-Editor** direkt in der Prozessakte (Maßnahmen-Tab, neben
+  der Reviewhistorie) — je Reviewart ein Intervall-Select.
+- **Folgereview nach Abschluss:** hat eine Reviewart eine definierte Policy,
+  schlägt der Abschlussdialog automatisch den nächsten Termin vor und kann
+  optional direkt einen neuen, geplanten Folgereview anlegen.
+- Import/Merge berücksichtigen `reviewConfig`: ungültige Intervalle werden
+  beim Import auf "keine Policy" zurückgesetzt statt geraten; beim
+  Zusammenführen wird eine bereits gesetzte Policy nie automatisch
+  überschrieben (analog zur bestehenden Regel bei `minimumCapability.mode`).
+- 9 neue Selbsttests (88 insgesamt): Migration 13→14, `newProcess()`-Form,
+  `computeNextReviewDate()` (keine Policy, ereignisbezogen, fest/individuell),
+  gleichzeitig offene Reviewarten, Import-Normalisierung, Merge-Verhalten.
+
+### Added — AP3: Maßnahmenmanagement 2.0
+- **Erweitertes Maßnahmenmodell** (Schema-Migration 14→15, additiv):
+  `sourceType`/`sourceId`/`sourceLabel`/`reviewId` (Herkunft nachvollziehbar
+  — Review, Parkplatz, Qualitätsbefund, Resilienz-Check oder manuell),
+  `erstelltAm`/`abgeschlossenAm` (Zeitachse), `wirksamkeitPruefer` (getrennt
+  vom bestehenden `wirksamkeitGeprueftAm`/`wirksamkeitErgebnis`),
+  `wiedervorlageAm`, `blockiertGrund`. Bei Altdatensätzen wird die Herkunft
+  nie rückwirkend erfunden — sie erhalten `sourceType:'unbekannt'` und einen
+  leeren, nicht geratenen Anlagezeitpunkt.
+- **Erweitertes Statusmodell:** `offen`, `geplant`, `in_arbeit` (jetzt "In
+  Umsetzung" beschriftet), `blockiert`, `erledigt`, `verworfen`. Der frühere
+  Wert `zurueckgestellt` bleibt für Bestandsdaten lesbar, wird im UI aber
+  nicht mehr neu angeboten. **"Erledigt" bedeutet weiterhin ausdrücklich
+  nicht "wirksam"** — die Wirksamkeitsprüfung bleibt ein separater Vorgang.
+- **Herkunft ist jetzt an drei Stellen aktiv nachvollziehbar:** Parkplatz →
+  Maßnahme (bestehende Funktion, jetzt mit Herkunftskennzeichnung), Review →
+  Maßnahme (vollständig bidirektional über `reviewId` und
+  `review.massnahmenIds[]`), Qualitäts-/Konsistenzbefund → Maßnahme (neu, in
+  der Qualitätsprüfung), sowie automatisch aus roten/gelben Resilienz-Checks.
+  Ein Herkunfts-Filter im Maßnahmenkatalog macht die Verteilung sichtbar.
+- **Neue Plausibilitätshinweise** (Dokumentationsqualität, keine fachliche
+  Bewertung): "Blockiert ohne Begründung" und "Erledigt ohne
+  Wirksamkeitsnachweis" (bereits vorhanden, jetzt zusätzlich in
+  `validateMassnahme()`); im Review Center zusätzlich "abgeschlossene
+  Reviews mit noch offenen Maßnahmen".
+- `abgeschlossenAm` wird beim Wechsel auf „Erledigt" einmalig automatisch
+  gesetzt und beim erneuten Öffnen/Schließen nicht überschrieben.
+- 10 neue Selbsttests (98 insgesamt): Migration 14→15, Statusklassifikation,
+  Blockade-ohne-Begründung, Wirksamkeitsnachweis-Hinweis, automatisches
+  `abgeschlossenAm`, offene Folgemaßnahmen abgeschlossener Reviews,
+  Import-Normalisierung von Herkunft/Review-Verknüpfung.
+
+### Added — AP4: BCM Timeline
+- **Neue Ansicht "BCM Timeline"** — filterbar nach Prozess, Ereignistyp und
+  Zeitraum, mit Drill-down in Prozessakte/Review Center/Maßnahmenkatalog/
+  Versionshistorie. **Bewusst kein neues `STATE.timeline[]`** — jedes
+  Ereignis wird aus bereits vorhandenen Zeitstempeln und
+  Versions-Snapshots abgeleitet (`buildTimelineEvents()`), nicht separat
+  gespeichert. Kein Audit-Log, kein Event-Sourcing, keine Aufzeichnung
+  jeder Feldänderung.
+- Abgeleitete Ereignistypen: Prozess angelegt; Review geplant/gestartet/
+  abgeschlossen; Maßnahme erstellt/abgeschlossen; Wirksamkeit geprüft;
+  Kritikalität geändert; MTA/RTO/RPO geändert; Notbetrieb wesentlich
+  geändert; kritische Ressourcen geändert; Version gespeichert; Freigabe
+  erzeugt. Bewusst NICHT enthalten: "Maßnahme gestartet"/"Maßnahme
+  blockiert" — für diese Übergänge speichert die Anwendung keinen eigenen
+  Zeitstempel, ein Ereignis dafür würde einen Zeitpunkt erfinden statt ihn
+  abzuleiten.
+- `compareVersions()` erkennt jetzt zusätzlich wesentliche
+  Notbetrieb-Änderungen (Auslöser, Entscheidung, Schritte, Rückkehr) und
+  liefert je Prozessänderung zusätzlich dessen ID (rein additiv, bestehende
+  Versionsvergleich-Ansicht unverändert).
+- Kompakter "Timeline anzeigen"-Link direkt in der Prozessakte (vorgefiltert
+  auf den jeweiligen Prozess).
+- 9 neue Selbsttests (107 insgesamt): keine erfundenen Zeitstempel bei
+  unvollständigen Reviews/Altmaßnahmen, korrekte Ableitung aus
+  Versionsdiffs, Unterscheidung Version/Freigabe, Duplikatfreiheit
+  (deterministische, idempotente Ableitung), Filter- und Sortierverhalten.
+
+### Added — AP5: Governance Dashboard
+- **Neuer, prominenter Bereich auf dem Dashboard** ("Was ist als Nächstes
+  zu tun?") — beantwortet direkt beim Öffnen der Anwendung, welche
+  Review-, Maßnahmen-, Entscheidungs- und Qualitätsaufgaben Aufmerksamkeit
+  brauchen. **Keine neue Persistenz und keine neue Schema-Version** —
+  `computeGovernanceDashboard()` führt ausschließlich bereits vorhandene
+  AP1–AP4-Funktionen zusammen (`reviewCenterData()`,
+  `massnahmeIsOverdue()`/`massnahmeIsOpen()`/`massnahmeNeedsEffectivenessProof()`,
+  `qualityAndConsistencyCheck()`, `buildTimelineEvents()`) und wird bei
+  jedem Rendern neu berechnet, ohne STATE zu verändern.
+- **Deterministische 11-Stufen-Priorisierung** (`governancePriorityList()`):
+  überfälliger Review eines kritischen Prozesses → überfällige Maßnahme
+  hoher Priorität → blockierte Maßnahme hoher Relevanz → kritischer
+  Prozess ohne Reviewplanung → bald fälliger Review eines kritischen
+  Prozesses → erledigte Maßnahme ohne Wirksamkeitsprüfung → offener
+  Managemententscheidungsbedarf → wesentlicher Konsistenz-/Qualitätsbefund
+  → überfälliger Review eines sonstigen Prozesses → sonstige überfällige
+  Maßnahme → sonstige fällige Governance-Aufgabe (bald fälliger Review
+  eines sonstigen Prozesses, sonstige blockierte Maßnahme, fällige
+  Wiedervorlage). Jeder Eintrag nennt Aufgabe, betroffenen Datensatz,
+  Grund im Klartext, zeitlichen Kontext und einen direkten Deep Link.
+  Kein Score, keine KI, keine fachliche Bewertung der BCM-Entscheidung.
+- **Kompakte Kennzahlenreihe** (8 Kacheln: überfällige/bald fällige
+  Reviews, überfällige/blockierte Maßnahmen, offene
+  Wirksamkeitsprüfungen, kritische Prozesse ohne Reviewplanung, offene
+  Managemententscheidungen, Änderungen seit letzter Freigabe) sowie
+  kompakte Detailkarten für Review-Governance, Maßnahmen-Governance,
+  Änderungen seit letzter Freigabe, offene Managemententscheidungen und
+  Datenqualität/Konsistenz — jede Karte reine Darstellung bestehender
+  Funktionen, keine zweite Fachlogik.
+- **"Änderungen seit letzter Freigabe"** ermittelt die letzte tatsächlich
+  erzeugte Freigabe-Version (`STATE.versions[].source==='release'`) und
+  zeigt fachlich relevante Timeline-Ereignisse seit diesem Zeitpunkt
+  (`changesSinceLastRelease()`, reine AP4-Ableitung). Existiert noch keine
+  Freigabe, wird das transparent kommuniziert — es wird kein
+  Referenzzeitpunkt erfunden.
+- **"Offene Managemententscheidungen"** nutzt ausschließlich das bereits
+  vorhandene Feld `massnahme.entscheidungsbedarf` — keine neue
+  Entscheidungs-Entität.
+- **Empty States statt "alles grün"**: ein leeres Workbook zeigt weiterhin
+  nur die bestehende Willkommenskarte (keine Governance-Kennzahlen mit
+  lauter Nullen); Prozesse ohne jegliche Reviewplanung erhalten eine
+  eigene, transparente Meldung statt einer positiven Pauschalaussage.
+- 19 neue Selbsttests (126 insgesamt): jede Prioritätsstufe einzeln,
+  stufenübergreifende Sortierreihenfolge, Determinismus bei wiederholtem
+  Aufruf, keine Mutation von STATE, Kennzahlen-Korrektheit, Deep Links,
+  Freigabe-/Kein-Freigabe-Fall, leeres Workbook.
+
+### Fixed — AP6: Release Completion
+- **BLOCKER (Rollenvalidierung 2.4): Freigabe-Bearbeiter fehlte bei
+  warnungsfreier Freigabe.** `App.confirmStatusChange()`/
+  `App.showReleaseReport()` erfassten Bearbeiter und Zeitpunkt bislang nur,
+  wenn der Freigabe-Prüfbericht Warnungen enthielt — eine warnungsfreie
+  Freigabe erzeugte einen Versionshistorien-Eintrag mit `BEARBEITER:
+  Unbekannt`. Das Bearbeiter-Feld erscheint jetzt bei jeder tatsächlichen
+  Freigabe (`bearbeitungsstand==='Freigegeben'`), unabhängig vom
+  Warnungsstatus. Keine Schemaänderung (`CURRENT_SCHEMA_VERSION` bleibt
+  15), keine neuen persistenten Felder, keine rückwirkende Änderung
+  bestehender Versionshistorien-Einträge.
+- Die HTML-Erzeugung des Freigabe-Prüfberichts wurde in die reine Funktion
+  `releaseReportHtml()` ausgelagert (keine Verhaltensänderung) — testbar
+  ohne ein echtes Modal zu öffnen/schließen.
+
+### Changed — AP6: Release Completion
+- `RELEASE_CHECK_CONFIG`/`releaseReadinessCheck()` um drei zusätzliche,
+  ausschließlich WARNENDE (nie blockierende) Governance-Signale ergänzt,
+  die bestehende AP1/AP3/AP5-Prädikate wiederverwenden: kritischer Prozess
+  ohne Reviewplanung (`reviewCenterData().missingPlanning`), blockierte
+  Maßnahme ohne Begründung (`massnahmeIsBlockedWithoutReason()`), offene
+  Managemententscheidung (`openManagementDecisions()`). Keine neue
+  Fachlogik, keine neue Bewertung.
+- BIA-Tab (`tabBia()`): zusätzlicher, rein darstellender Hinweis, wenn eine
+  Kategorie noch auf dem Ausgangswert (`bewertung:3`, unveränderter
+  `zeitpunkt`) steht und noch keine Beschreibung erfasst wurde — behebt die
+  in der Rollenvalidierung beobachtete Diskrepanz zwischen sichtbar
+  "vorbelegter" Bewertung und gleichzeitig 0 % Fortschritt.
+  `biaScore()`/`processProgress()` selbst unverändert.
+- Demo-Daten (`loadSampleDataInternal()`): ein realistischer, überfälliger
+  Review-Datensatz (inkl. Reviewzyklen-Policy) für den ersten Demo-Prozess
+  ergänzt, damit Review Center und Reviewzyklen sich am Demo-Workbook ohne
+  manuelles Anlegen zeigen lassen.
+- `docs/user-guide.md`: fehlender Timeline-Ereignistyp ("kritische
+  Ressourcen geändert") und fehlende Priorisierungsstufe 3 ergänzt;
+  MTA/RTO/RPO/BIA beim ersten Vorkommen ausgeschrieben; Querverweise zu den
+  vertiefenden `docs/handbook/*`-Kapiteln ergänzt; erklärt, dass bestimmte
+  Timeline-Änderungen erst nach einer gespeicherten Version als Versions-
+  diff sichtbar werden; Hinweis ergänzt, dass der Workshop-Modus die
+  laufende Governance (Review Center/Maßnahmenmanagement/Timeline/
+  Governance Dashboard) bewusst nicht mit abdeckt.
+- `docs/handbook/README.md`: Glossar um Wiedervorlage, "Blockiert ohne
+  Begründung" und Plausibilitätshinweis ergänzt.
+- `docs/release-process.md`: die fest hartcodierte Selbsttest-Anzahl (war
+  veraltet: "57") durch eine sich selbst nie veraltende Formulierung
+  ersetzt; die dokumentierte Erwartung an Datenqualitätshinweise/
+  Release-Blocker des Demo-Workbooks korrigiert (war bereits vor AP6
+  veraltet: 5 Hinweise/1 Blocker statt der dokumentierten 9/2).
+- `roadmap/RELEASE_2_4.md`: AP6 von "Prozessreife" auf "Release Completion"
+  umbenannt (entspricht der tatsächlichen Aufgabenstellung); die
+  ursprünglich separat geplanten AP7–AP10 (Freigaben/Historie/
+  Dokumentenreferenzen/Lifecycle-Berichte) mit Begründung aufgelöst, statt
+  als vergessene, leere Stubs stehen zu bleiben.
+- `README.md`: Versionsbadge auf `2.4.0-dev` korrigiert (war veraltet:
+  `2.2.0`); "Roadmap"-Abschnitt widersprach der Existenz von 2.4 und wurde
+  korrigiert; drei neue Screenshots (Review Center, BCM Timeline,
+  Governance Dashboard) ergänzt.
+- 5 neue Selbsttests (131 insgesamt): Bearbeiter-Feld erscheint mit/ohne
+  Warnungen, `createVersion()` verwirft einen übergebenen Bearbeiter nie,
+  historische leere Bearbeiter werden beim Import nicht rückwirkend
+  erfunden, die drei neuen Governance-Signale sind nachweislich Warnung
+  statt Blocker.
+
+### Investigated, not changed — AP6: Release Completion
+- **"Ampel bleibt immer Rot"** (Rollenvalidierung 2.4): systematisch über
+  acht Datenzustände (leeres Workbook, frisch angelegter/teilweise/
+  vollständig dokumentierter/kritischer Prozess, Demo-Workbook, kritische
+  Ressource ohne Alternative) reproduziert. `processAmpel()`/
+  `workbookAmpel()` (vorbestehend, nicht Teil von AP1–AP5) zeigten in
+  jedem Zustand ein fachlich nachvollziehbares, korrekt begründetes
+  Ergebnis — ein vollständig dokumentierter Prozess ohne offene Risiken
+  wird korrekt Gelb/Grün, nicht Rot. Keine Codeänderung.
+
+### Added — Release Candidate Finalization
+- **PDF-Handbuch erzeugt:** `docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`
+  (Titelseite, Inhaltsverzeichnis mit Sprungmarken, Kapitel 1–4, Anhang:
+  Glossar, Seitenzahlen im Fußbereich, Version 2.4.0) aus den bestehenden
+  `docs/handbook/*.md`-Kapiteln erzeugt. Kein neues dauerhaftes
+  Repository-Dependency — die Konvertierung lief einmalig über ein
+  Werkzeug außerhalb des Repositories (Markdown→HTML, anschließend
+  HTML→PDF per Headless-Chromium-Druckfunktion, wie sie in diesem Projekt
+  bereits für Browser-Tests verwendet wird); im Repository landet nur das
+  fertige PDF.
+
+### Changed — Release Candidate Finalization
+- Sprache in README.md, CHANGELOG.md, docs/user-guide.md,
+  docs/handbook/*, roadmap/RELEASE_2_4.md auf den finalen Releasezustand
+  vereinheitlicht: keine "in Entwicklung"/"2.4.0-dev"/"geplant"-Formulierungen
+  mehr, sofern sie den aktuellen Stand beschreiben (historische Einträge in
+  CHANGELOG/Handbuch-Versionsgeschichte bleiben als solche gekennzeichnet
+  erhalten). `roadmap/RELEASE_2_4.md` erhält eine Status-Kopfzeile
+  ("AP1–AP6 abgeschlossen").
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

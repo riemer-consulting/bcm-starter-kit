@@ -408,6 +408,23 @@ button.rowcard:hover{border-color:var(--line-strong);}
 
    CHANGELOG
    ---------
+   Version 2.4.0 — Governance & Lifecycle:
+   - AP1 Review Center: neues STATE.reviews[] (Schema 13, additiv). Ein Review
+     ist eine konkrete Arbeits-/Historieninstanz (nicht nur eine Vorlage) mit
+     Prozessbezug, Reviewart (Prozess-/BIA-/Notbetriebs-/Ressourcenreview,
+     REVIEW_ARTEN), geplantem/gestartetem/abgeschlossenem Datum,
+     Verantwortlichem, Status (nur geplant/in_bearbeitung/abgeschlossen —
+     bewusst KEIN eigener "überfällig"-Status, siehe reviewDueInfo()),
+     Ergebnis, nächstem Reviewtermin und Maßnahmenreferenzen
+     (massnahmenIds[]). Neue Ansicht "Review Center" (viewReviewCenter(),
+     Route 'reviews') beantwortet deterministisch und ohne Score: was ist
+     überfällig, was wird bald fällig (REVIEW_UPCOMING_WINDOW_DAYS=30 Tage),
+     welche kritischen Prozesse haben keine Reviewplanung, was sollte als
+     Nächstes bearbeitet werden (reviewCenterPriorityList(), Sortierung nach
+     Überfälligkeitsdauer, dann Fälligkeit, dann kritische Prozesse ohne
+     Planung — jede Einordnung ist über die Sortierkriterien nachvollziehbar,
+     keine Blackbox-Bewertung). Import/Export/Migration/Merge/Selektiv-Import
+     vollständig angebunden (normalizeReviewsForImport, IMPORT_LIMITS.maxReviews).
    Version 2.2.0 — Korrektheit, Sicherheit, Barrierefreiheit:
    - BEHOBEN (kritisch, Datenverlust): Beim Import gingen die strukturierten
      Prozessabhängigkeiten (processes[].dependencies) vollständig und ohne
@@ -790,7 +807,7 @@ button.rowcard:hover{border-color:var(--line-strong);}
 /* ---------------------------------------------------------------------
    1) KONSTANTEN / FACHLICHE REFERENZDATEN
    --------------------------------------------------------------------- */
-const APP_VERSION = '2.3.1';
+const APP_VERSION = '2.4.0';
 
 /* Lizenz — Version/Datum getrennt von APP_VERSION versioniert, damit eine
    künftige inhaltliche Änderung gezielt eine erneute Bestätigung erzwingen
@@ -886,6 +903,45 @@ const RESILIENZ_ITEMS = [
 ];
 
 const MASSNAHMEN_KATEGORIEN = ['IT / Technik','Personal','Lieferkette','Dokumentation','Kommunikation','Organisation','Sonstiges'];
+
+/* v2.4.0 (AP1, Review Center): fest definierte Reviewarten. Jede Reviewart
+   besitzt in AP2 eine eigene Zykluspolicy (process.reviewConfig); hier nur
+   die Liste selbst plus Anzeigebeschriftung. */
+const REVIEW_ARTEN = ['prozess','bia','notbetrieb','ressourcen'];
+const REVIEW_ART_LABELS = { prozess:'Prozessreview', bia:'BIA-Review', notbetrieb:'Notbetriebsreview', ressourcen:'Ressourcenreview' };
+/* Gespeicherte Statuswerte bewusst nur diese drei — Fälligkeit/Überfälligkeit
+   werden aus geplantAm berechnet (siehe reviewDueInfo()), nicht als eigener
+   Status gespeichert. */
+const REVIEW_STATUS = ['geplant','in_bearbeitung','abgeschlossen'];
+const REVIEW_STATUS_LABELS = { geplant:'Geplant', in_bearbeitung:'In Bearbeitung', abgeschlossen:'Abgeschlossen' };
+/* Anzahl Tage, ab denen ein geplanter Review als "bald fällig" gilt (nicht überfällig). */
+const REVIEW_UPCOMING_WINDOW_DAYS = 30;
+
+/* v2.4.0 (AP2): unterstützte Reviewintervalle je Reviewart. 'individuell'
+   verlangt zusätzlich eine eigene Monatsangabe (reviewConfig.intervalMonths);
+   'ereignisbezogen' hat bewusst KEIN Intervall — der nächste Termin wird nie
+   automatisch berechnet, sondern entsteht ausschließlich aus einem Ereignis. */
+const REVIEW_INTERVALS = ['3m','6m','12m','24m','individuell','ereignisbezogen'];
+const REVIEW_INTERVAL_LABELS = { '3m':'3 Monate', '6m':'6 Monate', '12m':'12 Monate', '24m':'24 Monate', individuell:'Individuell', ereignisbezogen:'Ereignisbezogen' };
+/* Feste Monatszahl je Standardintervall — 'individuell' liest stattdessen
+   reviewConfig.intervalMonths, 'ereignisbezogen' hat keinen Eintrag. */
+const REVIEW_INTERVAL_MONTHS = { '3m':3, '6m':6, '12m':12, '24m':24 };
+
+/* v2.4.0 (AP4, BCM Timeline): fest definierte, tatsächlich vorkommende
+   Ereignistypen. Bewusst NICHT enthalten: "Maßnahme gestartet"/"Maßnahme
+   blockiert" — das Produkt speichert für diese Übergänge keinen eigenen
+   Zeitstempel, ein Zeitpunkt würde also erfunden statt abgeleitet. Siehe
+   docs/handbook/timeline.md für die vollständige Herleitung je Ereignistyp. */
+const TIMELINE_EVENT_TYPES = ['prozess_angelegt','review_geplant','review_gestartet','review_abgeschlossen',
+  'massnahme_erstellt','massnahme_abgeschlossen','wirksamkeit_geprueft',
+  'kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert',
+  'version_gespeichert','freigabe_erzeugt'];
+const TIMELINE_EVENT_LABELS = {
+  prozess_angelegt:'Prozess angelegt', review_geplant:'Review geplant', review_gestartet:'Review gestartet', review_abgeschlossen:'Review abgeschlossen',
+  massnahme_erstellt:'Maßnahme erstellt', massnahme_abgeschlossen:'Maßnahme abgeschlossen', wirksamkeit_geprueft:'Wirksamkeit geprüft',
+  kritikalitaet_geaendert:'Kritikalität geändert', zeitwerte_geaendert:'MTA/RTO/RPO geändert', notbetrieb_geaendert:'Notbetrieb wesentlich geändert', ressourcen_geaendert:'Kritische Ressourcen geändert',
+  version_gespeichert:'Version gespeichert', freigabe_erzeugt:'Freigabe erzeugt'
+};
 
 const PROCESS_TABS = [
   {key:'steckbrief', label:'Steckbrief', ic:'01'},
@@ -1056,8 +1112,13 @@ function newProcess(name){
       empfehlung: (typeof item==='object' && item.empfehlung) || ''
     })),
     dependencies: [], // v1.5.0 (P11): strukturierte Prozessabhängigkeiten über IDs
+    reviewConfig: defaultReviewConfig(), // v2.4.0 (AP2): Reviewzyklen je Reviewart, je Art optional (null = keine Policy)
     createdAt: new Date().toISOString()
   };
+}
+/** v2.4.0 (AP2): liefert die Default-Reviewpolicy-Struktur eines Prozesses — je Reviewart zunächst KEINE Policy (null), damit nie ein Termin erfunden wird. @returns {object} */
+function defaultReviewConfig(){
+  return REVIEW_ARTEN.reduce((acc,a)=>{ acc[a] = null; return acc; }, {});
 }
 
 /** Erstellt eine leere Ressource mit allen Feldern (inkl. P12-Erweiterungen: Verantwortlich, Recovery-Anforderung, SPOF-Flag etc.). @returns {object} */
@@ -1080,7 +1141,15 @@ function newMassnahme(over){
     // v1.6.0 (P14): Aufwand, Risikoherkunft, Entscheidung, Wirksamkeit
     aufwand:'mittel', kostenSchaetzung:'', risikoOhneMassnahme:'', risikoNachMassnahme:'',
     entscheidungsbedarf:'', genehmiger:'', genehmigtAm:'', abhaengigkeiten:[],
-    nachweis:'', wirksamkeitGeprueftAm:'', wirksamkeitErgebnis:''}, over||{});
+    nachweis:'', wirksamkeitGeprueftAm:'', wirksamkeitErgebnis:'',
+    // v2.4.0 (AP3, Maßnahmenmanagement 2.0): Herkunft, Zeitachse, erweiterte
+    // Wirksamkeitsprüfung. sourceType 'manuell' ist hier der Default, weil
+    // newMassnahme() bei bekannter Herkunft (Review/Parkplatz/Qualitätsbefund/
+    // Resilienz-Check) explizit mit `over` überschrieben wird — nur eine
+    // Migration bestehender Altdatensätze setzt stattdessen 'unbekannt'.
+    sourceType:'manuell', sourceId:'', sourceLabel:'', reviewId:'',
+    erstelltAm: new Date().toISOString(), abgeschlossenAm:'',
+    wirksamkeitPruefer:'', wiedervorlageAm:'', blockiertGrund:''}, over||{});
 }
 
 /** Erzeugt einen neuen Parkplatz-Eintrag (v2.3.0, Workshop Edition). @param {object} [over] @returns {object} */
@@ -1095,6 +1164,24 @@ function newParkplatzItem(over){
     status: 'offen',
     erstelltAm: new Date().toISOString(),
     abschlussNotiz: ''
+  }, over||{});
+}
+
+/** Erzeugt einen neuen Review (v2.4.0, AP1 Review Center). Reviews sind konkrete Arbeits-/Historieninstanzen, keine Vorlagen. @param {object} [over] Felder, die die Defaults überschreiben. @returns {object} */
+function newReview(over){
+  return Object.assign({
+    id: uid('rev'),
+    prozessId: '',
+    reviewart: REVIEW_ARTEN[0],
+    geplantAm: '',
+    gestartetAm: '',
+    abgeschlossenAm: '',
+    verantwortlich: '',
+    status: 'geplant',
+    ergebnis: '',
+    naechsterReviewAm: '',
+    massnahmenIds: [],
+    erstelltAm: new Date().toISOString()
   }, over||{});
 }
 
@@ -1121,6 +1208,7 @@ function defaultState(){
     resources: [],
     massnahmen: [],
     parkplatz: [],
+    reviews: [],
     versions: [],
     ui: { route:'dashboard', processId:null, processTab:'steckbrief' }
   };
@@ -1131,7 +1219,7 @@ function defaultState(){
    Getrennt von APP_VERSION (Software-Version) — beschreibt die Form der
    gespeicherten Daten. Dateien ohne schemaVersion gelten als Schema 1.
    --------------------------------------------------------------------- */
-const CURRENT_SCHEMA_VERSION = 12;
+const CURRENT_SCHEMA_VERSION = 15;
 
 /** Schema-Migration 1->2: ergänzt Versions-Nachvollziehbarkeitsfelder und Resilienz-Empfehlungstexte. @param {object} data Rohdaten vor der Migration. @returns {{data:object, warnings:string[]}} */
 function migrateV1ToV2(data){
@@ -1335,7 +1423,50 @@ function migrateV11ToV12(data){
   return { data: d, warnings: [] };
 }
 
-const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12 };
+/** Schema-Migration 12->13: ergänzt reviews[] additiv (v2.4.0, AP1 Review Center). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV12ToV13(data){
+  const d = JSON.parse(JSON.stringify(data));
+  if(!Array.isArray(d.reviews)) d.reviews = [];
+  d.schemaVersion = 13;
+  return { data: d, warnings: [] };
+}
+
+/** Schema-Migration 13->14: ergänzt process.reviewConfig additiv, je Reviewart zunächst ohne Policy (null) — erfindet nie einen Termin (v2.4.0, AP2 Reviewzyklen). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV13ToV14(data){
+  const d = JSON.parse(JSON.stringify(data));
+  let fieldsAdded = 0;
+  (d.processes||[]).forEach(p=>{
+    if(!p.reviewConfig || typeof p.reviewConfig!=='object'){
+      p.reviewConfig = defaultReviewConfig();
+      fieldsAdded++;
+    } else {
+      REVIEW_ARTEN.forEach(a=>{ if(!(a in p.reviewConfig)){ p.reviewConfig[a] = null; fieldsAdded++; } });
+    }
+  });
+  d.schemaVersion = 14;
+  return { data: d, warnings: fieldsAdded>0 ? [fieldsAdded+' Prozess(e) erhielten beim Wechsel von Schema 13 auf Schema 14 eine leere Reviewzyklen-Konfiguration (keine Policy erfunden).'] : [] };
+}
+
+/** Schema-Migration 14->15: ergänzt Herkunfts-, Zeitachsen- und erweiterte Wirksamkeitsfelder je Maßnahme additiv (v2.4.0, AP3 Maßnahmenmanagement 2.0). Herkunft/Anlagezeitpunkt von Altdatensätzen sind nicht mehr rekonstruierbar und werden NICHT erfunden ("unbekannt" bzw. leer). @param {object} data @returns {{data:object, warnings:string[]}} */
+function migrateV14ToV15(data){
+  const d = JSON.parse(JSON.stringify(data));
+  let fieldsAdded = 0;
+  (d.massnahmen||[]).forEach(m=>{
+    if(m.sourceType===undefined){ m.sourceType = 'unbekannt'; fieldsAdded++; }
+    if(m.sourceId===undefined){ m.sourceId = ''; fieldsAdded++; }
+    if(m.sourceLabel===undefined){ m.sourceLabel = ''; fieldsAdded++; }
+    if(m.reviewId===undefined){ m.reviewId = ''; fieldsAdded++; }
+    if(m.erstelltAm===undefined){ m.erstelltAm = ''; fieldsAdded++; } // unbekannter Altzeitpunkt bleibt unbekannt, statt "jetzt" zu erfinden
+    if(m.abgeschlossenAm===undefined){ m.abgeschlossenAm = ''; fieldsAdded++; }
+    if(m.wirksamkeitPruefer===undefined){ m.wirksamkeitPruefer = ''; fieldsAdded++; }
+    if(m.wiedervorlageAm===undefined){ m.wiedervorlageAm = ''; fieldsAdded++; }
+    if(m.blockiertGrund===undefined){ m.blockiertGrund = ''; fieldsAdded++; }
+  });
+  d.schemaVersion = 15;
+  return { data: d, warnings: fieldsAdded>0 ? [fieldsAdded+' fehlende Felder wurden beim Wechsel von Schema 14 auf Schema 15 ergänzt (Herkunft "unbekannt", keine erfundenen Zeitpunkte).'] : [] };
+}
+
+const SCHEMA_MIGRATIONS = { 1: migrateV1ToV2, 2: migrateV2ToV3, 3: migrateV3ToV4, 4: migrateV4ToV5, 5: migrateV5ToV6, 6: migrateV6ToV7, 7: migrateV7ToV8, 8: migrateV8ToV9, 9: migrateV9ToV10, 10: migrateV10ToV11, 11: migrateV11ToV12, 12: migrateV12ToV13, 13: migrateV13ToV14, 14: migrateV14ToV15 };
 
 /** Zentrale Migrationsverkettung: wendet SCHEMA_MIGRATIONS schrittweise bis CURRENT_SCHEMA_VERSION an. Gibt NIE ok:true zurück, wenn eine Stufe fehlt oder das Ziel nicht exakt erreicht wird; lehnt neuere, unbekannte Schemas ab. @param {object} data Rohdaten (ggf. mit fehlendem/älterem schemaVersion). @returns {{ok:boolean, data?:object, warnings?:string[], error?:string, fromVersion?:number, toVersion?:number, migrated?:boolean}} */
 function migrateWorkbook(data){
@@ -1810,7 +1941,13 @@ function compareVersions(versionA, versionB){
       const vb = pb.bia && pb.bia[c.key] && pb.bia[c.key].bewertung;
       if(va!==vb) changes.push('BIA "'+c.label+'" geändert ('+va+' → '+vb+')');
     });
-    if(changes.length>0) diff.processChanges.push({ name: pb.steckbrief.name||pa.steckbrief.name||'(ohne Namen)', changes });
+    // v2.4.0 (AP4): "wesentliche" Notbetrieb-Änderung — bewusst nur die
+    // operativen Kernfelder, nicht jedes Freitextfeld (sonst würde die
+    // Timeline von belanglosen Formulierungsänderungen überflutet).
+    const NOTBETRIEB_WESENTLICH_FELDER = ['ausloeser','entscheidung','werInformiert','steuerung','schritt1','schritt2','schritt3','schritt4','rueckkehr'];
+    const notbetriebChanged = NOTBETRIEB_WESENTLICH_FELDER.some(f=>(pa.notbetrieb||{})[f]!==(pb.notbetrieb||{})[f]);
+    if(notbetriebChanged) changes.push('Notbetrieb wesentlich geändert');
+    if(changes.length>0) diff.processChanges.push({ id, name: pb.steckbrief.name||pa.steckbrief.name||'(ohne Namen)', changes });
   });
 
   const aResMap = new Map((a.resources||[]).map(r=>[r.id,r]));
@@ -1831,6 +1968,89 @@ function compareVersions(versionA, versionB){
   });
 
   return diff;
+}
+
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP4) — BCM TIMELINE
+   Bewusst KEIN STATE.timeline[]. Jedes Ereignis wird aus bereits
+   vorhandenen, ohnehin gespeicherten Zeitstempeln und Versions-Snapshots
+   abgeleitet (Ableitung vor Persistenz) — kein Audit-Log, kein Event-
+   Sourcing, keine Aufzeichnung jeder Feldänderung. Nur die in
+   TIMELINE_EVENT_TYPES gelisteten, fachlich relevanten Ereignistypen.
+   --------------------------------------------------------------------- */
+/** Baut die vollständige, unsortierte Liste aller ableitbaren Timeline-Ereignisse. Reine Ableitung aus STATE — erzeugt oder verändert nichts. @returns {Array<{type:string, timestamp:string, description:string, object:object|null, bearbeiter:string}>} */
+function buildTimelineEvents(){
+  const events = [];
+  /** @param {string} type @param {string} timestamp @param {string} description @param {object} obj @param {string} [bearbeiter] */
+  function add(type, timestamp, description, obj, bearbeiter){
+    if(!String(timestamp||'').trim()) return; // nie ein Ereignis ohne echten, vorhandenen Zeitstempel erzeugen
+    events.push({ type, timestamp, description, object: obj||null, bearbeiter: bearbeiter||'' });
+  }
+
+  STATE.processes.forEach(p=>{
+    const name = p.steckbrief.name||'(ohne Namen)';
+    add('prozess_angelegt', p.createdAt, 'Prozess "'+name+'" angelegt.', {type:'process', id:p.id, prozessId:p.id, label:name});
+  });
+
+  STATE.reviews.forEach(r=>{
+    const pname = processName(r.prozessId);
+    const art = REVIEW_ART_LABELS[r.reviewart]||r.reviewart;
+    const obj = {type:'review', id:r.id, prozessId:r.prozessId, label:art+' — '+pname};
+    add('review_geplant', r.erstelltAm, art+' für "'+pname+'" geplant'+(r.geplantAm?' (Termin '+fmtDateOnly(r.geplantAm)+')':'')+'.', obj, r.verantwortlich);
+    add('review_gestartet', r.gestartetAm, art+' für "'+pname+'" gestartet.', obj, r.verantwortlich);
+    add('review_abgeschlossen', r.abgeschlossenAm, art+' für "'+pname+'" abgeschlossen.', obj, r.verantwortlich);
+  });
+
+  STATE.massnahmen.forEach(m=>{
+    const titel = m.titel||'(ohne Titel)';
+    const obj = {type:'massnahme', id:m.id, prozessId:m.prozessId, label:titel};
+    add('massnahme_erstellt', m.erstelltAm, 'Maßnahme "'+titel+'" erstellt ('+(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+').', obj, m.verantwortlich);
+    add('massnahme_abgeschlossen', m.abgeschlossenAm, 'Maßnahme "'+titel+'" abgeschlossen.', obj, m.verantwortlich);
+    add('wirksamkeit_geprueft', m.wirksamkeitGeprueftAm, 'Wirksamkeit von "'+titel+'" geprüft'+(m.wirksamkeitErgebnis?' — '+m.wirksamkeitErgebnis:'')+'.', obj, m.wirksamkeitPruefer);
+  });
+
+  const sortedVersions = STATE.versions.slice().sort((a,b)=>a.nr-b.nr);
+  sortedVersions.forEach(v=>{
+    const isRelease = v.source==='release';
+    add(isRelease?'freigabe_erzeugt':'version_gespeichert', v.datum,
+      isRelease ? 'Freigabe erzeugt (Version '+v.nr+').' : 'Version '+v.nr+' gespeichert'+(v.notiz?': '+v.notiz:'')+'.',
+      {type:'version', id:v.nr, prozessId:null, label:'Version '+v.nr}, v.bearbeiter);
+  });
+
+  // Versionsdiffs NUR zwischen unmittelbar aufeinanderfolgenden Versionen —
+  // ein Vergleich nicht-konsekutiver Versionen würde Zwischenänderungen
+  // verschlucken oder (bei allen Paaren) Änderungen vervielfacht melden.
+  for(let i=1;i<sortedVersions.length;i++){
+    const vPrev = sortedVersions[i-1], vCur = sortedVersions[i];
+    let diff;
+    try{ diff = compareVersions(vPrev, vCur); } catch(e){ continue; } // beschädigter Snapshot -> keine Ableitung, kein Absturz
+    diff.processChanges.forEach(pc=>{
+      const p = getProcess(pc.id);
+      const label = p ? (p.steckbrief.name||pc.name) : pc.name;
+      const obj = {type:'process', id:pc.id, prozessId:pc.id, label};
+      if(pc.changes.some(c=>c.indexOf('Kritikalität')===0)) add('kritikalitaet_geaendert', vCur.datum, 'Kritikalität von "'+label+'" geändert.', obj, vCur.bearbeiter);
+      if(pc.changes.some(c=>c.indexOf('MTA')===0||c.indexOf('RTO')===0||c.indexOf('RPO')===0)) add('zeitwerte_geaendert', vCur.datum, 'MTA/RTO/RPO von "'+label+'" geändert.', obj, vCur.bearbeiter);
+      if(pc.changes.some(c=>c.indexOf('Notbetrieb')===0)) add('notbetrieb_geaendert', vCur.datum, 'Notbetrieb von "'+label+'" wesentlich geändert.', obj, vCur.bearbeiter);
+    });
+    if(diff.resourcesAdded.length>0 || diff.resourcesRemoved.length>0){
+      const parts = [];
+      if(diff.resourcesAdded.length>0) parts.push(diff.resourcesAdded.length+' hinzugefügt ('+diff.resourcesAdded.join(', ')+')');
+      if(diff.resourcesRemoved.length>0) parts.push(diff.resourcesRemoved.length+' entfernt ('+diff.resourcesRemoved.join(', ')+')');
+      add('ressourcen_geaendert', vCur.datum, 'Kritische Ressourcen geändert: '+parts.join('; ')+'.', {type:'version', id:vCur.nr, prozessId:null, label:'Version '+vCur.nr}, vCur.bearbeiter);
+    }
+  }
+
+  return events;
+}
+/** Liefert die gefilterte, absteigend nach Zeitpunkt sortierte Timeline. @param {{prozessId?:string, type?:string, from?:string, to?:string}} [filters] @returns {Array} */
+function timelineEvents(filters){
+  filters = filters || {};
+  let list = buildTimelineEvents();
+  if(filters.prozessId) list = list.filter(e=>e.object && e.object.prozessId===filters.prozessId);
+  if(filters.type) list = list.filter(e=>e.type===filters.type);
+  if(filters.from) list = list.filter(e=>String(e.timestamp)>=filters.from);
+  if(filters.to) list = list.filter(e=>String(e.timestamp)<=filters.to+'T23:59:59.999Z');
+  return list.sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
 }
 
 /* Prüfsummen-Verifizierung im Hintergrund (Web Crypto ist immer async).
@@ -1898,6 +2118,7 @@ const IMPORT_LIMITS = {
   maxResources: 5000,
   maxMassnahmen: 10000,
   maxParkplatz: 5000,
+  maxReviews: 20000,
   maxVersions: 100,
   maxTextLength: 50000,
   maxShortTextLength: 1000,
@@ -1957,7 +2178,19 @@ function timeUnitOptionsHtml(selected){
 const ENUM_RESILIENZ_STATUS = ['rot','gelb','gruen'];
 const ENUM_ALTERNATIVE = ['ja','teilweise','nein'];
 const ENUM_JA_NEIN = ['ja','nein'];
-const ENUM_MASSNAHMEN_STATUS = ['offen','in_arbeit','erledigt','zurueckgestellt'];
+/* v2.4.0 (AP3): additiv um 'geplant'/'blockiert'/'verworfen' erweitert (das
+   Zielstatusmodell aus AP3), 'zurueckgestellt' bleibt für Altdaten gültig
+   (Rückwärtskompatibilität), wird aber im UI nicht mehr als neue Auswahl
+   angeboten — siehe MASSNAHMEN_STATUS_UI_OPTIONS. */
+const ENUM_MASSNAHMEN_STATUS = ['offen','geplant','in_arbeit','blockiert','erledigt','verworfen','zurueckgestellt'];
+/* Im UI angebotene Statuswerte (AP3-Zielmodell) — 'zurueckgestellt' bewusst
+   nicht enthalten, bleibt aber via ENUM_MASSNAHMEN_STATUS importierbar/lesbar. */
+const MASSNAHMEN_STATUS_UI_OPTIONS = ['offen','geplant','in_arbeit','blockiert','erledigt','verworfen'];
+const MASSNAHMEN_STATUS_LABELS = { offen:'Offen', geplant:'Geplant', in_arbeit:'In Umsetzung', blockiert:'Blockiert', erledigt:'Erledigt', verworfen:'Verworfen', zurueckgestellt:'Zurückgestellt' };
+/* v2.4.0 (AP3): Herkunft einer Maßnahme — 'unbekannt' ausschließlich für
+   Altdatensätze aus der Migration (Herkunft nie rückwirkend erfunden). */
+const ENUM_MASSNAHME_SOURCE_TYPE = ['manuell','review','parkplatz','qualitaet','resilienz','unbekannt'];
+const MASSNAHME_SOURCE_LABELS = { manuell:'Manuell angelegt', review:'Aus Review', parkplatz:'Aus Parkplatz', qualitaet:'Aus Qualitätsbefund', resilienz:'Aus Resilienz-Check', unbekannt:'Unbekannt (Altdatensatz)' };
 /* v2.2.0: bislang nur implizit im UI vorhandene Wertemengen jetzt auch als
    Import-Enums geführt, damit eine manipulierte Datei keine unbekannten
    Zustände in die Fachlogik einschleusen kann (siehe normalizeMetaForImport
@@ -2356,7 +2589,35 @@ function normalizeProcessForImport(raw, finalId, warnings){
   merged.minfaehigkeit = normalizeMinfaehigkeitForImport(raw.minfaehigkeit, template.minfaehigkeit, pname, warnings);
   merged.resilienz = normalizeResilienzForImport(raw.resilienz, template.resilienz, pname, warnings);
   merged.dependencies = normalizeDependenciesForImport(raw.dependencies, pname, warnings);
+  // v2.4.0 (AP2): Reviewzyklen-Policy je Reviewart — ungültige/unbekannte
+  // Einträge werden auf "keine Policy" (null) zurückgesetzt, NIE geraten.
+  merged.reviewConfig = normalizeReviewConfigForImport(raw.reviewConfig, pname, warnings);
   return merged;
+}
+/** v2.4.0 (AP2): härtet die Reviewzyklen-Policy eines Prozesses beim Import. Ungültige Einträge werden zu null (keine Policy), nie zu einem geratenen Intervall. @param {*} rawConfig @param {string} pname @param {string[]} warnings @returns {object} */
+function normalizeReviewConfigForImport(rawConfig, pname, warnings){
+  const src = coercePlainObject(rawConfig);
+  const out = defaultReviewConfig();
+  REVIEW_ARTEN.forEach(a=>{
+    const entry = src[a];
+    if(entry===null || entry===undefined) return; // bleibt bei "keine Policy"
+    const obj = coercePlainObject(entry);
+    if(!REVIEW_INTERVALS.includes(obj.intervalType)){
+      warnings.push('Prozess "'+pname+'": Reviewzyklen-Policy "'+REVIEW_ART_LABELS[a]+'" hatte ein unbekanntes Intervall und wurde entfernt.');
+      return;
+    }
+    let intervalMonths = null;
+    if(obj.intervalType==='individuell'){
+      const n = Number(obj.intervalMonths);
+      if(Number.isFinite(n) && n>0){ intervalMonths = n; }
+      else {
+        warnings.push('Prozess "'+pname+'": individuelles Reviewintervall "'+REVIEW_ART_LABELS[a]+'" ohne gültige Monatsangabe wurde entfernt.');
+        return;
+      }
+    }
+    out[a] = { intervalType: obj.intervalType, intervalMonths };
+  });
+  return out;
 }
 
 const ENUM_VERSION_SOURCE = ['manual','import','restore','migration','cleanup','release','legacy'];
@@ -2463,6 +2724,9 @@ function validateImportData(data){
   if(data.parkplatz!==undefined && !Array.isArray(data.parkplatz)){
     return { valid:false, errors:['Das Feld "parkplatz" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
   }
+  if(data.reviews!==undefined && !Array.isArray(data.reviews)){
+    return { valid:false, errors:['Das Feld "reviews" ist vorhanden, aber kein Array.'], warnings:[], normalizedData:null };
+  }
 
   // P5: Größenbegrenzungen — eine Datei mit z. B. 100.000 Prozessen wird
   // VOR der weiteren Verarbeitung abgewiesen (Denial-of-Service-Schutz).
@@ -2477,6 +2741,9 @@ function validateImportData(data){
   }
   if(Array.isArray(data.parkplatz) && data.parkplatz.length > IMPORT_LIMITS.maxParkplatz){
     return { valid:false, errors:['Die Datei enthält '+data.parkplatz.length+' Parkplatz-Einträge — das Limit liegt bei '+IMPORT_LIMITS.maxParkplatz+'.'], warnings:[], normalizedData:null };
+  }
+  if(Array.isArray(data.reviews) && data.reviews.length > IMPORT_LIMITS.maxReviews){
+    return { valid:false, errors:['Die Datei enthält '+data.reviews.length+' Reviews — das Limit liegt bei '+IMPORT_LIMITS.maxReviews+'.'], warnings:[], normalizedData:null };
   }
   if(Array.isArray(data.versions) && data.versions.length > IMPORT_LIMITS.maxVersions){
     return { valid:false, errors:['Die Datei enthält '+data.versions.length+' Versionen — das Limit liegt bei '+IMPORT_LIMITS.maxVersions+'.'], warnings:[], normalizedData:null };
@@ -2493,6 +2760,7 @@ function validateImportData(data){
     resources: Array.isArray(data.resources) ? data.resources : [],
     massnahmen: Array.isArray(data.massnahmen) ? data.massnahmen : [],
     parkplatz: [],
+    reviews: [],
     processes: []
   };
   if(data.resources!==undefined && !Array.isArray(data.resources)) warnings.push('Ressourcen waren ungültig und wurden ignoriert.');
@@ -2655,6 +2923,11 @@ function validateImportData(data){
 
   // Maßnahmen: Struktur ergänzen, verwaiste Prozessreferenz leeren statt zu verwerfen
   const usedMassnahmeIds = new Set();
+  // v2.4.0 (AP1): merkt sich für jede ursprüngliche Maßnahmen-ID die
+  // tatsächlich vergebene finale ID — reviews[].massnahmenIds referenzieren
+  // Maßnahmen und müssen diese Umschreibung nachvollziehen können (analog
+  // zu processIdRemap oben).
+  const massnahmeIdRecord = new Map();
   normalized.massnahmen = normalized.massnahmen.map((m, idx)=>{
     if(!m || typeof m!=='object'){
       warnings.push('Maßnahme an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
@@ -2663,12 +2936,14 @@ function validateImportData(data){
     const template = newMassnahme();
     const merged = Object.assign({}, template, m);
     const mname0 = coerceString(merged.titel,'') || '(ohne Titel)';
+    const originalMassnahmeId = (typeof m.id==='string' && m.id.trim()!=='') ? m.id : null;
     if(!isSafeEntityId(merged.id) || usedMassnahmeIds.has(merged.id)){
       if(merged.id && usedMassnahmeIds.has(merged.id)) warnings.push('Maßnahme "'+mname0+'": doppelte ID wurde durch eine neue ersetzt.');
       else if(merged.id!==undefined && !isSafeEntityId(merged.id)) warnings.push('Maßnahme "'+mname0+'": die ID enthielt unzulässige Zeichen und wurde technisch neu vergeben.');
       merged.id = uid('m');
     }
     usedMassnahmeIds.add(merged.id);
+    if(originalMassnahmeId) massnahmeIdRecord.set(originalMassnahmeId, merged.id);
     merged.prozessId = coerceString(merged.prozessId, '');
     if(merged.prozessId){
       const resolved = resolveProcessReference(merged.prozessId);
@@ -2698,6 +2973,15 @@ function validateImportData(data){
      'entscheidungsbedarf','genehmiger','genehmigtAm','nachweis','wirksamkeitGeprueftAm','wirksamkeitErgebnis'].forEach(f=>{
       merged[f] = capText(coerceString(merged[f],''), IMPORT_LIMITS.maxTextLength, 'Maßnahme "'+mname+'": Feld "'+f+'"', warnings);
     });
+    // v2.4.0 (AP3): Herkunft, Zeitachse, erweiterte Wirksamkeitsprüfung.
+    // reviewId wird hier nur als Text übernommen — reviews[] ist an dieser
+    // Stelle noch nicht normalisiert (siehe Auflösung weiter unten,
+    // nachdem reviews[] verarbeitet wurde).
+    merged.sourceType = capEnum(merged.sourceType, ENUM_MASSNAHME_SOURCE_TYPE, 'unbekannt', 'Maßnahme "'+mname+'": Herkunft', warnings);
+    ['sourceId','sourceLabel','erstelltAm','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund'].forEach(f=>{
+      merged[f] = capText(coerceString(merged[f],''), IMPORT_LIMITS.maxShortTextLength, 'Maßnahme "'+mname+'": Feld "'+f+'"', warnings);
+    });
+    merged.reviewId = coerceString(merged.reviewId, '');
     return merged;
   }).filter(m=>m!==null);
 
@@ -2735,6 +3019,75 @@ function validateImportData(data){
     merged.abschlussNotiz = capText(coerceString(merged.abschlussNotiz,''), IMPORT_LIMITS.maxTextLength, 'Parkplatz: Abschlussnotiz', warnings);
     return merged;
   }).filter(p=>p!==null);
+
+  // v2.4.0 (AP1): Reviews normalisieren. Muss NACH Prozessen UND Maßnahmen
+  // laufen, da reviews[].prozessId/massnahmenIds beides referenzieren.
+  const rawReviews = Array.isArray(data.reviews) ? data.reviews : [];
+  const usedReviewIds = new Set();
+  const validMassnahmeIds = new Set(normalized.massnahmen.map(m=>m.id));
+  // v2.4.0 (AP3): merkt für jede ursprüngliche Review-ID die tatsächlich
+  // vergebene finale ID — massnahmen[].reviewId referenziert Reviews und
+  // muss diese Umschreibung nachvollziehen können (analog zu
+  // massnahmeIdRecord/processIdRemap oben).
+  const reviewIdRecord = new Map();
+  normalized.reviews = rawReviews.map((item, idx)=>{
+    if(!item || typeof item!=='object'){
+      warnings.push('Review an Position '+(idx+1)+' war ungültig und wurde übersprungen.');
+      return null;
+    }
+    const template = newReview();
+    const merged = Object.assign({}, template, item);
+    const originalReviewId = (typeof item.id==='string' && item.id.trim()!=='') ? item.id : null;
+    if(!isSafeEntityId(merged.id) || usedReviewIds.has(merged.id)){
+      merged.id = uid('rev');
+    }
+    usedReviewIds.add(merged.id);
+    if(originalReviewId) reviewIdRecord.set(originalReviewId, merged.id);
+    merged.prozessId = coerceString(merged.prozessId, '');
+    if(merged.prozessId){
+      const resolved = resolveProcessReference(merged.prozessId);
+      if(!resolved.ok){
+        if(resolved.reason==='ambiguous'){
+          warnings.push('Review: Verweis auf die mehrfach vorhandene Prozess-ID "'+merged.prozessId+'" ist mehrdeutig und wurde entfernt.');
+          unclearReferences.push({ type:'review', name: REVIEW_ART_LABELS[merged.reviewart]||merged.reviewart, processId: merged.prozessId });
+        } else {
+          warnings.push('Review: Verweis auf nicht vorhandenen Prozess wurde entfernt.');
+        }
+        merged.prozessId = '';
+      } else {
+        merged.prozessId = resolved.id;
+      }
+    }
+    merged.reviewart = capEnum(merged.reviewart, REVIEW_ARTEN, REVIEW_ARTEN[0], 'Review: Reviewart', warnings);
+    merged.status = capEnum(merged.status, REVIEW_STATUS, 'geplant', 'Review: Status', warnings);
+    ['geplantAm','gestartetAm','abgeschlossenAm','naechsterReviewAm','erstelltAm'].forEach(f=>{
+      merged[f] = coerceString(merged[f], '');
+    });
+    merged.verantwortlich = capText(coerceString(merged.verantwortlich,''), IMPORT_LIMITS.maxShortTextLength, 'Review: Verantwortlich', warnings);
+    merged.ergebnis = capText(coerceString(merged.ergebnis,''), IMPORT_LIMITS.maxTextLength, 'Review: Ergebnis', warnings);
+    // Maßnahmenreferenzen auf die (ggf. umgeschriebenen) finalen Maßnahmen-IDs auflösen;
+    // unbekannte/entfernte Referenzen werden stillschweigend entfernt (nicht mehr rekonstruierbar).
+    const rawMassnahmenIds = coerceArray(merged.massnahmenIds, 'Review: Maßnahmenreferenzen', warnings);
+    let droppedRefs = 0;
+    merged.massnahmenIds = rawMassnahmenIds.map(mid=>{
+      const finalId = massnahmeIdRecord.get(mid) || (validMassnahmeIds.has(mid) ? mid : null);
+      if(!finalId) droppedRefs++;
+      return finalId;
+    }).filter(mid=>mid!==null);
+    if(droppedRefs>0) warnings.push('Review: '+droppedRefs+' Verweis(e) auf nicht vorhandene Maßnahmen wurden entfernt.');
+    return merged;
+  }).filter(r=>r!==null);
+
+  // v2.4.0 (AP3): massnahmen[].reviewId auf die finalen Review-IDs auflösen
+  // (musste warten, bis reviews[] oben normalisiert war). Unauflösbare
+  // Referenzen werden geleert statt geraten.
+  const validReviewIds = new Set(normalized.reviews.map(r=>r.id));
+  normalized.massnahmen.forEach(m=>{
+    if(!m.reviewId) return;
+    const finalId = reviewIdRecord.get(m.reviewId) || (validReviewIds.has(m.reviewId) ? m.reviewId : '');
+    if(!finalId) warnings.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'": Verweis auf nicht vorhandenes Review wurde entfernt.');
+    m.reviewId = finalId;
+  });
 
   // Schema-Migration: greift für JEDEN Importweg automatisch (readImportFile,
   // verschlüsselter Import, Datei öffnen), da alle validateImportData() nutzen.
@@ -2875,6 +3228,17 @@ function mergeProcessInto(existing, imported, listMode){
       seenPairs.add(key);
     });
   }
+
+  // v2.4.0 (AP2): Reviewzyklen-Policy je Reviewart nur übernehmen, wenn im
+  // Ziel noch KEINE Policy gesetzt ist — eine bewusste fachliche Entscheidung
+  // wird beim Zusammenführen nie automatisch überschrieben (analog zu
+  // minimumCapability.mode oben).
+  if(!existing.reviewConfig) existing.reviewConfig = defaultReviewConfig();
+  if(imported.reviewConfig){
+    REVIEW_ARTEN.forEach(a=>{
+      if(!existing.reviewConfig[a] && imported.reviewConfig[a]) existing.reviewConfig[a] = imported.reviewConfig[a];
+    });
+  }
 }
 
 /** Merged eine importierte Ressource in eine bestehende hinein, vereinigt Prozessverknüpfungen. Mutiert existing. @param {object} existing @param {object} imported @param {string} listMode 'ergaenzen'|'ueberschreiben' @returns {void} */
@@ -2893,6 +3257,10 @@ function mergeResourceInto(existing, imported, listMode){
 /** Merged eine importierte Maßnahme in eine bestehende hinein (befüllt nur leere Felder). Mutiert existing. @param {object} existing @param {object} imported @returns {void} */
 function mergeMassnahmeInto(existing, imported){
   mergeStringFields(existing, imported, ['titel','verantwortlich','termin','nutzen','bemerkung']);
+  // v2.4.0 (AP3): Herkunft/Zeitachse nur auffüllen, wenn im Ziel noch nicht
+  // bekannt — nie eine bereits bekannte Herkunft überschreiben.
+  mergeStringFields(existing, imported, ['sourceId','sourceLabel','reviewId','erstelltAm','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund']);
+  if((!existing.sourceType || existing.sourceType==='unbekannt') && imported.sourceType) existing.sourceType = imported.sourceType;
 }
 
 /** Führt eine validierte Importdatei mit dem aktuellen STATE zusammen (Strategie "Zusammenführen"). Mutiert STATE. @param {object} importData Normalisierte Importdaten. @param {string} listMode 'ergaenzen'|'ueberschreiben' @returns {{added:number, updated:number}} */
@@ -2920,6 +3288,20 @@ function mergeImportData(importData, listMode){
     else {
       mergeStringFields(existing, ip, ['beschreibung','verantwortlich','termin','abschlussNotiz','workshopBlock']);
       if(!existing.prozessId && ip.prozessId) existing.prozessId = ip.prozessId;
+      updated++;
+    }
+  });
+  // v2.4.0 (AP1): Reviews zusammenführen
+  (importData.reviews||[]).forEach(ir=>{
+    const existing = STATE.reviews.find(r=>r.id===ir.id);
+    if(!existing){ STATE.reviews.push(ir); added++; }
+    else {
+      mergeStringFields(existing, ir, ['verantwortlich','ergebnis']);
+      if(!existing.prozessId && ir.prozessId) existing.prozessId = ir.prozessId;
+      if(!existing.naechsterReviewAm && ir.naechsterReviewAm) existing.naechsterReviewAm = ir.naechsterReviewAm;
+      const set = new Set(existing.massnahmenIds||[]);
+      (ir.massnahmenIds||[]).forEach(mid=>set.add(mid));
+      existing.massnahmenIds = Array.from(set);
       updated++;
     }
   });
@@ -2971,16 +3353,43 @@ function selectiveImportData(importData, processIds, resourceIds, massnahmeIds){
       cr++;
     }
   });
+  const massnahmeIdMap = {};
+  const importedMassnahmeCopies = []; // v2.4.0 (AP3): für die nachgelagerte reviewId-Auflösung
   (importData.massnahmen||[]).forEach(m=>{
     if(massnahmeIds.includes(m.id)){
       const copy = JSON.parse(JSON.stringify(m));
-      copy.id = uid('m');
+      const newMId = uid('m');
+      massnahmeIdMap[m.id] = newMId;
+      copy.id = newMId;
       copy.prozessId = idMap[m.prozessId] || '';
       STATE.massnahmen.push(copy);
+      importedMassnahmeCopies.push(copy);
       cm++;
     }
   });
-  return {processes:cp, resources:cr, massnahmen:cm};
+  // v2.4.0 (AP1): Reviews folgen automatisch ihrem Prozess (keine eigene
+  // Auswahlliste in der UI) — ein Review ohne mitausgewählten Prozess wird
+  // nicht übernommen, da er sonst ins Leere zeigen würde.
+  let cv = 0;
+  const reviewIdMap = {};
+  (importData.reviews||[]).forEach(r=>{
+    if(!idMap[r.prozessId]) return;
+    const copy = JSON.parse(JSON.stringify(r));
+    const newRId = uid('rev');
+    reviewIdMap[r.id] = newRId;
+    copy.id = newRId;
+    copy.prozessId = idMap[r.prozessId];
+    copy.massnahmenIds = (r.massnahmenIds||[]).filter(mid=>massnahmeIdMap[mid]).map(mid=>massnahmeIdMap[mid]);
+    STATE.reviews.push(copy);
+    cv++;
+  });
+  // v2.4.0 (AP3): massnahmen[].reviewId auf die neuen Review-IDs umschreiben;
+  // wurde das referenzierte Review nicht mitübernommen, wird die Referenz
+  // geleert statt auf ein fremdes Review im Zielworkbook zu raten.
+  importedMassnahmeCopies.forEach(copy=>{
+    if(copy.reviewId) copy.reviewId = reviewIdMap[copy.reviewId] || '';
+  });
+  return {processes:cp, resources:cr, massnahmen:cm, reviews:cv};
 }
 
 
@@ -3812,6 +4221,15 @@ function validateMassnahme(m){
   if(!String(m.prozessId||'').trim()){
     findings.push({type:'warn', field:'prozessId', message:'Kein Prozessbezug vorhanden.'});
   }
+  // v2.4.0 (AP3): Plausibilitätsregeln des erweiterten Statusmodells. Reine
+  // Dokumentationsqualität — keine Aussage darüber, ob die Blockade oder die
+  // Wirksamkeit fachlich zutreffend ist.
+  if(m.status==='blockiert' && !String(m.blockiertGrund||'').trim()){
+    findings.push({type:'bad', field:'blockiertGrund', message:'Blockiert ohne Begründung.'});
+  }
+  if(isErledigt && !String(m.wirksamkeitGeprueftAm||'').trim()){
+    findings.push({type:'warn', field:'wirksamkeitGeprueftAm', message:'Erledigt ohne Wirksamkeitsnachweis.'});
+  }
 
   const valid = !findings.some(f=>f.type==='bad');
   return { valid, findings };
@@ -3842,15 +4260,113 @@ const MASSNAHME_MATRIX_LABELS = {
   'niedrig-niedrig': 'Kann warten (niedriger Nutzen, niedriger Aufwand)',
   'niedrig-hoch': 'Infrage stellen (niedriger Nutzen, hoher Aufwand)'
 };
-/** P14: true, wenn eine Maßnahme einen vergangenen Termin hat und nicht erledigt ist. @param {object} m @returns {boolean} */
+/** P14: true, wenn eine Maßnahme einen vergangenen Termin hat und nicht abgeschlossen (erledigt/verworfen) ist. @param {object} m @returns {boolean} */
 function massnahmeIsOverdue(m){
-  if(m.status==='erledigt' || !m.termin) return false;
+  if(m.status==='erledigt' || m.status==='verworfen' || !m.termin) return false;
   const t = new Date(m.termin); const today = new Date(); today.setHours(0,0,0,0);
   return !isNaN(t.getTime()) && t.getTime() < today.getTime();
 }
-/** P14: true, wenn eine Maßnahme als erledigt markiert ist, aber kein Wirksamkeitsnachweis-Datum hinterlegt wurde. @param {object} m @returns {boolean} */
+/** P14: true, wenn eine Maßnahme als erledigt markiert ist, aber kein Wirksamkeitsnachweis-Datum hinterlegt wurde. Erledigt bedeutet NICHT automatisch wirksam — genau diese Lücke wird hier sichtbar gemacht. @param {object} m @returns {boolean} */
 function massnahmeNeedsEffectivenessProof(m){
   return m.status==='erledigt' && !String(m.wirksamkeitGeprueftAm||'').trim();
+}
+/** v2.4.0 (AP3): true, wenn eine Maßnahme "offen" im Sinne noch ausstehender Bearbeitung ist (alles außer erledigt/verworfen). @param {object} m @returns {boolean} */
+function massnahmeIsOpen(m){
+  return m.status!=='erledigt' && m.status!=='verworfen';
+}
+/** v2.4.0 (AP3): true, wenn eine Maßnahme blockiert ist, aber keine Begründung hinterlegt wurde. @param {object} m @returns {boolean} */
+function massnahmeIsBlockedWithoutReason(m){
+  return m.status==='blockiert' && !String(m.blockiertGrund||'').trim();
+}
+/** v2.4.0 (AP3): Reviews, die abgeschlossen sind, aber deren verknüpfte Maßnahmen noch nicht abgeschlossen (erledigt/verworfen) sind. @returns {object[]} */
+function reviewsWithOpenFollowupMassnahmen(){
+  return STATE.reviews.filter(r=>r.status==='abgeschlossen' && (r.massnahmenIds||[]).some(mid=>{
+    const m = STATE.massnahmen.find(x=>x.id===mid);
+    return m && massnahmeIsOpen(m);
+  }));
+}
+
+/* ---------------------------------------------------------------------
+   5l-a) REVIEW CENTER (v2.4.0, AP1)
+   Fälligkeit/Überfälligkeit werden hier BERECHNET, nie als eigener Status
+   gespeichert (siehe REVIEW_STATUS-Kommentar). Alle Sortier-/Priorisierungs-
+   regeln sind rein deterministisch (Datum, Kritikalität) — es gibt bewusst
+   keinen Score und keine fachliche Bewertung, ob ein Review "ausreichend"
+   war (das bleibt Sache des Anwenders/des Reviewergebnis-Freitexts).
+   --------------------------------------------------------------------- */
+/** Liefert alle Reviews eines Prozesses (alle Reviewarten, alle Status), neueste Planung zuerst. @param {string} prozessId @returns {object[]} */
+function reviewsForProcess(prozessId){
+  return STATE.reviews.filter(r=>r.prozessId===prozessId)
+    .slice().sort((a,b)=>(b.geplantAm||'').localeCompare(a.geplantAm||''));
+}
+/** Berechnet Fälligkeit/Überfälligkeit eines Reviews aus geplantAm — niemals aus einem gespeicherten Status. @param {object} r @returns {{state:'done'|'none'|'overdue'|'upcoming'|'ok', days:number|null}} */
+function reviewDueInfo(r){
+  if(r.status==='abgeschlossen') return { state:'done', days:null };
+  const due = String(r.geplantAm||'').trim();
+  if(!due) return { state:'none', days:null };
+  const dueDate = new Date(due); if(isNaN(dueDate.getTime())) return { state:'none', days:null };
+  dueDate.setHours(0,0,0,0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.round((dueDate.getTime()-today.getTime())/86400000);
+  if(days<0) return { state:'overdue', days:-days };
+  if(days<=REVIEW_UPCOMING_WINDOW_DAYS) return { state:'upcoming', days };
+  return { state:'ok', days };
+}
+/** true, wenn ein Review überfällig ist (siehe reviewDueInfo). @param {object} r @returns {boolean} */
+function reviewIsOverdue(r){ return reviewDueInfo(r).state==='overdue'; }
+/** Kritische Prozesse (isProcessKritisch) ohne jeglichen Review-Eintrag (keine Reviewart, kein Status) — signalisiert eine fehlende Reviewplanung, nicht deren fachliche Angemessenheit. @returns {object[]} */
+function processesWithoutReviewPlanning(){
+  return STATE.processes.filter(p=>isProcessKritisch(p) && reviewsForProcess(p.id).length===0);
+}
+/** Baut die deterministisch priorisierte "Was ist als Nächstes zu tun?"-Liste des Review Centers. Reihenfolge: überfällig (am längsten zuerst) -> bald fällig (am nächsten zuerst) -> kritische Prozesse ohne Reviewplanung (nach Prozessname). Kein Score, jede Position ist aus dem Sortierkriterium ableitbar. @returns {Array<{type:string, review?:object, process?:object, days?:number}>} */
+function reviewCenterPriorityList(){
+  const overdue = STATE.reviews.filter(reviewIsOverdue)
+    .map(r=>({type:'overdue', review:r, days:reviewDueInfo(r).days}))
+    .sort((a,b)=>b.days-a.days);
+  const upcoming = STATE.reviews.filter(r=>reviewDueInfo(r).state==='upcoming')
+    .map(r=>({type:'upcoming', review:r, days:reviewDueInfo(r).days}))
+    .sort((a,b)=>a.days-b.days);
+  const missingPlanning = processesWithoutReviewPlanning()
+    .slice().sort((a,b)=>(a.steckbrief.name||'').localeCompare(b.steckbrief.name||''))
+    .map(p=>({type:'missing_planning', process:p}));
+  return overdue.concat(upcoming, missingPlanning);
+}
+/** Aggregiert die Kennzahlen des Review Centers (für Kacheln/Badges). @returns {{overdue:object[], upcoming:object[], missingPlanning:object[], priorityList:Array}} */
+function reviewCenterData(){
+  return {
+    overdue: STATE.reviews.filter(reviewIsOverdue),
+    upcoming: STATE.reviews.filter(r=>reviewDueInfo(r).state==='upcoming'),
+    missingPlanning: processesWithoutReviewPlanning(),
+    priorityList: reviewCenterPriorityList(),
+    // v2.4.0 (AP3): Reviews sind formal abgeschlossen, aber die daraus
+    // entstandenen Maßnahmen sind es noch nicht — ein Governance-Hinweis,
+    // keine Aussage darüber, ob das Review inhaltlich unzureichend war.
+    openFollowupMassnahmen: reviewsWithOpenFollowupMassnahmen()
+  };
+}
+
+/* ---------------------------------------------------------------------
+   5l-b) REVIEWZYKLEN JE REVIEWART (v2.4.0, AP2)
+   Jede Reviewart besitzt eine eigene, optionale Zykluspolicy auf dem
+   Prozess (process.reviewConfig[reviewart]). Ist keine Policy definiert
+   (null), wird NIE ein Termin erfunden — computeNextReviewDate() liefert
+   dann konsequent null, nicht etwa einen geschätzten Standardwert.
+   --------------------------------------------------------------------- */
+/** Liefert die Reviewpolicy eines Prozesses für eine Reviewart, oder null, wenn keine definiert ist. @param {object} process @param {string} reviewart @returns {{intervalType:string, intervalMonths?:number}|null} */
+function reviewConfigFor(process, reviewart){
+  if(!process || !process.reviewConfig) return null;
+  return process.reviewConfig[reviewart] || null;
+}
+/** Berechnet den nächsten Reviewtermin aus der Policy einer Reviewart — liefert null, wenn keine Policy definiert ist oder die Reviewart ereignisbezogen ist (nie erfunden). @param {object} process @param {string} reviewart @param {string} fromDateStr ISO-Datum (YYYY-MM-DD), z. B. der Abschlusstermin des vorangegangenen Reviews. @returns {string|null} ISO-Datum (YYYY-MM-DD) oder null. */
+function computeNextReviewDate(process, reviewart, fromDateStr){
+  const config = reviewConfigFor(process, reviewart);
+  if(!config || config.intervalType==='ereignisbezogen') return null;
+  const months = config.intervalType==='individuell' ? Number(config.intervalMonths) : REVIEW_INTERVAL_MONTHS[config.intervalType];
+  if(!Number.isFinite(months) || months<=0) return null;
+  const from = String(fromDateStr||'').trim() ? new Date(fromDateStr) : new Date();
+  if(isNaN(from.getTime())) return null;
+  from.setMonth(from.getMonth()+months);
+  return from.toISOString().split('T')[0];
 }
 
 /* ---------------------------------------------------------------------
@@ -3870,7 +4386,7 @@ function criticalTimeConflictCount(){
 }
 /** P15: Anzahl offener Maßnahmen mit hoher Priorität. @returns {number} */
 function openCriticalMassnahmenCount(){
-  return STATE.massnahmen.filter(m=>m.prioritaet==='hoch' && m.status!=='erledigt').length;
+  return STATE.massnahmen.filter(m=>m.prioritaet==='hoch' && massnahmeIsOpen(m)).length;
 }
 /** P15: Anzahl überfälliger Maßnahmen (workbookweit). @returns {number} */
 function overdueMassnahmenCount(){
@@ -3983,13 +4499,19 @@ const RELEASE_CHECK_CONFIG = {
   missingResponsibles:              { blocker:false, label:'Fehlende Prozessverantwortliche' },
   criticalResourcesNoAlternative:   { blocker:false, label:'Kritische Ressourcen ohne Alternative' },
   overdueCriticalMeasures:          { blocker:false, label:'Überfällige kritische Maßnahmen' },
-  unconfirmedMigrations:            { blocker:false, label:'Unbestätigte Migrationsergebnisse' }
+  unconfirmedMigrations:            { blocker:false, label:'Unbestätigte Migrationsergebnisse' },
+  // v2.4.0 (AP6): drei bestehende Governance-Prädikate (AP1/AP3/AP5) zusätzlich als WARNUNG
+  // wiederverwendet — bewusst nie als Blocker, keine neue Fachlogik, keine neue Bewertung.
+  criticalProcessesNoReviewPlanning: { blocker:false, label:'Kritische Prozesse ohne Reviewplanung' },
+  blockedMassnahmenNoReason:         { blocker:false, label:'Blockierte Maßnahmen ohne Begründung' },
+  openGovernanceDecisions:           { blocker:false, label:'Offene Managemententscheidungen' }
 };
 /** P17: prüft das gesamte Workbook gegen die in RELEASE_CHECK_CONFIG zentral konfigurierten Blocker-/Warnkriterien für einen Statuswechsel zu "Zur Freigabe"/"Freigegeben". @returns {{ok:boolean, blockers:object[], warnings:object[]}} */
 function releaseReadinessCheck(){
   const findings = { missingRequiredFields:[], timeConflicts:[], unjustifiedCriticalityDeviations:[],
     criticalProcessesNoFallback:[], redResilienceNoMeasure:[], invalidReferences:[],
-    missingResponsibles:[], criticalResourcesNoAlternative:[], overdueCriticalMeasures:[], unconfirmedMigrations:[] };
+    missingResponsibles:[], criticalResourcesNoAlternative:[], overdueCriticalMeasures:[], unconfirmedMigrations:[],
+    criticalProcessesNoReviewPlanning:[], blockedMassnahmenNoReason:[], openGovernanceDecisions:[] };
 
   STATE.processes.forEach(p=>{
     const name = p.steckbrief.name || '(ohne Namen)';
@@ -4010,7 +4532,7 @@ function releaseReadinessCheck(){
       findings.criticalProcessesNoFallback.push('Kritischer Prozess "'+name+'" hat keinen definierten Notbetrieb.');
     }
     p.resilienz.filter(r=>r.status==='rot').forEach(r=>{
-      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && m.status!=='erledigt');
+      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && massnahmeIsOpen(m));
       if(!hatMassnahme){
         findings.redResilienceNoMeasure.push('Prozess "'+name+'": roter Resilienzpunkt "'+r.label+'" ohne offene Maßnahme.');
       }
@@ -4035,6 +4557,17 @@ function releaseReadinessCheck(){
     findings.invalidReferences.push('Prozess "'+(o.process.steckbrief.name||'–')+'": Abhängigkeit verweist auf nicht vorhandenen Prozess.');
   });
 
+  // v2.4.0 (AP6): reine Wiederverwendung bestehender AP1/AP3/AP5-Prädikate, keine neue Berechnung.
+  reviewCenterData().missingPlanning.forEach(p=>{
+    findings.criticalProcessesNoReviewPlanning.push('Kritischer Prozess "'+(p.steckbrief.name||'(ohne Namen)')+'" besitzt noch keine Reviewplanung.');
+  });
+  STATE.massnahmen.filter(massnahmeIsBlockedWithoutReason).forEach(m=>{
+    findings.blockedMassnahmenNoReason.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert, aber ohne dokumentierte Begründung.');
+  });
+  openManagementDecisions().forEach(m=>{
+    findings.openGovernanceDecisions.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'" hat offenen Entscheidungsbedarf: '+(m.entscheidungsbedarf||'').substring(0,120)+'.');
+  });
+
   const blockers = [], warnings = [];
   Object.keys(findings).forEach(cat=>{
     if(findings[cat].length===0) return;
@@ -4042,6 +4575,50 @@ function releaseReadinessCheck(){
     target.push({ category: cat, label: RELEASE_CHECK_CONFIG[cat].label, items: findings[cat] });
   });
   return { ok: blockers.length===0, blockers, warnings };
+}
+
+/** v2.4.0 (AP6): reine HTML-Erzeugung für den Freigabe-Prüfbericht — bewusst aus App.showReleaseReport()
+    herausgelöst, damit Selbsttests das Bearbeiter-/Begründungsfeld anhand der zurückgegebenen Zeichenkette
+    prüfen können, ohne selbst ein echtes Modal zu öffnen/schließen (das würde ein zeitgleich vom Anwender
+    geöffnetes Freigabe-Modal zerstören, da confirmStatusChange() intern runSelfTests() aufruft). Keine
+    Verhaltensänderung — identisches Markup wie zuvor inline in showReleaseReport(). @param {object} report @param {string} pendingStatusChange @returns {string} HTML */
+function releaseReportHtml(report, pendingStatusChange){
+  let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(pendingStatusChange)+'"</h3>';
+  if(report.blockers.length>0){
+    html += '<p class="small" style="color:var(--bad);font-weight:700;">Freigabe blockiert — folgende Punkte müssen zuerst behoben werden:</p>';
+    report.blockers.forEach(b=>{
+      html += '<div class="rowcard" style="border-color:var(--bad);"><b class="small">'+escapeHtml(b.label)+' ('+b.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
+        b.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
+        (b.items.length>6?'<li class="small">… und '+(b.items.length-6)+' weitere</li>':'')+'</ul></div>';
+    });
+  }
+  if(report.warnings.length>0){
+    html += '<p class="small" style="font-weight:700;margin-top:14px;">Warnungen (können mit dokumentierter Begründung akzeptiert werden):</p>';
+    report.warnings.forEach(w=>{
+      html += '<div class="rowcard"><b class="small">'+escapeHtml(w.label)+' ('+w.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
+        w.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
+        (w.items.length>6?'<li class="small">… und '+(w.items.length-6)+' weitere</li>':'')+'</ul></div>';
+    });
+  }
+  if(report.blockers.length===0 && report.warnings.length===0){
+    html += '<p class="small" style="color:var(--ok);">Keine Blocker oder Warnungen erkannt.</p>';
+  }
+  if(report.blockers.length===0){
+    // v2.4.0 (AP6): Bearbeiter wird bei JEDER tatsächlichen Freigabe erfasst (nicht nur bei Warnungen) —
+    // sonst trägt die Versionshistorie bei warnungsfreier Freigabe "Unbekannt" ein.
+    const needsBearbeiter = pendingStatusChange==='Freigegeben' || report.warnings.length>0;
+    if(needsBearbeiter){
+      html += '<div class="field"><label>Bearbeiter<span class="req">*</span></label><input type="text" id="release-bearbeiter" value="'+escapeHtml(STATE.meta.currentBearbeiter)+'"></div>';
+    }
+    if(report.warnings.length>0){
+      html += '<div class="field"><label>Begründung für die Akzeptanz der obigen Warnungen<span class="req">*</span></label><textarea id="release-justification" placeholder="Warum wird trotz dieser Warnungen freigegeben?"></textarea></div>';
+    }
+    html += '<div class="modal-actions"><button class="btn" onclick="App.cancelStatusChange()">Abbrechen</button>'+
+      '<button class="btn btn-primary" onclick="App.confirmStatusChange()">'+(pendingStatusChange==='Freigegeben'?'Freigeben (erzeugt neue Version)':'Bestätigen')+'</button></div>';
+  } else {
+    html += '<div class="modal-actions"><button class="btn btn-primary" onclick="App.cancelStatusChange()">Schließen</button></div>';
+  }
+  return html;
 }
 
 
@@ -4088,7 +4665,7 @@ function qualityAndConsistencyCheck(){
     }
     // Q13: Roter Resilienz-Check ohne offene Maßnahme
     p.resilienz.filter(r=>r.status==='rot').forEach(r=>{
-      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && m.status!=='erledigt');
+      const hatMassnahme = STATE.massnahmen.some(m=>m.prozessId===p.id && massnahmeIsOpen(m));
       if(!hatMassnahme){
         quality.push({process:name, processId:p.id, tab:'resilienz', severity:'warnung', rule:'Q13', text:'Roter Resilienz-Check "'+r.label+'" ohne offene Maßnahme.'});
       }
@@ -4212,6 +4789,300 @@ function isProcessKritisch(process){
   return process.steckbrief.kritikalitaet === 'hoch' || biaScore(process).klasse === 'Hoch';
 }
 
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP5) — GOVERNANCE DASHBOARD
+   Reine Berechnungsfunktionen auf Basis von AP1–AP4 (Review Center,
+   Reviewzyklen, Maßnahmenmanagement 2.0, BCM Timeline). Bewusst KEIN
+   STATE.dashboard[] und keine gespeicherten Kennzahlen/Scores/
+   Prioritäten — computeGovernanceDashboard() wird bei jedem Rendern neu
+   berechnet, verändert STATE nie und speichert nichts. Beantwortet "Was
+   muss ein BCM-Verantwortlicher als Nächstes tun?" rein deterministisch
+   (Sortierung nach Fälligkeit/Kritikalität/Priorität) — kein Score,
+   keine KI, keine fachliche Bewertung der BCM-Entscheidungen des
+   Anwenders.
+   --------------------------------------------------------------------- */
+/** v2.4.0 (AP5): true, wenn eine Maßnahme aus Governance-Sicht "hohe Relevanz" hat — hohe Priorität ODER Bezug zu einem kritischen Prozess. Reine Ableitung aus vorhandenen Feldern, keine neue Bewertung. @param {object} m @returns {boolean} */
+function massnahmeHatHoheRelevanz(m){
+  if(m.prioritaet==='hoch') return true;
+  const p = getProcess(m.prozessId);
+  return !!p && isProcessKritisch(p);
+}
+/** v2.4.0 (AP5): Tage seit dem überschrittenen Termin einer Maßnahme, oder null, wenn kein überschrittener Termin vorliegt. @param {object} m @returns {number|null} */
+function massnahmeUeberfaelligkeitTage(m){
+  if(!massnahmeIsOverdue(m)) return null;
+  const t = new Date(m.termin); const today = new Date();
+  t.setHours(0,0,0,0); today.setHours(0,0,0,0);
+  return Math.round((today.getTime()-t.getTime())/86400000);
+}
+/** v2.4.0 (AP5): offene Maßnahmen, deren Wiedervorlagedatum erreicht oder überschritten ist. @returns {object[]} */
+function massnahmenMitFaelligerWiedervorlage(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  return STATE.massnahmen.filter(m=>{
+    if(!massnahmeIsOpen(m) || !String(m.wiedervorlageAm||'').trim()) return false;
+    const d = new Date(m.wiedervorlageAm); if(isNaN(d.getTime())) return false;
+    d.setHours(0,0,0,0);
+    return d.getTime() <= today.getTime();
+  });
+}
+/** v2.4.0 (AP5): kompakte Maßnahmen-Governance-Sicht, analog zu reviewCenterData() — reine Filterung über die bestehenden AP3-Prädikate, keine zweite Maßnahmenlogik. @returns {{overdue:object[], blocked:object[], openHighPriority:object[], needsEffectivenessProof:object[], dueFollowup:object[]}} */
+function massnahmeGovernanceData(){
+  return {
+    overdue: STATE.massnahmen.filter(massnahmeIsOverdue),
+    blocked: STATE.massnahmen.filter(m=>m.status==='blockiert'),
+    openHighPriority: STATE.massnahmen.filter(m=>massnahmeIsOpen(m) && m.prioritaet==='hoch'),
+    needsEffectivenessProof: STATE.massnahmen.filter(massnahmeNeedsEffectivenessProof),
+    dueFollowup: massnahmenMitFaelligerWiedervorlage()
+  };
+}
+/** v2.4.0 (AP5): Maßnahmen mit offenem, noch nicht erledigtem Entscheidungsbedarf — nutzt ausschließlich das bestehende Feld massnahme.entscheidungsbedarf, führt keine neue Entscheidungs-Entität ein. @returns {object[]} */
+function openManagementDecisions(){
+  return STATE.massnahmen.filter(m=>massnahmeIsOpen(m) && String(m.entscheidungsbedarf||'').trim()!=='');
+}
+/** v2.4.0 (AP5): die zuletzt tatsächlich erzeugte Freigabe-Version (STATE.versions[].source==='release'), oder null, wenn noch keine Freigabe existiert. @returns {object|null} */
+function lastReleaseVersion(){
+  const releases = STATE.versions.filter(v=>v.source==='release').sort((a,b)=>b.nr-a.nr);
+  return releases.length>0 ? releases[0] : null;
+}
+/** v2.4.0 (AP5): fachlich relevante Ereignisse seit der letzten Freigabe, abgeleitet über buildTimelineEvents() (AP4) — keine neue Persistenz. Kommuniziert transparent, wenn noch keine Freigabe existiert, statt einen Referenzzeitpunkt zu erfinden. @returns {{hasRelease:boolean, release?:object, events?:Array}} */
+function changesSinceLastRelease(){
+  const release = lastReleaseVersion();
+  if(!release) return { hasRelease:false };
+  const relevantTypes = ['kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert','review_abgeschlossen','massnahme_abgeschlossen','wirksamkeit_geprueft'];
+  const events = buildTimelineEvents()
+    .filter(e=>relevantTypes.includes(e.type) && String(e.timestamp)>String(release.datum))
+    .sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
+  return { hasRelease:true, release, events };
+}
+/** v2.4.0 (AP5): auf das Dashboard zugeschnittene Qualitäts-/Konsistenzbefunde — nur Warnungen (nicht die bloßen Hinweise) plus alle Konsistenzbefunde, nicht die vollständige Liste (dafür gibt es die Qualitätsprüfung). Ruft ausschließlich die bestehende qualityAndConsistencyCheck() auf, keine zweite Quality Engine. @returns {{warnungen:object[], consistency:object[]}} */
+function governanceQualityHighlights(){
+  const {quality, consistency} = qualityAndConsistencyCheck();
+  return { warnungen: quality.filter(f=>f.severity==='warnung'), consistency };
+}
+/** v2.4.0 (AP5): grobe Anzeige-Tonalität einer Governance-Aufgabe (rot/gelb) — rein abgeleitet aus der bereits bestimmten Kategorie, kein zusätzlicher Score. @param {object} entry @returns {'bad'|'warn'} */
+function governanceEntryTone(entry){
+  return /overdue|blocked|missing/.test(entry.category) ? 'bad' : 'warn';
+}
+/**
+ * v2.4.0 (AP5): zentrale, deterministische Governance-Priorisierung
+ * ("Was muss ich als Nächstes tun?"). Reine Sortierung nach Fälligkeit,
+ * Kritikalität und Priorität — kein Score, keine KI, keine fachliche
+ * Bewertung, ob eine BCM-Entscheidung richtig/ausreichend/wirksam war.
+ *
+ * Reihenfolge (Stufen), an das tatsächliche Datenmodell angepasst:
+ *   1. überfälliger Review eines kritischen Prozesses
+ *   2. überfällige Maßnahme hoher Priorität
+ *   3. blockierte Maßnahme mit hoher Relevanz (hohe Priorität ODER kritischer Prozess)
+ *   4. kritischer Prozess ohne jegliche Reviewplanung
+ *   5. bald fälliger Review eines kritischen Prozesses
+ *   6. erledigte Maßnahme ohne dokumentierte Wirksamkeitsprüfung
+ *   7. offener Managemententscheidungsbedarf (massnahme.entscheidungsbedarf)
+ *      — in der Aufgabenstellung als eigener Fachbereich genannt, aber
+ *      nicht in der 10-Punkte-Beispielreihenfolge enthalten; hier bewusst
+ *      zwischen Wirksamkeitsprüfung und Konsistenzbefunden eingeordnet,
+ *      da eine offene Entscheidung typischerweise weitere Schritte blockiert.
+ *   8. wesentlicher offener Konsistenz-/Qualitätsbefund (alle
+ *      Konsistenzbefunde + Qualitätsbefunde der Stufe "warnung"; reine
+ *      "Hinweise" gelten hier nicht als "wesentlich" und bleiben der
+ *      Qualitätsprüfung vorbehalten)
+ *   9. überfälliger Review eines sonstigen (nicht kritischen) Prozesses
+ *  10. sonstige überfällige Maßnahme (nicht hohe Priorität)
+ *  11. sonstige fällige Governance-Aufgabe — bald fälliger Review eines
+ *      sonstigen Prozesses, blockierte Maßnahme ohne hohe Relevanz, oder
+ *      fällige Wiedervorlage einer offenen Maßnahme (Abschnitt 4 der
+ *      Aufgabenstellung nennt "Wiedervorlagen, sofern fällig" explizit,
+ *      ohne sie in die 10-Punkte-Reihenfolge einzuordnen — hier daher als
+ *      Sammelstufe am Ende).
+ *
+ * Innerhalb jeder Stufe wird nach Dringlichkeit sortiert (Tage überfällig
+ * absteigend bzw. Tage bis fällig aufsteigend), mit der Datensatz-ID als
+ * stabilem Tie-Breaker — bei unveränderten Daten daher immer dieselbe
+ * Reihenfolge.
+ * @returns {Array<{tier:number, category:string, title:string, reason:string, context:string, object:object}>}
+ */
+function governancePriorityList(){
+  const entries = [];
+  const rc = reviewCenterData();
+
+  rc.overdue
+    .filter(r=>{ const p=getProcess(r.prozessId); return p && isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(b).days-reviewDueInfo(a).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:1, category:'review_overdue_critical',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' überfällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig. Der Prozess ist als kritisch eingestuft.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(m=>massnahmeIsOverdue(m) && m.prioritaet==='hoch')
+    .sort((a,b)=> massnahmeUeberfaelligkeitTage(b)-massnahmeUeberfaelligkeitTage(a) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      const days = massnahmeUeberfaelligkeitTage(m);
+      entries.push({ tier:2, category:'massnahme_overdue_high',
+        title:'Maßnahme überfällig (hohe Priorität)',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig und hat hohe Priorität.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  STATE.massnahmen.filter(m=>m.status==='blockiert' && massnahmeHatHoheRelevanz(m))
+    .sort((a,b)=>{
+      const aFehlt = massnahmeIsBlockedWithoutReason(a), bFehlt = massnahmeIsBlockedWithoutReason(b);
+      if(aFehlt!==bFehlt) return aFehlt ? -1 : 1;
+      return a.id.localeCompare(b.id);
+    })
+    .forEach(m=>{
+      const fehlendeBegruendung = massnahmeIsBlockedWithoutReason(m);
+      entries.push({ tier:3, category:'massnahme_blocked_relevant',
+        title:'Blockierte Maßnahme (hohe Relevanz)',
+        reason: fehlendeBegruendung
+          ? 'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert, eine Begründung ist noch nicht dokumentiert.'
+          : 'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert: '+m.blockiertGrund,
+        context:'Blockiert',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  reviewCenterData().missingPlanning
+    .slice().sort((a,b)=>(a.steckbrief.name||'').localeCompare(b.steckbrief.name||'') || a.id.localeCompare(b.id))
+    .forEach(p=>{
+      entries.push({ tier:4, category:'process_missing_review_planning',
+        title:'Keine Reviewplanung',
+        reason:'Kritischer Prozess "'+(p.steckbrief.name||'(ohne Namen)')+'" besitzt noch keinen einzigen geplanten, gestarteten oder abgeschlossenen Review.',
+        context:'Keine Reviewplanung',
+        object:{type:'process', id:p.id, prozessId:p.id, label:p.steckbrief.name||'(ohne Namen)'} });
+    });
+
+  rc.upcoming
+    .filter(r=>{ const p=getProcess(r.prozessId); return p && isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(a).days-reviewDueInfo(b).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:5, category:'review_upcoming_critical',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' bald fällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist in '+days+' Tag'+(days===1?'':'en')+' fällig. Der Prozess ist als kritisch eingestuft.',
+        context:'Fällig in '+days+' Tag'+(days===1?'':'en'),
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(massnahmeNeedsEffectivenessProof)
+    .sort((a,b)=> String(a.abgeschlossenAm||'').localeCompare(String(b.abgeschlossenAm||'')) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:6, category:'massnahme_needs_effectiveness_proof',
+        title:'Wirksamkeitsprüfung fehlt',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist abgeschlossen'+(m.abgeschlossenAm?' (seit '+fmtDateOnly(m.abgeschlossenAm)+')':'')+', aber die Wirksamkeitsprüfung ist noch nicht dokumentiert.',
+        context: m.abgeschlossenAm ? 'Abgeschlossen am '+fmtDateOnly(m.abgeschlossenAm) : 'Abgeschlossen',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  openManagementDecisions()
+    .slice().sort((a,b)=>a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:7, category:'open_management_decision',
+        title:'Entscheidung erforderlich',
+        reason:'Für Maßnahme "'+(m.titel||'(ohne Titel)')+'" besteht offener Entscheidungsbedarf: '+m.entscheidungsbedarf,
+        context:'Entscheidung offen',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  const qh = governanceQualityHighlights();
+  qh.consistency.slice().sort((a,b)=>(a.rule+a.process).localeCompare(b.rule+b.process)).forEach(f=>{
+    entries.push({ tier:8, category:'consistency_finding',
+      title:'Konsistenzbefund ('+f.rule+')', reason:f.text, context:f.process,
+      object:{type:'quality', id:f.rule+'|'+f.process, prozessId:null, label:f.process} });
+  });
+  qh.warnungen.slice().sort((a,b)=>(a.rule+(a.processId||'')).localeCompare(b.rule+(b.processId||''))).forEach(f=>{
+    entries.push({ tier:8, category:'quality_finding',
+      title:'Qualitätsbefund ('+f.rule+')', reason:f.text, context:f.process,
+      object:{type:'quality', id:f.rule+'|'+(f.processId||''), prozessId:f.processId||null, label:f.process, tab:f.tab} });
+  });
+
+  rc.overdue
+    .filter(r=>{ const p=getProcess(r.prozessId); return !p || !isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(b).days-reviewDueInfo(a).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:9, category:'review_overdue_other',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' überfällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+
+  STATE.massnahmen.filter(m=>massnahmeIsOverdue(m) && m.prioritaet!=='hoch')
+    .sort((a,b)=> massnahmeUeberfaelligkeitTage(b)-massnahmeUeberfaelligkeitTage(a) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      const days = massnahmeUeberfaelligkeitTage(m);
+      entries.push({ tier:10, category:'massnahme_overdue_other',
+        title:'Maßnahme überfällig',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist seit '+days+' Tag'+(days===1?'':'en')+' überfällig.',
+        context:days+' Tag'+(days===1?'':'e')+' überfällig',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  rc.upcoming
+    .filter(r=>{ const p=getProcess(r.prozessId); return !p || !isProcessKritisch(p); })
+    .sort((a,b)=> reviewDueInfo(a).days-reviewDueInfo(b).days || a.id.localeCompare(b.id))
+    .forEach(r=>{
+      const days = reviewDueInfo(r).days;
+      entries.push({ tier:11, category:'review_upcoming_other',
+        title:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' bald fällig',
+        reason:(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' für "'+processName(r.prozessId)+'" ist in '+days+' Tag'+(days===1?'':'en')+' fällig.',
+        context:'Fällig in '+days+' Tag'+(days===1?'':'en'),
+        object:{type:'review', id:r.id, prozessId:r.prozessId, label:REVIEW_ART_LABELS[r.reviewart]} });
+    });
+  STATE.massnahmen.filter(m=>m.status==='blockiert' && !massnahmeHatHoheRelevanz(m))
+    .sort((a,b)=>a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:11, category:'massnahme_blocked_other',
+        title:'Blockierte Maßnahme',
+        reason:'Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert'+(m.blockiertGrund?': '+m.blockiertGrund:', eine Begründung ist noch nicht dokumentiert.'),
+        context:'Blockiert',
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+  massnahmenMitFaelligerWiedervorlage()
+    .slice().sort((a,b)=>String(a.wiedervorlageAm).localeCompare(String(b.wiedervorlageAm)) || a.id.localeCompare(b.id))
+    .forEach(m=>{
+      entries.push({ tier:11, category:'massnahme_followup_due',
+        title:'Wiedervorlage fällig',
+        reason:'Für Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist die Wiedervorlage zum '+fmtDateOnly(m.wiedervorlageAm)+' fällig.',
+        context:'Wiedervorlage '+fmtDateOnly(m.wiedervorlageAm),
+        object:{type:'massnahme', id:m.id, prozessId:m.prozessId, label:m.titel||'(ohne Titel)'} });
+    });
+
+  return entries;
+}
+/** v2.4.0 (AP5): zentrale, reine Berechnungsfunktion des Governance Dashboards. Führt AP1–AP4 zusammen, verändert STATE nie und speichert nichts — wird bei jedem Rendern neu berechnet (keine gespeicherten Kennzahlen/Scores). @returns {object} */
+function computeGovernanceDashboard(){
+  const hasProcesses = STATE.processes.length>0;
+  const priorityList = hasProcesses ? governancePriorityList() : [];
+  const rc = reviewCenterData();
+  const mg = massnahmeGovernanceData();
+  const decisions = openManagementDecisions();
+  const releaseInfo = changesSinceLastRelease();
+  const quality = governanceQualityHighlights();
+  return {
+    hasProcesses,
+    hasAnyReviews: STATE.reviews.length>0,
+    priorityList,
+    reviewGovernance: rc,
+    massnahmeGovernance: mg,
+    openDecisions: decisions,
+    changesSinceRelease: releaseInfo,
+    qualityHighlights: quality,
+    kpis: {
+      reviewsOverdue: rc.overdue.length,
+      reviewsUpcoming: rc.upcoming.length,
+      massnahmenOverdue: mg.overdue.length,
+      massnahmenBlocked: mg.blocked.length,
+      wirksamkeitOffen: mg.needsEffectivenessProof.length,
+      kritischeProzesseOhnePlanung: rc.missingPlanning.length,
+      offeneEntscheidungen: decisions.length,
+      aenderungenSeitFreigabe: releaseInfo.hasRelease ? releaseInfo.events.length : null
+    }
+  };
+}
+
 /* Abhängigkeitscluster: Ressourcen die in mehreren Prozessen vorkommen,
    gruppiert nach Kategorie, priorisiert nach Häufigkeit × Kritikalität. */
 function buildClusters(){
@@ -4305,7 +5176,7 @@ function allPotentialDuplicateResourcePairs(){
 function dashboardStats(){
   const processes = STATE.processes;
   const kritisch = processes.filter(isProcessKritisch).length;
-  const offeneMassnahmen = STATE.massnahmen.filter(m=>m.status==='offen'||m.status==='in_arbeit').length;
+  const offeneMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).length;
   const hoheRisiken = processes.reduce((sum,p)=>sum + resilienzSummary(p).rot, 0);
   const offeneParkplatz = STATE.parkplatz.filter(p=>p.status==='offen').length;
   return { anzahlProzesse: processes.length, kritisch, offeneMassnahmen, hoheRisiken, offeneParkplatz };
@@ -4413,7 +5284,7 @@ function processAmpel(process){
     rotGruende.push('Roter Resilienzpunkt ohne Maßnahme');
   }
 
-  const offeneMassnahmen = STATE.massnahmen.some(m=>m.prozessId===process.id && (m.status==='offen'||m.status==='in_arbeit'));
+  const offeneMassnahmen = STATE.massnahmen.some(m=>m.prozessId===process.id && massnahmeIsOpen(m));
   if(offeneMassnahmen){
     gelbGruende.push('Offene Maßnahmen vorhanden');
   }
@@ -4559,6 +5430,8 @@ function renderView(){
   if(r==='cluster') return viewCluster();
   if(r==='massnahmen') return viewMassnahmenKatalog();
   if(r==='parkplatz') return viewParkplatz();
+  if(r==='reviews') return viewReviewCenter();
+  if(r==='timeline') return viewTimeline();
   if(r==='quality') return viewQualityCheck();
   if(r==='summary') return viewSummary();
   if(r==='versions') return viewVersions();
@@ -4619,6 +5492,8 @@ function renderSidebar(){
 
   html += '<div class="navgroup"><div class="navgroup-label">Übergreifend</div>';
   html += navItem('cluster','▦','Abhängigkeitscluster');
+  html += navItem('reviews','↺','Review Center', reviewCenterData().overdue.length);
+  html += navItem('timeline','▤','BCM Timeline');
   html += navItem('massnahmen','✓','Maßnahmenkatalog', stats.offeneMassnahmen);
   html += navItem('parkplatz','☐','Parkplatz', STATE.parkplatz.filter(p=>p.status==='offen').length);
   html += navItem('quality','◎','Qualitätsprüfung');
@@ -4658,7 +5533,7 @@ function navItem(route, ic, label, count){
 /** Rendert die Kopfleiste (Titel, Speicherstatus, Datei-Aktionen, Suche). @returns {string} HTML */
 function renderTopbar(){
   const titles = {
-    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
+    dashboard:'Dashboard', cluster:'Abhängigkeitscluster', reviews:'Review Center', timeline:'BCM Timeline', massnahmen:'Maßnahmenkatalog', parkplatz:'Parkplatz', quality:'Qualitätsprüfung',
     summary:'Management Summary', versions:'Versionshistorie', settings:'Branding & Einstellungen',
     process: STATE.ui.processId ? processName(STATE.ui.processId) : 'Prozess'
   };
@@ -4865,38 +5740,7 @@ const App = {
   },
   /** P17: zeigt den Freigabe-Prüfbericht (Blocker/Warnungen) für den in PENDING_STATUS_CHANGE hinterlegten Zielstatus. @returns {void} */
   showReleaseReport(){
-    const report = releaseReadinessCheck();
-    let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(PENDING_STATUS_CHANGE)+'"</h3>';
-    if(report.blockers.length>0){
-      html += '<p class="small" style="color:var(--bad);font-weight:700;">Freigabe blockiert — folgende Punkte müssen zuerst behoben werden:</p>';
-      report.blockers.forEach(b=>{
-        html += '<div class="rowcard" style="border-color:var(--bad);"><b class="small">'+escapeHtml(b.label)+' ('+b.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
-          b.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
-          (b.items.length>6?'<li class="small">… und '+(b.items.length-6)+' weitere</li>':'')+'</ul></div>';
-      });
-    }
-    if(report.warnings.length>0){
-      html += '<p class="small" style="font-weight:700;margin-top:14px;">Warnungen (können mit dokumentierter Begründung akzeptiert werden):</p>';
-      report.warnings.forEach(w=>{
-        html += '<div class="rowcard"><b class="small">'+escapeHtml(w.label)+' ('+w.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
-          w.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
-          (w.items.length>6?'<li class="small">… und '+(w.items.length-6)+' weitere</li>':'')+'</ul></div>';
-      });
-    }
-    if(report.blockers.length===0 && report.warnings.length===0){
-      html += '<p class="small" style="color:var(--ok);">Keine Blocker oder Warnungen erkannt.</p>';
-    }
-    if(report.blockers.length===0){
-      if(report.warnings.length>0){
-        html += '<div class="field"><label>Bearbeiter<span class="req">*</span></label><input type="text" id="release-bearbeiter" value="'+escapeHtml(STATE.meta.currentBearbeiter)+'"></div>';
-        html += '<div class="field"><label>Begründung für die Akzeptanz der obigen Warnungen<span class="req">*</span></label><textarea id="release-justification" placeholder="Warum wird trotz dieser Warnungen freigegeben?"></textarea></div>';
-      }
-      html += '<div class="modal-actions"><button class="btn" onclick="App.cancelStatusChange()">Abbrechen</button>'+
-        '<button class="btn btn-primary" onclick="App.confirmStatusChange()">'+(PENDING_STATUS_CHANGE==='Freigegeben'?'Freigeben (erzeugt neue Version)':'Bestätigen')+'</button></div>';
-    } else {
-      html += '<div class="modal-actions"><button class="btn btn-primary" onclick="App.cancelStatusChange()">Schließen</button></div>';
-    }
-    openModal(html);
+    openModal(releaseReportHtml(releaseReadinessCheck(), PENDING_STATUS_CHANGE));
   },
   /** P17: bricht einen laufenden Bearbeitungsstand-Wechsel ab, ohne etwas zu speichern. @returns {void} */
   cancelStatusChange(){
@@ -4917,24 +5761,33 @@ const App = {
         return;
       }
     }
+    const target = PENDING_STATUS_CHANGE;
+    // v2.4.0 (AP6): Bearbeiter wird unabhängig vom Warnungsstatus erfasst, sobald tatsächlich
+    // freigegeben wird — createVersion() erhält damit nie mehr stillschweigend 'Unbekannt'.
+    const needsBearbeiter = target==='Freigegeben' || report.warnings.length>0;
+    let bearbeiter = '';
+    if(needsBearbeiter){
+      const bearbEl = document.getElementById('release-bearbeiter');
+      bearbeiter = bearbEl ? bearbEl.value.trim() : '';
+    }
     if(report.warnings.length>0){
       const justEl = document.getElementById('release-justification');
-      const bearbEl = document.getElementById('release-bearbeiter');
       const justification = justEl ? justEl.value.trim() : '';
-      const bearbeiter = bearbEl ? bearbEl.value.trim() : '';
       if(!justification || !bearbeiter){ toast('Bitte Bearbeiter und Begründung angeben.'); return; }
       STATE.meta.releaseWarningAcceptances.push({
         categories: report.warnings.map(w=>w.category),
         bearbeiter, datum: new Date().toISOString(), begruendung: justification
       });
+    } else if(needsBearbeiter && !bearbeiter){
+      toast('Bitte Bearbeiter angeben.');
+      return;
     }
-    const target = PENDING_STATUS_CHANGE;
     STATE.meta.bearbeitungsstand = target;
     PENDING_STATUS_CHANGE = null;
     autosave();
     closeModal();
     if(target==='Freigegeben'){
-      await createVersion(STATE.meta.currentBearbeiter, 'Automatische Version bei Freigabe', 'release');
+      await createVersion(bearbeiter, 'Automatische Version bei Freigabe', 'release');
       toast('Workbook freigegeben — neue Version '+STATE.meta.version+' automatisch angelegt.');
     } else {
       toast('Bearbeitungsstand geändert zu "'+target+'".');
@@ -5124,7 +5977,9 @@ const App = {
       STATE.massnahmen.push(newMassnahme({
         titel: titelPrefix+i.label,
         prozessId: processId, kategorie:'Organisation', prioritaet: i.status==='rot' ? 'hoch' : 'mittel',
-        bemerkung: bemerkungTeile.length ? bemerkungTeile.join(' — ') : ('Automatisch aus '+(i.status==='rot'?'rotem':'gelbem')+' Resilienz-Check erzeugt.')
+        bemerkung: bemerkungTeile.length ? bemerkungTeile.join(' — ') : ('Automatisch aus '+(i.status==='rot'?'rotem':'gelbem')+' Resilienz-Check erzeugt.'),
+        // v2.4.0 (AP3): Herkunft nachvollziehbar
+        sourceType:'resilienz', sourceId: i.id, sourceLabel: i.label
       }));
       created++;
     });
@@ -5143,7 +5998,7 @@ const App = {
     STATE.massnahmen = STATE.massnahmen.filter(m=>m.id!==id);
     autosave(); render();
   },
-  massnahmenFilter:{status:'', prioritaet:'', prozessId:'', aufwand:'', verantwortlich:'', ueberfaellig:false, sort:'termin'},
+  massnahmenFilter:{status:'', prioritaet:'', prozessId:'', aufwand:'', verantwortlich:'', sourceType:'', ueberfaellig:false, sort:'termin'},
   /** Setzt einen Filter im Maßnahmenkatalog und rendert neu. @param {string} key @param {*} val @returns {void} */
   setMassnahmenFilter(key, val){ App.massnahmenFilter[key]=val; render(); },
   /** Exportiert den aktuell gefilterten Maßnahmenkatalog als CSV-Datei. @returns {void} */
@@ -5738,7 +6593,7 @@ const App = {
     const summary = selectiveImportData(PENDING_IMPORT, pIds, rIds, mIds);
     PENDING_IMPORT = null;
     autosave(); closeModal(); render();
-    toast(summary.processes+' Prozess(e), '+summary.resources+' Ressource(n), '+summary.massnahmen+' Maßnahme(n) hinzugefügt.');
+    toast(summary.processes+' Prozess(e), '+summary.resources+' Ressource(n), '+summary.massnahmen+' Maßnahme(n)'+(summary.reviews?', '+summary.reviews+' Review(s)':'')+' hinzugefügt.');
   },
 
   /** Öffnet den Dialog "Neue Version speichern". @returns {void} */
@@ -5878,6 +6733,167 @@ const App = {
   },
 };
 
+/** v2.4.0 (AP5): Deep-Link-Button für ein Governance-Objekt (Review/Prozess/Maßnahme/Qualitätsbefund/Version). Führt immer in eine bestehende Ansicht, nie in eine neue Detailansicht. @param {{type:string,id:*,prozessId:?string,tab?:string}} obj @returns {string} HTML */
+function governanceDrilldownHtml(obj){
+  if(!obj) return '';
+  if(obj.type==='review') return '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>';
+  if(obj.type==='process') return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(obj.id)+'\',\'steckbrief\')">Prozessakte öffnen</button>';
+  if(obj.type==='massnahme') return '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button>';
+  if(obj.type==='quality'){
+    if(obj.prozessId) return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(obj.prozessId)+'\',\''+(obj.tab||'steckbrief')+'\')">Prozessakte öffnen</button>';
+    return '<button class="btn btn-sm" onclick="go(\'quality\')">Qualitätsprüfung öffnen</button>';
+  }
+  if(obj.type==='version') return '<button class="btn btn-sm" onclick="go(\'timeline\')">Timeline öffnen</button>';
+  return '';
+}
+/** v2.4.0 (AP5): rendert eine einzelne priorisierte Governance-Aufgabe. @param {object} entry @returns {string} HTML */
+function governancePriorityRowHtml(entry){
+  return '<div class="rowcard"><div class="spread"><div>'+
+    '<span class="badge b-'+governanceEntryTone(entry)+'">'+escapeHtml(entry.title)+'</span> '+
+    (entry.context?'<span class="small muted">'+escapeHtml(entry.context)+'</span>':'')+
+    '<div style="margin-top:4px;">'+escapeHtml(entry.reason)+'</div></div>'+
+    governanceDrilldownHtml(entry.object)+'</div></div>';
+}
+/** v2.4.0 (AP5): kompakte Review-Governance-Karte — reine Darstellung von reviewCenterData() (AP1), keine zweite Reviewberechnung. @param {object} rc @returns {string} HTML */
+function governanceReviewSectionHtml(rc){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Review-Governance</div>'+
+    '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button></div>';
+  if(rc.overdue.length===0 && rc.upcoming.length===0 && rc.missingPlanning.length===0){
+    html += '<div class="small muted">Keine überfälligen oder bald fälligen Reviews, keine kritischen Prozesse ohne Reviewplanung.</div>';
+  } else {
+    const section = (title, list, renderItem)=>{
+      if(list.length===0) return '';
+      let h = '<div class="small muted" style="font-weight:700;margin:8px 0 4px;">'+title+' ('+list.length+')</div>';
+      list.slice(0,3).forEach(item=>{ h += renderItem(item); });
+      if(list.length>3) h += '<div class="small muted">… und '+(list.length-3)+' weitere</div>';
+      return h;
+    };
+    html += section('Überfällig', rc.overdue, r=>'<div class="small">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' — '+escapeHtml(processName(r.prozessId))+'</div>');
+    html += section('Bald fällig', rc.upcoming, r=>'<div class="small">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+' — '+escapeHtml(processName(r.prozessId))+'</div>');
+    html += section('Ohne Reviewplanung', rc.missingPlanning, p=>'<div class="small">'+escapeHtml(p.steckbrief.name||'(ohne Namen)')+'</div>');
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): kompakte Maßnahmen-Governance-Karte — reine Darstellung von massnahmeGovernanceData() (AP3), keine zweite Maßnahmenlogik. @param {object} mg @returns {string} HTML */
+function governanceMassnahmenSectionHtml(mg){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen-Governance</div>'+
+    '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div>';
+  const total = mg.overdue.length+mg.blocked.length+mg.openHighPriority.length+mg.needsEffectivenessProof.length+mg.dueFollowup.length;
+  if(total===0){
+    html += '<div class="small muted">Keine überfälligen, blockierten oder wirksamkeitsungeprüften Maßnahmen, keine fälligen Wiedervorlagen.</div>';
+  } else {
+    const row = (label, count)=> count>0 ? '<div class="small" style="margin:2px 0;">'+count+'× '+label+'</div>' : '';
+    html += row('überfällig', mg.overdue.length);
+    html += row('blockiert', mg.blocked.length);
+    html += row('offen, hohe Priorität', mg.openHighPriority.length);
+    html += row('erledigt ohne Wirksamkeitsnachweis', mg.needsEffectivenessProof.length);
+    html += row('Wiedervorlage fällig', mg.dueFollowup.length);
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Änderungen seit letzter Freigabe" — reine Darstellung von changesSinceLastRelease() (AP4-Ableitung), kommuniziert transparent, wenn noch keine Freigabe existiert. @param {object} info @returns {string} HTML */
+function governanceReleaseSectionHtml(info){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Änderungen seit letzter Freigabe</div>'+
+    '<button class="btn btn-sm" onclick="go(\'timeline\')">Timeline öffnen</button></div>';
+  if(!info.hasRelease){
+    html += emptyState('Noch keine Freigabe', 'Es wurde noch keine Freigabe erzeugt — es gibt daher noch keinen Bezugspunkt für Änderungen seit der letzten Freigabe.');
+  } else if(info.events.length===0){
+    html += '<div class="small muted">Keine fachlich relevanten Änderungen seit der Freigabe vom '+fmtDate(info.release.datum)+' (Version '+info.release.nr+').</div>';
+  } else {
+    html += '<div class="small muted" style="margin-bottom:6px;">Seit Freigabe vom '+fmtDate(info.release.datum)+' (Version '+info.release.nr+'):</div>';
+    info.events.slice(0,5).forEach(e=>{
+      html += '<div class="small" style="margin:2px 0;">'+escapeHtml(TIMELINE_EVENT_LABELS[e.type]||e.type)+' — '+escapeHtml(e.description)+'</div>';
+    });
+    if(info.events.length>5) html += '<div class="small muted">… und '+(info.events.length-5)+' weitere</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Offene Managemententscheidungen" — reine Darstellung von openManagementDecisions() (nutzt ausschließlich massnahme.entscheidungsbedarf). @param {object[]} decisions @returns {string} HTML */
+function governanceDecisionsSectionHtml(decisions){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Offene Managemententscheidungen</div>'+
+    '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div>';
+  if(decisions.length===0){
+    html += '<div class="small muted">Keine offenen Entscheidungsbedarfe dokumentiert.</div>';
+  } else {
+    decisions.slice(0,5).forEach(m=>{
+      html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(m.titel||'(ohne Titel)')+'</b>: '+escapeHtml(m.entscheidungsbedarf)+'</div>';
+    });
+    if(decisions.length>5) html += '<div class="small muted">… und '+(decisions.length-5)+' weitere</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): "Datenqualität & Konsistenz" — reine Darstellung von governanceQualityHighlights() (nutzt ausschließlich die bestehende qualityAndConsistencyCheck()). Keine Aussage über die fachliche Richtigkeit der zugrundeliegenden BCM-Entscheidung. @param {object} q @returns {string} HTML */
+function governanceQualitySectionHtml(q){
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Datenqualität &amp; Konsistenz</div>'+
+    '<button class="btn btn-sm" onclick="go(\'quality\')">Qualitätsprüfung öffnen</button></div>';
+  const total = q.warnungen.length+q.consistency.length;
+  if(total===0){
+    html += '<div class="small muted">Keine wesentlichen Qualitäts- oder Konsistenzbefunde.</div>';
+  } else {
+    q.consistency.slice(0,3).forEach(f=>{ html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(f.rule)+'</b> — '+escapeHtml(f.text)+'</div>'; });
+    q.warnungen.slice(0,3).forEach(f=>{ html += '<div class="small" style="margin:2px 0;"><b>'+escapeHtml(f.rule)+'</b> — '+escapeHtml(f.text)+'</div>'; });
+    if(total>6) html += '<div class="small muted">… und '+(total-6)+' weitere in der Qualitätsprüfung</div>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP5): rendert den vollständigen Governance-Dashboard-Bereich (Prioritätsliste, Kennzahlen, kompakte Review-/Maßnahmen-/Freigabe-/Entscheidungs-/Qualitätsübersicht). Reine Darstellung über computeGovernanceDashboard() — keine eigene Berechnung, keine Mutation. @returns {string} HTML */
+function governanceDashboardHtml(){
+  const gd = computeGovernanceDashboard();
+
+  if(!gd.hasProcesses){
+    // Die Willkommenskarte deckt "ganz neues Workbook" bereits ab; dieser
+    // Zweig greift nur, wenn Prozesse zwischenzeitlich wieder entfernt
+    // wurden, aber schon Versionen existieren (Willkommenskarte erscheint dann nicht mehr).
+    if(STATE.versions.length===0) return '';
+    return '<div class="card"><div class="card-head"><div class="card-title">Governance-Übersicht</div></div>'+
+      emptyState('Noch keine Prozesse dokumentiert', 'Beginnen Sie mit der Prozessaufnahme, um Governance-Aussagen zu erhalten.')+'</div>';
+  }
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Was ist als Nächstes zu tun?</div>'+
+    '<div class="small muted">Deterministisch nach Fälligkeit, Kritikalität und Priorität sortiert — kein Score.</div></div>';
+  if(gd.priorityList.length===0){
+    html += gd.hasAnyReviews
+      ? emptyState('Keine dringenden Aufgaben', 'Aktuell keine dringenden Governance-Aufgaben erkannt.')
+      : emptyState('Reviewplanung fehlt', 'Für diese Prozesse ist noch keine Reviewplanung hinterlegt.');
+  } else {
+    html += '<div>';
+    gd.priorityList.forEach(entry=>{ html += governancePriorityRowHtml(entry); });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  const k = gd.kpis;
+  html += '<div class="grid grid-4" style="margin:16px 0 0;">';
+  html += statTile(k.reviewsOverdue, 'Reviews überfällig', k.reviewsOverdue>0?'bad':'ok', "go('reviews')");
+  html += statTile(k.reviewsUpcoming, 'Reviews bald fällig', k.reviewsUpcoming>0?'warn':'ok', "go('reviews')");
+  html += statTile(k.massnahmenOverdue, 'Maßnahmen überfällig', k.massnahmenOverdue>0?'bad':'ok', "go('massnahmen')");
+  html += statTile(k.massnahmenBlocked, 'Maßnahmen blockiert', k.massnahmenBlocked>0?'warn':'ok', "go('massnahmen')");
+  html += '</div>';
+  html += '<div class="grid grid-4" style="margin:8px 0 22px;">';
+  html += statTile(k.wirksamkeitOffen, 'Wirksamkeitsprüfungen offen', k.wirksamkeitOffen>0?'warn':'ok', "go('massnahmen')");
+  html += statTile(k.kritischeProzesseOhnePlanung, 'Kritische Prozesse ohne Reviewplanung', k.kritischeProzesseOhnePlanung>0?'bad':'ok', "go('reviews')");
+  html += statTile(k.offeneEntscheidungen, 'Offene Managemententscheidungen', k.offeneEntscheidungen>0?'warn':'ok', "go('massnahmen')");
+  html += statTile(k.aenderungenSeitFreigabe===null?'–':k.aenderungenSeitFreigabe, 'Änderungen seit letzter Freigabe', undefined, "go('timeline')");
+  html += '</div>';
+
+  html += '<div class="grid grid-2" style="margin-bottom:16px;">';
+  html += governanceReviewSectionHtml(gd.reviewGovernance);
+  html += governanceMassnahmenSectionHtml(gd.massnahmeGovernance);
+  html += '</div>';
+  html += '<div class="grid grid-2" style="margin-bottom:16px;">';
+  html += governanceReleaseSectionHtml(gd.changesSinceRelease);
+  html += governanceDecisionsSectionHtml(gd.openDecisions);
+  html += '</div>';
+  html += governanceQualitySectionHtml(gd.qualityHighlights);
+
+  return html;
+}
+
 /** Rendert die View "Dashboard". @returns {string} HTML */
 function viewDashboard(){
   const stats = dashboardStats();
@@ -5901,6 +6917,14 @@ function viewDashboard(){
     html += '<li>Maßnahmen ableiten und nachverfolgen</li>';
     html += '</ol></div>';
   }
+
+  // v2.4.0 (AP5): Governance Dashboard — steht bewusst vor den generischen
+  // KPI-Tiles/Schnellzugriffen, da die konkrete Arbeitsliste laut
+  // Aufgabenstellung das wichtigste Element der Ansicht sein muss.
+  // governanceDashboardHtml() entscheidet selbst, ob (und welcher)
+  // Empty-State bei fehlenden Prozessen sinnvoll ist — bei einem ganz
+  // neuen Workbook übernimmt bereits die Willkommenskarte oben diese Rolle.
+  html += governanceDashboardHtml();
 
   html += '<div class="privacy-note" style="font-size:11px;">🔒 Alle Daten bleiben lokal — keine Übertragung an externe Server. '+storageLocationNotice()+'</div>';
 
@@ -5990,11 +7014,16 @@ function kritikalitaetBadge(level){
   const labelMap = {hoch:'Hoch', mittel:'Mittel', niedrig:'Niedrig'};
   return '<span class="badge '+(map[level]||'b-neutral')+'">'+(labelMap[level]||level)+'</span>';
 }
+/** v2.4.0 (AP3): baut <option>-HTML für Maßnahmen-Status-Selects aus MASSNAHMEN_STATUS_UI_OPTIONS. Zeigt einen ausgewählten, aber nicht mehr angebotenen Altwert (z. B. 'zurueckgestellt') zusätzlich an, statt ihn optisch verschwinden zu lassen. @param {string} selected @returns {string} HTML */
+function massnahmenStatusOptionsHtml(selected){
+  const options = MASSNAHMEN_STATUS_UI_OPTIONS.includes(selected) || !selected ? MASSNAHMEN_STATUS_UI_OPTIONS : MASSNAHMEN_STATUS_UI_OPTIONS.concat([selected]);
+  return options.map(v=>'<option value="'+v+'" '+(selected===v?'selected':'')+'>'+escapeHtml(MASSNAHMEN_STATUS_LABELS[v]||v)+'</option>').join('');
+}
 /** Rendert ein Farbbadge für den Maßnahmen-Status. @param {string} status @returns {string} HTML */
 function statusBadge(status){
-  const map = {offen:'b-bad', in_arbeit:'b-warn', erledigt:'b-ok', zurueckgestellt:'b-neutral'};
-  const labelMap = {offen:'Offen', in_arbeit:'In Arbeit', erledigt:'Erledigt', zurueckgestellt:'Zurückgestellt'};
-  return '<span class="badge '+(map[status]||'b-neutral')+'">'+(labelMap[status]||status)+'</span>';
+  // v2.4.0 (AP3): um geplant/blockiert/verworfen erweitert; zurueckgestellt bleibt für Altdaten lesbar.
+  const map = {offen:'b-bad', geplant:'b-neutral', in_arbeit:'b-warn', blockiert:'b-bad', erledigt:'b-ok', verworfen:'b-neutral', zurueckgestellt:'b-neutral'};
+  return '<span class="badge '+(map[status]||'b-neutral')+'">'+(MASSNAHMEN_STATUS_LABELS[status]||status)+'</span>';
 }
 /** Rendert das Qualitäts-Badge einer Maßnahme (basierend auf validateMassnahme). @param {object} m @returns {string} HTML */
 function massnahmeQualityBadge(m){
@@ -6254,17 +7283,29 @@ function tabSixty(p){
 function tabBia(p){
   const idx = STATE.processes.indexOf(p);
   const score = biaScore(p);
+  // v2.4.0 (AP6): keine Kategorie ist inhaltlich beschrieben -> Bewertung/Zeitpunkt stehen
+  // noch auf dem Ausgangswert aus newProcess() (bewertung:3, zeitpunkt:BIA_ZEITPUNKTE[1]).
+  // Score/Ampel werden davon unabhängig weiterhin unverändert berechnet (keine Fachlogikänderung) —
+  // hier wird nur zusätzlich sichtbar gemacht, dass es sich noch um keine bestätigte Einschätzung handelt,
+  // damit die 0%-Fortschrittsanzeige (processProgress) nicht der sichtbaren Bewertung widerspricht.
+  const biaUnbearbeitet = BIA_CATEGORIES.every(c=>!p.bia[c.key].beschreibung.trim());
   let html = '<div class="card"><div class="spread"><div class="card-title">Gesamtbewertung</div>'+
     '<span class="badge b-'+score.ampel+'" style="font-size:13px;padding:6px 14px;">'+score.klasse+' · Score '+score.avg+' / 5</span></div>'+
     '<div class="card-help">Bewerten Sie jede Auswirkungskategorie von 1 (gering) bis 5 (existenzbedrohend). Score und Ampel werden automatisch berechnet.</div>'+
-    '<div class="card-help">Die Gesamtbewertung wird gewichtet berechnet. Lieferfähigkeit, Kundenwirkung und interne Betriebsfähigkeit haben ein höheres Gewicht.</div></div>';
+    '<div class="card-help">Die Gesamtbewertung wird gewichtet berechnet. Lieferfähigkeit, Kundenwirkung und interne Betriebsfähigkeit haben ein höheres Gewicht.</div>'+
+    (biaUnbearbeitet ? '<div class="small" style="color:var(--warn);margin-top:4px;">⚠ Noch keine Kategorie inhaltlich beschrieben — Bewertung und Zeitpunkt stehen aktuell auf dem Ausgangswert und sind keine bestätigte Einschätzung (siehe Fortschrittsanzeige).</div>' : '')+
+    '</div>';
 
   BIA_CATEGORIES.forEach(c=>{
     const d = p.bia[c.key];
     const base = 'processes.'+idx+'.bia.'+c.key+'.';
+    const unbearbeitet = !d.beschreibung.trim();
     html += '<div class="card">';
     html += '<div class="spread" style="margin-bottom:10px;"><div class="card-title" style="font-size:13.5px;">'+c.label+'</div>'+
       '<div class="flexrow">'+ratingDots(d.bewertung)+'</div></div>';
+    if(unbearbeitet){
+      html += '<div class="small muted" style="margin-top:-6px;margin-bottom:10px;">Ausgangswert, noch nicht bestätigt — wird erst mit einer Beschreibung der Auswirkung zu einer dokumentierten Einschätzung.</div>';
+    }
     /* v2.2.0 (Barrierefreiheit): Die Auswahl war ausschließlich über die
        Hintergrundfarbe der Schaltfläche erkennbar. aria-pressed macht den
        Zustand für Screenreader hörbar; die Gruppe erhält einen Namen, damit
@@ -6557,14 +7598,76 @@ function resilienzComment(pid, itemId, val){
 
 /** Rendert den prozessbezogenen Maßnahmen-Tab. @param {object} p @returns {string} HTML */
 function tabMassnahmenTab(p){
+  let html = tabReviewHistoryCard(p);
   const list = STATE.massnahmen.filter(m=>m.prozessId===p.id);
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen für diesen Prozess</div>'+
+  html += '<div class="card"><div class="card-head"><div class="card-title">Maßnahmen für diesen Prozess</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.addMassnahme(\''+safeJsString(p.id)+'\')" title="Neue Maßnahme für diesen Prozess anlegen">+ Maßnahme</button></div>';
   if(list.length===0){ html += emptyState('Keine Maßnahmen erfasst', 'Maßnahmen können hier oder automatisch aus roten Resilienz-Checks erzeugt werden.'); }
   list.forEach(m=>{ html += massnahmeRow(m); });
   html += '</div>';
   return html;
 }
+/** v2.4.0 (AP1): kompakte Reviewhistorie innerhalb der Prozessakte — Drill-down in die eigentlichen Review-Datensätze bleibt im Review Center. @param {object} p @returns {string} HTML */
+function tabReviewHistoryCard(p){
+  const list = reviewsForProcess(p.id);
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Reviews für diesen Prozess</div>'+
+    '<div class="flexrow">'+
+    '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>'+
+    '<button class="btn btn-sm" onclick="App.timelineFilter.prozessId=\''+safeJsString(p.id)+'\';go(\'timeline\')" title="BCM Timeline, gefiltert auf diesen Prozess">Timeline anzeigen</button>'+
+    '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(p.id)+'\')">+ Review planen</button>'+
+    '</div></div>';
+  html += reviewConfigEditorHtml(p);
+  if(list.length===0){
+    html += emptyState('Keine Reviews geplant', isProcessKritisch(p) ? 'Dieser Prozess ist kritisch und besitzt noch keine Reviewplanung.' : 'Für diesen Prozess wurden noch keine Reviews geplant.');
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Reviewart</th><th>Geplant am</th><th>Status</th><th>Fälligkeit</th><th>Ergebnis</th></tr></thead><tbody>';
+    list.forEach(r=>{
+      html += '<tr><td>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+'</td><td>'+fmtDateOnly(r.geplantAm)+'</td>'+
+        '<td>'+reviewStatusBadge(r.status)+'</td><td>'+(reviewDueBadge(r)||'–')+'</td>'+
+        '<td>'+(r.ergebnis?escapeHtml(r.ergebnis.substring(0,80)+(r.ergebnis.length>80?'…':'')):'–')+'</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  return html;
+}
+/** v2.4.0 (AP2): kompakter Editor für die Reviewzyklen-Policy eines Prozesses, je Reviewart ein Intervall-Select. @param {object} p @returns {string} HTML */
+function reviewConfigEditorHtml(p){
+  const cfg = p.reviewConfig || defaultReviewConfig();
+  let html = '<div class="small muted" style="font-weight:700;margin:10px 0 6px;">Reviewzyklen je Reviewart</div>';
+  html += '<div class="grid grid-4" style="margin-bottom:6px;">';
+  REVIEW_ARTEN.forEach(a=>{
+    const entry = cfg[a];
+    const intervalType = entry ? entry.intervalType : '';
+    html += '<div class="field"><label>'+escapeHtml(REVIEW_ART_LABELS[a])+'</label>'+
+      '<select onchange="App.setReviewConfig(\''+safeJsString(p.id)+'\',\''+a+'\',this.value)">'+
+      '<option value="">– keine Policy –</option>'+
+      REVIEW_INTERVALS.map(iv=>'<option value="'+iv+'" '+(intervalType===iv?'selected':'')+'>'+escapeHtml(REVIEW_INTERVAL_LABELS[iv])+'</option>').join('')+
+      '</select>'+
+      (intervalType==='individuell' ? '<input type="number" min="1" placeholder="Monate" value="'+escapeHtml(entry&&entry.intervalMonths||'')+'" style="margin-top:4px;" onchange="App.setReviewConfigMonths(\''+safeJsString(p.id)+'\',\''+a+'\',this.value)">' : '')+
+      '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+/** Setzt die Reviewzyklen-Policy einer Reviewart auf dem Prozess (oder entfernt sie bei leerem Wert — dann wird nie ein Termin erfunden). @param {string} processId @param {string} reviewart @param {string} intervalType @returns {void} */
+App.setReviewConfig = function(processId, reviewart, intervalType){
+  const p = getProcess(processId);
+  if(!p) return;
+  if(!p.reviewConfig) p.reviewConfig = defaultReviewConfig();
+  p.reviewConfig[reviewart] = intervalType ? { intervalType, intervalMonths: intervalType==='individuell' ? (p.reviewConfig[reviewart]&&p.reviewConfig[reviewart].intervalMonths||null) : null } : null;
+  autosave();
+  render();
+};
+/** Setzt die individuelle Monatsangabe einer 'individuell'-Reviewpolicy. @param {string} processId @param {string} reviewart @param {string} monthsValue @returns {void} */
+App.setReviewConfigMonths = function(processId, reviewart, monthsValue){
+  const p = getProcess(processId);
+  if(!p || !p.reviewConfig || !p.reviewConfig[reviewart]) return;
+  const months = Number(monthsValue);
+  p.reviewConfig[reviewart].intervalMonths = Number.isFinite(months) && months>0 ? months : null;
+  autosave();
+  render();
+};
 /** Rendert eine einzelne Maßnahmenzeile mit allen Feldern inkl. P14-Erweiterungen, Matrix-Einordnung und Überfälligkeits-/Nachweis-Badges. @param {object} m @returns {string} HTML */
 function massnahmeRow(m){
   let html = '<div class="rowcard"><div class="rowcard-head">';
@@ -6575,7 +7678,13 @@ function massnahmeRow(m){
   if(massnahmeIsOverdue(m)) badges.push('<span class="badge b-bad">Überfällig</span>');
   if(massnahmeNeedsEffectivenessProof(m)) badges.push('<span class="badge b-warn">Kein Wirksamkeitsnachweis</span>');
   if(String(m.entscheidungsbedarf||'').trim()) badges.push('<span class="badge b-warn">Entscheidung erforderlich</span>');
+  if(massnahmeIsBlockedWithoutReason(m)) badges.push('<span class="badge b-bad">Blockiert ohne Begründung</span>');
   if(badges.length>0){ html += '<div style="margin-bottom:8px;">'+badges.join(' ')+'</div>'; }
+  // v2.4.0 (AP3): Herkunft nachvollziehbar machen — nie editierbar, da sie
+  // beschreibt, WIE die Maßnahme entstanden ist.
+  html += '<div class="small muted" style="margin-bottom:8px;">Herkunft: '+escapeHtml(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+
+    (m.sourceLabel?' — '+escapeHtml(m.sourceLabel):'')+
+    (m.erstelltAm?' · angelegt '+fmtDateOnly(m.erstelltAm):'')+'</div>';
   html += '<div class="grid grid-4">';
   html += '<div class="field"><label>Prozess</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'prozessId\',this.value)"><option value="">– kein Bezug –</option>'+
     STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(m.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'(ohne Namen)')+'</option>').join('')+'</select></div>';
@@ -6584,7 +7693,7 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Priorität</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'prioritaet\',this.value)">'+
     levelOptionsHtml(m.prioritaet, LEVEL_ORDER_HOCH_FIRST)+'</select></div>';
   html += '<div class="field"><label>Status</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'status\',this.value)">'+
-    [['offen','Offen'],['in_arbeit','In Arbeit'],['erledigt','Erledigt'],['zurueckgestellt','Zurückgestellt']].map(([v,l])=>'<option value="'+v+'" '+(m.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+    massnahmenStatusOptionsHtml(m.status)+'</select></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
   html += '<div class="field"><label>Verantwortlich</label><input type="text" value="'+escapeHtml(m.verantwortlich)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'verantwortlich\',this.value)"></div>';
@@ -6617,6 +7726,15 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Wirksamkeit geprüft am</label><input type="date" value="'+escapeHtml(m.wirksamkeitGeprueftAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitGeprueftAm\',this.value)"></div>';
   html += '<div class="field"><label>Wirksamkeit — Ergebnis</label><input type="text" value="'+escapeHtml(m.wirksamkeitErgebnis)+'" placeholder="z. B. Wirksam, Teilweise" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitErgebnis\',this.value)"></div>';
   html += '</div>';
+  // v2.4.0 (AP3): Prüfer der Wirksamkeit getrennt vom Ergebnis erfassbar —
+  // "erledigt" heißt nicht "wirksam", und "wirksam" heißt nicht "von wem geprüft".
+  html += '<div class="grid grid-2">';
+  html += '<div class="field"><label>Wirksamkeit — Prüfer</label><input type="text" value="'+escapeHtml(m.wirksamkeitPruefer)+'" placeholder="Name oder Rolle" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitPruefer\',this.value)"></div>';
+  html += '<div class="field"><label>Wiedervorlage</label><input type="date" value="'+escapeHtml(m.wiedervorlageAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wiedervorlageAm\',this.value)"></div>';
+  html += '</div>';
+  if(m.status==='blockiert'){
+    html += '<div class="field"><label>Begründung für Blockade <span class="req">*</span></label><input type="text" value="'+escapeHtml(m.blockiertGrund)+'" placeholder="Warum ist diese Maßnahme blockiert?" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'blockiertGrund\',this.value)"></div>';
+  }
 
   html += massnahmeFindingsHtml(m);
   return html;
@@ -6639,6 +7757,12 @@ function massnahmeFindingsHtml(m){
 function massUpdate(id, key, val){
   const m = STATE.massnahmen.find(m=>m.id===id);
   m[key]=val;
+  // v2.4.0 (AP3): abgeschlossenAm wird beim Wechsel auf "erledigt" einmalig
+  // gesetzt, nie automatisch wieder entfernt (fachlicher Zeitpunkt bleibt
+  // erhalten, auch wenn die Maßnahme später erneut geöffnet wird).
+  if(key==='status' && val==='erledigt' && !m.abgeschlossenAm){
+    m.abgeschlossenAm = new Date().toISOString().split('T')[0];
+  }
   autosave();
   render();
 }
@@ -6731,6 +7855,7 @@ function viewMassnahmenKatalog(){
   if(f.prozessId) list = list.filter(m=>m.prozessId===f.prozessId);
   if(f.aufwand) list = list.filter(m=>m.aufwand===f.aufwand);
   if(f.verantwortlich) list = list.filter(m=>m.verantwortlich===f.verantwortlich);
+  if(f.sourceType) list = list.filter(m=>m.sourceType===f.sourceType);
   if(f.ueberfaellig) list = list.filter(massnahmeIsOverdue);
   const sorters = {
     termin:(a,b)=>(a.termin||'9999').localeCompare(b.termin||'9999'),
@@ -6751,7 +7876,7 @@ function viewMassnahmenKatalog(){
 
   html += '<div class="grid grid-4" style="margin-bottom:10px;">';
   html += '<div class="field"><label>Status</label><select onchange="App.setMassnahmenFilter(\'status\',this.value)"><option value="">Alle</option>'+
-    [['offen','Offen'],['in_arbeit','In Arbeit'],['erledigt','Erledigt'],['zurueckgestellt','Zurückgestellt']].map(([v,l])=>'<option value="'+v+'" '+(f.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+    massnahmenStatusOptionsHtml(f.status)+'</select></div>';
   html += '<div class="field"><label>Priorität</label><select onchange="App.setMassnahmenFilter(\'prioritaet\',this.value)"><option value="">Alle</option>'+
     levelOptionsHtml(f.prioritaet, LEVEL_ORDER_HOCH_FIRST)+'</select></div>';
   html += '<div class="field"><label>Aufwand</label><select onchange="App.setMassnahmenFilter(\'aufwand\',this.value)"><option value="">Alle</option>'+
@@ -6764,22 +7889,27 @@ function viewMassnahmenKatalog(){
     verantwortlicheOptions.map(v=>'<option value="'+escapeHtml(v)+'" '+(f.verantwortlich===v?'selected':'')+'>'+escapeHtml(v)+'</option>').join('')+'</select></div>';
   html += '<div class="field"><label>Sortierung</label><select onchange="App.setMassnahmenFilter(\'sort\',this.value)">'+
     [['termin','Termin'],['prioritaet','Priorität'],['aufwand','Aufwand'],['status','Status']].map(([v,l])=>'<option value="'+v+'" '+(f.sort===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Herkunft</label><select onchange="App.setMassnahmenFilter(\'sourceType\',this.value)"><option value="">Alle</option>'+
+    ENUM_MASSNAHME_SOURCE_TYPE.map(v=>'<option value="'+v+'" '+(f.sourceType===v?'selected':'')+'>'+escapeHtml(MASSNAHME_SOURCE_LABELS[v])+'</option>').join('')+'</select></div>';
   html += '<div class="field" style="display:flex;align-items:flex-end;"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" '+(f.ueberfaellig?'checked':'')+' onchange="App.setMassnahmenFilter(\'ueberfaellig\',this.checked)" style="width:auto;"> Nur überfällige anzeigen</label></div>';
   html += '</div>';
 
   if(list.length===0){ html += emptyState('Keine Maßnahmen gefunden', 'Passen Sie die Filter an oder legen Sie eine neue Maßnahme an.'); }
   else {
-    html += '<table class="dtable"><thead><tr><th>Maßnahme</th><th>Prozess</th><th>Kategorie</th><th>Priorität</th><th>Aufwand</th><th>Verantwortlich</th><th>Termin</th><th>Status</th><th>Qualität</th></tr></thead><tbody>';
+    html += '<table class="dtable"><thead><tr><th>Maßnahme</th><th>Prozess</th><th>Kategorie</th><th>Priorität</th><th>Aufwand</th><th>Verantwortlich</th><th>Termin</th><th>Status</th><th>Herkunft</th><th>Qualität</th></tr></thead><tbody>';
     list.forEach(m=>{
       const overdue = massnahmeIsOverdue(m);
       const needsProof = massnahmeNeedsEffectivenessProof(m);
+      const blockedNoReason = massnahmeIsBlockedWithoutReason(m);
       html += '<tr'+(overdue?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(m.titel||'(ohne Titel)')+'</b>'+
         (overdue?' <span class="badge b-bad">Überfällig</span>':'')+
         (needsProof?' <span class="badge b-warn">Kein Nachweis</span>':'')+
+        (blockedNoReason?' <span class="badge b-bad">Ohne Begründung</span>':'')+
         '</td><td>'+escapeHtml(processName(m.prozessId))+'</td>'+
         '<td>'+escapeHtml(m.kategorie)+'</td><td>'+kritikalitaetBadge(m.prioritaet)+'</td>'+
         '<td>'+kritikalitaetBadge(m.aufwand)+'</td>'+
         '<td>'+escapeHtml(m.verantwortlich||'–')+'</td><td>'+fmtDateOnly(m.termin)+'</td><td>'+statusBadge(m.status)+'</td>'+
+        '<td class="small muted">'+escapeHtml(MASSNAHME_SOURCE_LABELS[m.sourceType]||m.sourceType)+'</td>'+
         '<td>'+massnahmeQualityBadge(m)+'</td></tr>';
     });
     html += '</tbody></table>';
@@ -6890,7 +8020,9 @@ App.confirmParkplatzToMassnahme = function(id){
     titel: titel,
     prozessId: item.prozessId,
     verantwortlich: document.getElementById('p2m-resp').value.trim(),
-    termin: document.getElementById('p2m-date').value
+    termin: document.getElementById('p2m-date').value,
+    // v2.4.0 (AP3): Herkunft nachvollziehbar
+    sourceType:'parkplatz', sourceId: item.id, sourceLabel: item.beschreibung.substring(0,120)
   });
   STATE.massnahmen.push(m);
   item.status = 'massnahme';
@@ -6961,6 +8093,364 @@ function viewParkplatz(){
   return html;
 }
 
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP1) — REVIEW CENTER
+   --------------------------------------------------------------------- */
+/** Badge für den gespeicherten Review-Status (nicht die berechnete Fälligkeit). @param {string} status @returns {string} HTML */
+function reviewStatusBadge(status){
+  const map = {geplant:'b-neutral', in_bearbeitung:'b-warn', abgeschlossen:'b-ok'};
+  return '<span class="badge '+(map[status]||'b-neutral')+'">'+escapeHtml(REVIEW_STATUS_LABELS[status]||status)+'</span>';
+}
+/** Badge für die berechnete Fälligkeit eines Reviews (reviewDueInfo) — getrennt vom gespeicherten Status. @param {object} r @returns {string} HTML */
+function reviewDueBadge(r){
+  const info = reviewDueInfo(r);
+  if(info.state==='overdue') return '<span class="badge b-bad">Überfällig ('+info.days+' Tag'+(info.days===1?'':'e')+')</span>';
+  if(info.state==='upcoming') return '<span class="badge b-warn">Bald fällig ('+info.days+' Tag'+(info.days===1?'':'e')+')</span>';
+  return '';
+}
+App.reviewFilter = { status:'', reviewart:'', prozessId:'' };
+/** Setzt einen Filter im Review Center und rendert neu. @param {string} key @param {*} val @returns {void} */
+App.setReviewFilter = function(key, val){ App.reviewFilter[key] = val; render(); };
+/** Öffnet ein Modal zum Anlegen oder Bearbeiten eines Reviews. @param {string} [editId] @param {string} [vorauswahlProzessId] @returns {void} */
+App.openReviewForm = function(editId, vorauswahlProzessId){
+  const existing = editId ? STATE.reviews.find(r=>r.id===editId) : null;
+  const item = existing || newReview({prozessId: vorauswahlProzessId||''});
+  const title = existing ? 'Review bearbeiten' : 'Neuen Review planen';
+  openModal(
+    '<h3>'+escapeHtml(title)+'</h3>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="rev-proc">Prozess <span class="req">*</span></label><select id="rev-proc"><option value="">– bitte wählen –</option>'+
+      STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(item.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label for="rev-art">Reviewart <span class="req">*</span></label><select id="rev-art">'+
+      REVIEW_ARTEN.map(a=>'<option value="'+a+'" '+(item.reviewart===a?'selected':'')+'>'+escapeHtml(REVIEW_ART_LABELS[a])+'</option>').join('')+'</select></div>'+
+    '</div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="rev-plan">Geplant am</label><input type="date" id="rev-plan" value="'+escapeHtml(item.geplantAm)+'"></div>'+
+    '<div class="field"><label for="rev-resp">Verantwortlich</label><input type="text" id="rev-resp" value="'+escapeHtml(item.verantwortlich)+'" placeholder="Name oder Rolle"></div>'+
+    '</div>'+
+    (existing ? '<div class="grid grid-2">'+
+      '<div class="field"><label for="rev-status">Status</label><select id="rev-status">'+
+        REVIEW_STATUS.map(s=>'<option value="'+s+'" '+(item.status===s?'selected':'')+'>'+escapeHtml(REVIEW_STATUS_LABELS[s])+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label for="rev-next">Nächster Reviewtermin</label><input type="date" id="rev-next" value="'+escapeHtml(item.naechsterReviewAm)+'"></div>'+
+      '</div>'+
+      '<div class="grid grid-2">'+
+      '<div class="field"><label for="rev-started">Gestartet am</label><input type="date" id="rev-started" value="'+escapeHtml(item.gestartetAm)+'"></div>'+
+      '<div class="field"><label for="rev-done">Abgeschlossen am</label><input type="date" id="rev-done" value="'+escapeHtml(item.abgeschlossenAm)+'"></div>'+
+      '</div>'+
+      '<div class="field"><label for="rev-result">Ergebnis</label><textarea id="rev-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(item.ergebnis)+'</textarea></div>'
+      : '')+
+    '<div class="modal-actions">'+
+    '<button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.saveReview(\''+safeJsString(existing?item.id:'')+'\')">'+(existing?'Speichern':'Anlegen')+'</button>'+
+    '</div>'
+  );
+};
+/** Speichert einen Review (neu oder Bearbeitung). @param {string} existingId Leer für neuen Review. @returns {void} */
+App.saveReview = function(existingId){
+  const prozessId = document.getElementById('rev-proc').value;
+  if(!prozessId){ toast('Bitte einen Prozess wählen.'); return; }
+  const data = {
+    prozessId,
+    reviewart: document.getElementById('rev-art').value,
+    geplantAm: document.getElementById('rev-plan').value,
+    verantwortlich: document.getElementById('rev-resp').value.trim()
+  };
+  if(existingId){
+    const item = STATE.reviews.find(r=>r.id===existingId);
+    if(item){
+      Object.assign(item, data);
+      const statusEl = document.getElementById('rev-status');
+      if(statusEl) item.status = statusEl.value;
+      const nextEl = document.getElementById('rev-next');
+      if(nextEl) item.naechsterReviewAm = nextEl.value;
+      const startedEl = document.getElementById('rev-started');
+      if(startedEl) item.gestartetAm = startedEl.value;
+      const doneEl = document.getElementById('rev-done');
+      if(doneEl) item.abgeschlossenAm = doneEl.value;
+      const resultEl = document.getElementById('rev-result');
+      if(resultEl) item.ergebnis = resultEl.value.trim();
+    }
+  } else {
+    STATE.reviews.push(newReview(data));
+  }
+  closeModal();
+  autosave();
+  render();
+  toast(existingId ? 'Review aktualisiert.' : 'Review geplant.');
+};
+/** Löscht einen Review nach Bestätigung. @param {string} id @returns {void} */
+App.deleteReview = function(id){
+  if(!confirm('Diesen Review wirklich löschen?')) return;
+  STATE.reviews = STATE.reviews.filter(r=>r.id!==id);
+  autosave();
+  render();
+  toast('Review gelöscht.');
+};
+/** Startet einen geplanten Review (Status -> in_bearbeitung, setzt gestartetAm falls leer). @param {string} id @returns {void} */
+App.startReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  r.status = 'in_bearbeitung';
+  if(!r.gestartetAm) r.gestartetAm = new Date().toISOString().split('T')[0];
+  autosave();
+  render();
+  toast('Review gestartet.');
+};
+/** Öffnet ein Modal zum Abschließen eines Reviews (Ergebnis + optional nächster Reviewtermin). Schlägt bei definierter Reviewzyklen-Policy (AP2) den nächsten Termin vor und bietet an, den Folgereview direkt anzulegen. @param {string} id @returns {void} */
+App.openCompleteReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  const process = getProcess(r.prozessId);
+  const today = new Date().toISOString().split('T')[0];
+  const suggested = process ? computeNextReviewDate(process, r.reviewart, today) : null;
+  openModal(
+    '<h3>Review abschließen</h3>'+
+    '<p class="small muted">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' — '+escapeHtml(processName(r.prozessId))+'</p>'+
+    '<div class="field"><label for="rev-c-result">Ergebnis <span class="req">*</span></label><textarea id="rev-c-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(r.ergebnis)+'</textarea></div>'+
+    '<div class="field"><label for="rev-c-next">Nächster Reviewtermin'+(suggested?' (aus Reviewzyklen-Policy vorgeschlagen)':' (optional, manuell — keine Policy definiert)')+'</label><input type="date" id="rev-c-next" value="'+escapeHtml(suggested||r.naechsterReviewAm)+'"></div>'+
+    (suggested ? '<div class="field"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rev-c-followup" checked style="width:auto;"> Folgereview automatisch als „Geplant" anlegen</label></div>' : '')+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmCompleteReview(\''+safeJsString(id)+'\')">Review abschließen</button></div>'
+  );
+};
+/** Bestätigt den Abschluss eines Reviews; legt bei entsprechender Policy und aktivierter Checkbox automatisch den Folgereview an. @param {string} id @returns {void} */
+App.confirmCompleteReview = function(id){
+  const r = STATE.reviews.find(r=>r.id===id);
+  if(!r) return;
+  const ergebnis = document.getElementById('rev-c-result').value.trim();
+  if(!ergebnis){ toast('Bitte ein Ergebnis eintragen.'); return; }
+  r.ergebnis = ergebnis;
+  r.naechsterReviewAm = document.getElementById('rev-c-next').value;
+  r.status = 'abgeschlossen';
+  r.abgeschlossenAm = new Date().toISOString().split('T')[0];
+  const followupEl = document.getElementById('rev-c-followup');
+  let followupCreated = false;
+  if(followupEl && followupEl.checked && r.naechsterReviewAm){
+    STATE.reviews.push(newReview({ prozessId:r.prozessId, reviewart:r.reviewart, geplantAm:r.naechsterReviewAm, verantwortlich:r.verantwortlich }));
+    followupCreated = true;
+  }
+  closeModal();
+  autosave();
+  render();
+  toast('Review abgeschlossen.'+(followupCreated?' Folgereview am '+fmtDateOnly(r.naechsterReviewAm)+' angelegt.':''));
+};
+/** v2.4.0 (AP1): legt aus einem Review eine neue Maßnahme an und verknüpft sie über review.massnahmenIds. @param {string} reviewId @returns {void} */
+App.reviewToMassnahme = function(reviewId){
+  const r = STATE.reviews.find(r=>r.id===reviewId);
+  if(!r) return;
+  openModal(
+    '<h3>Maßnahme aus Review anlegen</h3>'+
+    '<div class="field"><label for="r2m-title">Titel der Maßnahme <span class="req">*</span></label><input type="text" id="r2m-title" style="width:100%;" placeholder="z. B. Feststellung aus '+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' beheben"></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="r2m-resp">Verantwortlich</label><input type="text" id="r2m-resp" value="'+escapeHtml(r.verantwortlich)+'"></div>'+
+    '<div class="field"><label for="r2m-date">Termin</label><input type="date" id="r2m-date"></div>'+
+    '</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmReviewToMassnahme(\''+safeJsString(reviewId)+'\')">Maßnahme anlegen</button></div>'
+  );
+};
+/** Bestätigt die Erzeugung einer Maßnahme aus einem Review. @param {string} reviewId @returns {void} */
+App.confirmReviewToMassnahme = function(reviewId){
+  const r = STATE.reviews.find(r=>r.id===reviewId);
+  if(!r) return;
+  const titel = document.getElementById('r2m-title').value.trim();
+  if(!titel){ toast('Bitte einen Titel eingeben.'); return; }
+  const m = newMassnahme({
+    titel,
+    prozessId: r.prozessId,
+    verantwortlich: document.getElementById('r2m-resp').value.trim(),
+    termin: document.getElementById('r2m-date').value,
+    // v2.4.0 (AP3): vollständig bidirektionale Herkunft — reviewId zusätzlich
+    // zu sourceId, damit "welche Maßnahmen kamen aus welchem Review" ohne
+    // Umweg über sourceType geprüft werden kann.
+    sourceType:'review', sourceId: r.id, sourceLabel: REVIEW_ART_LABELS[r.reviewart]+' — '+processName(r.prozessId), reviewId: r.id
+  });
+  STATE.massnahmen.push(m);
+  if(!r.massnahmenIds.includes(m.id)) r.massnahmenIds.push(m.id);
+  closeModal();
+  autosave();
+  render();
+  toast('Maßnahme "'+titel+'" angelegt und mit Review verknüpft.');
+};
+/** Rendert die View "Review Center". @returns {string} HTML */
+function viewReviewCenter(){
+  const data = reviewCenterData();
+  const f = App.reviewFilter;
+  let list = STATE.reviews.slice();
+  if(f.status) list = list.filter(r=>r.status===f.status);
+  if(f.reviewart) list = list.filter(r=>r.reviewart===f.reviewart);
+  if(f.prozessId) list = list.filter(r=>r.prozessId===f.prozessId);
+  list.sort((a,b)=>(a.geplantAm||'9999').localeCompare(b.geplantAm||'9999'));
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Review Center</div>'+
+    '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm()">+ Review planen</button></div>';
+  html += '<div class="grid grid-4" style="margin-bottom:12px;">';
+  html += statTile(data.overdue.length, 'Überfällig', data.overdue.length>0?'bad':'ok');
+  html += statTile(data.upcoming.length, 'Bald fällig (≤'+REVIEW_UPCOMING_WINDOW_DAYS+' Tage)', data.upcoming.length>0?'warn':'ok');
+  html += statTile(data.missingPlanning.length, 'Kritische Prozesse ohne Reviewplanung', data.missingPlanning.length>0?'bad':'ok');
+  html += statTile(data.openFollowupMassnahmen.length, 'Abgeschlossene Reviews mit offenen Maßnahmen', data.openFollowupMassnahmen.length>0?'warn':'ok', "go('reviews')");
+  html += '</div>';
+  if(data.openFollowupMassnahmen.length>0){
+    html += '<div class="card-title" style="font-size:13.5px;margin-bottom:8px;">Abgeschlossene Reviews mit noch offenen Maßnahmen</div>';
+    html += '<div style="margin-bottom:16px;">';
+    data.openFollowupMassnahmen.forEach(r=>{
+      const openCount = (r.massnahmenIds||[]).filter(mid=>{ const m=STATE.massnahmen.find(x=>x.id===mid); return m && massnahmeIsOpen(m); }).length;
+      html += '<div class="rowcard"><div class="spread"><div><b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+'</b> — '+escapeHtml(processName(r.prozessId))+
+        '<div class="small muted">Abgeschlossen am '+fmtDateOnly(r.abgeschlossenAm)+' · '+openCount+' Maßnahme(n) noch nicht abgeschlossen</div></div>'+
+        '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button></div></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="card-title" style="font-size:13.5px;margin-bottom:8px;">Was ist als Nächstes zu tun?</div>';
+  if(data.priorityList.length===0){
+    html += '<div class="small muted" style="margin-bottom:16px;">Keine überfälligen oder bald fälligen Reviews, keine kritischen Prozesse ohne Reviewplanung.</div>';
+  } else {
+    html += '<div style="margin-bottom:16px;">';
+    data.priorityList.slice(0,15).forEach(item=>{
+      if(item.type==='missing_planning'){
+        html += '<div class="rowcard"><div class="spread"><div><span class="badge b-bad">Keine Reviewplanung</span> <b>'+escapeHtml(item.process.steckbrief.name||'(ohne Namen)')+'</b>'+
+          '<div class="small muted">Kritischer Prozess ohne jeglichen Review-Eintrag.</div></div>'+
+          '<button class="btn btn-sm btn-primary" onclick="App.openReviewForm(\'\',\''+safeJsString(item.process.id)+'\')">Review planen</button></div></div>';
+      } else {
+        const r = item.review;
+        html += '<div class="rowcard"><div class="spread"><div>'+reviewDueBadge(r)+' <b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+'</b> — '+escapeHtml(processName(r.prozessId))+
+          '<div class="small muted">Geplant am '+fmtDateOnly(r.geplantAm)+(r.verantwortlich?' · '+escapeHtml(r.verantwortlich):'')+'</div></div>'+
+          '<div class="flexrow">'+(r.status==='geplant'?'<button class="btn btn-sm" onclick="App.startReview(\''+safeJsString(r.id)+'\')">Starten</button>':'')+
+          ' <button class="btn btn-sm btn-primary" onclick="App.openCompleteReview(\''+safeJsString(r.id)+'\')">Abschließen</button></div></div></div>';
+      }
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="grid grid-3" style="margin-bottom:16px;">';
+  html += '<div class="field"><label>Status</label><select onchange="App.setReviewFilter(\'status\',this.value)"><option value="">Alle</option>'+
+    REVIEW_STATUS.map(s=>'<option value="'+s+'" '+(f.status===s?'selected':'')+'>'+escapeHtml(REVIEW_STATUS_LABELS[s])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Reviewart</label><select onchange="App.setReviewFilter(\'reviewart\',this.value)"><option value="">Alle</option>'+
+    REVIEW_ARTEN.map(a=>'<option value="'+a+'" '+(f.reviewart===a?'selected':'')+'>'+escapeHtml(REVIEW_ART_LABELS[a])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Prozess</label><select onchange="App.setReviewFilter(\'prozessId\',this.value)"><option value="">Alle</option>'+
+    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(f.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name)+'</option>').join('')+'</select></div>';
+  html += '</div>';
+
+  if(list.length===0){
+    html += emptyState('Keine Reviews gefunden', 'Passen Sie die Filter an oder planen Sie einen neuen Review.');
+  } else {
+    html += '<table class="dtable"><thead><tr><th>Reviewart</th><th>Prozess</th><th>Geplant am</th><th>Verantwortlich</th><th>Status</th><th>Fälligkeit</th><th>Maßnahmen</th><th></th></tr></thead><tbody>';
+    list.forEach(r=>{
+      html += '<tr>';
+      html += '<td><b>'+escapeHtml(REVIEW_ART_LABELS[r.reviewart]||r.reviewart)+'</b></td>';
+      html += '<td>'+escapeHtml(processName(r.prozessId))+'</td>';
+      html += '<td>'+fmtDateOnly(r.geplantAm)+'</td>';
+      html += '<td>'+escapeHtml(r.verantwortlich||'–')+'</td>';
+      html += '<td>'+reviewStatusBadge(r.status)+'</td>';
+      html += '<td>'+(reviewDueBadge(r)||'–')+'</td>';
+      html += '<td>'+(r.massnahmenIds.length||'–')+'</td>';
+      html += '<td class="flexrow">'+
+        '<button class="btn btn-sm" onclick="App.openReviewForm(\''+safeJsString(r.id)+'\')">Bearbeiten</button>'+
+        (r.status==='geplant'?' <button class="btn btn-sm" onclick="App.startReview(\''+safeJsString(r.id)+'\')">Starten</button>':'')+
+        (r.status!=='abgeschlossen'?' <button class="btn btn-sm" onclick="App.openCompleteReview(\''+safeJsString(r.id)+'\')">Abschließen</button>':'')+
+        ' <button class="btn btn-sm" onclick="App.reviewToMassnahme(\''+safeJsString(r.id)+'\')">+ Maßnahme</button>'+
+        ' <button class="btn btn-sm btn-ghost" onclick="App.deleteReview(\''+safeJsString(r.id)+'\')">Löschen</button>'+
+        '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ---------------------------------------------------------------------
+   v2.4.0 (AP4) — VIEW: BCM TIMELINE
+   --------------------------------------------------------------------- */
+App.timelineFilter = { prozessId:'', type:'', from:'', to:'' };
+/** Setzt einen Filter der BCM Timeline und rendert neu. @param {string} key @param {string} val @returns {void} */
+App.setTimelineFilter = function(key, val){ App.timelineFilter[key] = val; render(); };
+/** Rendert einen Icon-/Farb-Hinweis je Timeline-Ereignistyp (rein dekorativ, keine fachliche Bewertung). @param {string} type @returns {string} HTML */
+function timelineEventBadge(type){
+  const toneMap = {
+    prozess_angelegt:'b-neutral', review_geplant:'b-neutral', review_gestartet:'b-warn', review_abgeschlossen:'b-ok',
+    massnahme_erstellt:'b-neutral', massnahme_abgeschlossen:'b-ok', wirksamkeit_geprueft:'b-ok',
+    kritikalitaet_geaendert:'b-warn', zeitwerte_geaendert:'b-warn', notbetrieb_geaendert:'b-warn', ressourcen_geaendert:'b-warn',
+    version_gespeichert:'b-neutral', freigabe_erzeugt:'b-ok'
+  };
+  return '<span class="badge '+(toneMap[type]||'b-neutral')+'">'+escapeHtml(TIMELINE_EVENT_LABELS[type]||type)+'</span>';
+}
+/** Baut den Drill-down-Link eines Timeline-Ereignisses zur passenden bestehenden Ansicht (Prozess/Review Center/Maßnahmenkatalog/Versionshistorie). @param {object} e @returns {string} HTML */
+function timelineDrilldownHtml(e){
+  if(!e.object) return '';
+  const o = e.object;
+  if(o.type==='process') return '<button class="btn btn-sm" onclick="go(\'process\',\''+safeJsString(o.id)+'\',\'steckbrief\')">Prozessakte öffnen</button>';
+  if(o.type==='review') return '<button class="btn btn-sm" onclick="go(\'reviews\')">Review Center öffnen</button>';
+  if(o.type==='massnahme') return '<button class="btn btn-sm" onclick="go(\'massnahmen\')">Maßnahmenkatalog öffnen</button>';
+  if(o.type==='version') return '<button class="btn btn-sm" onclick="go(\'versions\')">Versionshistorie öffnen</button>';
+  return '';
+}
+/** Rendert die View "BCM Timeline". @returns {string} HTML */
+function viewTimeline(){
+  const f = App.timelineFilter;
+  const list = timelineEvents(f);
+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">BCM Timeline</div>'+
+    '<div class="small muted">Fachlich relevante BCM-Ereignisse, abgeleitet aus vorhandenen Daten — kein Audit-Log, keine Aufzeichnung jeder Feldänderung.</div></div>';
+
+  html += '<div class="grid grid-4" style="margin-bottom:16px;">';
+  html += '<div class="field"><label>Prozess</label><select onchange="App.setTimelineFilter(\'prozessId\',this.value)"><option value="">Alle</option>'+
+    STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(f.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Ereignistyp</label><select onchange="App.setTimelineFilter(\'type\',this.value)"><option value="">Alle</option>'+
+    TIMELINE_EVENT_TYPES.map(t=>'<option value="'+t+'" '+(f.type===t?'selected':'')+'>'+escapeHtml(TIMELINE_EVENT_LABELS[t])+'</option>').join('')+'</select></div>';
+  html += '<div class="field"><label>Zeitraum von</label><input type="date" value="'+escapeHtml(f.from)+'" onchange="App.setTimelineFilter(\'from\',this.value)"></div>';
+  html += '<div class="field"><label>Zeitraum bis</label><input type="date" value="'+escapeHtml(f.to)+'" onchange="App.setTimelineFilter(\'to\',this.value)"></div>';
+  html += '</div>';
+
+  if(list.length===0){
+    html += emptyState('Keine Ereignisse gefunden', 'Passen Sie die Filter an, oder es liegen noch keine ableitbaren Ereignisse vor (z. B. noch keine gespeicherte Version).');
+  } else {
+    html += '<div>';
+    list.forEach(e=>{
+      html += '<div class="rowcard"><div class="spread"><div>'+timelineEventBadge(e.type)+' '+fmtDate(e.timestamp)+
+        '<div style="margin-top:4px;">'+escapeHtml(e.description)+(e.bearbeiter?' <span class="small muted">— '+escapeHtml(e.bearbeiter)+'</span>':'')+'</div></div>'+
+        timelineDrilldownHtml(e)+'</div></div>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/** v2.4.0 (AP3): öffnet ein Modal, um aus einem Qualitäts-/Konsistenzbefund eine Maßnahme anzulegen. @param {string} rule Regelcode (z. B. "Q13"). @param {string} processId Leer, wenn der Befund keinen Prozessbezug hat. @param {string} text Befundtext, dient als Titel-Vorschlag. @returns {void} */
+App.qualityFindingToMassnahme = function(rule, processId, text){
+  openModal(
+    '<h3>Maßnahme aus Qualitätsbefund anlegen</h3>'+
+    '<p class="small muted">Regel '+escapeHtml(rule)+(processId?' — '+escapeHtml(processName(processId)):'')+'</p>'+
+    '<div class="field"><label for="q2m-title">Titel der Maßnahme <span class="req">*</span></label><input type="text" id="q2m-title" style="width:100%;" value="'+escapeHtml(text.substring(0,200))+'"></div>'+
+    '<div class="grid grid-2">'+
+    '<div class="field"><label for="q2m-resp">Verantwortlich</label><input type="text" id="q2m-resp"></div>'+
+    '<div class="field"><label for="q2m-date">Termin</label><input type="date" id="q2m-date"></div>'+
+    '</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">Abbrechen</button>'+
+    '<button class="btn btn-primary" onclick="App.confirmQualityFindingToMassnahme(\''+safeJsString(rule)+'\',\''+safeJsString(processId)+'\',\''+safeJsString(text)+'\')">Maßnahme anlegen</button></div>'
+  );
+};
+/** Bestätigt die Erzeugung einer Maßnahme aus einem Qualitäts-/Konsistenzbefund. @param {string} rule @param {string} processId @param {string} text @returns {void} */
+App.confirmQualityFindingToMassnahme = function(rule, processId, text){
+  const titel = document.getElementById('q2m-title').value.trim();
+  if(!titel){ toast('Bitte einen Titel eingeben.'); return; }
+  const m = newMassnahme({
+    titel,
+    prozessId: processId||'',
+    verantwortlich: document.getElementById('q2m-resp').value.trim(),
+    termin: document.getElementById('q2m-date').value,
+    // v2.4.0 (AP3): Herkunft nachvollziehbar. sourceId ist die Regel+Prozess-
+    // Kombination — Qualitätsbefunde besitzen sonst keine eigene ID.
+    sourceType:'qualitaet', sourceId: rule+(processId?'|'+processId:''), sourceLabel: rule+': '+text.substring(0,150)
+  });
+  STATE.massnahmen.push(m);
+  closeModal();
+  autosave();
+  render();
+  toast('Maßnahme "'+titel+'" angelegt.');
+};
 /** v2.3.0: Rendert die View "Qualitäts- und Konsistenzprüfung". @returns {string} HTML */
 function viewQualityCheck(){
   const {quality, consistency} = qualityAndConsistencyCheck();
@@ -6977,9 +8467,12 @@ function viewQualityCheck(){
   html += '</div>';
 
   // v2.3.1: Hilfsfunktion für Befund-Zeile mit Direkt-Link
+  // v2.4.0 (AP3): zusätzlich "+ Maßnahme" — ein Qualitäts-/Konsistenzbefund
+  // ist damit direkt in eine nachvollziehbare Maßnahme überführbar.
   function qualityRow(f, isBad){
     const link = f.processId ? '<button class="btn btn-sm" style="margin-left:6px;white-space:nowrap;" onclick="go(\'process\',\''+safeJsString(f.processId)+'\',\''+(f.tab||'steckbrief')+'\')">Bearbeiten</button>' : '';
-    return '<tr'+(isBad?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(f.rule)+'</b></td><td>'+escapeHtml(f.process)+link+'</td><td>'+escapeHtml(f.text)+'</td></tr>';
+    const toMassnahme = '<button class="btn btn-sm" style="margin-left:6px;white-space:nowrap;" onclick="App.qualityFindingToMassnahme(\''+safeJsString(f.rule)+'\',\''+safeJsString(f.processId||'')+'\',\''+safeJsString(f.text)+'\')">+ Maßnahme</button>';
+    return '<tr'+(isBad?' style="background:var(--bad-bg);"':'')+'><td><b>'+escapeHtml(f.rule)+'</b></td><td>'+escapeHtml(f.process)+link+'</td><td>'+escapeHtml(f.text)+toMassnahme+'</td></tr>';
   }
 
   if(consistency.length>0){
@@ -7020,7 +8513,7 @@ function managementSummaryHtml(forPrint){
   const stats = dashboardStats();
   const processes = STATE.processes;
   const kritischste = processes.slice().sort((a,b)=>biaScore(b).avg-biaScore(a).avg).slice(0,5);
-  const topMassnahmen = STATE.massnahmen.filter(m=>m.status!=='erledigt').sort((a,b)=>
+  const topMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).sort((a,b)=>
     ({hoch:0,mittel:1,niedrig:2}[a.prioritaet]-{hoch:0,mittel:1,niedrig:2}[b.prioritaet])
   ).slice(0,5);
   const cluster = buildClusters().slice(0,5);
@@ -7570,7 +9063,7 @@ function renderGfOverlay(){
   const stats = dashboardStats();
   const kritischste = STATE.processes.slice().sort((a,b)=>biaScore(b).avg-biaScore(a).avg).slice(0,5);
   const cluster = buildClusters().slice(0,5);
-  const topMassnahmen = STATE.massnahmen.filter(m=>m.status!=='erledigt').sort((a,b)=>
+  const topMassnahmen = STATE.massnahmen.filter(massnahmeIsOpen).sort((a,b)=>
     ({hoch:0,mittel:1,niedrig:2}[a.prioritaet]-{hoch:0,mittel:1,niedrig:2}[b.prioritaet])).slice(0,5);
   const offeneEntscheidungen = STATE.processes.filter(p=>!p.notbetrieb.entscheidung.trim());
 
@@ -8319,6 +9812,19 @@ function loadSampleDataInternal(){
   STATE.massnahmen.push(newMassnahme({titel:'Hot-Standby für ERP-System einrichten', prozessId:p.id, kategorie:'IT / Technik', prioritaet:'hoch', verantwortlich:'IT-Abteilung', status:'offen', nutzen:'Reduziert Ausfallzeit auf Minuten.'}));
   STATE.massnahmen.push(newMassnahme({titel:'Papierprozess für Notbetrieb testen', prozessId:p.id, kategorie:'Organisation', prioritaet:'mittel', verantwortlich:'Petra Sommer', status:'offen'}));
 
+  // v2.4.0 (AP6): ein realistischer Review-Datensatz, damit Review Center und
+  // Reviewzyklen sich am Demo-Workbook zeigen lassen, ohne diesen erst manuell
+  // anzulegen. Bewusst überfällig (kritischer Prozess) — genau der Fall, den
+  // Review Center und Governance Dashboard hervorheben sollen. Datum wird zur
+  // Ladezeit relativ berechnet, damit die Demo nie durch ein festes Datum veraltet.
+  p.reviewConfig.prozess = { intervalType:'12m' };
+  const demoReviewGeplant = new Date(); demoReviewGeplant.setDate(demoReviewGeplant.getDate()-45);
+  STATE.reviews.push(newReview({
+    prozessId: p.id, reviewart:'prozess', status:'geplant',
+    geplantAm: demoReviewGeplant.toISOString().split('T')[0],
+    verantwortlich: p.steckbrief.verantwortlicher
+  }));
+
   /* ---- Zweiter Beispielprozess: IT-Basisdienst ---- */
   const p2 = newProcess('Bereitstellung E-Mail- und Kollaborationsdienste');
   p2.steckbrief.verantwortlicher = 'Markus Vogt';
@@ -9031,7 +10537,626 @@ function runSelfTests(){
     assertTrue(WORKSHOP_BLOCKS.includes('Notbetrieb'), 'Notbetrieb-Block muss vorhanden sein');
   });
 
-  return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{
+  /* ---- v2.4.0 (AP1): Review Center ---- */
+  test('defaultState: enthält reviews als leeres Array', true, ()=>{
+    const ds = defaultState();
+    assertTrue(Array.isArray(ds.reviews), 'defaultState().reviews fehlt');
+    assertEqual(ds.reviews.length, 0);
+  });
+  test('newReview: enthält alle Basisfelder mit Default-Status "geplant"', true, ()=>{
+    const r = newReview();
+    assertEqual(r.status, 'geplant');
+    assertTrue(Array.isArray(r.massnahmenIds), 'massnahmenIds muss ein Array sein');
+    ['id','prozessId','reviewart','geplantAm','gestartetAm','abgeschlossenAm','verantwortlich','ergebnis','naechsterReviewAm','erstelltAm'].forEach(f=>{
+      assertTrue(Object.prototype.hasOwnProperty.call(r,f), 'newReview() fehlt Feld "'+f+'"');
+    });
+  });
+  test('Migration 12->13: ergänzt reviews[] additiv, verändert Bestehendes nicht', true, ()=>{
+    const legacy = { schemaVersion:12, processes:[newProcess('Legacy')], resources:[], massnahmen:[], parkplatz:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 12->13 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    assertTrue(Array.isArray(result.data.reviews), 'reviews[] fehlt nach Migration 12->13');
+    assertEqual(result.data.reviews.length, 0);
+    assertEqual(result.data.processes[0].steckbrief.name, 'Legacy', 'Prozessname nach Migration verändert');
+  });
+  test('reviewDueInfo: vergangenes geplantAm bei offenem Review -> overdue', true, ()=>{
+    const past = new Date(); past.setDate(past.getDate()-5);
+    const r = newReview({geplantAm: past.toISOString().split('T')[0], status:'geplant'});
+    const info = reviewDueInfo(r);
+    assertEqual(info.state, 'overdue');
+    assertEqual(info.days, 5);
+  });
+  test('reviewDueInfo: geplantAm innerhalb des Fenster -> upcoming', false, ()=>{
+    const soon = new Date(); soon.setDate(soon.getDate()+10);
+    const r = newReview({geplantAm: soon.toISOString().split('T')[0], status:'geplant'});
+    assertEqual(reviewDueInfo(r).state, 'upcoming');
+  });
+  test('reviewDueInfo: abgeschlossener Review ist nie überfällig, unabhängig vom Datum', true, ()=>{
+    const past = new Date(); past.setDate(past.getDate()-100);
+    const r = newReview({geplantAm: past.toISOString().split('T')[0], status:'abgeschlossen'});
+    assertEqual(reviewDueInfo(r).state, 'done');
+  });
+  test('processesWithoutReviewPlanning: erkennt kritischen Prozess ohne jeglichen Review', false, ()=>{
+    const origProcs = STATE.processes, origReviews = STATE.reviews;
+    const p = newProcess('KritischOhneReview'); p.steckbrief.kritikalitaet = 'hoch';
+    STATE.processes = [p]; STATE.reviews = [];
+    const missing = processesWithoutReviewPlanning();
+    assertTrue(missing.some(x=>x.id===p.id), 'kritischer Prozess ohne Review wurde nicht erkannt');
+    STATE.processes = origProcs; STATE.reviews = origReviews;
+  });
+  test('reviewCenterPriorityList: überfällig vor bald-fällig vor fehlender Planung', false, ()=>{
+    const origProcs = STATE.processes, origReviews = STATE.reviews;
+    const pCrit = newProcess('PrioTestKritisch'); pCrit.steckbrief.kritikalitaet = 'hoch';
+    const pNorm = newProcess('PrioTestNormal');
+    const past = new Date(); past.setDate(past.getDate()-3);
+    const soon = new Date(); soon.setDate(soon.getDate()+3);
+    const overdueReview = newReview({prozessId:pNorm.id, geplantAm: past.toISOString().split('T')[0]});
+    const upcomingReview = newReview({prozessId:pNorm.id, geplantAm: soon.toISOString().split('T')[0]});
+    STATE.processes = [pCrit, pNorm]; STATE.reviews = [upcomingReview, overdueReview];
+    const list = reviewCenterPriorityList();
+    assertEqual(list.map(i=>i.type), ['overdue','upcoming','missing_planning']);
+    STATE.processes = origProcs; STATE.reviews = origReviews;
+  });
+  test('Import: reviews werden normalisiert, Prozessreferenz aufgelöst, unbekannte Maßnahmenreferenz entfernt', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pX', steckbrief:{name:'ReviewImportProzess'}}],
+      resources:[], massnahmen:[{id:'mX', titel:'Import-Maßnahme', prozessId:'pX'}], parkplatz:[],
+      reviews:[{id:'rX', prozessId:'pX', reviewart:'bia', status:'geplant', massnahmenIds:['mX','unbekannt']}], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid, 'Importdatei mit Reviews sollte gültig sein');
+    assertEqual(r.normalizedData.reviews.length, 1);
+    assertEqual(r.normalizedData.reviews[0].prozessId, 'pX');
+    assertEqual(r.normalizedData.reviews[0].massnahmenIds.length, 1, 'unbekannte Maßnahmenreferenz hätte entfernt werden müssen');
+  });
+  test('Import: zu viele Reviews werden abgelehnt (IMPORT_LIMITS.maxReviews)', true, ()=>{
+    const tooMany = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[], resources:[], massnahmen:[], parkplatz:[],
+      reviews: new Array(IMPORT_LIMITS.maxReviews+1).fill(0).map(()=>({id:uid('rev')})), versions:[] };
+    const r = validateImportData(tooMany);
+    assertTrue(!r.valid, 'Import mit zu vielen Reviews hätte abgelehnt werden müssen');
+  });
+  test('mergeImportData: neuer Review wird hinzugefügt, bestehender zusammengeführt', false, ()=>{
+    const origReviews = STATE.reviews;
+    const existing = newReview({id:'revMerge', ergebnis:''});
+    STATE.reviews = [existing];
+    const summary = mergeImportData({ processes:[], resources:[], massnahmen:[], parkplatz:[],
+      reviews:[ newReview({id:'revMerge', ergebnis:'Aus Import'}), newReview({id:'revNeu'}) ] }, 'ergaenzen');
+    assertEqual(summary.added, 1);
+    assertEqual(summary.updated, 1);
+    assertEqual(STATE.reviews.find(r=>r.id==='revMerge').ergebnis, 'Aus Import', 'leeres Ergebnis hätte übernommen werden müssen');
+    assertTrue(!!STATE.reviews.find(r=>r.id==='revNeu'), 'neuer Review wurde nicht hinzugefügt');
+    STATE.reviews = origReviews;
+  });
+
+  /* ---- v2.4.0 (AP2): Reviewzyklen je Reviewart ---- */
+  test('newProcess: reviewConfig enthält alle Reviewarten, zunächst ohne Policy', true, ()=>{
+    const p = newProcess('RC-Test');
+    REVIEW_ARTEN.forEach(a=>{ assertEqual(p.reviewConfig[a], null, 'reviewConfig.'+a+' sollte initial null sein'); });
+  });
+  test('Migration 13->14: ergänzt reviewConfig additiv, erfindet keine Policy', true, ()=>{
+    const legacyProcess = newProcess('LegacyOhneReviewConfig');
+    delete legacyProcess.reviewConfig;
+    const legacy = { schemaVersion:13, processes:[legacyProcess], resources:[], massnahmen:[], parkplatz:[], reviews:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 13->14 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    REVIEW_ARTEN.forEach(a=>{ assertEqual(result.data.processes[0].reviewConfig[a], null, 'reviewConfig.'+a+' hätte null bleiben müssen (keine erfundene Policy)'); });
+  });
+  test('computeNextReviewDate: liefert null, wenn keine Policy definiert ist', true, ()=>{
+    const p = newProcess('OhnePolicy');
+    assertEqual(computeNextReviewDate(p, 'bia', '2024-01-01'), null);
+  });
+  test('computeNextReviewDate: liefert null bei "ereignisbezogen" (kein erfundenes Intervall)', true, ()=>{
+    const p = newProcess('Ereignisbezogen');
+    p.reviewConfig.notbetrieb = { intervalType:'ereignisbezogen', intervalMonths:null };
+    assertEqual(computeNextReviewDate(p, 'notbetrieb', '2024-01-01'), null);
+  });
+  test('computeNextReviewDate: 6-Monats-Intervall wird korrekt berechnet', false, ()=>{
+    const p = newProcess('SechsMonate');
+    p.reviewConfig.bia = { intervalType:'6m', intervalMonths:null };
+    assertEqual(computeNextReviewDate(p, 'bia', '2024-01-15'), '2024-07-15');
+  });
+  test('computeNextReviewDate: individuelles Intervall nutzt intervalMonths', false, ()=>{
+    const p = newProcess('Individuell');
+    p.reviewConfig.ressourcen = { intervalType:'individuell', intervalMonths:9 };
+    assertEqual(computeNextReviewDate(p, 'ressourcen', '2024-01-15'), '2024-10-15');
+  });
+  test('Mehrere offene Reviewarten desselben Prozesses können gleichzeitig bestehen', false, ()=>{
+    const origReviews = STATE.reviews;
+    const p = newProcess('MehrereReviewarten');
+    STATE.reviews = [
+      newReview({prozessId:p.id, reviewart:'prozess', status:'geplant'}),
+      newReview({prozessId:p.id, reviewart:'bia', status:'in_bearbeitung'})
+    ];
+    const list = reviewsForProcess(p.id);
+    assertEqual(list.length, 2);
+    assertEqual(new Set(list.map(r=>r.reviewart)).size, 2, 'beide Reviewarten sollten unabhängig nebeneinander bestehen');
+    STATE.reviews = origReviews;
+  });
+  test('Import: reviewConfig wird normalisiert, ungültiges Intervall auf "keine Policy" zurückgesetzt', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pRC', steckbrief:{name:'ImportReviewConfig'},
+      reviewConfig:{ prozess:{intervalType:'12m'}, bia:{intervalType:'unsinn'}, notbetrieb:{intervalType:'individuell', intervalMonths:-5}, ressourcen:null }
+    }], resources:[], massnahmen:[], parkplatz:[], reviews:[], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid);
+    const rc = r.normalizedData.processes[0].reviewConfig;
+    assertEqual(rc.prozess, {intervalType:'12m', intervalMonths:null});
+    assertEqual(rc.bia, null, 'unbekanntes Intervall hätte zu "keine Policy" werden müssen');
+    assertEqual(rc.notbetrieb, null, 'individuell ohne gültige Monatsangabe hätte zu "keine Policy" werden müssen');
+    assertEqual(rc.ressourcen, null);
+  });
+  test('mergeProcessInto: reviewConfig überschreibt bestehende fachliche Entscheidung nicht', false, ()=>{
+    const existing = newProcess('MergeReviewConfig');
+    existing.reviewConfig.prozess = { intervalType:'12m', intervalMonths:null };
+    const imported = newProcess('MergeReviewConfigImport');
+    imported.reviewConfig.prozess = { intervalType:'3m', intervalMonths:null };
+    imported.reviewConfig.bia = { intervalType:'6m', intervalMonths:null };
+    mergeProcessInto(existing, imported, 'ergaenzen');
+    assertEqual(existing.reviewConfig.prozess, {intervalType:'12m', intervalMonths:null}, 'bestehende Policy hätte nicht überschrieben werden dürfen');
+    assertEqual(existing.reviewConfig.bia, {intervalType:'6m', intervalMonths:null}, 'leere Policy hätte ergänzt werden sollen');
+  });
+
+  /* ---- v2.4.0 (AP3): Maßnahmenmanagement 2.0 ---- */
+  test('newMassnahme: enthält Herkunfts-/Zeitachsen-/Wirksamkeitsfelder mit sinnvollen Defaults', true, ()=>{
+    const m = newMassnahme();
+    assertEqual(m.sourceType, 'manuell');
+    assertTrue(!!m.erstelltAm, 'erstelltAm sollte bei neuer Maßnahme gesetzt sein');
+    ['sourceId','sourceLabel','reviewId','abgeschlossenAm','wirksamkeitPruefer','wiedervorlageAm','blockiertGrund'].forEach(f=>{
+      assertEqual(m[f], '', 'newMassnahme().'+f+' sollte leer starten');
+    });
+  });
+  test('Migration 14->15: ergänzt Maßnahmenfelder additiv, Herkunft "unbekannt" statt erfunden, kein Zeitpunkt erfunden', true, ()=>{
+    const legacyMassnahme = { id:'mLegacy', titel:'Alte Maßnahme', prozessId:'', status:'offen' };
+    const legacy = { schemaVersion:14, processes:[], resources:[], massnahmen:[legacyMassnahme], parkplatz:[], reviews:[], versions:[] };
+    const result = migrateWorkbook(legacy);
+    assertTrue(result.ok, 'Migration 14->15 sollte erfolgreich sein');
+    assertEqual(result.toVersion, CURRENT_SCHEMA_VERSION);
+    const m = result.data.massnahmen[0];
+    assertEqual(m.sourceType, 'unbekannt', 'Herkunft von Altdaten darf nicht erfunden werden');
+    assertEqual(m.erstelltAm, '', 'Anlagezeitpunkt von Altdaten darf nicht erfunden werden');
+    assertEqual(m.abgeschlossenAm, '');
+  });
+  test('massnahmeIsOpen: klassifiziert alle Statuswerte korrekt', false, ()=>{
+    assertEqual(['offen','geplant','in_arbeit','blockiert'].map(s=>massnahmeIsOpen(newMassnahme({status:s}))), [true,true,true,true]);
+    assertEqual(['erledigt','verworfen'].map(s=>massnahmeIsOpen(newMassnahme({status:s}))), [false,false]);
+  });
+  test('massnahmeIsOverdue: verworfene Maßnahme ist nie überfällig', true, ()=>{
+    const m = newMassnahme({status:'verworfen', termin:'2000-01-01'});
+    assertEqual(massnahmeIsOverdue(m), false);
+  });
+  test('massnahmeIsBlockedWithoutReason: erkennt blockiert ohne Begründung, nicht bei vorhandener Begründung', false, ()=>{
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'blockiert', blockiertGrund:''})), true);
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'blockiert', blockiertGrund:'Wartet auf Budgetfreigabe'})), false);
+    assertEqual(massnahmeIsBlockedWithoutReason(newMassnahme({status:'offen'})), false);
+  });
+  test('massUpdate: setzt abgeschlossenAm einmalig beim Wechsel auf "erledigt"', false, ()=>{
+    const origMassnahmen = STATE.massnahmen;
+    const m = newMassnahme({status:'offen'});
+    STATE.massnahmen = [m];
+    massUpdate(m.id, 'status', 'erledigt');
+    assertTrue(!!m.abgeschlossenAm, 'abgeschlossenAm hätte gesetzt werden müssen');
+    const firstDate = m.abgeschlossenAm;
+    massUpdate(m.id, 'status', 'offen');
+    massUpdate(m.id, 'status', 'erledigt');
+    assertEqual(m.abgeschlossenAm, firstDate, 'abgeschlossenAm hätte beim erneuten Abschluss nicht überschrieben werden dürfen');
+    STATE.massnahmen = origMassnahmen;
+  });
+  test('validateMassnahme: blockiert ohne Begründung ist kritisch, erledigt ohne Wirksamkeitsnachweis ist Warnung', true, ()=>{
+    const blocked = validateMassnahme(newMassnahme({titel:'X', status:'blockiert'}));
+    assertTrue(blocked.findings.some(f=>f.field==='blockiertGrund' && f.type==='bad'), 'blockiert ohne Begründung hätte "bad" sein müssen');
+    const doneNoProof = validateMassnahme(newMassnahme({titel:'X', status:'erledigt', verantwortlich:'A', termin:'2020-01-01'}));
+    assertTrue(doneNoProof.findings.some(f=>f.field==='wirksamkeitGeprueftAm' && f.type==='warn'), 'erledigt ohne Wirksamkeitsnachweis hätte "warn" sein müssen');
+  });
+  test('reviewsWithOpenFollowupMassnahmen: findet abgeschlossenes Review mit offener Maßnahme, nicht bei abgeschlossener Maßnahme', false, ()=>{
+    const origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen;
+    const mOffen = newMassnahme({status:'offen'});
+    const mErledigt = newMassnahme({status:'erledigt'});
+    const rOffen = newReview({status:'abgeschlossen', massnahmenIds:[mOffen.id]});
+    const rErledigt = newReview({status:'abgeschlossen', massnahmenIds:[mErledigt.id]});
+    STATE.massnahmen = [mOffen, mErledigt];
+    STATE.reviews = [rOffen, rErledigt];
+    const result = reviewsWithOpenFollowupMassnahmen();
+    assertEqual(result.map(r=>r.id), [rOffen.id]);
+    STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+  });
+  test('Import: Maßnahmen-Herkunft und Review-Verknüpfung werden normalisiert und aufgelöst', true, ()=>{
+    const f = { schemaVersion: CURRENT_SCHEMA_VERSION, processes:[{id:'pM', steckbrief:{name:'ImportMassnahmenHerkunft'}}],
+      resources:[], parkplatz:[],
+      massnahmen:[{id:'mSrc', titel:'Aus Review', prozessId:'pM', sourceType:'review', reviewId:'rSrc'}, {id:'mBad', titel:'Ungültige Herkunft', sourceType:'unsinn'}],
+      reviews:[{id:'rSrc', prozessId:'pM', reviewart:'bia', status:'geplant', massnahmenIds:['mSrc']}], versions:[] };
+    const r = validateImportData(f);
+    assertTrue(r.valid);
+    const m1 = r.normalizedData.massnahmen.find(m=>m.titel==='Aus Review');
+    assertEqual(m1.sourceType, 'review');
+    assertEqual(m1.reviewId, r.normalizedData.reviews[0].id, 'reviewId hätte auf die finale Review-ID aufgelöst werden müssen');
+    const m2 = r.normalizedData.massnahmen.find(m=>m.titel==='Ungültige Herkunft');
+    assertEqual(m2.sourceType, 'unbekannt', 'ungültige Herkunft hätte auf "unbekannt" zurückgesetzt werden müssen');
+  });
+  test('ENUM_MASSNAHMEN_STATUS: neue Zielstatuswerte sind gültig, Altwert "zurueckgestellt" bleibt importierbar', false, ()=>{
+    ['geplant','blockiert','verworfen','zurueckgestellt'].forEach(s=>{
+      assertTrue(ENUM_MASSNAHMEN_STATUS.includes(s), 'Status "'+s+'" fehlt im Enum');
+    });
+  });
+
+  /* ---- v2.4.0 (AP4): BCM Timeline ---- */
+  (function(){
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen, origVersions = STATE.versions;
+
+    test('buildTimelineEvents: Prozessanlage erzeugt genau ein Ereignis mit dem echten Anlagezeitpunkt', true, ()=>{
+      const p = newProcess('TimelineProzess');
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.type==='prozess_angelegt');
+      assertEqual(events.length, 1);
+      assertEqual(events[0].timestamp, p.createdAt);
+    });
+
+    test('buildTimelineEvents: Review mit nur geplantAm erzeugt genau ein Ereignis, kein erfundener Start/Abschluss', true, ()=>{
+      const p = newProcess('TimelineReviewProzess');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01'}); // gestartetAm/abgeschlossenAm bewusst leer
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===r.id);
+      assertEqual(events.length, 1);
+      assertEqual(events[0].type, 'review_geplant');
+    });
+
+    test('buildTimelineEvents: vollständig durchlaufener Review erzeugt genau drei Ereignisse', false, ()=>{
+      const p = newProcess('TimelineReviewVollstaendig');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01', gestartetAm:'2026-01-05', abgeschlossenAm:'2026-01-10', status:'abgeschlossen'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===r.id);
+      assertEqual(events.map(e=>e.type).sort(), ['review_abgeschlossen','review_geplant','review_gestartet']);
+    });
+
+    test('buildTimelineEvents: Maßnahme ohne bekannten Anlagezeitpunkt (Altdatensatz) erzeugt kein "massnahme_erstellt"-Ereignis', true, ()=>{
+      const legacyMassnahme = newMassnahme({titel:'Altmaßnahme', erstelltAm:''}); // simuliert Migration 14->15
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [legacyMassnahme]; STATE.versions = [];
+      const events = buildTimelineEvents().filter(e=>e.object && e.object.id===legacyMassnahme.id);
+      assertTrue(!events.some(e=>e.type==='massnahme_erstellt'), 'Ein Anlage-Ereignis ohne echten Zeitstempel wäre erfunden');
+    });
+
+    test('buildTimelineEvents: Versionsdiff leitet Kritikalitäts-, Zeitwert-, Notbetrieb- und Ressourcenänderungen ab', false, ()=>{
+      const snapA = JSON.stringify({processes:[{id:'tx', steckbrief:{name:'TX', kritikalitaet:'mittel', mtaWert:'4', mtaEinheit:'Stunden', rto:{wert:2,einheit:'Stunden'}, rpo:{wert:1,einheit:'Stunden'}}, bia:{}, notbetrieb:{entscheidung:'Alt'}}], resources:[], massnahmen:[]});
+      const snapB = JSON.stringify({processes:[{id:'tx', steckbrief:{name:'TX', kritikalitaet:'hoch', mtaWert:'2', mtaEinheit:'Stunden', rto:{wert:2,einheit:'Stunden'}, rpo:{wert:1,einheit:'Stunden'}}, bia:{}, notbetrieb:{entscheidung:'Neu'}}], resources:[{id:'rx', name:'Neue Ressource'}], massnahmen:[]});
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:snapA, source:'manual'},
+        {nr:2, datum:'2026-02-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:snapB, source:'manual'}
+      ];
+      const events = buildTimelineEvents();
+      ['kritikalitaet_geaendert','zeitwerte_geaendert','notbetrieb_geaendert','ressourcen_geaendert'].forEach(t=>{
+        assertTrue(events.some(e=>e.type===t && e.timestamp==='2026-02-01T00:00:00.000Z'), 'Ereignis "'+t+'" wurde nicht abgeleitet', events.map(e=>e.type));
+      });
+    });
+
+    test('buildTimelineEvents: unterscheidet "Version gespeichert" von "Freigabe erzeugt" anhand version.source', false, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'},
+        {nr:2, datum:'2026-01-02T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'release'}
+      ];
+      const events = buildTimelineEvents();
+      assertTrue(events.some(e=>e.type==='version_gespeichert' && e.object.id===1), 'Version 1 hätte "version_gespeichert" sein müssen');
+      assertTrue(events.some(e=>e.type==='freigabe_erzeugt' && e.object.id===2), 'Version 2 (Freigabe) hätte "freigabe_erzeugt" sein müssen');
+    });
+
+    test('buildTimelineEvents: liefert bei unverändertem STATE bei wiederholtem Aufruf identische Ereignisse (keine Duplikate/Nichtdeterminismus)', true, ()=>{
+      const p = newProcess('TimelineDedup');
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01', gestartetAm:'2026-01-02', abgeschlossenAm:'2026-01-03'});
+      const m = newMassnahme({titel:'DedupMassnahme', prozessId:p.id});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = [m]; STATE.versions = [];
+      const first = buildTimelineEvents();
+      const second = buildTimelineEvents();
+      assertEqual(JSON.stringify(first), JSON.stringify(second), 'buildTimelineEvents() sollte bei unverändertem STATE deterministisch identische Ergebnisse liefern');
+      const keys = first.map(e=>e.type+'|'+(e.object?e.object.id:'')+'|'+e.timestamp);
+      assertEqual(keys.length, new Set(keys).size, 'buildTimelineEvents() enthält doppelte Ereignisse für dasselbe Objekt/denselben Zeitpunkt/Typ');
+    });
+
+    test('timelineEvents: Filter nach Prozess, Ereignistyp und Zeitraum grenzen korrekt ein', false, ()=>{
+      const p1 = newProcess('TimelineFilterA');
+      const p2 = newProcess('TimelineFilterB');
+      STATE.processes = [p1, p2]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [];
+      const byProcess = timelineEvents({prozessId:p1.id});
+      assertTrue(byProcess.every(e=>e.object && e.object.prozessId===p1.id), 'Prozessfilter hat fremde Ereignisse durchgelassen');
+      const byType = timelineEvents({type:'prozess_angelegt'});
+      assertTrue(byType.every(e=>e.type==='prozess_angelegt'), 'Typfilter hat andere Ereignistypen durchgelassen');
+      const byRangeFuture = timelineEvents({from:'2999-01-01'});
+      assertEqual(byRangeFuture.length, 0, 'Zeitraumfilter in der Zukunft hätte keine Treffer liefern sollen');
+    });
+
+    test('timelineEvents: absteigend nach Zeitpunkt sortiert', false, ()=>{
+      const p = newProcess('TimelineSort');
+      p.createdAt = '2020-01-01T00:00:00.000Z';
+      const r = newReview({prozessId:p.id, geplantAm:'2026-01-01'});
+      r.erstelltAm = '2025-01-01T00:00:00.000Z';
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = [];
+      const events = timelineEvents();
+      for(let i=1;i<events.length;i++){
+        assertTrue(String(events[i-1].timestamp) >= String(events[i].timestamp), 'Timeline nicht absteigend sortiert');
+      }
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen; STATE.versions = origVersions;
+  })();
+
+  /* ---- v2.4.0 (AP5): Governance Dashboard ---- */
+  (function(){
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen,
+      origVersions = STATE.versions, origResources = STATE.resources;
+
+    test('governancePriorityList: überfälliger Review eines kritischen Prozesses -> Stufe 1', true, ()=>{
+      const p = newProcess('GovKritischOverdue'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-5);
+      const r = newReview({prozessId:p.id, reviewart:'prozess', geplantAm: past.toISOString().split('T')[0], status:'geplant'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===1 && e.category==='review_overdue_critical' && e.object.id===r.id), 'überfälliger Review eines kritischen Prozesses fehlt in Stufe 1', list);
+    });
+
+    test('governancePriorityList: überfällige Maßnahme hoher Priorität -> Stufe 2', true, ()=>{
+      const p = newProcess('GovMassnahmeHoch');
+      const m = newMassnahme({prozessId:p.id, titel:'Hohe Prio überfällig', prioritaet:'hoch', status:'offen', termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===2 && e.category==='massnahme_overdue_high' && e.object.id===m.id), 'überfällige Maßnahme hoher Priorität fehlt in Stufe 2', list);
+    });
+
+    test('governancePriorityList: blockierte Maßnahme mit hoher Relevanz -> Stufe 3', true, ()=>{
+      const p = newProcess('GovBlockiert'); p.steckbrief.kritikalitaet = 'hoch';
+      const m = newMassnahme({prozessId:p.id, titel:'Blockiert kritisch', status:'blockiert', blockiertGrund:''});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===3 && e.category==='massnahme_blocked_relevant' && e.object.id===m.id), 'blockierte Maßnahme mit hoher Relevanz fehlt in Stufe 3', list);
+    });
+
+    test('governancePriorityList: kritischer Prozess ohne Reviewplanung -> Stufe 4', true, ()=>{
+      const p = newProcess('GovOhnePlanung'); p.steckbrief.kritikalitaet = 'hoch';
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===4 && e.category==='process_missing_review_planning' && e.object.id===p.id), 'kritischer Prozess ohne Reviewplanung fehlt in Stufe 4', list);
+    });
+
+    test('governancePriorityList: bald fälliger Review eines kritischen Prozesses -> Stufe 5', false, ()=>{
+      const p = newProcess('GovBaldFaellig'); p.steckbrief.kritikalitaet = 'hoch';
+      const soon = new Date(); soon.setDate(soon.getDate()+5);
+      const r = newReview({prozessId:p.id, reviewart:'bia', geplantAm: soon.toISOString().split('T')[0], status:'geplant'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===5 && e.category==='review_upcoming_critical' && e.object.id===r.id), 'bald fälliger Review eines kritischen Prozesses fehlt in Stufe 5', list);
+    });
+
+    test('governancePriorityList: erledigte Maßnahme ohne Wirksamkeitsprüfung -> Stufe 6', true, ()=>{
+      const p = newProcess('GovWirksamkeit');
+      const m = newMassnahme({prozessId:p.id, titel:'Erledigt ohne Nachweis', status:'erledigt', abgeschlossenAm:'2026-01-01', wirksamkeitGeprueftAm:''});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===6 && e.category==='massnahme_needs_effectiveness_proof' && e.object.id===m.id), 'erledigte Maßnahme ohne Wirksamkeitsprüfung fehlt in Stufe 6', list);
+    });
+
+    test('governancePriorityList: offener Managemententscheidungsbedarf -> Stufe 7', true, ()=>{
+      const p = newProcess('GovEntscheidung');
+      const m = newMassnahme({prozessId:p.id, titel:'Entscheidung nötig', status:'offen', entscheidungsbedarf:'Budgetfreigabe erforderlich'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===7 && e.category==='open_management_decision' && e.object.id===m.id), 'offener Managemententscheidungsbedarf fehlt in Stufe 7', list);
+      assertEqual(openManagementDecisions().length, 1);
+    });
+    test('openManagementDecisions: erledigte/verworfene Maßnahmen mit Entscheidungsbedarf gelten nicht als offen', false, ()=>{
+      const p = newProcess('GovEntscheidungErledigt');
+      const m = newMassnahme({prozessId:p.id, status:'erledigt', entscheidungsbedarf:'Bereits entschieden', abgeschlossenAm:'2026-01-01', wirksamkeitGeprueftAm:'2026-01-02'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      assertEqual(openManagementDecisions().length, 0);
+    });
+
+    test('governancePriorityList: wesentlicher Qualitätsbefund (Warnung) -> Stufe 8', false, ()=>{
+      const r = newResource(); r.name = 'GovKritischeRessourceOhneAlternative'; r.kritikalitaet = 'hoch'; r.alternative = 'nein';
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [r];
+      const list = governancePriorityList();
+      assertTrue(list.some(e=>e.tier===8 && e.category==='quality_finding'), 'Qualitätsbefund (Q10) fehlt in Stufe 8', list);
+    });
+
+    test('governancePriorityList: Sortierung ist über alle Stufen hinweg monoton (Stufe steigt nie rückwärts)', true, ()=>{
+      const pCrit = newProcess('GovMonoKritisch'); pCrit.steckbrief.kritikalitaet = 'hoch';
+      const pCrit2 = newProcess('GovMonoKritischOhnePlanung'); pCrit2.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-3);
+      const r1 = newReview({prozessId:pCrit.id, geplantAm:past.toISOString().split('T')[0]});
+      const m1 = newMassnahme({prozessId:pCrit.id, titel:'MonoHochUeberfaellig', prioritaet:'hoch', termin:'2000-01-01'});
+      const m2 = newMassnahme({prozessId:pCrit.id, titel:'MonoBlockiert', status:'blockiert'});
+      const m3 = newMassnahme({prozessId:pCrit.id, titel:'MonoErledigt', status:'erledigt', abgeschlossenAm:'2026-01-01'});
+      const m4 = newMassnahme({prozessId:pCrit.id, titel:'MonoEntscheidung', entscheidungsbedarf:'Test'});
+      const r = newResource(); r.kritikalitaet = 'hoch'; r.alternative = 'nein';
+      STATE.processes = [pCrit, pCrit2]; STATE.reviews = [r1]; STATE.massnahmen = [m1,m2,m3,m4]; STATE.versions = []; STATE.resources = [r];
+      const list = governancePriorityList();
+      for(let i=1;i<list.length;i++){
+        assertTrue(list[i].tier>=list[i-1].tier, 'Stufe ist an Position '+i+' rückläufig ('+list[i-1].tier+' -> '+list[i].tier+')', list.map(e=>e.tier));
+      }
+    });
+
+    test('governancePriorityList: gleiche Daten erzeugen bei wiederholtem Aufruf dieselbe Reihenfolge (deterministisch)', true, ()=>{
+      const p = newProcess('GovDeterministisch'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-7);
+      const r = newReview({prozessId:p.id, geplantAm: past.toISOString().split('T')[0]});
+      const m = newMassnahme({prozessId:p.id, titel:'DetMassnahme', prioritaet:'hoch', termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = [r]; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const first = governancePriorityList();
+      const second = governancePriorityList();
+      assertEqual(JSON.stringify(first), JSON.stringify(second), 'governancePriorityList() sollte bei unverändertem STATE deterministisch identisch sein');
+    });
+
+    test('changesSinceLastRelease: findet Ereignisse nach der letzten Freigabe, ignoriert keine Freigabe existierende Ereignisse davor', false, ()=>{
+      const p = newProcess('GovFreigabeProzess');
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [];
+      STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'},
+        {nr:2, datum:'2026-02-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'release'}
+      ];
+      const m = newMassnahme({prozessId:p.id, titel:'NachFreigabeAbgeschlossen', status:'erledigt', abgeschlossenAm:'2026-03-01'});
+      STATE.massnahmen = [m]; STATE.resources = [];
+      const info = changesSinceLastRelease();
+      assertTrue(info.hasRelease, 'hasRelease sollte true sein');
+      assertEqual(info.release.nr, 2);
+      assertTrue(info.events.some(e=>e.type==='massnahme_abgeschlossen' && e.timestamp==='2026-03-01'), 'Ereignis nach der Freigabe fehlt', info.events);
+    });
+    test('changesSinceLastRelease: kommuniziert transparent, wenn noch keine Freigabe existiert', true, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = [
+        {nr:1, datum:'2026-01-01T00:00:00.000Z', bearbeiter:'', notiz:'', snapshot:JSON.stringify({processes:[]}), source:'manual'}
+      ]; STATE.resources = [];
+      const info = changesSinceLastRelease();
+      assertEqual(info.hasRelease, false, 'ohne Freigabe-Version sollte kein Referenzzeitpunkt erfunden werden');
+      assertTrue(info.events===undefined, 'events sollte bei fehlender Freigabe nicht gesetzt sein');
+    });
+
+    test('computeGovernanceDashboard: leeres Workbook liefert hasProcesses:false und eine leere Prioritätsliste', true, ()=>{
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const gd = computeGovernanceDashboard();
+      assertEqual(gd.hasProcesses, false);
+      assertEqual(gd.priorityList.length, 0);
+    });
+
+    test('computeGovernanceDashboard: Kennzahlen entsprechen den tatsächlich gefilterten Datensätzen', false, ()=>{
+      const p = newProcess('GovKpiProzess'); p.steckbrief.kritikalitaet = 'hoch';
+      const past = new Date(); past.setDate(past.getDate()-2);
+      const rOverdue = newReview({prozessId:p.id, geplantAm: past.toISOString().split('T')[0]});
+      const mOverdue = newMassnahme({prozessId:p.id, termin:'2000-01-01', status:'offen'});
+      const mBlocked = newMassnahme({prozessId:p.id, status:'blockiert'});
+      const mNeedsProof = newMassnahme({prozessId:p.id, status:'erledigt', abgeschlossenAm:'2026-01-01'});
+      const mDecision = newMassnahme({prozessId:p.id, entscheidungsbedarf:'Klären'});
+      STATE.processes = [p]; STATE.reviews = [rOverdue]; STATE.massnahmen = [mOverdue, mBlocked, mNeedsProof, mDecision]; STATE.versions = []; STATE.resources = [];
+      const gd = computeGovernanceDashboard();
+      assertEqual(gd.kpis.reviewsOverdue, 1);
+      assertEqual(gd.kpis.massnahmenOverdue, 1);
+      assertEqual(gd.kpis.massnahmenBlocked, 1);
+      assertEqual(gd.kpis.wirksamkeitOffen, 1);
+      assertEqual(gd.kpis.offeneEntscheidungen, 1);
+      assertEqual(gd.kpis.aenderungenSeitFreigabe, null, 'ohne Freigabe sollte kein Zählwert erfunden werden');
+    });
+
+    test('computeGovernanceDashboard: verändert STATE nicht (reine Berechnung)', true, ()=>{
+      const p = newProcess('GovKeineMutation'); p.steckbrief.kritikalitaet = 'hoch';
+      const m = newMassnahme({prozessId:p.id, termin:'2000-01-01'});
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = [m]; STATE.versions = []; STATE.resources = [];
+      const before = JSON.stringify(STATE);
+      computeGovernanceDashboard();
+      const after = JSON.stringify(STATE);
+      assertEqual(after, before, 'computeGovernanceDashboard() darf STATE nicht verändern');
+    });
+
+    test('governanceDrilldownHtml: erzeugt für jeden Objekttyp einen sinnvollen Deep Link', false, ()=>{
+      assertTrue(governanceDrilldownHtml({type:'review'}).includes("go('reviews')"), 'Review-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'process', id:'p1'}).includes("go('process','p1','steckbrief')"), 'Prozess-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'massnahme'}).includes("go('massnahmen')"), 'Maßnahmen-Deep-Link fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'quality', prozessId:'p1', tab:'bia'}).includes("go('process','p1','bia')"), 'Qualitätsbefund-Deep-Link mit Prozessbezug fehlerhaft');
+      assertTrue(governanceDrilldownHtml({type:'quality', prozessId:null}).includes("go('quality')"), 'Qualitätsbefund-Deep-Link ohne Prozessbezug fehlerhaft');
+    });
+
+    test('massnahmeHatHoheRelevanz: hohe Priorität ODER kritischer Prozess, sonst nicht', false, ()=>{
+      const pKrit = newProcess('GovRelevanzKritisch'); pKrit.steckbrief.kritikalitaet = 'hoch';
+      const pNorm = newProcess('GovRelevanzNormal');
+      STATE.processes = [pKrit, pNorm];
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pNorm.id, prioritaet:'hoch'})), true);
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pKrit.id, prioritaet:'niedrig'})), true);
+      assertEqual(massnahmeHatHoheRelevanz(newMassnahme({prozessId:pNorm.id, prioritaet:'niedrig'})), false);
+    });
+
+    test('massnahmenMitFaelligerWiedervorlage: erkennt fällige Wiedervorlage nur bei offenen Maßnahmen', false, ()=>{
+      const past = new Date(); past.setDate(past.getDate()-1);
+      const mOffenFaellig = newMassnahme({status:'offen', wiedervorlageAm: past.toISOString().split('T')[0]});
+      const mErledigtFaellig = newMassnahme({status:'erledigt', abgeschlossenAm:'2026-01-01', wiedervorlageAm: past.toISOString().split('T')[0]});
+      const future = new Date(); future.setDate(future.getDate()+30);
+      const mOffenZukunft = newMassnahme({status:'offen', wiedervorlageAm: future.toISOString().split('T')[0]});
+      STATE.processes = []; STATE.reviews = []; STATE.massnahmen = [mOffenFaellig, mErledigtFaellig, mOffenZukunft]; STATE.versions = []; STATE.resources = [];
+      const due = massnahmenMitFaelligerWiedervorlage();
+      assertEqual(due.map(m=>m.id), [mOffenFaellig.id]);
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+    STATE.versions = origVersions; STATE.resources = origResources;
+  })();
+
+  /* ---- v2.4.0 (AP6): Release Completion — Freigabe-Bearbeiter immer erfassen ---- */
+  const ap6TestPromise = (async ()=>{
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen,
+      origVersions = STATE.versions, origResources = STATE.resources;
+
+    /** Baut einen für releaseReadinessCheck() vollständig sauberen (blocker- und warnungsfreien) Prozess. @param {string} id */
+    function cleanReleasableProcess(id){
+      return validateImportData({
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        processes: [{id:id, steckbrief:{name:'AP6-Sauber-'+id, ziel:'Ziel', mtaWert:'8', mtaEinheit:'Stunden',
+          verantwortlicher:'V', fachbereich:'F', kritikalitaet:'niedrig',
+          rto:{wert:4, einheit:'Stunden', legacyText:''}, rpo:{wert:1, einheit:'Stunden', legacyText:''}},
+          bia: BIA_CATEGORIES.reduce((acc,c)=>{ acc[c.key]={bewertung:1, beschreibung:'b', zeitpunkt:BIA_ZEITPUNKTE[1], kommentar:''}; return acc; },{}),
+          notbetrieb:{ausloeser:'A', entscheidung:'E', schritt1:'S', getestetAm:'2026-01-01'},
+          resilienz: RESILIENZ_ITEMS.map((it,i)=>({id:'ri'+id+i, label:it.label, status:'gruen', kommentar:'ok', empfehlung:it.empfehlung})),
+          dependencies: []}],
+        resources: [], massnahmen: [], versions: []
+      }).normalizedData.processes[0];
+    }
+
+    test('Freigabe-Modal (AP6): Bearbeiter-Feld erscheint auch OHNE Warnungen', true, ()=>{
+      // Bewusst über die reine releaseReportHtml()-Funktion geprüft, NICHT über ein echtes
+      // openModal()/closeModal() — Letzteres würde, weil dieser Test selbst im Rahmen von
+      // runSelfTests() läuft (das confirmStatusChange() bei jeder echten Freigabe aufruft),
+      // ein zeitgleich vom Anwender geöffnetes echtes Freigabe-Modal aus dem DOM reißen.
+      STATE.processes = [cleanReleasableProcess('rel1')]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      assertTrue(report.ok===true && report.warnings.length===0,
+        'Testfixtur ist nicht warnungsfrei — Test kann die eigentliche Behauptung nicht prüfen', report);
+      const html = releaseReportHtml(report, 'Freigegeben');
+      assertTrue(html.includes('id="release-bearbeiter"'), 'Bearbeiter-Feld fehlt bei warnungsfreier Freigabe — Versionshistorie würde stillschweigend "Unbekannt" erhalten (BLOCKER aus der Rollenvalidierung 2.4)');
+    });
+
+    test('Freigabe-Modal (AP6): Bearbeiter- UND Begründungsfeld erscheinen weiterhin bei Warnungen', true, ()=>{
+      const p = cleanReleasableProcess('rel2');
+      p.steckbrief.verantwortlicher = ''; // löst missingResponsibles-Warnung aus (blocker:false)
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      assertTrue(report.ok===true && report.warnings.length>0,
+        'Testfixtur erzeugt keine Warnung — Test kann die Regression nicht prüfen', report);
+      const html = releaseReportHtml(report, 'Freigegeben');
+      const hasBearbeiter = html.includes('id="release-bearbeiter"');
+      const hasJustification = html.includes('id="release-justification"');
+      assertTrue(hasBearbeiter && hasJustification,
+        'Bearbeiter- oder Begründungsfeld fehlt bei Freigabe mit Warnungen (Regression ggü. v1.6.0/P17)', {hasBearbeiter, hasJustification});
+    });
+
+    await asyncTest('createVersion (AP6): "release"-Version mit explizitem Bearbeiter erfasst ihn, nie "Unbekannt"', true, async ()=>{
+      const savedState = STATE;
+      try{
+        STATE = defaultState();
+        await createVersion('Erika Musterfrau', 'AP6-Selbsttest', 'release');
+        const v = STATE.versions[STATE.versions.length-1];
+        assertEqual(v.bearbeiter, 'Erika Musterfrau', 'Explizit übergebener Bearbeiter darf beim Anlegen einer Freigabe-Version nicht verworfen werden');
+        assertTrue(!!v.datum, 'Zeitpunkt der Freigabe-Version fehlt');
+        assertEqual(v.source, 'release', 'Herkunft der Version muss "release" sein');
+      } finally {
+        STATE = savedState;
+      }
+    });
+
+    test('releaseReadinessCheck (AP6): drei neue Governance-Signale sind WARNUNG, nie BLOCKER', true, ()=>{
+      const pKrit = cleanReleasableProcess('gov1'); pKrit.steckbrief.kritikalitaet = 'hoch';
+      pKrit.steckbrief.kritikalitaetAbweichungBegruendung = 'Regulatorisch gesetzt, unabhängig von der BIA-Empfehlung.';
+      const mBlockiert = newMassnahme({prozessId:pKrit.id, titel:'Blockiert ohne Grund', status:'blockiert', blockiertGrund:''});
+      const mEntscheidung = newMassnahme({prozessId:pKrit.id, titel:'Entscheidung offen', status:'offen', entscheidungsbedarf:'Budget klären'});
+      STATE.processes = [pKrit]; STATE.reviews = []; STATE.massnahmen = [mBlockiert, mEntscheidung]; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      const cats = report.warnings.map(w=>w.category);
+      assertTrue(report.ok===true, 'die drei neuen Signale dürfen niemals blockieren', report.blockers);
+      assertTrue(cats.includes('criticalProcessesNoReviewPlanning'), 'kritischer Prozess ohne Reviewplanung fehlt als Warnung', cats);
+      assertTrue(cats.includes('blockedMassnahmenNoReason'), 'blockierte Maßnahme ohne Begründung fehlt als Warnung', cats);
+      assertTrue(cats.includes('openGovernanceDecisions'), 'offene Managemententscheidung fehlt als Warnung', cats);
+    });
+
+    test('Import (AP6): leerer Bearbeiter einer Altversion wird nicht rückwirkend erfunden', true, ()=>{
+      const r = validateImportData({schemaVersion:CURRENT_SCHEMA_VERSION, processes:[], resources:[], massnahmen:[],
+        versions:[{nr:1, datum:'2020-01-01T00:00:00.000Z', bearbeiter:'', notiz:'Alt', snapshot:JSON.stringify({processes:[]}), source:'release'}]});
+      assertEqual(r.normalizedData.versions[0].bearbeiter, '', 'Import darf einen leeren historischen Bearbeiter nicht durch einen erfundenen Wert (z. B. "Unbekannt") ersetzen');
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+    STATE.versions = origVersions; STATE.resources = origResources;
+  })();
+
+  return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise, ap6TestPromise]).then(()=>{
     const total = results.length;
     const passed = results.filter(r=>r.passed).length;
     const failed = total - passed;
@@ -9051,6 +11176,8 @@ function openCommandPalette(){
     {ic:'◆', label:'Management Summary', action:()=>go('summary')},
     {ic:'✓', label:'Maßnahmenkatalog', action:()=>go('massnahmen')},
     {ic:'☐', label:'Parkplatz (offene Punkte)', action:()=>go('parkplatz')},
+    {ic:'↺', label:'Review Center', action:()=>go('reviews')},
+    {ic:'▤', label:'BCM Timeline', action:()=>go('timeline')},
     {ic:'◎', label:'Qualitätsprüfung', action:()=>go('quality')},
     {ic:'▼', label:'Priorisierungsansicht', action:()=>App.openPrioView()},
     {ic:'GF', label:'Managementbericht (GF-Ansicht)', action:()=>App.openGfMode()},
