@@ -4499,13 +4499,19 @@ const RELEASE_CHECK_CONFIG = {
   missingResponsibles:              { blocker:false, label:'Fehlende Prozessverantwortliche' },
   criticalResourcesNoAlternative:   { blocker:false, label:'Kritische Ressourcen ohne Alternative' },
   overdueCriticalMeasures:          { blocker:false, label:'Überfällige kritische Maßnahmen' },
-  unconfirmedMigrations:            { blocker:false, label:'Unbestätigte Migrationsergebnisse' }
+  unconfirmedMigrations:            { blocker:false, label:'Unbestätigte Migrationsergebnisse' },
+  // v2.4.0 (AP6): drei bestehende Governance-Prädikate (AP1/AP3/AP5) zusätzlich als WARNUNG
+  // wiederverwendet — bewusst nie als Blocker, keine neue Fachlogik, keine neue Bewertung.
+  criticalProcessesNoReviewPlanning: { blocker:false, label:'Kritische Prozesse ohne Reviewplanung' },
+  blockedMassnahmenNoReason:         { blocker:false, label:'Blockierte Maßnahmen ohne Begründung' },
+  openGovernanceDecisions:           { blocker:false, label:'Offene Managemententscheidungen' }
 };
 /** P17: prüft das gesamte Workbook gegen die in RELEASE_CHECK_CONFIG zentral konfigurierten Blocker-/Warnkriterien für einen Statuswechsel zu "Zur Freigabe"/"Freigegeben". @returns {{ok:boolean, blockers:object[], warnings:object[]}} */
 function releaseReadinessCheck(){
   const findings = { missingRequiredFields:[], timeConflicts:[], unjustifiedCriticalityDeviations:[],
     criticalProcessesNoFallback:[], redResilienceNoMeasure:[], invalidReferences:[],
-    missingResponsibles:[], criticalResourcesNoAlternative:[], overdueCriticalMeasures:[], unconfirmedMigrations:[] };
+    missingResponsibles:[], criticalResourcesNoAlternative:[], overdueCriticalMeasures:[], unconfirmedMigrations:[],
+    criticalProcessesNoReviewPlanning:[], blockedMassnahmenNoReason:[], openGovernanceDecisions:[] };
 
   STATE.processes.forEach(p=>{
     const name = p.steckbrief.name || '(ohne Namen)';
@@ -4551,6 +4557,17 @@ function releaseReadinessCheck(){
     findings.invalidReferences.push('Prozess "'+(o.process.steckbrief.name||'–')+'": Abhängigkeit verweist auf nicht vorhandenen Prozess.');
   });
 
+  // v2.4.0 (AP6): reine Wiederverwendung bestehender AP1/AP3/AP5-Prädikate, keine neue Berechnung.
+  reviewCenterData().missingPlanning.forEach(p=>{
+    findings.criticalProcessesNoReviewPlanning.push('Kritischer Prozess "'+(p.steckbrief.name||'(ohne Namen)')+'" besitzt noch keine Reviewplanung.');
+  });
+  STATE.massnahmen.filter(massnahmeIsBlockedWithoutReason).forEach(m=>{
+    findings.blockedMassnahmenNoReason.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'" ist blockiert, aber ohne dokumentierte Begründung.');
+  });
+  openManagementDecisions().forEach(m=>{
+    findings.openGovernanceDecisions.push('Maßnahme "'+(m.titel||'(ohne Titel)')+'" hat offenen Entscheidungsbedarf: '+(m.entscheidungsbedarf||'').substring(0,120)+'.');
+  });
+
   const blockers = [], warnings = [];
   Object.keys(findings).forEach(cat=>{
     if(findings[cat].length===0) return;
@@ -4558,6 +4575,50 @@ function releaseReadinessCheck(){
     target.push({ category: cat, label: RELEASE_CHECK_CONFIG[cat].label, items: findings[cat] });
   });
   return { ok: blockers.length===0, blockers, warnings };
+}
+
+/** v2.4.0 (AP6): reine HTML-Erzeugung für den Freigabe-Prüfbericht — bewusst aus App.showReleaseReport()
+    herausgelöst, damit Selbsttests das Bearbeiter-/Begründungsfeld anhand der zurückgegebenen Zeichenkette
+    prüfen können, ohne selbst ein echtes Modal zu öffnen/schließen (das würde ein zeitgleich vom Anwender
+    geöffnetes Freigabe-Modal zerstören, da confirmStatusChange() intern runSelfTests() aufruft). Keine
+    Verhaltensänderung — identisches Markup wie zuvor inline in showReleaseReport(). @param {object} report @param {string} pendingStatusChange @returns {string} HTML */
+function releaseReportHtml(report, pendingStatusChange){
+  let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(pendingStatusChange)+'"</h3>';
+  if(report.blockers.length>0){
+    html += '<p class="small" style="color:var(--bad);font-weight:700;">Freigabe blockiert — folgende Punkte müssen zuerst behoben werden:</p>';
+    report.blockers.forEach(b=>{
+      html += '<div class="rowcard" style="border-color:var(--bad);"><b class="small">'+escapeHtml(b.label)+' ('+b.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
+        b.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
+        (b.items.length>6?'<li class="small">… und '+(b.items.length-6)+' weitere</li>':'')+'</ul></div>';
+    });
+  }
+  if(report.warnings.length>0){
+    html += '<p class="small" style="font-weight:700;margin-top:14px;">Warnungen (können mit dokumentierter Begründung akzeptiert werden):</p>';
+    report.warnings.forEach(w=>{
+      html += '<div class="rowcard"><b class="small">'+escapeHtml(w.label)+' ('+w.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
+        w.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
+        (w.items.length>6?'<li class="small">… und '+(w.items.length-6)+' weitere</li>':'')+'</ul></div>';
+    });
+  }
+  if(report.blockers.length===0 && report.warnings.length===0){
+    html += '<p class="small" style="color:var(--ok);">Keine Blocker oder Warnungen erkannt.</p>';
+  }
+  if(report.blockers.length===0){
+    // v2.4.0 (AP6): Bearbeiter wird bei JEDER tatsächlichen Freigabe erfasst (nicht nur bei Warnungen) —
+    // sonst trägt die Versionshistorie bei warnungsfreier Freigabe "Unbekannt" ein.
+    const needsBearbeiter = pendingStatusChange==='Freigegeben' || report.warnings.length>0;
+    if(needsBearbeiter){
+      html += '<div class="field"><label>Bearbeiter<span class="req">*</span></label><input type="text" id="release-bearbeiter" value="'+escapeHtml(STATE.meta.currentBearbeiter)+'"></div>';
+    }
+    if(report.warnings.length>0){
+      html += '<div class="field"><label>Begründung für die Akzeptanz der obigen Warnungen<span class="req">*</span></label><textarea id="release-justification" placeholder="Warum wird trotz dieser Warnungen freigegeben?"></textarea></div>';
+    }
+    html += '<div class="modal-actions"><button class="btn" onclick="App.cancelStatusChange()">Abbrechen</button>'+
+      '<button class="btn btn-primary" onclick="App.confirmStatusChange()">'+(pendingStatusChange==='Freigegeben'?'Freigeben (erzeugt neue Version)':'Bestätigen')+'</button></div>';
+  } else {
+    html += '<div class="modal-actions"><button class="btn btn-primary" onclick="App.cancelStatusChange()">Schließen</button></div>';
+  }
+  return html;
 }
 
 
@@ -5679,38 +5740,7 @@ const App = {
   },
   /** P17: zeigt den Freigabe-Prüfbericht (Blocker/Warnungen) für den in PENDING_STATUS_CHANGE hinterlegten Zielstatus. @returns {void} */
   showReleaseReport(){
-    const report = releaseReadinessCheck();
-    let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(PENDING_STATUS_CHANGE)+'"</h3>';
-    if(report.blockers.length>0){
-      html += '<p class="small" style="color:var(--bad);font-weight:700;">Freigabe blockiert — folgende Punkte müssen zuerst behoben werden:</p>';
-      report.blockers.forEach(b=>{
-        html += '<div class="rowcard" style="border-color:var(--bad);"><b class="small">'+escapeHtml(b.label)+' ('+b.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
-          b.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
-          (b.items.length>6?'<li class="small">… und '+(b.items.length-6)+' weitere</li>':'')+'</ul></div>';
-      });
-    }
-    if(report.warnings.length>0){
-      html += '<p class="small" style="font-weight:700;margin-top:14px;">Warnungen (können mit dokumentierter Begründung akzeptiert werden):</p>';
-      report.warnings.forEach(w=>{
-        html += '<div class="rowcard"><b class="small">'+escapeHtml(w.label)+' ('+w.items.length+')</b><ul style="margin:6px 0 0;padding-left:18px;">'+
-          w.items.slice(0,6).map(i=>'<li class="small">'+escapeHtml(i)+'</li>').join('')+
-          (w.items.length>6?'<li class="small">… und '+(w.items.length-6)+' weitere</li>':'')+'</ul></div>';
-      });
-    }
-    if(report.blockers.length===0 && report.warnings.length===0){
-      html += '<p class="small" style="color:var(--ok);">Keine Blocker oder Warnungen erkannt.</p>';
-    }
-    if(report.blockers.length===0){
-      if(report.warnings.length>0){
-        html += '<div class="field"><label>Bearbeiter<span class="req">*</span></label><input type="text" id="release-bearbeiter" value="'+escapeHtml(STATE.meta.currentBearbeiter)+'"></div>';
-        html += '<div class="field"><label>Begründung für die Akzeptanz der obigen Warnungen<span class="req">*</span></label><textarea id="release-justification" placeholder="Warum wird trotz dieser Warnungen freigegeben?"></textarea></div>';
-      }
-      html += '<div class="modal-actions"><button class="btn" onclick="App.cancelStatusChange()">Abbrechen</button>'+
-        '<button class="btn btn-primary" onclick="App.confirmStatusChange()">'+(PENDING_STATUS_CHANGE==='Freigegeben'?'Freigeben (erzeugt neue Version)':'Bestätigen')+'</button></div>';
-    } else {
-      html += '<div class="modal-actions"><button class="btn btn-primary" onclick="App.cancelStatusChange()">Schließen</button></div>';
-    }
-    openModal(html);
+    openModal(releaseReportHtml(releaseReadinessCheck(), PENDING_STATUS_CHANGE));
   },
   /** P17: bricht einen laufenden Bearbeitungsstand-Wechsel ab, ohne etwas zu speichern. @returns {void} */
   cancelStatusChange(){
@@ -5731,24 +5761,33 @@ const App = {
         return;
       }
     }
+    const target = PENDING_STATUS_CHANGE;
+    // v2.4.0 (AP6): Bearbeiter wird unabhängig vom Warnungsstatus erfasst, sobald tatsächlich
+    // freigegeben wird — createVersion() erhält damit nie mehr stillschweigend 'Unbekannt'.
+    const needsBearbeiter = target==='Freigegeben' || report.warnings.length>0;
+    let bearbeiter = '';
+    if(needsBearbeiter){
+      const bearbEl = document.getElementById('release-bearbeiter');
+      bearbeiter = bearbEl ? bearbEl.value.trim() : '';
+    }
     if(report.warnings.length>0){
       const justEl = document.getElementById('release-justification');
-      const bearbEl = document.getElementById('release-bearbeiter');
       const justification = justEl ? justEl.value.trim() : '';
-      const bearbeiter = bearbEl ? bearbEl.value.trim() : '';
       if(!justification || !bearbeiter){ toast('Bitte Bearbeiter und Begründung angeben.'); return; }
       STATE.meta.releaseWarningAcceptances.push({
         categories: report.warnings.map(w=>w.category),
         bearbeiter, datum: new Date().toISOString(), begruendung: justification
       });
+    } else if(needsBearbeiter && !bearbeiter){
+      toast('Bitte Bearbeiter angeben.');
+      return;
     }
-    const target = PENDING_STATUS_CHANGE;
     STATE.meta.bearbeitungsstand = target;
     PENDING_STATUS_CHANGE = null;
     autosave();
     closeModal();
     if(target==='Freigegeben'){
-      await createVersion(STATE.meta.currentBearbeiter, 'Automatische Version bei Freigabe', 'release');
+      await createVersion(bearbeiter, 'Automatische Version bei Freigabe', 'release');
       toast('Workbook freigegeben — neue Version '+STATE.meta.version+' automatisch angelegt.');
     } else {
       toast('Bearbeitungsstand geändert zu "'+target+'".');
@@ -7244,17 +7283,29 @@ function tabSixty(p){
 function tabBia(p){
   const idx = STATE.processes.indexOf(p);
   const score = biaScore(p);
+  // v2.4.0 (AP6): keine Kategorie ist inhaltlich beschrieben -> Bewertung/Zeitpunkt stehen
+  // noch auf dem Ausgangswert aus newProcess() (bewertung:3, zeitpunkt:BIA_ZEITPUNKTE[1]).
+  // Score/Ampel werden davon unabhängig weiterhin unverändert berechnet (keine Fachlogikänderung) —
+  // hier wird nur zusätzlich sichtbar gemacht, dass es sich noch um keine bestätigte Einschätzung handelt,
+  // damit die 0%-Fortschrittsanzeige (processProgress) nicht der sichtbaren Bewertung widerspricht.
+  const biaUnbearbeitet = BIA_CATEGORIES.every(c=>!p.bia[c.key].beschreibung.trim());
   let html = '<div class="card"><div class="spread"><div class="card-title">Gesamtbewertung</div>'+
     '<span class="badge b-'+score.ampel+'" style="font-size:13px;padding:6px 14px;">'+score.klasse+' · Score '+score.avg+' / 5</span></div>'+
     '<div class="card-help">Bewerten Sie jede Auswirkungskategorie von 1 (gering) bis 5 (existenzbedrohend). Score und Ampel werden automatisch berechnet.</div>'+
-    '<div class="card-help">Die Gesamtbewertung wird gewichtet berechnet. Lieferfähigkeit, Kundenwirkung und interne Betriebsfähigkeit haben ein höheres Gewicht.</div></div>';
+    '<div class="card-help">Die Gesamtbewertung wird gewichtet berechnet. Lieferfähigkeit, Kundenwirkung und interne Betriebsfähigkeit haben ein höheres Gewicht.</div>'+
+    (biaUnbearbeitet ? '<div class="small" style="color:var(--warn);margin-top:4px;">⚠ Noch keine Kategorie inhaltlich beschrieben — Bewertung und Zeitpunkt stehen aktuell auf dem Ausgangswert und sind keine bestätigte Einschätzung (siehe Fortschrittsanzeige).</div>' : '')+
+    '</div>';
 
   BIA_CATEGORIES.forEach(c=>{
     const d = p.bia[c.key];
     const base = 'processes.'+idx+'.bia.'+c.key+'.';
+    const unbearbeitet = !d.beschreibung.trim();
     html += '<div class="card">';
     html += '<div class="spread" style="margin-bottom:10px;"><div class="card-title" style="font-size:13.5px;">'+c.label+'</div>'+
       '<div class="flexrow">'+ratingDots(d.bewertung)+'</div></div>';
+    if(unbearbeitet){
+      html += '<div class="small muted" style="margin-top:-6px;margin-bottom:10px;">Ausgangswert, noch nicht bestätigt — wird erst mit einer Beschreibung der Auswirkung zu einer dokumentierten Einschätzung.</div>';
+    }
     /* v2.2.0 (Barrierefreiheit): Die Auswahl war ausschließlich über die
        Hintergrundfarbe der Schaltfläche erkennbar. aria-pressed macht den
        Zustand für Screenreader hörbar; die Gruppe erhält einen Namen, damit
@@ -9761,6 +9812,19 @@ function loadSampleDataInternal(){
   STATE.massnahmen.push(newMassnahme({titel:'Hot-Standby für ERP-System einrichten', prozessId:p.id, kategorie:'IT / Technik', prioritaet:'hoch', verantwortlich:'IT-Abteilung', status:'offen', nutzen:'Reduziert Ausfallzeit auf Minuten.'}));
   STATE.massnahmen.push(newMassnahme({titel:'Papierprozess für Notbetrieb testen', prozessId:p.id, kategorie:'Organisation', prioritaet:'mittel', verantwortlich:'Petra Sommer', status:'offen'}));
 
+  // v2.4.0 (AP6): ein realistischer Review-Datensatz, damit Review Center und
+  // Reviewzyklen sich am Demo-Workbook zeigen lassen, ohne diesen erst manuell
+  // anzulegen. Bewusst überfällig (kritischer Prozess) — genau der Fall, den
+  // Review Center und Governance Dashboard hervorheben sollen. Datum wird zur
+  // Ladezeit relativ berechnet, damit die Demo nie durch ein festes Datum veraltet.
+  p.reviewConfig.prozess = { intervalType:'12m' };
+  const demoReviewGeplant = new Date(); demoReviewGeplant.setDate(demoReviewGeplant.getDate()-45);
+  STATE.reviews.push(newReview({
+    prozessId: p.id, reviewart:'prozess', status:'geplant',
+    geplantAm: demoReviewGeplant.toISOString().split('T')[0],
+    verantwortlich: p.steckbrief.verantwortlicher
+  }));
+
   /* ---- Zweiter Beispielprozess: IT-Basisdienst ---- */
   const p2 = newProcess('Bereitstellung E-Mail- und Kollaborationsdienste');
   p2.steckbrief.verantwortlicher = 'Markus Vogt';
@@ -11007,7 +11071,92 @@ function runSelfTests(){
     STATE.versions = origVersions; STATE.resources = origResources;
   })();
 
-  return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise]).then(()=>{
+  /* ---- v2.4.0 (AP6): Release Completion — Freigabe-Bearbeiter immer erfassen ---- */
+  const ap6TestPromise = (async ()=>{
+    const origProcesses = STATE.processes, origReviews = STATE.reviews, origMassnahmen = STATE.massnahmen,
+      origVersions = STATE.versions, origResources = STATE.resources;
+
+    /** Baut einen für releaseReadinessCheck() vollständig sauberen (blocker- und warnungsfreien) Prozess. @param {string} id */
+    function cleanReleasableProcess(id){
+      return validateImportData({
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        processes: [{id:id, steckbrief:{name:'AP6-Sauber-'+id, ziel:'Ziel', mtaWert:'8', mtaEinheit:'Stunden',
+          verantwortlicher:'V', fachbereich:'F', kritikalitaet:'niedrig',
+          rto:{wert:4, einheit:'Stunden', legacyText:''}, rpo:{wert:1, einheit:'Stunden', legacyText:''}},
+          bia: BIA_CATEGORIES.reduce((acc,c)=>{ acc[c.key]={bewertung:1, beschreibung:'b', zeitpunkt:BIA_ZEITPUNKTE[1], kommentar:''}; return acc; },{}),
+          notbetrieb:{ausloeser:'A', entscheidung:'E', schritt1:'S', getestetAm:'2026-01-01'},
+          resilienz: RESILIENZ_ITEMS.map((it,i)=>({id:'ri'+id+i, label:it.label, status:'gruen', kommentar:'ok', empfehlung:it.empfehlung})),
+          dependencies: []}],
+        resources: [], massnahmen: [], versions: []
+      }).normalizedData.processes[0];
+    }
+
+    test('Freigabe-Modal (AP6): Bearbeiter-Feld erscheint auch OHNE Warnungen', true, ()=>{
+      // Bewusst über die reine releaseReportHtml()-Funktion geprüft, NICHT über ein echtes
+      // openModal()/closeModal() — Letzteres würde, weil dieser Test selbst im Rahmen von
+      // runSelfTests() läuft (das confirmStatusChange() bei jeder echten Freigabe aufruft),
+      // ein zeitgleich vom Anwender geöffnetes echtes Freigabe-Modal aus dem DOM reißen.
+      STATE.processes = [cleanReleasableProcess('rel1')]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      assertTrue(report.ok===true && report.warnings.length===0,
+        'Testfixtur ist nicht warnungsfrei — Test kann die eigentliche Behauptung nicht prüfen', report);
+      const html = releaseReportHtml(report, 'Freigegeben');
+      assertTrue(html.includes('id="release-bearbeiter"'), 'Bearbeiter-Feld fehlt bei warnungsfreier Freigabe — Versionshistorie würde stillschweigend "Unbekannt" erhalten (BLOCKER aus der Rollenvalidierung 2.4)');
+    });
+
+    test('Freigabe-Modal (AP6): Bearbeiter- UND Begründungsfeld erscheinen weiterhin bei Warnungen', true, ()=>{
+      const p = cleanReleasableProcess('rel2');
+      p.steckbrief.verantwortlicher = ''; // löst missingResponsibles-Warnung aus (blocker:false)
+      STATE.processes = [p]; STATE.reviews = []; STATE.massnahmen = []; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      assertTrue(report.ok===true && report.warnings.length>0,
+        'Testfixtur erzeugt keine Warnung — Test kann die Regression nicht prüfen', report);
+      const html = releaseReportHtml(report, 'Freigegeben');
+      const hasBearbeiter = html.includes('id="release-bearbeiter"');
+      const hasJustification = html.includes('id="release-justification"');
+      assertTrue(hasBearbeiter && hasJustification,
+        'Bearbeiter- oder Begründungsfeld fehlt bei Freigabe mit Warnungen (Regression ggü. v1.6.0/P17)', {hasBearbeiter, hasJustification});
+    });
+
+    await asyncTest('createVersion (AP6): "release"-Version mit explizitem Bearbeiter erfasst ihn, nie "Unbekannt"', true, async ()=>{
+      const savedState = STATE;
+      try{
+        STATE = defaultState();
+        await createVersion('Erika Musterfrau', 'AP6-Selbsttest', 'release');
+        const v = STATE.versions[STATE.versions.length-1];
+        assertEqual(v.bearbeiter, 'Erika Musterfrau', 'Explizit übergebener Bearbeiter darf beim Anlegen einer Freigabe-Version nicht verworfen werden');
+        assertTrue(!!v.datum, 'Zeitpunkt der Freigabe-Version fehlt');
+        assertEqual(v.source, 'release', 'Herkunft der Version muss "release" sein');
+      } finally {
+        STATE = savedState;
+      }
+    });
+
+    test('releaseReadinessCheck (AP6): drei neue Governance-Signale sind WARNUNG, nie BLOCKER', true, ()=>{
+      const pKrit = cleanReleasableProcess('gov1'); pKrit.steckbrief.kritikalitaet = 'hoch';
+      pKrit.steckbrief.kritikalitaetAbweichungBegruendung = 'Regulatorisch gesetzt, unabhängig von der BIA-Empfehlung.';
+      const mBlockiert = newMassnahme({prozessId:pKrit.id, titel:'Blockiert ohne Grund', status:'blockiert', blockiertGrund:''});
+      const mEntscheidung = newMassnahme({prozessId:pKrit.id, titel:'Entscheidung offen', status:'offen', entscheidungsbedarf:'Budget klären'});
+      STATE.processes = [pKrit]; STATE.reviews = []; STATE.massnahmen = [mBlockiert, mEntscheidung]; STATE.versions = []; STATE.resources = [];
+      const report = releaseReadinessCheck();
+      const cats = report.warnings.map(w=>w.category);
+      assertTrue(report.ok===true, 'die drei neuen Signale dürfen niemals blockieren', report.blockers);
+      assertTrue(cats.includes('criticalProcessesNoReviewPlanning'), 'kritischer Prozess ohne Reviewplanung fehlt als Warnung', cats);
+      assertTrue(cats.includes('blockedMassnahmenNoReason'), 'blockierte Maßnahme ohne Begründung fehlt als Warnung', cats);
+      assertTrue(cats.includes('openGovernanceDecisions'), 'offene Managemententscheidung fehlt als Warnung', cats);
+    });
+
+    test('Import (AP6): leerer Bearbeiter einer Altversion wird nicht rückwirkend erfunden', true, ()=>{
+      const r = validateImportData({schemaVersion:CURRENT_SCHEMA_VERSION, processes:[], resources:[], massnahmen:[],
+        versions:[{nr:1, datum:'2020-01-01T00:00:00.000Z', bearbeiter:'', notiz:'Alt', snapshot:JSON.stringify({processes:[]}), source:'release'}]});
+      assertEqual(r.normalizedData.versions[0].bearbeiter, '', 'Import darf einen leeren historischen Bearbeiter nicht durch einen erfundenen Wert (z. B. "Unbekannt") ersetzen');
+    });
+
+    STATE.processes = origProcesses; STATE.reviews = origReviews; STATE.massnahmen = origMassnahmen;
+    STATE.versions = origVersions; STATE.resources = origResources;
+  })();
+
+  return Promise.all([encTestPromise, saveTestPromise, legacyCryptoPromise, ap6TestPromise]).then(()=>{
     const total = results.length;
     const passed = results.filter(r=>r.passed).length;
     const failed = total - passed;

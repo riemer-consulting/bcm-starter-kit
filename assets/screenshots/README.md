@@ -2,18 +2,26 @@
 
 This directory needs the following screenshots, captured manually from a
 running instance of `bcm-starter-kit.html` in a desktop browser (Chrome or
-Edge recommended, window width ≈ 1440px). Automated capture was not possible
-in the environment this repository was prepared in (no headless browser with
-network access to fetch a browser binary was available) — see the final
-report from repository preparation for details.
+Edge recommended, window width ≈ 1440px).
+
+**Update (2.4.0-dev/AP6):** a headless Chromium (via Playwright) with a
+pre-installed browser binary became available in the environment this branch
+was prepared in, so the three 2.4.0-dev views below could be captured
+automatically after all. The remaining ones still need manual capture — they
+either depend on OS-level browser chrome this environment cannot drive (the
+native print dialog for `pdf-report.png`) or simply have not been done yet.
 
 Loading `examples/demo-workbook.json` first (via **Import JSON** in the top
-bar — note that Settings offers only the *encrypted* import) is recommended so
-screenshots show realistic, populated data rather than an empty workbook.
+bar — note that Settings offers only the *encrypted* import), or clicking
+**Beispieldaten laden** in the app, is recommended so screenshots show
+realistic, populated data rather than an empty workbook.
 
 | Filename | Capture |
 |---|---|
-| `dashboard.png` | **Present, but mislabelled:** the file currently in this directory shows the *executive view* (GF-Ansicht), not the dashboard. It is used as the header image in `README.md` and described there accurately. A genuine dashboard screenshot is still missing. |
+| `dashboard.png` | **Present, but mislabelled:** the file currently in this directory shows the *executive view* (GF-Ansicht), not the dashboard. It is used as the header image in `README.md` and described there accurately. |
+| `governance-dashboard.png` | **Present (2.4.0-dev).** The Dashboard route's Governance Dashboard section ("Was ist als Nächstes zu tun?"), captured against the demo workbook. |
+| `review-center.png` | **Present (2.4.0-dev).** The Review Center view, captured against the demo workbook. |
+| `timeline.png` | **Present (2.4.0-dev).** The BCM Timeline view, captured against the demo workbook. |
 | `process-record.png` | A process record's **Steckbrief** (fact sheet) tab — e.g. "Auftragserfassung". |
 | `measures.png` | The measures catalog (`Maßnahmenkatalog`), ideally with the "overdue only" filter cleared so multiple statuses are visible. |
 | `executive-view.png` | The executive view (**GF-Ansicht**), scrolled to show the compact management overview at the top. (Not currently referenced by `README.md`, which uses `dashboard.png` for this — see above.) |

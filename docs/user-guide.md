@@ -44,6 +44,9 @@ process record or the sample-data loader.
 
 ### Governance Dashboard *(2.4.0-dev)*
 
+*(See the German [Governance Dashboard handbook chapter](handbook/governance-dashboard.md)
+for a deeper walkthrough, including the full 11-tier priority order.)*
+
 As soon as at least one process exists, the Dashboard leads with a
 **Governance Dashboard** section, above the general counts — because
 answering "what do I need to do next?" matters more than a count of how
@@ -54,9 +57,11 @@ states the task, the record it concerns, a plain-language reason (never
 just a severity label), when it's due, and a button that opens the exact
 record — never a vague pointer you have to go find yourself. The order is
 fixed and explainable: overdue reviews and measures on critical
-processes/of high priority first, then planning gaps, then upcoming
-reviews, effectiveness checks, open decisions, and quality/consistency
-findings, then the same categories for everything else. Nothing here is a
+processes/of high priority first, then blocked measures with high
+relevance (high priority or a critical process), then planning gaps, then
+upcoming reviews, effectiveness checks, open decisions, and
+quality/consistency findings, then the same categories for everything
+else. Nothing here is a
 score — the position of every entry follows directly from its category and
 how overdue or soon-due it is, and identical data always produces the
 identical order.
@@ -74,10 +79,11 @@ together.
 
 **"Changes since the last release"** looks at your most recent Freigabe
 (release) version and lists what changed since then — criticality,
-MTA/RTO/RPO, emergency-operations, or critical-resource changes, plus
-reviews and measures completed and effectiveness checks done. If you have
-never created a release, it says so plainly instead of guessing a
-reference point.
+MTA (maximum tolerable downtime), RTO (recovery time objective), RPO
+(recovery point objective), emergency-operations, or critical-resource
+changes, plus reviews and measures completed and effectiveness checks
+done. If you have never created a release, it says so plainly instead of
+guessing a reference point.
 
 **Open management decisions** reuses the existing "decision needed" field
 on measures — it is not a new kind of record.
@@ -133,15 +139,18 @@ and potential duplicate resource entries (detected by name similarity).
 
 ## Review Center
 
-*(Version 2.4.0-dev, under active development — not yet part of a stable release.)*
+*(Version 2.4.0-dev, under active development — not yet part of a stable release.
+See the German [Review Center handbook chapter](handbook/review-center.md) for
+a deeper walkthrough.)*
 
 The Review Center answers one question: **what does the person responsible
 for BCM need to do next?** It does not judge whether your BCM decisions are
 correct, sufficient or effective — it only tracks planning and due dates.
 
 A **review** is a concrete work/history record, not a template: it records a
-process, a review type (process review, BIA review, emergency-operations
-review, or resource review), planned/started/completed dates, an owner,
+process, a review type (process review, BIA — Business Impact Analysis —
+review, emergency-operations review, or resource review),
+planned/started/completed dates, an owner,
 a status (`planned` / `in progress` / `completed`), a result, the next
 review date, and links to measures that came out of it.
 
@@ -189,6 +198,9 @@ review are visually flagged throughout the application.
 
 ### Origin and status *(2.4.0-dev)*
 
+*(See the German [Maßnahmenmanagement 2.0 handbook chapter](handbook/massnahmenmanagement.md)
+for a deeper walkthrough.)*
+
 Every measure records where it came from — created manually, converted
 from a review, from a parking-lot item, from a quality/consistency finding,
 or generated automatically from a red/yellow resilience check — shown as a
@@ -205,14 +217,16 @@ block or the outcome itself was actually justified.
 
 ## BCM Timeline
 
-*(Version 2.4.0-dev, under active development — not yet part of a stable release.)*
+*(Version 2.4.0-dev, under active development — not yet part of a stable release.
+See the German [BCM Timeline handbook chapter](handbook/timeline.md) for a
+deeper walkthrough.)*
 
 A chronological, filterable view of business-relevant BCM events — process
 created; reviews planned/started/completed; measures created/completed;
-effectiveness checked; criticality, MTA/RTO/RPO, or emergency-operations
-changes; versions saved; releases created. Filter by process, event type,
-or date range; each entry links back to the relevant process record,
-Review Center, measures catalog, or version history.
+effectiveness checked; criticality, MTA/RTO/RPO, emergency-operations, or
+critical-resource changes; versions saved; releases created. Filter by
+process, event type, or date range; each entry links back to the relevant
+process record, Review Center, measures catalog, or version history.
 
 This is **not** an audit log and does not record every field edit — only
 the event types listed above, and only when the application already has a
@@ -221,6 +235,14 @@ every entry is computed from data you already see elsewhere (creation
 dates, review/measure dates, saved versions). A process record's Measures
 tab has a "Timeline anzeigen" shortcut that opens the timeline pre-filtered
 to that process.
+
+**Field edits alone never appear here.** Criticality, MTA/RTO/RPO,
+emergency-operations, and critical-resource changes are derived by
+comparing two consecutive *saved versions* — so if you edit one of these
+fields, that change only shows up in the Timeline after you next save a
+version (**Version speichern**) or create a release. Editing a field and
+checking the Timeline immediately afterwards, without saving a version in
+between, will correctly show nothing yet.
 
 ## Management (executive) view
 
@@ -324,6 +346,16 @@ session — answers are saved as you move through the questions. Note that this
 walks through **one process**, not the whole workbook: switch process using the
 selector at the top left, and close the mode with **Escape** or the close
 button.
+
+Workshop mode covers the foundational BCM work for a process (impact,
+minimum capability, resilience, emergency operations) — it deliberately does
+**not** walk through Review Center, Measures catalog, BCM Timeline, or the
+Governance Dashboard *(2.4.0-dev)*: those are where the *ongoing* governance
+work happens once the foundational workshop is done, and mixing an ongoing,
+multi-process view into a single-process, one-sitting workshop would work
+against its purpose. After a workshop, continue there — see
+[Review Center](#review-center), [Measures catalog](#measures-catalog),
+[BCM Timeline](#bcm-timeline), and the [Governance Dashboard](#governance-dashboard).
 
 ## Working in more than one browser tab
 

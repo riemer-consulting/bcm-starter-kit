@@ -165,6 +165,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Aufruf, keine Mutation von STATE, Kennzahlen-Korrektheit, Deep Links,
   Freigabe-/Kein-Freigabe-Fall, leeres Workbook.
 
+### Fixed — AP6: Release Completion
+- **BLOCKER (Rollenvalidierung 2.4): Freigabe-Bearbeiter fehlte bei
+  warnungsfreier Freigabe.** `App.confirmStatusChange()`/
+  `App.showReleaseReport()` erfassten Bearbeiter und Zeitpunkt bislang nur,
+  wenn der Freigabe-Prüfbericht Warnungen enthielt — eine warnungsfreie
+  Freigabe erzeugte einen Versionshistorien-Eintrag mit `BEARBEITER:
+  Unbekannt`. Das Bearbeiter-Feld erscheint jetzt bei jeder tatsächlichen
+  Freigabe (`bearbeitungsstand==='Freigegeben'`), unabhängig vom
+  Warnungsstatus. Keine Schemaänderung (`CURRENT_SCHEMA_VERSION` bleibt
+  15), keine neuen persistenten Felder, keine rückwirkende Änderung
+  bestehender Versionshistorien-Einträge.
+- Die HTML-Erzeugung des Freigabe-Prüfberichts wurde in die reine Funktion
+  `releaseReportHtml()` ausgelagert (keine Verhaltensänderung) — testbar
+  ohne ein echtes Modal zu öffnen/schließen.
+
+### Changed — AP6: Release Completion
+- `RELEASE_CHECK_CONFIG`/`releaseReadinessCheck()` um drei zusätzliche,
+  ausschließlich WARNENDE (nie blockierende) Governance-Signale ergänzt,
+  die bestehende AP1/AP3/AP5-Prädikate wiederverwenden: kritischer Prozess
+  ohne Reviewplanung (`reviewCenterData().missingPlanning`), blockierte
+  Maßnahme ohne Begründung (`massnahmeIsBlockedWithoutReason()`), offene
+  Managemententscheidung (`openManagementDecisions()`). Keine neue
+  Fachlogik, keine neue Bewertung.
+- BIA-Tab (`tabBia()`): zusätzlicher, rein darstellender Hinweis, wenn eine
+  Kategorie noch auf dem Ausgangswert (`bewertung:3`, unveränderter
+  `zeitpunkt`) steht und noch keine Beschreibung erfasst wurde — behebt die
+  in der Rollenvalidierung beobachtete Diskrepanz zwischen sichtbar
+  "vorbelegter" Bewertung und gleichzeitig 0 % Fortschritt.
+  `biaScore()`/`processProgress()` selbst unverändert.
+- Demo-Daten (`loadSampleDataInternal()`): ein realistischer, überfälliger
+  Review-Datensatz (inkl. Reviewzyklen-Policy) für den ersten Demo-Prozess
+  ergänzt, damit Review Center und Reviewzyklen sich am Demo-Workbook ohne
+  manuelles Anlegen zeigen lassen.
+- `docs/user-guide.md`: fehlender Timeline-Ereignistyp ("kritische
+  Ressourcen geändert") und fehlende Priorisierungsstufe 3 ergänzt;
+  MTA/RTO/RPO/BIA beim ersten Vorkommen ausgeschrieben; Querverweise zu den
+  vertiefenden `docs/handbook/*`-Kapiteln ergänzt; erklärt, dass bestimmte
+  Timeline-Änderungen erst nach einer gespeicherten Version als Versions-
+  diff sichtbar werden; Hinweis ergänzt, dass der Workshop-Modus die
+  laufende Governance (Review Center/Maßnahmenmanagement/Timeline/
+  Governance Dashboard) bewusst nicht mit abdeckt.
+- `docs/handbook/README.md`: Glossar um Wiedervorlage, "Blockiert ohne
+  Begründung" und Plausibilitätshinweis ergänzt.
+- `docs/release-process.md`: die fest hartcodierte Selbsttest-Anzahl (war
+  veraltet: "57") durch eine sich selbst nie veraltende Formulierung
+  ersetzt; die dokumentierte Erwartung an Datenqualitätshinweise/
+  Release-Blocker des Demo-Workbooks korrigiert (war bereits vor AP6
+  veraltet: 5 Hinweise/1 Blocker statt der dokumentierten 9/2).
+- `roadmap/RELEASE_2_4.md`: AP6 von "Prozessreife" auf "Release Completion"
+  umbenannt (entspricht der tatsächlichen Aufgabenstellung); die
+  ursprünglich separat geplanten AP7–AP10 (Freigaben/Historie/
+  Dokumentenreferenzen/Lifecycle-Berichte) mit Begründung aufgelöst, statt
+  als vergessene, leere Stubs stehen zu bleiben.
+- `README.md`: Versionsbadge auf `2.4.0-dev` korrigiert (war veraltet:
+  `2.2.0`); "Roadmap"-Abschnitt widersprach der Existenz von 2.4 und wurde
+  korrigiert; drei neue Screenshots (Review Center, BCM Timeline,
+  Governance Dashboard) ergänzt.
+- 5 neue Selbsttests (131 insgesamt): Bearbeiter-Feld erscheint mit/ohne
+  Warnungen, `createVersion()` verwirft einen übergebenen Bearbeiter nie,
+  historische leere Bearbeiter werden beim Import nicht rückwirkend
+  erfunden, die drei neuen Governance-Signale sind nachweislich Warnung
+  statt Blocker.
+
+### Investigated, not changed — AP6: Release Completion
+- **"Ampel bleibt immer Rot"** (Rollenvalidierung 2.4): systematisch über
+  acht Datenzustände (leeres Workbook, frisch angelegter/teilweise/
+  vollständig dokumentierter/kritischer Prozess, Demo-Workbook, kritische
+  Ressource ohne Alternative) reproduziert. `processAmpel()`/
+  `workbookAmpel()` (vorbestehend, nicht Teil von AP1–AP5) zeigten in
+  jedem Zustand ein fachlich nachvollziehbares, korrekt begründetes
+  Ergebnis — ein vollständig dokumentierter Prozess ohne offene Risiken
+  wird korrekt Gelb/Grün, nicht Rot. Keine Codeänderung.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

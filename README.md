@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-2.2.0-informational">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.4.0--dev-informational">
   <img alt="No build step" src="https://img.shields.io/badge/build-none%20required-brightgreen">
   <img alt="Works offline" src="https://img.shields.io/badge/works-offline-brightgreen">
 </p>
@@ -98,7 +98,7 @@ Contributions are welcome — bug reports, documentation improvements, and pull 
 
 ## Roadmap
 
-BCM Starter Kit is considered **functionally complete** for its original scope as of version 2.x. There is no committed roadmap of new business features. Future work is expected to focus on:
+BCM Starter Kit was considered **functionally complete** for its original 2.x scope. Version **2.4.0 "Governance & Lifecycle"** (in development on `feature/2.4-governance-lifecycle`) completes the ongoing BCM lifecycle on top of that — Review Center, review cycles, Measures management 2.0, BCM Timeline, and the Governance Dashboard — see [`roadmap/RELEASE_2_4.md`](roadmap/RELEASE_2_4.md). Beyond finishing 2.4, there is no committed roadmap of further new business features; a possible 2.5 is scoped to Reporting & Compliance only (see [`roadmap/RELEASE_2_5.md`](roadmap/RELEASE_2_5.md)). Other future work is expected to focus on:
 
 - Documentation and translation improvements — the application's own interface is German-only, and there is no internationalization infrastructure in place today
 - Additional demo/example workbooks
@@ -128,19 +128,21 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md
 
 ## Screenshots
 
-One screenshot exists; the rest still need to be captured manually from a running instance — see the note in [`assets/screenshots/README.md`](assets/screenshots/README.md).
+Four screenshots exist; the rest still need to be captured manually from a running instance — see the note in [`assets/screenshots/README.md`](assets/screenshots/README.md).
 
 | View | File | Present |
 |---|---|---|
 | Executive view (shown at the top of this README) | `assets/screenshots/dashboard.png` | ✅ |
-| Dashboard | — | ❌ still to capture |
+| Dashboard — Governance Dashboard *(2.4.0-dev)* | `assets/screenshots/governance-dashboard.png` | ✅ |
+| Review Center *(2.4.0-dev)* | `assets/screenshots/review-center.png` | ✅ |
+| BCM Timeline *(2.4.0-dev)* | `assets/screenshots/timeline.png` | ✅ |
 | Process record | `assets/screenshots/process-record.png` | ❌ still to capture |
 | Measures catalog | `assets/screenshots/measures.png` | ❌ still to capture |
 | PDF report | `assets/screenshots/pdf-report.png` | ❌ still to capture |
 | Settings | `assets/screenshots/settings.png` | ❌ still to capture |
 | Startup screen | `assets/screenshots/startup-screen.png` | ❌ still to capture |
 
-Note that the existing file is named `dashboard.png` but actually shows the **executive view**. The name is kept as-is because it is referenced from this README; renaming it would be a separate, deliberate change.
+Note that the existing file is named `dashboard.png` but actually shows the **executive view**. The name is kept as-is because it is referenced from this README; renaming it would be a separate, deliberate change. The three 2.4.0-dev screenshots above were captured headlessly (Chromium via Playwright) against the demo workbook, at 1440×1000; the remaining ones still need manual capture in a desktop browser, as this environment cannot drive dialogs that depend on OS-level chrome (e.g. the native print dialog for the PDF report screenshot).
 
 ---
 

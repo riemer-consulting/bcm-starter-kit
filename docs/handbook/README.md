@@ -4,9 +4,16 @@ Dieses Verzeichnis ist die fortlaufend gepflegte Markdown-Quelle für das
 Anwenderhandbuch. Es wird während der Entwicklung von Version 2.4
 ("Governance & Lifecycle") kapitelweise ergänzt.
 
-**Wichtig:** Das finale PDF-Handbuch wird erst zum Abschluss von Version 2.4
-erzeugt (siehe `roadmap/RELEASE_2_4.md`). Bis dahin ist dieses Verzeichnis
-die maßgebliche, kontinuierlich aktualisierte Quelle.
+**Wichtig:** Ein finales PDF-Handbuch war für den Abschluss von Version 2.4
+(AP6, siehe `roadmap/RELEASE_2_4.md`) vorgesehen. Bei der Umsetzung von AP6
+wurde geprüft, wie ein solches PDF erzeugt werden könnte — es existiert weder
+ein bereits vorhandenes PDF-Handbuch noch ein dokumentierter Erzeugungsweg
+dafür in diesem Repository (die eingebaute "PDF erzeugen"-Funktion der
+Anwendung erzeugt Berichte aus den Workbook-Daten, keine Dokumentation aus
+Markdown-Dateien). Bewusst wurde dafür **keine neue Build-Pipeline**
+eingeführt — das wäre über den Scope von AP6 hinausgegangen. Dieses
+Verzeichnis bleibt deshalb die maßgebliche Quelle; ein PDF-Handbuch ist ein
+offener, im AP6-Abschlussbericht dokumentierter Punkt.
 
 Für Anwender der aktuell stabilen Version siehe stattdessen
 [docs/user-guide.md](../user-guide.md) — dieses Handbuch ergänzt dort, wo
@@ -33,6 +40,9 @@ Erklärung jeweils im zugehörigen Kapitel.
 | Reviewzyklen-Policy | Optionales Intervall je Reviewart und Prozess | [1](review-center.md) |
 | Herkunft (Maßnahme) | Woher eine Maßnahme entstand (Review/Parkplatz/Qualitätsbefund/Resilienz/manuell) | [2](massnahmenmanagement.md) |
 | Wirksamkeitsprüfung | Separater Nachweis, dass eine erledigte Maßnahme tatsächlich wirkt | [2](massnahmenmanagement.md) |
+| Wiedervorlage | Datum für eine erneute Prüfung einer offenen Maßnahme (`wiedervorlageAm`) | [2](massnahmenmanagement.md) |
+| Blockiert ohne Begründung | Plausibilitätshinweis: Maßnahme mit Status `blockiert`, aber ohne `blockiertGrund` | [2](massnahmenmanagement.md) |
+| Plausibilitätshinweis | Hinweis auf eine Dokumentationslücke (z. B. fehlende Begründung/Nachweis) — keine fachliche Bewertung der Maßnahme selbst | [2](massnahmenmanagement.md) |
 | BCM Timeline | Chronologische, abgeleitete Ansicht fachlicher BCM-Ereignisse | [3](timeline.md) |
 | Governance Dashboard | Zusammengeführte, priorisierte Arbeitsliste "Was ist als Nächstes zu tun?" | [4](governance-dashboard.md) |
 | Priorisierungsstufe | Eine der 11 festen, deterministischen Rangstufen der Governance-Priorisierung | [4](governance-dashboard.md) |

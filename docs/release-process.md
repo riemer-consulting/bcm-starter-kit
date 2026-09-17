@@ -31,10 +31,12 @@ Before tagging a release, verify all of the following:
    released.
 2. **`CHANGELOG.md`** has an entry for the new version, dated, with the
    correct category (Added / Changed / Fixed / Removed / Security).
-3. **Self-tests pass.** Open the file, press **Ctrl+Alt+T**, confirm all 57
-   tests pass (or however many exist at release time — the count is reported
-   in the result). No critical test may fail; the release readiness check in
-   the application itself also blocks approval if one does.
+3. **Self-tests pass.** Open the file, press **Ctrl+Alt+T**, and confirm all
+   integrated self-tests pass. The suite reports its own current total in the
+   result — this document deliberately does not hard-code that number, since
+   it grows with every release and a fixed count here would just go stale
+   again. No critical test may fail; the release readiness check in the
+   application itself also blocks approval if one does.
 4. **If the schema version changed:** confirm `CURRENT_SCHEMA_VERSION` was
    bumped, a new step was added to `SCHEMA_MIGRATIONS`, and the migration is
    purely additive. Test opening an older-schema file (or a snapshot of one)
@@ -52,9 +54,13 @@ Before tagging a release, verify all of the following:
    feedback revealed it (see `CHANGELOG.md`, 2.2.0). The dependency cluster
    view should show one critical chain (IT-Betrieb → Auftragserfassung →
    Lager & Kommissionierung).
-   Note that the demo workbook deliberately produces 9 *data-quality* hints
-   and 2 release blockers — those are business findings about the fictional
-   company, not import problems, and are expected.
+   Note that the demo workbook deliberately produces 5 *data-quality* hints
+   and 1 release blocker (an unjustified criticality deviation) — those are
+   business findings about the fictional company, not import problems, and
+   are expected. (Corrected in 2.4.0-dev/AP6 — this count had drifted out of
+   sync with the actual demo data; re-verify it by hand if the demo workbook
+   itself changes, since unlike the self-test count above, this one is not
+   self-reporting.)
 7. **README and documentation reflect the current feature set.** Skim
    `README.md` and `docs/` for anything that describes removed or changed
    behavior.

@@ -222,45 +222,83 @@ wurden zusammen mit "bald fälliger Review eines sonstigen Prozesses" und
 fällige Governance-Aufgabe") ergänzt. Beide Ergänzungen sind in
 `roadmap/DECISIONS.md` begründet.
 
-### AP6 – Prozessreife
+### AP6 – Release Completion
+
+**Status: umgesetzt (2.4.0-dev)**
 
 - Ziel
+  Kein neues fachliches Arbeitspaket, sondern der kontrollierte Abschluss
+  von Version 2.4: eine Release-Gap-Analyse und eine fachliche
+  Rollenvalidierung (BCM-Manager, interner Revisor, Trainer, neuer
+  Anwender, Handbuch) haben AP1–AP5 geprüft und bestätigt, dass kein
+  weiteres Kernfeature fehlt. AP6 schließt die dabei gefundenen konkreten
+  Lücken, statt neue Funktionen zu bauen.
 - Fachlicher Nutzen
+  Die Rollenvalidierung hatte einen BLOCKER empirisch nachgewiesen: eine
+  warnungsfreie Freigabe erfasste keinen Bearbeiter (`BEARBEITER:
+  Unbekannt` in der Versionshistorie) — genau in der Funktion, die die
+  Nachvollziehbarkeits-Zusage von 2.4 einlöst. Das ist behoben. Zusätzlich
+  wurden zwei gemeldete Statusanzeigen-Beobachtungen ("Ampel bleibt
+  immer Rot", "BIA zeigt Vorbelegung trotz 0 % Fortschritt") mit
+  systematischen Tests über mehrere Datenzustände root-cause-analysiert
+  (siehe unten) und die Rollenvalidierung damit unabhängig überprüft statt
+  ungeprüft übernommen.
 - UX-Auswirkungen
+  Freigabe-Dialog zeigt das Bearbeiter-Feld jetzt auch ohne Warnungen.
+  BIA-Tab weist zusätzlich aus, wenn eine Kategorie noch auf dem
+  Ausgangswert steht und keine bestätigte Einschätzung ist. Freigabeprüfung
+  kann zusätzlich drei bereits vorhandene Governance-Signale (kritischer
+  Prozess ohne Reviewplanung, blockierte Maßnahme ohne Begründung, offene
+  Managemententscheidung) als Warnung anzeigen — nie als Blocker.
 - Architektur
+  `App.confirmStatusChange()`/`App.showReleaseReport()`: Bearbeiter-
+  Erfassung nicht mehr an `report.warnings.length>0` gekoppelt, sondern
+  zusätzlich an `PENDING_STATUS_CHANGE==='Freigegeben'`. Keine
+  Schemaänderung (`CURRENT_SCHEMA_VERSION` bleibt 15), keine neuen
+  persistenten Felder — ausschließlich Wiederverwendung von
+  `version.bearbeiter`/`STATE.meta.currentBearbeiter`. `RELEASE_CHECK_CONFIG`
+  um drei Warnkategorien ergänzt, die ausschließlich bestehende AP1/AP3/AP5-
+  Prädikate (`reviewCenterData().missingPlanning`,
+  `massnahmeIsBlockedWithoutReason()`, `openManagementDecisions()`)
+  wiederverwenden — keine neue Fachlogik. `processAmpel()`/`workbookAmpel()`
+  (vorbestehend, nicht Teil von AP1–AP5) unverändert — Root-Cause-Analyse
+  über die Zustände leeres Workbook/frisch angelegter/teilweise/
+  vollständig dokumentierter/kritischer Prozess/Demo-Workbook ergab
+  durchgehend fachlich korrektes, transparent begründetes Verhalten (siehe
+  Abschlussbericht). `tabBia()` zeigt zusätzlich einen rein darstellenden
+  Hinweis, wenn eine Kategorie noch beim Ausgangswert (`bewertung:3`,
+  `zeitpunkt` unverändert) steht — `biaScore()`/`processProgress()` selbst
+  unverändert.
 - Tests
+  5 neue Selbsttests (131 insgesamt): Bearbeiter-Feld erscheint mit und
+  ohne Warnungen, `createVersion()` verwirft einen übergebenen Bearbeiter
+  nie, historische leere Bearbeiter werden beim Import nicht rückwirkend
+  erfunden, die drei neuen Governance-Signale sind nachweislich Warnung
+  statt Blocker. Vollständige Regression AP1–AP5. Browser-Validierung und
+  Recovery-Test siehe Abschlussbericht.
 
-### AP7 – Freigaben
+**Roadmap-Reconciliation (AP6–AP10 der ursprünglichen Planung):** die
+folgenden vier ursprünglich für 2.4 vorgesehenen Themen wurden NICHT als
+eigene Arbeitspakete gebaut. Das ist eine bewusste, hier dokumentierte
+Entscheidung — keine vergessene Planung:
 
-- Ziel
-- Fachlicher Nutzen
-- UX-Auswirkungen
-- Architektur
-- Tests
-
-### AP8 – Historie
-
-- Ziel
-- Fachlicher Nutzen
-- UX-Auswirkungen
-- Architektur
-- Tests
-
-### AP9 – Dokumentenreferenzen
-
-- Ziel
-- Fachlicher Nutzen
-- UX-Auswirkungen
-- Architektur
-- Tests
-
-### AP10 – Lifecycle-Berichte
-
-- Ziel
-- Fachlicher Nutzen
-- UX-Auswirkungen
-- Architektur
-- Tests
+- **Prozessreife** — kein eigenes neues Feature. Das bestehende
+  `processMaturity()`/`processProgress()` (vor 2.4) sowie
+  `qualityAndConsistencyCheck()` und das neue Governance Dashboard (AP5)
+  decken den fachlichen Bedarf bereits ab; ein zusätzliches
+  Reifegradmodell würde denselben Sachverhalt doppelt bewerten.
+- **Freigaben** — der harte fachliche Kern (Nachvollziehbarkeit WER/WANN
+  bei einer Freigabe) wurde in AP6 selbst als Korrektur behoben, statt ein
+  eigenes Arbeitspaket zu füllen. Eine darüberhinausgehende Audit-Maske
+  ist bewusst nicht Teil von 2.4 (siehe "Nicht Bestandteil").
+- **Historie** — kein eigenes Feature. Reviewhistorie (AP1), Review Center
+  (AP1) und BCM Timeline (AP4) decken den fachlichen Bedarf bereits ab.
+- **Dokumentenreferenzen/Nachweisverwaltung** — nach 2.5 verschoben (siehe
+  `roadmap/RELEASE_2_5.md`, AP7 "Nachweisverwaltung").
+- **Lifecycle-Berichte** — kein eigenes 2.4-Paket. Reporting & Compliance
+  (Managementberichte, Auditmodus, Compliance-Dashboard) gehört fachlich
+  nach 2.5, nicht in ein Governance-&-Lifecycle-Release ohne
+  Berichtsanspruch.
 
 ## Nicht Bestandteil
 
