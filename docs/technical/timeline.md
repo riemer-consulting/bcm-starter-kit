@@ -1,6 +1,10 @@
-# BCM Timeline
+# BCM Timeline — technische Referenz
 
 *Arbeitspaket AP4, Version 2.4.0.*
+
+> **Diese Seite ist technische Dokumentation** (Datenmodell, Funktionsnamen,
+> Ableitungslogik) — für die anwenderorientierte Erklärung siehe
+> [BCM Timeline im Benutzerhandbuch](../handbook/20-timeline.md).
 
 ## Zweck
 

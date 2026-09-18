@@ -1,6 +1,10 @@
-# Review Center
+# Review Center — technische Referenz
 
 *Arbeitspaket AP1, Version 2.4.0.*
+
+> **Diese Seite ist technische Dokumentation** (Datenmodell, Funktionsnamen,
+> Migrationen) — für die anwenderorientierte Erklärung siehe
+> [Review Center im Benutzerhandbuch](../handbook/17-review-center.md).
 
 ## Zweck
 

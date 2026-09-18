@@ -1,6 +1,10 @@
-# Maßnahmenmanagement 2.0
+# Maßnahmenmanagement 2.0 — technische Referenz
 
 *Arbeitspaket AP3, Version 2.4.0.*
+
+> **Diese Seite ist technische Dokumentation** (Datenmodell, Funktionsnamen,
+> Migrationen) — für die anwenderorientierte Erklärung siehe
+> [Maßnahmenmanagement im Benutzerhandbuch](../handbook/15-massnahmenmanagement.md).
 
 ## Zweck
 

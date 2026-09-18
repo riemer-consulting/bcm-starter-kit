@@ -259,6 +259,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   erhalten). `roadmap/RELEASE_2_4.md` erhält eine Status-Kopfzeile
   ("AP1–AP6 abgeschlossen").
 
+### Added — Dokumentations- und Hilfe-Release-Gate
+
+> `APP_VERSION` bleibt `2.4.0`, `CURRENT_SCHEMA_VERSION` bleibt `15`. Keine
+> neue BCM-Fachfunktion, keine Änderung bestehender Fachlogik, Berechnungen,
+> Priorisierungslogik oder Datenmodelle. Ausschließlich Benutzerdokumentation
+> und kontextbezogene In-App-Hilfe.
+
+- **Vollständiges Benutzerhandbuch** (`docs/handbook/`, 32 Kapitel): deckt
+  erstmals die **gesamte** Anwendung anwenderorientiert ab, nicht nur die
+  2.4.0-Neuerungen — von der ersten Prozessaufnahme über BIA, Mindestfähigkeit,
+  Ressourcen/Abhängigkeiten, Notbetrieb, Resilienz-Check, Workshop-Modus,
+  Parkplatz und Maßnahmenmanagement bis zu Review Center, Reviewzyklen,
+  Timeline, Governance Dashboard, Versionierung, Freigabe, Import/Export,
+  Verschlüsselung, Datensicherung, PDF-Bericht, Einstellungen und einem
+  vollständigen Arbeitsablauf-Beispiel. Keine internen Funktionsnamen,
+  Datenstrukturen oder Migrationsdetails.
+- **Technische Referenz getrennt** (`docs/technical/`): die vier bisherigen
+  AP1–AP5-Technikkapitel (Review Center, Maßnahmenmanagement,
+  Timeline, Governance Dashboard) wurden per `git mv` aus `docs/handbook/`
+  hierher verschoben und gegenseitig mit ihrem jeweiligen Benutzerhandbuch-
+  Kapitel verlinkt.
+- **Kontextbezogene In-App-Hilfe** (`HELP_TOPICS`, `helpBtn()`,
+  `App.openHelp()`/`App.closeHelp()`): kleine "?"-Schaltflächen an rund
+  25 Stellen der Anwendung (Kritikalität, BIA, MTA/RTO/RPO, Ressourcen/
+  Abhängigkeiten, Notbetrieb, Mindestfähigkeit, Resilienz, Workshop-Modus,
+  Parkplatz, Maßnahmenstatus, Blockierung, Wirksamkeitsprüfung, Reviewarten,
+  Reviewzyklen, Reviewabschluss, Timeline, Governance Dashboard,
+  Qualitätsprüfung, Versionierung, Freigabe, Release Readiness, Import/
+  Export, Verschlüsselung, Recovery) öffnen kurze, rein erklärende Texte im
+  bestehenden Modal-System (`openModal()`/`closeModal()`, vollständig
+  tastaturbedienbar, Escape schließt). Die Hilfe ändert nie Daten. Wird sie
+  aus einem bereits offenen Dialog mit Formularfeldern heraus geöffnet (z. B.
+  „Review abschließen"), sichert `App.openHelp()` dessen aktuell eingegebene
+  Werte und stellt sie über „Zurück" wieder her, statt sie zu verwerfen.
+  Bleibt vollständig offline; kein neues Navigationslevel, kein neues
+  UI-Framework, keine neuen persistenten Felder.
+- **12 neue Screenshots** (`docs/handbook/images/`) aus dem finalen
+  2.4.0-Stand mit Demo-Workbook, headless über Playwright/Chromium erzeugt,
+  in die passenden Handbuchkapitel eingebettet.
+- **Neues PDF-Handbuch** (`docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`,
+  82 Seiten): vollständig neu aus allen 32 Kapiteln erzeugt (Titelseite,
+  Inhaltsverzeichnis mit Sprungmarken zu allen 32 Kapiteln, Screenshots,
+  Tabellen, durchgehende Seitenzahlen) — ersetzt die bisherige 4-Kapitel-Fassung.
+
+### Fixed — Dokumentations- und Hilfe-Release-Gate
+- Handbuch-Kapitel 21 (Governance Dashboard) beschrieb es fälschlich als
+  eigenen Seitenleisten-Menüpunkt; tatsächlich ist es der obere Teil der
+  Dashboard-Ansicht ("Was ist als Nächstes zu tun?"). Text korrigiert, keine
+  Codeänderung.
+
 ## [2.3.1] — Polish & Productivity
 
 Ergebnis eines vollständigen Workshop-Walkthroughs: über 40 einzelne UX-Verbesserungen,

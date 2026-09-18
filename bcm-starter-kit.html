@@ -157,6 +157,16 @@ nav.navlist{padding:14px 12px;flex:1;}
 .btn-danger:hover{background:#f6d9d6;}
 .btn-sm{padding:5px 10px;font-size:12px;border-radius:7px;}
 .btn[disabled]{opacity:.45;cursor:not-allowed;}
+/* v2.4.0 (Dokumentations-Release-Gate): kleines, konsistentes In-App-Hilfe-Element.
+   Öffnet ausschließlich erklärenden Text über das bestehende Modal-System —
+   ändert nie Daten, kein neues Navigationslevel. */
+.help-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);background:var(--surface-soft);color:var(--ink-faint);font-size:12px;font-weight:700;line-height:1;cursor:pointer;padding:0;vertical-align:middle;margin-left:6px;}
+.help-btn:hover,.help-btn:focus-visible{border-color:var(--accent);color:var(--accent);}
+.help-body p{margin:0 0 10px;}
+.help-body p:last-child{margin-bottom:0;}
+.help-body .help-label{font-weight:700;display:block;margin-bottom:2px;}
+.help-body .help-example{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;margin:10px 0;font-size:12.5px;}
+.help-body .help-more{font-size:12px;color:var(--ink-faint);margin-top:12px;font-style:italic;}
 
 /* ---------- Cards & layout ---------- */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow);}
@@ -4583,7 +4593,8 @@ function releaseReadinessCheck(){
     geöffnetes Freigabe-Modal zerstören, da confirmStatusChange() intern runSelfTests() aufruft). Keine
     Verhaltensänderung — identisches Markup wie zuvor inline in showReleaseReport(). @param {object} report @param {string} pendingStatusChange @returns {string} HTML */
 function releaseReportHtml(report, pendingStatusChange){
-  let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(pendingStatusChange)+'"</h3>';
+  let html = '<h3>Freigabeprüfung — Wechsel zu „'+escapeHtml(pendingStatusChange)+'"</h3>'+
+    '<p class="small muted" style="margin-top:-6px;">Automatische Prüfung vor der Freigabe.'+helpBtn('releaseReadiness')+'</p>';
   if(report.blockers.length>0){
     html += '<p class="small" style="color:var(--bad);font-weight:700;">Freigabe blockiert — folgende Punkte müssen zuerst behoben werden:</p>';
     report.blockers.forEach(b=>{
@@ -5633,6 +5644,10 @@ function renderSearchResults(){
 let MODAL_RETURN_FOCUS = null;
 /** Aktiver Tastatur-Handler des offenen Dialogs (Escape/Tabulator). @type {function|null} */
 let MODAL_KEY_HANDLER = null;
+/** v2.4.0 (Dokumentations-Release-Gate): Markup eines Dialogs, der geöffnet war, bevor App.openHelp() ihn
+    durch die Hilfe ersetzt hat — ermöglicht der Hilfe "Zurück"-Schaltfläche die Rückkehr, ohne bereits
+    eingegebene, noch nicht gespeicherte Werte in Formularfeldern dieses Dialogs zu verlieren. @type {string|null} */
+let HELP_RETURN_HTML = null;
 
 /** Liefert die aktuell fokussierbaren Elemente eines Dialogs in Dokumentreihenfolge. @param {Element} modal @returns {Element[]} */
 function modalFocusables(modal){
@@ -5701,6 +5716,21 @@ function closeModal(keepFocusTarget){
   if(target && typeof target.focus==='function' && document.contains(target)) target.focus();
 }
 
+/** v2.4.0 (Dokumentations-Release-Gate): erzeugt das Markup eines Dialogs für App.openHelp()/App.closeHelp(), wobei
+    aktuell eingegebene, aber noch nicht bestätigte Formularwerte (Tippen ändert nur die Live-Eigenschaft .value,
+    nicht das serialisierte HTML-Attribut) zuvor ins Markup zurückgeschrieben werden — sonst ginge eine
+    unfertige Eingabe verloren, wenn die Hilfe denselben Dialog ersetzt und "Zurück" ihn neu aufbaut.
+    Rein lesend gegenüber STATE — betrifft ausschließlich das DOM-Markup des offenen Dialogs. @param {Element} modalEl @returns {string} HTML */
+function snapshotModalFormHtml(modalEl){
+  modalEl.querySelectorAll('input,textarea,select').forEach(el=>{
+    if(el.tagName==='TEXTAREA'){ el.textContent = el.value; }
+    else if(el.tagName==='SELECT'){ Array.from(el.options).forEach(o=>{ if(o.selected){ o.removeAttribute('selected'); } }); const sel=el.options[el.selectedIndex]; if(sel) sel.setAttribute('selected',''); }
+    else if(el.type==='checkbox'||el.type==='radio'){ if(el.checked){ el.setAttribute('checked',''); } else { el.removeAttribute('checked'); } }
+    else { el.setAttribute('value', el.value); }
+  });
+  return modalEl.innerHTML;
+}
+
 /* ---------------------------------------------------------------------
    9) APP — zentrales Aktionsobjekt (vom Markup via onclick referenziert)
    --------------------------------------------------------------------- */
@@ -5725,6 +5755,26 @@ const App = {
     setPath(STATE, fieldPath+'.legacyText', '');
     autosave();
     render();
+  },
+
+  /** v2.4.0 (Dokumentations-Release-Gate): öffnet die kontextbezogene In-App-Hilfe zu einem HELP_TOPICS-Thema im bestehenden Modal-System. Rein lesend, ändert nie STATE. War bereits ein Dialog mit Formularfeldern geöffnet (z. B. "Review abschließen"), wird dessen Markup inkl. bereits eingegebener Werte gesichert, damit "Zurück" ohne Datenverlust dorthin zurückführt. @param {string} key Schlüssel in HELP_TOPICS. @returns {void} */
+  openHelp(key){
+    const t = HELP_TOPICS[key];
+    if(!t) return;
+    const openBg = document.getElementById('modal-bg');
+    HELP_RETURN_HTML = openBg ? snapshotModalFormHtml(openBg.firstChild) : null;
+    const backBtn = HELP_RETURN_HTML
+      ? '<button class="btn btn-primary" onclick="App.closeHelp()">Zurück</button>'
+      : '<button class="btn btn-primary" onclick="App.closeHelp()">Schließen</button>';
+    openModal('<h3>'+escapeHtml(t.title)+'</h3><div class="help-body">'+t.body+'</div>'+
+      '<div class="modal-actions">'+backBtn+'</div>');
+  },
+  /** v2.4.0 (Dokumentations-Release-Gate): schließt die Hilfe — kehrt zum vorherigen Dialog zurück, falls App.openHelp() einen gesichert hat, sonst normales Schließen. @returns {void} */
+  closeHelp(){
+    const returnHtml = HELP_RETURN_HTML;
+    HELP_RETURN_HTML = null;
+    if(returnHtml){ openModal(returnHtml); }
+    else { closeModal(); }
   },
 
   /** P17: Einstiegspunkt für einen Bearbeitungsstand-Wechsel; leitet bei "Zur Freigabe"/"Freigegeben" zur Freigabeprüfung, sonst direkte Übernahme. @param {string} newValue @returns {void} */
@@ -6854,7 +6904,7 @@ function governanceDashboardHtml(){
       emptyState('Noch keine Prozesse dokumentiert', 'Beginnen Sie mit der Prozessaufnahme, um Governance-Aussagen zu erhalten.')+'</div>';
   }
 
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Was ist als Nächstes zu tun?</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Was ist als Nächstes zu tun?'+helpBtn('governanceDashboard')+'</div>'+
     '<div class="small muted">Deterministisch nach Fälligkeit, Kritikalität und Priorität sortiert — kein Score.</div></div>';
   if(gd.priorityList.length===0){
     html += gd.hasAnyReviews
@@ -7164,6 +7214,206 @@ function dependenciesCardHtml(process){
   return html;
 }
 
+/* ---------------------------------------------------------------------
+   v2.4.0 (Dokumentations-Release-Gate) — KONTEXTBEZOGENE IN-APP-HILFE
+   ---------------------------------------------------------------------
+   Reine Erklärungstexte, rein lesend. Kein neues Navigationslevel, keine
+   neue Datenstruktur, kein Einfluss auf STATE — HELP_TOPICS wird von
+   App.openHelp() ausschließlich in ein bestehendes Modal (openModal/
+   closeModal) gerendert. Inhalte sind statisch und werden nie mit
+   Anwenderdaten interpoliert (kein escapeHtml() nötig). Jeder Text
+   verweist am Ende auf das passende Kapitel im ausführlichen
+   Benutzerhandbuch (docs/handbook/) — als Klartextangabe, nicht als
+   Link, da die HTML-Datei offline und unabhängig vom docs/-Ordner
+   funktionieren muss (Single-File-/Offline-Prinzip). */
+const HELP_TOPICS = {
+  kritikalitaet: { title:'Kritikalität', body: `
+    <p><span class="help-label">Was ist das?</span> Ihre bewusste Einstufung, wie wichtig dieser Prozess für die Fortführung des Unternehmens ist — Hoch, Mittel oder Niedrig.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Stufen Sie den Prozess manuell ein. Das Starter Kit zeigt Ihnen zusätzlich eine Empfehlung, die es aus Ihrer Business Impact Analyse berechnet.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Die Kritikalität steuert u. a. die Ampel je Prozess, die Priorisierung im Governance Dashboard und ob für eine Freigabe ein dokumentierter Notbetrieb verlangt wird.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Weicht Ihre Einstufung von der BIA-Empfehlung ab, ist das ausdrücklich erlaubt — tragen Sie dann aber eine kurze Begründung ein.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 6 „Kritikalität verstehen und dokumentieren".</p>` },
+
+  bia: { title:'Business Impact Analysis (BIA)', body: `
+    <p><span class="help-label">Was ist das?</span> Die Einschätzung, welche Auswirkung ein Ausfall dieses Prozesses auf acht Unternehmensbereiche hätte (z. B. Finanzen, Kunden, Recht).</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Bewerten Sie jede Kategorie von 1 (gering) bis 5 (existenzbedrohend) und beschreiben Sie kurz, worin die Auswirkung besteht.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Aus allen acht Bewertungen berechnet das Starter Kit einen gewichteten Gesamtscore und daraus eine Kritikalitäts-Empfehlung.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Jede Kategorie startet technisch mit dem Wert 3 vorbelegt — das ist noch <b>keine</b> Einschätzung. Erst eine eingetragene Beschreibung macht daraus eine bestätigte Bewertung.</p>
+    <div class="help-example"><b>Beispiel:</b> Kategorie „Lieferfähigkeit" — Bewertung 4, Beschreibung „Nach 24 Stunden Ausfall können vereinbarte Liefertermine für Großkunden nicht mehr eingehalten werden."</div>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 7 „Business Impact Analysis (BIA)".</p>` },
+
+  mtaRtoRpo: { title:'MTA, RTO und RPO', body: `
+    <p><span class="help-label">Was ist das?</span> Drei Zeitwerte: <b>MTA</b> — wie lange darf der Prozess maximal ausfallen? <b>RTO</b> — bis wann muss die Leistung wiederhergestellt sein? <b>RPO</b> — welcher Datenverlust ist noch akzeptabel?</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Tragen Sie für jeden Wert eine Zahl und eine Einheit ein — abgeleitet aus Ihrer Business Impact Analyse, nicht aus einer Vorgabe des Starter Kits.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Direkt darunter prüft das Starter Kit die Plausibilität der drei Werte zueinander, z. B. ob RTO die MTA überschreitet.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> RTO über MTA blockiert später eine Freigabe. RTO = MTA lässt keinen Puffer. Diese Prüfung bewertet nur die Werte zueinander, nicht ob sie fachlich richtig sind.</p>
+    <div class="help-example"><b>Beispiel:</b> MTA 24 Stunden, RTO 8 Stunden (Puffer zur MTA), RPO 1 Stunde (stündliche Datensicherung).</div>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 8 „MTA, RTO und RPO".</p>` },
+
+  ressourcen: { title:'Kritische Ressourcen und Abhängigkeiten', body: `
+    <p><span class="help-label">Was ist das?</span> Die Personen, Systeme, Daten, Lieferanten und weiteren Mittel, die dieser Prozess zum Funktionieren braucht.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Erfassen Sie jede benötigte Ressource mit Kategorie, Kritikalität und — wichtig — ob eine Alternative existiert.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Ressourcen werden in einem gemeinsamen Pool geführt. Der Abhängigkeitscluster wertet aus, welche Ressourcen mehrfach genutzt werden und wo Single Points of Failure liegen.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Legen Sie dieselbe Ressource nicht mehrfach neu an — verknüpfen Sie stattdessen den bestehenden Eintrag, sonst bleibt Mehrfachnutzung unsichtbar.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 10 „Ressourcen und Abhängigkeiten".</p>` },
+
+  notbetrieb: { title:'Notbetrieb', body: `
+    <p><span class="help-label">Was ist das?</span> Die konkrete Beschreibung, wie dieser Prozess während einer Störung tatsächlich weiterläuft.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Beschreiben Sie Auslöser, Entscheidung, die einzelnen Schritte sowie benötigte Unterlagen und Kontaktlisten — möglichst konkret, nicht allgemein.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Für kritische Prozesse verlangt eine Freigabe einen dokumentierten Notbetrieb. Fehlendes Testdatum wird als Hinweis angezeigt.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Ein nie geübter Notbetrieb bleibt Theorie — halten Sie offene Lücken ehrlich fest, statt einen zu optimistischen Plan zu zeigen.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 11 „Notbetrieb".</p>` },
+
+  mindestfaehigkeit: { title:'Mindestfähigkeit', body: `
+    <p><span class="help-label">Was ist das?</span> Was im Notbetrieb wirklich unverzichtbar ist — und was reduziert oder zurückgestellt werden kann.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Ordnen Sie Leistungen den drei Spalten zu (Muss funktionieren / Kann reduziert werden / Kann warten) und erfassen Sie optional eine messbare Mindestfähigkeit (Prozent, Menge oder nur Beschreibung).</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Sie ist Grundlage für eine realistische Notbetriebsplanung.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Wählen Sie bei der messbaren Erfassung genau einen Modus — das Starter Kit rechnet nie automatisch zwischen Prozent und Menge um.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 9 „Mindestfähigkeit".</p>` },
+
+  resilienz: { title:'Resilienz-Check', body: `
+    <p><span class="help-label">Was ist das?</span> Eine feste 12-Punkte-Checkliste zur groben Einschätzung, wie robust dieser Prozess grundsätzlich aufgestellt ist.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Bewerten Sie jeden Punkt mit einer Ampel (Grün/Gelb/Rot) und optional einem Kommentar.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Über „Maßnahmen aus Checks erzeugen" lassen sich aus roten (und optional gelben) Punkten automatisch Maßnahmen-Entwürfe anlegen.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Ein roter Punkt ohne zugehörige Maßnahme wird als Datenqualitätslücke gemeldet.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 12 „Resilienz-Check".</p>` },
+
+  workshop: { title:'Workshop-Modus', body: `
+    <p><span class="help-label">Was ist das?</span> Eine geführte Fragenfolge in großer Schrift für die gemeinsame Prozessanalyse im Termin.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Beantworten Sie die Fragen block­weise; Ihre Eingaben landen direkt in den zugehörigen Feldern der Prozessakte.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Offene Punkte lassen sich per „+ Parkplatz" festhalten, ohne den Workshop zu unterbrechen.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Die „Moderatoren-Notiz" wird bewusst <b>nicht</b> gespeichert — sie verschwindet beim Schließen. Wichtige Ergebnisse gehören in ein reguläres Feld oder auf den Parkplatz.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 13 „Workshop-Modus".</p>` },
+
+  massnahmenstatus: { title:'Maßnahmenstatus', body: `
+    <p><span class="help-label">Was ist das?</span> Der Bearbeitungsstand einer Maßnahme: Offen, Geplant, In Arbeit, Blockiert, Erledigt, Verworfen oder Zurückgestellt.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Halten Sie den Status aktuell — er bestimmt u. a., ob eine Maßnahme als überfällig gilt oder im Governance Dashboard auftaucht.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Beim Wechsel auf „Erledigt" wird einmalig ein Abschlussdatum gesetzt, das auch bei erneutem Öffnen erhalten bleibt.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> „Erledigt" bedeutet nicht automatisch „wirksam" — dafür gibt es die separate Wirksamkeitsprüfung.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 15 „Maßnahmenmanagement".</p>` },
+
+  blockierung: { title:'Blockierte Maßnahmen', body: `
+    <p><span class="help-label">Was ist das?</span> Eine Maßnahme, die aktuell nicht vorankommt — z. B. weil eine Entscheidung oder ein Budget fehlt.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Setzen Sie den Status auf „Blockiert" und tragen Sie eine Begründung ein.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Eine Begründung ist bei diesem Status Pflicht. Ohne sie wird die Maßnahme im Katalog und im Governance Dashboard als „Blockiert ohne Begründung" hervorgehoben — und blockiert eine Freigabe.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Eine dauerhaft blockierte Maßnahme ohne Fortschritt sollte regelmäßig neu bewertet werden.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 15 „Maßnahmenmanagement".</p>` },
+
+  wirksamkeit: { title:'Wirksamkeitsprüfung', body: `
+    <p><span class="help-label">Was ist das?</span> Der Nachweis, dass eine umgesetzte Maßnahme tatsächlich wirkt.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Tragen Sie Nachweis, Prüfdatum, Ergebnis und Prüfer ein, sobald eine Maßnahme geprüft wurde.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Fehlt der Nachweis bei einer erledigten Maßnahme, weist das Starter Kit darauf in der Qualitätsprüfung hin.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Prüfer und Ergebnis sind bewusst getrennte Felder — „erledigt" heißt nicht „wirksam", und „wirksam" allein sagt nicht, wer geprüft hat.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 15 „Maßnahmenmanagement".</p>` },
+
+  reviewarten: { title:'Reviewarten', body: `
+    <p><span class="help-label">Was ist das?</span> Vier unabhängige Reviewarten: Prozessreview, BIA-Review, Notbetriebsreview, Ressourcenreview.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Wählen Sie beim Planen eines Reviews die passende Art — je nachdem, welcher Teil der Prozessakte geprüft werden soll.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Jede Reviewart wird unabhängig von den anderen geplant, durchgeführt und mit einer eigenen Fälligkeit verfolgt.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Ein Review ändert die geprüften Felder nicht automatisch — er ist der Anlass, sie tatsächlich durchzugehen.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 17 „Review Center".</p>` },
+
+  reviewzyklen: { title:'Reviewzyklen', body: `
+    <p><span class="help-label">Was ist das?</span> Ein optionales Wiederholungsintervall je Reviewart und Prozess (z. B. „alle 12 Monate").</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Wählen Sie ein Intervall (3/6/12/24 Monate, individuell oder ereignisbezogen) oder lassen Sie „keine Policy" stehen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Beim Abschluss eines passenden Reviews schlägt das Starter Kit automatisch den nächsten Termin vor.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Ohne definierte Policy erfindet das Starter Kit keinen Termin — auch „ereignisbezogen" erzeugt bewusst keinen automatischen Vorschlag.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 18 „Reviewzyklen".</p>` },
+
+  reviewabschluss: { title:'Review abschließen', body: `
+    <p><span class="help-label">Was ist das?</span> Der Abschluss eines laufenden Reviews mit dokumentiertem Ergebnis.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Tragen Sie ein Ergebnis ein (Pflichtfeld) und optional den nächsten Reviewtermin.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Ist für diese Reviewart eine Zykluspolicy hinterlegt, schlägt das Starter Kit den Folgetermin vor und bietet an, den Folgereview direkt als „Geplant" anzulegen.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Sie können den vorgeschlagenen Folgereview jederzeit abwählen — die Entscheidung bleibt bei Ihnen.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 17 „Review Center".</p>` },
+
+  timeline: { title:'BCM Timeline', body: `
+    <p><span class="help-label">Was ist das?</span> Eine chronologische Übersicht fachlich relevanter BCM-Ereignisse — kein vollständiges Änderungsprotokoll.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Filtern Sie nach Prozess, Ereignistyp und Zeitraum, um nachzuvollziehen, was sich wann geändert hat.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts — die Timeline zeigt ausschließlich bereits vorhandene Daten, sie speichert selbst nichts Neues.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Es erscheinen nur Ereignisse mit echtem Zeitstempel — nicht jede Feldänderung wird abgebildet.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 20 „BCM Timeline".</p>` },
+
+  governanceDashboard: { title:'Governance Dashboard', body: `
+    <p><span class="help-label">Was ist das?</span> Eine priorisierte Arbeitsliste: Worum sollten Sie sich als BCM-Verantwortlicher jetzt kümmern?</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Gehen Sie die Liste von oben nach unten durch — jede Position erklärt, warum sie erscheint, und verlinkt direkt in die passende Ansicht.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts — das Dashboard berechnet alles bei jedem Aufruf neu aus bereits vorhandenen Daten.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Eine leere Liste bedeutet nur, dass aktuell keine der festen Regeln zutrifft — nicht, dass alles inhaltlich vollständig ist.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 21 „Governance Dashboard".</p>` },
+
+  qualitaetspruefung: { title:'Qualitäts- und Konsistenzprüfung', body: `
+    <p><span class="help-label">Was ist das?</span> Eine automatische Prüfung, ob Ihre Dokumentation vollständig und widerspruchsfrei ist.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Gehen Sie die angezeigten Befunde durch — über „Bearbeiten" springen Sie direkt zum betroffenen Feld, über „+ Maßnahme" legen Sie bei Bedarf eine Maßnahme an.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts wird automatisch geändert — die Prüfung zeigt nur an, was noch fehlt oder widersprüchlich ist.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> „Alle Prüfungen bestanden" heißt nur, dass die geprüften Regeln erfüllt sind — nicht automatisch Freigabereife.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 16 „Qualitäts- und Konsistenzprüfung".</p>` },
+
+  versionierung: { title:'Versionierung', body: `
+    <p><span class="help-label">Was ist das?</span> Ein unveränderlicher Schnappschuss des gesamten Workbooks zu einem bestimmten Zeitpunkt.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Speichern Sie vor größeren Änderungen oder nach wichtigen Terminen (z. B. einem Workshop) bewusst eine neue Version.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Zwei Versionen lassen sich strukturiert vergleichen; eine ältere Version lässt sich wiederherstellen.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Beim Wiederherstellen wird der bisherige aktuelle Stand <b>nicht</b> automatisch vorher gesichert — sichern Sie ihn bei Bedarf selbst zuerst.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 23 „Versionierung und Versionshistorie".</p>` },
+
+  freigabe: { title:'Freigabe', body: `
+    <p><span class="help-label">Was ist das?</span> Der formale Bearbeitungsstand-Wechsel zu „Zur Freigabe" oder „Freigegeben".</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Ändern Sie den Bearbeitungsstand — das Starter Kit zeigt automatisch einen Prüfbericht mit Blockern und Warnungen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Bestehen Blocker, ist die Freigabe nicht möglich, bis diese behoben sind. Warnungen lassen sich mit dokumentierter Begründung akzeptieren.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Eine erfolgreiche Freigabe legt automatisch eine neue Version an — inklusive Bearbeiter und Zeitpunkt.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 24 „Freigabe und Release Readiness".</p>` },
+
+  releaseReadiness: { title:'Release Readiness (Freigabeprüfung)', body: `
+    <p><span class="help-label">Was ist das?</span> Die automatische Prüfung, die vor einer Freigabe abläuft — Blocker und Warnungen aus dem gesamten Workbook.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Behobene Blocker sind Voraussetzung; bei Warnungen tragen Sie Bearbeiter und Begründung ein, wenn Sie sie bewusst akzeptieren.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Bei „Freigegeben" werden zusätzlich die eingebauten kritischen Selbsttests ausgeführt — bestehen sie nicht, wird die Freigabe verweigert.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Die Prüfung ersetzt keine fachliche Beurteilung — sie stellt nur sicher, dass grundlegende Lücken nicht unbemerkt bleiben.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 24 „Freigabe und Release Readiness".</p>` },
+
+  importExport: { title:'Import und Export', body: `
+    <p><span class="help-label">Was ist das?</span> Der Weg, Daten als JSON-Datei zu sichern oder mit anderen auszutauschen.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Exportieren Sie regelmäßig eine JSON-Datei als Sicherung. Beim Import mit vorhandenem eigenem Stand wählen Sie zwischen Ersetzen, Zusammenführen oder Manuell auswählen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> „Vollständig ersetzen" überschreibt den aktuellen Stand vollständig — nicht exportierte eigene Eingaben gehen dabei verloren.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Exportieren Sie vor einem „Vollständig ersetzen"-Import zur Sicherheit zuerst Ihren eigenen aktuellen Stand.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 25 „Import, Export und Verschlüsselung".</p>` },
+
+  verschluesselung: { title:'Verschlüsselter Export/Import', body: `
+    <p><span class="help-label">Was ist das?</span> Ein Export des gesamten Stands, geschützt mit einem selbst gewählten Passwort (AES-GCM).</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Vergeben Sie beim Export ein Passwort und geben Sie es sicher an die empfangende Person weiter — über einen anderen Kanal als die Datei selbst.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Die Datei lässt sich nur mit exakt diesem Passwort wieder entschlüsseln.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Das Passwort wird nirgends gespeichert und ist bei Verlust <b>nicht wiederherstellbar</b>.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 25 „Import, Export und Verschlüsselung".</p>` },
+
+  recovery: { title:'Wiederherstellung und Sicherungen', body: `
+    <p><span class="help-label">Was ist das?</span> Automatisch angelegte Sicherungen vor riskanten Vorgängen (Import, Versions-Wiederherstellung, Bereinigen, Schema-Aktualisierung).</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Bei Bedarf: eine Sicherung ansehen, wiederherstellen, als JSON herunterladen oder löschen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts automatisch — Sie entscheiden jeden Wiederherstellungsschritt selbst.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Es werden nur bis zu 5 Sicherungen rotierend vorgehalten — das ersetzt keine eigenen regelmäßigen Exporte oder Versionen.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 26 „Datensicherung und Wiederherstellung".</p>` },
+
+  parkplatz: { title:'Parkplatz', body: `
+    <p><span class="help-label">Was ist das?</span> Ein Sammelplatz für offene Punkte, die gerade nicht sofort geklärt werden sollen — vor allem im Workshop nützlich.</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Erfassen Sie einen kurzen Punkt mit optional Prozess, Verantwortlichem und Termin.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Sie können den Punkt später als „Erledigt" abschließen oder direkt in eine Maßnahme umwandeln.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> Ein Parkplatz-Eintrag ersetzt keine Maßnahme mit Termin — verschieben Sie wichtige Punkte rechtzeitig dorthin.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 14 „Parkplatz".</p>` },
+
+  managementstatus: { title:'Managementstatus', body: `
+    <p><span class="help-label">Was ist das?</span> Der kompakteste Einstieg der GF-Ansicht: sechs Kennzahlenkacheln, eine Tabelle "Top-Risiken" und eine Tabelle "Datenqualitätswarnungen".</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Nichts eingeben — nur lesen. Klicken Sie eine Kachel oder eine Tabellenzeile an, um direkt in die passende Ansicht zu springen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts — alle Zahlen und Tabellen werden bei jedem Öffnen neu aus vorhandenen Prozess-, Ressourcen- und Maßnahmendaten berechnet.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> "Top-Risiken" zeigt nur kritische Prozesse mit einer konkret erkannten Ursache — "Datenqualitätswarnungen" sind dagegen keine bestätigten Risiken, sondern reine Erhebungslücken (z. B. fehlender Verantwortlicher). Beide Tabellen bewerten nicht, was zuerst zu tun ist — das entscheiden Sie.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 22 „Management Summary und GF-Ansicht".</p>` },
+};
+
+/** v2.4.0 (Dokumentations-Release-Gate): rendert den kleinen "?"-Hilfeknopf für ein HELP_TOPICS-Thema.
+    Rein lesend — öffnet ausschließlich erklärenden Text, ändert nie Daten. @param {string} key Schlüssel in HELP_TOPICS. @param {string} [labelSuffix] Zusätzlicher Text für aria-label, z. B. der Feldname. @returns {string} HTML */
+function helpBtn(key, labelSuffix){
+  const t = HELP_TOPICS[key];
+  if(!t) return '';
+  const label = 'Hilfe: '+t.title+(labelSuffix?' — '+labelSuffix:'');
+  return '<button type="button" class="help-btn" aria-label="'+escapeHtml(label)+'" title="Hilfe" onclick="App.openHelp(\''+key+'\')">?</button>';
+}
+
 /** Rendert den Steckbrief-Tab einer Prozessakte (Grunddaten, Kritikalität, Zeitwerte, Abhängigkeiten). @param {object} p @returns {string} HTML */
 function tabSteckbrief(p){
   const s = p.steckbrief, base = 'processes.'+STATE.processes.indexOf(p)+'.steckbrief.';
@@ -7186,7 +7436,8 @@ function tabSteckbrief(p){
 
   html += dependenciesCardHtml(p);
 
-  html += '<div class="card"><div class="card-title" style="margin-bottom:14px;">Kritikalität & Zeitwerte</div>';
+  html += '<div class="card"><div class="card-head"><div class="card-title">Kritikalität & Zeitwerte</div>'+
+    '<div>'+helpBtn('kritikalitaet')+helpBtn('mtaRtoRpo','MTA/RTO/RPO')+'</div></div>';
   html += '<div class="grid grid-4">';
   html += fieldInput(base+'kritikalitaet', s.kritikalitaet, 'Kritikalität', {type:'select', required:true, rerender:true,
     options:[{value:'hoch',label:'Hoch'},{value:'mittel',label:'Mittel'},{value:'niedrig',label:'Niedrig'}]});
@@ -7289,7 +7540,7 @@ function tabBia(p){
   // hier wird nur zusätzlich sichtbar gemacht, dass es sich noch um keine bestätigte Einschätzung handelt,
   // damit die 0%-Fortschrittsanzeige (processProgress) nicht der sichtbaren Bewertung widerspricht.
   const biaUnbearbeitet = BIA_CATEGORIES.every(c=>!p.bia[c.key].beschreibung.trim());
-  let html = '<div class="card"><div class="spread"><div class="card-title">Gesamtbewertung</div>'+
+  let html = '<div class="card"><div class="spread"><div class="card-title">Gesamtbewertung'+helpBtn('bia')+'</div>'+
     '<span class="badge b-'+score.ampel+'" style="font-size:13px;padding:6px 14px;">'+score.klasse+' · Score '+score.avg+' / 5</span></div>'+
     '<div class="card-help">Bewerten Sie jede Auswirkungskategorie von 1 (gering) bis 5 (existenzbedrohend). Score und Ampel werden automatisch berechnet.</div>'+
     '<div class="card-help">Die Gesamtbewertung wird gewichtet berechnet. Lieferfähigkeit, Kundenwirkung und interne Betriebsfähigkeit haben ein höheres Gewicht.</div>'+
@@ -7335,7 +7586,8 @@ function ratingDots(rating){
 function tabMinfaehigkeit(p){
   const idx = STATE.processes.indexOf(p);
   const base = 'processes.'+idx+'.minfaehigkeit.';
-  let html = '<div class="card"><div class="card-help">Ordnen Sie zu, welche Leistungen im Krisenfall zwingend erbracht werden müssen, welche reduziert werden können und welche temporär entfallen können.</div></div>';
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Mindestfähigkeit</div>'+helpBtn('mindestfaehigkeit')+'</div>'+
+    '<div class="card-help">Ordnen Sie zu, welche Leistungen im Krisenfall zwingend erbracht werden müssen, welche reduziert werden können und welche temporär entfallen können.</div></div>';
   html += '<div class="canvas3" style="margin-bottom:18px;">';
   html += canvasCol(p, idx, 'muss', 'Muss funktionieren', 'must');
   html += canvasCol(p, idx, 'reduziert', 'Kann reduziert werden', 'reduced');
@@ -7406,7 +7658,7 @@ function canvasCol(p, idx, col, label, cls){
 /** Rendert den Ressourcen-Tab einer Prozessakte (verknüpfte Ressourcen aus dem globalen Pool). @param {object} p @returns {string} HTML */
 function tabRessourcen(p){
   const linked = STATE.resources.filter(r=>r.prozesse.includes(p.id));
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Kritische Ressourcen dieses Prozesses</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Kritische Ressourcen dieses Prozesses'+helpBtn('ressourcen')+'</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.addResource(\''+safeJsString(p.id)+'\')" title="Neue kritische Ressource anlegen">+ Ressource</button></div>';
   html += '<div class="card-help">Ressourcen werden in einem gemeinsamen Pool verwaltet, damit Mehrfachnutzung über Prozesse hinweg im Abhängigkeitscluster sichtbar wird.</div>';
   if(linked.length===0){ html += emptyState('Keine Ressourcen verknüpft', 'Fügen Sie Personen, Systeme, Lieferanten oder andere kritische Ressourcen hinzu.'); }
@@ -7506,7 +7758,7 @@ function resUpdateNested(id, key, subkey, val){
 /** Rendert den Notbetrieb-Tab (Ablaufdarstellung, Schritte, Testdatum). @param {object} p @returns {string} HTML */
 function tabNotbetrieb(p){
   const idx = STATE.processes.indexOf(p), n = p.notbetrieb, base='processes.'+idx+'.notbetrieb.';
-  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Ablaufdarstellung</div>'+flowDiagramSvg()+'</div>';
+  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Ablaufdarstellung'+helpBtn('notbetrieb')+'</div>'+flowDiagramSvg()+'</div>';
 
   html += '<div class="card"><div class="grid grid-2">';
   html += fieldInput(base+'ausloeser', n.ausloeser, 'Auslöser', {type:'textarea', required:true});
@@ -7568,7 +7820,7 @@ function flowDiagramSvg(){
 /** Rendert den Resilienz-Check-Tab (12-Punkte-Checkliste). @param {object} p @returns {string} HTML */
 function tabResilienz(p){
   const rs = resilienzSummary(p);
-  let html = '<div class="card"><div class="spread"><div class="card-title">Resilienz-Check</div>'+
+  let html = '<div class="card"><div class="spread"><div class="card-title">Resilienz-Check'+helpBtn('resilienz')+'</div>'+
     '<div class="flexrow"><span class="badge b-bad">'+rs.rot+' rot</span><span class="badge b-warn">'+rs.gelb+' gelb</span><span class="badge b-ok">'+rs.gruen+' grün</span></div></div>';
   html += '<div class="card-help">Bewerten Sie jeden Punkt mit einer Ampel. Aus roten Punkten lassen sich automatisch Maßnahmen ableiten, optional auch aus gelben.</div>';
   html += '<button class="btn btn-sm" onclick="App.generateMassnahmenFromResilienz(\''+safeJsString(p.id)+'\')" title="Erstellt Maßnahmen-Vorschläge für rote und gelbe Resilienz-Checks">Maßnahmen aus Checks erzeugen</button>';
@@ -7634,7 +7886,7 @@ function tabReviewHistoryCard(p){
 /** v2.4.0 (AP2): kompakter Editor für die Reviewzyklen-Policy eines Prozesses, je Reviewart ein Intervall-Select. @param {object} p @returns {string} HTML */
 function reviewConfigEditorHtml(p){
   const cfg = p.reviewConfig || defaultReviewConfig();
-  let html = '<div class="small muted" style="font-weight:700;margin:10px 0 6px;">Reviewzyklen je Reviewart</div>';
+  let html = '<div class="small muted" style="font-weight:700;margin:10px 0 6px;">Reviewzyklen je Reviewart'+helpBtn('reviewzyklen')+'</div>';
   html += '<div class="grid grid-4" style="margin-bottom:6px;">';
   REVIEW_ARTEN.forEach(a=>{
     const entry = cfg[a];
@@ -7692,7 +7944,7 @@ function massnahmeRow(m){
     MASSNAHMEN_KATEGORIEN.map(c=>'<option '+(m.kategorie===c?'selected':'')+'>'+c+'</option>').join('')+'</select></div>';
   html += '<div class="field"><label>Priorität</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'prioritaet\',this.value)">'+
     levelOptionsHtml(m.prioritaet, LEVEL_ORDER_HOCH_FIRST)+'</select></div>';
-  html += '<div class="field"><label>Status</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'status\',this.value)">'+
+  html += '<div class="field"><label>Status'+helpBtn('massnahmenstatus')+'</label><select onchange="massUpdate(\''+safeJsString(m.id)+'\',\'status\',this.value)">'+
     massnahmenStatusOptionsHtml(m.status)+'</select></div>';
   html += '</div>';
   html += '<div class="grid grid-2">';
@@ -7722,7 +7974,7 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Genehmigt am</label><input type="date" value="'+escapeHtml(m.genehmigtAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'genehmigtAm\',this.value)"></div>';
   html += '</div>';
   html += '<div class="grid grid-3">';
-  html += '<div class="field"><label>Nachweis</label><input type="text" placeholder="z. B. Protokoll, Testbericht" value="'+escapeHtml(m.nachweis)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'nachweis\',this.value)"></div>';
+  html += '<div class="field"><label>Nachweis'+helpBtn('wirksamkeit')+'</label><input type="text" placeholder="z. B. Protokoll, Testbericht" value="'+escapeHtml(m.nachweis)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'nachweis\',this.value)"></div>';
   html += '<div class="field"><label>Wirksamkeit geprüft am</label><input type="date" value="'+escapeHtml(m.wirksamkeitGeprueftAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitGeprueftAm\',this.value)"></div>';
   html += '<div class="field"><label>Wirksamkeit — Ergebnis</label><input type="text" value="'+escapeHtml(m.wirksamkeitErgebnis)+'" placeholder="z. B. Wirksam, Teilweise" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wirksamkeitErgebnis\',this.value)"></div>';
   html += '</div>';
@@ -7733,7 +7985,7 @@ function massnahmeRow(m){
   html += '<div class="field"><label>Wiedervorlage</label><input type="date" value="'+escapeHtml(m.wiedervorlageAm)+'" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'wiedervorlageAm\',this.value)"></div>';
   html += '</div>';
   if(m.status==='blockiert'){
-    html += '<div class="field"><label>Begründung für Blockade <span class="req">*</span></label><input type="text" value="'+escapeHtml(m.blockiertGrund)+'" placeholder="Warum ist diese Maßnahme blockiert?" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'blockiertGrund\',this.value)"></div>';
+    html += '<div class="field"><label>Begründung für Blockade <span class="req">*</span>'+helpBtn('blockierung')+'</label><input type="text" value="'+escapeHtml(m.blockiertGrund)+'" placeholder="Warum ist diese Maßnahme blockiert?" onchange="massUpdate(\''+safeJsString(m.id)+'\',\'blockiertGrund\',this.value)"></div>';
   }
 
   html += massnahmeFindingsHtml(m);
@@ -7773,6 +8025,7 @@ function viewCluster(){
   const kp = keyPersons(), cs = criticalSystems(), csup = criticalSuppliers();
   let html = '';
 
+  html += '<div class="spread" style="margin-bottom:10px;"><div class="kicker">Abhängigkeitscluster</div>'+helpBtn('ressourcen','Abhängigkeitscluster')+'</div>';
   html += '<div class="grid grid-3" style="margin-bottom:18px;">';
   html += clusterCard('Schlüsselpersonen', 'Personen, die in mehr als einem Prozess unverzichtbar sind.', kp);
   html += clusterCard('Häufig kritische IT-Systeme', 'Systeme/Anwendungen mit Mehrfachnutzung über Prozesse.', cs);
@@ -8046,7 +8299,7 @@ function viewParkplatz(){
   const erledigt = STATE.parkplatz.filter(p=>p.status==='erledigt').length;
   const alsMassnahme = STATE.parkplatz.filter(p=>p.status==='massnahme').length;
 
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Parkplatz — offene Punkte</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Parkplatz — offene Punkte'+helpBtn('parkplatz')+'</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.openParkplatzForm()">+ Neuer Eintrag</button></div>';
 
   html += '<div class="grid grid-3" style="margin-bottom:12px;">';
@@ -8121,7 +8374,7 @@ App.openReviewForm = function(editId, vorauswahlProzessId){
     '<div class="grid grid-2">'+
     '<div class="field"><label for="rev-proc">Prozess <span class="req">*</span></label><select id="rev-proc"><option value="">– bitte wählen –</option>'+
       STATE.processes.map(p=>'<option value="'+escapeHtml(p.id)+'" '+(item.prozessId===p.id?'selected':'')+'>'+escapeHtml(p.steckbrief.name||'Unbenannt')+'</option>').join('')+'</select></div>'+
-    '<div class="field"><label for="rev-art">Reviewart <span class="req">*</span></label><select id="rev-art">'+
+    '<div class="field"><label for="rev-art">Reviewart <span class="req">*</span>'+helpBtn('reviewarten')+'</label><select id="rev-art">'+
       REVIEW_ARTEN.map(a=>'<option value="'+a+'" '+(item.reviewart===a?'selected':'')+'>'+escapeHtml(REVIEW_ART_LABELS[a])+'</option>').join('')+'</select></div>'+
     '</div>'+
     '<div class="grid grid-2">'+
@@ -8205,7 +8458,7 @@ App.openCompleteReview = function(id){
   const suggested = process ? computeNextReviewDate(process, r.reviewart, today) : null;
   openModal(
     '<h3>Review abschließen</h3>'+
-    '<p class="small muted">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' — '+escapeHtml(processName(r.prozessId))+'</p>'+
+    '<p class="small muted">'+escapeHtml(REVIEW_ART_LABELS[r.reviewart])+' — '+escapeHtml(processName(r.prozessId))+helpBtn('reviewabschluss')+'</p>'+
     '<div class="field"><label for="rev-c-result">Ergebnis <span class="req">*</span></label><textarea id="rev-c-result" rows="4" placeholder="Feststellungen, Entscheidung, Begründung…">'+escapeHtml(r.ergebnis)+'</textarea></div>'+
     '<div class="field"><label for="rev-c-next">Nächster Reviewtermin'+(suggested?' (aus Reviewzyklen-Policy vorgeschlagen)':' (optional, manuell — keine Policy definiert)')+'</label><input type="date" id="rev-c-next" value="'+escapeHtml(suggested||r.naechsterReviewAm)+'"></div>'+
     (suggested ? '<div class="field"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rev-c-followup" checked style="width:auto;"> Folgereview automatisch als „Geplant" anlegen</label></div>' : '')+
@@ -8391,7 +8644,7 @@ function viewTimeline(){
   const f = App.timelineFilter;
   const list = timelineEvents(f);
 
-  let html = '<div class="card"><div class="card-head"><div class="card-title">BCM Timeline</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">BCM Timeline'+helpBtn('timeline')+'</div>'+
     '<div class="small muted">Fachlich relevante BCM-Ereignisse, abgeleitet aus vorhandenen Daten — kein Audit-Log, keine Aufzeichnung jeder Feldänderung.</div></div>';
 
   html += '<div class="grid grid-4" style="margin-bottom:16px;">';
@@ -8457,7 +8710,7 @@ function viewQualityCheck(){
   const warnungen = quality.filter(f=>f.severity==='warnung');
   const hinweise = quality.filter(f=>f.severity==='hinweis');
 
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Qualitäts- und Konsistenzprüfung</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Qualitäts- und Konsistenzprüfung'+helpBtn('qualitaetspruefung')+'</div>'+
     '<div class="small muted">Prüft Vollständigkeit und Konsistenz der Dokumentation.</div></div>';
 
   html += '<div class="grid grid-3" style="margin-bottom:16px;">';
@@ -8718,7 +8971,7 @@ function managementSummaryHtml(forPrint){
    --------------------------------------------------------------------- */
 function viewVersions(){
   refreshVersionChecksums(); // still im Hintergrund, re-rendert bei Bedarf selbst
-  let html = '<div class="card"><div class="card-head"><div class="card-title">Versionshistorie</div>'+
+  let html = '<div class="card"><div class="card-head"><div class="card-title">Versionshistorie'+helpBtn('versionierung')+'</div>'+
     '<button class="btn btn-sm btn-primary" onclick="App.openSaveVersion()">Neue Version speichern</button></div>';
   html += '<div class="card-help">Jede gespeicherte Version bleibt unveränderlich erhalten. Ältere Versionen können angesehen, verglichen und als neuer Stand wiederhergestellt werden.</div>';
   if(STATE.versions.length===0){
@@ -8851,7 +9104,7 @@ App.confirmRestoreVersion = function(nr){
 function viewRecoveryAndBackupsCard(){
   const backups = listAutoBackups();
   const recoveries = listRecoverySnapshots();
-  let html = '<div class="card"><div class="card-title" style="margin-bottom:6px;">Wiederherstellung und Sicherungen</div>';
+  let html = '<div class="card"><div class="card-title" style="margin-bottom:6px;">Wiederherstellung und Sicherungen'+helpBtn('recovery')+'</div>';
   html += '<div class="card-help">Bis zu 5 automatische Sicherungen (rotierend) — angelegt vor Import, Versions-Wiederherstellung, Bereinigen und Schema-Aktualisierungen.</div>';
 
   if(recoveries.length>0){
@@ -8897,7 +9150,7 @@ function viewSettings(){
   let html = '<div class="card"><div class="card-title" style="margin-bottom:14px;">Kunde & Branding</div>';
   html += '<div class="grid grid-2">';
   html += '<div class="field"><label>Kundenname</label><input type="text" value="'+escapeHtml(m.kundenname)+'" onchange="App.setFieldAndRerender(\'meta.kundenname\', this.value)"></div>';
-  html += '<div class="field"><label>Bearbeitungsstand</label><select onchange="App.attemptStatusChange(this.value)">'+
+  html += '<div class="field"><label>Bearbeitungsstand'+helpBtn('freigabe')+'</label><select onchange="App.attemptStatusChange(this.value)">'+
     ['Entwurf','In Bearbeitung','Zur Freigabe','Freigegeben'].map(v=>'<option value="'+v+'" '+(m.bearbeitungsstand===v?'selected':'')+'>'+v+'</option>').join('')+
     '</select><div class="small muted" style="margin-top:4px;">Beim Wechsel zu „Zur Freigabe" oder „Freigegeben" wird automatisch eine Freigabeprüfung durchgeführt.</div></div>';
   html += fieldInput('meta.vertraulichkeit', m.vertraulichkeit, 'Vertraulichkeitskennzeichnung (erscheint auf jeder PDF-Seite)', {placeholder:'z. B. Vertraulich, Nur für internen Gebrauch'});
@@ -8936,7 +9189,8 @@ function viewSettings(){
 
   html += viewRecoveryAndBackupsCard();
 
-  html += '<div class="card"><div class="card-title" style="margin-bottom:12px;">Daten & Bedienbarkeit</div>';
+  html += '<div class="card"><div class="card-head"><div class="card-title">Daten & Bedienbarkeit</div>'+
+    '<div>'+helpBtn('importExport')+helpBtn('verschluesselung','Verschlüsselung')+'</div></div>';
   html += '<div class="grid grid-3">';
   html += choiceCard('Beispieldaten laden', 'Demo-Prozess zur Orientierung ergänzen.', 'App.loadSampleData()');
   html += choiceCard('Daten exportieren (JSON)', 'Vollständigen Stand als Datei sichern.', 'App.exportJson()');
@@ -8970,7 +9224,7 @@ function managementDecisionOverviewHtml(){
   const dataGaps = dataQualityWarnings();
   const decisions = entscheidungsbedarfStructured();
 
-  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Managementstatus</div>';
+  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Managementstatus'+helpBtn('managementstatus')+'</div>';
   html += '<div class="grid grid-3">';
   html += kpiTile(ampelBadge(status.ampel.level), 'Workbook-Ampel', "App.closeOverlay();go('dashboard');");
   html += kpiTile(status.completeness+' %', 'Datenvollständigkeit', "App.closeOverlay();go('dashboard');");
@@ -9178,6 +9432,7 @@ function renderWorkshopOverlay(){
   html += '<span class="small muted" style="white-space:nowrap;">Prozess '+(procIdx+1)+' von '+totalProcs+'</span>';
   html += '</div>';
   html += '<div style="display:flex;align-items:center;gap:8px;">';
+  html += helpBtn('workshop');
   html += '<button class="btn btn-sm" onclick="App.openWorkshopParkplatz()" title="Offenen Punkt auf den Parkplatz setzen">+ Parkplatz'+(openParkplatz>0?' ('+openParkplatz+')':'')+'</button>';
   html += '<button class="btn btn-sm" onclick="App.openModeratorNotiz()" title="Persönliche Sitzungsnotiz – wird beim Schließen gelöscht">✎ Notiz</button>';
   html += '<button class="btn" onclick="App.closeOverlay()">Schließen ✕</button>';
@@ -11185,7 +11440,7 @@ function openCommandPalette(){
     {ic:'↻', label:'Versionshistorie', action:()=>go('versions')},
     {ic:'⚙', label:'Einstellungen', action:()=>go('settings')},
     {ic:'PDF', label:'PDF erzeugen', action:()=>App.openPdfModal()},
-    {ic:'↓', label:'Daten exportieren (JSON)', action:()=>App.exportJSON()},
+    {ic:'↓', label:'Daten exportieren (JSON)', action:()=>App.exportJson()},
     {ic:'↑', label:'Daten importieren', action:()=>App.openImport()}
   ];
   // Dynamisch: Prozesse als Aktionen
