@@ -35,6 +35,41 @@ nach einem Browserfehler), erscheint hier zusätzlich ein Abschnitt
 eine manuelle Rettung), eine automatische Wiederherstellung versuchen
 oder den Eintrag löschen.
 
+## Der Wiederherstellungs-Dialog beim Programmstart
+
+Erkennt das Starter Kit **direkt beim Öffnen der Anwendung**, dass der
+zuletzt gespeicherte Stand in diesem Browser nicht gelesen werden kann,
+zeigt es diesen Dialog automatisch — Sie müssen dafür nichts anklicken.
+Zwei Ursachen sind möglich:
+
+- Die Daten stammen von einer **neueren Version** des Starter Kits (ein
+  Ihnen unbekanntes Datenmodell) und wurden deshalb nicht automatisch
+  geöffnet.
+- Der zuletzt gespeicherte Stand ist **beschädigt oder unvollständig**
+  (z. B. nach einem Browserabsturz mitten im Speichern).
+
+In beiden Fällen gilt: **Die Rohdaten werden nicht gelöscht** und bleiben
+erhalten, bis Sie sie ausdrücklich entfernen. Sie haben vier Möglichkeiten:
+
+- **Rohdaten herunterladen** — sichert die unveränderten Rohdaten als
+  Datei, unabhängig davon, ob Sie danach noch etwas anderes tun.
+- **Wiederherstellungsversuch starten** — übernimmt nur vollständig
+  gültige Teilstrukturen; eine unvollständige Rekonstruktion wird danach
+  klar als solche gekennzeichnet, statt stillschweigend Daten zu erfinden.
+- **Leeres Workbook öffnen** — startet mit einem leeren Stand. Die
+  eigentlichen Recovery-Daten gehen dabei **nicht** verloren, sondern
+  bleiben unter "Wiederherstellung und Sicherungen" in den Einstellungen
+  erhalten, falls Sie später doch noch darauf zugreifen möchten.
+- **Recovery-Daten löschen** — entfernt die Rohdaten endgültig, ohne sie
+  zu übernehmen.
+
+**Was Sie danach prüfen sollten:** Nach einem Wiederherstellungsversuch
+sollten Sie die übernommenen Daten stichprobenartig durchsehen (v. a.
+zuletzt bearbeitete Prozesse) und zeitnah eine eigene Sicherung anlegen
+— entweder einen JSON-Export (siehe [Kapitel 25](25-import-export-verschluesselung.md))
+oder eine Version (siehe [Kapitel 23](23-versionierung.md)) — damit ein
+erneutes Problem nicht wieder auf denselben unsicheren Stand zurückfällt.
+
 ## Was das Starter Kit automatisch macht
 
 Es erkennt riskante Vorgänge selbst und legt vor jedem von ihnen

@@ -107,9 +107,35 @@ keine bestätigte Einschätzung. Erst wenn Sie zu einer Kategorie tatsächlich
 eine Beschreibung eintragen, zählt sie als bearbeitet. Näheres in
 [Kapitel 7](07-bia.md).
 
+## Eine Prozessakte duplizieren
+
+Über den Knopf **Duplizieren** im Kopfbereich der Prozessakte (neben
+"Workshop" und "Löschen") legen Sie eine vollständige Kopie der aktuellen
+Prozessakte als neue Akte an — mit dem Namenszusatz "(Kopie)" und allen
+Inhalten aller acht Reiter (Steckbrief, BIA, Mindestfähigkeit, Notbetrieb,
+Resilienz-Check, Maßnahmen usw.).
+
+**Wichtig:** Die Verknüpfungen zu kritischen Ressourcen werden dabei
+bewusst **nicht** mitkopiert — sonst würde dieselbe Ressource (z. B. ein
+IT-System) doppelt gezählt, obwohl sie tatsächlich nur einmal existiert.
+Prüfen Sie nach dem Duplizieren daher insbesondere:
+
+- den Prozessnamen (statt "… (Kopie)" einen aussagekräftigen Namen
+  vergeben),
+- den Reiter **Kritische Ressourcen** — hier müssen Sie die tatsächlich
+  benötigten Ressourcen erneut verknüpfen (siehe
+  [Kapitel 10](10-ressourcen-abhaengigkeiten.md)),
+- ob Verantwortlichkeit, Kritikalität und Zeitwerte für den neuen Prozess
+  noch zutreffen, oder ob es sich tatsächlich um einen eigenständig zu
+  bewertenden Prozess handelt.
+
+Ein Duplikat eignet sich besonders, wenn mehrere Prozesse sehr ähnlich
+aufgebaut sind (z. B. dieselbe Grundstruktur an mehreren Standorten) und
+Sie sich das erneute Ausfüllen aller Reiter ersparen möchten.
+
 ## Löschen einer Prozessakte
 
-Über den Knopf "Entfernen" in der jeweiligen Ansicht können Sie einen
+Über den Knopf "Löschen" im Kopfbereich der Prozessakte können Sie einen
 Prozess löschen. Das entfernt auch seine Ressourcen-Verknüpfungen sowie
 Reviews und Maßnahmen, die ausschließlich zu ihm gehörten — sichern Sie
 vorher eine Version, falls Sie das rückgängig machen können wollen

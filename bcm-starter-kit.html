@@ -7396,6 +7396,13 @@ const HELP_TOPICS = {
     <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Sie können den Punkt später als „Erledigt" abschließen oder direkt in eine Maßnahme umwandeln.</p>
     <p><span class="help-label">Was sollte ich beachten?</span> Ein Parkplatz-Eintrag ersetzt keine Maßnahme mit Termin — verschieben Sie wichtige Punkte rechtzeitig dorthin.</p>
     <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 14 „Parkplatz".</p>` },
+
+  managementstatus: { title:'Managementstatus', body: `
+    <p><span class="help-label">Was ist das?</span> Der kompakteste Einstieg der GF-Ansicht: sechs Kennzahlenkacheln, eine Tabelle "Top-Risiken" und eine Tabelle "Datenqualitätswarnungen".</p>
+    <p><span class="help-label">Was soll ich hier tun?</span> Nichts eingeben — nur lesen. Klicken Sie eine Kachel oder eine Tabellenzeile an, um direkt in die passende Ansicht zu springen.</p>
+    <p><span class="help-label">Was passiert mit meiner Eingabe?</span> Nichts — alle Zahlen und Tabellen werden bei jedem Öffnen neu aus vorhandenen Prozess-, Ressourcen- und Maßnahmendaten berechnet.</p>
+    <p><span class="help-label">Was sollte ich beachten?</span> "Top-Risiken" zeigt nur kritische Prozesse mit einer konkret erkannten Ursache — "Datenqualitätswarnungen" sind dagegen keine bestätigten Risiken, sondern reine Erhebungslücken (z. B. fehlender Verantwortlicher). Beide Tabellen bewerten nicht, was zuerst zu tun ist — das entscheiden Sie.</p>
+    <p class="help-more">Mehr dazu: Benutzerhandbuch, Kapitel 22 „Management Summary und GF-Ansicht".</p>` },
 };
 
 /** v2.4.0 (Dokumentations-Release-Gate): rendert den kleinen "?"-Hilfeknopf für ein HELP_TOPICS-Thema.
@@ -9217,7 +9224,7 @@ function managementDecisionOverviewHtml(){
   const dataGaps = dataQualityWarnings();
   const decisions = entscheidungsbedarfStructured();
 
-  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Managementstatus</div>';
+  let html = '<div class="card"><div class="card-title" style="margin-bottom:12px;">Managementstatus'+helpBtn('managementstatus')+'</div>';
   html += '<div class="grid grid-3">';
   html += kpiTile(ampelBadge(status.ampel.level), 'Workbook-Ampel', "App.closeOverlay();go('dashboard');");
   html += kpiTile(status.completeness+' %', 'Datenvollständigkeit', "App.closeOverlay();go('dashboard');");

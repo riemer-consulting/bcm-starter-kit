@@ -36,6 +36,21 @@ Im Steckbrief-Reiter, unter "Kritikalität & Zeitwerte".
    zutreffend" bedeuten; tragen Sie dann einen für Sie sinnvollen
    Referenzwert ein oder vermerken Sie das im Bemerkungsfeld.
 
+## Hinweis bei älteren RTO/RPO-Werten
+
+Bei Prozessen, die aus einer sehr frühen Version des Starter Kits
+importiert wurden, kann bei RTO oder RPO ein Hinweis erscheinen: "Alter
+Freitextwert aus einer früheren Version". Damals wurden RTO/RPO noch als
+freier Text erfasst (z. B. "ca. 1 Tag") statt als Zahl mit Einheit. Der
+alte Text bleibt dabei sichtbar, wird aber **nicht automatisch** in das
+neue Zahl-plus-Einheit-Format umgewandelt — das Starter Kit erfindet
+dabei keinen Wert.
+
+**Was Sie tun sollten:** Lesen Sie den alten Freitext, tragen Sie den
+Wert oben strukturiert (Zahl + Einheit) ein, und blenden Sie den Hinweis
+anschließend über den Knopf **"Hinweis ausblenden"** aus. Bis Sie das
+tun, bleibt der Hinweis bestehen — er verschwindet nicht von selbst.
+
 ## Was das Starter Kit automatisch macht
 
 Direkt unter den Feldern zeigt das Starter Kit eine

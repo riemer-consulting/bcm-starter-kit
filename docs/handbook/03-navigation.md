@@ -67,11 +67,43 @@ die übrige Bedienoberfläche zu zeigen:
 - **Workshop-Modus** — geführte Fragenfolge für einen Workshop-Termin
   (siehe [Kapitel 13](13-workshop.md)).
 - **Priorisierung** — beamertaugliche Übersicht aller Prozesse, sortiert
-  nach BIA-Score, für die gemeinsame Diskussion, welcher Prozess zuerst
-  behandelt wird.
+  nach BIA-Score (siehe unten).
 
 Alle drei schließen Sie mit der **Escape**-Taste oder dem Schließen-Knopf
 und kehren dann genau dorthin zurück, wo Sie vorher waren.
+
+### Die Priorisierungsansicht
+
+**Wo finde ich sie?** Über den Knopf **Priorisierung** ganz unten in der
+Seitenleiste (Bereich "Präsentation & Workshop") oder über die
+Befehlspalette (Strg+K, "Priorisierungsansicht").
+
+**Wofür ist sie da?** Eine großformatige, für Beamer/Projektion
+geeignete Tabelle aller Prozesse — als gemeinsame Diskussionsgrundlage,
+z. B. in einem Termin mit mehreren Prozessverantwortlichen: "Welchen
+Prozess sollten wir als Nächstes vertiefen?"
+
+**Welche Informationen werden angezeigt?** Oben drei Kennzahlen
+(Prozesse gesamt, davon kritisch, davon nicht kritisch). Darunter eine
+Tabelle mit einer Zeile je Prozess: Rang, Prozessname mit Fachbereich,
+Kritikalität, BIA-Score und Dokumentationsfortschritt — sortiert nach
+BIA-Score absteigend. Kritische Prozesse sind zusätzlich farblich
+hervorgehoben.
+
+**Wie verwende ich sie?** Über den Knopf **Öffnen** am Ende jeder Zeile
+springen Sie direkt in den Steckbrief des jeweiligen Prozesses — die
+Priorisierungsansicht selbst dient nur der Übersicht und enthält keine
+Eingabefelder.
+
+**Was das Starter Kit automatisch macht:** Die Sortierung nach
+BIA-Score sowie die Kennzahlen werden bei jedem Öffnen neu aus den
+vorhandenen Prozessdaten berechnet (siehe [Kapitel 7](07-bia.md)) — es
+wird nichts gespeichert und nichts verändert.
+
+**Was ich selbst entscheiden muss:** Die Sortierung nach BIA-Score ist
+ein Vorschlag zur Diskussion, keine verbindliche Priorisierung — ob ein
+Prozess tatsächlich vorrangig bearbeitet werden sollte, entscheiden Sie
+gemeinsam im Termin.
 
 ## Suche
 

@@ -83,13 +83,14 @@ braucht keine Internetverbindung.
 
 ## Versionsgeschichte dieses Handbuchs
 
-- **AP1–AP5** (während der Entwicklung, damals 2.4.0-dev): Kapitel zu den
-  jeweiligen Arbeitspaketen einzeln angelegt.
-- **AP6/Release Candidate** (Version 2.4.0): Sprache auf den finalen
+- **Erste Fassung** (während der Entwicklung von Version 2.4.0): einzelne
+  Kapitel zu den damals neuen Governance-Funktionen (Review Center,
+  Maßnahmenmanagement, BCM Timeline, Governance Dashboard).
+- **Finalisierung zum Release** (Version 2.4.0): Sprache auf den finalen
   Releasezustand aktualisiert, Glossar ergänzt, PDF erzeugt.
-- **Dokumentations- und Hilfe-Release-Gate** (Version 2.4.0): Vollständig
-  neu strukturiert. Die bisherigen vier technischen AP-Kapitel wurden nach
-  [`docs/technical/`](../technical/README.md) verschoben. An ihrer Stelle
-  entstand dieses vollständige, anwenderorientierte Benutzerhandbuch für
-  die gesamte Anwendung (nicht nur die 2.4.0-Neuerungen), ergänzt um
-  kontextbezogene In-App-Hilfe.
+- **Vollständige Neustrukturierung** (Version 2.4.0): Aus den bisher nur
+  technisch beschriebenen Governance-Funktionen wurde dieses vollständige,
+  anwenderorientierte Benutzerhandbuch für die **gesamte** Anwendung
+  (nicht nur die damaligen Neuerungen). Die bisherigen vier technischen
+  Kapitel wurden dabei nach [`docs/technical/`](../technical/README.md)
+  verschoben, und kontextbezogene In-App-Hilfe kam hinzu.

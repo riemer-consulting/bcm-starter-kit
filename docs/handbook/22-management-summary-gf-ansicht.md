@@ -17,6 +17,61 @@ Inhalt, unterscheiden sich aber in Darstellung und Umfang.
 
 ![GF-Ansicht, kompakter Führungsüberblick](images/12-gf-ansicht.png)
 
+## Der Managementstatus (oberster Bereich der GF-Ansicht)
+
+Direkt beim Öffnen der GF-Ansicht sehen Sie zuerst den Bereich
+**Managementstatus** — den kompaktesten Einstieg, noch vor allen anderen
+Inhalten dieses Kapitels. Er beantwortet auf einen Blick: *Steht das
+Workbook insgesamt gut da, und wo brennt es am meisten?*
+
+### Die sechs Kennzahlenkacheln
+
+| Kachel | Bedeutung |
+|---|---|
+| Workbook-Ampel | Gesamtampel über alle Prozesse (siehe [Kapitel 6](06-kritikalitaet.md)) |
+| Datenvollständigkeit | wie weit die Prozessakten im Schnitt ausgefüllt sind |
+| Kritische Prozesse | Anzahl als "Hoch" eingestufter Prozesse — anklickbar für die Liste |
+| Zeitwertkonflikte | Anzahl Prozesse, bei denen RTO die MTA überschreitet (siehe [Kapitel 8](08-mta-rto-rpo.md)) — anklickbar für die Liste |
+| Offene kritische Maßnahmen | offene Maßnahmen mit hoher Priorität — führt in den gefilterten Maßnahmenkatalog |
+| Überfällige Maßnahmen | Maßnahmen mit verstrichenem Termin — führt in den gefilterten Maßnahmenkatalog |
+
+### Die Tabelle "Top-Risiken"
+
+Zeigt ausschließlich **kritische** Prozesse, bei denen mindestens eine
+konkrete Ursache erkannt wurde (RTO über MTA, kein dokumentierter
+Notbetrieb, roter Resilienzpunkt, oder eine kritische Ressource ohne
+Alternative). Je Zeile: Prozess (verlinkt in die Prozessakte), Ursache,
+betroffene Ressource, MTA, ob ein Notbetrieb hinterlegt ist, ob bereits
+eine Maßnahme existiert, und ob eine Entscheidung erforderlich ist. Ist
+für einen kritischen Prozess **keine** dieser Ursachen erkannt, erscheint
+er hier bewusst nicht — die Tabelle zeigt nur bestätigte Risiken, keine
+vollständige Prozessliste.
+
+### Die Tabelle "Datenqualitätswarnungen"
+
+Getrennt von den Top-Risiken ausgewiesen, weil es sich **nicht** um
+bestätigte Risiken handelt, sondern um Erhebungslücken: fehlender
+Prozessverantwortlicher, unbegründete Kritikalitätsabweichung,
+unvollständige RTO/RPO-Angaben, ungetesteter Notbetrieb, oder eine
+Abhängigkeit, die auf einen inzwischen gelöschten Prozess verweist.
+
+### Herkunft und Interpretation
+
+Beide Tabellen und alle sechs Kacheln werden bei jedem Öffnen der
+GF-Ansicht neu aus den vorhandenen Prozess-, Ressourcen- und
+Maßnahmendaten berechnet — dieselben Daten, die Sie auch im
+[Governance Dashboard](21-governance-dashboard.md), im
+[Maßnahmenkatalog](15-massnahmenmanagement.md) und in der
+[Qualitätsprüfung](16-qualitaetspruefung.md) sehen, hier nur für die
+Managementebene zusammengefasst dargestellt. Es wird nichts gespeichert
+und keine neue Bewertung erfunden.
+
+**Was das Starter Kit nicht automatisch entscheidet:** Ob eine "Rote"
+Workbook-Ampel oder ein aufgeführtes Top-Risiko sofort gehandelt werden
+muss, welche der Datenqualitätslücken zuerst geschlossen wird, und ob
+eine Entscheidung im Sinne des Unternehmens getroffen wurde — das bleibt
+in jedem Fall eine Managemententscheidung.
+
 ## Was beide Ansichten enthalten
 
 - Eine kurze Textzusammenfassung: Anzahl Prozesse, davon kritisch, offene

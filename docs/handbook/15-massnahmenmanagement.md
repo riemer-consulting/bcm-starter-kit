@@ -78,6 +78,27 @@ Im Maßnahmenkatalog lässt sich nach Status, Priorität, Prozess, Aufwand,
 Verantwortlichem, Herkunft und "nur überfällige" filtern, sowie nach
 Termin, Priorität, Aufwand oder Status sortieren.
 
+## CSV-Export
+
+Über **CSV-Export** im Maßnahmenkatalog erzeugen Sie eine
+Tabellenkalkulations-Datei (Maßnahme, Prozess, Kategorie, Priorität,
+Verantwortlich, Termin, Status, Erwarteter Nutzen, Bemerkung) — geeignet,
+um Maßnahmen z. B. in Excel weiterzubearbeiten, auszudrucken oder an
+Personen ohne Zugriff auf das Starter Kit weiterzugeben.
+
+**Wichtig:**
+
+- Der CSV-Export enthält **immer alle** Maßnahmen, unabhängig von einem
+  gerade aktiven Filter.
+- Er enthält nur einen Teil der Felder (siehe oben) — Aufwand,
+  Risikoeinschätzung, Genehmigung, Wirksamkeitsprüfung und Herkunft sind
+  **nicht** enthalten.
+- Die CSV-Datei ist **nicht** zur vollständigen Sicherung oder
+  Wiederherstellung eines Workbooks geeignet — dafür nutzen Sie den
+  JSON-Export bzw. eine Version (siehe [Kapitel 23](23-versionierung.md)
+  und [Kapitel 25](25-import-export-verschluesselung.md)). Ein
+  CSV-Export lässt sich nicht wieder in das Starter Kit importieren.
+
 ## Was ich selbst entscheiden muss
 
 Ob eine Maßnahme tatsächlich wirksam war, prüfen und beurteilen Sie — das
