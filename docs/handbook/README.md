@@ -1,62 +1,95 @@
-# BCM Starter Kit — Handbuch (Markdown-Quelle)
+# BCM Starter Kit — Benutzerhandbuch (Version 2.4.0)
 
-Dieses Verzeichnis ist die gepflegte Markdown-Quelle für das
-Anwenderhandbuch zu Version 2.4.0 ("Governance & Lifecycle"). Es wurde
-während der Entwicklung von Version 2.4.0 kapitelweise ergänzt und ist mit
-dem Release vollständig.
+Dieses Handbuch erklärt das **gesamte** BCM Starter Kit — nicht nur die mit
+Version 2.4.0 hinzugekommenen Funktionen — für alle, die damit arbeiten:
+BCM-Verantwortliche, Prozessverantwortliche, Workshop-Moderatoren und
+neue Anwender.
 
-**PDF-Handbuch:** Aus diesen Kapiteln wurde
-[`docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`](../BCM-Starter-Kit_Benutzerhandbuch.pdf)
-erzeugt (Version 2.4.0, Titelseite, Inhaltsverzeichnis mit Sprungmarken,
-Seitenzahlen, Kapitel 1–4, Anhang: Glossar). Dieses Verzeichnis bleibt die
-maßgebliche, fortlaufend gepflegte Quelle — das PDF ist ein daraus erzeugter,
-einmaliger Snapshot für den Release, kein eigenständig gepflegtes Dokument.
-Bei einer künftigen inhaltlichen Änderung dieser Kapitel muss das PDF erneut
-erzeugt werden, um konsistent zu bleiben.
+Es beantwortet zu jeder Funktion: Wofür ist sie da? Wann brauche ich sie?
+Wie benutze ich sie? Was macht das Starter Kit automatisch, was muss ich
+selbst entscheiden? Es enthält bewusst **keine** internen
+Funktionsnamen, Datenstrukturen oder Migrationsdetails — dafür gibt es die
+[technische Referenz](../technical/README.md).
 
-Für Anwender siehe außerdem [docs/user-guide.md](../user-guide.md) — dieses
-Handbuch ergänzt dort, wo die mit Version 2.4.0 hinzugekommenen Funktionen
-ausführlicher erklärt werden müssen, als es im laufenden User Guide sinnvoll
-ist.
+Ein vollständiges PDF dieses Handbuchs liegt unter
+[`docs/BCM-Starter-Kit_Benutzerhandbuch.pdf`](../BCM-Starter-Kit_Benutzerhandbuch.pdf).
+Für den schnellen Einstieg siehe außerdem [Quickstart](../quickstart.md).
 
-## Kapitel
+## Inhalt
 
-1. [Review Center](review-center.md) *(AP1/AP2, Version 2.4.0)*
-2. [Maßnahmenmanagement 2.0](massnahmenmanagement.md) *(AP3, Version 2.4.0)*
-3. [BCM Timeline](timeline.md) *(AP4, Version 2.4.0)*
-4. [Governance Dashboard](governance-dashboard.md) *(AP5, Version 2.4.0)*
+### Einstieg
 
-## Glossar
+1. [BCM Starter Kit kennenlernen](01-willkommen.md)
+2. [Schnellstart](02-schnellstart.md)
+3. [Bedienkonzept und Navigation](03-navigation.md)
+4. [Workbook erstellen, öffnen und sichern](04-workbook.md)
 
-Kurzreferenz der zentralen Begriffe aus Version 2.4 — vollständige
-Erklärung jeweils im zugehörigen Kapitel.
+### Prozesse dokumentieren
 
-| Begriff | Bedeutung | Kapitel |
-|---|---|---|
-| Review | Konkrete Arbeits-/Historieninstanz einer Reviewart zu einem Prozess | [1](review-center.md) |
-| Reviewart | Prozess-/BIA-/Notbetriebs-/Ressourcenreview | [1](review-center.md) |
-| Fälligkeit/Überfälligkeit | Aus `geplantAm` berechnet, nie gespeichert | [1](review-center.md) |
-| Reviewzyklen-Policy | Optionales Intervall je Reviewart und Prozess | [1](review-center.md) |
-| Herkunft (Maßnahme) | Woher eine Maßnahme entstand (Review/Parkplatz/Qualitätsbefund/Resilienz/manuell) | [2](massnahmenmanagement.md) |
-| Wirksamkeitsprüfung | Separater Nachweis, dass eine erledigte Maßnahme tatsächlich wirkt | [2](massnahmenmanagement.md) |
-| Wiedervorlage | Datum für eine erneute Prüfung einer offenen Maßnahme (`wiedervorlageAm`) | [2](massnahmenmanagement.md) |
-| Blockiert ohne Begründung | Plausibilitätshinweis: Maßnahme mit Status `blockiert`, aber ohne `blockiertGrund` | [2](massnahmenmanagement.md) |
-| Plausibilitätshinweis | Hinweis auf eine Dokumentationslücke (z. B. fehlende Begründung/Nachweis) — keine fachliche Bewertung der Maßnahme selbst | [2](massnahmenmanagement.md) |
-| BCM Timeline | Chronologische, abgeleitete Ansicht fachlicher BCM-Ereignisse | [3](timeline.md) |
-| Governance Dashboard | Zusammengeführte, priorisierte Arbeitsliste "Was ist als Nächstes zu tun?" | [4](governance-dashboard.md) |
-| Priorisierungsstufe | Eine der 11 festen, deterministischen Rangstufen der Governance-Priorisierung | [4](governance-dashboard.md) |
-| Deep Link | Direkter Klick-Link von einer Governance-Aufgabe in die zuständige bestehende Ansicht | [4](governance-dashboard.md) |
+5. [Prozesse erfassen und pflegen](05-prozesse.md)
+6. [Kritikalität verstehen und dokumentieren](06-kritikalitaet.md)
+7. [Business Impact Analysis (BIA)](07-bia.md)
+8. [MTA, RTO und RPO](08-mta-rto-rpo.md)
+9. [Mindestfähigkeit](09-mindestfaehigkeit.md)
+10. [Ressourcen und Abhängigkeiten](10-ressourcen-abhaengigkeiten.md)
+11. [Notbetrieb](11-notbetrieb.md)
+12. [Resilienz-Check](12-resilienz.md)
+
+### Workshop und offene Punkte
+
+13. [Workshop-Modus](13-workshop.md)
+14. [Parkplatz](14-parkplatz.md)
+
+### Maßnahmen und Qualität
+
+15. [Maßnahmenmanagement](15-massnahmenmanagement.md)
+16. [Qualitäts- und Konsistenzprüfung](16-qualitaetspruefung.md)
+
+### Laufende Governance
+
+17. [Review Center](17-review-center.md)
+18. [Reviewzyklen](18-reviewzyklen.md)
+19. [Reviews durchführen und abschließen](19-reviews-durchfuehren.md)
+20. [BCM Timeline](20-timeline.md)
+21. [Governance Dashboard](21-governance-dashboard.md)
+22. [Management Summary und GF-Ansicht](22-management-summary-gf-ansicht.md)
+
+### Versionen und Freigabe
+
+23. [Versionierung und Versionsvergleich](23-versionierung.md)
+24. [Freigabe und Release Readiness](24-freigabe.md)
+
+### Daten, Sicherung und Ausgabe
+
+25. [Import, Export und Verschlüsselung](25-import-export-verschluesselung.md)
+26. [Datensicherung und Recovery](26-datensicherung-recovery.md)
+27. [PDF-Berichte und Druck](27-pdf-druck.md)
+28. [Einstellungen](28-einstellungen.md)
+
+### Praxis
+
+29. [Arbeiten mit Demo-Daten](29-demo-daten.md)
+30. [Typischer Arbeitsablauf am Beispiel](30-arbeitsablauf-beispiel.md)
+31. [Häufige Fragen und Troubleshooting](31-faq-troubleshooting.md)
+32. [Glossar](32-glossar.md)
+
+## Hinweis zur In-App-Hilfe
+
+An vielen erklärungsbedürftigen Stellen der Anwendung öffnet ein kleines
+Hilfe-Symbol (?) eine kurze Direkthilfe. Diese verlinkt am Ende jeweils auf
+das passende Kapitel hier für die ausführliche Erklärung. Die Hilfe
+funktioniert vollständig offline — sie ist Teil der Anwendungsdatei und
+braucht keine Internetverbindung.
 
 ## Versionsgeschichte dieses Handbuchs
 
-- **AP1/AP2** (während der Entwicklung, damals 2.4.0-dev): Kapitel "Review
-  Center" angelegt.
-- **AP3** (während der Entwicklung, damals 2.4.0-dev): Kapitel
-  "Maßnahmenmanagement 2.0" ergänzt.
-- **AP4** (während der Entwicklung, damals 2.4.0-dev): Kapitel "BCM
-  Timeline" ergänzt.
-- **AP5** (während der Entwicklung, damals 2.4.0-dev): Kapitel "Governance
-  Dashboard" ergänzt; Glossar und diese Versionsgeschichte neu eingeführt.
+- **AP1–AP5** (während der Entwicklung, damals 2.4.0-dev): Kapitel zu den
+  jeweiligen Arbeitspaketen einzeln angelegt.
 - **AP6/Release Candidate** (Version 2.4.0): Sprache auf den finalen
-  Releasezustand aktualisiert, Glossar um Wiedervorlage/"Blockiert ohne
-  Begründung"/Plausibilitätshinweis ergänzt, PDF-Handbuch erzeugt.
+  Releasezustand aktualisiert, Glossar ergänzt, PDF erzeugt.
+- **Dokumentations- und Hilfe-Release-Gate** (Version 2.4.0): Vollständig
+  neu strukturiert. Die bisherigen vier technischen AP-Kapitel wurden nach
+  [`docs/technical/`](../technical/README.md) verschoben. An ihrer Stelle
+  entstand dieses vollständige, anwenderorientierte Benutzerhandbuch für
+  die gesamte Anwendung (nicht nur die 2.4.0-Neuerungen), ergänzt um
+  kontextbezogene In-App-Hilfe.

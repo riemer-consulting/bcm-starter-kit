@@ -1,6 +1,10 @@
-# Governance Dashboard
+# Governance Dashboard — technische Referenz
 
 *Arbeitspaket AP5, Version 2.4.0.*
+
+> **Diese Seite ist technische Dokumentation** (Datenmodell, Funktionsnamen,
+> Priorisierungslogik im Detail) — für die anwenderorientierte Erklärung
+> siehe [Governance Dashboard im Benutzerhandbuch](../handbook/21-governance-dashboard.md).
 
 ## Zweck
 

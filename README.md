@@ -120,8 +120,10 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability and [SUPPORT.md
 ## Documentation
 
 - [Quickstart](docs/quickstart.md) — first ten minutes
-- [User Guide](docs/user-guide.md) — complete reference
-- [Benutzerhandbuch (PDF, German)](docs/BCM-Starter-Kit_Benutzerhandbuch.pdf) — Review Center, Maßnahmenmanagement 2.0, BCM Timeline, Governance Dashboard
+- [User Guide](docs/user-guide.md) — complete English reference
+- [Benutzerhandbuch (German, 32 chapters)](docs/handbook/README.md) — complete, task-oriented user handbook for the entire application, not just the 2.4.0 additions
+- [Benutzerhandbuch (PDF, German)](docs/BCM-Starter-Kit_Benutzerhandbuch.pdf) — PDF export of the handbook above
+- [Technical Reference (German)](docs/technical/README.md) — internal data model and calculation logic, kept separate from the user handbook
 - [Architecture](docs/architecture.md) — how the application is built
 - [Data Storage & Privacy](docs/data-storage-and-privacy.md)
 - [Release Process](docs/release-process.md)
