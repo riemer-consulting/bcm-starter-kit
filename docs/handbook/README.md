@@ -1,4 +1,4 @@
-# BCM Starter Kit — Benutzerhandbuch (Version 2.4.0)
+# BCM Starter Kit — Benutzerhandbuch (Version 2.4.1)
 
 Dieses Handbuch erklärt das **gesamte** BCM Starter Kit — nicht nur die mit
 Version 2.4.0 hinzugekommenen Funktionen — für alle, die damit arbeiten:
@@ -94,3 +94,6 @@ braucht keine Internetverbindung.
   (nicht nur die damaligen Neuerungen). Die bisherigen vier technischen
   Kapitel wurden dabei nach [`docs/technical/`](../technical/README.md)
   verschoben, und kontextbezogene In-App-Hilfe kam hinzu.
+- **Versionsstand aktualisiert** (Version 2.4.1, Chrome-Startup-Hotfix):
+  keine inhaltliche Änderung an diesem Handbuch — der Hotfix behebt einen
+  reinen Programmstart-Fehler ohne Bedienänderung.

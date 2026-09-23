@@ -817,7 +817,7 @@ button.rowcard:hover{border-color:var(--line-strong);}
 /* ---------------------------------------------------------------------
    1) KONSTANTEN / FACHLICHE REFERENZDATEN
    --------------------------------------------------------------------- */
-const APP_VERSION = '2.4.0';
+const APP_VERSION = '2.4.1';
 
 /* Lizenz — Version/Datum getrennt von APP_VERSION versioniert, damit eine
    künftige inhaltliche Änderung gezielt eine erneute Bestätigung erzwingen
@@ -1551,7 +1551,14 @@ function sanitizeLegacyVersionSnapshots(versions){
 /* ---------------------------------------------------------------------
    3) PERSISTENZ — localStorage Autosave + Versionierung
    --------------------------------------------------------------------- */
-let STATE = loadState();
+// v2.4.1 (Hotfix): diese Variablen müssen VOR der STATE-Zuweisung unten
+// deklariert sein, da loadState() (über stashRecoverySnapshot()) synchron
+// auf sie schreiben kann — z. B. bei einer Schema-Migration. Vorher rief
+// dieselbe Zeile loadState() bereits an erster Stelle auf, wodurch dieser
+// Schreibzugriff in der Temporal Dead Zone der noch nicht initialisierten
+// let-Bindungen landete (ReferenceError, nur auf Pfaden mit
+// Migration/Recovery/Bereinigung — nicht bei leerem oder bereits aktuellem
+// Storage).
 let PENDING_IMPORT = null; // während eines mehrstufigen Imports zwischengespeicherte Importdatei
 let PENDING_RECOVERY_KEY = null;    // gesetzt, wenn P3-Wiederherstellungsdialog nötig ist
 let PENDING_RECOVERY_REASON = null; // 'parse-error' | 'future-schema'
@@ -1561,6 +1568,9 @@ let PENDING_CLEANUP_NOTICE = null; // v1.4.1: Anzahl bereinigter, rekursiv aufge
 let PENDING_STATUS_CHANGE = null; // v1.6.0 (P17): Ziel-Bearbeitungsstand während der Freigabeprüfung
 let SAVE_TIMER = null;
 let DIRTY = false;
+const AUTOBACKUP_PREFIX = 'bcm_autobackup_'; // createAutoBackup() liest dies; wird von loadState() bei Migration/Bereinigung aufgerufen
+const AUTOBACKUP_SLOTS = 5;
+let STATE = loadState();
 
 /** Lädt STATE beim Start aus localStorage: parst, migriert (migrateWorkbook), bereinigt aufgeblähte Legacy-Versionssnapshots und stößt bei Fehlern die P3-Wiederherstellung an. @returns {object} */
 function loadState(){
@@ -1697,8 +1707,10 @@ function versionableSnapshot(){
    Versionsverlauf. Werden NIE in reguläre Workbook-Exporte eingebettet,
    leben ausschließlich in localStorage unter eigenen Keys.
    --------------------------------------------------------------------- */
-const AUTOBACKUP_PREFIX = 'bcm_autobackup_';
-const AUTOBACKUP_SLOTS = 5;
+// AUTOBACKUP_PREFIX/AUTOBACKUP_SLOTS sind oben (vor loadState()) deklariert —
+// createAutoBackup() liest sie, und loadState() ruft createAutoBackup() bei
+// jeder Migration/Bereinigung synchron auf (gleiche TDZ-Klasse wie der
+// PENDING_*-Fix in v2.4.1, siehe Kommentar dort).
 let lastIntervalBackupAt = 0;
 let backupDueToChange = false;
 
@@ -10268,6 +10280,46 @@ function runSelfTests(){
   test('migrateWorkbook: neueres unbekanntes Schema wird abgelehnt', true, ()=>{
     const r = migrateWorkbook({schemaVersion:CURRENT_SCHEMA_VERSION+5, processes:[], resources:[], massnahmen:[], versions:[]});
     assertTrue(r.ok===false, 'zu neues Schema darf nicht geöffnet werden', r);
+  });
+
+  /* ---- 5b) Startup-Reihenfolge (Regression v2.4.1: Chrome-TDZ-Absturz) ----
+     v2.4.0 rief `let STATE = loadState();` auf, BEVOR mehrere von loadState()
+     (bei einer Schema-Migration, P3-Wiederherstellung bzw. über den darin
+     synchron aufgerufenen createAutoBackup()) beschriebene/gelesene
+     Variablen selbst deklariert waren — sowohl die PENDING_*-Meldungen als
+     auch AUTOBACKUP_PREFIX/AUTOBACKUP_SLOTS. Das führte beim Start mit
+     migrationspflichtigen Altdaten zu "ReferenceError: Cannot access
+     '...' before initialization" (Temporal Dead Zone) bzw. zu einer still
+     fehlschlagenden Vor-Migrations-Sicherung — die Anwendung blieb dabei als
+     leere weiße Seite stehen, noch bevor App.render() je aufgerufen wurde.
+     Dieser Test prüft anhand des tatsächlich geladenen Skriptquelltexts,
+     dass die Deklarationsreihenfolge nicht wieder vertauscht wird. Bewusst
+     KEIN direkter Aufruf von loadState() hier: das würde reale
+     Auto-Backup-Slots des aktiven Anwenders überschreiben (siehe
+     createAutoBackup) — als reiner Quelltext-Check bleibt der Test
+     vollständig lesend/synthetisch. */
+  test('Startup-Reihenfolge: PENDING_*/AUTOBACKUP_*-Deklarationen stehen vor "let STATE = loadState()" (TDZ-Regression v2.4.1)', true, ()=>{
+    const scriptEl = document.querySelector('script');
+    const src = scriptEl ? scriptEl.textContent : '';
+    assertTrue(src.length > 1000, 'Skriptquelltext konnte nicht gelesen werden', src.length);
+    const stateIdx = src.indexOf('let STATE = loadState();');
+    assertTrue(stateIdx > -1, '"let STATE = loadState();" wurde im Quelltext nicht gefunden');
+    const requiredDeclarations = [
+      'let PENDING_IMPORT = null;',
+      'let PENDING_RECOVERY_KEY = null;',
+      'let PENDING_RECOVERY_REASON = null;',
+      'let PENDING_MIGRATION_NOTICE = null;',
+      'let PENDING_BACKUP_FAILURE_NOTICE = null;',
+      'let PENDING_CLEANUP_NOTICE = null;',
+      "const AUTOBACKUP_PREFIX = 'bcm_autobackup_';",
+      'const AUTOBACKUP_SLOTS = 5;'
+    ];
+    requiredDeclarations.forEach(decl=>{
+      const declIdx = src.indexOf(decl);
+      assertTrue(declIdx > -1 && declIdx < stateIdx,
+        '"'+decl+'" muss VOR "let STATE = loadState();" stehen, sonst wirft loadState() bei Migration/Recovery einen TDZ-ReferenceError bzw. schlägt die Vor-Migrations-Sicherung fehl (v2.4.1-Hotfix-Regression)',
+        {declIdx, stateIdx});
+    });
   });
 
   /* ---- 6) XSS-Testwerte ---- */

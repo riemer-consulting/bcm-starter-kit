@@ -5,6 +5,54 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.4.1] — Chrome Startup Hotfix
+
+> Release-Blocker-Fix: die veröffentlichte 2.4.0-Datei blieb in Google Chrome
+> beim lokalen `file://`-Start unter bestimmten Bedingungen als leere weiße
+> Seite stehen. Reiner Deklarationsreihenfolge-Fix — keine Fachlogik-, UI-
+> oder Datenmodelländerung.
+
+### Fixed
+- **Chrome-Startup-Absturz behoben:** `let STATE = loadState();` wurde
+  bislang vor mehreren von `loadState()` (bei einer Schema-Migration bzw.
+  P3-Wiederherstellung) synchron beschriebenen `let`-Variablen aufgerufen
+  (`PENDING_IMPORT`, `PENDING_RECOVERY_KEY`, `PENDING_RECOVERY_REASON`,
+  `PENDING_MIGRATION_NOTICE`, `PENDING_BACKUP_FAILURE_NOTICE`,
+  `PENDING_CLEANUP_NOTICE`). In Chrome führte das beim Öffnen migrations-
+  pflichtiger Altdaten zu `ReferenceError: Cannot access '...' before
+  initialization` (Temporal Dead Zone) — die Anwendung initialisierte
+  `#app` dabei nie. Betraf ausschließlich Starts mit migrationspflichtigem
+  oder beschädigtem/zu neuem Altbestand; leere oder bereits aktuelle
+  (Schema 15) Daten waren nicht betroffen.
+- **Gleiche Ursache bei der Vor-Migrations-Sicherung behoben:**
+  `AUTOBACKUP_PREFIX`/`AUTOBACKUP_SLOTS` waren ebenfalls erst nach
+  `loadState()` deklariert. Dadurch schlug die automatische Sicherung vor
+  einer Schema-Migration bzw. Legacy-Snapshot-Bereinigung in Chrome bislang
+  still fehl (nur in der Konsole sichtbar, kein Datenverlust, da
+  `defaultState()`/die Migration selbst davon unberührt blieben).
+- Fix ist eine reine Umsortierung bestehender Deklarationen — keine Änderung
+  an Migrationslogik, Datenmodell, UI oder Business-Regeln.
+  `CURRENT_SCHEMA_VERSION` bleibt 15.
+- Die zusätzlich gemeldete Chrome-Konsolenmeldung „Unsafe attempt to load
+  URL … 'file:' URLs are treated as unique security origins" wurde separat
+  geprüft: keine `iframe`-, `fetch`-, `URL()`- oder Navigations-Aufrufe im
+  Anwendungscode gefunden — reine, folgenlose Chrome-interne
+  Browserwarnung beim Öffnen lokaler HTML-Dateien, kein zweiter
+  Anwendungsfehler.
+
+### Added
+- **1 neuer Selbsttest** (132 insgesamt): prüft anhand des geladenen
+  Skriptquelltexts, dass die betroffenen Deklarationen vor
+  `let STATE = loadState();` stehen (TDZ-Regressionsschutz).
+- **`test/regression-chrome-startup.mjs`:** neues, eigenständiges
+  Playwright-Regressionsskript, das die Datei in einem echten, isolierten
+  Chromium über `file://` mit sechs Storage-Zuständen startet (leer,
+  migrationspflichtig minimal/realistisch, zu neues Schema, beschädigtes
+  JSON, aktueller Stand) und auf uncaught JavaScript-Exceptions sowie ein
+  initialisiertes `#app` prüft — deckt genau den realen Startpfad ab, den
+  die in der Anwendung integrierte Selbstprüfung strukturell nicht prüfen
+  kann (sie läuft erst nach einem bereits erfolgreichen Start).
+
 ## [2.4.0] — Governance & Lifecycle
 
 > BCM endet nicht mit dem Workshop. Version 2.4.0 erweitert das BCM Starter
