@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-2.4.0-informational">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.4.1-informational">
   <img alt="No build step" src="https://img.shields.io/badge/build-none%20required-brightgreen">
   <img alt="Works offline" src="https://img.shields.io/badge/works-offline-brightgreen">
 </p>
