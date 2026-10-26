@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Bühne – BCM Tabletop-Regie</title>
+<style>
+  :root { --bg:#05070b; --panel:#0e141d; --border:#263142; --text:#f0f4f9; --muted:#8a97a8; --accent:#3b82c4; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; }
+  .top { display:flex; justify-content:space-between; align-items:center; padding:18px 36px; border-bottom:1px solid var(--border); }
+  .brand { font-size:20px; font-weight:700; letter-spacing:1px; }
+  .clock { text-align:right; }
+  .clock .label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; }
+  .clock .time { font-size:34px; font-weight:800; font-variant-numeric: tabular-nums; }
+  .main { display:flex; height: calc(100vh - 88px); }
+  .side { width: 280px; border-right:1px solid var(--border); padding: 24px; }
+  .side .block { margin-bottom: 28px; }
+  .side .block .k { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+  .side .block .v { font-size:22px; font-weight:700; }
+  .progress-track { background:#1a2330; border-radius:6px; height:10px; overflow:hidden; margin-top:10px; }
+  .progress-fill { background:var(--accent); height:100%; transition:width 1s linear; }
+  .content { flex:1; padding: 48px 64px; display:flex; flex-direction:column; justify-content:center; }
+  .simzeit { font-size:20px; color: var(--accent); font-weight:700; letter-spacing:1px; margin-bottom: 10px; }
+  .titel { font-size:52px; font-weight:800; margin: 0 0 24px; line-height:1.1; }
+  .text { font-size:22px; line-height:1.5; max-width: 900px; margin-bottom: 24px; }
+  .krisen { background: rgba(217,83,79,.12); border-left:4px solid #d9534f; padding: 14px 20px; font-size:19px; margin-bottom: 24px; max-width:820px; }
+  .aufgabe { font-size:18px; color: var(--muted); }
+  .aufgabe li { margin-bottom: 6px; }
+  .idle, .ended { display:flex; align-items:center; justify-content:center; height:100%; flex-direction:column; text-align:center; }
+  .idle h1, .ended h1 { font-size: 46px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand" id="company-name">BCM Tabletop-Regie</div>
+    <div class="clock">
+      <div class="label" id="status-label">Krisenzeit</div>
+      <div class="time" id="clock-time">00:00</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="side">
+      <div class="block"><div class="k">Fortschritt</div><div class="v" id="progress-label">0 / 0</div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div></div>
+      <div class="block"><div class="k">Übungszeit</div><div class="v" id="elapsed-label">0 Min.</div></div>
+      <div class="block muted" id="company-facts" style="font-size:13px;color:var(--muted);line-height:1.5;"></div>
+    </div>
+    <div class="content" id="content">
+      <div class="idle"><h1>Bereit.</h1><p class="muted">Die Übung startet im Setup.</p></div>
+    </div>
+  </div>
+<script src="stage.js"></script>
+</body>
+</html>

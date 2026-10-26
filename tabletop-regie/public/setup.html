@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Setup – BCM Tabletop-Regie</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="container">
+  <div class="nav"><a href="index.html">Start</a><a class="active" href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a href="moderator.html" target="_blank">Moderation</a></div>
+  <h1 id="scenario-title">Setup</h1>
+  <p class="muted" id="scenario-subtitle"></p>
+
+  <div class="card">
+    <h2>Teilnehmer &amp; Rollen</h2>
+    <p class="muted">Jede Rolle kann von genau einer Person gespielt werden, oder du fasst mehrere Rollen bei einer Person zusammen (kompakte Besetzung für kleinere Gruppen). Sonderlagekarten gehen per E-Mail an die Person, die der jeweiligen Rolle zugeordnet ist.</p>
+    <div class="row" style="margin-bottom:12px;">
+      <button id="btn-fill-full" class="secondary">Alle 20 Einzelrollen anlegen</button>
+      <button id="btn-fill-compact" class="secondary">Kompakt: 8 Funktionsbereiche anlegen</button>
+      <button id="btn-add-row" class="secondary">+ Teilnehmer</button>
+    </div>
+    <table id="participants-table">
+      <thead><tr><th>Name</th><th>E-Mail</th><th>Remote</th><th>Rolle(n)</th><th></th></tr></thead>
+      <tbody id="participants-body"></tbody>
+    </table>
+    <div class="row" style="margin-top:12px;">
+      <button id="btn-save-participants">Teilnehmerliste speichern</button>
+      <span id="save-status" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ablauf</h2>
+    <div class="grid-2">
+      <div>
+        <label for="duration-mode">Zeitmodus</label>
+        <select id="duration-mode">
+          <option value="authored">Erprobte Zeiten aus dem Drehbuch (für ca. 18–20 Teilnehmer)</option>
+          <option value="computed">Automatisch berechnet nach Rollenzahl &amp; Schwierigkeit (volles Drehbuch)</option>
+          <option value="target">Zieldauer vorgeben – Lage wird darauf zugeschnitten</option>
+        </select>
+      </div>
+      <div>
+        <label for="difficulty">Schwierigkeit (Entscheidungsphasen-Länge)</label>
+        <select id="difficulty">
+          <option value="leicht">Leicht (kürzere Entscheidungsphasen)</option>
+          <option value="mittel" selected>Mittel</option>
+          <option value="hoch">Hoch (längere Entscheidungsphasen)</option>
+        </select>
+      </div>
+    </div>
+    <div id="target-duration-row" class="grid-2" style="margin-top:12px;display:none;">
+      <div>
+        <label for="target-preset">Zieldauer</label>
+        <select id="target-preset">
+          <option value="45">45 Minuten</option>
+          <option value="60">60 Minuten</option>
+          <option value="90" selected>90 Minuten (Standard)</option>
+          <option value="120">120 Minuten (2 Stunden)</option>
+          <option value="custom">Eigene Angabe …</option>
+        </select>
+      </div>
+      <div id="target-custom-wrap" style="display:none;">
+        <label for="target-custom">Eigene Zieldauer (Minuten)</label>
+        <input id="target-custom" type="number" min="10" max="480" value="90">
+      </div>
+    </div>
+    <p class="muted" id="duration-preview" style="margin-top:10px;"></p>
+    <p class="muted" id="duration-preview-detail" style="margin-top:4px;font-size:12px;"></p>
+    <div class="row" style="margin-top:12px;">
+      <button id="btn-start">Übung starten</button>
+      <span class="muted">Öffnet danach automatisch Bühne und Moderation in neuen Tabs.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>SMTP-Server (für Sonderlagekarten-Benachrichtigungen)</h2>
+    <div class="grid-2">
+      <div><label>Host</label><input id="smtp-host"></div>
+      <div><label>Port</label><input id="smtp-port" type="number"></div>
+      <div><label>Benutzer</label><input id="smtp-user"></div>
+      <div><label>Passwort</label><input id="smtp-pass" type="password"></div>
+      <div><label>Absenderadresse</label><input id="smtp-from"></div>
+      <div><label>Absendername</label><input id="smtp-fromname"></div>
+    </div>
+    <div class="row" style="margin-top:8px;">
+      <label style="display:flex;align-items:center;gap:6px;width:auto;"><input type="checkbox" id="smtp-secure" style="width:auto;"> TLS/SSL (secure)</label>
+      <label style="display:flex;align-items:center;gap:6px;width:auto;"><input type="checkbox" id="smtp-insecure-tls" style="width:auto;"> Selbstsigniertes/abgelaufenes TLS-Zertifikat akzeptieren (nur für interne/Test-Server)</label>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <button id="btn-save-settings">Einstellungen speichern</button>
+      <input id="test-email-to" placeholder="Test-Empfänger@example.com" style="max-width:260px;">
+      <button id="btn-test-email" class="secondary">Test-E-Mail senden</button>
+      <span id="settings-status" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Branding (Durchführer)</h2>
+    <div class="grid-2">
+      <div><label>Name der durchführenden Organisation</label><input id="brand-name" placeholder="z. B. EXCON, Riemer Consulting ..."></div>
+      <div><label>Logo (Pfad/URL, optional – erscheint auf Urkunden)</label><input id="brand-logo" placeholder="/media/mein-logo.png"></div>
+    </div>
+    <div class="row" style="margin-top:12px;"><button id="btn-save-branding" class="secondary">Branding speichern</button></div>
+  </div>
+</div>
+<script src="setup.js"></script>
+</body>
+</html>

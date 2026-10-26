@@ -1,0 +1,15 @@
+{
+  "name": "tabletop-regie",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lokale Regie-App für BCM-Tabletop-Übungen: Drehbuch, Timer, Rollen, E-Mail-Benachrichtigungen, Bewertungsmatrix.",
+  "type": "commonjs",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14"
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Moderation – BCM Tabletop-Regie</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .not-shared { border: 2px dashed var(--bad); }
+  .not-shared-label { color: var(--bad); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; align-items: start; }
+  .mini { font-size: 12px; }
+  .score-select { width: 56px; display: inline-block; }
+  .log-entry { font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .log-entry.mail { color: var(--ok); }
+  .log-entry.error { color: var(--bad); }
+  .log-entry.warn { color: var(--warn); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav"><a href="index.html">Start</a><a href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a class="active" href="moderator.html">Moderation</a></div>
+  <div class="not-shared-label">⚠ Diese Ansicht NICHT per Bildschirmfreigabe teilen</div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;">
+      <h1 id="m-title">Moderation</h1>
+      <div class="row">
+        <span id="m-status" class="badge warn">idle</span>
+        <button id="btn-pause" class="secondary">Pause</button>
+        <button id="btn-resume" class="secondary">Fortsetzen</button>
+        <button id="btn-reset" class="danger">Zurücksetzen</button>
+      </div>
+    </div>
+    <div class="row mini muted">
+      <span id="m-elapsed"></span> · <span id="m-mode"></span> · <span id="m-roles"></span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h2>Aktuelle Lagekarte (öffentlich)</h2>
+        <div id="m-current-lk" class="muted">Noch nicht gestartet.</div>
+      </div>
+
+      <div class="card" id="m-schedule-warning-card" style="display:none;border-color:var(--warn);">
+        <h2 style="color:var(--warn);">Hinweis zur Zieldauer</h2>
+        <div id="m-schedule-warning" class="mini"></div>
+      </div>
+
+      <div class="card">
+        <h2>Nächste Ereignisse</h2>
+        <table><thead><tr><th>Minute</th><th>Typ</th><th>Titel</th></tr></thead><tbody id="m-upcoming"></tbody></table>
+      </div>
+
+      <div class="card" id="m-skipped-card" style="display:none;">
+        <h2>Aus Zeitgründen übersprungen</h2>
+        <p class="muted mini">Diese Karten passen im aktuellen Zieldauer-Plan nicht hinein. Bei Bedarf trotzdem aufnehmen (wird sofort angezeigt/versendet).</p>
+        <div id="m-skipped"></div>
+      </div>
+
+      <div class="card">
+        <h2>Manuell auslösen</h2>
+        <h3 class="mini muted">Nicht zeitlich festgelegte Sonderlagekarten</h3>
+        <div id="m-unscheduled-sk"></div>
+        <h3 class="mini muted" style="margin-top:14px;">Bonuskarten (nur bei Bedarf für Dynamik einsetzen)</h3>
+        <div id="m-bonus"></div>
+      </div>
+
+      <div class="card">
+        <h2>Versand-Log</h2>
+        <div id="m-log"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>Moderationsleitfaden</h2>
+        <div id="m-leitfaden" class="mini"></div>
+      </div>
+
+      <div class="card">
+        <h2>Bewertungsmatrix</h2>
+        <table id="m-bewertung"><thead id="m-bewertung-head"></thead><tbody id="m-bewertung-body"></tbody></table>
+      </div>
+
+      <div class="card">
+        <h2>Urkunden</h2>
+        <div id="m-certs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="moderator.js"></script>
+</body>
+</html>

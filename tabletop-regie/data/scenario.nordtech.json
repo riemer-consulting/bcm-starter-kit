@@ -1,0 +1,771 @@
+{
+  "id": "nordtech-7-tage-ausnahmezustand",
+  "title": "7 Tage im Ausnahmezustand",
+  "subtitle": "BCM Tabletop Exercise – Ransomware-Angriff auf die NordTech Components GmbH",
+  "company": {
+    "name": "NordTech Components GmbH",
+    "facts": "3 Standorte · ca. 620 Mitarbeiter · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
+    "logo": "/media/nordtech-logo.webp"
+  },
+  "difficulty": "mittel-hoch",
+  "recommendedParticipants": {
+    "min": 6,
+    "reference": 20,
+    "max": 24
+  },
+  "timing": {
+    "mode": "authored",
+    "referenceGroupSize": 20,
+    "note": "Die Minutenangaben sind auf eine Gruppe von ca. 18-20 Teilnehmenden zugeschnitten. In 'berechnet'-Modus leitet die App die Dauer stattdessen aus der Anzahl aktiver Rollen her (1 Min. Lesezeit + 30 Sek. je aktivem Funktionsbereich, max. 4 Min. Krisenstabsentscheidung je Lagekarte)."
+  },
+  "standardablauf": {
+    "readingMinutes": 1,
+    "perRoleSeconds": 30,
+    "maxDecisionMinutes": 4,
+    "speakingOrder": [
+      "geschaeftsfuehrung",
+      "it",
+      "erp",
+      "finanzen",
+      "personal",
+      "einkauf",
+      "vertrieb",
+      "marketing"
+    ]
+  },
+  "roleGroups": [
+    {
+      "key": "geschaeftsfuehrung",
+      "label": "Geschäftsführung",
+      "members": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "key": "it",
+      "label": "IT & Wiederanlauf",
+      "members": [
+        "leiter-it",
+        "it-mitarbeiter"
+      ]
+    },
+    {
+      "key": "erp",
+      "label": "ERP & Geschäftsprozesse",
+      "members": [
+        "erp-stammdaten",
+        "erp-beratung",
+        "inventuren-spezialprozesse"
+      ]
+    },
+    {
+      "key": "finanzen",
+      "label": "Finanzen",
+      "members": [
+        "kaufmaennische-leiterin-cfo",
+        "debitorenbuchhaltung",
+        "debitorenmanagement",
+        "fakturierung"
+      ]
+    },
+    {
+      "key": "personal",
+      "label": "Personal",
+      "members": [
+        "leiterin-personal"
+      ]
+    },
+    {
+      "key": "einkauf",
+      "label": "Lieferanten & Beschaffung",
+      "members": [
+        "leiter-einkauf"
+      ]
+    },
+    {
+      "key": "vertrieb",
+      "label": "Kunden & Vertrieb",
+      "members": [
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-einzelhandel",
+        "regionalleiter-west",
+        "regionalleiter-ost"
+      ]
+    },
+    {
+      "key": "marketing",
+      "label": "Kommunikation / Marketing",
+      "members": [
+        "marketing-ecommerce"
+      ]
+    },
+    {
+      "key": "krisenstab-support",
+      "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
+      "members": [
+        "notfallmanagement-bcm",
+        "assistenz-gf-dokumentation",
+        "office-management"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "geschaeftsfuehrer-ceo",
+      "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
+      "group": "geschaeftsfuehrung"
+    },
+    {
+      "id": "geschaeftsfuehrerin-vertrieb",
+      "funktion": "Geschäftsführerin Vertrieb, stellv. Krisenstabsleiterin",
+      "group": "vertrieb"
+    },
+    {
+      "id": "leiter-it",
+      "funktion": "Leiter IT (CIO)",
+      "group": "it"
+    },
+    {
+      "id": "it-mitarbeiter",
+      "funktion": "IT-Mitarbeiter (Vertreter IT-Leitung)",
+      "group": "it"
+    },
+    {
+      "id": "notfallmanagement-bcm",
+      "funktion": "Notfallmanagement / BCM",
+      "group": "krisenstab-support"
+    },
+    {
+      "id": "erp-stammdaten",
+      "funktion": "ERP / Stammdaten",
+      "group": "erp"
+    },
+    {
+      "id": "erp-beratung",
+      "funktion": "ERP-Beratung",
+      "group": "erp"
+    },
+    {
+      "id": "inventuren-spezialprozesse",
+      "funktion": "Inventuren & Spezialprozesse",
+      "group": "erp"
+    },
+    {
+      "id": "kaufmaennische-leiterin-cfo",
+      "funktion": "Kaufmännische Leiterin (CFO)",
+      "group": "finanzen"
+    },
+    {
+      "id": "debitorenbuchhaltung",
+      "funktion": "Debitorenbuchhaltung",
+      "group": "finanzen"
+    },
+    {
+      "id": "debitorenmanagement",
+      "funktion": "Debitorenmanagement",
+      "group": "finanzen"
+    },
+    {
+      "id": "fakturierung",
+      "funktion": "Fakturierung",
+      "group": "finanzen"
+    },
+    {
+      "id": "leiter-einkauf",
+      "funktion": "Leiter Strategischer Einkauf",
+      "group": "einkauf"
+    },
+    {
+      "id": "leiterin-personal",
+      "funktion": "Leiterin Personal",
+      "group": "personal"
+    },
+    {
+      "id": "marketing-ecommerce",
+      "funktion": "Marketing & eCommerce",
+      "group": "marketing"
+    },
+    {
+      "id": "leiter-einzelhandel",
+      "funktion": "Leiter Einzelhandel",
+      "group": "vertrieb"
+    },
+    {
+      "id": "regionalleiter-west",
+      "funktion": "Regionalleiter West",
+      "group": "vertrieb"
+    },
+    {
+      "id": "regionalleiter-ost",
+      "funktion": "Regionalleiter Ost",
+      "group": "vertrieb"
+    },
+    {
+      "id": "assistenz-gf-dokumentation",
+      "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
+      "group": "krisenstab-support"
+    },
+    {
+      "id": "office-management",
+      "funktion": "Office Management / interne Kommunikation",
+      "group": "krisenstab-support"
+    }
+  ],
+  "moderationsleitfaden": {
+    "begruessung": "Guten Morgen zusammen. Heute werden wir keine IT-Systeme reparieren. Wir werden auch keine technische Analyse durchführen. Heute erleben wir gemeinsam die schlimmste Woche in der Geschichte der NordTech Components GmbH. Sie alle vertreten Ihre Funktion innerhalb des Unternehmens. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst sieben Tage Unternehmenskrise, die wir innerhalb der nächsten Stunde durchlaufen werden. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
+    "eroeffnungstext": "Der Markt öffnet in wenigen Minuten. NordTech Components ist ein gesunder Mittelständler. 620 Mitarbeiter. 185 Mio. Euro Umsatz. Drei Standorte. Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in einer Stunde.",
+    "spielregeln": [
+      "Jeder Teilnehmer vertritt ausschließlich seinen Verantwortungsbereich.",
+      "Jede Lagekarte enthält neue Informationen.",
+      "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
+      "Anschließend erfolgt die Abstimmung im Krisenstab."
+    ],
+    "moderationsregel": "Nicht diskutieren lassen. Nicht in technische Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
+    "debriefingFragen": [
+      "Wann wart ihr am stärksten unter Druck?",
+      "Welche Information hat gefehlt?",
+      "Wer hätte früher eingebunden werden müssen?",
+      "Welche BCM-Maßnahme hätte geholfen?",
+      "Welche Person war kritisch?",
+      "Wo waren Single Points of Failure?"
+    ],
+    "abschlussfragenVorDebrief": [
+      "Worüber haben wir am meisten diskutiert?",
+      "Welche Informationen haben gefehlt?",
+      "Welche Entscheidung fiel besonders schwer?",
+      "Welche BCM-Maßnahme hätte uns geholfen?"
+    ],
+    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Cyberangriff selbst, sondern der Moment (ca. Minute 51 / Sonderkarte 17), in dem der Krisenstabsleiter dem Beirat Bericht erstatten muss und IT, Vertrieb, Personal, Finanzen und Einkauf kurzfristig eine gemeinsame Lage erzeugen müssen."
+  },
+  "debriefMinutes": 13,
+  "lagekarten": [
+    {
+      "id": "LK01",
+      "nr": 1,
+      "simZeit": "Montag 07:00 Uhr",
+      "titel": "Cyberangriff",
+      "minuteOffset": 5,
+      "diskussionMinuten": 5,
+      "text": "Die Frühschicht meldet massive IT-Probleme. Folgende Systeme sind nicht verfügbar: ERP, Fileserver, Zeiterfassung, E-Mail. Auf mehreren Bildschirmen erscheint eine Lösegeldforderung. Die Produktion kann keine neuen Fertigungsaufträge abrufen.",
+      "kriseninfo": "Lösegeldforderung: 2.000.000 € · Frist: 48 Stunden",
+      "aufgabe": [
+        "Welche Auswirkungen hat dies auf Ihren Bereich?",
+        "Welche Sofortmaßnahmen leiten Sie ein?",
+        "Welche Entscheidungen benötigt der Krisenstab?"
+      ],
+      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen.",
+      "media": null,
+      "prioritaet": 1
+    },
+    {
+      "id": "LK02",
+      "nr": 2,
+      "simZeit": "Montag 09:00 Uhr",
+      "titel": "Produktion stoppt",
+      "minuteOffset": 10,
+      "diskussionMinuten": 4,
+      "text": "Die Produktionsleitung meldet: Es können keine Fertigungsaufträge mehr gestartet werden. Bereits laufende Aufträge werden in wenigen Stunden abgeschlossen sein. Danach steht die Fertigung.",
+      "kriseninfo": "Lagerbestand reicht noch für: 48 Stunden",
+      "aufgabe": [
+        "Welche Folgen erwarten Sie?",
+        "Welche Kunden sind betroffen?",
+        "Welche Prioritäten setzen Sie?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK03",
+      "nr": 3,
+      "simZeit": "Montag 11:00 Uhr",
+      "titel": "LinkedIn-Beitrag",
+      "minuteOffset": 18,
+      "diskussionMinuten": 4,
+      "text": "Ein Mitarbeiter veröffentlicht einen Beitrag auf LinkedIn mit Bildern aus dem Unternehmen. Aussage: \"Heute läuft bei uns gar nichts mehr.\" Der Beitrag verbreitet sich schnell.",
+      "kriseninfo": "20.000 Aufrufe · mehrere Journalisten kommentieren",
+      "aufgabe": [
+        "Wer reagiert?",
+        "Wie kommunizieren Sie?",
+        "Müssen Mitarbeiter informiert werden?"
+      ],
+      "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen.",
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK04",
+      "nr": 4,
+      "simZeit": "Montag 14:00 Uhr",
+      "titel": "NDR-Anfrage",
+      "minuteOffset": 24,
+      "diskussionMinuten": 5,
+      "text": "Der NDR kontaktiert die Unternehmenskommunikation. Fragen: Wurden Kundendaten gestohlen? Zahlen Sie Lösegeld? Ist die Produktion betroffen?",
+      "kriseninfo": "Antwortfrist: 2 Stunden",
+      "aufgabe": [
+        "Wer spricht?",
+        "Was wird kommuniziert?",
+        "Was wird bewusst nicht kommuniziert?"
+      ],
+      "moderatorHinweis": "Jetzt aktiv den NDR-Reporter spielen.",
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK05",
+      "nr": 5,
+      "simZeit": "Dienstag 08:00 Uhr",
+      "titel": "Schlüsselperson fällt aus",
+      "minuteOffset": 29,
+      "diskussionMinuten": 3,
+      "text": "Der leitende Systemadministrator ist nicht erreichbar, er befindet sich im Krankenhaus. Niemand kennt Backup-Konfiguration, Notfallpasswörter oder Firewallregeln.",
+      "kriseninfo": null,
+      "aufgabe": [
+        "Welche Risiken entstehen?",
+        "Welche Alternativen gibt es?",
+        "Welche Prioritäten ändern sich?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK06",
+      "nr": 6,
+      "simZeit": "Dienstag 10:00 Uhr",
+      "titel": "Kunde eskaliert",
+      "minuteOffset": 34,
+      "diskussionMinuten": 4,
+      "text": "Ein Automobilkunde fordert eine Stellungnahme. Bei Lieferausfall drohen 50.000 € Vertragsstrafe pro Tag.",
+      "kriseninfo": "Entscheidung vom Kunden gefordert bis 16 Uhr",
+      "aufgabe": [
+        "Wer spricht mit dem Kunden?",
+        "Welche Zusagen machen Sie?",
+        "Welche Risiken entstehen?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK07",
+      "nr": 7,
+      "simZeit": "Dienstag 13:00 Uhr",
+      "titel": "Datenschutz",
+      "minuteOffset": 38,
+      "diskussionMinuten": 4,
+      "text": "Es gibt Hinweise auf Datenabfluss. Die Datenschutzbehörde fordert eine Stellungnahme.",
+      "kriseninfo": "Meldepflicht innerhalb von 72 Stunden",
+      "aufgabe": [
+        "Welche Informationen liegen vor?",
+        "Welche Informationen fehlen?",
+        "Wer übernimmt die Kommunikation?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK08",
+      "nr": 8,
+      "simZeit": "Mittwoch 08:00 Uhr",
+      "titel": "Positive Entwicklung",
+      "minuteOffset": 44,
+      "diskussionMinuten": 3,
+      "text": "Forensiker identifizieren den Einbruchsvektor: Phishing-Mail. Derzeit keine Hinweise auf aktive Angreifer im Netzwerk.",
+      "kriseninfo": "erste gute Nachricht der Übung",
+      "aufgabe": [
+        "Welche Maßnahmen ergeben sich daraus?",
+        "Kommunizieren Sie diesen Erfolg?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK09",
+      "nr": 9,
+      "simZeit": "Mittwoch 11:00 Uhr",
+      "titel": "Backups gefunden",
+      "minuteOffset": 47,
+      "diskussionMinuten": 4,
+      "text": "Offline-Backups sind verfügbar. Stand: Samstag 23:00 Uhr.",
+      "kriseninfo": "Ein Arbeitstag Datenverlust",
+      "aufgabe": [
+        "Wiederherstellung starten?",
+        "Weitere Analysen durchführen?",
+        "Welche Risiken bestehen?"
+      ],
+      "moderatorHinweis": "noch bessere Nachricht als LK08.",
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK10",
+      "nr": 10,
+      "simZeit": "Donnerstag 08:00 Uhr",
+      "titel": "NDR-Sonderbericht",
+      "minuteOffset": 56,
+      "diskussionMinuten": 4,
+      "text": "Der NDR veröffentlicht einen Bericht: \"Cyber-Chaos bei NordTech\". Ein anonymer Mitarbeiter kritisiert die Unternehmensführung.",
+      "kriseninfo": "Social Media reagiert massiv",
+      "aufgabe": [
+        "Reagieren oder ignorieren?",
+        "Wie schützen Sie den Ruf des Unternehmens?"
+      ],
+      "moderatorHinweis": "Jetzt das Gebäudebild zeigen: 'Der Übertragungswagen steht vor der Zentrale.'",
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK11",
+      "nr": 11,
+      "simZeit": "Donnerstag 13:00 Uhr",
+      "titel": "Pharmakunde eskaliert",
+      "minuteOffset": 62,
+      "diskussionMinuten": 4,
+      "text": "Ein Pharmakunde droht mit Schadensersatz. Er benötigt dringend Ware.",
+      "kriseninfo": "Frist: 48 Stunden",
+      "aufgabe": [
+        "Welche Kunden priorisieren Sie?",
+        "Welche Lieferungen haben Vorrang?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK12",
+      "nr": 12,
+      "simZeit": "Freitag 08:00 Uhr",
+      "titel": "Teilweiser Wiederanlauf",
+      "minuteOffset": 66,
+      "diskussionMinuten": 3,
+      "text": "Werk Süd kann wieder produzieren.",
+      "kriseninfo": "Kapazität: 30 %",
+      "aufgabe": [
+        "Welche Produkte produzieren Sie zuerst?",
+        "Welche Kunden werden priorisiert?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK13",
+      "nr": 13,
+      "simZeit": "Freitag 11:00 Uhr",
+      "titel": "Cyberversicherung",
+      "minuteOffset": 72,
+      "diskussionMinuten": 3,
+      "text": "Die Cyberversicherung bestätigt Deckung. Folgende Leistungen werden übernommen: Forensik, Krisenkommunikation, Rechtsberatung.",
+      "kriseninfo": null,
+      "aufgabe": [
+        "Welche Leistungen nutzen Sie zuerst?",
+        "Wer koordiniert die Zusammenarbeit?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK14",
+      "nr": 14,
+      "simZeit": "Samstag 09:00 Uhr",
+      "titel": "ERP-Testbetrieb",
+      "minuteOffset": 75,
+      "diskussionMinuten": 4,
+      "text": "Das ERP-System läuft in einer Testumgebung. Erste Funktionstests erfolgreich.",
+      "kriseninfo": "Ein Restrisiko bleibt bestehen",
+      "aufgabe": [
+        "Sofort produktiv gehen?",
+        "Weitere Tests durchführen?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK15",
+      "nr": 15,
+      "simZeit": "Sonntag 12:00 Uhr",
+      "titel": "Wiederanlauf",
+      "minuteOffset": 82,
+      "diskussionMinuten": 5,
+      "text": "70 % der Produktion laufen wieder. Die IT-Systeme sind weitgehend verfügbar. Kunden und Presse beobachten die Situation weiterhin kritisch.",
+      "kriseninfo": null,
+      "aufgabe": [
+        "Welche Botschaft senden Sie an Kunden, Mitarbeiter, Öffentlichkeit?",
+        "Welche Maßnahmen folgen nach der Krise?"
+      ],
+      "moderatorHinweis": "Letzte Lagekarte. Übungsende bei minuteOffset 87.",
+      "media": null,
+      "prioritaet": 1
+    }
+  ],
+  "sonderlagekarten": [
+    {
+      "id": "SK01",
+      "nr": 1,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 14,
+      "vertraulich": true,
+      "text": "Ein externer Dienstleister informiert dich: Die Backups könnten ebenfalls kompromittiert sein. Aktuell ist das nicht bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Die IT-Leitung informiert den Krisenstab über das Risiko.",
+      "moderatorSchlecht": "Die IT-Leitung wartet zu lange und alle verlassen sich auf Backups.",
+      "prioritaet": 1
+    },
+    {
+      "id": "SK02",
+      "nr": 2,
+      "empfaenger": "it-mitarbeiter",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Du entdeckst einen Offline-Datenträger. Möglicherweise befindet sich darauf ein älteres Backup. Der Zustand ist unbekannt. Du entscheidest selbst über das weitere Vorgehen.",
+      "moderatorGut": "IT prüft das Medium.",
+      "moderatorSchlecht": "Information bleibt liegen.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK03",
+      "nr": 3,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 14,
+      "vertraulich": true,
+      "text": "Der wichtigste Systemadministrator hat sich krank gemeldet. Voraussichtlicher Ausfall: 14 Tage. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
+      "moderatorGut": "Schlüsselpersonenrisiko wird sofort eskaliert.",
+      "moderatorSchlecht": "Niemand erfährt davon.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK04",
+      "nr": 4,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Ein weiterer IT-Mitarbeiter hat gekündigt. Kündigungsfrist: 4 Wochen. Die Information ist bisher nur dir bekannt.",
+      "moderatorGut": "HR informiert den Krisenstab.",
+      "moderatorSchlecht": "Thema wird ignoriert.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK05",
+      "nr": 5,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 22,
+      "vertraulich": true,
+      "text": "Ein Großkunde droht: Wenn heute keine verbindliche Aussage erfolgt, wird ein Wettbewerber beauftragt. Der Kunde erwartet zeitnah eine Reaktion.",
+      "moderatorGut": "Kunde wird aktiv betreut.",
+      "moderatorSchlecht": "Keine Kommunikation.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK06",
+      "nr": 6,
+      "empfaenger": "leiter-einzelhandel",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Drei wichtige Fachhändler beschweren sich öffentlich. Die ersten Kommentare verbreiten sich in sozialen Medien. Wie gehst du damit um?",
+      "moderatorGut": "Marketing und Vertrieb werden eingebunden.",
+      "moderatorSchlecht": "Man wartet ab.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK07",
+      "nr": 7,
+      "empfaenger": "marketing-ecommerce",
+      "minuteOffset": 22,
+      "vertraulich": true,
+      "text": "Ein Journalist kontaktiert dich direkt über LinkedIn. Fragen: Zahlen Sie Lösegeld? Sind Kundendaten betroffen? Ist die Produktion ausgefallen? Wie reagierst du?",
+      "moderatorGut": "Kommunikation erfolgt abgestimmt.",
+      "moderatorSchlecht": "Einzelantwort ohne Abstimmung.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK08",
+      "nr": 8,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 32,
+      "vertraulich": true,
+      "text": "Die Hausbank fordert eine kurzfristige Einschätzung des finanziellen Schadens. Frist: 2 Stunden. Welche Informationen benötigst du?",
+      "moderatorGut": "Schadensabschätzung wird vorbereitet.",
+      "moderatorSchlecht": "Keine Zahlen verfügbar.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK09",
+      "nr": 9,
+      "empfaenger": "debitorenbuchhaltung",
+      "minuteOffset": 42,
+      "vertraulich": true,
+      "text": "Mehrere Kunden halten ihre Zahlungen zurück. Begründung: Unsicherheit über die Lieferfähigkeit. Wie gehst du vor?",
+      "moderatorGut": "Finanzen informiert den Krisenstab.",
+      "moderatorSchlecht": "Thema bleibt im Fachbereich.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK10",
+      "nr": 10,
+      "empfaenger": "debitorenmanagement",
+      "minuteOffset": 42,
+      "vertraulich": true,
+      "text": "Die ersten Kunden drohen mit Schadensersatzforderungen. Noch liegen keine offiziellen Schreiben vor. Was unternimmst du?",
+      "moderatorGut": "Rechtliche Bewertung wird angefordert.",
+      "moderatorSchlecht": "Keine Eskalation.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK11",
+      "nr": 11,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 32,
+      "vertraulich": true,
+      "text": "Ein strategischer Lieferant meldet: Material reicht nur noch für zwei Tage. Anschließend droht Produktionsstillstand.",
+      "moderatorGut": "Lieferantenmanagement wird aktiviert.",
+      "moderatorSchlecht": "Produktion erfährt es zu spät.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK12",
+      "nr": 12,
+      "empfaenger": "erp-stammdaten",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Ein Mitarbeiter meldet: Im ERP fehlen offenbar Datensätze. Ob die Daten verloren sind, ist unklar. Wie reagierst du?",
+      "moderatorGut": "Prüfung wird veranlasst.",
+      "moderatorSchlecht": "Daten werden ungeprüft übernommen.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK13",
+      "nr": 13,
+      "empfaenger": "erp-beratung",
+      "minuteOffset": 60,
+      "vertraulich": true,
+      "text": "Mehrere Fachbereiche führen Notfalllisten in Excel. Jeder Bereich arbeitet mit anderen Datenständen. Wie gehst du vor?",
+      "moderatorGut": "Koordination der Datenbasis.",
+      "moderatorSchlecht": "Jeder arbeitet weiter allein.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK14",
+      "nr": 14,
+      "empfaenger": "inventuren-spezialprozesse",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "In vier Tagen wäre Inventurstichtag. Die Systeme stehen weiterhin nicht zur Verfügung. Welche Risiken siehst du?",
+      "moderatorGut": "Alternativverfahren entwickeln.",
+      "moderatorSchlecht": "Problem ignorieren.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK15",
+      "nr": 15,
+      "empfaenger": "assistenz-gf-dokumentation",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Mehrere Teilnehmer behaupten später: \"Das haben wir nie beschlossen.\" Wie stellst du die Nachvollziehbarkeit sicher?",
+      "moderatorGut": "Beschlüsse dokumentieren.",
+      "moderatorSchlecht": "Keine Protokollierung.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK16",
+      "nr": 16,
+      "empfaenger": "office-management",
+      "minuteOffset": 60,
+      "vertraulich": true,
+      "text": "Im Unternehmen kursieren Gerüchte. Mehrere Mitarbeitende behaupten: \"NordTech zahlt bereits Lösegeld.\" Wie gehst du mit dieser Situation um?",
+      "moderatorGut": "Interne Kommunikation anregen.",
+      "moderatorSchlecht": "Gerüchte laufen weiter.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK17",
+      "nr": 17,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 51,
+      "vertraulich": true,
+      "text": "Der Beirat fordert in 30 Minuten: Schadenshöhe, Wiederanlaufprognose, Kommunikationsstrategie. Du musst eine Lageeinschätzung vorbereiten.",
+      "moderatorGut": "Krisenstab liefert Fakten.",
+      "moderatorSchlecht": "Keine abgestimmte Lage.",
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: sprich den Krisenstabsleiter direkt an: 'Der Beirat erwartet in fünf Minuten eine Lageeinschätzung von Ihnen.' Der ganze Raum muss liefern. Dies ist laut Playbook die stärkste Szene der Übung.",
+      "prioritaet": 1
+    },
+    {
+      "id": "SK18",
+      "nr": 18,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 69,
+      "vertraulich": true,
+      "text": "Ein Pharmakunde bietet an, auf Vertragsstrafen zu verzichten. Voraussetzung: eine verbindliche Lieferzusage. Wie bewertest du die Situation?",
+      "moderatorGut": "Risiken und Chancen abwägen.",
+      "moderatorSchlecht": "Unüberlegte Zusagen.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK19",
+      "nr": 19,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 69,
+      "vertraulich": true,
+      "text": "Die Forensiker empfehlen: Kein System darf aktuell wieder eingeschaltet werden. Gleichzeitig steigt der Druck aus den Fachbereichen. Wie gehst du damit um?",
+      "moderatorGut": "Risiken transparent machen.",
+      "moderatorSchlecht": "Business und IT arbeiten gegeneinander.",
+      "moderatorHinweis": "Erzeugt bewussten Konflikt mit SK18 (Vertrieb will liefern, IT will warten).",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK20",
+      "nr": 20,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 79,
+      "vertraulich": true,
+      "text": "Der Aufsichtsrat stellt die Frage: \"Unter welchen Bedingungen würden Sie eine Lösegeldzahlung überhaupt in Betracht ziehen?\" Bereite deine Position vor.",
+      "moderatorGut": "Begründete Entscheidung.",
+      "moderatorSchlecht": "Unklare Haltung.",
+      "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
+      "prioritaet": 1
+    }
+  ],
+  "bonuskarten": [
+    {
+      "id": "B1",
+      "empfaenger": "it-mitarbeiter",
+      "text": "Verlasse den Raum für 5 Minuten. Du bist aufgrund eines medizinischen Notfalls nicht verfügbar."
+    },
+    {
+      "id": "B2",
+      "empfaenger": "marketing-ecommerce",
+      "text": "Ein Screenshot eines internen Dokuments taucht auf Social Media auf. Niemand weiß, wer ihn veröffentlicht hat."
+    },
+    {
+      "id": "B3",
+      "empfaenger": "leiter-einkauf",
+      "text": "Ein Lieferant priorisiert einen Wettbewerber. Materiallieferung verzögert sich um 7 Tage."
+    },
+    {
+      "id": "B4",
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "text": "Ein Fernsehsender möchte in 15 Minuten ein Live-Interview. Du musst entscheiden, ob du zusagst."
+    },
+    {
+      "id": "B5",
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "text": "Erste Schätzung: Der Schaden liegt bereits über 500.000 €. Die Zahlen sind noch nicht bestätigt."
+    }
+  ],
+  "bewertungskriterien": [
+    "Rollenverständnis",
+    "Kommunikation",
+    "Entscheidungsfähigkeit",
+    "Zusammenarbeit",
+    "Krisenmanagement",
+    "Priorisierung",
+    "Dokumentation"
+  ],
+  "urkunde": {
+    "veranstaltung": "BCM-Krisensimulation \"7 Tage im Ausnahmezustand\"",
+    "maxPunkte": 10
+  }
+}
