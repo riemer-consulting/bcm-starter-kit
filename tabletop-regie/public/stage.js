@@ -36,7 +36,9 @@ async function refresh() {
 
   const lk = s.currentLagekarte;
   if (!lk) {
-    content.innerHTML = '<div class="idle"><h1>Die Krise beginnt gleich …</h1></div>';
+    content.innerHTML = s.eroeffnungstext
+      ? `<div class="idle"><h1>Die Krise beginnt gleich …</h1><p class="text" style="max-width:820px;">${escapeHtml(s.eroeffnungstext)}</p></div>`
+      : '<div class="idle"><h1>Die Krise beginnt gleich …</h1></div>';
     return;
   }
   const krisenHtml = lk.kriseninfo ? `<div class="krisen">${escapeHtml(lk.kriseninfo)}</div>` : '';

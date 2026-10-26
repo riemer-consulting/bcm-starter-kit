@@ -53,8 +53,18 @@ function render(s) {
     const lk = s.currentLagekarte;
     lkBox.innerHTML = `<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
+  } else if (s.status === 'running') {
+    const mf = scenario.moderationsleitfaden;
+    const next = s.upcoming[0];
+    const minsToNext = next ? Math.max(0, Math.round((next.minute - s.elapsedMinutes) * 10) / 10) : null;
+    lkBox.innerHTML = `
+      <p class="mini" style="color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Jetzt vorlesen — die Krise hat noch nicht begonnen</p>
+      <p><b>Begrüßung:</b> ${escapeHtml(mf.begruessung)}</p>
+      ${mf.eroeffnungstext ? `<p><b>Eröffnung (auch auf der Bühne sichtbar):</b> ${escapeHtml(mf.eroeffnungstext)}</p>` : ''}
+      ${next ? `<p class="mini muted">Erste Lagekarte in ca. ${minsToNext} Min.: ${escapeHtml(next.titel)}</p>` : ''}
+    `;
   } else {
-    lkBox.textContent = s.status === 'idle' ? 'Noch nicht gestartet.' : s.status === 'ended' ? 'Übung beendet.' : 'Noch keine Lagekarte fällig.';
+    lkBox.textContent = s.status === 'idle' ? 'Noch nicht gestartet.' : 'Übung beendet.';
   }
 
   // Naechste Ereignisse

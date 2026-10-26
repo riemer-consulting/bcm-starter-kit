@@ -195,6 +195,7 @@ app.get('/api/run/stage-state', (req, res) => {
     companyName: scenario.company.name,
     companyFacts: scenario.company.facts,
     title: scenario.title,
+    eroeffnungstext: scenario.moderationsleitfaden.eroeffnungstext,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
     currentLagekarte: currentLk ? {
