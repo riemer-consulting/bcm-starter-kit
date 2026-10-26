@@ -262,8 +262,30 @@
       "prioritaet": 1
     },
     {
-      "id": "LK02",
+      "id": "LK16",
       "nr": 2,
+      "simZeit": "Montag 08:00 Uhr",
+      "titel": "OT-Trennung",
+      "minuteOffset": 8,
+      "diskussionMinuten": 3,
+      "text": "Die IT empfiehlt, auch unbetroffene Produktionsanlagen (OT) vorsorglich vom Netz zu nehmen, um eine Ausbreitung zu verhindern – das würde auch noch laufende, bislang unbetroffene Fertigungsaufträge stoppen.",
+      "kriseninfo": "Betrifft auch aktuell noch laufende, unbetroffene Anlagen",
+      "aufgabe": [
+        "Tragen Sie die vorsorgliche Trennung mit?",
+        "Welche Aufträge wären zusätzlich betroffen?",
+        "Wer entscheidet, wenn IT und Produktion unterschiedlicher Meinung sind?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk16-ot-trennung.png",
+        "caption": "Entscheidung: auch unbetroffene Anlagen vorsorglich vom Netz nehmen?"
+      },
+      "prioritaet": 2
+    },
+    {
+      "id": "LK02",
+      "nr": 3,
       "simZeit": "Montag 09:00 Uhr",
       "titel": "Produktion stoppt",
       "minuteOffset": 10,
@@ -285,7 +307,7 @@
     },
     {
       "id": "LK03",
-      "nr": 3,
+      "nr": 4,
       "simZeit": "Montag 11:00 Uhr",
       "titel": "LinkedIn-Beitrag",
       "minuteOffset": 18,
@@ -307,7 +329,7 @@
     },
     {
       "id": "LK04",
-      "nr": 4,
+      "nr": 5,
       "simZeit": "Montag 14:00 Uhr",
       "titel": "Nordkanal-Anfrage",
       "minuteOffset": 24,
@@ -329,7 +351,7 @@
     },
     {
       "id": "LK05",
-      "nr": 5,
+      "nr": 6,
       "simZeit": "Dienstag 08:00 Uhr",
       "titel": "Schlüsselperson fällt aus",
       "minuteOffset": 29,
@@ -351,16 +373,16 @@
     },
     {
       "id": "LK06",
-      "nr": 6,
+      "nr": 7,
       "simZeit": "Dienstag 10:00 Uhr",
       "titel": "Kunde eskaliert",
       "minuteOffset": 34,
       "diskussionMinuten": 4,
-      "text": "Ein Automobilkunde fordert eine Stellungnahme. Bei Lieferausfall drohen 50.000 € Vertragsstrafe pro Tag.",
+      "text": "Ein Automobilkunde fordert eine Stellungnahme und verlangt einen schriftlichen Störungsbericht nach Lieferantenhandbuch binnen 24 Stunden – eine mündliche Zusage reicht nicht. Bei Lieferausfall drohen 50.000 € Vertragsstrafe pro Tag.",
       "kriseninfo": "Entscheidung vom Kunden gefordert bis 16 Uhr",
       "aufgabe": [
-        "Wer spricht mit dem Kunden?",
-        "Welche Zusagen machen Sie?",
+        "Wer erstellt den schriftlichen Störungsbericht?",
+        "Welche Zusagen machen Sie darüber hinaus?",
         "Welche Risiken entstehen?"
       ],
       "moderatorHinweis": null,
@@ -373,7 +395,7 @@
     },
     {
       "id": "LK07",
-      "nr": 7,
+      "nr": 8,
       "simZeit": "Dienstag 13:00 Uhr",
       "titel": "Datenschutz",
       "minuteOffset": 38,
@@ -395,7 +417,7 @@
     },
     {
       "id": "LK08",
-      "nr": 8,
+      "nr": 9,
       "simZeit": "Mittwoch 08:00 Uhr",
       "titel": "Positive Entwicklung",
       "minuteOffset": 44,
@@ -416,7 +438,7 @@
     },
     {
       "id": "LK09",
-      "nr": 9,
+      "nr": 10,
       "simZeit": "Mittwoch 11:00 Uhr",
       "titel": "Backups gefunden",
       "minuteOffset": 47,
@@ -438,7 +460,7 @@
     },
     {
       "id": "LK10",
-      "nr": 10,
+      "nr": 11,
       "simZeit": "Donnerstag 08:00 Uhr",
       "titel": "Nordkanal-Sonderbericht",
       "minuteOffset": 56,
@@ -459,7 +481,7 @@
     },
     {
       "id": "LK11",
-      "nr": 11,
+      "nr": 12,
       "simZeit": "Donnerstag 13:00 Uhr",
       "titel": "Pharmakunde eskaliert",
       "minuteOffset": 62,
@@ -480,7 +502,7 @@
     },
     {
       "id": "LK12",
-      "nr": 12,
+      "nr": 13,
       "simZeit": "Freitag 08:00 Uhr",
       "titel": "Teilweiser Wiederanlauf",
       "minuteOffset": 66,
@@ -501,13 +523,13 @@
     },
     {
       "id": "LK13",
-      "nr": 13,
+      "nr": 14,
       "simZeit": "Freitag 11:00 Uhr",
       "titel": "Cyberversicherung",
       "minuteOffset": 72,
       "diskussionMinuten": 3,
-      "text": "Die Cyberversicherung bestätigt Deckung. Folgende Leistungen werden übernommen: Forensik, Krisenkommunikation, Rechtsberatung.",
-      "kriseninfo": null,
+      "text": "Die Cyberversicherung bestätigt die Schadenshöhe für die Kostenübernahme – allerdings nur für Dienstleister aus ihrem eigenen Partnernetzwerk. Bereits beauftragte externe Forensiker oder Berater außerhalb dieses Netzwerks werden nicht erstattet.",
+      "kriseninfo": "Vorläufige Kostenzusage: 1,4 Mio. €",
       "aufgabe": [
         "Welche Leistungen nutzen Sie zuerst?",
         "Wer koordiniert die Zusammenarbeit?"
@@ -522,7 +544,7 @@
     },
     {
       "id": "LK14",
-      "nr": 14,
+      "nr": 15,
       "simZeit": "Samstag 09:00 Uhr",
       "titel": "ERP-Testbetrieb",
       "minuteOffset": 75,
@@ -543,7 +565,7 @@
     },
     {
       "id": "LK15",
-      "nr": 15,
+      "nr": 16,
       "simZeit": "Sonntag 12:00 Uhr",
       "titel": "Wiederanlauf",
       "minuteOffset": 82,
@@ -592,7 +614,7 @@
       "empfaenger": "leiterin-personal",
       "minuteOffset": 14,
       "vertraulich": true,
-      "text": "Der wichtigste Systemadministrator hat sich krank gemeldet. Voraussichtlicher Ausfall: 14 Tage. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
+      "text": "Der Systemadministrator wurde heute Nacht ins Krankenhaus eingeliefert, Diagnose unklar, Rückkehr ungewiss. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
       "moderatorGut": "Schlüsselpersonenrisiko wird sofort eskaliert.",
       "moderatorSchlecht": "Niemand erfährt davon.",
       "prioritaet": 2
@@ -781,11 +803,44 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "minuteOffset": 79,
       "vertraulich": true,
-      "text": "Der Aufsichtsrat stellt die Frage: \"Unter welchen Bedingungen würden Sie eine Lösegeldzahlung überhaupt in Betracht ziehen?\" Bereite deine Position vor.",
+      "text": "Der Aufsichtsrat stellt die Frage: \"Unter welchen Bedingungen würden Sie eine Lösegeldzahlung überhaupt in Betracht ziehen?\" Euer Anwalt warnt zusätzlich: Vor jeder Zahlung muss geprüft werden, ob SHADOWVAULT einer bekannten, sanktionierten Gruppierung zuzuordnen ist – eine Zahlung wäre dann selbst strafbar. Bereite deine Position vor.",
       "moderatorGut": "Begründete Entscheidung.",
       "moderatorSchlecht": "Unklare Haltung.",
       "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
       "prioritaet": 1
+    },
+    {
+      "id": "SK21",
+      "nr": 21,
+      "empfaenger": "notfallmanagement-bcm",
+      "minuteOffset": 12,
+      "vertraulich": true,
+      "text": "Nach NIS2/BSIG müsst ihr als \"wichtige Einrichtung\" innerhalb von 24 Stunden eine Erstmeldung ans BSI prüfen – unabhängig von der DSGVO-Meldung. Die Frist läuft bereits.",
+      "moderatorGut": "BCM bringt die NIS2-Meldepflicht aktiv in den Krisenstab ein, parallel zur DSGVO-Prüfung.",
+      "moderatorSchlecht": "Der Krisenstab verwechselt NIS2-Meldung mit der DSGVO-Meldung und hält nur eine der beiden Fristen ein.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK22",
+      "nr": 22,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 19,
+      "vertraulich": true,
+      "text": "Eure Cyberversicherung meldet sich: Nur Dienstleister aus ihrem Partnernetzwerk (Forensik, Anwalt, Krisenkommunikation) werden erstattet. Wer schon andere beauftragt hat, trägt das Risiko selbst.",
+      "moderatorGut": "Finanzen gibt die Einschränkung sofort an IT und Kommunikation weiter, bevor diese eigene Dienstleister beauftragen.",
+      "moderatorSchlecht": "Finanzen behält die Information für sich, während IT/Kommunikation bereits eigene, nicht erstattungsfähige Dienstleister beauftragt haben.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK23",
+      "nr": 23,
+      "empfaenger": "notfallmanagement-bcm",
+      "minuteOffset": 22,
+      "vertraulich": true,
+      "text": "Die Polizei (ZAC beim LKA) fragt an, ob bereits Anzeige erstattet wurde, und bietet Unterstützung bei der Beweissicherung an. Löscht niemand vorschnell Logs?",
+      "moderatorGut": "BCM informiert umgehend IT und Geschäftsführung, bevor weitere Systeme bereinigt oder neu aufgesetzt werden.",
+      "moderatorSchlecht": "BCM ignoriert die Anfrage, während IT parallel bereits Systeme neu aufsetzt und dabei Spuren vernichtet.",
+      "prioritaet": 2
     }
   ],
   "bonuskarten": [

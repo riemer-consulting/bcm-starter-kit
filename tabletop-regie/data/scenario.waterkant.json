@@ -306,8 +306,30 @@
       "prioritaet": 2
     },
     {
-      "id": "LK05",
+      "id": "LK13",
       "nr": 5,
+      "simZeit": "Dienstag 07:45 Uhr",
+      "titel": "Störfall-Behörde",
+      "minuteOffset": 24,
+      "diskussionMinuten": 4,
+      "text": "Die Gewerbeaufsicht meldet sich als zuständige Störfall-Behörde: Binnen 48 Stunden müssen der aktuelle Sicherheitsbericht und der betriebliche Alarm- und Gefahrenabwehrplan nach der Störfall-Verordnung vorgelegt werden. Zusätzlich ist eine Information der Nachbarschaft vorgeschrieben – die bisher nicht erfolgt ist.",
+      "kriseninfo": "Frist: 48 Stunden · Nachbarschaftsinformation bislang nicht erfolgt",
+      "aufgabe": [
+        "Wer stellt die geforderten Unterlagen zusammen?",
+        "Wie informieren Sie jetzt noch die Nachbarschaft?",
+        "Welche Konsequenzen drohen bei Fristversäumnis?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk13-stoerfall-behoerde.png",
+        "caption": "Die Gewerbeaufsicht fordert Sicherheitsbericht und Gefahrenabwehrplan."
+      },
+      "prioritaet": 2
+    },
+    {
+      "id": "LK05",
+      "nr": 6,
       "simZeit": "Dienstag 08:30 Uhr",
       "titel": "Rauch über der Stadt",
       "minuteOffset": 27,
@@ -329,7 +351,7 @@
     },
     {
       "id": "LK06",
-      "nr": 6,
+      "nr": 7,
       "simZeit": "Dienstag 10:00 Uhr",
       "titel": "Pressekontakt",
       "minuteOffset": 34,
@@ -351,7 +373,7 @@
     },
     {
       "id": "LK07",
-      "nr": 7,
+      "nr": 8,
       "simZeit": "Dienstag 12:00 Uhr",
       "titel": "Großkunde storniert",
       "minuteOffset": 42,
@@ -372,8 +394,30 @@
       "prioritaet": 3
     },
     {
+      "id": "LK14",
+      "nr": 9,
+      "simZeit": "Dienstag 20:00 Uhr",
+      "titel": "Kontaminiertes Löschwasser",
+      "minuteOffset": 46,
+      "diskussionMinuten": 4,
+      "text": "Die Untere Wasserbehörde meldet: Kontaminiertes Löschwasser ist über die Kanalisation in einen angrenzenden Bach gelangt. Erste tote Fische werden gemeldet, ein Umweltverband schaltet sich ein.",
+      "kriseninfo": "Umweltbehörde vor Ort · Umweltverband kündigt Stellungnahme an",
+      "aufgabe": [
+        "Wie reagieren Sie auf die Umweltbehörde?",
+        "Wer übernimmt die Kommunikation mit dem Umweltverband?",
+        "Welche zusätzlichen Risiken entstehen dadurch?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk14-loeschwasser.png",
+        "caption": "Kontaminiertes Löschwasser gelangt in einen angrenzenden Bach."
+      },
+      "prioritaet": 2
+    },
+    {
       "id": "LK08",
-      "nr": 8,
+      "nr": 10,
       "simZeit": "Mittwoch 06:00 Uhr",
       "titel": "Online-Shop bricht ein",
       "minuteOffset": 50,
@@ -395,12 +439,12 @@
     },
     {
       "id": "LK09",
-      "nr": 9,
+      "nr": 11,
       "simZeit": "Mittwoch 14:00 Uhr",
       "titel": "Ersatzlager gefunden",
       "minuteOffset": 60,
       "diskussionMinuten": 3,
-      "text": "Ein befreundetes Logistikunternehmen stellt kurzfristig Lagerflächen zur Verfügung. Erste Notfall-Lieferungen für die wichtigsten Filialen können organisiert werden.",
+      "text": "Ein befreundetes Logistikunternehmen stellt kurzfristig Lagerflächen zur Verfügung. Zusätzlich vereinbart der Einkauf mit den fünf wichtigsten Lieferanten testweise Direktbelieferungen einzelner Filialen unter Umgehung des Zentrallagers – genau das Modell, das andere Handelsketten nach vergleichbaren Lagerverlusten nutzen.",
       "kriseninfo": "Zusätzliche Lagerkapazität: ca. 40 % des Bedarfs",
       "aufgabe": [
         "Welche Filialen werden zuerst beliefert?",
@@ -417,7 +461,7 @@
     },
     {
       "id": "LK10",
-      "nr": 10,
+      "nr": 12,
       "simZeit": "Mittwoch 18:00 Uhr",
       "titel": "Pressekonferenz",
       "minuteOffset": 68,
@@ -439,13 +483,13 @@
     },
     {
       "id": "LK11",
-      "nr": 11,
+      "nr": 13,
       "simZeit": "Donnerstag 09:00 Uhr",
       "titel": "Gutachter vor Ort",
       "minuteOffset": 76,
       "diskussionMinuten": 4,
-      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police enthält eine Deckungslücke bei Betriebsunterbrechungen über 10 Tage hinaus.",
-      "kriseninfo": "Geschätzter Schaden: 18 Mio. € · Deckungslücke ab Tag 11",
+      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police sieht eine Karenzzeit von 10 Tagen vor (bereits selbst getragen) und eine Haftzeit von 12 Monaten – der Gutachter bezweifelt, ob der Wiederaufbau rechtzeitig abgeschlossen werden kann.",
+      "kriseninfo": "Geschätzter Schaden: 18 Mio. € · Zweifel, ob der Wiederaufbau innerhalb der 12-Monats-Haftzeit gelingt",
       "aufgabe": [
         "Welche finanziellen Risiken ergeben sich?",
         "Wie kommunizieren Sie das intern?",
@@ -460,8 +504,30 @@
       "prioritaet": 2
     },
     {
+      "id": "LK15",
+      "nr": 14,
+      "simZeit": "Donnerstag 11:00 Uhr",
+      "titel": "Ermittlungsverfahren",
+      "minuteOffset": 79,
+      "diskussionMinuten": 3,
+      "text": "Die Staatsanwaltschaft leitet ein Ermittlungsverfahren wegen des Verdachts der fahrlässigen Körperverletzung ein – wegen des verletzten Nachtschicht-Mitarbeiters. Die Geschäftsführung wird als Zeugin/Zeuge geladen.",
+      "kriseninfo": "Ermittlungsverfahren eröffnet · Geschäftsführung als Zeuge geladen",
+      "aufgabe": [
+        "Wie wirkt sich das auf die öffentliche Kommunikation aus?",
+        "Wer begleitet die Geschäftsführung rechtlich?",
+        "Welche internen Unterlagen sind jetzt besonders sensibel?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk15-ermittlungsverfahren.png",
+        "caption": "Die Staatsanwaltschaft eröffnet ein Ermittlungsverfahren."
+      },
+      "prioritaet": 2
+    },
+    {
       "id": "LK12",
-      "nr": 12,
+      "nr": 15,
       "simZeit": "Donnerstag 16:00 Uhr",
       "titel": "Wiederanlauf",
       "minuteOffset": 83,
@@ -522,7 +588,7 @@
       "empfaenger": "leiter-finanzen-cfo",
       "minuteOffset": 32,
       "vertraulich": true,
-      "text": "Deine Prüfung der Versicherungspolice zeigt: Die Betriebsunterbrechungsversicherung deckt nur die ersten zehn Tage vollständig ab. Danach sinkt die Erstattung erheblich.",
+      "text": "Deine Prüfung der Versicherungspolice zeigt: Es gilt eine Karenzzeit von 10 Tagen – die ersten 10 Tage Ertragsausfall tragt ihr komplett selbst. Danach zahlt die Versicherung, aber nur für die vereinbarte Haftzeit von 12 Monaten.",
       "moderatorGut": "Finanzen informiert den Krisenstab frühzeitig über die Deckungslücke.",
       "moderatorSchlecht": "Finanzen behält die Information zurück, bis es zu spät für Gegenmaßnahmen ist.",
       "prioritaet": 2
@@ -569,6 +635,17 @@
       "text": "Mehrere Filialleitungen in deiner Region melden dir vertraulich: Das Personal ist verunsichert, erste Krankmeldungen für das Wochenende gehen ein.",
       "moderatorGut": "Die Regionalleitung bringt das Thema aktiv in den Krisenstab ein und fordert Unterstützung.",
       "moderatorSchlecht": "Die Regionalleitung behandelt es als reines Personalproblem der einzelnen Filialen.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK09",
+      "nr": 9,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Für Großformat-Baustoffe (Bauholz, Zement-Silos) gibt es keine Ausweichkapazität in der Region. Anders als bei kleineren Sortimenten bleibt dieser Bereich bis zum Wiederaufbau blockiert.",
+      "moderatorGut": "Einkauf kommuniziert diese Einschränkung offen, statt falsche Hoffnungen zu wecken.",
+      "moderatorSchlecht": "Einkauf verspricht eine schnelle Lösung, die es für dieses Sortiment gar nicht geben kann.",
       "prioritaet": 3
     }
   ],
