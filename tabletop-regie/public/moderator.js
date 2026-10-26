@@ -67,10 +67,13 @@ function render(s) {
     lkBox.textContent = s.status === 'idle' ? 'Noch nicht gestartet.' : 'Übung beendet.';
   }
 
-  // Naechste Ereignisse
+  // Naechste Ereignisse — "Zeitsprung hierhin" ueberspringt Leerlauf oder
+  // springt gezielt zu einer bestimmten Karte, wenn eine Diskussion kuerzer
+  // oder laenger lief als geplant.
   document.getElementById('m-upcoming').innerHTML = s.upcoming.map(ev => `
-    <tr><td>${ev.minute}</td><td>${ev.type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'}</td><td>${escapeHtml(ev.titel)}</td></tr>
-  `).join('') || '<tr><td colspan="3" class="muted">Keine weiteren geplanten Ereignisse.</td></tr>';
+    <tr><td>${ev.minute}</td><td>${ev.type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'}</td><td>${escapeHtml(ev.titel)}</td>
+      <td><button class="secondary jump-to-event" data-type="${ev.type}" data-id="${ev.id}">Zeitsprung hierhin</button></td></tr>
+  `).join('') || '<tr><td colspan="4" class="muted">Keine weiteren geplanten Ereignisse.</td></tr>';
 
   // Manuell ausloesbare Sonderlagekarten — zeigt den echten, zugeordneten
   // Teilnehmernamen, wenn vorhanden, sonst die Funktionsbezeichnung der Rolle.
@@ -156,6 +159,9 @@ document.addEventListener('click', e => {
   }
   if (e.target.classList.contains('promote-event')) {
     api('/api/run/promote/' + e.target.dataset.type + '/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
+  }
+  if (e.target.classList.contains('jump-to-event')) {
+    api('/api/run/jump-to-event/' + e.target.dataset.type + '/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
   }
 });
 document.addEventListener('change', e => {

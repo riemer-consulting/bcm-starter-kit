@@ -225,6 +225,18 @@ function currentLagekarte(scenario, state) {
   return due.reduce((latest, ev) => (ev.minute > latest.minute ? ev : latest)).ref;
 }
 
+/**
+ * Versetzt den Lauf manuell auf eine bestimmte Übungsminute ("Zeitsprung") —
+ * z. B. um eine zu lange diskutierte Wartezeit zu überspringen oder gezielt
+ * zu einer bestimmten Karte vorzuspulen. Die Uhr läuft danach normal
+ * (echtzeit-basiert) ab diesem neuen Punkt weiter, inklusive Pause-Verhalten.
+ */
+function setElapsedMinutes(state, targetMinutes) {
+  if (!state.startedAt) return;
+  const now = state.status === 'paused' && state.pausedAt ? state.pausedAt : Date.now();
+  state.totalPausedMs = (now - state.startedAt) - Math.max(0, targetMinutes) * 60000;
+}
+
 function totalPlannedMinutes(scenario, state) {
   if (state.durationMode === 'target' && state.plannedTotalMinutes != null) {
     return state.plannedTotalMinutes;
@@ -242,6 +254,7 @@ module.exports = {
   DIFFICULTY_DECISION_MINUTES,
   newRunState,
   elapsedMinutes,
+  setElapsedMinutes,
   buildTimeline,
   activeRoleGroupCount,
   computeEffectiveSchedule,

@@ -196,12 +196,13 @@ app.get('/api/run/stage-state', (req, res) => {
     companyFacts: scenario.company.facts,
     title: scenario.title,
     eroeffnungstext: scenario.moderationsleitfaden.eroeffnungstext,
+    idleSound: (scenario.sounds && scenario.sounds.idle) || null,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
     currentLagekarte: currentLk ? {
-      nr: currentLk.nr, simZeit: currentLk.simZeit, titel: currentLk.titel,
+      id: currentLk.id, nr: currentLk.nr, simZeit: currentLk.simZeit, titel: currentLk.titel,
       text: currentLk.text, kriseninfo: currentLk.kriseninfo, aufgabe: currentLk.aufgabe,
-      media: currentLk.media || null
+      media: currentLk.media || null, sound: currentLk.sound || null
     } : null,
     lagekartenTotal: scenario.lagekarten.length,
     lagekartenGezeigt: state.firedLagekarten.filter(id => id.startsWith('LK')).length
@@ -247,6 +248,22 @@ app.post('/api/run/promote/:type/:id', (req, res) => {
   state.skippedEvents.splice(idx, 1);
   state.promotedEvents.push({ type, id, minute: Math.round(engine.elapsedMinutes(state) * 100) / 100 });
   log('info', `${type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'} ${id} manuell nachträglich aufgenommen (war aus Zeitgründen übersprungen).`);
+  persist();
+  res.json({ ok: true });
+});
+// Zeitsprung: Moderator kann Leerlauf überspringen oder gezielt zu einer
+// bestimmten Karte vorspulen, wenn eine Diskussion kürzer/länger lief als
+// geplant. Danach läuft die Uhr normal (echtzeit-basiert) weiter.
+app.post('/api/run/jump-to-event/:type/:id', (req, res) => {
+  if (state.status !== 'running' && state.status !== 'paused') {
+    return res.status(400).json({ ok: false, error: 'Kein aktiver Lauf.' });
+  }
+  const schedule = engine.getActiveSchedule(scenario, state);
+  const ev = schedule.find(e => e.type === req.params.type && e.id === req.params.id);
+  if (!ev) return res.status(404).json({ ok: false, error: 'Ereignis ist aktuell nicht im Ablaufplan.' });
+  engine.setElapsedMinutes(state, ev.minute);
+  log('info', `Zeitsprung: Übungszeit manuell auf Minute ${Math.round(ev.minute * 10) / 10} gesetzt (${ev.type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'} ${ev.id}).`);
+  tick();
   persist();
   res.json({ ok: true });
 });

@@ -4,10 +4,57 @@ function fmtMinutes(min) {
   return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
 }
 
+// Sound-Unterstützung: Browser blockieren Audio mit Ton ohne vorherigen
+// Klick, daher der "Ton aktivieren"-Button. Danach übernimmt refresh()
+// automatisch: Ambient-Loop in der Vorlaufzeit, Ein-Mal-Sound pro Lagekarte.
+let soundEnabled = false;
+let lastLagekarteId = null;
+const ambientAudio = document.getElementById('ambient-audio');
+const eventAudio = document.getElementById('event-audio');
+document.getElementById('btn-enable-sound').addEventListener('click', () => {
+  soundEnabled = true;
+  document.getElementById('sound-unlock').style.display = 'none';
+  ambientAudio.play().catch(() => {});
+  eventAudio.play().then(() => eventAudio.pause()).catch(() => {});
+});
+
+function applySound(s) {
+  if (!soundEnabled) return;
+  if (s.status === 'idle' || s.status === 'ended') {
+    if (!ambientAudio.paused) ambientAudio.pause();
+    if (!eventAudio.paused) eventAudio.pause();
+    lastLagekarteId = null;
+    return;
+  }
+  const idle = s.idleSound;
+  const lk = s.currentLagekarte;
+  if (!lk) {
+    if (idle && ambientAudio.getAttribute('src') !== idle.src) {
+      ambientAudio.src = idle.src;
+      ambientAudio.volume = idle.volume != null ? idle.volume : 0.5;
+      ambientAudio.play().catch(() => {});
+    } else if (idle && ambientAudio.paused) {
+      ambientAudio.play().catch(() => {});
+    }
+    lastLagekarteId = null;
+    return;
+  }
+  if (!ambientAudio.paused) ambientAudio.pause();
+  if (lk.sound && lk.id !== lastLagekarteId) {
+    eventAudio.src = lk.sound.src;
+    eventAudio.loop = !!lk.sound.loop;
+    eventAudio.volume = lk.sound.volume != null ? lk.sound.volume : 0.7;
+    eventAudio.play().catch(() => {});
+  }
+  lastLagekarteId = lk.id;
+}
+
 async function refresh() {
   let s;
   try { s = await (await fetch('/api/run/stage-state')).json(); }
   catch (e) { return; }
+
+  applySound(s);
 
   document.getElementById('company-name').textContent = s.companyName || 'BCM Tabletop-Regie';
   document.getElementById('company-facts').textContent = s.companyFacts || '';

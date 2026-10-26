@@ -28,9 +28,16 @@
   .aufgabe li { margin-bottom: 6px; }
   .idle, .ended { display:flex; align-items:center; justify-content:center; height:100%; flex-direction:column; text-align:center; }
   .idle h1, .ended h1 { font-size: 46px; }
+  .sound-unlock { position:fixed; inset:0; background:rgba(5,7,11,.92); z-index:100; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; }
+  .sound-unlock button { font-size:20px; padding:16px 32px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
+  .sound-unlock p { color:var(--muted); font-size:14px; }
 </style>
 </head>
 <body>
+  <div class="sound-unlock" id="sound-unlock">
+    <button id="btn-enable-sound">🔊 Ton aktivieren &amp; Übung anzeigen</button>
+    <p>Browser blockieren Ton ohne Klick. Einmal klicken, danach läuft alles automatisch.</p>
+  </div>
   <div class="top">
     <div class="brand" id="company-name">BCM Tabletop-Regie</div>
     <div class="clock">
@@ -49,6 +56,8 @@
       <div class="idle"><h1>Bereit.</h1><p class="muted">Die Übung startet im Setup.</p></div>
     </div>
   </div>
+  <audio id="ambient-audio" loop></audio>
+  <audio id="event-audio"></audio>
 <script src="stage.js"></script>
 </body>
 </html>

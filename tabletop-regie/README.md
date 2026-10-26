@@ -83,6 +83,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    per Mail verschickt. Nicht zeitlich festgelegte Sonderlagekarten, die
    Bonuskarten und — im Zieldauer-Modus — aus Zeitgründen übersprungene Karten
    löst/holst du bei Bedarf manuell in der Moderationsansicht nach.
+   Läuft eine Diskussion deutlich kürzer oder länger als geplant, klicke bei
+   der gewünschten Karte in "Nächste Ereignisse" auf **"Zeitsprung hierhin"** —
+   die Übungszeit springt direkt auf diese Karte, läuft danach normal weiter
+   und überspringt dabei fällig werdende Sonderlagekarten nicht (sie werden
+   beim Zeitsprung mit ausgelöst/verschickt).
 7. Bewertung direkt während/nach der Übung in der Matrix eintragen, danach pro
    Teilnehmer die Urkunde öffnen und drucken (Browser-Druckdialog → "Als PDF
    speichern").
@@ -132,7 +137,31 @@ in der JSON-Datei ergänzen:
 ```
 
 (`"type": "image"` für Bilder.) Die Bühne spielt/zeigt die Datei automatisch,
-sobald diese Lagekarte aktiv wird.
+sobald diese Lagekarte aktiv wird. **Grundsatz:** Jede Lagekarte sollte nach
+Möglichkeit ein Bild/Video haben — das vermittelt deutlich mehr als reiner
+Text und verhindert eine leere Bühne.
+
+**Eigene Sounds (Ambience/Effekte) einbinden:** Audiodateien (mp3/ogg) selbst
+aufnehmen oder aus einer Sound-Bibliothek besorgen, in `media/` ablegen und
+referenzieren:
+
+```json
+// Oben im Szenario, auf gleicher Ebene wie "roles" — Dauerschleife, solange
+// noch keine Lagekarte aktiv ist (z. B. ruhige Büro-/Hallenatmosphäre):
+"sounds": { "idle": { "src": "/media/nordtech/ambience-buero.mp3", "loop": true, "volume": 0.5 } }
+```
+
+```json
+// Bei einer einzelnen Lagekarte — spielt einmalig (oder als Loop), sobald
+// diese Karte aktiv wird, z. B. Alarm/Maschinenstillstand beim Störfall:
+"sound": { "src": "/media/nordtech/lk01-alarm.mp3", "loop": false, "volume": 0.7 }
+```
+
+Die Bühne fragt beim ersten Laden einmal per Klick ("Ton aktivieren") die
+Erlaubnis zur Audiowiedergabe ab (Browser blockieren Ton sonst), danach läuft
+alles automatisch mit. Beide Scenario-Dateien in diesem Repo enthalten aktuell
+noch keine Sounds — die Technik ist vorbereitet, die eigentlichen Audiodateien
+müssen noch ergänzt werden.
 
 **Weitere Karten hinzufügen:** einfach ein neues Objekt in `lagekarten[]` bzw.
 `sonderlagekarten[]` ergänzen. Der Server liest die Datei bei jedem Start neu
