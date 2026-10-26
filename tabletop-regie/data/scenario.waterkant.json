@@ -213,7 +213,12 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte 'Pressekonferenz'), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund die Sonderlagekarten zur fehlenden Rauchmelder-Wartung und zur Versicherungs-Deckungslücke bereits kursieren."
+    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte 'Pressekonferenz'), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund die Sonderlagekarten zur fehlenden Rauchmelder-Wartung und zur Versicherungs-Deckungslücke bereits kursieren.",
+    "idleMedia": {
+      "type": "image",
+      "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png",
+      "caption": "Ruhe vor dem Sturm: die Nachtschicht im Zentrallager."
+    }
   },
   "debriefMinutes": 12,
   "lagekarten": [

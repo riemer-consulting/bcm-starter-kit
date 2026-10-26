@@ -12,7 +12,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/media', express.static(path.join(__dirname, '..', 'media')));
 
-const { file: scenarioFile, scenario } = store.loadScenario();
+// Reihenfolge: SCENARIO_FILE (Umgebungsvariable, explizite Vorgabe) ->
+// zuletzt im Setup gewähltes Szenario (data/settings.json) -> erste
+// gefundene Datei. So merkt sich die App die Auswahl auch nach einem
+// Neustart, ohne dass SCENARIO_FILE jedes Mal manuell gesetzt werden muss.
+const startupSettings = store.loadSettings();
+let { file: scenarioFile, scenario } = store.loadScenario(process.env.SCENARIO_FILE || startupSettings.activeScenarioFile || undefined);
+if (!scenario) {
+  ({ file: scenarioFile, scenario } = store.loadScenario());
+}
 if (!scenario) {
   console.error('Konnte Szenario nicht laden:', scenarioFile);
   process.exit(1);
@@ -85,6 +93,41 @@ app.get('/api/scenario-meta', (req, res) => {
     lagekartenCount: scenario.lagekarten.length, sonderlagekartenCount: scenario.sonderlagekarten.length,
     bonuskartenCount: scenario.bonuskarten.length, moderationsleitfaden: scenario.moderationsleitfaden
   });
+});
+
+// Erlaubt den Wechsel zwischen mehreren im data/-Ordner liegenden
+// Szenarien (z. B. NordTech <-> Waterkant) direkt aus dem Setup, ohne
+// Terminal/Umgebungsvariable. Setzt Lauf und Teilnehmer zurueck, da Rollen
+// zwischen Szenarien nicht uebertragbar sind.
+app.get('/api/scenarios', (req, res) => {
+  const files = store.listScenarioFiles();
+  const list = files.map(f => {
+    const loaded = store.loadScenario(f);
+    return {
+      file: f,
+      title: loaded.scenario ? loaded.scenario.title : f,
+      companyName: loaded.scenario && loaded.scenario.company ? loaded.scenario.company.name : null
+    };
+  });
+  res.json({ active: scenarioFile, scenarios: list });
+});
+app.post('/api/scenarios/select', (req, res) => {
+  const { file } = req.body || {};
+  if (!store.listScenarioFiles().includes(file)) {
+    return res.status(400).json({ ok: false, error: 'Unbekannte Szenario-Datei.' });
+  }
+  const loaded = store.loadScenario(file);
+  if (!loaded.scenario) return res.status(500).json({ ok: false, error: 'Szenario konnte nicht geladen werden.' });
+  scenarioFile = loaded.file;
+  scenario = loaded.scenario;
+  state = engine.newRunState(scenario);
+  state.scenarioFile = scenarioFile;
+  const settings = store.loadSettings();
+  settings.activeScenarioFile = scenarioFile;
+  store.saveSettings(settings);
+  log('info', `Szenario gewechselt zu: ${scenario.title} (${scenario.company.name}).`);
+  persist();
+  res.json({ ok: true, title: scenario.title, companyName: scenario.company.name });
 });
 
 // Vorschau fuer den Zieldauer-Modus im Setup: nutzt die im Formular gerade
@@ -196,6 +239,7 @@ app.get('/api/run/stage-state', (req, res) => {
     companyFacts: scenario.company.facts,
     title: scenario.title,
     eroeffnungstext: scenario.moderationsleitfaden.eroeffnungstext,
+    idleMedia: scenario.moderationsleitfaden.idleMedia || null,
     idleSound: (scenario.sounds && scenario.sounds.idle) || null,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
@@ -233,11 +277,27 @@ app.post('/api/run/start', (req, res) => {
     log('info', `Zieldauer-Plan erstellt: ${minutes} Min. gewünscht, ${plan.schedule.length} Ereignisse ausgewählt (${plan.skipped.length} übersprungen), geplante Gesamtzeit ${plan.totalMinutes} Min.${plan.warning ? ' Hinweis: ' + plan.warning : ''}`);
   }
 
+  // Bewusst noch kein Timer-Start: die Buehne zeigt jetzt die "Ruhe vor dem
+  // Sturm" (Eroeffnungstext/-bild), der Moderator liest Begruessung und
+  // Eroeffnung ungehetzt vor. Der Krisentimer startet erst explizit per
+  // /api/run/begin-crisis, sobald alle bereit sind.
+  state.status = 'briefing';
+  state.startedAt = null;
+  state.pausedAt = null;
+  state.totalPausedMs = 0;
+  log('info', `Übung vorbereitet (Modus: ${state.durationMode}, Schwierigkeit: ${state.difficulty}). Krisentimer noch nicht gestartet.`);
+  persist();
+  res.json({ ok: true });
+});
+app.post('/api/run/begin-crisis', (req, res) => {
+  if (state.status !== 'briefing') {
+    return res.status(400).json({ ok: false, error: 'Übung ist nicht in der Vorbereitungsphase.' });
+  }
   state.status = 'running';
   state.startedAt = Date.now();
   state.pausedAt = null;
   state.totalPausedMs = 0;
-  log('info', `Übung gestartet (Modus: ${state.durationMode}, Schwierigkeit: ${state.difficulty}).`);
+  log('info', 'Krisentimer gestartet.');
   persist();
   res.json({ ok: true });
 });

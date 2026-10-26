@@ -235,7 +235,12 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Cyberangriff selbst, sondern der Moment (ca. Minute 51 / Sonderkarte 17), in dem der Krisenstabsleiter dem Beirat Bericht erstatten muss und IT, Vertrieb, Personal, Finanzen und Einkauf kurzfristig eine gemeinsame Lage erzeugen müssen."
+    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Cyberangriff selbst, sondern der Moment (ca. Minute 51 / Sonderkarte 17), in dem der Krisenstabsleiter dem Beirat Bericht erstatten muss und IT, Vertrieb, Personal, Finanzen und Einkauf kurzfristig eine gemeinsame Lage erzeugen müssen.",
+    "idleMedia": {
+      "type": "image",
+      "src": "/media/nordtech/idle-ruhe-vor-dem-sturm.png",
+      "caption": "Ruhe vor dem Sturm: ein ganz normaler Schichtbeginn."
+    }
   },
   "debriefMinutes": 13,
   "lagekarten": [

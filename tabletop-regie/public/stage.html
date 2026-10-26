@@ -12,22 +12,22 @@
   .clock { text-align:right; }
   .clock .label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; }
   .clock .time { font-size:34px; font-weight:800; font-variant-numeric: tabular-nums; }
-  .main { display:flex; height: calc(100vh - 88px); }
-  .side { width: 280px; border-right:1px solid var(--border); padding: 24px; }
+  .main { display:flex; height: calc(100vh - 88px); min-height:0; }
+  .side { width: 280px; flex-shrink:0; border-right:1px solid var(--border); padding: 24px; overflow-y:auto; }
   .side .block { margin-bottom: 28px; }
   .side .block .k { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
   .side .block .v { font-size:22px; font-weight:700; }
   .progress-track { background:#1a2330; border-radius:6px; height:10px; overflow:hidden; margin-top:10px; }
   .progress-fill { background:var(--accent); height:100%; transition:width 1s linear; }
-  .content { flex:1; padding: 48px 64px; display:flex; flex-direction:column; justify-content:center; }
-  .simzeit { font-size:20px; color: var(--accent); font-weight:700; letter-spacing:1px; margin-bottom: 10px; }
-  .titel { font-size:52px; font-weight:800; margin: 0 0 24px; line-height:1.1; }
-  .text { font-size:22px; line-height:1.5; max-width: 900px; margin-bottom: 24px; }
-  .krisen { background: rgba(217,83,79,.12); border-left:4px solid #d9534f; padding: 14px 20px; font-size:19px; margin-bottom: 24px; max-width:820px; }
-  .aufgabe { font-size:18px; color: var(--muted); }
+  .content { flex:1; min-width:0; min-height:0; padding: clamp(20px,3vh,48px) clamp(24px,4vw,64px); display:flex; flex-direction:column; justify-content:flex-start; overflow-y:auto; }
+  .simzeit { font-size:clamp(15px,1.6vw,20px); color: var(--accent); font-weight:700; letter-spacing:1px; margin-bottom: 8px; flex-shrink:0; }
+  .titel { font-size:clamp(28px,4.2vw,52px); font-weight:800; margin: 0 0 clamp(12px,2vh,24px); line-height:1.1; flex-shrink:0; }
+  .text { font-size:clamp(16px,1.7vw,22px); line-height:1.5; max-width: 900px; margin-bottom: clamp(12px,2vh,24px); flex-shrink:0; }
+  .krisen { background: rgba(217,83,79,.12); border-left:4px solid #d9534f; padding: 12px 20px; font-size:clamp(14px,1.4vw,19px); margin-bottom: clamp(12px,2vh,24px); max-width:820px; flex-shrink:0; }
+  .aufgabe { font-size:clamp(14px,1.3vw,18px); color: var(--muted); flex-shrink:0; }
   .aufgabe li { margin-bottom: 6px; }
-  .idle, .ended { display:flex; align-items:center; justify-content:center; height:100%; flex-direction:column; text-align:center; }
-  .idle h1, .ended h1 { font-size: 46px; }
+  .idle, .ended { display:flex; align-items:center; justify-content:center; min-height:100%; flex-direction:column; text-align:center; }
+  .idle h1, .ended h1 { font-size: clamp(28px,4vw,46px); }
   .sound-unlock { position:fixed; inset:0; background:rgba(5,7,11,.92); z-index:100; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; }
   .sound-unlock button { font-size:20px; padding:16px 32px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
   .sound-unlock p { color:var(--muted); font-size:14px; }

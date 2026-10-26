@@ -66,20 +66,29 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
 ## Ablauf einer Übung
 
-1. **Setup öffnen.** Teilnehmer eintragen (Name, E-Mail, ggf. "Remote"-Haken)
-   und Rollen zuweisen — entweder "Alle 20 Einzelrollen" (volle Besetzung) oder
-   "Kompakt: 8 Funktionsbereiche" (für kleinere Gruppen), oder frei von Hand.
-2. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
+1. **Setup öffnen.** Oben zuerst das **Szenario** wählen (z. B. NordTech oder
+   Waterkant) — ein Wechsel setzt Lauf und Teilnehmerliste zurück, da Rollen
+   zwischen Szenarien nicht übertragbar sind. Die Auswahl wird gespeichert und
+   bleibt auch nach einem Neustart erhalten (kein `SCENARIO_FILE` mehr nötig,
+   außer du willst das gezielt per Kommandozeile erzwingen).
+2. Teilnehmer eintragen (Name, E-Mail, ggf. "Remote"-Haken) und Rollen
+   zuweisen — entweder "Alle N Einzelrollen" (volle Besetzung) oder
+   "Kompakt: X Funktionsbereiche" (für kleinere Gruppen), oder frei von Hand.
+3. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
-3. **Branding** (Name/Logo der durchführenden Organisation) für die Urkunden
+4. **Branding** (Name/Logo der durchführenden Organisation) für die Urkunden
    eintragen — unabhängig vom Kundenlogo, das im Szenario selbst steckt.
-4. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
+5. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
    Schwierigkeit bzw. Zieldauer setzen. Im Zieldauer-Modus zeigt die Setup-Seite
    sofort eine Live-Vorschau, wie viele Karten das ergibt und was entfällt.
-5. **"Übung starten"** klickt — öffnet automatisch Bühne und Moderation in
-   neuen Tabs/Fenstern. Den Bühnen-Tab per Bildschirmfreigabe/Beamer zeigen,
-   die Moderation läuft parallel auf deinem eigenen, nicht geteilten Bildschirm.
-6. Während der Übung: Sonderlagekarten mit festem Zeitpunkt werden automatisch
+6. **"Übung starten"** klickt — öffnet automatisch Bühne und Moderation in
+   neuen Tabs/Fenstern. Beide zeigen zunächst die **"Ruhe vor dem Sturm"**
+   (Eröffnungstext/-bild) — der Krisentimer läuft noch nicht. Lies in Ruhe
+   Begrüßung und Eröffnung vor, verbinde Bildschirmfreigabe/Beamer usw.
+7. Erst wenn alle bereit sind: in der Moderationsansicht auf **"Jetzt beginnt
+   die Krise — Timer starten"** klicken. Ab diesem Moment läuft die Uhr und
+   die erste Lagekarte feuert zum geplanten Zeitpunkt.
+8. Während der Übung: Sonderlagekarten mit festem Zeitpunkt werden automatisch
    per Mail verschickt. Nicht zeitlich festgelegte Sonderlagekarten, die
    Bonuskarten und — im Zieldauer-Modus — aus Zeitgründen übersprungene Karten
    löst/holst du bei Bedarf manuell in der Moderationsansicht nach.
@@ -88,7 +97,7 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    die Übungszeit springt direkt auf diese Karte, läuft danach normal weiter
    und überspringt dabei fällig werdende Sonderlagekarten nicht (sie werden
    beim Zeitsprung mit ausgelöst/verschickt).
-7. Bewertung direkt während/nach der Übung in der Matrix eintragen, danach pro
+9. Bewertung direkt während/nach der Übung in der Matrix eintragen, danach pro
    Teilnehmer die Urkunde öffnen und drucken (Browser-Druckdialog → "Als PDF
    speichern").
 
@@ -168,11 +177,12 @@ müssen noch ergänzt werden.
 ein — kein Build-Schritt nötig.
 
 **Ein weiteres Szenario anlegen:** Datei kopieren, z. B. zu
-`data/scenario.andererkunde.json`, Inhalte anpassen. Liegen mehrere
-`scenario.*.json`-Dateien in `data/`, wird beim Start ohne weitere Angabe
-alphabetisch die erste geladen (aktuell: `scenario.nordtech.json`). Um gezielt
-ein anderes auszuwählen — z. B. das mitgelieferte Handels-Szenario
-"72 Stunden in Flammen" — die Umgebungsvariable `SCENARIO_FILE` setzen; die
+`data/scenario.andererkunde.json`, Inhalte anpassen. Jede `scenario.*.json`-
+Datei in `data/` erscheint automatisch im **Szenario**-Dropdown oben im Setup
+— das ist der normale Weg, zwischen mehreren Drehbüchern zu wechseln (merkt
+sich die Auswahl auch über einen Neustart hinweg). Die Umgebungsvariable
+`SCENARIO_FILE` bleibt als Override für Kommandozeilen-/Skript-Nutzung
+erhalten und hat Vorrang vor der im Setup gespeicherten Auswahl; die
 Schreibweise unterscheidet sich je nach Betriebssystem/Shell:
 
 - **Windows, Eingabeaufforderung (cmd):**

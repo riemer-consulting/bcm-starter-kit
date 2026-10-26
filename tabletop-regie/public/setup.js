@@ -105,6 +105,25 @@ document.getElementById('participants-body').addEventListener('click', e => {
     renderParticipants();
   }
 });
+async function loadScenarioList() {
+  const data = await (await fetch('/api/scenarios')).json();
+  const select = document.getElementById('scenario-select');
+  select.innerHTML = data.scenarios.map(s =>
+    `<option value="${s.file}" ${s.file === data.active ? 'selected' : ''}>${s.title}${s.companyName ? ' — ' + s.companyName : ''}</option>`
+  ).join('');
+}
+document.getElementById('btn-switch-scenario').addEventListener('click', async () => {
+  const file = document.getElementById('scenario-select').value;
+  if (!confirm('Szenario wirklich wechseln? Der aktuelle Lauf und die Teilnehmerliste werden dabei zurückgesetzt.')) return;
+  const res = await fetch('/api/scenarios/select', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ file }) });
+  const r = await res.json();
+  if (r.ok) {
+    document.getElementById('scenario-switch-status').textContent = `Gewechselt zu: ${r.title}.`;
+    await init();
+  } else {
+    document.getElementById('scenario-switch-status').textContent = 'Fehler: ' + r.error;
+  }
+});
 document.getElementById('btn-fill-full').addEventListener('click', () => {
   participants = meta.roles.map(r => ({ name: '', email: '', remote: false, roleIds: [r.id] }));
   renderParticipants();
@@ -177,14 +196,17 @@ document.getElementById('btn-save-branding').addEventListener('click', async () 
   document.getElementById('settings-status').textContent = 'Branding gespeichert.';
 });
 
-(async function init() {
+async function init() {
   meta = await (await fetch('/api/scenario-meta')).json();
   document.getElementById('scenario-title').textContent = meta.title;
   document.getElementById('scenario-subtitle').textContent = meta.subtitle;
+  document.getElementById('btn-fill-full').textContent = `Alle ${meta.roles.length} Einzelrollen anlegen`;
+  await loadScenarioList();
   participants = await (await fetch('/api/participants')).json();
   if (participants.length === 0) {
     participants = meta.roles.map(r => ({ name: '', email: '', remote: false, roleIds: [r.id] }));
   }
   renderParticipants();
   await loadSettings();
-})();
+}
+init();

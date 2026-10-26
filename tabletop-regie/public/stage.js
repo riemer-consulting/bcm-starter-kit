@@ -74,6 +74,7 @@ async function refresh() {
   }
   if (s.status === 'paused') statusLabel.textContent = 'Pausiert';
   else if (s.status === 'ended') statusLabel.textContent = 'Beendet';
+  else if (s.status === 'briefing') statusLabel.textContent = 'Vorbereitung';
   else statusLabel.textContent = 'Krisenzeit';
 
   if (s.status === 'ended') {
@@ -83,9 +84,10 @@ async function refresh() {
 
   const lk = s.currentLagekarte;
   if (!lk) {
-    content.innerHTML = s.eroeffnungstext
-      ? `<div class="idle"><h1>Die Krise beginnt gleich …</h1><p class="text" style="max-width:820px;">${escapeHtml(s.eroeffnungstext)}</p></div>`
-      : '<div class="idle"><h1>Die Krise beginnt gleich …</h1></div>';
+    const idleMediaHtml = s.idleMedia ? renderMedia(s.idleMedia) : '';
+    const introText = s.eroeffnungstext ? `<p class="text" style="max-width:820px;">${escapeHtml(s.eroeffnungstext)}</p>` : '';
+    const heading = s.status === 'briefing' ? 'Ruhe vor dem Sturm' : 'Die Krise beginnt gleich …';
+    content.innerHTML = `<div class="idle"><h1>${heading}</h1>${introText}${idleMediaHtml}</div>`;
     return;
   }
   const krisenHtml = lk.kriseninfo ? `<div class="krisen">${escapeHtml(lk.kriseninfo)}</div>` : '';
@@ -104,10 +106,12 @@ async function refresh() {
 function renderMedia(media) {
   const src = escapeHtml(media.src || '');
   const caption = media.caption ? `<div class="muted" style="font-size:14px;margin-top:6px;">${escapeHtml(media.caption)}</div>` : '';
+  // max-height statt fixer Breite: verhindert, dass ein hohes Bild zusammen
+  // mit Text/Aufgaben den verfügbaren Platz sprengt (siehe .content overflow-y).
   if (media.type === 'video') {
-    return `<div style="margin:0 0 20px;max-width:720px;"><video src="${src}" controls autoplay style="width:100%;border-radius:8px;"></video>${caption}</div>`;
+    return `<div style="margin:0 0 16px;max-width:720px;flex-shrink:0;"><video src="${src}" controls autoplay style="max-width:100%;max-height:34vh;border-radius:8px;"></video>${caption}</div>`;
   }
-  return `<div style="margin:0 0 20px;max-width:720px;"><img src="${src}" style="width:100%;border-radius:8px;">${caption}</div>`;
+  return `<div style="margin:0 0 16px;max-width:720px;flex-shrink:0;"><img src="${src}" style="max-width:100%;max-height:34vh;border-radius:8px;display:block;">${caption}</div>`;
 }
 
 function escapeHtml(s) {
