@@ -213,7 +213,7 @@
   ],
   "moderationsleitfaden": {
     "begruessung": "Guten Morgen zusammen. Heute werden wir keine IT-Systeme reparieren. Wir werden auch keine technische Analyse durchführen. Heute erleben wir gemeinsam die schlimmste Woche in der Geschichte der NordTech Components GmbH. Sie alle vertreten Ihre Funktion innerhalb des Unternehmens. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst sieben Tage Unternehmenskrise, die wir innerhalb der nächsten Stunde durchlaufen werden. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Der Markt öffnet in wenigen Minuten. NordTech Components ist ein gesunder Mittelständler. 620 Mitarbeiter. 185 Mio. Euro Umsatz. Drei Standorte. Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in einer Stunde.",
+    "eroeffnungstext": "Montag, kurz vor 7 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Mitarbeiter, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in einer Stunde.",
     "spielregeln": [
       "Jeder Teilnehmer vertritt ausschließlich seinen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
@@ -253,8 +253,8 @@
         "Welche Sofortmaßnahmen leiten Sie ein?",
         "Welche Entscheidungen benötigt der Krisenstab?"
       ],
-      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen.",
-      "media": null,
+      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen. Die Lösegeldforderung jetzt auf der Bühne zeigen.",
+      "media": { "type": "image", "src": "/media/nordtech/lk01-loesegeldforderung.png", "caption": "Lösegeldforderung, wie sie auf den betroffenen Bildschirmen erscheint." },
       "prioritaet": 1
     },
     {
@@ -290,24 +290,24 @@
         "Müssen Mitarbeiter informiert werden?"
       ],
       "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen.",
-      "media": null,
+      "media": { "type": "image", "src": "/media/nordtech/lk03-linkedin-post.png", "caption": "Social-Media-Beitrag eines Mitarbeiters, wenige Minuten nach Veröffentlichung." },
       "prioritaet": 3
     },
     {
       "id": "LK04",
       "nr": 4,
       "simZeit": "Montag 14:00 Uhr",
-      "titel": "NDR-Anfrage",
+      "titel": "Nordkanal-Anfrage",
       "minuteOffset": 24,
       "diskussionMinuten": 5,
-      "text": "Der NDR kontaktiert die Unternehmenskommunikation. Fragen: Wurden Kundendaten gestohlen? Zahlen Sie Lösegeld? Ist die Produktion betroffen?",
+      "text": "Der Regionalsender Nordkanal kontaktiert die Unternehmenskommunikation. Fragen: Wurden Kundendaten gestohlen? Zahlen Sie Lösegeld? Ist die Produktion betroffen?",
       "kriseninfo": "Antwortfrist: 2 Stunden",
       "aufgabe": [
         "Wer spricht?",
         "Was wird kommuniziert?",
         "Was wird bewusst nicht kommuniziert?"
       ],
-      "moderatorHinweis": "Jetzt aktiv den NDR-Reporter spielen.",
+      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
       "media": null,
       "prioritaet": 2
     },
@@ -404,17 +404,17 @@
       "id": "LK10",
       "nr": 10,
       "simZeit": "Donnerstag 08:00 Uhr",
-      "titel": "NDR-Sonderbericht",
+      "titel": "Nordkanal-Sonderbericht",
       "minuteOffset": 56,
       "diskussionMinuten": 4,
-      "text": "Der NDR veröffentlicht einen Bericht: \"Cyber-Chaos bei NordTech\". Ein anonymer Mitarbeiter kritisiert die Unternehmensführung.",
+      "text": "Nordkanal veröffentlicht einen Bericht: \"Cyber-Chaos bei NordTech\". Ein anonymer Mitarbeiter kritisiert die Unternehmensführung.",
       "kriseninfo": "Social Media reagiert massiv",
       "aufgabe": [
         "Reagieren oder ignorieren?",
         "Wie schützen Sie den Ruf des Unternehmens?"
       ],
       "moderatorHinweis": "Jetzt das Gebäudebild zeigen: 'Der Übertragungswagen steht vor der Zentrale.'",
-      "media": null,
+      "media": { "type": "image", "src": "/media/nordtech/lk10-nordkanal-bericht.png", "caption": "Nordkanal berichtet live von vor der NordTech-Zentrale." },
       "prioritaet": 3
     },
     {

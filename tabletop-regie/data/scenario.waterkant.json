@@ -1,0 +1,433 @@
+{
+  "id": "waterkant-72-stunden-in-flammen",
+  "title": "72 Stunden in Flammen",
+  "subtitle": "BCM-Krisensimulation für den Einzelhandel",
+  "company": {
+    "name": "Waterkant Baumärkte GmbH",
+    "facts": "14 Filialen in Norddeutschland · ca. 850 Mitarbeitende · ca. 240 Mio. € Umsatz · Baustoffe, Garten & Heimwerkerbedarf",
+    "logo": null
+  },
+  "difficulty": "mittel",
+  "recommendedParticipants": { "min": 5, "reference": 12, "max": 16 },
+  "timing": {
+    "mode": "authored",
+    "referenceGroupSize": 12,
+    "note": "Die Minutenangaben sind auf eine Gruppe von ca. 10-12 Teilnehmenden zugeschnitten. In 'berechnet'-Modus leitet die App die Dauer stattdessen aus der Anzahl aktiver Rollen her (1 Min. Lesezeit + 30 Sek. je aktivem Funktionsbereich, max. 4 Min. Krisenstabsentscheidung je Lagekarte)."
+  },
+  "standardablauf": {
+    "readingMinutes": 1,
+    "perRoleSeconds": 30,
+    "maxDecisionMinutes": 4,
+    "speakingOrder": [
+      "geschaeftsfuehrung",
+      "logistik",
+      "it",
+      "einkauf",
+      "arbeitssicherheit",
+      "personal",
+      "vertrieb",
+      "e-commerce",
+      "finanzen",
+      "kommunikation"
+    ]
+  },
+  "roleGroups": [
+    { "key": "geschaeftsfuehrung", "label": "Geschäftsführung", "members": ["geschaeftsfuehrer-ceo"] },
+    { "key": "logistik", "label": "Logistik & Zentrallager", "members": ["leiterin-logistik-zentrallager", "schichtleiter-zentrallager"] },
+    { "key": "it", "label": "IT & Warenwirtschaft", "members": ["leiter-it"] },
+    { "key": "einkauf", "label": "Einkauf & Lieferanten", "members": ["leiter-einkauf"] },
+    { "key": "personal", "label": "Personal", "members": ["leiterin-personal"] },
+    { "key": "arbeitssicherheit", "label": "Arbeitssicherheit & Werkschutz", "members": ["leiter-arbeitssicherheit"] },
+    { "key": "vertrieb", "label": "Filialen & Vertrieb", "members": ["regionalleiterin-filialen-nord", "regionalleiter-filialen-sued"] },
+    { "key": "e-commerce", "label": "Online-Shop", "members": ["online-shop-leitung"] },
+    { "key": "finanzen", "label": "Finanzen & Versicherung", "members": ["leiter-finanzen-cfo"] },
+    { "key": "kommunikation", "label": "Unternehmenskommunikation / Marketing", "members": ["leiterin-kommunikation-pr"] },
+    { "key": "krisenstab-support", "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)", "members": ["notfallmanagement-bcm", "assistenz-gf-dokumentation"] }
+  ],
+  "roles": [
+    { "id": "geschaeftsfuehrer-ceo", "funktion": "Geschäftsführer (CEO), Krisenstabsleiter", "group": "geschaeftsfuehrung" },
+    { "id": "leiterin-logistik-zentrallager", "funktion": "Leiterin Logistik & Zentrallager", "group": "logistik" },
+    { "id": "schichtleiter-zentrallager", "funktion": "Schichtleiter Zentrallager (vor Ort in der Brandnacht)", "group": "logistik" },
+    { "id": "leiter-it", "funktion": "Leiter IT (Kassensysteme & Warenwirtschaft)", "group": "it" },
+    { "id": "leiter-einkauf", "funktion": "Leiter Einkauf & Lieferantenmanagement", "group": "einkauf" },
+    { "id": "leiterin-personal", "funktion": "Leiterin Personal", "group": "personal" },
+    { "id": "leiter-arbeitssicherheit", "funktion": "Leiter Arbeitssicherheit & Werkschutz", "group": "arbeitssicherheit" },
+    { "id": "regionalleiterin-filialen-nord", "funktion": "Regionalleiterin Filialen Nord", "group": "vertrieb" },
+    { "id": "regionalleiter-filialen-sued", "funktion": "Regionalleiter Filialen Süd", "group": "vertrieb" },
+    { "id": "online-shop-leitung", "funktion": "Leitung Online-Shop & E-Commerce", "group": "e-commerce" },
+    { "id": "leiter-finanzen-cfo", "funktion": "Leiter Finanzen & Versicherung (CFO)", "group": "finanzen" },
+    { "id": "leiterin-kommunikation-pr", "funktion": "Leiterin Unternehmenskommunikation & Marketing", "group": "kommunikation" },
+    { "id": "notfallmanagement-bcm", "funktion": "Notfallmanagement / BCM-Koordination", "group": "krisenstab-support" },
+    { "id": "assistenz-gf-dokumentation", "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation", "group": "krisenstab-support" }
+  ],
+  "moderationsleitfaden": {
+    "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Sie alle vertreten Ihre Funktion im Unternehmen. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir innerhalb der nächsten Stunde durchlaufen werden. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
+    "eroeffnungstext": "Dienstag, kurz nach 3 Uhr nachts. Das Zentrallager der Waterkant Baumärkte GmbH liegt still, nur die Nachtschicht ist vor Ort. In wenigen Stunden beginnt das wichtigste Geschäft des Jahres: der Start der Frühjahrssaison in allen 14 Filialen. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in einer Stunde.",
+    "spielregeln": [
+      "Jeder Teilnehmer vertritt ausschließlich seinen Verantwortungsbereich.",
+      "Jede Lagekarte enthält neue Informationen.",
+      "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
+      "Anschließend erfolgt die Abstimmung im Krisenstab."
+    ],
+    "moderationsregel": "Nicht diskutieren lassen. Nicht in technische oder bauliche Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
+    "debriefingFragen": [
+      "Wann wart ihr am stärksten unter Druck?",
+      "Welche Information hat gefehlt?",
+      "Wer hätte früher eingebunden werden müssen?",
+      "Welche BCM-Maßnahme hätte geholfen?",
+      "Welche Person war kritisch?",
+      "Wo waren Single Points of Failure?"
+    ],
+    "abschlussfragenVorDebrief": [
+      "Worüber haben wir am meisten diskutiert?",
+      "Welche Informationen haben gefehlt?",
+      "Welche Entscheidung fiel besonders schwer?",
+      "Welche BCM-Maßnahme hätte uns geholfen?"
+    ],
+    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte 'Pressekonferenz'), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund die Sonderlagekarten zur fehlenden Rauchmelder-Wartung und zur Versicherungs-Deckungslücke bereits kursieren."
+  },
+  "debriefMinutes": 12,
+  "lagekarten": [
+    {
+      "id": "LK01",
+      "nr": 1,
+      "simZeit": "Dienstag 03:10 Uhr",
+      "titel": "Feueralarm",
+      "minuteOffset": 5,
+      "diskussionMinuten": 5,
+      "text": "Die Nachtschicht im Zentrallager meldet eine Rauchentwicklung im Bereich der Gefahrstoff- und Farbenlagerung. Die Feuerwehr ist alarmiert und auf dem Weg. Ein Mitarbeiter der Nachtschicht wird mit Verdacht auf Rauchgasvergiftung ins Krankenhaus gebracht.",
+      "kriseninfo": "1 Verletzter · Feuerwehr: Eintreffen in ca. 8 Minuten",
+      "aufgabe": [
+        "Welche Auswirkungen hat dies auf Ihren Bereich?",
+        "Welche Sofortmaßnahmen leiten Sie ein?",
+        "Welche Entscheidungen benötigt der Krisenstab?"
+      ],
+      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen.",
+      "media": null,
+      "prioritaet": 1
+    },
+    {
+      "id": "LK02",
+      "nr": 2,
+      "simZeit": "Dienstag 03:45 Uhr",
+      "titel": "Großbrand",
+      "minuteOffset": 10,
+      "diskussionMinuten": 4,
+      "text": "Die Feuerwehr meldet: Das Chemikalien- und Farbenlager ist explosionsartig in Brand geraten. Rund ein Drittel des Zentrallagers gilt als vollständig zerstört. Ein Sicherheitsradius von 300 Metern wurde eingerichtet.",
+      "kriseninfo": "Geschätzter Lagerverlust: ca. 30 % der Bestände",
+      "aufgabe": [
+        "Welche Folgen erwarten Sie für Ihren Bereich?",
+        "Welche Kunden/Filialen sind betroffen?",
+        "Welche Prioritäten setzen Sie?"
+      ],
+      "moderatorHinweis": "Jetzt das Lagerbrand-Bild zeigen.",
+      "media": { "type": "image", "src": "/media/waterkant/lk02-lagerbrand.png", "caption": "Überwachungskamera-Aufnahme aus dem Zentrallager." },
+      "prioritaet": 1
+    },
+    {
+      "id": "LK03",
+      "nr": 3,
+      "simZeit": "Dienstag 06:00 Uhr",
+      "titel": "Serverraum betroffen",
+      "minuteOffset": 16,
+      "diskussionMinuten": 4,
+      "text": "Die IT meldet: Der Serverraum im Zentrallager lag im betroffenen Gebäudeteil. Das Warenwirtschaftssystem und die zentrale Kassenanbindung sind vollständig ausgefallen. Keine Filiale kann aktuell Bestände oder Preise online abgleichen.",
+      "kriseninfo": "Betroffen: Warenwirtschaft, Kassenanbindung, Online-Shop-Lagerbestand",
+      "aufgabe": [
+        "Wie wirkt sich das auf den Tagesbetrieb aus?",
+        "Welche Übergangslösung ist möglich?",
+        "Was braucht die IT vom Krisenstab?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK04",
+      "nr": 4,
+      "simZeit": "Dienstag 07:00 Uhr",
+      "titel": "Filialen öffnen trotzdem",
+      "minuteOffset": 21,
+      "diskussionMinuten": 4,
+      "text": "Die ersten Filialen öffnen planmäßig. Mitarbeitende vor Ort sind verunsichert: Kassen laufen nur eingeschränkt im Offline-Modus, Preisauskünfte sind teils nicht möglich. Erste Kunden beschweren sich.",
+      "kriseninfo": "14 Filialen betroffen, davon 6 bereits geöffnet",
+      "aufgabe": [
+        "Was kommunizieren Sie an die Filialleitungen?",
+        "Wie sichern Sie den Kassenbetrieb ab?",
+        "Wer informiert die Mitarbeitenden vor Ort?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK05",
+      "nr": 5,
+      "simZeit": "Dienstag 08:30 Uhr",
+      "titel": "Rauch über der Stadt",
+      "minuteOffset": 27,
+      "diskussionMinuten": 4,
+      "text": "Die Rauchwolke über dem Zentrallager ist kilometerweit sichtbar. Anwohner posten Fotos und Videos in sozialen Netzwerken. Erste Spekulationen über austretende Gefahrstoffe verbreiten sich.",
+      "kriseninfo": "Mehrere tausend Social-Media-Interaktionen in 30 Minuten",
+      "aufgabe": [
+        "Wer beobachtet die Social-Media-Lage?",
+        "Reagieren Sie öffentlich oder beobachten Sie zunächst?",
+        "Welche Fakten können Sie bereits bestätigen?"
+      ],
+      "moderatorHinweis": "Jetzt den Social-Media-Beitrag zeigen.",
+      "media": { "type": "image", "src": "/media/waterkant/lk05-social-post.png", "caption": "Öffentlicher Beitrag einer Anwohnerin, 12 Minuten alt." },
+      "prioritaet": 2
+    },
+    {
+      "id": "LK06",
+      "nr": 6,
+      "simZeit": "Dienstag 10:00 Uhr",
+      "titel": "Pressekontakt",
+      "minuteOffset": 34,
+      "diskussionMinuten": 5,
+      "text": "Die Lokalzeitung und der Regionalsender Nordkanal fragen bei der Unternehmenskommunikation an: Gab es Verletzte? Sind Gefahrstoffe ausgetreten? Wie sicher war das Lager?",
+      "kriseninfo": "Antwortfrist: 90 Minuten",
+      "aufgabe": [
+        "Wer spricht mit der Presse?",
+        "Was wird kommuniziert, was bewusst nicht?",
+        "Wie gehen Sie mit Spekulationen zu Gefahrstoffen um?"
+      ],
+      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK07",
+      "nr": 7,
+      "simZeit": "Dienstag 12:00 Uhr",
+      "titel": "Großkunde storniert",
+      "minuteOffset": 42,
+      "diskussionMinuten": 4,
+      "text": "Ein großer Bau-Kunde storniert einen Großauftrag über Dämmstoffe und Baustahl wegen befürchteter Lieferverzögerungen. Weitere Gewerbekunden fragen nach Alternativen.",
+      "kriseninfo": "Auftragswert: ca. 180.000 €",
+      "aufgabe": [
+        "Wie reagieren Sie auf die Stornierung?",
+        "Welche Kunden priorisieren Sie?",
+        "Welche Ausweichlieferungen sind möglich?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK08",
+      "nr": 8,
+      "simZeit": "Mittwoch 06:00 Uhr",
+      "titel": "Online-Shop bricht ein",
+      "minuteOffset": 50,
+      "diskussionMinuten": 4,
+      "text": "Der Online-Shop zeigt weiterhin falsche Lagerbestände. Dutzende Bestellungen können nicht ausgeliefert werden. Erste negative Bewertungen häufen sich.",
+      "kriseninfo": "237 betroffene Bestellungen · Bewertungsschnitt sinkt auf 2,1 Sterne",
+      "aufgabe": [
+        "Wie informieren Sie betroffene Kunden?",
+        "Pausieren Sie den Online-Shop?",
+        "Wie wirkt sich das auf das Markenimage aus?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK09",
+      "nr": 9,
+      "simZeit": "Mittwoch 14:00 Uhr",
+      "titel": "Ersatzlager gefunden",
+      "minuteOffset": 60,
+      "diskussionMinuten": 3,
+      "text": "Ein befreundetes Logistikunternehmen stellt kurzfristig Lagerflächen zur Verfügung. Erste Notfall-Lieferungen für die wichtigsten Filialen können organisiert werden.",
+      "kriseninfo": "Zusätzliche Lagerkapazität: ca. 40 % des Bedarfs",
+      "aufgabe": [
+        "Welche Filialen werden zuerst beliefert?",
+        "Was braucht die Logistik jetzt vom Krisenstab?",
+        "Wie kommunizieren Sie den Fortschritt intern?"
+      ],
+      "moderatorHinweis": "Positive Lagekarte, Entlastung im Raum spürbar machen.",
+      "media": null,
+      "prioritaet": 3
+    },
+    {
+      "id": "LK10",
+      "nr": 10,
+      "simZeit": "Mittwoch 18:00 Uhr",
+      "titel": "Pressekonferenz",
+      "minuteOffset": 68,
+      "diskussionMinuten": 6,
+      "text": "Der Druck steigt: Nordkanal kündigt eine Sonderberichterstattung an. Die Geschäftsführung muss innerhalb der nächsten Stunde live Stellung beziehen – zu Ursache, Verletzten, Gefahrstoffen und zur Zukunft der Filialen.",
+      "kriseninfo": "Ankündigung: Sonderbericht um 19 Uhr",
+      "aufgabe": [
+        "Wer tritt vor die Kamera?",
+        "Welche Botschaft hat oberste Priorität?",
+        "Wie gehen Sie mit unbeantworteten Fragen um?"
+      ],
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: sprich den Krisenstabsleiter direkt an: 'In einer Stunde stehen Sie vor laufenden Kameras.' Der ganze Raum muss liefern. Dies ist laut Drehbuch die stärkste Szene der Übung.",
+      "media": { "type": "image", "src": "/media/waterkant/lk10-nordkanal-ankuendigung.png", "caption": "Nordkanal kündigt den Sonderbericht an." },
+      "prioritaet": 1
+    },
+    {
+      "id": "LK11",
+      "nr": 11,
+      "simZeit": "Donnerstag 09:00 Uhr",
+      "titel": "Gutachter vor Ort",
+      "minuteOffset": 76,
+      "diskussionMinuten": 4,
+      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police enthält eine Deckungslücke bei Betriebsunterbrechungen über 10 Tage hinaus.",
+      "kriseninfo": "Geschätzter Schaden: 18 Mio. € · Deckungslücke ab Tag 11",
+      "aufgabe": [
+        "Welche finanziellen Risiken ergeben sich?",
+        "Wie kommunizieren Sie das intern?",
+        "Welche Entscheidungen muss der Krisenstab treffen?"
+      ],
+      "moderatorHinweis": null,
+      "media": null,
+      "prioritaet": 2
+    },
+    {
+      "id": "LK12",
+      "nr": 12,
+      "simZeit": "Donnerstag 16:00 Uhr",
+      "titel": "Wiederanlauf",
+      "minuteOffset": 83,
+      "diskussionMinuten": 5,
+      "text": "Das Interims-Zentrallager nimmt den Betrieb auf. Die wichtigsten Filialen sind wieder vollständig belieferbar. Die Geschäftsführung bereitet ein Abschlussstatement für Mitarbeitende und Öffentlichkeit vor.",
+      "kriseninfo": "Reduzierter Betrieb: ca. 60 % der üblichen Lieferkapazität",
+      "aufgabe": [
+        "Was nehmen Sie aus den letzten 72 Stunden mit?",
+        "Was muss sich strukturell ändern?",
+        "Wie schließen Sie die Krise nach außen ab?"
+      ],
+      "moderatorHinweis": "Letzte Lagekarte. Übungsende bei minuteOffset 83.",
+      "media": null,
+      "prioritaet": 1
+    }
+  ],
+  "sonderlagekarten": [
+    {
+      "id": "SK01",
+      "nr": 1,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "minuteOffset": 12,
+      "vertraulich": true,
+      "text": "Ein Ersthelfer berichtet dir vertraulich: Der Brand könnte von einer defekten Ladestation für Gabelstapler-Akkus ausgegangen sein. Noch ist nichts bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Arbeitssicherheit informiert den Krisenstab zeitnah und transparent über den Verdacht.",
+      "moderatorSchlecht": "Arbeitssicherheit behält die Information für sich, bis Behörden oder Presse selbst darauf stoßen.",
+      "prioritaet": 1
+    },
+    {
+      "id": "SK02",
+      "nr": 2,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 20,
+      "vertraulich": true,
+      "text": "Dir wird vertraulich zugetragen: Der verletzte Mitarbeiter hatte vor sechs Wochen schriftlich einen defekten Rauchmelder im Lagerbereich gemeldet. Die Meldung liegt dokumentiert in der internen Mängelliste vor.",
+      "moderatorGut": "Personal eskaliert das Thema intern an Geschäftsführung und Arbeitssicherheit.",
+      "moderatorSchlecht": "Personal ignoriert die Information oder behält sie für sich.",
+      "prioritaet": 1
+    },
+    {
+      "id": "SK03",
+      "nr": 3,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 24,
+      "vertraulich": true,
+      "text": "Dir wird klar: Das lokale Backup des Warenwirtschaftssystems lag im selben Serverraum und ist ebenfalls zerstört. Ein Cloud-Backup existiert, ist aber rund drei Wochen alt.",
+      "moderatorGut": "IT kommuniziert den Datenverlust offen und schlägt eine Übergangslösung vor.",
+      "moderatorSchlecht": "IT verschweigt das Alter des Backups und lässt den Krisenstab im Unklaren über den tatsächlichen Datenverlust.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK04",
+      "nr": 4,
+      "empfaenger": "leiter-finanzen-cfo",
+      "minuteOffset": 32,
+      "vertraulich": true,
+      "text": "Deine Prüfung der Versicherungspolice zeigt: Die Betriebsunterbrechungsversicherung deckt nur die ersten zehn Tage vollständig ab. Danach sinkt die Erstattung erheblich.",
+      "moderatorGut": "Finanzen informiert den Krisenstab frühzeitig über die Deckungslücke.",
+      "moderatorSchlecht": "Finanzen behält die Information zurück, bis es zu spät für Gegenmaßnahmen ist.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK05",
+      "nr": 5,
+      "empfaenger": "leiterin-logistik-zentrallager",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Zwei Mitarbeitende berichten dir anonym: Die letzte Brandschutzwartung wurde vor vier Monaten von einer neuen, günstigeren Fremdfirma durchgeführt. Es gab danach mehrfach Beschwerden über offene Mängel.",
+      "moderatorGut": "Logistik gibt die Information an den Krisenstab weiter, auch wenn sie unangenehm ist.",
+      "moderatorSchlecht": "Logistik spielt die Beschwerden herunter oder leugnet deren Existenz.",
+      "prioritaet": 2
+    },
+    {
+      "id": "SK06",
+      "nr": 6,
+      "empfaenger": "leiterin-kommunikation-pr",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Ein Journalist von Nordkanal deutet dir gegenüber an, bereits Kenntnis von der gemeldeten Rauchmelder-Mängelliste zu haben – offenbar durch einen internen Hinweisgeber. Eine Veröffentlichung sei in Vorbereitung.",
+      "moderatorGut": "Kommunikation bereitet den Krisenstab proaktiv auf die mögliche Veröffentlichung vor.",
+      "moderatorSchlecht": "Kommunikation hofft, dass die Information nicht veröffentlicht wird, und bereitet nichts vor.",
+      "prioritaet": 1
+    },
+    {
+      "id": "SK07",
+      "nr": 7,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Dein wichtigster Baustofflieferant kann aufgrund eigener Kapazitätsengpässe kurzfristig nicht aushelfen. Ein Ausweichlieferant wäre verfügbar, verlangt aber rund 30 % höhere Preise.",
+      "moderatorGut": "Einkauf legt die Mehrkosten transparent dem Krisenstab vor.",
+      "moderatorSchlecht": "Einkauf trifft die teure Entscheidung im Alleingang, ohne den Krisenstab einzubeziehen.",
+      "prioritaet": 3
+    },
+    {
+      "id": "SK08",
+      "nr": 8,
+      "empfaenger": "regionalleiterin-filialen-nord",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Mehrere Filialleitungen in deiner Region melden dir vertraulich: Das Personal ist verunsichert, erste Krankmeldungen für das Wochenende gehen ein.",
+      "moderatorGut": "Die Regionalleitung bringt das Thema aktiv in den Krisenstab ein und fordert Unterstützung.",
+      "moderatorSchlecht": "Die Regionalleitung behandelt es als reines Personalproblem der einzelnen Filialen.",
+      "prioritaet": 3
+    }
+  ],
+  "bonuskarten": [
+    {
+      "id": "B1",
+      "empfaenger": "leiterin-personal",
+      "text": "Verlasse den Raum für 10 Minuten. Du führst ein dringendes Gespräch mit der Familie des verletzten Mitarbeiters."
+    },
+    {
+      "id": "B2",
+      "empfaenger": "leiter-it",
+      "text": "Ein Phishing-Versuch nutzt die Verwirrung aus: Eine E-Mail mit dem Betreff 'Aktuelle Informationen zum Brand' verlangt Zugangsdaten. Mehrere Mitarbeitende haben bereits geklickt."
+    },
+    {
+      "id": "B3",
+      "empfaenger": "leiterin-kommunikation-pr",
+      "text": "Ein Video vom Brand wird auf Social Media viral: über 500.000 Aufrufe in zwei Stunden."
+    },
+    {
+      "id": "B4",
+      "empfaenger": "leiter-finanzen-cfo",
+      "text": "Die Hausbank meldet sich und fragt nach einer aktuellen Liquiditätsplanung für die nächsten Wochen."
+    }
+  ],
+  "bewertungskriterien": [
+    "Rollenverständnis",
+    "Kommunikation",
+    "Entscheidungsfähigkeit",
+    "Zusammenarbeit",
+    "Krisenmanagement",
+    "Priorisierung",
+    "Dokumentation"
+  ],
+  "urkunde": {
+    "veranstaltung": "BCM-Krisensimulation \"72 Stunden in Flammen\"",
+    "maxPunkte": 10
+  }
+}

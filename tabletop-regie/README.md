@@ -97,8 +97,20 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
 ## Ein Drehbuch erweitern oder ein neues anlegen
 
-Das Drehbuch liegt als lesbare JSON-Datei unter `data/scenario.<name>.json`
-(mitgeliefert: `data/scenario.nordtech.json`). Struktur:
+Das Drehbuch liegt als lesbare JSON-Datei unter `data/scenario.<name>.json`.
+Mitgeliefert sind zwei vollständig unabhängige Beispielszenarien aus
+unterschiedlichen Branchen:
+
+- `data/scenario.nordtech.json` — "7 Tage im Ausnahmezustand": Ransomware-Angriff
+  bei einem fiktiven produzierenden Mittelständler (Automobil-/Pharmazulieferer).
+  Wird ohne `SCENARIO_FILE` automatisch geladen (alphabetisch erste Datei).
+- `data/scenario.waterkant.json` — "72 Stunden in Flammen": Großbrand im
+  Zentrallager eines fiktiven Baumarkt-/Einzelhandelsunternehmens, mit ganz
+  anderen Rollen (Logistik, Filialen, Online-Shop, Arbeitssicherheit statt
+  IT-Wiederanlauf) und einer physischen statt einer Cyber-Krise.
+
+Beide dienen als Vorlage für eigene Branchen (z. B. Spedition, Handwerk,
+Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 
 - `roles` / `roleGroups` — Personas und ihre Funktionsbereiche
 - `lagekarten[]` — öffentliche Ereignisse mit `minuteOffset` (Minute ab
@@ -126,19 +138,23 @@ sobald diese Lagekarte aktiv wird.
 `sonderlagekarten[]` ergänzen. Der Server liest die Datei bei jedem Start neu
 ein — kein Build-Schritt nötig.
 
-**Ein zweites Kundenszenario anlegen:** Datei kopieren, z. B. zu
+**Ein weiteres Szenario anlegen:** Datei kopieren, z. B. zu
 `data/scenario.andererkunde.json`, Inhalte anpassen. Liegen mehrere
 `scenario.*.json`-Dateien in `data/`, wird beim Start ohne weitere Angabe
-alphabetisch die erste geladen. Um gezielt eine andere auszuwählen, die
-Umgebungsvariable `SCENARIO_FILE` setzen — die Schreibweise unterscheidet
-sich je nach Betriebssystem/Shell:
+alphabetisch die erste geladen (aktuell: `scenario.nordtech.json`). Um gezielt
+ein anderes auszuwählen — z. B. das mitgelieferte Handels-Szenario
+"72 Stunden in Flammen" — die Umgebungsvariable `SCENARIO_FILE` setzen; die
+Schreibweise unterscheidet sich je nach Betriebssystem/Shell:
 
 - **Windows, Eingabeaufforderung (cmd):**
-  `set SCENARIO_FILE=scenario.andererkunde.json && npm start`
+  `set SCENARIO_FILE=scenario.waterkant.json && npm start`
 - **Windows, PowerShell:**
-  `$env:SCENARIO_FILE="scenario.andererkunde.json"; npm start`
+  `$env:SCENARIO_FILE="scenario.waterkant.json"; npm start`
 - **macOS/Linux:**
-  `SCENARIO_FILE=scenario.andererkunde.json npm start`
+  `SCENARIO_FILE=scenario.waterkant.json npm start`
+
+(Für ein eigenes Szenario `scenario.waterkant.json` oben entsprechend durch
+den eigenen Dateinamen ersetzen, z. B. `scenario.andererkunde.json`.)
 
 ## Datenschutz & Lokalität
 
