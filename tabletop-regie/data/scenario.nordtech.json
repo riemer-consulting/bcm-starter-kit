@@ -254,7 +254,11 @@
         "Welche Entscheidungen benötigt der Krisenstab?"
       ],
       "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen. Die Lösegeldforderung jetzt auf der Bühne zeigen.",
-      "media": { "type": "image", "src": "/media/nordtech/lk01-loesegeldforderung.png", "caption": "Lösegeldforderung, wie sie auf den betroffenen Bildschirmen erscheint." },
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk01-loesegeldforderung.png",
+        "caption": "Lösegeldforderung, wie sie auf den betroffenen Bildschirmen erscheint."
+      },
       "prioritaet": 1
     },
     {
@@ -272,7 +276,11 @@
         "Welche Prioritäten setzen Sie?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk02-produktion-stoppt.png",
+        "caption": "Status: Fertigungsaufträge können nicht mehr gestartet werden."
+      },
       "prioritaet": 2
     },
     {
@@ -290,7 +298,11 @@
         "Müssen Mitarbeiter informiert werden?"
       ],
       "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen.",
-      "media": { "type": "image", "src": "/media/nordtech/lk03-linkedin-post.png", "caption": "Social-Media-Beitrag eines Mitarbeiters, wenige Minuten nach Veröffentlichung." },
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk03-linkedin-post.png",
+        "caption": "Social-Media-Beitrag eines Mitarbeiters, wenige Minuten nach Veröffentlichung."
+      },
       "prioritaet": 3
     },
     {
@@ -308,7 +320,11 @@
         "Was wird bewusst nicht kommuniziert?"
       ],
       "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk04-nordkanal-anfrage.png",
+        "caption": "Presseanfrage von Nordkanal."
+      },
       "prioritaet": 2
     },
     {
@@ -326,7 +342,11 @@
         "Welche Prioritäten ändern sich?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk05-schluesselperson-faellt-aus.png",
+        "caption": "Der leitende Systemadministrator ist nicht erreichbar."
+      },
       "prioritaet": 2
     },
     {
@@ -344,7 +364,11 @@
         "Welche Risiken entstehen?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk06-kunde-eskaliert.png",
+        "caption": "Automobilkunde droht mit Vertragsstrafe."
+      },
       "prioritaet": 3
     },
     {
@@ -362,7 +386,11 @@
         "Wer übernimmt die Kommunikation?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk07-datenschutz.png",
+        "caption": "Datenschutzbehörde fordert Stellungnahme."
+      },
       "prioritaet": 2
     },
     {
@@ -379,7 +407,11 @@
         "Kommunizieren Sie diesen Erfolg?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk08-positive-entwicklung.png",
+        "caption": "Forensik identifiziert den Einbruchsvektor."
+      },
       "prioritaet": 3
     },
     {
@@ -397,7 +429,11 @@
         "Welche Risiken bestehen?"
       ],
       "moderatorHinweis": "noch bessere Nachricht als LK08.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk09-backups-gefunden.png",
+        "caption": "Offline-Backups sind verfügbar."
+      },
       "prioritaet": 2
     },
     {
@@ -414,7 +450,11 @@
         "Wie schützen Sie den Ruf des Unternehmens?"
       ],
       "moderatorHinweis": "Jetzt das Gebäudebild zeigen: 'Der Übertragungswagen steht vor der Zentrale.'",
-      "media": { "type": "image", "src": "/media/nordtech/lk10-nordkanal-bericht.png", "caption": "Nordkanal berichtet live von vor der NordTech-Zentrale." },
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk10-nordkanal-bericht.png",
+        "caption": "Nordkanal berichtet live von vor der NordTech-Zentrale."
+      },
       "prioritaet": 3
     },
     {
@@ -431,7 +471,11 @@
         "Welche Lieferungen haben Vorrang?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk11-pharmakunde-eskaliert.png",
+        "caption": "Pharmakunde droht mit Schadensersatz."
+      },
       "prioritaet": 3
     },
     {
@@ -448,7 +492,11 @@
         "Welche Kunden werden priorisiert?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk12-teilweiser-wiederanlauf.png",
+        "caption": "Werk Süd kann wieder produzieren."
+      },
       "prioritaet": 2
     },
     {
@@ -465,7 +513,11 @@
         "Wer koordiniert die Zusammenarbeit?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk13-cyberversicherung.png",
+        "caption": "Die Cyberversicherung bestätigt die Deckung."
+      },
       "prioritaet": 3
     },
     {
@@ -482,7 +534,11 @@
         "Weitere Tests durchführen?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk14-erp-testbetrieb.png",
+        "caption": "ERP-Testbetrieb läuft."
+      },
       "prioritaet": 3
     },
     {
@@ -499,7 +555,11 @@
         "Welche Maßnahmen folgen nach der Krise?"
       ],
       "moderatorHinweis": "Letzte Lagekarte. Übungsende bei minuteOffset 87.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk15-wiederanlauf.png",
+        "caption": "Wiederanlauf: 70 % der Produktion laufen wieder."
+      },
       "prioritaet": 1
     }
   ],

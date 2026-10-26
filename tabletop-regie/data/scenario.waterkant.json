@@ -8,7 +8,11 @@
     "logo": null
   },
   "difficulty": "mittel",
-  "recommendedParticipants": { "min": 5, "reference": 12, "max": 16 },
+  "recommendedParticipants": {
+    "min": 5,
+    "reference": 12,
+    "max": 16
+  },
   "timing": {
     "mode": "authored",
     "referenceGroupSize": 12,
@@ -32,33 +36,158 @@
     ]
   },
   "roleGroups": [
-    { "key": "geschaeftsfuehrung", "label": "Geschäftsführung", "members": ["geschaeftsfuehrer-ceo"] },
-    { "key": "logistik", "label": "Logistik & Zentrallager", "members": ["leiterin-logistik-zentrallager", "schichtleiter-zentrallager"] },
-    { "key": "it", "label": "IT & Warenwirtschaft", "members": ["leiter-it"] },
-    { "key": "einkauf", "label": "Einkauf & Lieferanten", "members": ["leiter-einkauf"] },
-    { "key": "personal", "label": "Personal", "members": ["leiterin-personal"] },
-    { "key": "arbeitssicherheit", "label": "Arbeitssicherheit & Werkschutz", "members": ["leiter-arbeitssicherheit"] },
-    { "key": "vertrieb", "label": "Filialen & Vertrieb", "members": ["regionalleiterin-filialen-nord", "regionalleiter-filialen-sued"] },
-    { "key": "e-commerce", "label": "Online-Shop", "members": ["online-shop-leitung"] },
-    { "key": "finanzen", "label": "Finanzen & Versicherung", "members": ["leiter-finanzen-cfo"] },
-    { "key": "kommunikation", "label": "Unternehmenskommunikation / Marketing", "members": ["leiterin-kommunikation-pr"] },
-    { "key": "krisenstab-support", "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)", "members": ["notfallmanagement-bcm", "assistenz-gf-dokumentation"] }
+    {
+      "key": "geschaeftsfuehrung",
+      "label": "Geschäftsführung",
+      "members": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "key": "logistik",
+      "label": "Logistik & Zentrallager",
+      "members": [
+        "leiterin-logistik-zentrallager",
+        "schichtleiter-zentrallager"
+      ]
+    },
+    {
+      "key": "it",
+      "label": "IT & Warenwirtschaft",
+      "members": [
+        "leiter-it"
+      ]
+    },
+    {
+      "key": "einkauf",
+      "label": "Einkauf & Lieferanten",
+      "members": [
+        "leiter-einkauf"
+      ]
+    },
+    {
+      "key": "personal",
+      "label": "Personal",
+      "members": [
+        "leiterin-personal"
+      ]
+    },
+    {
+      "key": "arbeitssicherheit",
+      "label": "Arbeitssicherheit & Werkschutz",
+      "members": [
+        "leiter-arbeitssicherheit"
+      ]
+    },
+    {
+      "key": "vertrieb",
+      "label": "Filialen & Vertrieb",
+      "members": [
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued"
+      ]
+    },
+    {
+      "key": "e-commerce",
+      "label": "Online-Shop",
+      "members": [
+        "online-shop-leitung"
+      ]
+    },
+    {
+      "key": "finanzen",
+      "label": "Finanzen & Versicherung",
+      "members": [
+        "leiter-finanzen-cfo"
+      ]
+    },
+    {
+      "key": "kommunikation",
+      "label": "Unternehmenskommunikation / Marketing",
+      "members": [
+        "leiterin-kommunikation-pr"
+      ]
+    },
+    {
+      "key": "krisenstab-support",
+      "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
+      "members": [
+        "notfallmanagement-bcm",
+        "assistenz-gf-dokumentation"
+      ]
+    }
   ],
   "roles": [
-    { "id": "geschaeftsfuehrer-ceo", "funktion": "Geschäftsführer (CEO), Krisenstabsleiter", "group": "geschaeftsfuehrung" },
-    { "id": "leiterin-logistik-zentrallager", "funktion": "Leiterin Logistik & Zentrallager", "group": "logistik" },
-    { "id": "schichtleiter-zentrallager", "funktion": "Schichtleiter Zentrallager (vor Ort in der Brandnacht)", "group": "logistik" },
-    { "id": "leiter-it", "funktion": "Leiter IT (Kassensysteme & Warenwirtschaft)", "group": "it" },
-    { "id": "leiter-einkauf", "funktion": "Leiter Einkauf & Lieferantenmanagement", "group": "einkauf" },
-    { "id": "leiterin-personal", "funktion": "Leiterin Personal", "group": "personal" },
-    { "id": "leiter-arbeitssicherheit", "funktion": "Leiter Arbeitssicherheit & Werkschutz", "group": "arbeitssicherheit" },
-    { "id": "regionalleiterin-filialen-nord", "funktion": "Regionalleiterin Filialen Nord", "group": "vertrieb" },
-    { "id": "regionalleiter-filialen-sued", "funktion": "Regionalleiter Filialen Süd", "group": "vertrieb" },
-    { "id": "online-shop-leitung", "funktion": "Leitung Online-Shop & E-Commerce", "group": "e-commerce" },
-    { "id": "leiter-finanzen-cfo", "funktion": "Leiter Finanzen & Versicherung (CFO)", "group": "finanzen" },
-    { "id": "leiterin-kommunikation-pr", "funktion": "Leiterin Unternehmenskommunikation & Marketing", "group": "kommunikation" },
-    { "id": "notfallmanagement-bcm", "funktion": "Notfallmanagement / BCM-Koordination", "group": "krisenstab-support" },
-    { "id": "assistenz-gf-dokumentation", "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation", "group": "krisenstab-support" }
+    {
+      "id": "geschaeftsfuehrer-ceo",
+      "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
+      "group": "geschaeftsfuehrung"
+    },
+    {
+      "id": "leiterin-logistik-zentrallager",
+      "funktion": "Leiterin Logistik & Zentrallager",
+      "group": "logistik"
+    },
+    {
+      "id": "schichtleiter-zentrallager",
+      "funktion": "Schichtleiter Zentrallager (vor Ort in der Brandnacht)",
+      "group": "logistik"
+    },
+    {
+      "id": "leiter-it",
+      "funktion": "Leiter IT (Kassensysteme & Warenwirtschaft)",
+      "group": "it"
+    },
+    {
+      "id": "leiter-einkauf",
+      "funktion": "Leiter Einkauf & Lieferantenmanagement",
+      "group": "einkauf"
+    },
+    {
+      "id": "leiterin-personal",
+      "funktion": "Leiterin Personal",
+      "group": "personal"
+    },
+    {
+      "id": "leiter-arbeitssicherheit",
+      "funktion": "Leiter Arbeitssicherheit & Werkschutz",
+      "group": "arbeitssicherheit"
+    },
+    {
+      "id": "regionalleiterin-filialen-nord",
+      "funktion": "Regionalleiterin Filialen Nord",
+      "group": "vertrieb"
+    },
+    {
+      "id": "regionalleiter-filialen-sued",
+      "funktion": "Regionalleiter Filialen Süd",
+      "group": "vertrieb"
+    },
+    {
+      "id": "online-shop-leitung",
+      "funktion": "Leitung Online-Shop & E-Commerce",
+      "group": "e-commerce"
+    },
+    {
+      "id": "leiter-finanzen-cfo",
+      "funktion": "Leiter Finanzen & Versicherung (CFO)",
+      "group": "finanzen"
+    },
+    {
+      "id": "leiterin-kommunikation-pr",
+      "funktion": "Leiterin Unternehmenskommunikation & Marketing",
+      "group": "kommunikation"
+    },
+    {
+      "id": "notfallmanagement-bcm",
+      "funktion": "Notfallmanagement / BCM-Koordination",
+      "group": "krisenstab-support"
+    },
+    {
+      "id": "assistenz-gf-dokumentation",
+      "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
+      "group": "krisenstab-support"
+    }
   ],
   "moderationsleitfaden": {
     "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Sie alle vertreten Ihre Funktion im Unternehmen. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir innerhalb der nächsten Stunde durchlaufen werden. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
@@ -103,7 +232,11 @@
         "Welche Entscheidungen benötigt der Krisenstab?"
       ],
       "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk01-feueralarm.png",
+        "caption": "Feueralarm im Zentrallager."
+      },
       "prioritaet": 1
     },
     {
@@ -121,7 +254,11 @@
         "Welche Prioritäten setzen Sie?"
       ],
       "moderatorHinweis": "Jetzt das Lagerbrand-Bild zeigen.",
-      "media": { "type": "image", "src": "/media/waterkant/lk02-lagerbrand.png", "caption": "Überwachungskamera-Aufnahme aus dem Zentrallager." },
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk02-lagerbrand.png",
+        "caption": "Überwachungskamera-Aufnahme aus dem Zentrallager."
+      },
       "prioritaet": 1
     },
     {
@@ -139,7 +276,11 @@
         "Was braucht die IT vom Krisenstab?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk03-serverraum-betroffen.png",
+        "caption": "Warenwirtschaft und Kassenanbindung sind ausgefallen."
+      },
       "prioritaet": 2
     },
     {
@@ -157,7 +298,11 @@
         "Wer informiert die Mitarbeitenden vor Ort?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk04-filialen-oeffnen-trotzdem.png",
+        "caption": "Filialen öffnen trotz eingeschränktem Kassenbetrieb."
+      },
       "prioritaet": 2
     },
     {
@@ -175,7 +320,11 @@
         "Welche Fakten können Sie bereits bestätigen?"
       ],
       "moderatorHinweis": "Jetzt den Social-Media-Beitrag zeigen.",
-      "media": { "type": "image", "src": "/media/waterkant/lk05-social-post.png", "caption": "Öffentlicher Beitrag einer Anwohnerin, 12 Minuten alt." },
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk05-social-post.png",
+        "caption": "Öffentlicher Beitrag einer Anwohnerin, 12 Minuten alt."
+      },
       "prioritaet": 2
     },
     {
@@ -193,7 +342,11 @@
         "Wie gehen Sie mit Spekulationen zu Gefahrstoffen um?"
       ],
       "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk06-pressekontakt.png",
+        "caption": "Presseanfrage von Lokalzeitung und Nordkanal."
+      },
       "prioritaet": 2
     },
     {
@@ -211,7 +364,11 @@
         "Welche Ausweichlieferungen sind möglich?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk07-grosskunde-storniert.png",
+        "caption": "Großkunde storniert einen Großauftrag."
+      },
       "prioritaet": 3
     },
     {
@@ -229,7 +386,11 @@
         "Wie wirkt sich das auf das Markenimage aus?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk08-online-shop-bricht-ein.png",
+        "caption": "Der Online-Shop zeigt falsche Lagerbestände."
+      },
       "prioritaet": 3
     },
     {
@@ -247,7 +408,11 @@
         "Wie kommunizieren Sie den Fortschritt intern?"
       ],
       "moderatorHinweis": "Positive Lagekarte, Entlastung im Raum spürbar machen.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk09-ersatzlager-gefunden.png",
+        "caption": "Ein Logistikpartner stellt Ersatzlagerflächen bereit."
+      },
       "prioritaet": 3
     },
     {
@@ -265,7 +430,11 @@
         "Wie gehen Sie mit unbeantworteten Fragen um?"
       ],
       "moderatorHinweis": "JETZT WIRD ES SPANNEND: sprich den Krisenstabsleiter direkt an: 'In einer Stunde stehen Sie vor laufenden Kameras.' Der ganze Raum muss liefern. Dies ist laut Drehbuch die stärkste Szene der Übung.",
-      "media": { "type": "image", "src": "/media/waterkant/lk10-nordkanal-ankuendigung.png", "caption": "Nordkanal kündigt den Sonderbericht an." },
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk10-nordkanal-ankuendigung.png",
+        "caption": "Nordkanal kündigt den Sonderbericht an."
+      },
       "prioritaet": 1
     },
     {
@@ -283,7 +452,11 @@
         "Welche Entscheidungen muss der Krisenstab treffen?"
       ],
       "moderatorHinweis": null,
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk11-gutachter-vor-ort.png",
+        "caption": "Der Versicherungsgutachter schätzt den Schaden."
+      },
       "prioritaet": 2
     },
     {
@@ -301,7 +474,11 @@
         "Wie schließen Sie die Krise nach außen ab?"
       ],
       "moderatorHinweis": "Letzte Lagekarte. Übungsende bei minuteOffset 83.",
-      "media": null,
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk12-wiederanlauf.png",
+        "caption": "Das Interims-Zentrallager nimmt den Betrieb auf."
+      },
       "prioritaet": 1
     }
   ],
