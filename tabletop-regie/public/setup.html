@@ -87,6 +87,11 @@
       <label style="display:flex;align-items:center;gap:6px;width:auto;"><input type="checkbox" id="smtp-secure" style="width:auto;"> TLS/SSL (secure)</label>
       <label style="display:flex;align-items:center;gap:6px;width:auto;"><input type="checkbox" id="smtp-insecure-tls" style="width:auto;"> Selbstsigniertes/abgelaufenes TLS-Zertifikat akzeptieren (nur für interne/Test-Server)</label>
     </div>
+    <p class="mini muted" style="margin-top:4px;">
+      Port <b>587</b> → Haken bei "TLS/SSL (secure)" <b>weglassen</b> (STARTTLS, Verbindung wird automatisch hochgestuft).
+      Port <b>465</b> → Haken <b>setzen</b> (sofort verschlüsselte Verbindung). Falsch herum führt zu einem
+      "wrong version number"-Fehler bei der Test-E-Mail.
+    </p>
     <div class="row" style="margin-top:12px;">
       <button id="btn-save-settings">Einstellungen speichern</button>
       <input id="test-email-to" placeholder="Test-Empfänger@example.com" style="max-width:260px;">
