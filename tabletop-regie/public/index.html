@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>BCM Tabletop-Regie</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="container">
+  <h1>BCM Tabletop-Regie</h1>
+  <p class="muted">Lokale Regie-App für BCM-Tabletop-Übungen. Läuft nur auf diesem Rechner, keine Cloud, keine externen Server außer dem von dir eingetragenen SMTP-Server.</p>
+  <div class="card">
+    <h2 id="scenario-title">Szenario wird geladen…</h2>
+    <p class="muted" id="scenario-subtitle"></p>
+  </div>
+  <div class="row">
+    <a href="setup.html"><button>1. Setup: Teilnehmer, Rollen, Einstellungen</button></a>
+    <a href="stage.html" target="_blank"><button class="secondary">2. Bühne öffnen (für Beamer/TV – teilbar)</button></a>
+    <a href="moderator.html" target="_blank"><button class="secondary">3. Moderation öffnen (nicht teilen)</button></a>
+  </div>
+</div>
+<script>
+fetch('/api/scenario-meta').then(r=>r.json()).then(m=>{
+  document.getElementById('scenario-title').textContent = m.title;
+  document.getElementById('scenario-subtitle').textContent = m.subtitle + ' — ' + m.lagekartenCount + ' Lagekarten, ' + m.sonderlagekartenCount + ' Sonderlagekarten, ' + m.bonuskartenCount + ' Bonuskarten.';
+});
+</script>
+</body>
+</html>

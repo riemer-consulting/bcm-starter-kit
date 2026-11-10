@@ -1,0 +1,64 @@
+:root {
+  --bg: #0b0f16;
+  --panel: #131a24;
+  --panel-2: #1a2330;
+  --border: #2a3444;
+  --text: #e8edf4;
+  --muted: #8a97a8;
+  --accent: #3b82c4;
+  --bad: #d9534f;
+  --warn: #e0a832;
+  --ok: #4caf7d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+h1, h2, h3 { font-weight: 700; margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+input, select, textarea {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  width: 100%;
+}
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+button.secondary { background: var(--panel-2); border: 1px solid var(--border); color: var(--text); }
+button.danger { background: var(--bad); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 13px; }
+th { color: var(--muted); font-weight: 600; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.badge.ok { background: rgba(76,175,125,.2); color: var(--ok); }
+.badge.warn { background: rgba(224,168,50,.2); color: var(--warn); }
+.badge.bad { background: rgba(217,83,79,.2); color: var(--bad); }
+a { color: var(--accent); }
+.nav { display: flex; gap: 10px; margin-bottom: 20px; }
+.nav a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+.nav a.active, .nav a:hover { color: var(--text); background: var(--panel-2); }
