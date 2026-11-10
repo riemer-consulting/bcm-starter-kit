@@ -180,9 +180,17 @@ referenzieren:
 
 Die Bühne fragt beim ersten Laden einmal per Klick ("Ton aktivieren") die
 Erlaubnis zur Audiowiedergabe ab (Browser blockieren Ton sonst), danach läuft
-alles automatisch mit. Beide Scenario-Dateien in diesem Repo enthalten aktuell
-noch keine Sounds — die Technik ist vorbereitet, die eigentlichen Audiodateien
-müssen noch ergänzt werden.
+alles automatisch mit.
+
+Beide Szenarien in diesem Repo nutzen das **bewusst sparsam**: eine
+durchgehende Dauerschleife für die Vorlaufphase (Maschinenraum-Atmosphäre bei
+NordTech, Kundschaftsmurmeln bei Waterkant) und genau **ein** Kontrast-Moment
+beim Krisenausbruch (NordTech: Maschinen stoppen, bedrücktes Gemurmel seit
+"Cyberangriff"; Waterkant: Unruhe an der Kasse seit "Filialen öffnen
+trotzdem") — nicht mehr. Die Dateien sind synthetisch erzeugt (keine
+Field-Recordings, keine Sprachaufnahmen), funktionieren aber als Atmosphäre.
+Wer echte Aufnahmen hat, ersetzt einfach die Dateien unter `media/<firma>/`,
+ohne den JSON-Verweis zu ändern.
 
 **Weitere Karten hinzufügen:** einfach ein neues Objekt in `lagekarten[]` bzw.
 `sonderlagekarten[]` ergänzen. Der Server liest die Datei bei jedem Start neu

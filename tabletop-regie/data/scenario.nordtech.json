@@ -264,7 +264,12 @@
         "src": "/media/nordtech/lk01-loesegeldforderung.png",
         "caption": "Lösegeldforderung, wie sie auf den betroffenen Bildschirmen erscheint."
       },
-      "prioritaet": 1
+      "prioritaet": 1,
+      "sound": {
+        "src": "/media/nordtech/lk01-stille-gemurmel.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     },
     {
       "id": "LK16",
@@ -887,5 +892,12 @@
   "urkunde": {
     "veranstaltung": "BCM-Krisensimulation \"7 Tage im Ausnahmezustand\"",
     "maxPunkte": 10
+  },
+  "sounds": {
+    "idle": {
+      "src": "/media/nordtech/ambience-maschinenraum.mp3",
+      "loop": true,
+      "volume": 0.5
+    }
   }
 }

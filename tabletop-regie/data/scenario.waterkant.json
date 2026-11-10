@@ -308,7 +308,12 @@
         "src": "/media/waterkant/lk04-filialen-oeffnen-trotzdem.png",
         "caption": "Filialen öffnen trotz eingeschränktem Kassenbetrieb."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "sound": {
+        "src": "/media/waterkant/lk04-unruhe-kasse.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     },
     {
       "id": "LK13",
@@ -688,5 +693,12 @@
   "urkunde": {
     "veranstaltung": "BCM-Krisensimulation \"72 Stunden in Flammen\"",
     "maxPunkte": 10
+  },
+  "sounds": {
+    "idle": {
+      "src": "/media/waterkant/ambience-kundschaft.mp3",
+      "loop": true,
+      "volume": 0.5
+    }
   }
 }
