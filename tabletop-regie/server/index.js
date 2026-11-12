@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const multer = require('multer');
+const QRCode = require('qrcode');
 
 const store = require('./store');
 const engine = require('./runEngine');
@@ -645,7 +646,20 @@ function mediaUrlToFile(mediaUrl) {
   return path.join(__dirname, '..', 'media', mediaUrl.slice('/media/'.length));
 }
 
-app.get('/api/certificate/participant/:id', (req, res) => {
+// Feste Breite/Format fuer den QR-Code auf der Urkunde (klein, aber noch gut
+// scanbar auf einem Handy-Bildschirm).
+async function renderStarterKitQrDataUrl(url) {
+  if (!url) return null;
+  try { return await QRCode.toDataURL(url, { width: 168, margin: 1 }); }
+  catch (e) { return null; }
+}
+async function renderStarterKitQrBuffer(url) {
+  if (!url) return null;
+  try { return await QRCode.toBuffer(url, { width: 168, margin: 1 }); }
+  catch (e) { return null; }
+}
+
+app.get('/api/certificate/participant/:id', async (req, res) => {
   const participant = participantById(req.params.id);
   if (!participant || !participant.name) {
     return res.status(400).send('Diese Person hat noch keinen Namen im Setup eingetragen.');
@@ -653,10 +667,14 @@ app.get('/api/certificate/participant/:id', (req, res) => {
   const roles = (participant.roleIds || []).map(roleById).filter(Boolean);
   const settings = store.loadSettings();
   const score = scoreForParticipant(participant);
+  const starterKitUrl = settings.branding.starterKitUrl;
   res.send(renderCertificate({
     scenario, role: roles[0], roles, participant, score, branding: settings.branding,
     companyLogoSrc: scenario.company.logo, brandingLogoSrc: settings.branding.logo,
-    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE')
+    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE'),
+    starterKitUrl, starterKitLabel: settings.branding.starterKitLabel,
+    starterKitScreenshotSrc: '/media/starterkit/dashboard-screenshot.png',
+    starterKitQrSrc: await renderStarterKitQrDataUrl(starterKitUrl)
   }));
 });
 
@@ -671,13 +689,21 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
   const attachments = [];
   const companyLogoFile = mediaUrlToFile(scenario.company.logo);
   const brandingLogoFile = mediaUrlToFile(settings.branding.logo);
+  const starterKitUrl = settings.branding.starterKitUrl;
+  const screenshotFile = path.join(__dirname, '..', 'media', 'starterkit', 'dashboard-screenshot.png');
+  const qrBuffer = await renderStarterKitQrBuffer(starterKitUrl);
   if (companyLogoFile) attachments.push({ filename: 'company-logo.png', path: companyLogoFile, cid: 'company-logo' });
   if (brandingLogoFile) attachments.push({ filename: 'branding-logo.png', path: brandingLogoFile, cid: 'branding-logo' });
+  if (fs.existsSync(screenshotFile)) attachments.push({ filename: 'starter-kit-screenshot.png', path: screenshotFile, cid: 'starterkit-screenshot' });
+  if (qrBuffer) attachments.push({ filename: 'starter-kit-qr.png', content: qrBuffer, cid: 'starterkit-qr' });
   const html = renderCertificate({
     scenario, role: roles[0], roles, participant, score, branding: settings.branding,
     companyLogoSrc: companyLogoFile ? 'cid:company-logo' : null,
     brandingLogoSrc: brandingLogoFile ? 'cid:branding-logo' : null,
-    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE')
+    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE'),
+    starterKitUrl, starterKitLabel: settings.branding.starterKitLabel,
+    starterKitScreenshotSrc: fs.existsSync(screenshotFile) ? 'cid:starterkit-screenshot' : null,
+    starterKitQrSrc: qrBuffer ? 'cid:starterkit-qr' : null
   });
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
   const rollenText = roles.map(r => r.funktion).join(', ');

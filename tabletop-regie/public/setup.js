@@ -312,6 +312,8 @@ async function loadSettings() {
   document.getElementById('brand-name').value = (s.branding && s.branding.organisationName) || '';
   document.getElementById('brand-logo').value = (s.branding && s.branding.logo) || '';
   document.getElementById('brand-ort').value = (s.branding && s.branding.ort) || '';
+  document.getElementById('brand-starterkit-url').value = (s.branding && s.branding.starterKitUrl) || '';
+  document.getElementById('brand-starterkit-label').value = (s.branding && s.branding.starterKitLabel) || '';
   updateBrandLogoPreview();
   applyRunDefaults(s.runDefaults);
 }
@@ -357,7 +359,13 @@ document.getElementById('btn-test-email').addEventListener('click', async () => 
   document.getElementById('settings-status').textContent = r.ok ? 'Test-E-Mail gesendet.' : ('Fehler: ' + r.error);
 });
 document.getElementById('btn-save-branding').addEventListener('click', async () => {
-  await saveSettingsPart({ branding: { organisationName: document.getElementById('brand-name').value, logo: document.getElementById('brand-logo').value, ort: document.getElementById('brand-ort').value } });
+  await saveSettingsPart({ branding: {
+    organisationName: document.getElementById('brand-name').value,
+    logo: document.getElementById('brand-logo').value,
+    ort: document.getElementById('brand-ort').value,
+    starterKitUrl: document.getElementById('brand-starterkit-url').value,
+    starterKitLabel: document.getElementById('brand-starterkit-label').value
+  } });
   document.getElementById('settings-status').textContent = 'Branding gespeichert.';
 });
 document.getElementById('brand-logo-upload').addEventListener('change', async (e) => {

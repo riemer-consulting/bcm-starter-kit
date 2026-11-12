@@ -11,7 +11,7 @@ function escapeHtml(s) {
 // entscheidet, was dort steht — ein relativer "/media/..."-Pfad fuer die
 // Browser-Vorschau (vom Server ausgeliefert), oder eine "cid:..."-Referenz
 // fuers E-Mail-Versenden (mit passendem nodemailer-Inline-Attachment).
-function renderCertificate({ scenario, role, roles, participant, score, branding, companyLogoSrc, brandingLogoSrc, ort, datum }) {
+function renderCertificate({ scenario, role, roles, participant, score, branding, companyLogoSrc, brandingLogoSrc, ort, datum, starterKitUrl, starterKitLabel, starterKitScreenshotSrc, starterKitQrSrc }) {
   const maxPunkte = (scenario.urkunde && scenario.urkunde.maxPunkte) || 10;
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
   const orgName = (branding && branding.organisationName) || 'Durchführende Organisation';
@@ -29,6 +29,20 @@ function renderCertificate({ scenario, role, roles, participant, score, branding
   const companyLogoHtml = companyLogoSrc
     ? `<img src="${escapeHtml(companyLogoSrc)}" alt="${escapeHtml(companyName)}" style="height:40px;margin-bottom:6pt;">`
     : '';
+
+  // Call-to-Action unterhalb der eigentlichen Urkunde: die Übung ist der
+  // Einstieg, das Starter Kit der naheliegende naechste Schritt fuer alle,
+  // die BCM danach auch fuer das eigene Unternehmen angehen wollen.
+  const starterKitHtml = starterKitUrl ? `
+  <div style="font-family:-apple-system,'Segoe UI',Arial,sans-serif;text-align:center;max-width:480pt;margin:24pt auto 0;padding-top:20pt;border-top:1pt solid #d5dbe3;">
+    <div style="font-size:13pt;font-weight:700;color:#1a2233;margin-bottom:6pt;">Nächster Schritt: ${escapeHtml(starterKitLabel || 'BCM Starter Kit')}</div>
+    <div style="font-size:11pt;color:#556;margin-bottom:12pt;">Diese Übung war eine Simulation — für die eigene Business-Continuity-Planung im Unternehmen gibt es das kostenlose, lokal laufende BCM Starter Kit.</div>
+    ${starterKitScreenshotSrc ? `<img src="${escapeHtml(starterKitScreenshotSrc)}" alt="BCM Starter Kit" style="max-width:320pt;border:1pt solid #d5dbe3;border-radius:6pt;margin-bottom:10pt;">` : ''}
+    <div style="display:flex;align-items:center;justify-content:center;gap:14pt;">
+      ${starterKitQrSrc ? `<img src="${escapeHtml(starterKitQrSrc)}" alt="QR-Code zum BCM Starter Kit" style="width:84pt;height:84pt;">` : ''}
+      <a href="${escapeHtml(starterKitUrl)}" style="font-size:11pt;color:#2f6ba3;word-break:break-all;">${escapeHtml(starterKitUrl)}</a>
+    </div>
+  </div>` : '';
 
   return `<!DOCTYPE html>
 <html lang="de">
@@ -62,6 +76,7 @@ function renderCertificate({ scenario, role, roles, participant, score, branding
     <div class="score">Gesamtbewertung: ${scoreText} / ${maxPunkte} Punkten</div>
     <div class="footer">${ortDatumText ? escapeHtml(ortDatumText) + '<br>' : ''}${logoHtml}<br>Ausgestellt durch ${escapeHtml(orgName)}</div>
   </div>
+  ${starterKitHtml}
 </body>
 </html>`;
 }

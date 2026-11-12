@@ -134,7 +134,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Vorschau angezeigt. Beides ist bereits hinterlegt, falls du nichts
    hochlädst. Der
    eingetragene **Ort** erscheint zusammen mit dem **Datum** (automatisch das
-   Tagesdatum des Laufs) auf jeder Urkunde.
+   Tagesdatum des Laufs) auf jeder Urkunde. Jede Urkunde endet außerdem mit
+   einem kurzen Call-to-Action (Link, QR-Code, Screenshot) zum unter "Link auf
+   der Urkunde" eingetragenen Ziel — standardmäßig das [BCM Starter
+   Kit](../README.md), das eigentliche Produkt, für das diese Übung der
+   Einstieg ist. Feld leer lassen, um den Abschnitt wegzulassen.
 6. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
    Schwierigkeit bzw. Zieldauer setzen. Im Zieldauer-Modus zeigt die Setup-Seite
    sofort eine Live-Vorschau, wie viele Karten das ergibt und was entfällt.

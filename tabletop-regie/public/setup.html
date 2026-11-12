@@ -157,9 +157,12 @@
         <input id="brand-logo" readonly title="Wird automatisch beim Hochladen gesetzt." style="margin-top:6px;font-size:12px;color:var(--muted);">
       </div>
       <div><label>Ort (erscheint auf Urkunden, Datum wird automatisch gesetzt)</label><input id="brand-ort" placeholder="z. B. Soltau"></div>
+      <div><label>Link auf der Urkunde (Call-to-Action, z. B. BCM Starter Kit)</label><input id="brand-starterkit-url" placeholder="https://github.com/riemer-consulting/bcm-starter-kit"></div>
+      <div><label>Beschriftung für diesen Link</label><input id="brand-starterkit-label" placeholder="z. B. BCM Starter Kit"></div>
     </div>
+    <p class="muted mini" style="font-size:12px;margin-top:4px;">Jede Urkunde bekommt am Ende einen kurzen Hinweis mit Link, QR-Code und Screenshot zu diesem Link — leer lassen, um das wegzulassen.</p>
     <div class="row" style="margin-top:12px;">
-      <button id="btn-save-branding" class="secondary" title="Speichert Name/Ort der durchführenden Organisation für die Urkunden.">Branding speichern</button>
+      <button id="btn-save-branding" class="secondary" title="Speichert Name/Ort/Link der durchführenden Organisation für die Urkunden.">Branding speichern</button>
       <span id="brand-upload-status" class="muted"></span>
     </div>
   </div>
