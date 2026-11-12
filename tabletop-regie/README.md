@@ -110,11 +110,13 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    "hinzufügen" klicken, Namen/E-Mails ergänzen. Sie bekommen die öffentlichen
    Lagekarten mit, tauchen nicht in der Bewertungsmatrix auf (keine feste
    Funktion zu bewerten) und erhalten am Ende trotzdem eine eigene Urkunde.
-   Mit **"Begrüßung an alle senden"** bekommt jede Person (unabhängig von der
-   Rolle) vorab eine Mail mit Begrüßungstext und Spielregeln aus dem Drehbuch.
-   Mit **"Rollenbeschreibungen per E-Mail senden"** bekommt jede Person
-   zusätzlich eine Mail mit ihrer Rolle (oder Rollen) und der jeweiligen
-   Beschreibung.
+   Begrüßung/Spielregeln und Rollenbeschreibung sind **Pflicht, nicht
+   optional**: Beim Klick auf "Übung starten" (Schritt 7) schickt die App
+   automatisch an jede Person mit E-Mail sowohl die Begrüßung mit Spielregeln
+   als auch die eigene Rollenbeschreibung — niemand steigt ohne Vorab-Info
+   ein. Die Buttons **"Begrüßung an alle senden"** und **"Rollenbeschreibungen
+   per E-Mail senden"** bleiben zusätzlich hier, falls du das vorab schon mal
+   testen oder nach einer späten Änderung erneut verschicken willst.
 4. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
 5. **Branding** (Name/Logo der durchführenden Organisation, Ort) für die
@@ -129,13 +131,23 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 6. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
    Schwierigkeit bzw. Zieldauer setzen. Im Zieldauer-Modus zeigt die Setup-Seite
    sofort eine Live-Vorschau, wie viele Karten das ergibt und was entfällt.
-7. **"Übung starten"** klickt — öffnet automatisch Bühne und Moderation in
-   neuen Tabs/Fenstern. Beide zeigen zunächst die **"Ruhe vor dem Sturm"**
-   (Eröffnungstext/-bild) — der Krisentimer läuft noch nicht. Lies in Ruhe
-   Begrüßung und Eröffnung vor, verbinde Bildschirmfreigabe/Beamer usw.
+7. **"Übung starten"** klickt — schickt automatisch Begrüßung, Spielregeln und
+   Rollenbeschreibungen an alle Teilnehmer mit E-Mail (siehe Schritt 3) und
+   öffnet danach automatisch die **Moderationsansicht**
+   in einem neuen Tab (noch nicht die Bühne!). Erst wenn ihr wirklich bereit
+   seid, klickst du dort oben auf **"Bühne öffnen"** — erst in diesem Moment
+   geht der Bühnen-Tab auf und die Ambience-Geräusche/-Bilder der "Ruhe vor
+   dem Sturm" beginnen. So läuft nie unbeaufsichtigt im Hintergrund etwas,
+   während noch niemand hinschaut. Lies in Ruhe Begrüßung und Eröffnung vor,
+   verbinde Bildschirmfreigabe/Beamer usw.
 8. Erst wenn alle bereit sind: in der Moderationsansicht auf **"Jetzt beginnt
-   die Krise — Timer starten"** klicken. Ab diesem Moment läuft die Uhr und
-   die erste Lagekarte feuert zum geplanten Zeitpunkt.
+   die Krise — Timer startet in 30s"** klicken. Die eigentliche Krisenuhr
+   läuft dann erst **30 Sekunden später** los (mit sichtbarem Countdown auf
+   Bühne und Moderation) — genug Zeit für die letzten Worte, bevor spürbar
+   etwas passiert. Danach feuert die erste Lagekarte zum geplanten Zeitpunkt.
+   Dauert eine Diskussion länger als geplant, pausiert **"Pause"** in der
+   Moderation jederzeit die Uhr (keine Karte feuert währenddessen) —
+   **"Fortsetzen"** setzt sie fort, ohne die Zieldauer zu verfälschen.
 9. Während der Übung: Sonderlagekarten mit festem Zeitpunkt werden automatisch
    per Mail verschickt. Nicht zeitlich festgelegte Sonderlagekarten, die
    Bonuskarten und — im Zieldauer-Modus — aus Zeitgründen übersprungene Karten

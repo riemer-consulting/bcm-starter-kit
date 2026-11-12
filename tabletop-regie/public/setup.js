@@ -261,13 +261,33 @@ document.getElementById('btn-send-briefings').addEventListener('click', async ()
 });
 
 document.getElementById('btn-start').addEventListener('click', async () => {
+  const statusEl = document.getElementById('start-status');
   participants = collectParticipantsFromDom();
   await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
   const durationMode = document.getElementById('duration-mode').value;
   const difficulty = document.getElementById('difficulty').value;
   const targetMinutes = durationMode === 'target' ? currentTargetMinutes() : undefined;
   await fetch('/api/run/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ durationMode, difficulty, targetMinutes }) });
-  window.open('stage.html', '_blank');
+
+  // Pflicht statt Kann: jede Person mit E-Mail bekommt beim Start automatisch
+  // Begrüßung/Spielregeln und ihre Rollenbeschreibung(en) -- vorher musste
+  // der Moderator das per Hand ueber zwei separate Buttons anstossen und
+  // konnte es vergessen, wodurch Teilnehmer ohne jede Vorab-Information in
+  // die Übung gingen.
+  statusEl.textContent = 'Sende Begrüßung und Rollenbeschreibungen …';
+  const [welcome, briefings] = await Promise.all([
+    fetch('/api/participants/send-welcome', { method: 'POST' }).then(r => r.json()),
+    fetch('/api/participants/send-briefings', { method: 'POST' }).then(r => r.json())
+  ]);
+  const welcomeOk = welcome.results.filter(r => r.ok).length;
+  const briefingsOk = briefings.results.filter(r => r.ok).length;
+  statusEl.textContent = `Übung gestartet. Begrüßung: ${welcomeOk}/${welcome.results.length} gesendet. `
+    + `Rollenbeschreibungen: ${briefingsOk}/${briefings.results.length} gesendet.`
+    + ((welcome.ok && briefings.ok) ? '' : ' Hinweis: nicht alle E-Mails gingen raus — SMTP-Einstellungen oben prüfen.');
+
+  // Bewusst nur die Moderation oeffnen: die Buehne (und damit Ambience-Sound
+  // fuers Publikum) oeffnet der Moderator von dort aus erst, wenn alle
+  // bereit sind -- sonst laeuft die Vorbereitungszeit unbeaufsichtigt mit.
   window.open('moderator.html', '_blank');
 });
 

@@ -6,7 +6,8 @@ const DIFFICULTY_DECISION_MINUTES = { leicht: 2, mittel: 4, hoch: 6 };
 
 function newRunState(scenario) {
   return {
-    status: 'idle', // idle | running | paused | ended
+    status: 'idle', // idle | briefing | countdown | running | paused | ended
+    crisisStartsAt: null, // waehrend 'countdown': Timestamp, ab dem der Timer wirklich laeuft
     scenarioFile: null,
     durationMode: 'authored', // 'authored' (feste, erprobte Zeiten) | 'computed' (nach Rollenzahl/Schwierigkeit) | 'target' (Zieldauer vorgeben)
     difficulty: 'mittel',

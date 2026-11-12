@@ -99,6 +99,7 @@ async function refresh() {
   if (s.status === 'paused') statusLabel.textContent = 'Pausiert';
   else if (s.status === 'ended') statusLabel.textContent = 'Beendet';
   else if (s.status === 'briefing') statusLabel.textContent = 'Vorbereitung';
+  else if (s.status === 'countdown') statusLabel.textContent = 'Start in Kürze';
   else statusLabel.textContent = 'Krisenzeit';
 
   if (s.status === 'ended') {
@@ -110,7 +111,9 @@ async function refresh() {
   if (!lk) {
     const idleMediaHtml = s.idleMedia ? renderMedia(s.idleMedia) : '';
     const introText = s.eroeffnungstext ? `<p class="text" style="max-width:820px;">${escapeHtml(s.eroeffnungstext)}</p>` : '';
-    const heading = s.status === 'briefing' ? 'Ruhe vor dem Sturm' : 'Die Krise beginnt gleich …';
+    const heading = s.status === 'briefing' ? 'Ruhe vor dem Sturm'
+      : s.status === 'countdown' ? `Die Krise beginnt in ${s.crisisCountdownSeconds}s …`
+      : 'Die Krise beginnt gleich …';
     content.innerHTML = `<div class="idle"><h1>${heading}</h1>${introText}${idleMediaHtml}</div>`;
     return;
   }

@@ -55,7 +55,9 @@ function render(s) {
 
   document.getElementById('m-title').textContent = scenario.title;
   const statusBadge = document.getElementById('m-status');
-  statusBadge.textContent = s.status === 'briefing' ? 'Vorbereitung' : s.status;
+  statusBadge.textContent = s.status === 'briefing' ? 'Vorbereitung'
+    : s.status === 'countdown' ? `Start in ${s.crisisCountdownSeconds}s`
+    : s.status;
   statusBadge.className = 'badge ' + (s.status === 'running' ? 'ok' : s.status === 'ended' ? 'bad' : 'warn');
   document.getElementById('btn-begin-crisis').style.display = s.status === 'briefing' ? '' : 'none';
   document.getElementById('btn-pause').style.display = s.status === 'running' ? '' : 'none';
@@ -94,12 +96,14 @@ function render(s) {
     const lk = s.currentLagekarte;
     lkBox.innerHTML = `<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
-  } else if (s.status === 'running' || s.status === 'briefing') {
+  } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
     const next = s.upcoming[0];
     const minsToNext = next ? Math.max(0, Math.round((next.minute - s.elapsedMinutes) * 10) / 10) : null;
     const timingNote = s.status === 'briefing'
       ? '<p class="mini" style="color:var(--ok);">Der Krisentimer läuft noch nicht. Lies Begrüßung und Eröffnung in Ruhe vor, klicke erst danach oben auf "Jetzt beginnt die Krise".</p>'
+      : s.status === 'countdown'
+      ? `<p class="mini" style="color:var(--warn);font-weight:700;">Die Krise beginnt in ${s.crisisCountdownSeconds} Sekunden — Zeit für die letzten Worte.</p>`
       : (next ? `<p class="mini muted">Erste Lagekarte in ca. ${minsToNext} Min.: ${escapeHtml(next.titel)}</p>` : '');
     lkBox.innerHTML = `
       <p class="mini" style="color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Jetzt vorlesen — die Krise hat noch nicht begonnen</p>
@@ -195,6 +199,7 @@ async function refresh() {
   try { render(await api('/api/run/moderator-state')); } catch (e) { /* Server evtl. kurz nicht erreichbar */ }
 }
 
+document.getElementById('btn-open-stage').addEventListener('click', () => window.open('stage.html', '_blank'));
 document.getElementById('btn-begin-crisis').addEventListener('click', () => api('/api/run/begin-crisis', { method: 'POST' }).then(refresh));
 document.getElementById('btn-pause').addEventListener('click', () => api('/api/run/pause', { method: 'POST' }).then(refresh));
 document.getElementById('btn-resume').addEventListener('click', () => api('/api/run/resume', { method: 'POST' }).then(refresh));

@@ -111,7 +111,26 @@ async function fireSonderlagekarte(sk, { manual } = {}) {
   persist();
 }
 
+// Nach "Jetzt beginnt die Krise" laeuft der Timer nicht sofort los, sondern
+// erst nach 30 Sekunden Verzoegerung (Status 'countdown') -- der Moderator
+// hat so noch kurz Zeit zu Ende zu sprechen, bevor sichtbar/hoerbar etwas
+// passiert. Wird sowohl vom 3-Sekunden-Tick als auch bei jedem Status-Abruf
+// geprueft, damit der Uebergang fuer Buehne/Moderation nicht erst mit bis zu
+// 3 Sekunden Verzug ankommt.
+function maybeStartCrisisFromCountdown() {
+  if (state.status === 'countdown' && state.crisisStartsAt && Date.now() >= state.crisisStartsAt) {
+    state.status = 'running';
+    state.startedAt = state.crisisStartsAt;
+    state.pausedAt = null;
+    state.totalPausedMs = 0;
+    state.crisisStartsAt = null;
+    log('info', 'Krisentimer gestartet.');
+    persist();
+  }
+}
+
 function tick() {
+  maybeStartCrisisFromCountdown();
   if (state.status !== 'running') return;
   const due = engine.dueEvents(scenario, state);
   const lk = due.filter(e => e.type === 'lagekarte');
@@ -310,6 +329,7 @@ app.post('/api/settings/test-email', async (req, res) => {
 
 // ---- Lauf-Steuerung ----
 app.get('/api/run/moderator-state', (req, res) => {
+  maybeStartCrisisFromCountdown();
   const schedule = engine.getActiveSchedule(scenario, state);
   const currentLk = engine.currentLagekarte(scenario, state);
   const upcoming = schedule.filter(ev => !(
@@ -333,6 +353,7 @@ app.get('/api/run/moderator-state', (req, res) => {
   }));
   res.json({
     status: state.status,
+    crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
     durationMode: state.durationMode,
     difficulty: state.difficulty,
     targetMinutes: state.targetMinutes,
@@ -356,9 +377,11 @@ app.get('/api/run/moderator-state', (req, res) => {
 });
 
 app.get('/api/run/stage-state', (req, res) => {
+  maybeStartCrisisFromCountdown();
   const currentLk = engine.currentLagekarte(scenario, state);
   res.json({
     status: state.status,
+    crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
     companyName: scenario.company.name,
     companyLogo: scenario.company.logo || null,
     companyLogoLight: scenario.company.stageLogo || scenario.company.logo || null,
@@ -444,11 +467,9 @@ app.post('/api/run/begin-crisis', (req, res) => {
   if (state.status !== 'briefing') {
     return res.status(400).json({ ok: false, error: 'Übung ist nicht in der Vorbereitungsphase.' });
   }
-  state.status = 'running';
-  state.startedAt = Date.now();
-  state.pausedAt = null;
-  state.totalPausedMs = 0;
-  log('info', 'Krisentimer gestartet.');
+  state.status = 'countdown';
+  state.crisisStartsAt = Date.now() + 30000;
+  log('info', 'Krise wird in 30 Sekunden eingeläutet.');
   persist();
   res.json({ ok: true });
 });
