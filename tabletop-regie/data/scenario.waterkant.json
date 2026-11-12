@@ -5,7 +5,8 @@
   "company": {
     "name": "Waterkant Baumärkte GmbH",
     "facts": "14 Filialen in Norddeutschland · ca. 850 Mitarbeitende · ca. 240 Mio. € Umsatz · Baustoffe, Garten & Heimwerkerbedarf",
-    "logo": "/media/waterkant/waterkant-logo.png"
+    "logo": "/media/waterkant/waterkant-logo.png",
+    "stageLogo": "/media/waterkant/waterkant-logo-light.png"
   },
   "difficulty": "mittel",
   "recommendedParticipants": {
@@ -121,72 +122,86 @@
     {
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
-      "group": "geschaeftsfuehrung"
+      "group": "geschaeftsfuehrung",
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen und musst am Ende öffentlich vor die Presse treten."
     },
     {
       "id": "leiterin-logistik-zentrallager",
       "funktion": "Leiterin Logistik & Zentrallager",
-      "group": "logistik"
+      "group": "logistik",
+      "beschreibung": "Du verantwortest das Zentrallager und die Belieferung aller Filialen. Nach dem Brand musst du Alternativen organisieren, damit die Filialen weiter Ware bekommen."
     },
     {
       "id": "schichtleiter-zentrallager",
       "funktion": "Schichtleiter Zentrallager (vor Ort in der Brandnacht)",
-      "group": "logistik"
+      "group": "logistik",
+      "beschreibung": "Du warst in der Brandnacht vor Ort und kennst die Lage im Lager aus erster Hand — Zustand des Gebäudes, Verletzte, was sich noch retten lässt."
     },
     {
       "id": "leiter-it",
       "funktion": "Leiter IT (Kassensysteme & Warenwirtschaft)",
-      "group": "it"
+      "group": "it",
+      "beschreibung": "Du verantwortest Kassensysteme und Warenwirtschaft. Nach dem Serverausfall musst du entscheiden, wie Filialen und Online-Shop übergangsweise arbeiten können."
     },
     {
       "id": "leiter-einkauf",
       "funktion": "Leiter Einkauf & Lieferantenmanagement",
-      "group": "einkauf"
+      "group": "einkauf",
+      "beschreibung": "Du verantwortest Lieferanten und Beschaffung. Du musst kurzfristig Ersatzlieferungen organisieren und entscheiden, wo sich Mehrkosten lohnen."
     },
     {
       "id": "leiterin-personal",
       "funktion": "Leiterin Personal",
-      "group": "personal"
+      "group": "personal",
+      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden, insbesondere den verletzten Kollegen aus der Nachtschicht und seine Familie, sowie die Stimmung im Team."
     },
     {
       "id": "leiter-arbeitssicherheit",
       "funktion": "Leiter Arbeitssicherheit & Werkschutz",
-      "group": "arbeitssicherheit"
+      "group": "arbeitssicherheit",
+      "beschreibung": "Du verantwortest Arbeitssicherheit und Werkschutz. Die Brandursache und mögliche Versäumnisse bei der Wartung sind dein heikelstes Thema."
     },
     {
       "id": "regionalleiterin-filialen-nord",
       "funktion": "Regionalleiterin Filialen Nord",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erste mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
     },
     {
       "id": "regionalleiter-filialen-sued",
       "funktion": "Regionalleiter Filialen Süd",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erster mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
     },
     {
       "id": "online-shop-leitung",
       "funktion": "Leitung Online-Shop & E-Commerce",
-      "group": "e-commerce"
+      "group": "e-commerce",
+      "beschreibung": "Du verantwortest den Online-Shop. Falsche Lagerbestände und stornierte Bestellungen sind dein unmittelbares Problem."
     },
     {
       "id": "leiter-finanzen-cfo",
       "funktion": "Leiter Finanzen & Versicherung (CFO)",
-      "group": "finanzen"
+      "group": "finanzen",
+      "beschreibung": "Du verantwortest Finanzen und Versicherung. Du musst früh einschätzen, was die Versicherung deckt und wo das Unternehmen selbst einspringen muss."
     },
     {
       "id": "leiterin-kommunikation-pr",
       "funktion": "Leiterin Unternehmenskommunikation & Marketing",
-      "group": "kommunikation"
+      "group": "kommunikation",
+      "beschreibung": "Du verantwortest die externe Kommunikation. Presse, soziale Medien und am Ende die Pressekonferenz laufen über deinen Tisch."
     },
     {
       "id": "notfallmanagement-bcm",
       "funktion": "Notfallmanagement / BCM-Koordination",
-      "group": "krisenstab-support"
+      "group": "krisenstab-support",
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Behördenanfragen, Eskalationswege. Ohne feste Sprechzeit, aber wichtig, damit nichts untergeht."
     },
     {
       "id": "assistenz-gf-dokumentation",
       "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
-      "group": "krisenstab-support"
+      "group": "krisenstab-support",
+      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs für die spätere Nachbereitung. Ohne feste Sprechzeit, aber wichtig fürs Debriefing."
     }
   ],
   "moderationsleitfaden": {

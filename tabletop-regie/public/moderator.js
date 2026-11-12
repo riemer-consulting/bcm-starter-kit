@@ -13,6 +13,42 @@ function participantFor(roleId, participants) {
   return participants.find(p => (p.roleIds || []).includes(roleId));
 }
 
+// Prozessablauf-Zeitleiste + freier Zeit-Schieberegler: zeigt alle geplanten
+// Ereignisse auf einen Blick (erledigt/aktuell/kommend) und erlaubt, direkt
+// auf jede beliebige Minute zu springen — nicht nur auf die naechsten paar
+// vordefinierten Ereignisse. Waehrend der Nutzer zieht, ueberschreibt das
+// 2-Sekunden-Polling den Regler nicht (timelineDragging-Flag).
+let timelineDragging = false;
+const timelineSlider = document.getElementById('timeline-slider');
+timelineSlider.addEventListener('pointerdown', () => { timelineDragging = true; });
+timelineSlider.addEventListener('input', () => {
+  document.getElementById('timeline-drag-label').textContent = `Springe zu: ${Number(timelineSlider.value).toFixed(1)} Min. …`;
+});
+timelineSlider.addEventListener('change', () => {
+  api('/api/run/jump-to-minute', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ minute: Number(timelineSlider.value) }) })
+    .then(() => { timelineDragging = false; document.getElementById('timeline-drag-label').textContent = ''; refresh(); });
+});
+document.addEventListener('pointerup', () => { timelineDragging = false; });
+
+function renderTimeline(s) {
+  const total = s.totalPlannedMinutes || 1;
+  document.getElementById('timeline-label').textContent = `${s.elapsedMinutes} / ${s.totalPlannedMinutes} Min.`;
+  const track = document.getElementById('timeline-track');
+  const markersHtml = (s.fullTimeline || []).map(ev => {
+    const pct = Math.min(100, Math.max(0, (ev.minute / total) * 100));
+    const cls = ['marker', ev.type, ev.fired ? 'fired' : '', ev.isCurrent ? 'current' : ''].filter(Boolean).join(' ');
+    return `<div class="${cls}" style="left:${pct}%" title="${escapeHtml(ev.minute + ' Min.: ' + ev.titel)}"></div>`;
+  }).join('');
+  const nowPct = Math.min(100, Math.max(0, (s.elapsedMinutes / total) * 100));
+  track.innerHTML = markersHtml + `<div class="timeline-now" style="left:${nowPct}%"></div>`;
+  if (!timelineDragging) {
+    timelineSlider.max = total;
+    timelineSlider.value = s.elapsedMinutes;
+  }
+  const canJump = s.status === 'running' || s.status === 'paused';
+  timelineSlider.disabled = !canJump;
+}
+
 function render(s) {
   lastState = s;
   const scenario = s.scenario;
@@ -29,6 +65,8 @@ function render(s) {
     : s.durationMode === 'computed' ? `Berechnet (${s.difficulty})` : 'Erprobte feste Zeiten';
   document.getElementById('m-mode').textContent = `Modus: ${modeLabel}`;
   document.getElementById('m-roles').textContent = `${s.activeRoleGroups} aktive Funktionsbereiche`;
+
+  renderTimeline(s);
 
   const warnCard = document.getElementById('m-schedule-warning-card');
   if (s.scheduleWarning) {
@@ -124,7 +162,7 @@ function render(s) {
   // Bewertungsmatrix
   const kriterien = scenario.bewertungskriterien;
   document.getElementById('m-bewertung-head').innerHTML = `<tr><th>Rolle</th><th>Teilnehmer</th>${kriterien.map(k => `<th>${k.slice(0,4)}.</th>`).join('')}<th>Ø</th></tr>`;
-  document.getElementById('m-bewertung-body').innerHTML = scenario.roles.filter(role => activeRoleIds.includes(role.id)).map(role => {
+  document.getElementById('m-bewertung-body').innerHTML = scenario.roles.filter(role => activeRoleIds.includes(role.id) && role.id !== 'teilnehmer').map(role => {
     const p = participantFor(role.id, s.participants);
     const scores = s.bewertung[role.id] || {};
     const cells = kriterien.map(k => `
@@ -138,14 +176,15 @@ function render(s) {
   }).join('');
 
   // Urkunden — werden direkt per E-Mail verschickt (kein Ausdrucken mehr).
-  document.getElementById('m-certs').innerHTML = scenario.roles.map(role => {
-    const p = participantFor(role.id, s.participants);
-    if (!p || !p.name) return '';
-    return `<div class="row" style="justify-content:space-between;align-items:center;" data-role="${role.id}">
-      <span class="mini">${escapeHtml(p.name)} (${escapeHtml(role.funktion)})</span>
+  // Pro Person (nicht pro Rolle), damit auch mehrere "Teilnehmer" ohne feste
+  // Funktion jeweils ihre eigene Urkunde bekommen.
+  document.getElementById('m-certs').innerHTML = (s.participants || []).filter(p => p.name).map(p => {
+    const rollenText = (p.roleIds || []).map(rid => { const r = scenario.roles.find(x => x.id === rid); return r ? r.funktion : rid; }).join(', ');
+    return `<div class="row" style="justify-content:space-between;align-items:center;" data-id="${p.id}">
+      <span class="mini">${escapeHtml(p.name)}${rollenText ? ' (' + escapeHtml(rollenText) + ')' : ''}</span>
       <span class="row" style="width:auto;">
-        <a href="/api/certificate/${role.id}" target="_blank"><button class="secondary">Vorschau</button></a>
-        <button class="send-cert" data-role="${role.id}">Per E-Mail senden</button>
+        <a href="/api/certificate/participant/${p.id}" target="_blank"><button class="secondary">Vorschau</button></a>
+        <button class="send-cert" data-id="${p.id}">Per E-Mail senden</button>
         <span class="mini muted cert-status"></span>
       </span>
     </div>`;
@@ -179,9 +218,9 @@ document.addEventListener('click', e => {
     api('/api/run/jump-to-event/' + e.target.dataset.type + '/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
   }
   if (e.target.classList.contains('send-cert')) {
-    const statusEl = e.target.closest('[data-role]').querySelector('.cert-status');
+    const statusEl = e.target.closest('[data-id]').querySelector('.cert-status');
     statusEl.textContent = 'Sende …';
-    api('/api/certificate/' + e.target.dataset.role + '/send', { method: 'POST' }).then(r => {
+    api('/api/certificate/participant/' + e.target.dataset.id + '/send', { method: 'POST' }).then(r => {
       statusEl.textContent = r.ok ? 'Gesendet ✓' : 'Fehler: ' + r.error;
     });
   }

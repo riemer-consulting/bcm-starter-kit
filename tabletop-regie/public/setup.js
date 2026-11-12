@@ -25,14 +25,17 @@ function activeRoles() {
 
 function renderRoleCheckboxes() {
   document.getElementById('role-checkboxes').innerHTML = meta.roleGroups.map(g => `
-    <div style="margin-bottom:10px;">
-      <div class="mini muted" style="margin-bottom:4px;">${g.label}</div>
-      <div class="row" style="flex-wrap:wrap;gap:4px 16px;">
+    <div style="margin-bottom:14px;">
+      <div class="mini muted" style="margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">${g.label}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 20px;">
         ${g.members.map(rid => {
           const role = meta.roles.find(r => r.id === rid);
           const checked = activeRoleIds.includes(rid) ? 'checked' : '';
-          return `<label style="display:flex;align-items:center;gap:6px;width:auto;font-size:13px;">
-            <input type="checkbox" class="role-check" value="${rid}" ${checked} style="width:auto;"> ${role.funktion}
+          return `<label style="display:block;width:auto;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:13px;">
+              <input type="checkbox" class="role-check" value="${rid}" ${checked} style="width:auto;flex-shrink:0;"> ${role.funktion}
+            </span>
+            ${role.beschreibung ? `<span class="mini muted" style="display:block;margin-left:22px;line-height:1.3;">${role.beschreibung}</span>` : ''}
           </label>`;
         }).join('')}
       </div>
@@ -172,6 +175,17 @@ document.getElementById('btn-add-row').addEventListener('click', () => {
   participants.push({ name: '', email: '', roleIds: [] });
   renderParticipants();
 });
+document.getElementById('btn-add-teilnehmer').addEventListener('click', async () => {
+  const count = Math.max(1, Number(document.getElementById('teilnehmer-count').value) || 1);
+  if (!activeRoleIds.includes('teilnehmer')) {
+    activeRoleIds = activeRoleIds.concat(['teilnehmer']);
+    await fetch('/api/active-roles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(activeRoleIds) });
+    renderRoleCheckboxes();
+  }
+  participants = collectParticipantsFromDom();
+  for (let i = 0; i < count; i++) participants.push({ name: '', email: '', roleIds: ['teilnehmer'] });
+  renderParticipants();
+});
 document.getElementById('participants-body').addEventListener('click', e => {
   if (e.target.classList.contains('p-remove')) {
     participants = collectParticipantsFromDom();
@@ -216,6 +230,15 @@ document.getElementById('btn-save-participants').addEventListener('click', async
   renderParticipants();
 });
 
+document.getElementById('btn-send-briefings').addEventListener('click', async () => {
+  participants = collectParticipantsFromDom();
+  await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
+  document.getElementById('save-status').textContent = 'Sende Rollenbeschreibungen …';
+  const r = await (await fetch('/api/participants/send-briefings', { method: 'POST' })).json();
+  const okCount = r.results.filter(x => x.ok).length;
+  document.getElementById('save-status').textContent = `Rollenbeschreibungen versendet: ${okCount}/${r.results.length} erfolgreich.`;
+});
+
 document.getElementById('btn-start').addEventListener('click', async () => {
   participants = collectParticipantsFromDom();
   await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
@@ -240,6 +263,7 @@ async function loadSettings() {
   document.getElementById('smtp-fromname').value = s.smtp.fromName || '';
   document.getElementById('brand-name').value = (s.branding && s.branding.organisationName) || '';
   document.getElementById('brand-logo').value = (s.branding && s.branding.logo) || '';
+  document.getElementById('brand-ort').value = (s.branding && s.branding.ort) || '';
 }
 async function saveSettingsPart(partial) {
   const res = await fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(partial) });
@@ -268,7 +292,7 @@ document.getElementById('btn-test-email').addEventListener('click', async () => 
   document.getElementById('settings-status').textContent = r.ok ? 'Test-E-Mail gesendet.' : ('Fehler: ' + r.error);
 });
 document.getElementById('btn-save-branding').addEventListener('click', async () => {
-  await saveSettingsPart({ branding: { organisationName: document.getElementById('brand-name').value, logo: document.getElementById('brand-logo').value } });
+  await saveSettingsPart({ branding: { organisationName: document.getElementById('brand-name').value, logo: document.getElementById('brand-logo').value, ort: document.getElementById('brand-ort').value } });
   document.getElementById('settings-status').textContent = 'Branding gespeichert.';
 });
 

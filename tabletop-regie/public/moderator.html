@@ -14,6 +14,14 @@
   .log-entry.mail { color: var(--ok); }
   .log-entry.error { color: var(--bad); }
   .log-entry.warn { color: var(--warn); }
+  .timeline-wrap { position:relative; height:56px; margin-top:8px; }
+  .timeline-track { position:absolute; left:0; right:0; top:22px; height:6px; background:var(--panel-2); border-radius:3px; }
+  .timeline-track .marker { position:absolute; top:-5px; width:16px; height:16px; margin-left:-8px; border-radius:50%; border:2px solid var(--border); background:var(--panel); cursor:pointer; }
+  .timeline-track .marker.fired { background:var(--muted); border-color:var(--muted); opacity:.5; }
+  .timeline-track .marker.current { background:var(--accent); border-color:var(--accent); box-shadow:0 0 0 4px rgba(59,130,196,.3); }
+  .timeline-track .marker.sonderlagekarte { border-radius:4px; }
+  .timeline-now { position:absolute; top:-10px; width:2px; height:26px; background:var(--bad); pointer-events:none; transition:left .3s linear; }
+  #timeline-slider { position:absolute; left:0; right:0; top:0; width:100%; height:56px; margin:0; opacity:0; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -34,6 +42,18 @@
     </div>
     <div class="row mini muted">
       <span id="m-elapsed"></span> · <span id="m-mode"></span> · <span id="m-roles"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Prozessablauf</h2>
+    <div id="m-timeline" class="timeline-wrap">
+      <div class="timeline-track" id="timeline-track"></div>
+      <input type="range" id="timeline-slider" min="0" max="100" step="0.1" value="0">
+    </div>
+    <div class="row" style="justify-content:space-between;margin-top:6px;">
+      <span class="mini muted" id="timeline-label">0 / 0 Min.</span>
+      <span class="mini muted" id="timeline-drag-label"></span>
     </div>
   </div>
 

@@ -4,6 +4,28 @@ function fmtMinutes(min) {
   return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
 }
 
+// Hell/Dunkel-Umschalter: je nach Raum/Beamer-Helligkeit per Klick wechselbar.
+// Merkt sich die Wahl pro Browser/Geraet (localStorage), nicht serverseitig.
+let currentTheme = 'dark';
+try { currentTheme = localStorage.getItem('ttr-stage-theme') || 'dark'; } catch (e) {}
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('ttr-stage-theme', theme); } catch (e) {}
+  updateLogoForTheme();
+}
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+let lastStageState = null;
+function updateLogoForTheme() {
+  if (!lastStageState) return;
+  const logoEl = document.getElementById('company-logo');
+  const src = currentTheme === 'light' ? lastStageState.companyLogo : lastStageState.companyLogoLight;
+  if (src) { logoEl.src = src; logoEl.style.display = ''; } else { logoEl.style.display = 'none'; }
+}
+applyTheme(currentTheme);
+
 // Sound-Unterstützung: Browser blockieren Audio mit Ton ohne vorherigen
 // Klick, daher der "Ton aktivieren"-Button. Danach übernimmt refresh()
 // automatisch: Ambient-Loop in der Vorlaufzeit, Ein-Mal-Sound pro Lagekarte.
@@ -57,8 +79,8 @@ async function refresh() {
   applySound(s);
 
   document.getElementById('company-name').textContent = s.companyName || 'BCM Tabletop-Regie';
-  const logoEl = document.getElementById('company-logo');
-  if (s.companyLogo) { logoEl.src = s.companyLogo; logoEl.style.display = ''; } else { logoEl.style.display = 'none'; }
+  lastStageState = s;
+  updateLogoForTheme();
   document.getElementById('company-facts').textContent = s.companyFacts || '';
   document.getElementById('clock-time').textContent = fmtMinutes(s.elapsedMinutes);
   document.getElementById('elapsed-label').textContent = Math.round(s.elapsedMinutes) + ' / ' + Math.round(s.totalPlannedMinutes) + ' Min.';

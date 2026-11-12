@@ -21,10 +21,16 @@ nebeneinander.
   **Bühne** (für Beamer/TV, teilbar). Sonderlagekarten gehen automatisch **per
   E-Mail** an die zugeordnete Person — mit einer vertraulichen, rollenbezogenen
   Nachricht.
-- Die **Moderationsansicht** (nicht teilen!) zeigt kommende Ereignisse, erlaubt
-  manuelles Auslösen von Bonus-/Sonderkarten, enthält eine live ausfüllbare
-  **Bewertungsmatrix** und verschickt **Urkunden direkt per E-Mail** an die
-  jeweilige Person — kein Drucken, kein manuelles "Als PDF speichern".
+- Die **Moderationsansicht** (nicht teilen!) zeigt oben einen visuellen
+  **Prozessablauf** (alle Lage-/Sonderlagekarten auf einer Zeitleiste,
+  erledigt/aktuell/kommend) mit einem frei ziehbaren **Zeit-Schieberegler** —
+  springe direkt auf jede beliebige Minute, statt dich nur von Karte zu Karte
+  zu hangeln. Dazu kommende Ereignisse, manuelles Auslösen von Bonus-/
+  Sonderkarten, eine live ausfüllbare **Bewertungsmatrix** und **Urkunden
+  direkt per E-Mail** an jede einzelne Person — kein Drucken, kein manuelles
+  "Als PDF speichern".
+- Die **Bühne** hat einen **Hell/Dunkel-Umschalter** (oben rechts) für helle
+  Räume/Beamer — die Wahl merkt sich der Browser pro Gerät.
 - Die Übungsdauer passt sich **Gruppengröße und Schwierigkeit** an, in drei
   wählbaren Zeitmodi (siehe unten): erprobte feste Zeiten, automatisch nach
   Rollenzahl berechnet (volles Drehbuch), oder eine **Zieldauer vorgeben**
@@ -78,18 +84,30 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    eintragen und auf "Passende Rollen vorschlagen" klicken (wählt automatisch
    eine fachlich breite Auswahl über alle Funktionsbereiche hinweg), oder
    Rollen einzeln anhaken. Nur angehakte Rollen erscheinen danach in der
-   Teilnehmerzuweisung, der Bewertungsmatrix und bei "Manuell auslösen".
+   Teilnehmerzuweisung, der Bewertungsmatrix und bei "Manuell auslösen". Zu
+   jeder Rolle steht direkt eine kurze **Rollenbeschreibung** (Zuständigkeit,
+   worauf die Person im Verlauf achten muss), damit klar ist, was mit einer
+   Rolle überhaupt gemeint ist, bevor sie jemandem zugewiesen wird.
 3. Teilnehmer eintragen (Name, E-Mail) und Rollen zuweisen — entweder "Alle N
    aktiven Rollen" (volle Besetzung der Auswahl) oder "Kompakt: X
    Funktionsbereiche" (für noch kleinere Gruppen), oder frei von Hand. Jede
    Person bekommt ihre Sonderlagekarten und Urkunde per E-Mail, unabhängig
-   davon, ob sie im Raum oder remote zugeschaltet ist.
+   davon, ob sie im Raum oder remote zugeschaltet ist. Personen ganz ohne
+   aktive Funktion (reine Zuschauer/Zuhörer) trägst du über "Teilnehmer ohne
+   aktive Rolle (bekommen trotzdem eine Urkunde)" ein — Anzahl eingeben,
+   "hinzufügen" klicken, Namen/E-Mails ergänzen. Sie bekommen die öffentlichen
+   Lagekarten mit, tauchen nicht in der Bewertungsmatrix auf (keine feste
+   Funktion zu bewerten) und erhalten am Ende trotzdem eine eigene Urkunde.
+   Mit **"Rollenbeschreibungen per E-Mail senden"** bekommt jede Person vorab
+   eine Mail mit ihrer Rolle (oder Rollen) und der jeweiligen Beschreibung.
 4. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
-5. **Branding** (Name/Logo der durchführenden Organisation) für die Urkunden
-   prüfen — Standard ist "EXCON" mit mitgeliefertem Logo, unabhängig vom
-   Kundenlogo, das im Szenario selbst steckt (z. B. Waterkant Baumärkte).
-   Beides ist bereits hinterlegt, ohne dass du etwas hochladen musst.
+5. **Branding** (Name/Logo der durchführenden Organisation, Ort) für die
+   Urkunden prüfen — Standard ist "EXCON" mit mitgeliefertem Logo, unabhängig
+   vom Kundenlogo, das im Szenario selbst steckt (z. B. Waterkant Baumärkte).
+   Beides ist bereits hinterlegt, ohne dass du etwas hochladen musst. Der
+   eingetragene **Ort** erscheint zusammen mit dem **Datum** (automatisch das
+   Tagesdatum des Laufs) auf jeder Urkunde.
 6. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
    Schwierigkeit bzw. Zieldauer setzen. Im Zieldauer-Modus zeigt die Setup-Seite
    sofort eine Live-Vorschau, wie viele Karten das ergibt und was entfällt.
@@ -104,14 +122,19 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    per Mail verschickt. Nicht zeitlich festgelegte Sonderlagekarten, die
    Bonuskarten und — im Zieldauer-Modus — aus Zeitgründen übersprungene Karten
    löst/holst du bei Bedarf manuell in der Moderationsansicht nach.
-   Läuft eine Diskussion deutlich kürzer oder länger als geplant, klicke bei
-   der gewünschten Karte in "Nächste Ereignisse" auf **"Zeitsprung hierhin"** —
-   die Übungszeit springt direkt auf diese Karte, läuft danach normal weiter
-   und überspringt dabei fällig werdende Sonderlagekarten nicht (sie werden
-   beim Zeitsprung mit ausgelöst/verschickt).
-10. Bewertung direkt während/nach der Übung in der Matrix eintragen, danach pro
-   Teilnehmer auf "Per E-Mail senden" klicken — die Urkunde geht direkt an
-   die hinterlegte Adresse. "Vorschau" zeigt sie zusätzlich im Browser an.
+   Der **Prozessablauf** oben in der Moderationsansicht zeigt jederzeit, wo du
+   stehst und was noch kommt. Läuft eine Diskussion deutlich kürzer oder
+   länger als geplant, hast du zwei Möglichkeiten: bei der gewünschten Karte
+   in "Nächste Ereignisse" auf **"Zeitsprung hierhin"** klicken, oder direkt
+   am **Zeit-Schieberegler** im Prozessablauf auf eine beliebige Minute ziehen
+   (z. B. 43,2 statt nur die nächste Kartenminute). Beides überspringt dabei
+   fällig werdende Sonderlagekarten nicht (sie werden beim Zeitsprung mit
+   ausgelöst/verschickt).
+10. Bewertung direkt während/nach der Übung in der Matrix eintragen (die
+   generische "Teilnehmer"-Rolle ohne feste Funktion erscheint hier bewusst
+   nicht), danach pro Person unter "Urkunden" auf "Per E-Mail senden"
+   klicken — die Urkunde geht direkt an die hinterlegte Adresse, mit Ort und
+   Tagesdatum. "Vorschau" zeigt sie zusätzlich im Browser an.
 
 ## Die drei Zeitmodi
 

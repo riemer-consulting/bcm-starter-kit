@@ -36,7 +36,7 @@ function loadScenario(filename) {
 
 const DEFAULT_SETTINGS = {
   smtp: { host: '', port: 587, secure: false, user: '', pass: '', fromAddress: '', fromName: 'BCM Tabletop-Regie', allowInsecureTLS: false },
-  branding: { organisationName: 'EXCON', logo: '/media/branding/excon-logo.png' }
+  branding: { organisationName: 'EXCON', logo: '/media/branding/excon-logo.png', ort: '' }
 };
 
 function loadSettings() {

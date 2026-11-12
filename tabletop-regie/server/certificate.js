@@ -11,10 +11,12 @@ function escapeHtml(s) {
 // entscheidet, was dort steht — ein relativer "/media/..."-Pfad fuer die
 // Browser-Vorschau (vom Server ausgeliefert), oder eine "cid:..."-Referenz
 // fuers E-Mail-Versenden (mit passendem nodemailer-Inline-Attachment).
-function renderCertificate({ scenario, role, participant, score, branding, companyLogoSrc, brandingLogoSrc }) {
+function renderCertificate({ scenario, role, roles, participant, score, branding, companyLogoSrc, brandingLogoSrc, ort, datum }) {
   const maxPunkte = (scenario.urkunde && scenario.urkunde.maxPunkte) || 10;
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
   const orgName = (branding && branding.organisationName) || 'Durchführende Organisation';
+  const rollenText = (roles && roles.length ? roles : [role]).filter(Boolean).map(r => r.funktion).join(', ');
+  const ortDatumText = [ort, datum].filter(Boolean).join(', ');
   const logoHtml = brandingLogoSrc
     ? `<img src="${escapeHtml(brandingLogoSrc)}" alt="${escapeHtml(orgName)}" style="height:48px;">`
     : `<div style="font-size:20px;font-weight:700;letter-spacing:2px;">${escapeHtml(orgName)}</div>`;
@@ -53,12 +55,12 @@ function renderCertificate({ scenario, role, participant, score, branding, compa
     <h1>🏆 URKUNDE 🏆</h1>
     <div class="text">Hiermit wird bestätigt, dass</div>
     <div class="name">${escapeHtml(displayName)}</div>
-    <div class="role">in der Rolle: ${escapeHtml(role.funktion)}</div>
+    <div class="role">in der Rolle: ${escapeHtml(rollenText)}</div>
     <div class="text">erfolgreich an der ${escapeHtml(veranstaltung)} teilgenommen hat.<br>
     Die Teilnehmerin / Der Teilnehmer bewies Verantwortungsbewusstsein, Kommunikationsstärke,
     Entscheidungsfähigkeit und Teamarbeit unter den Bedingungen einer simulierten Unternehmenskrise.</div>
     <div class="score">Gesamtbewertung: ${scoreText} / ${maxPunkte} Punkten</div>
-    <div class="footer">${logoHtml}<br>Ausgestellt durch ${escapeHtml(orgName)}</div>
+    <div class="footer">${ortDatumText ? escapeHtml(ortDatumText) + '<br>' : ''}${logoHtml}<br>Ausgestellt durch ${escapeHtml(orgName)}</div>
   </div>
 </body>
 </html>`;

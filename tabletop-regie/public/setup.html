@@ -42,12 +42,18 @@
       <button id="btn-fill-compact" class="secondary">Kompakt: 8 Funktionsbereiche anlegen</button>
       <button id="btn-add-row" class="secondary">+ Teilnehmer</button>
     </div>
+    <div class="row" style="margin-bottom:12px;align-items:center;">
+      <label class="mini muted" for="teilnehmer-count" style="margin-right:6px;">Teilnehmer ohne aktive Rolle (bekommen trotzdem eine Urkunde):</label>
+      <input type="number" id="teilnehmer-count" min="1" value="5" style="width:60px;">
+      <button id="btn-add-teilnehmer" class="secondary" type="button">hinzufügen</button>
+    </div>
     <table id="participants-table">
       <thead><tr><th>Name</th><th>E-Mail</th><th>Rolle(n)</th><th></th></tr></thead>
       <tbody id="participants-body"></tbody>
     </table>
     <div class="row" style="margin-top:12px;">
       <button id="btn-save-participants">Teilnehmerliste speichern</button>
+      <button id="btn-send-briefings" class="secondary">Rollenbeschreibungen per E-Mail senden</button>
       <span id="save-status" class="muted"></span>
     </div>
   </div>
@@ -128,6 +134,7 @@
     <div class="grid-2">
       <div><label>Name der durchführenden Organisation</label><input id="brand-name" placeholder="z. B. EXCON, Riemer Consulting ..."></div>
       <div><label>Logo (Pfad/URL, optional – erscheint auf Urkunden)</label><input id="brand-logo" placeholder="/media/mein-logo.png"></div>
+      <div><label>Ort (erscheint auf Urkunden, Datum wird automatisch gesetzt)</label><input id="brand-ort" placeholder="z. B. Soltau"></div>
     </div>
     <div class="row" style="margin-top:12px;"><button id="btn-save-branding" class="secondary">Branding speichern</button></div>
   </div>

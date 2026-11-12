@@ -4,9 +4,14 @@
 <meta charset="utf-8">
 <title>Bühne – BCM Tabletop-Regie</title>
 <style>
-  :root { --bg:#05070b; --panel:#0e141d; --border:#263142; --text:#f0f4f9; --muted:#8a97a8; --accent:#3b82c4; }
+  :root { --bg:#05070b; --panel:#0e141d; --border:#263142; --text:#f0f4f9; --muted:#8a97a8; --accent:#3b82c4; --progress-track:#1a2330; }
+  :root[data-theme="light"] { --bg:#f3f5f8; --panel:#ffffff; --border:#d5dbe3; --text:#1a2233; --muted:#5c6b7d; --accent:#2f6ba3; --progress-track:#dde3ea; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; transition: background .25s, color .25s; }
+  .theme-toggle { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); cursor:pointer; user-select:none; }
+  .theme-toggle .track { width:40px; height:20px; border-radius:10px; background:var(--border); position:relative; transition: background .2s; }
+  .theme-toggle .knob { position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:var(--accent); transition: left .2s; }
+  :root[data-theme="light"] .theme-toggle .knob { left:22px; }
   .top { display:flex; justify-content:space-between; align-items:center; padding:18px 36px; border-bottom:1px solid var(--border); }
   .brand { font-size:20px; font-weight:700; letter-spacing:1px; }
   .clock { text-align:right; }
@@ -17,7 +22,7 @@
   .side .block { margin-bottom: 28px; }
   .side .block .k { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
   .side .block .v { font-size:22px; font-weight:700; }
-  .progress-track { background:#1a2330; border-radius:6px; height:10px; overflow:hidden; margin-top:10px; }
+  .progress-track { background:var(--progress-track); border-radius:6px; height:10px; overflow:hidden; margin-top:10px; }
   .progress-fill { background:var(--accent); height:100%; transition:width 1s linear; }
   .content { flex:1; min-width:0; min-height:0; padding: clamp(20px,3vh,48px) clamp(24px,4vw,64px); display:flex; flex-direction:column; justify-content:flex-start; overflow-y:auto; }
   .simzeit { font-size:clamp(15px,1.6vw,20px); color: var(--accent); font-weight:700; letter-spacing:1px; margin-bottom: 8px; flex-shrink:0; }
@@ -40,9 +45,14 @@
   </div>
   <div class="top">
     <div class="brand" id="company-brand"><img id="company-logo" style="display:none;height:36px;vertical-align:middle;margin-right:10px;"><span id="company-name">BCM Tabletop-Regie</span></div>
-    <div class="clock">
-      <div class="label" id="status-label">Krisenzeit</div>
-      <div class="time" id="clock-time">00:00</div>
+    <div style="display:flex;align-items:center;gap:22px;">
+      <label class="theme-toggle" id="theme-toggle" title="Hell/Dunkel umschalten">
+        <span>Hell</span><div class="track"><div class="knob"></div></div><span>Dunkel</span>
+      </label>
+      <div class="clock">
+        <div class="label" id="status-label">Krisenzeit</div>
+        <div class="time" id="clock-time">00:00</div>
+      </div>
     </div>
   </div>
   <div class="main">

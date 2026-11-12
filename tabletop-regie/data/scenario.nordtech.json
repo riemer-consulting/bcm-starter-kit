@@ -5,7 +5,8 @@
   "company": {
     "name": "NordTech Components GmbH",
     "facts": "3 Standorte · ca. 620 Mitarbeiter · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
-    "logo": "/media/nordtech/nordtech-logo.png"
+    "logo": "/media/nordtech/nordtech-logo.png",
+    "stageLogo": "/media/nordtech/nordtech-logo-light.png"
   },
   "difficulty": "mittel-hoch",
   "recommendedParticipants": {
@@ -113,102 +114,122 @@
     {
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
-      "group": "geschaeftsfuehrung"
+      "group": "geschaeftsfuehrung",
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Aufsichtsrat) und musst das Team zusammenhalten."
     },
     {
       "id": "geschaeftsfuehrerin-vertrieb",
       "funktion": "Geschäftsführerin Vertrieb, stellv. Krisenstabsleiterin",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du vertrittst den Krisenstabsleiter bei Bedarf und verantwortest alle Kundenbeziehungen. Du musst Großkunden beruhigen, ohne Zusagen zu machen, die das Unternehmen nicht halten kann."
     },
     {
       "id": "leiter-it",
       "funktion": "Leiter IT (CIO)",
-      "group": "it"
+      "group": "it",
+      "beschreibung": "Du bist für die Wiederherstellung aller IT-Systeme verantwortlich. Du entscheidest über Forensik und Wiederanlauf-Reihenfolge und musst dem Krisenstab ehrlich sagen, was technisch wirklich möglich ist — auch wenn das unbequem ist."
     },
     {
       "id": "it-mitarbeiter",
       "funktion": "IT-Mitarbeiter (Vertreter IT-Leitung)",
-      "group": "it"
+      "group": "it",
+      "beschreibung": "Du unterstützt die IT-Leitung operativ und vertrittst sie, falls sie ausfällt. Du kennst die Systeme im Detail und bist oft die erste Anlaufstelle für technische Rückfragen."
     },
     {
       "id": "notfallmanagement-bcm",
       "funktion": "Notfallmanagement / BCM",
-      "group": "krisenstab-support"
+      "group": "krisenstab-support",
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Meldepflichten, Eskalationswege. Du hast keine feste Sprechzeit, bringst dich aber ein, wenn eine wichtige Information sonst untergeht."
     },
     {
       "id": "erp-stammdaten",
       "funktion": "ERP / Stammdaten",
-      "group": "erp"
+      "group": "erp",
+      "beschreibung": "Du verantwortest die Unternehmensdaten im ERP-System. Du musst einschätzen, was an Daten wirklich verloren ist und was sich rekonstruieren lässt."
     },
     {
       "id": "erp-beratung",
       "funktion": "ERP-Beratung",
-      "group": "erp"
+      "group": "erp",
+      "beschreibung": "Du unterstützt bei der Wiederherstellung der Geschäftsprozesse im ERP-System und berätst die Fachbereiche, wie sie ohne funktionierende Systeme übergangsweise arbeiten können."
     },
     {
       "id": "inventuren-spezialprozesse",
       "funktion": "Inventuren & Spezialprozesse",
-      "group": "erp"
+      "group": "erp",
+      "beschreibung": "Du bist verantwortlich für Inventuren und Sonderprozesse. Ein anstehender Inventurstichtag ohne funktionierende Systeme ist dein größtes Problem."
     },
     {
       "id": "kaufmaennische-leiterin-cfo",
       "funktion": "Kaufmännische Leiterin (CFO)",
-      "group": "finanzen"
+      "group": "finanzen",
+      "beschreibung": "Du verantwortest alle finanziellen Aspekte der Krise: Schadenshöhe, Liquidität, Versicherung, Bankkontakt. Du musst früh einschätzen, was sich das Unternehmen leisten kann."
     },
     {
       "id": "debitorenbuchhaltung",
       "funktion": "Debitorenbuchhaltung",
-      "group": "finanzen"
+      "group": "finanzen",
+      "beschreibung": "Du bist verantwortlich für offene Forderungen. Wenn Kunden wegen der Krise nicht zahlen, ist das zuerst dein Problem."
     },
     {
       "id": "debitorenmanagement",
       "funktion": "Debitorenmanagement",
-      "group": "finanzen"
+      "group": "finanzen",
+      "beschreibung": "Du gehst mit Kunden um, die mit Schadensersatz drohen oder Zahlungen zurückhalten. Du musst hart bleiben, ohne die Geschäftsbeziehung zu zerstören."
     },
     {
       "id": "fakturierung",
       "funktion": "Fakturierung",
-      "group": "finanzen"
+      "group": "finanzen",
+      "beschreibung": "Du stellst sicher, dass trotz der Krise weiter korrekt abgerechnet werden kann — oder dokumentierst sauber, warum das gerade nicht geht."
     },
     {
       "id": "leiter-einkauf",
       "funktion": "Leiter Strategischer Einkauf",
-      "group": "einkauf"
+      "group": "einkauf",
+      "beschreibung": "Du verantwortest Lieferanten und Materialversorgung. Wenn Material knapp wird, musst du entscheiden, wen du zuerst belieferst oder wo du teurer nachkaufst."
     },
     {
       "id": "leiterin-personal",
       "funktion": "Leiterin Personal",
-      "group": "personal"
+      "group": "personal",
+      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden: Ausfälle von Schlüsselpersonen, Gerüchte im Haus, Belastung des Teams. Du entscheidest, wer wann was erfährt."
     },
     {
       "id": "marketing-ecommerce",
       "funktion": "Marketing & eCommerce",
-      "group": "marketing"
+      "group": "marketing",
+      "beschreibung": "Du verantwortest die externe Kommunikation in sozialen Medien und den Online-Auftritt. Du bist meist die erste Anlaufstelle für Presseanfragen."
     },
     {
       "id": "leiter-einzelhandel",
       "funktion": "Leiter Einzelhandel",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du verantwortest das Einzelhandelsgeschäft. Beschwerden von Fachhändlern landen zuerst bei dir."
     },
     {
       "id": "regionalleiter-west",
       "funktion": "Regionalleiter West",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
     },
     {
       "id": "regionalleiter-ost",
       "funktion": "Regionalleiter Ost",
-      "group": "vertrieb"
+      "group": "vertrieb",
+      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
     },
     {
       "id": "assistenz-gf-dokumentation",
       "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
-      "group": "krisenstab-support"
+      "group": "krisenstab-support",
+      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs, damit später nachvollziehbar ist, wer was wann entschieden hat. Ohne feste Sprechzeit, aber wichtig für die Nachbereitung."
     },
     {
       "id": "office-management",
       "funktion": "Office Management / interne Kommunikation",
-      "group": "krisenstab-support"
+      "group": "krisenstab-support",
+      "beschreibung": "Du verantwortest die interne Kommunikation im Haus und organisatorische Abläufe. Gerüchte und Unsicherheit im Team sind dein Thema."
     }
   ],
   "moderationsleitfaden": {

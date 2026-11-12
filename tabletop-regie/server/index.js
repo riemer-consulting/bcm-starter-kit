@@ -13,6 +13,24 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/media', express.static(path.join(__dirname, '..', 'media')));
 
+// Generische, szenario-unabhaengige Rolle "Teilnehmer": fuer Personen ohne
+// feste Funktion im Krisenstab (reine Beobachter/Zuhoerer), beliebig oft
+// vergebbar, bekommt keine Sonderlagekarten/Bewertung, aber eine Urkunde.
+// Wird dem geladenen Szenario zur Laufzeit angehaengt, nicht in der JSON-
+// Datei gespeichert.
+function augmentWithGenericRole(scenario) {
+  if (!scenario.roles.find(r => r.id === 'teilnehmer')) {
+    scenario.roles.push({
+      id: 'teilnehmer', funktion: 'Teilnehmer', group: 'allgemein',
+      beschreibung: 'Du nimmst an der Übung teil, ohne eine feste Funktion im Krisenstab zu übernehmen. Du bekommst die öffentlichen Lagekarten mit und am Ende eine Teilnahme-Urkunde.'
+    });
+  }
+  if (!scenario.roleGroups.find(g => g.key === 'allgemein')) {
+    scenario.roleGroups.push({ key: 'allgemein', label: 'Teilnehmer (ohne feste Rolle)', members: ['teilnehmer'] });
+  }
+  return scenario;
+}
+
 // Reihenfolge: SCENARIO_FILE (Umgebungsvariable, explizite Vorgabe) ->
 // zuletzt im Setup gewähltes Szenario (data/settings.json) -> erste
 // gefundene Datei. So merkt sich die App die Auswahl auch nach einem
@@ -26,6 +44,7 @@ if (!scenario) {
   console.error('Konnte Szenario nicht laden:', scenarioFile);
   process.exit(1);
 }
+scenario = augmentWithGenericRole(scenario);
 
 let state = store.loadRunState() || engine.newRunState(scenario);
 state.scenarioFile = scenarioFile;
@@ -40,6 +59,10 @@ function groupByKey(key) { return scenario.roleGroups.find(g => g.key === key); 
 
 function participantsForRole(roleId) {
   return state.participants.filter(p => (p.roleIds || []).includes(roleId));
+}
+
+function participantById(id) {
+  return state.participants.find(p => p.id === id);
 }
 
 function log(type, message) {
@@ -123,7 +146,7 @@ app.post('/api/scenarios/select', (req, res) => {
   const loaded = store.loadScenario(file);
   if (!loaded.scenario) return res.status(500).json({ ok: false, error: 'Szenario konnte nicht geladen werden.' });
   scenarioFile = loaded.file;
-  scenario = loaded.scenario;
+  scenario = augmentWithGenericRole(loaded.scenario);
   state = engine.newRunState(scenario);
   state.scenarioFile = scenarioFile;
   const settings = store.loadSettings();
@@ -167,6 +190,29 @@ app.post('/api/participants', (req, res) => {
   }));
   persist();
   res.json(state.participants);
+});
+
+// Schickt jeder/jedem Teilnehmenden einmalig eine E-Mail mit Funktion und
+// Rollenbeschreibung ihrer/seiner zugewiesenen Rolle(n) — unabhaengig davon,
+// ob diese Rolle ueberhaupt Sonderlagekarten bekommt.
+app.post('/api/participants/send-briefings', async (req, res) => {
+  const settings = store.loadSettings();
+  const results = [];
+  for (const p of state.participants) {
+    if (!p.email || !(p.roleIds || []).length) continue;
+    const roles = p.roleIds.map(rid => roleById(rid)).filter(Boolean);
+    if (!roles.length) continue;
+    const rollenText = roles.map(r => `${r.funktion}${r.beschreibung ? '\n' + r.beschreibung : ''}`).join('\n\n');
+    const text = `Hallo ${p.name || ''},\n\ndeine Rolle${roles.length > 1 ? 'n' : ''} in der Übung "${scenario.title}":\n\n${rollenText}\n\nViel Erfolg!`;
+    const result = await mailer.sendMail(settings.smtp, {
+      to: p.email, subject: `Deine Rolle in der Übung: ${roles.map(r => r.funktion).join(', ')}`, text
+    });
+    log(result.ok ? 'mail' : 'error',
+      result.ok ? `Rollenbeschreibung an ${p.name} (${p.email}) gesendet.` : `Rollenbeschreibung an ${p.name} fehlgeschlagen: ${result.error}`);
+    results.push({ participantId: p.id, ok: result.ok, error: result.error });
+  }
+  persist();
+  res.json({ ok: results.every(r => r.ok), results });
 });
 
 // Welche Rollen fuer diesen Lauf ueberhaupt zur Auswahl stehen sollen (z. B.
@@ -220,6 +266,14 @@ app.get('/api/run/moderator-state', (req, res) => {
     type: ev.type, id: ev.id, minute: Math.round(ev.minute * 10) / 10,
     titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${roleById(ev.ref.empfaenger).funktion}`
   }));
+  // Kompletter Ablaufplan fuer die Prozessuebersicht/den Zeit-Schieberegler
+  // in der Moderation (nicht nur die naechsten paar Ereignisse).
+  const fullTimeline = schedule.map(ev => ({
+    type: ev.type, id: ev.id, minute: Math.round(ev.minute * 10) / 10,
+    titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${roleById(ev.ref.empfaenger).funktion}`,
+    fired: ev.type === 'lagekarte' ? state.firedLagekarten.includes(ev.id) : !!state.firedSonderlagekarten.find(f => f.id === ev.id),
+    isCurrent: !!(currentLk && ev.type === 'lagekarte' && ev.id === currentLk.id)
+  }));
   const skippedDetailed = (state.skippedEvents || []).map(sk => ({
     type: sk.type, id: sk.id, reason: sk.reason,
     titel: sk.type === 'lagekarte' ? scenario.lagekarten.find(lk => lk.id === sk.id).titel : `Sonderlagekarte für ${roleById(scenario.sonderlagekarten.find(s => s.id === sk.id).empfaenger).funktion}`
@@ -235,6 +289,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     activeRoleGroups: engine.activeRoleGroupCount(scenario, state),
     currentLagekarte: currentLk,
     upcoming,
+    fullTimeline,
     skipped: skippedDetailed,
     firedSonderlagekarten: state.firedSonderlagekarten,
     unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id)),
@@ -253,6 +308,7 @@ app.get('/api/run/stage-state', (req, res) => {
     status: state.status,
     companyName: scenario.company.name,
     companyLogo: scenario.company.logo || null,
+    companyLogoLight: scenario.company.stageLogo || scenario.company.logo || null,
     companyFacts: scenario.company.facts,
     title: scenario.title,
     eroeffnungstext: scenario.moderationsleitfaden.eroeffnungstext,
@@ -346,6 +402,20 @@ app.post('/api/run/jump-to-event/:type/:id', (req, res) => {
   persist();
   res.json({ ok: true });
 });
+// Freier Zeit-Schieberegler: springt auf jede beliebige Minute (nicht nur
+// auf vordefinierte Ereignisse), fuer den Fall, dass ein Thema schon vorher
+// durch ist oder noch mehr Zeit gebraucht wird.
+app.post('/api/run/jump-to-minute', (req, res) => {
+  if (state.status !== 'running' && state.status !== 'paused') {
+    return res.status(400).json({ ok: false, error: 'Kein aktiver Lauf.' });
+  }
+  const minute = Math.max(0, Number((req.body || {}).minute) || 0);
+  engine.setElapsedMinutes(state, minute);
+  log('info', `Zeitsprung: Übungszeit manuell auf Minute ${Math.round(minute * 10) / 10} gesetzt.`);
+  tick();
+  persist();
+  res.json({ ok: true });
+});
 app.post('/api/run/pause', (req, res) => {
   if (state.status === 'running') { state.status = 'paused'; state.pausedAt = Date.now(); log('info', 'Übung pausiert.'); persist(); }
   res.json({ ok: true });
@@ -413,6 +483,14 @@ function scoreForRole(roleId) {
   return Math.round((avg / 5) * (scenario.urkunde.maxPunkte || 10) * 10) / 10;
 }
 
+// Eine Person kann mehrere (oder — als generische "Teilnehmer"-Rolle — gar
+// keine bewertete) Rolle(n) haben: Durchschnitt über alle bewerteten Rollen.
+function scoreForParticipant(participant) {
+  const values = (participant.roleIds || []).map(scoreForRole).filter(v => v !== null && v !== undefined);
+  if (values.length === 0) return null;
+  return Math.round((values.reduce((a, b) => a + b, 0) / values.length) * 10) / 10;
+}
+
 // Absoluter Dateipfad zu einem "/media/..."-Verweis — fuer E-Mail-Anhaenge,
 // da ein relativer Browser-Pfad im Mail-Client des Empfaengers nicht
 // aufgeloest werden kann (der zeigt sonst auf dessen eigenes "localhost").
@@ -421,47 +499,48 @@ function mediaUrlToFile(mediaUrl) {
   return path.join(__dirname, '..', 'media', mediaUrl.slice('/media/'.length));
 }
 
-app.get('/api/certificate/:roleId', (req, res) => {
-  const role = roleById(req.params.roleId);
-  if (!role) return res.status(404).send('Unbekannte Rolle.');
-  const participant = participantsForRole(role.id)[0] || null;
+app.get('/api/certificate/participant/:id', (req, res) => {
+  const participant = participantById(req.params.id);
   if (!participant || !participant.name) {
-    return res.status(400).send('Dieser Rolle ist noch kein Teilnehmer mit Namen zugeordnet. Bitte zuerst im Setup eintragen.');
+    return res.status(400).send('Diese Person hat noch keinen Namen im Setup eingetragen.');
   }
+  const roles = (participant.roleIds || []).map(roleById).filter(Boolean);
   const settings = store.loadSettings();
-  const score = scoreForRole(role.id);
+  const score = scoreForParticipant(participant);
   res.send(renderCertificate({
-    scenario, role, participant, score, branding: settings.branding,
-    companyLogoSrc: scenario.company.logo, brandingLogoSrc: settings.branding.logo
+    scenario, role: roles[0], roles, participant, score, branding: settings.branding,
+    companyLogoSrc: scenario.company.logo, brandingLogoSrc: settings.branding.logo,
+    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE')
   }));
 });
 
-app.post('/api/certificate/:roleId/send', async (req, res) => {
-  const role = roleById(req.params.roleId);
-  if (!role) return res.status(404).json({ ok: false, error: 'Unbekannte Rolle.' });
-  const participant = participantsForRole(role.id)[0] || null;
+app.post('/api/certificate/participant/:id/send', async (req, res) => {
+  const participant = participantById(req.params.id);
   if (!participant || !participant.name || !participant.email) {
-    return res.status(400).json({ ok: false, error: 'Dieser Rolle ist noch kein Teilnehmer mit Name und E-Mail zugeordnet.' });
+    return res.status(400).json({ ok: false, error: 'Diese Person hat noch keinen Namen und keine E-Mail im Setup eingetragen.' });
   }
+  const roles = (participant.roleIds || []).map(roleById).filter(Boolean);
   const settings = store.loadSettings();
-  const score = scoreForRole(role.id);
+  const score = scoreForParticipant(participant);
   const attachments = [];
   const companyLogoFile = mediaUrlToFile(scenario.company.logo);
   const brandingLogoFile = mediaUrlToFile(settings.branding.logo);
   if (companyLogoFile) attachments.push({ filename: 'company-logo.png', path: companyLogoFile, cid: 'company-logo' });
   if (brandingLogoFile) attachments.push({ filename: 'branding-logo.png', path: brandingLogoFile, cid: 'branding-logo' });
   const html = renderCertificate({
-    scenario, role, participant, score, branding: settings.branding,
+    scenario, role: roles[0], roles, participant, score, branding: settings.branding,
     companyLogoSrc: companyLogoFile ? 'cid:company-logo' : null,
-    brandingLogoSrc: brandingLogoFile ? 'cid:branding-logo' : null
+    brandingLogoSrc: brandingLogoFile ? 'cid:branding-logo' : null,
+    ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE')
   });
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
+  const rollenText = roles.map(r => r.funktion).join(', ');
   const result = await mailer.sendMail(settings.smtp, {
     to: participant.email, subject: `Deine Urkunde – ${veranstaltung}`, html, attachments
   });
   log(result.ok ? 'mail' : 'error',
     result.ok
-      ? `Urkunde für ${participant.name} (${role.funktion}) per E-Mail versendet.`
+      ? `Urkunde für ${participant.name} (${rollenText}) per E-Mail versendet.`
       : `Urkunden-Versand an ${participant.name} fehlgeschlagen: ${result.error}`);
   persist();
   res.json(result);
