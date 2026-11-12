@@ -230,6 +230,15 @@ document.getElementById('btn-save-participants').addEventListener('click', async
   renderParticipants();
 });
 
+document.getElementById('btn-send-welcome').addEventListener('click', async () => {
+  participants = collectParticipantsFromDom();
+  await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
+  document.getElementById('save-status').textContent = 'Sende Begrüßung …';
+  const r = await (await fetch('/api/participants/send-welcome', { method: 'POST' })).json();
+  const okCount = r.results.filter(x => x.ok).length;
+  document.getElementById('save-status').textContent = `Begrüßung versendet: ${okCount}/${r.results.length} erfolgreich.`;
+});
+
 document.getElementById('btn-send-briefings').addEventListener('click', async () => {
   participants = collectParticipantsFromDom();
   await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });

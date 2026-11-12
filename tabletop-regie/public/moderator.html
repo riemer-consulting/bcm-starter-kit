@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="container">
-  <div class="nav"><a href="index.html">Start</a><a href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a class="active" href="moderator.html">Moderation</a></div>
+  <div class="nav"><a href="index.html">Start</a><a href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a class="active" href="moderator.html">Moderation</a><a href="ablauf.html" target="_blank">Ablauf & Hilfe</a></div>
   <div class="not-shared-label">⚠ Diese Ansicht NICHT per Bildschirmfreigabe teilen</div>
 
   <div class="card">
@@ -34,10 +34,10 @@
       <h1 id="m-title">Moderation</h1>
       <div class="row">
         <span id="m-status" class="badge warn">idle</span>
-        <button id="btn-begin-crisis" style="display:none;">Jetzt beginnt die Krise — Timer starten</button>
-        <button id="btn-pause" class="secondary">Pause</button>
-        <button id="btn-resume" class="secondary">Fortsetzen</button>
-        <button id="btn-reset" class="danger">Zurücksetzen</button>
+        <button id="btn-begin-crisis" style="display:none;" title="Startet den Krisentimer — vorher Begrüßung/Eröffnung in Ruhe vorlesen.">Jetzt beginnt die Krise — Timer starten</button>
+        <button id="btn-pause" class="secondary" title="Hält den Timer an, löst aber keine Karten aus, solange pausiert ist.">Pause</button>
+        <button id="btn-resume" class="secondary" title="Setzt den angehaltenen Timer fort.">Fortsetzen</button>
+        <button id="btn-reset" class="danger" title="Setzt Timer und ausgelöste Karten zurück — die Teilnehmerliste bleibt erhalten.">Zurücksetzen</button>
       </div>
     </div>
     <div class="row mini muted">
@@ -49,7 +49,7 @@
     <h2>Prozessablauf</h2>
     <div id="m-timeline" class="timeline-wrap">
       <div class="timeline-track" id="timeline-track"></div>
-      <input type="range" id="timeline-slider" min="0" max="100" step="0.1" value="0">
+      <input type="range" id="timeline-slider" min="0" max="100" step="0.1" value="0" title="Ziehen, um die Übungszeit direkt auf eine beliebige Minute zu springen.">
     </div>
     <div class="row" style="justify-content:space-between;margin-top:6px;">
       <span class="mini muted" id="timeline-label">0 / 0 Min.</span>

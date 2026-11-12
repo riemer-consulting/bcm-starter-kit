@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Ablauf &amp; Hilfe – BCM Tabletop-Regie</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .lk-entry { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .lk-entry:last-child { border-bottom: none; }
+  .lk-entry .meta { color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+  .regel-list { margin: 0; padding-left: 20px; }
+  .regel-list li { margin-bottom: 6px; }
+  .hilfe-step { margin-bottom: 14px; }
+  .hilfe-step b { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <a href="index.html">Start</a>
+    <a href="setup.html">Setup</a>
+    <a href="stage.html" target="_blank">Bühne</a>
+    <a href="moderator.html" target="_blank">Moderation</a>
+    <a class="active" href="ablauf.html">Ablauf &amp; Hilfe</a>
+  </div>
+
+  <h1 id="a-title">Ablauf &amp; Hilfe</h1>
+  <p class="muted" id="a-status"></p>
+
+  <div class="card">
+    <h2>Begrüßung</h2>
+    <p id="a-begruessung" class="muted">Wird geladen …</p>
+  </div>
+
+  <div class="card">
+    <h2>Spielregeln</h2>
+    <ol class="regel-list" id="a-regeln"></ol>
+  </div>
+
+  <div class="card">
+    <h2>Lagekarten bisher</h2>
+    <p class="muted mini" style="font-size:13px;">Zum Nachlesen, falls du etwas verpasst hast. Künftige Lagekarten erscheinen hier erst, wenn sie auf der Bühne dran waren — damit nichts vorweggenommen wird. Vertrauliche Sonderlagekarten stehen bewusst nicht hier, die bekommst nur du selbst per E-Mail, wenn deine Rolle betroffen ist.</p>
+    <div id="a-lagekarten"></div>
+  </div>
+
+  <div class="card">
+    <h2>Hilfe — wie starte ich das, was passiert wann?</h2>
+    <div class="hilfe-step"><b>App starten:</b> Im Hauptordner (nicht in diesem Unterordner) <code>start.sh</code> (macOS/Linux) bzw. <code>start.bat</code> (Windows) doppelklicken/ausführen und "2) BCM Tabletop-Übung" wählen. Alternativ im Ordner <code>tabletop-regie</code> einmalig <code>npm install</code>, danach jedes Mal <code>npm start</code>.</div>
+    <div class="hilfe-step"><b>Setup:</b> Hier trägst du vorher Teilnehmer, Rollen, SMTP-Server und Branding ein. Ohne das geht's nicht los — Button "Übung starten" öffnet danach automatisch Bühne und Moderation.</div>
+    <div class="hilfe-step"><b>Bühne:</b> Für Beamer/TV oder Bildschirmfreigabe gedacht — zeigt die öffentlichen Lagekarten, keine vertraulichen Inhalte. Der Schieber oben rechts wechselt zwischen hellem und dunklem Hintergrund.</div>
+    <div class="hilfe-step"><b>Moderation:</b> Nur für dich als Moderator:in — hier läufst Timer-Steuerung, der Prozessablauf mit Zeit-Schieberegler, manuelles Auslösen von Karten, die Bewertungsmatrix und der Urkunden-Versand zusammen. Nicht per Bildschirmfreigabe teilen (enthält vertrauliche Inhalte)!</div>
+    <div class="hilfe-step"><b>Diese Seite (Ablauf &amp; Hilfe):</b> Kannst du Teilnehmenden zusätzlich zur Bühne zeigen oder im selben Netzwerk freigeben — enthält nur unkritische Inhalte (Begrüßung, Regeln, bereits gezeigte Lagekarten).</div>
+    <div class="hilfe-step"><b>Mouseover:</b> Fast jeder Button in der App zeigt beim Draufhalten mit der Maus eine kurze Erklärung, was er tut.</div>
+  </div>
+</div>
+<script src="ablauf.js"></script>
+</body>
+</html>

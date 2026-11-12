@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-  <div class="nav"><a href="index.html">Start</a><a class="active" href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a href="moderator.html" target="_blank">Moderation</a></div>
+  <div class="nav"><a href="index.html">Start</a><a class="active" href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a href="moderator.html" target="_blank">Moderation</a><a href="ablauf.html" target="_blank">Ablauf & Hilfe</a></div>
   <h1 id="scenario-title">Setup</h1>
   <p class="muted" id="scenario-subtitle"></p>
 
@@ -15,8 +15,8 @@
     <h2>Szenario</h2>
     <p class="muted">Welches Unternehmen/Drehbuch soll simuliert werden? Ein Wechsel setzt den aktuellen Lauf und die Teilnehmerliste zurück, da Rollen zwischen Szenarien nicht übertragbar sind.</p>
     <div class="row">
-      <select id="scenario-select" style="max-width:420px;"></select>
-      <button id="btn-switch-scenario" class="secondary">Szenario wechseln</button>
+      <select id="scenario-select" style="max-width:420px;" title="Welches Drehbuch/Unternehmen geladen werden soll."></select>
+      <button id="btn-switch-scenario" class="secondary" title="Lädt das ausgewählte Szenario neu — setzt Teilnehmerliste und laufende Übung zurück!">Szenario wechseln</button>
       <span id="scenario-switch-status" class="muted"></span>
     </div>
   </div>
@@ -25,10 +25,10 @@
     <h2>Rollen für diesen Lauf</h2>
     <p class="muted">Welche Rollen sollen diesmal überhaupt zur Auswahl stehen? Nicht angehakte Rollen verschwinden aus der Rollenzuweisung unten — macht die Liste kürzer und passend zur tatsächlichen Teilnehmerzahl.</p>
     <div class="row" style="margin-bottom:10px;">
-      <input id="role-count-hint" type="number" min="1" placeholder="Teilnehmerzahl" style="max-width:160px;">
-      <button id="btn-suggest-roles" class="secondary">Passende Rollen vorschlagen</button>
-      <button id="btn-roles-all" class="secondary">Alle</button>
-      <button id="btn-roles-none" class="secondary">Keine</button>
+      <input id="role-count-hint" type="number" min="1" placeholder="Teilnehmerzahl" style="max-width:160px;" title="Wie viele Personen mit aktiver Rolle teilnehmen — Grundlage für den Rollenvorschlag.">
+      <button id="btn-suggest-roles" class="secondary" title="Wählt automatisch eine fachlich breite Rollenauswahl für die eingetragene Teilnehmerzahl.">Passende Rollen vorschlagen</button>
+      <button id="btn-roles-all" class="secondary" title="Hakt alle Rollen dieses Szenarios an.">Alle</button>
+      <button id="btn-roles-none" class="secondary" title="Hakt alle Rollen ab.">Keine</button>
       <span id="role-select-status" class="muted"></span>
     </div>
     <div id="role-checkboxes"></div>
@@ -38,22 +38,23 @@
     <h2>Teilnehmer &amp; Rollen</h2>
     <p class="muted">Jede Rolle kann von genau einer Person gespielt werden, oder du fasst mehrere Rollen bei einer Person zusammen (kompakte Besetzung für kleinere Gruppen). Sonderlagekarten gehen per E-Mail an die Person, die der jeweiligen Rolle zugeordnet ist.</p>
     <div class="row" style="margin-bottom:12px;">
-      <button id="btn-fill-full" class="secondary">Alle 20 Einzelrollen anlegen</button>
-      <button id="btn-fill-compact" class="secondary">Kompakt: 8 Funktionsbereiche anlegen</button>
-      <button id="btn-add-row" class="secondary">+ Teilnehmer</button>
+      <button id="btn-fill-full" class="secondary" title="Legt für jede aktive Rolle eine eigene leere Teilnehmerzeile an.">Alle 20 Einzelrollen anlegen</button>
+      <button id="btn-fill-compact" class="secondary" title="Fasst pro Funktionsbereich mehrere Rollen auf eine Person zusammen — für kleinere Gruppen.">Kompakt: 8 Funktionsbereiche anlegen</button>
+      <button id="btn-add-row" class="secondary" title="Fügt eine einzelne leere Teilnehmerzeile hinzu.">+ Teilnehmer</button>
     </div>
     <div class="row" style="margin-bottom:12px;align-items:center;">
       <label class="mini muted" for="teilnehmer-count" style="margin-right:6px;">Teilnehmer ohne aktive Rolle (bekommen trotzdem eine Urkunde):</label>
-      <input type="number" id="teilnehmer-count" min="1" value="5" style="width:60px;">
-      <button id="btn-add-teilnehmer" class="secondary" type="button">hinzufügen</button>
+      <input type="number" id="teilnehmer-count" min="1" value="5" style="width:60px;" title="Anzahl der zusätzlichen Teilnehmer-Zeilen, die angelegt werden sollen.">
+      <button id="btn-add-teilnehmer" class="secondary" type="button" title="Legt die angegebene Anzahl an Personen mit der allgemeinen Rolle 'Teilnehmer' an (keine feste Funktion, aber eigene Urkunde).">hinzufügen</button>
     </div>
     <table id="participants-table">
       <thead><tr><th>Name</th><th>E-Mail</th><th>Rolle(n)</th><th></th></tr></thead>
       <tbody id="participants-body"></tbody>
     </table>
     <div class="row" style="margin-top:12px;">
-      <button id="btn-save-participants">Teilnehmerliste speichern</button>
-      <button id="btn-send-briefings" class="secondary">Rollenbeschreibungen per E-Mail senden</button>
+      <button id="btn-save-participants" title="Speichert Namen, E-Mails und Rollenzuweisungen für diesen Lauf.">Teilnehmerliste speichern</button>
+      <button id="btn-send-welcome" class="secondary" title="Schickt JEDER Person mit E-Mail die allgemeine Begrüßung und die Spielregeln — unabhängig von der Rolle.">Begrüßung an alle senden</button>
+      <button id="btn-send-briefings" class="secondary" title="Schickt jeder Person ihre konkrete(n) Rolle(n) inkl. Rollenbeschreibung per E-Mail.">Rollenbeschreibungen per E-Mail senden</button>
       <span id="save-status" class="muted"></span>
     </div>
   </div>
@@ -97,7 +98,7 @@
     <p class="muted" id="duration-preview" style="margin-top:10px;"></p>
     <p class="muted" id="duration-preview-detail" style="margin-top:4px;font-size:12px;"></p>
     <div class="row" style="margin-top:12px;">
-      <button id="btn-start">Übung starten</button>
+      <button id="btn-start" title="Startet den Lauf mit der aktuellen Teilnehmerliste und öffnet Bühne + Moderation.">Übung starten</button>
       <span class="muted">Öffnet danach automatisch Bühne und Moderation in neuen Tabs.</span>
     </div>
   </div>
@@ -122,9 +123,9 @@
       "wrong version number"-Fehler bei der Test-E-Mail.
     </p>
     <div class="row" style="margin-top:12px;">
-      <button id="btn-save-settings">Einstellungen speichern</button>
-      <input id="test-email-to" placeholder="Test-Empfänger@example.com" style="max-width:260px;">
-      <button id="btn-test-email" class="secondary">Test-E-Mail senden</button>
+      <button id="btn-save-settings" title="Speichert die SMTP-Zugangsdaten lokal (niemals committen).">Einstellungen speichern</button>
+      <input id="test-email-to" placeholder="Test-Empfänger@example.com" style="max-width:260px;" title="Adresse, an die eine Testnachricht geschickt wird.">
+      <button id="btn-test-email" class="secondary" title="Schickt eine Testnachricht, um die SMTP-Einstellungen zu prüfen.">Test-E-Mail senden</button>
       <span id="settings-status" class="muted"></span>
     </div>
   </div>
@@ -136,7 +137,7 @@
       <div><label>Logo (Pfad/URL, optional – erscheint auf Urkunden)</label><input id="brand-logo" placeholder="/media/mein-logo.png"></div>
       <div><label>Ort (erscheint auf Urkunden, Datum wird automatisch gesetzt)</label><input id="brand-ort" placeholder="z. B. Soltau"></div>
     </div>
-    <div class="row" style="margin-top:12px;"><button id="btn-save-branding" class="secondary">Branding speichern</button></div>
+    <div class="row" style="margin-top:12px;"><button id="btn-save-branding" class="secondary" title="Speichert Name/Logo/Ort der durchführenden Organisation für die Urkunden.">Branding speichern</button></div>
   </div>
 </div>
 <script src="setup.js"></script>

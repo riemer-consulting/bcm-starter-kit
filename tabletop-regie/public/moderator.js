@@ -82,7 +82,7 @@ function render(s) {
     document.getElementById('m-skipped').innerHTML = s.skipped.map(ev => `
       <div class="row" style="justify-content:space-between;margin-bottom:6px;">
         <span class="mini">${escapeHtml(ev.titel)} <span class="muted">— ${escapeHtml(ev.reason)}</span></span>
-        <button class="secondary promote-event" data-type="${ev.type}" data-id="${ev.id}">Trotzdem aufnehmen</button>
+        <button class="secondary promote-event" data-type="${ev.type}" data-id="${ev.id}" title="Nimmt diese aus Zeitgründen übersprungene Karte doch noch mit auf — wird sofort angezeigt/versendet.">Trotzdem aufnehmen</button>
       </div>`).join('');
   } else {
     skippedCard.style.display = 'none';
@@ -116,7 +116,7 @@ function render(s) {
   // oder laenger lief als geplant.
   document.getElementById('m-upcoming').innerHTML = s.upcoming.map(ev => `
     <tr><td>${ev.minute}</td><td>${ev.type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'}</td><td>${escapeHtml(ev.titel)}</td>
-      <td><button class="secondary jump-to-event" data-type="${ev.type}" data-id="${ev.id}">Zeitsprung hierhin</button></td></tr>
+      <td><button class="secondary jump-to-event" data-type="${ev.type}" data-id="${ev.id}" title="Springt direkt auf diese Karte — fällig werdende Sonderlagekarten dazwischen werden dabei mit ausgelöst/verschickt.">Zeitsprung hierhin</button></td></tr>
   `).join('') || '<tr><td colspan="4" class="muted">Keine weiteren geplanten Ereignisse.</td></tr>';
 
   // Manuell ausloesbare Sonderlagekarten — zeigt den echten, zugeordneten
@@ -131,7 +131,7 @@ function render(s) {
     const role = scenario.roles.find(r => r.id === sk.empfaenger);
     return `<div class="row" style="justify-content:space-between;margin-bottom:6px;">
       <span class="mini">${sk.id} — für ${roleLabel(role, s.participants)}</span>
-      <button class="secondary fire-sk" data-id="${sk.id}">Jetzt auslösen</button>
+      <button class="secondary fire-sk" data-id="${sk.id}" title="Verschickt diese vertrauliche Sonderlagekarte sofort per E-Mail an die zugeordnete Person.">Jetzt auslösen</button>
     </div>`;
   }).join('') || '<p class="muted mini">Keine offenen Karten.</p>';
 
@@ -140,7 +140,7 @@ function render(s) {
     const fired = b.fired;
     return `<div class="row" style="justify-content:space-between;margin-bottom:6px;">
       <span class="mini">${b.id} — für ${roleLabel(role, s.participants)}: ${escapeHtml(b.text)}</span>
-      <button class="secondary fire-bonus" data-id="${b.id}" ${fired ? 'disabled' : ''}>${fired ? 'Ausgelöst' : 'Auslösen'}</button>
+      <button class="secondary fire-bonus" data-id="${b.id}" ${fired ? 'disabled' : ''} title="Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.">${fired ? 'Ausgelöst' : 'Auslösen'}</button>
     </div>`;
   }).join('');
 
@@ -183,8 +183,8 @@ function render(s) {
     return `<div class="row" style="justify-content:space-between;align-items:center;" data-id="${p.id}">
       <span class="mini">${escapeHtml(p.name)}${rollenText ? ' (' + escapeHtml(rollenText) + ')' : ''}</span>
       <span class="row" style="width:auto;">
-        <a href="/api/certificate/participant/${p.id}" target="_blank"><button class="secondary">Vorschau</button></a>
-        <button class="send-cert" data-id="${p.id}">Per E-Mail senden</button>
+        <a href="/api/certificate/participant/${p.id}" target="_blank"><button class="secondary" title="Zeigt die Urkunde dieser Person im Browser an, ohne sie zu verschicken.">Vorschau</button></a>
+        <button class="send-cert" data-id="${p.id}" title="Verschickt die Urkunde per E-Mail an diese Person.">Per E-Mail senden</button>
         <span class="mini muted cert-status"></span>
       </span>
     </div>`;

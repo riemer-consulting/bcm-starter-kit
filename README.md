@@ -58,6 +58,12 @@ Most Business Continuity Management tooling falls into one of two categories: ex
 
 No server, no build step, no dependencies to install. See [`docs/quickstart.md`](docs/quickstart.md) for a full walkthrough in under ten minutes, or [`docs/user-guide.md`](docs/user-guide.md) for complete documentation.
 
+### This repository also contains BCM Tabletop-Regie
+
+A separate, independent tool for running live BCM tabletop exercises (crisis simulations) — see [`tabletop-regie/README.md`](tabletop-regie/README.md). It shares no code or data model with BCM Starter Kit above; both just happen to live in the same repository.
+
+To start either tool, run `start.sh` (macOS/Linux) or `start.bat` (Windows) in the repository root and pick one from the menu — it either opens `bcm-starter-kit.html` directly, or starts the Tabletop-Regie server for you.
+
 ### Try the demo workbook
 
 [`examples/demo-workbook.json`](examples/demo-workbook.json) contains a fictional company ("Musterbau GmbH") with six fully worked-out processes, eleven resources and nine structured dependencies. Open BCM Starter Kit, click **Import JSON** in the top bar, and load it to see every feature populated with realistic (fictional) data. See [`examples/README.md`](examples/README.md).

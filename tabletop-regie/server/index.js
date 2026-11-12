@@ -215,6 +215,32 @@ app.post('/api/participants/send-briefings', async (req, res) => {
   res.json({ ok: results.every(r => r.ok), results });
 });
 
+// Begruessung + Spielregeln an ALLE Teilnehmer (unabhaengig von der Rolle) —
+// damit jeder vorab weiss, wie die Übung grundsaetzlich ablaeuft, nicht nur,
+// welche Rolle er/sie spielt (das kommt separat per Rollenbeschreibung).
+app.post('/api/participants/send-welcome', async (req, res) => {
+  const mf = scenario.moderationsleitfaden || {};
+  const regelnText = (mf.spielregeln || []).map((r, i) => `${i + 1}. ${r}`).join('\n');
+  const settings = store.loadSettings();
+  const results = [];
+  for (const p of state.participants) {
+    if (!p.email) continue;
+    const text = `Hallo ${p.name || ''},\n\n`
+      + `du nimmst bald an der Übung "${scenario.title}" teil.\n\n`
+      + `Worum es geht:\n${mf.begruessung || ''}\n\n`
+      + (regelnText ? `Spielregeln:\n${regelnText}\n\n` : '')
+      + `Deine konkrete Rolle bekommst du separat per E-Mail zugeschickt.\n\nBis bald!`;
+    const result = await mailer.sendMail(settings.smtp, {
+      to: p.email, subject: `Willkommen zur Übung: ${scenario.title}`, text
+    });
+    log(result.ok ? 'mail' : 'error',
+      result.ok ? `Begrüßung an ${p.name} (${p.email}) gesendet.` : `Begrüßung an ${p.name} fehlgeschlagen: ${result.error}`);
+    results.push({ participantId: p.id, ok: result.ok, error: result.error });
+  }
+  persist();
+  res.json({ ok: results.every(r => r.ok), results });
+});
+
 // Welche Rollen fuer diesen Lauf ueberhaupt zur Auswahl stehen sollen (z. B.
 // nur 10 von 20 Rollen bei einer kleineren Gruppe) — reduziert die sonst
 // sehr lange Rollenliste bei der Teilnehmerzuweisung im Setup.
@@ -323,6 +349,29 @@ app.get('/api/run/stage-state', (req, res) => {
     } : null,
     lagekartenTotal: scenario.lagekarten.length,
     lagekartenGezeigt: state.firedLagekarten.filter(id => id.startsWith('LK')).length
+  });
+});
+
+// Oeffentliche, spoilerfreie Ablauf-Ansicht fuer Teilnehmer: Begruessung,
+// Spielregeln und nur die BEREITS GEZEIGTEN Lagekarten zum Nachlesen — keine
+// Sonderlagekarten (vertraulich/rollenbezogen) und keine kuenftigen Karten.
+app.get('/api/run/ablauf-state', (req, res) => {
+  const mf = scenario.moderationsleitfaden || {};
+  const gezeigt = scenario.lagekarten
+    .filter(lk => state.firedLagekarten.includes(lk.id))
+    .sort((a, b) => a.minuteOffset - b.minuteOffset)
+    .map(lk => ({
+      id: lk.id, simZeit: lk.simZeit, titel: lk.titel, text: lk.text,
+      kriseninfo: lk.kriseninfo || null, media: lk.media || null
+    }));
+  res.json({
+    status: state.status,
+    title: scenario.title,
+    companyName: scenario.company.name,
+    begruessung: mf.begruessung || '',
+    spielregeln: mf.spielregeln || [],
+    lagekartenGezeigt: gezeigt,
+    lagekartenTotal: scenario.lagekarten.length
   });
 });
 

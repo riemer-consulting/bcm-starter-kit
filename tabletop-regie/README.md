@@ -37,13 +37,24 @@ nebeneinander.
   (z. B. 45/90/120 Minuten) — die App schneidet dann Kartenauswahl und
   Diskussionszeiten passend zu.
 
+- Fast jeder Button in der App zeigt beim Draufhalten mit der Maus (Mouseover)
+  eine kurze Erklärung, was er tut — und ein eigener **"Ablauf & Hilfe"**-Tab
+  erklärt Start, die einzelnen Ansichten und zeigt Teilnehmenden Begrüßung,
+  Spielregeln und bereits gezeigte Lagekarten zum Nachlesen (ohne vertrauliche
+  Sonderlagekarten und ohne Spoiler kommender Karten).
+
 ## Installation & Start
 
 Voraussetzung: [Node.js](https://nodejs.org/) (LTS-Version) ist auf dem Rechner
 installiert — Windows, macOS und Linux funktionieren alle gleich gut, es gibt
 keine Linux-spezifischen Pfade oder Abhängigkeiten.
 
-**Unter Windows:** Ordner `tabletop-regie` im Explorer öffnen, in die
+**Am einfachsten:** im Hauptordner des Repos (eine Ebene über `tabletop-regie`)
+`start.sh` (macOS/Linux, im Terminal ausführen oder doppelklicken) bzw.
+`start.bat` (Windows, doppelklicken) starten und "2) BCM Tabletop-Übung"
+wählen — installiert beim ersten Mal automatisch die Abhängigkeiten.
+
+**Manuell unter Windows:** Ordner `tabletop-regie` im Explorer öffnen, in die
 Adresszeile oben `cmd` eintippen und Enter drücken — das öffnet eine
 Eingabeaufforderung direkt in diesem Ordner. Dort:
 
@@ -52,7 +63,7 @@ npm install
 npm start
 ```
 
-**Unter macOS/Linux:** Terminal öffnen, dann:
+**Manuell unter macOS/Linux:** Terminal öffnen, dann:
 
 ```bash
 cd tabletop-regie
@@ -68,6 +79,7 @@ Danach:
 - Setup: http://localhost:4173/setup.html
 - Bühne (teilen): http://localhost:4173/stage.html
 - Moderation (nicht teilen): http://localhost:4173/moderator.html
+- Ablauf & Hilfe (für Teilnehmer + Erklärung der App): http://localhost:4173/ablauf.html
 
 Die App läuft ausschließlich lokal. Die einzige ausgehende Netzwerkverbindung
 ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
@@ -98,8 +110,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    "hinzufügen" klicken, Namen/E-Mails ergänzen. Sie bekommen die öffentlichen
    Lagekarten mit, tauchen nicht in der Bewertungsmatrix auf (keine feste
    Funktion zu bewerten) und erhalten am Ende trotzdem eine eigene Urkunde.
-   Mit **"Rollenbeschreibungen per E-Mail senden"** bekommt jede Person vorab
-   eine Mail mit ihrer Rolle (oder Rollen) und der jeweiligen Beschreibung.
+   Mit **"Begrüßung an alle senden"** bekommt jede Person (unabhängig von der
+   Rolle) vorab eine Mail mit Begrüßungstext und Spielregeln aus dem Drehbuch.
+   Mit **"Rollenbeschreibungen per E-Mail senden"** bekommt jede Person
+   zusätzlich eine Mail mit ihrer Rolle (oder Rollen) und der jeweiligen
+   Beschreibung.
 4. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
 5. **Branding** (Name/Logo der durchführenden Organisation, Ort) für die
