@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const multer = require('multer');
 
 const store = require('./store');
 const engine = require('./runEngine');
@@ -12,6 +13,22 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/media', express.static(path.join(__dirname, '..', 'media')));
+
+// Logo-Upload fuer das Branding (Urkunden): landet direkt unter media/branding,
+// damit der Moderator keinen Dateipfad im System heraussuchen muss.
+const brandingMediaDir = path.join(__dirname, '..', 'media', 'branding');
+fs.mkdirSync(brandingMediaDir, { recursive: true });
+const logoUpload = multer({
+  storage: multer.diskStorage({
+    destination: brandingMediaDir,
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase() || '.png';
+      cb(null, `custom-logo-${Date.now()}${ext}`);
+    }
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => cb(null, /^image\//.test(file.mimetype))
+});
 
 // Generische, szenario-unabhaengige Rolle "Teilnehmer": fuer Personen ohne
 // feste Funktion im Krisenstab (reine Beobachter/Zuhoerer), beliebig oft
@@ -269,6 +286,16 @@ app.post('/api/settings', (req, res) => {
   };
   store.saveSettings(merged);
   res.json({ ok: true });
+});
+app.post('/api/settings/upload-logo', (req, res) => {
+  logoUpload.single('logo')(req, res, (err) => {
+    if (err) return res.status(400).json({ ok: false, error: err.message });
+    if (!req.file) return res.status(400).json({ ok: false, error: 'Keine Bilddatei empfangen (erlaubt: PNG/JPG/SVG/...).' });
+    const url = '/media/branding/' + req.file.filename;
+    const current = store.loadSettings();
+    store.saveSettings({ ...current, branding: { ...current.branding, logo: url } });
+    res.json({ ok: true, url });
+  });
 });
 app.post('/api/settings/test-email', async (req, res) => {
   const settings = store.loadSettings();

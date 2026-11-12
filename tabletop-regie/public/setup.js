@@ -48,6 +48,13 @@ function renderRoleCheckboxes() {
 
 async function saveActiveRoles() {
   await fetch('/api/active-roles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(activeRoleIds) });
+  // Erst den aktuellen DOM-Stand uebernehmen (sonst gehen bereits getippte
+  // Namen verloren), dann verwaiste, nie ausgefuellte Platzhalter-Zeilen
+  // entfernen, deren Rolle gerade deaktiviert wurde -- verhindert, dass sich
+  // leere Zeilen unbemerkt ansammeln und die Teilnehmerzahl verfaelschen.
+  participants = collectParticipantsFromDom().filter(p =>
+    p.name.trim() || p.email.trim() || p.roleIds.some(rid => activeRoleIds.includes(rid))
+  );
   renderRoleCheckboxes();
   renderParticipants();
 }
@@ -182,7 +189,12 @@ document.getElementById('btn-add-teilnehmer').addEventListener('click', async ()
     await fetch('/api/active-roles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(activeRoleIds) });
     renderRoleCheckboxes();
   }
-  participants = collectParticipantsFromDom();
+  // Ersetzt gezielt nur die noch nicht ausgefuellten Teilnehmer-Platzhalter
+  // (statt blind weitere anzuhaengen) -- so fuehrt mehrfaches Klicken nicht
+  // zu immer mehr leeren Zeilen, die die Teilnehmerzahl unbemerkt aufblaehen.
+  participants = collectParticipantsFromDom().filter(p =>
+    p.name.trim() || p.email.trim() || p.roleIds.join(',') !== 'teilnehmer'
+  );
   for (let i = 0; i < count; i++) participants.push({ name: '', email: '', roleIds: ['teilnehmer'] });
   renderParticipants();
 });
@@ -273,6 +285,12 @@ async function loadSettings() {
   document.getElementById('brand-name').value = (s.branding && s.branding.organisationName) || '';
   document.getElementById('brand-logo').value = (s.branding && s.branding.logo) || '';
   document.getElementById('brand-ort').value = (s.branding && s.branding.ort) || '';
+  updateBrandLogoPreview();
+}
+function updateBrandLogoPreview() {
+  const url = document.getElementById('brand-logo').value;
+  const img = document.getElementById('brand-logo-preview');
+  if (url) { img.src = url; img.style.display = ''; } else { img.style.display = 'none'; }
 }
 async function saveSettingsPart(partial) {
   const res = await fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(partial) });
@@ -303,6 +321,28 @@ document.getElementById('btn-test-email').addEventListener('click', async () => 
 document.getElementById('btn-save-branding').addEventListener('click', async () => {
   await saveSettingsPart({ branding: { organisationName: document.getElementById('brand-name').value, logo: document.getElementById('brand-logo').value, ort: document.getElementById('brand-ort').value } });
   document.getElementById('settings-status').textContent = 'Branding gespeichert.';
+});
+document.getElementById('brand-logo-upload').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('brand-upload-status');
+  statusEl.textContent = 'Lade Logo hoch …';
+  const fd = new FormData();
+  fd.append('logo', file);
+  try {
+    const res = await fetch('/api/settings/upload-logo', { method: 'POST', body: fd });
+    const r = await res.json();
+    if (r.ok) {
+      document.getElementById('brand-logo').value = r.url;
+      updateBrandLogoPreview();
+      statusEl.textContent = 'Logo hochgeladen und gespeichert.';
+    } else {
+      statusEl.textContent = 'Fehler beim Hochladen: ' + r.error;
+    }
+  } catch (err) {
+    statusEl.textContent = 'Fehler beim Hochladen: ' + err.message;
+  }
+  e.target.value = '';
 });
 
 async function init() {

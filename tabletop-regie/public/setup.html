@@ -134,10 +134,20 @@
     <h2>Branding (Durchführer)</h2>
     <div class="grid-2">
       <div><label>Name der durchführenden Organisation</label><input id="brand-name" placeholder="z. B. EXCON, Riemer Consulting ..."></div>
-      <div><label>Logo (Pfad/URL, optional – erscheint auf Urkunden)</label><input id="brand-logo" placeholder="/media/mein-logo.png"></div>
+      <div>
+        <label>Logo (erscheint auf Urkunden)</label>
+        <div class="row" style="align-items:center;">
+          <img id="brand-logo-preview" style="height:40px;max-width:160px;object-fit:contain;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;display:none;">
+          <input type="file" id="brand-logo-upload" accept="image/*" title="Eigenes Logo-Bild hochladen — landet automatisch im richtigen Ordner, kein Dateipfad nötig." style="width:auto;flex:1;">
+        </div>
+        <input id="brand-logo" readonly title="Wird automatisch beim Hochladen gesetzt." style="margin-top:6px;font-size:12px;color:var(--muted);">
+      </div>
       <div><label>Ort (erscheint auf Urkunden, Datum wird automatisch gesetzt)</label><input id="brand-ort" placeholder="z. B. Soltau"></div>
     </div>
-    <div class="row" style="margin-top:12px;"><button id="btn-save-branding" class="secondary" title="Speichert Name/Logo/Ort der durchführenden Organisation für die Urkunden.">Branding speichern</button></div>
+    <div class="row" style="margin-top:12px;">
+      <button id="btn-save-branding" class="secondary" title="Speichert Name/Ort der durchführenden Organisation für die Urkunden.">Branding speichern</button>
+      <span id="brand-upload-status" class="muted"></span>
+    </div>
   </div>
 </div>
 <script src="setup.js"></script>

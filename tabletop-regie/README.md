@@ -120,7 +120,10 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 5. **Branding** (Name/Logo der durchführenden Organisation, Ort) für die
    Urkunden prüfen — Standard ist "EXCON" mit mitgeliefertem Logo, unabhängig
    vom Kundenlogo, das im Szenario selbst steckt (z. B. Waterkant Baumärkte).
-   Beides ist bereits hinterlegt, ohne dass du etwas hochladen musst. Der
+   Eigenes Logo per Klick auf "Datei auswählen" hochladen — kein Dateipfad im
+   System nötig, landet automatisch am richtigen Ort und wird sofort als
+   Vorschau angezeigt. Beides ist bereits hinterlegt, falls du nichts
+   hochlädst. Der
    eingetragene **Ort** erscheint zusammen mit dem **Datum** (automatisch das
    Tagesdatum des Laufs) auf jeder Urkunde.
 6. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
