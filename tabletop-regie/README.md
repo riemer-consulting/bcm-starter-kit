@@ -86,6 +86,13 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
 ## Ablauf einer Übung
 
+0. **Bereitest du Übungen öfter vor?** Dann zuerst ganz oben im Setup unter
+   **"Vorlage"** prüfen, ob du schon eine **Vorlage herunterladen** kannst,
+   die du beim letzten Mal gespeichert hast — "Vorlage laden …" spielt
+   Teilnehmer, Rollenauswahl, SMTP-Zugangsdaten, Branding und Zeitmodus in
+   einem Schritt ein (auch auf einem anderen Rechner), statt alles erneut
+   einzutippen. Am Ende dieses Setups (Schritt 7) kannst du die aktuelle
+   Konfiguration jederzeit wieder als neue Vorlage herunterladen.
 1. **Setup öffnen.** Oben zuerst das **Szenario** wählen (z. B. NordTech oder
    Waterkant) — ein Wechsel setzt Lauf und Teilnehmerliste zurück, da Rollen
    zwischen Szenarien nicht übertragbar sind. Die Auswahl wird gespeichert und
@@ -275,6 +282,11 @@ den eigenen Dateinamen ersetzen, z. B. `scenario.andererkunde.json`.)
   siehe `.gitignore`).
 - Die einzige externe Verbindung ist der von dir konfigurierte SMTP-Server.
 - SMTP-Zugangsdaten liegen lokal in `data/settings.json` — niemals committen.
+- Eine heruntergeladene **Vorlage** (JSON-Datei) enthält bewusst das echte
+  SMTP-Passwort sowie alle eingetragenen Teilnehmernamen/-E-Mails im Klartext
+  — ohne Passwort wäre sie beim Wiedereinspielen nutzlos. Diese Datei also
+  genauso behandeln wie `data/settings.json`: lokal aufbewahren, nicht
+  committen, nicht unverschlüsselt per Mail verschicken.
 
 ## Bekannte Grenzen (v1)
 

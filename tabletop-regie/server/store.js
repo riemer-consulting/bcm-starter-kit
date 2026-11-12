@@ -36,7 +36,11 @@ function loadScenario(filename) {
 
 const DEFAULT_SETTINGS = {
   smtp: { host: '', port: 587, secure: false, user: '', pass: '', fromAddress: '', fromName: 'BCM Tabletop-Regie', allowInsecureTLS: false },
-  branding: { organisationName: 'EXCON', logo: '/media/branding/excon-logo.png', ort: '' }
+  branding: { organisationName: 'EXCON', logo: '/media/branding/excon-logo.png', ort: '' },
+  // Zuletzt gewaehlter Zeitmodus/Schwierigkeit/Zieldauer -- wird beim
+  // Start einer Uebung gemerkt, damit das Setup beim naechsten Mal nicht
+  // wieder auf die Standardwerte zurueckfaellt.
+  runDefaults: { durationMode: 'authored', difficulty: 'mittel', targetPreset: '90', targetCustom: 90 }
 };
 
 function loadSettings() {

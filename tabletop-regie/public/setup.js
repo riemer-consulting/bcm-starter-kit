@@ -268,6 +268,13 @@ document.getElementById('btn-start').addEventListener('click', async () => {
   const difficulty = document.getElementById('difficulty').value;
   const targetMinutes = durationMode === 'target' ? currentTargetMinutes() : undefined;
   await fetch('/api/run/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ durationMode, difficulty, targetMinutes }) });
+  // Zeitmodus/Schwierigkeit/Zieldauer merken, damit das Setup sie beim
+  // naechsten Mal (bzw. in einer exportierten Vorlage) wieder vorschlaegt.
+  await saveSettingsPart({ runDefaults: {
+    durationMode, difficulty,
+    targetPreset: document.getElementById('target-preset').value,
+    targetCustom: Number(document.getElementById('target-custom').value) || 90
+  } });
 
   // Pflicht statt Kann: jede Person mit E-Mail bekommt beim Start automatisch
   // Begrüßung/Spielregeln und ihre Rollenbeschreibung(en) -- vorher musste
@@ -306,6 +313,17 @@ async function loadSettings() {
   document.getElementById('brand-logo').value = (s.branding && s.branding.logo) || '';
   document.getElementById('brand-ort').value = (s.branding && s.branding.ort) || '';
   updateBrandLogoPreview();
+  applyRunDefaults(s.runDefaults);
+}
+function applyRunDefaults(rd) {
+  if (!rd) return;
+  document.getElementById('duration-mode').value = rd.durationMode || 'authored';
+  document.getElementById('difficulty').value = rd.difficulty || 'mittel';
+  document.getElementById('target-preset').value = rd.targetPreset || '90';
+  document.getElementById('target-custom').value = rd.targetCustom || 90;
+  document.getElementById('target-duration-row').style.display = document.getElementById('duration-mode').value === 'target' ? 'grid' : 'none';
+  document.getElementById('target-custom-wrap').style.display = document.getElementById('target-preset').value === 'custom' ? 'block' : 'none';
+  updateDurationPreview();
 }
 function updateBrandLogoPreview() {
   const url = document.getElementById('brand-logo').value;
@@ -363,6 +381,40 @@ document.getElementById('brand-logo-upload').addEventListener('change', async (e
     statusEl.textContent = 'Fehler beim Hochladen: ' + err.message;
   }
   e.target.value = '';
+});
+
+document.getElementById('btn-export-template').addEventListener('click', async () => {
+  const tpl = await (await fetch('/api/template/export')).json();
+  const blob = new Blob([JSON.stringify(tpl, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const datestamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `vorlage-${(tpl.scenarioFile || 'uebung').replace(/\.json$/, '')}-${datestamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  document.getElementById('template-status').textContent = 'Vorlage heruntergeladen.';
+});
+
+document.getElementById('input-import-template').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  if (!confirm('Vorlage wirklich einspielen? Teilnehmer, Rollenauswahl, SMTP- und Branding-Einstellungen des aktuellen Laufs werden dabei ersetzt.')) return;
+  const statusEl = document.getElementById('template-status');
+  try {
+    const tpl = JSON.parse(await file.text());
+    statusEl.textContent = 'Spiele Vorlage ein …';
+    const res = await fetch('/api/template/import', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(tpl) });
+    const r = await res.json();
+    if (!r.ok) { statusEl.textContent = 'Fehler: ' + r.error; return; }
+    statusEl.textContent = `Vorlage eingespielt (${r.title}).`;
+    await init();
+  } catch (err) {
+    statusEl.textContent = 'Datei konnte nicht gelesen werden: ' + err.message;
+  }
 });
 
 async function init() {

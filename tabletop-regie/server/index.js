@@ -174,13 +174,10 @@ app.get('/api/scenarios', (req, res) => {
   });
   res.json({ active: scenarioFile, scenarios: list });
 });
-app.post('/api/scenarios/select', (req, res) => {
-  const { file } = req.body || {};
-  if (!store.listScenarioFiles().includes(file)) {
-    return res.status(400).json({ ok: false, error: 'Unbekannte Szenario-Datei.' });
-  }
+function switchScenario(file) {
+  if (!store.listScenarioFiles().includes(file)) return { ok: false, error: 'Unbekannte Szenario-Datei.' };
   const loaded = store.loadScenario(file);
-  if (!loaded.scenario) return res.status(500).json({ ok: false, error: 'Szenario konnte nicht geladen werden.' });
+  if (!loaded.scenario) return { ok: false, error: 'Szenario konnte nicht geladen werden.' };
   scenarioFile = loaded.file;
   scenario = augmentWithGenericRole(loaded.scenario);
   state = engine.newRunState(scenario);
@@ -190,7 +187,12 @@ app.post('/api/scenarios/select', (req, res) => {
   store.saveSettings(settings);
   log('info', `Szenario gewechselt zu: ${scenario.title} (${scenario.company.name}).`);
   persist();
-  res.json({ ok: true, title: scenario.title, companyName: scenario.company.name });
+  return { ok: true, title: scenario.title, companyName: scenario.company.name };
+}
+
+app.post('/api/scenarios/select', (req, res) => {
+  const result = switchScenario((req.body || {}).file);
+  res.status(result.ok ? 200 : 400).json(result);
 });
 
 // Vorschau fuer den Zieldauer-Modus im Setup: nutzt die im Formular gerade
@@ -216,14 +218,17 @@ app.post('/api/preview-schedule', (req, res) => {
 
 // ---- Teilnehmer ----
 app.get('/api/participants', (req, res) => res.json(state.participants));
-app.post('/api/participants', (req, res) => {
-  const list = Array.isArray(req.body) ? req.body : [];
-  state.participants = list.map(p => ({
+function normalizeParticipants(list) {
+  return (Array.isArray(list) ? list : []).map(p => ({
     id: p.id || crypto.randomUUID(),
     name: String(p.name || '').trim(),
     email: String(p.email || '').trim(),
     roleIds: Array.isArray(p.roleIds) ? p.roleIds : []
   }));
+}
+
+app.post('/api/participants', (req, res) => {
+  state.participants = normalizeParticipants(req.body);
   persist();
   res.json(state.participants);
 });
@@ -294,16 +299,23 @@ app.get('/api/settings', (req, res) => {
   const s = store.loadSettings();
   res.json(Object.assign({}, s, { smtp: Object.assign({}, s.smtp, { pass: s.smtp.pass ? '••••••••' : '' }) }));
 });
-app.post('/api/settings', (req, res) => {
+function mergeSettings(incoming) {
   const current = store.loadSettings();
-  const incoming = req.body || {};
+  incoming = incoming || {};
   // Platzhalter-Passwort nicht ueberschreiben, wenn Nutzer das Feld unveraendert liess.
   if (incoming.smtp && incoming.smtp.pass === '••••••••') incoming.smtp.pass = current.smtp.pass;
   const merged = {
     smtp: Object.assign({}, current.smtp, incoming.smtp || {}),
-    branding: Object.assign({}, current.branding, incoming.branding || {})
+    branding: Object.assign({}, current.branding, incoming.branding || {}),
+    runDefaults: Object.assign({}, current.runDefaults, incoming.runDefaults || {}),
+    activeScenarioFile: current.activeScenarioFile
   };
   store.saveSettings(merged);
+  return merged;
+}
+
+app.post('/api/settings', (req, res) => {
+  mergeSettings(req.body);
   res.json({ ok: true });
 });
 app.post('/api/settings/upload-logo', (req, res) => {
@@ -325,6 +337,43 @@ app.post('/api/settings/test-email', async (req, res) => {
     text: 'Dies ist eine Testnachricht Ihrer BCM-Tabletop-Regie-App. Wenn Sie diese E-Mail erhalten, ist der SMTP-Versand korrekt konfiguriert.'
   });
   res.json(result);
+});
+
+// ---- Vorlagen (Setup wiederverwendbar machen) ----
+// Ein Moderator, der dieselbe Art Übung öfter vorbereitet, soll nicht jedes
+// Mal Teilnehmer, Rollen, SMTP-Zugangsdaten und Zeitmodus neu eintippen
+// müssen: Export schreibt alles in eine JSON-Datei, Import spielt sie wieder
+// ein. Absichtlich inkl. des echten SMTP-Passworts (nicht maskiert wie bei
+// GET /api/settings) -- ohne Passwort waere die Vorlage beim Wiedereinspielen
+// nutzlos. Die Datei bleibt lokal beim Moderator, wie alle anderen
+// Konfigurationsdaten dieser App auch.
+app.get('/api/template/export', (req, res) => {
+  res.json({
+    exportedAt: new Date().toISOString(),
+    scenarioFile,
+    activeRoleIds: state.activeRoleIds,
+    participants: state.participants,
+    settings: store.loadSettings()
+  });
+});
+
+app.post('/api/template/import', (req, res) => {
+  const tpl = req.body || {};
+  if (tpl.scenarioFile && tpl.scenarioFile !== scenarioFile) {
+    const switchResult = switchScenario(tpl.scenarioFile);
+    if (!switchResult.ok) return res.status(400).json(switchResult);
+  }
+  if (tpl.settings) mergeSettings(tpl.settings);
+  if (Array.isArray(tpl.activeRoleIds)) {
+    const validIds = new Set(scenario.roles.map(r => r.id));
+    state.activeRoleIds = tpl.activeRoleIds.filter(id => validIds.has(id));
+  }
+  if (Array.isArray(tpl.participants)) {
+    state.participants = normalizeParticipants(tpl.participants);
+  }
+  log('info', 'Vorlage eingespielt: Teilnehmer, Rollen und Einstellungen übernommen.');
+  persist();
+  res.json({ ok: true, title: scenario.title, companyName: scenario.company.name });
 });
 
 // ---- Lauf-Steuerung ----

@@ -12,6 +12,19 @@
   <p class="muted" id="scenario-subtitle"></p>
 
   <div class="card">
+    <h2>Vorlage</h2>
+    <p class="muted">Bereitest du solche Übungen öfter vor? Lade Teilnehmer, Rollen, SMTP-Zugangsdaten, Branding und Zeitmodus als eine Datei herunter und spiele sie beim nächsten Mal (auch auf einem anderen Rechner) wieder ein — dann musst du nichts erneut eintippen.</p>
+    <div class="row">
+      <button id="btn-export-template" class="secondary" title="Lädt Teilnehmer, Rollen, SMTP-Zugangsdaten, Branding und Zeitmodus als JSON-Datei herunter.">Vorlage herunterladen</button>
+      <label class="secondary" style="display:inline-flex;align-items:center;gap:8px;width:auto;padding:9px 16px;border:1px solid var(--border);border-radius:6px;cursor:pointer;" title="Spielt eine zuvor heruntergeladene Vorlagen-Datei ein — ersetzt Teilnehmer, Rollen und Einstellungen des aktuellen Laufs.">
+        Vorlage laden …
+        <input type="file" id="input-import-template" accept="application/json,.json" style="display:none;">
+      </label>
+      <span id="template-status" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card">
     <h2>Szenario</h2>
     <p class="muted">Welches Unternehmen/Drehbuch soll simuliert werden? Ein Wechsel setzt den aktuellen Lauf und die Teilnehmerliste zurück, da Rollen zwischen Szenarien nicht übertragbar sind.</p>
     <div class="row">
