@@ -1210,6 +1210,111 @@
         "geschaeftsfuehrerin-vertrieb",
         "leiter-einzelhandel"
       ]
+    },
+    {
+      "id": "SK27",
+      "nr": 27,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 57,
+      "vertraulich": true,
+      "text": "Die erste Frist der Erpresser ist abgelaufen. Jetzt melden sie sich erneut über das Tor-Portal: „Wir sind noch in eurem Netz. Ihr habt 12 Stunden.“ Die Forensik kann das weder bestätigen noch ausschließen. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Die Drohung geht sofort in den Krisenstab; Forensik prüft gezielt, der Wiederanlauf wird bewusst abgewogen statt hektisch gestoppt.",
+      "moderatorSchlecht": "Die Information bleibt in der IT, der Wiederanlauf läuft ungeprüft weiter – oder es wird ohne Abstimmung alles wieder abgeschaltet.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK28",
+      "nr": 28,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 63,
+      "vertraulich": true,
+      "text": "Der Betriebsrat verlangt bis heute Mittag eine Information an die Belegschaft: Wie sicher sind die Arbeitsplätze, und werden die Überstunden der letzten Tage bezahlt? In der Produktion wird schon über Dienst nach Vorschrift gesprochen.",
+      "moderatorGut": "Kurzfristige, ehrliche Information an die Belegschaft, abgestimmt mit der Geschäftsführung.",
+      "moderatorSchlecht": "Vertröstung auf später – die Gerüchte wachsen, die Stimmung kippt.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "office-management"
+      ]
+    },
+    {
+      "id": "SK29",
+      "nr": 29,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 72,
+      "vertraulich": true,
+      "text": "Die Hausbank meldet sich erneut: Wegen der Ausfälle will sie die Kreditlinie überprüfen und bittet bis Montag um eine Liquiditätsplanung für die nächsten acht Wochen – inklusive Annahmen zu Kundenzahlungen und Vertragsstrafen.",
+      "moderatorGut": "Realistische Planung gemeinsam mit Vertrieb und Einkauf, die Bank wird aktiv und ehrlich informiert.",
+      "moderatorSchlecht": "Die Zahlen werden schöngerechnet oder die Frist verstreicht.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "debitorenbuchhaltung"
+      ]
+    },
+    {
+      "id": "SK30",
+      "nr": 30,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 74,
+      "vertraulich": true,
+      "text": "Ein großer Automobilkunde will erst wieder bestellen, wenn ein externes Sicherheits-Audit bestätigt, dass bei euch kein Angreifer mehr im Netz ist. Bis dahin gehen Folgeaufträge an den Zweitlieferanten.",
+      "moderatorGut": "Audit wird zugesagt und terminiert, der Kunde bekommt einen klaren Ansprechpartner und regelmäßige Updates.",
+      "moderatorSchlecht": "Beschwichtigen („Alles wieder sicher“) ohne Nachweis – der Kunde wandert ab.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-einzelhandel",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK31",
+      "nr": 31,
+      "empfaenger": "fakturierung",
+      "minuteOffset": 80,
+      "vertraulich": true,
+      "text": "Das ERP läuft im Test. Im Rückstau liegen rund 5.600 handschriftliche Lieferscheine aus den Ausfalltagen. Ohne Nacherfassung geht keine Rechnung raus – und ohne Rechnung zahlt kein Kunde.",
+      "moderatorGut": "Nacherfassung wird priorisiert und mit Zusatzkräften geplant, die Liquiditätsfolgen gehen an die Finanzleitung.",
+      "moderatorSchlecht": "Die Abrechnung wird stillschweigend verschoben, die Liquiditätslücke fällt erst später auf.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "debitorenbuchhaltung",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK32",
+      "nr": 32,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 83,
+      "vertraulich": true,
+      "text": "Ein wichtiger Rohstofflieferant liefert ab sofort nur noch gegen Vorkasse. Er hat von eurer Lage aus der Presse erfahren und will kein Risiko eingehen.",
+      "moderatorGut": "Gespräch auf Leitungsebene, Zahlungsbedingungen werden mit der Finanzleitung abgestimmt.",
+      "moderatorSchlecht": "Bestellungen werden einfach zurückgestellt – der Wiederanlauf stockt mangels Material.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "kaufmaennische-leiterin-cfo",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK33",
+      "nr": 33,
+      "empfaenger": "marketing-ecommerce",
+      "minuteOffset": 85,
+      "vertraulich": true,
+      "text": "Die Produktion läuft wieder zu 70 %. In der Geschäftsführung gibt es den Wunsch, am Montag groß zu verkünden: „Alles wieder im Griff.“ Gleichzeitig ist offen, ob Kundendaten abgeflossen sind. Wie formulierst du die Botschaft?",
+      "moderatorGut": "Ehrliche, vorsichtige Botschaft; Kunden werden vor der Presse informiert, offene Punkte werden benannt.",
+      "moderatorSchlecht": "Vorschnelle Entwarnung – sie fällt dem Unternehmen auf die Füße, sobald neue Fakten auftauchen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "office-management",
+        "geschaeftsfuehrer-ceo"
+      ]
     }
   ],
   "bonuskarten": [

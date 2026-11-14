@@ -3,6 +3,7 @@ function escapeHtml(s) {
 }
 
 let lastState = null;
+let skippedPastOpen = false;
 
 async function api(path, opts) {
   const res = await fetch(path, opts);
@@ -130,7 +131,7 @@ function updateSkAlerts(s) {
         <div class="kopf" style="flex:1;">${f.manual ? 'Manuell ausgelöst' : 'Soeben verschickt'}: vertrauliche Karte ${escapeHtml(f.id)} an ${an}</div>
         <button class="secondary sk-alert-ok" data-idx="${i}" style="flex-shrink:0;" title="Hinweis schließen. Die Karte bleibt unten unter „Verschickte vertrauliche Karten“ einsehbar.">Gesehen</button>
       </div>
-      <div>${escapeHtml(sk.text || '')}</div>
+      <div class="txt" title="Mit der Maus darüberfahren, um den ganzen Text zu sehen.">${escapeHtml(sk.text || '')}</div>
       ${sk.moderatorHinweis ? `<div style="color:var(--warn);margin-top:4px;">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
       ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
       ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
@@ -192,14 +193,28 @@ function render(s) {
     warnCard.style.display = 'none';
   }
 
+  // Nicht eingeplante Karten: nur die, die zur aktuellen oder einer
+  // kommenden Lage passen. Vergangene sind ausgeblendet (per Klick sichtbar).
   const skippedCard = document.getElementById('m-skipped-card');
-  if (s.skipped && s.skipped.length > 0) {
+  const offen = (s.skipped || []).filter(ev => !ev.vorbei);
+  const vergangen = (s.skipped || []).filter(ev => ev.vorbei);
+  if (offen.length || vergangen.length) {
     skippedCard.style.display = '';
-    document.getElementById('m-skipped').innerHTML = s.skipped.map(ev => `
-      <div class="row" style="justify-content:space-between;margin-bottom:6px;">
-        <span class="mini">${escapeHtml(ev.titel)} <span class="muted">— ${escapeHtml(ev.reason)}</span></span>
-        <button class="secondary promote-event" data-type="${ev.type}" data-id="${ev.id}" title="Nimmt diese aus Zeitgründen übersprungene Karte doch noch mit auf — wird sofort angezeigt/versendet.">Trotzdem aufnehmen</button>
-      </div>`).join('');
+    const zeile = ev => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-top:1px solid var(--border);">
+        <div class="mini" style="flex:1;">
+          <b>${escapeHtml(ev.titel)}</b>
+          ${ev.jetzt ? '<span class="badge ok" style="margin-left:6px;">passt jetzt</span>' : ''}
+          ${ev.lage ? `<span class="muted"> · gehört zu „${escapeHtml(ev.lage.titel)}“ (${escapeHtml(ev.lage.simZeit)})</span>` : ''}
+          <div style="margin-top:3px;">${escapeHtml(ev.text || '')}</div>
+        </div>
+        <button class="secondary promote-event" data-type="${ev.type}" data-id="${ev.id}" style="flex-shrink:0;" title="Nimmt diese Karte jetzt doch auf – sie wird sofort angezeigt bzw. verschickt.">Jetzt einsetzen</button>
+      </div>`;
+    document.getElementById('m-skipped').innerHTML =
+      (offen.length ? offen.map(zeile).join('') : '<p class="muted mini">Für die aktuelle und die kommenden Lagen ist nichts mehr offen.</p>') +
+      (vergangen.length ? `<details class="mini" style="margin-top:8px;" ${skippedPastOpen ? 'open' : ''}><summary class="muted" style="cursor:pointer;">${vergangen.length} Karten zu bereits vergangenen Lagen ausgeblendet</summary>${vergangen.map(zeile).join('')}</details>` : '');
+    const det = document.querySelector('#m-skipped details');
+    if (det) det.addEventListener('toggle', () => { skippedPastOpen = det.open; });
   } else {
     skippedCard.style.display = 'none';
   }

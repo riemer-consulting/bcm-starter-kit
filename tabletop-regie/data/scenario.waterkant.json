@@ -960,6 +960,95 @@
         "notfallmanagement-bcm",
         "geschaeftsfuehrer-ceo"
       ]
+    },
+    {
+      "id": "SK16",
+      "nr": 16,
+      "empfaenger": "leiterin-kommunikation-pr",
+      "minuteOffset": 70,
+      "vertraulich": true,
+      "text": "Kurz vor der Pressekonferenz erfährst du: Ein Video aus der Brandnacht kursiert. Es zeigt Mitarbeitende ohne Schutzausrüstung, die Ware aus der brennenden Halle tragen. Mehrere Redaktionen haben es bereits.",
+      "moderatorGut": "Das Video wird vorab im Krisenstab besprochen und in der Pressekonferenz offen angesprochen.",
+      "moderatorSchlecht": "Man hofft, dass niemand danach fragt – und wird in der Pressekonferenz kalt erwischt.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "notfallmanagement-bcm"
+      ]
+    },
+    {
+      "id": "SK17",
+      "nr": 17,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 74,
+      "vertraulich": true,
+      "text": "Mitarbeitende des Zentrallagers fragen, ob sie in Kurzarbeit gehen oder in die Filialen versetzt werden. Zwei erfahrene Lagerkräfte haben bereits gekündigt, ein Wettbewerber wirbt gezielt ab.",
+      "moderatorGut": "Schnelle, verbindliche Perspektive für die Lagerbelegschaft, Schlüsselkräfte werden persönlich angesprochen.",
+      "moderatorSchlecht": "Keine Aussage bis „alles geklärt ist“ – weitere Kündigungen folgen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-arbeitssicherheit",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK18",
+      "nr": 18,
+      "empfaenger": "leiter-finanzen-cfo",
+      "minuteOffset": 81,
+      "vertraulich": true,
+      "text": "Der Gutachter der Versicherung deutet an: Sollte die Brandschutzwartung tatsächlich überfällig gewesen sein, könnte die Versicherung ihre Leistung wegen grober Fahrlässigkeit kürzen. Eine Entscheidung fällt in etwa zwei Wochen.",
+      "moderatorGut": "Das Risiko geht sofort in die Planung; Wartungsunterlagen werden gesichert, juristische Beratung eingebunden.",
+      "moderatorSchlecht": "Es wird mit der vollen Versicherungsleistung weitergeplant, als wäre nichts.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK19",
+      "nr": 19,
+      "empfaenger": "online-shop-leitung",
+      "minuteOffset": 84,
+      "vertraulich": true,
+      "text": "Über 200 Online-Bestellungen sind seit dem Brand überfällig. Kunden posten Fotos der Brandruine unter eure Werbeanzeigen: „Hier kommt meine Bestellung wohl nicht mehr her.“ Die Kampagne zum Saisonstart läuft weiter.",
+      "moderatorGut": "Kampagne pausieren, betroffene Kunden aktiv anschreiben, realistische Lieferzusagen oder Erstattung anbieten.",
+      "moderatorSchlecht": "Werbung läuft weiter, Kommentare werden gelöscht – der Shitstorm wächst.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "leiterin-kommunikation-pr"
+      ]
+    },
+    {
+      "id": "SK20",
+      "nr": 20,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "minuteOffset": 88,
+      "vertraulich": true,
+      "text": "Die Gewerbeaufsicht kündigt für Montag eine Prüfung aller übrigen Lagerstandorte und Filialen an – insbesondere Ladestationen und Gefahrstofflagerung. Bis dahin müssen Mängel dokumentiert und behoben sein.",
+      "moderatorGut": "Sofortige Begehung aller Standorte mit Mängelliste und klaren Verantwortlichen.",
+      "moderatorSchlecht": "Die Ankündigung wird als Formalie behandelt – am Montag drohen weitere Schließungen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK21",
+      "nr": 21,
+      "empfaenger": "regionalleiterin-filialen-nord",
+      "minuteOffset": 89,
+      "vertraulich": true,
+      "text": "Der Wiederanlauf ist angekündigt, doch in drei Filialen fehlen weiterhin Gartenmöbel und Pflanzen aus der Saisonaktion. Kunden bestehen auf den beworbenen Preisen und drohen mit schlechten Bewertungen.",
+      "moderatorGut": "Klare Kulanzregel für alle Filialen, Personal vor Ort bekommt eine einheitliche Antwort.",
+      "moderatorSchlecht": "Jede Filiale entscheidet anders – Kunden vergleichen und beschweren sich öffentlich.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "regionalleiter-filialen-sued",
+        "geschaeftsfuehrer-ceo"
+      ]
     }
   ],
   "bonuskarten": [

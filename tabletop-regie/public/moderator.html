@@ -30,7 +30,9 @@
   #timeline-slider:disabled::-webkit-slider-thumb { background:var(--muted); box-shadow:none; }
   .timeline-ghost { position:absolute; top:4px; width:2px; height:48px; background:var(--warn); opacity:.55; pointer-events:none; display:none; }
   #timeline-preview { min-height:18px; margin-top:4px; font-size:13px; }
-  #m-alerts { position:sticky; top:0; z-index:50; max-height:55vh; overflow-y:auto; }
+  #m-alerts { position:fixed; top:12px; right:12px; width:min(440px, 42vw); z-index:50; max-height:70vh; overflow-y:auto; }
+  .sk-alert .txt { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .sk-alert:hover .txt { -webkit-line-clamp:unset; }
   .sk-alert { background:var(--panel); border:2px solid var(--warn); border-radius:8px; padding:10px 14px; margin-bottom:8px; box-shadow:0 6px 20px rgba(0,0,0,.35); font-size:13px; }
   .sk-alert.fehler { border-color:var(--bad); }
   .sk-alert .kopf { font-weight:700; color:var(--warn); margin-bottom:4px; }
@@ -106,8 +108,8 @@
       </div>
 
       <div class="card" id="m-skipped-card" style="display:none;">
-        <h2>Aus Zeitgründen übersprungen</h2>
-        <p class="muted mini">Diese Karten passen im aktuellen Zieldauer-Plan nicht hinein. Bei Bedarf trotzdem aufnehmen (wird sofort angezeigt/versendet).</p>
+        <h2>Nicht eingeplante Karten</h2>
+        <p class="muted mini">Diese Karten sind für die gewählte Dauer nicht im Plan – aus Zeitgründen oder damit niemand mit vertraulichen Karten überflutet wird. Angezeigt werden nur Karten, die zur aktuellen oder einer kommenden Lage passen. Wenn eine Diskussion mehr Druck braucht: „Jetzt einsetzen“.</p>
         <div id="m-skipped"></div>
       </div>
 

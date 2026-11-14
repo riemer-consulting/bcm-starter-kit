@@ -216,25 +216,9 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     if (candidates.length) actPicks.push(candidates[0]);
   });
 
-  // Rollenabdeckung: jede besetzte Rolle bekommt mindestens eine eigene
-  // Sonderlagekarte (eigene Karten vor Ersatz-Karten).
-  const coverage = [];
-  if (roleFilterActive) {
-    const alreadyCovered = new Set(prio1.filter(ev => ev.type === 'sonderlagekarte').map(recipientOf));
-    activeRoleSet.forEach(roleId => {
-      if (alreadyCovered.has(roleId)) return;
-      const candidates = [...prio2, ...prio3]
-        .filter(ev => ev.type === 'sonderlagekarte' && recipientOf(ev) === roleId)
-        .sort((a, b) => ((a.ref.empfaenger === roleId ? 0 : 1) - (b.ref.empfaenger === roleId ? 0 : 1))
-          || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
-          || (a.authoredMinute - b.authoredMinute));
-      if (candidates.length) coverage.push(candidates[0]);
-    });
-  }
-
   const baseline = [];
   const baseIds = new Set();
-  [...prio1, ...actPicks, ...coverage].forEach(ev => { if (!baseIds.has(keyOf(ev))) { baseIds.add(keyOf(ev)); baseline.push(ev); } });
+  [...prio1, ...actPicks].forEach(ev => { if (!baseIds.has(keyOf(ev))) { baseIds.add(keyOf(ev)); baseline.push(ev); } });
   const remainingPool = [...prio2, ...prio3].filter(ev => !baseIds.has(keyOf(ev)));
   // Erst Lagekarten nach Zeitbudget, danach vertrauliche Karten nach Menge.
   const lkPool = remainingPool.filter(ev => ev.type === 'lagekarte');
@@ -298,29 +282,51 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   }
 
   // Vertrauliche Karten kosten keine Spielzeit, duerfen aber nicht ueberfluten:
-  // insgesamt so viele wie im erprobten Ablauf (ca. 1,6 je Lagekarte), eigene
-  // Karten einer Rolle vor umgeleiteten, und keine Person bekommt deutlich
-  // mehr als die anderen.
+  // insgesamt ca. 1,6 je Lagekarte, keine Person bekommt deutlich mehr als die
+  // anderen -- und sie verteilen sich GLEICHMAESSIG ueber den Bogen, statt sich
+  // am Anfang zu ballen: Jede Karte gehoert zum Abschnitt der Lagekarte, nach
+  // der sie im Drehbuch kommt; ausgewaehlt wird immer zuerst fuer den
+  // Abschnitt, der bisher die wenigsten vertraulichen Karten hat.
+  const lkSel = selected.filter(ev => ev.type === 'lagekarte').sort((a, b) => a.authoredMinute - b.authoredMinute);
+  const windowOf = ev => { let w = 0; lkSel.forEach((l, i) => { if (l.authoredMinute <= ev.authoredMinute) w = i; }); return w; };
+  const winLoad = new Array(Math.max(1, lkSel.length)).fill(0);
+  const recLoad = {};
+  const skSelected = [];
+  const taken = new Set();
+  const recOf = ev => recipientOf(ev) || ev.ref.empfaenger;
+  const own = ev => (recipientOf(ev) === ev.ref.empfaenger ? 0 : 1);
+  const take = (ev, intoSelected) => {
+    if (intoSelected) selected.push(ev);
+    skSelected.push(ev); taken.add(keyOf(ev));
+    winLoad[windowOf(ev)]++; recLoad[recOf(ev)] = (recLoad[recOf(ev)] || 0) + 1;
+  };
+  selected.filter(ev => ev.type !== 'lagekarte').forEach(ev => take(ev, false));
+  const balanced = (a, b) => (winLoad[windowOf(a)] - winLoad[windowOf(b)])
+    || (own(a) - own(b))
+    || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
+    || (a.authoredMinute - b.authoredMinute);
+  // Rollenabdeckung: jede besetzte Rolle bekommt mindestens eine eigene Karte
+  // (eigene Karte vor umgeleiteter, dann im am wenigsten belegten Abschnitt).
+  if (roleFilterActive) {
+    activeRoleSet.forEach(roleId => {
+      if (skSelected.some(ev => recipientOf(ev) === roleId)) return;
+      const candidates = skPool.filter(ev => !taken.has(keyOf(ev)) && recipientOf(ev) === roleId)
+        .sort((a, b) => (own(a) - own(b)) || balanced(a, b));
+      if (candidates.length) take(candidates[0], true);
+    });
+  }
   const lkCount = selected.filter(fullLk).length;
-  const skSelected = selected.filter(ev => ev.type !== 'lagekarte');
   const skBudget = Math.max(skSelected.length, Math.round(lkCount * 1.6));
   const recipients = Math.max(1, roleFilterActive ? activeRoleSet.size : 1);
   const perRecipientCap = Math.max(2, Math.ceil(skBudget / recipients) + 1);
-  const load = {};
-  skSelected.forEach(ev => { const r = recipientOf(ev) || ev.ref.empfaenger; load[r] = (load[r] || 0) + 1; });
-  skPool
-    .slice()
-    .sort((a, b) => ((recipientOf(a) === a.ref.empfaenger ? 0 : 1) - (recipientOf(b) === b.ref.empfaenger ? 0 : 1))
-      || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
-      || (a.authoredMinute - b.authoredMinute))
-    .forEach(ev => {
-      const r = recipientOf(ev) || ev.ref.empfaenger;
-      if (skSelected.length < skBudget && (load[r] || 0) < perRecipientCap) {
-        selected.push(ev); skSelected.push(ev); load[r] = (load[r] || 0) + 1;
-      } else {
-        skipped.push({ type: ev.type, id: ev.id, reason: 'Für diese Dauer nicht enthalten – sonst kämen zu viele vertrauliche Karten auf einmal.' });
-      }
-    });
+  while (skSelected.length < skBudget) {
+    const candidates = skPool.filter(ev => !taken.has(keyOf(ev)) && (recLoad[recOf(ev)] || 0) < perRecipientCap).sort(balanced);
+    if (!candidates.length) break;
+    take(candidates[0], true);
+  }
+  skPool.filter(ev => !taken.has(keyOf(ev))).forEach(ev => {
+    skipped.push({ type: ev.type, id: ev.id, reason: 'Nicht eingeplant, damit die vertraulichen Karten gleichmäßig über die Übung verteilt sind und niemand überflutet wird.' });
+  });
 
   selected.sort((a, b) => a.authoredMinute - b.authoredMinute);
   const { placed, total } = placeEvents(selected, ev => (isVorbote(ev) ? vm : lkSlotFor(decisionMinutes)));

@@ -659,10 +659,26 @@ app.get('/api/run/moderator-state', (req, res) => {
     fired: ev.type === 'lagekarte' ? state.firedLagekarten.includes(ev.id) : !!state.firedSonderlagekarten.find(f => f.id === ev.id),
     isCurrent: !!(currentLk && ev.type === 'lagekarte' && ev.id === currentLk.id)
   }));
-  const skippedDetailed = (state.skippedEvents || []).map(sk => ({
-    type: sk.type, id: sk.id, reason: sk.reason,
-    titel: sk.type === 'lagekarte' ? scenario.lagekarten.find(lk => lk.id === sk.id).titel : `Sonderlagekarte für ${recipientLabel(scenario.sonderlagekarten.find(s => s.id === sk.id))}`
-  }));
+  // Uebersprungene Karten mit Inhalt und Zuordnung zur Lage. "vorbei" = die
+  // Geschichte ist schon ueber den Moment dieser Karte hinaus (gehoert zu
+  // einer frueheren Lagekarte als der aktuellen) -- die blendet die
+  // Moderation standardmaessig aus.
+  const lkByTime = scenario.lagekarten.slice().sort((a, b) => a.minuteOffset - b.minuteOffset);
+  const gehoertZu = minute => { let l = lkByTime[0]; lkByTime.forEach(x => { if (x.minuteOffset <= minute) l = x; }); return l; };
+  const skippedDetailed = (state.skippedEvents || []).map(sk => {
+    const ref = sk.type === 'lagekarte' ? scenario.lagekarten.find(lk => lk.id === sk.id) : scenario.sonderlagekarten.find(s2 => s2.id === sk.id);
+    if (!ref) return null;
+    const lage = sk.type === 'lagekarte' ? ref : gehoertZu(ref.minuteOffset == null ? Infinity : ref.minuteOffset);
+    return {
+      type: sk.type, id: sk.id, reason: sk.reason,
+      titel: sk.type === 'lagekarte' ? ref.titel : `Vertrauliche Karte für ${recipientLabel(ref)}`,
+      text: ref.text,
+      lage: lage ? { titel: lage.titel, simZeit: lage.simZeit } : null,
+      lageMinute: lage ? lage.minuteOffset : 9999,
+      jetzt: !!(currentLk && lage && lage.id === currentLk.id),
+      vorbei: !!(currentLk && lage && lage.minuteOffset < currentLk.minuteOffset)
+    };
+  }).filter(Boolean).sort((a, b) => (a.vorbei - b.vorbei) || (b.jetzt - a.jetzt) || (a.lageMinute - b.lageMinute));
   res.json({
     status: state.status,
     crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
