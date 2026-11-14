@@ -578,6 +578,14 @@ function applyRunDefaults(rd) {
 function updateBrandLogoPreview() {
   const url = document.getElementById('brand-logo').value;
   const img = document.getElementById('brand-logo-preview');
+  const hint = document.getElementById('brand-logo-hint');
+  hint.textContent = '';
+  // Fehlt die Datei (z. B. in einem neu entpackten Ordner), statt eines
+  // kaputten Bildes klar sagen, was los ist und was auf der Urkunde landet.
+  img.onerror = () => {
+    img.src = '/media/branding/excon-logo.png';
+    hint.textContent = 'Die Logo-Datei fehlt auf diesem Rechner (vermutlich in einem anderen Ordner hochgeladen). Bis Sie es neu hochladen, steht das Standard-Logo auf den Urkunden.';
+  };
   if (url) { img.src = url; img.style.display = ''; } else { img.style.display = 'none'; }
 }
 async function saveSettingsPart(partial) {
