@@ -9,6 +9,7 @@
   },
   "main": "server/index.js",
   "scripts": {
+    "prestart": "node server/check-deps.js || npm install",
     "start": "node server/index.js",
     "pruefen": "node server/validate.js"
   },

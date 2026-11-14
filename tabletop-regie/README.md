@@ -52,7 +52,10 @@ keine Linux-spezifischen Pfade oder Abhängigkeiten.
 **Am einfachsten:** im Hauptordner des Repos (eine Ebene über `tabletop-regie`)
 `start.sh` (macOS/Linux, im Terminal ausführen oder doppelklicken) bzw.
 `start.bat` (Windows, doppelklicken) starten und "2) BCM Tabletop-Übung"
-wählen — installiert beim ersten Mal automatisch die Abhängigkeiten.
+wählen. Vor jedem Start wird geprüft, ob die installierten Pakete zur
+Programmversion passen; fehlen welche oder sind sie veraltet (z. B. weil eine
+neue Version über einen alten Ordner entpackt wurde), wird automatisch
+nachinstalliert. Einmal pro neuer Version braucht das eine Internetverbindung.
 
 **Manuell unter Windows:** Ordner `tabletop-regie` im Explorer öffnen, in die
 Adresszeile oben `cmd` eintippen und Enter drücken — das öffnet eine

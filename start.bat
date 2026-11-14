@@ -19,11 +19,9 @@ if "%choice%"=="2" (
     goto :eof
   )
   cd tabletop-regie
-  if not exist node_modules (
-    echo Erster Start: installiere Abhaengigkeiten ...
-    call npm install
-  )
+  rem npm start prueft selbst, ob die Pakete passen, und installiert bei Bedarf.
   call npm start
+  pause
   goto :eof
 )
 

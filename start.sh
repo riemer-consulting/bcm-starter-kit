@@ -26,10 +26,7 @@ case "$choice" in
       exit 1
     fi
     cd tabletop-regie
-    if [ ! -d node_modules ]; then
-      echo "Erster Start: installiere Abhängigkeiten …"
-      npm install
-    fi
+    # npm start prueft selbst, ob die Pakete passen, und installiert bei Bedarf.
     npm start
     ;;
   *)
