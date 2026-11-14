@@ -121,7 +121,10 @@ function render(s) {
         : `<p class="mini" style="color:var(--warn);">Keine der hier geforderten Rollen ist besetzt (${zust.map(rid => escapeHtml(funktion(rid))).join(', ')}). Bring die Fachperspektive selbst ein oder gib die Frage an die Krisenstabsleitung.</p>`)
       : '';
     const aktHtml = lk.aktLabel ? `<span class="badge" style="margin-right:8px;" title="Station im Spannungsbogen: Vorboten – Ausbruch – Eskalation – Höhepunkt – Folgen – Wiederanlauf">${escapeHtml(lk.aktLabel)}</span>` : '';
-    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zustHtml +
+    const tonHtml = lk.sound
+      ? `<p class="mini"><button class="secondary replay-sound" title="Spielt den Ton dieser Lagekarte auf der Bühne noch einmal von vorn ab.">Ton noch einmal abspielen</button> <span class="muted">${lk.eigenerTon ? 'eigene Aufnahme' : 'Ton aus dem Drehbuch'}</span></p>`
+      : (lk.sprechertext ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen)</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>` : '');
+    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + tonHtml + zustHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -319,6 +322,9 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 });
 
 document.addEventListener('click', e => {
+  if (e.target.classList.contains('replay-sound')) {
+    api('/api/run/replay-sound', { method: 'POST' });
+  }
   if (e.target.classList.contains('fire-sk')) {
     api('/api/run/fire-sonderkarte/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
   }

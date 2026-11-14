@@ -43,6 +43,8 @@ const DEFAULT_SETTINGS = {
     starterKitUrl: 'https://github.com/riemer-consulting/bcm-starter-kit',
     starterKitLabel: 'BCM Starter Kit'
   },
+  // Eigene Toene je Lagekarte, nur lokal: { [scenarioFile]: { [lagekartenId]: { sound } } }
+  mediaOverrides: {},
   // Zuletzt gewaehlter Zeitmodus/Schwierigkeit/Zieldauer -- wird beim
   // Start einer Uebung gemerkt, damit das Setup beim naechsten Mal nicht
   // wieder auf die Standardwerte zurueckfaellt.

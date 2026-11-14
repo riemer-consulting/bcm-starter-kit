@@ -369,7 +369,7 @@
         "Wie kommunizieren Sie?",
         "Müssen Mitarbeiter informiert werden?"
       ],
-      "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen. Auf das Foto hinweisen: Der Angriff ist damit öffentlich, bevor das Unternehmen selbst etwas gesagt hat.",
+      "moderatorHinweis": "Das LinkedIn-Bild erscheint auf der Bühne. Auf das Foto im Beitrag hinweisen: Die Lösegeldforderung ist zu sehen, der Angriff ist damit öffentlich, bevor das Unternehmen selbst etwas gesagt hat.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk03-linkedin-post-foto.webp",
@@ -559,7 +559,7 @@
         "Reagieren oder ignorieren?",
         "Wie schützen Sie den Ruf des Unternehmens?"
       ],
-      "moderatorHinweis": "Jetzt das Gebäudebild zeigen: 'Der Übertragungswagen steht vor der Zentrale.'",
+      "moderatorHinweis": "Der Sonderbericht läuft auf der Bühne, wenn im Setup eine Aufnahme hinterlegt ist. Sonst den Sprechertext live vorlesen. Danach kurz Stille lassen und fragen: Was sagen wir jetzt – intern und extern?",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk10-nordkanal-studio-foto.webp",
@@ -570,7 +570,8 @@
         "marketing-ecommerce",
         "geschaeftsfuehrer-ceo"
       ],
-      "akt": "hoehepunkt"
+      "akt": "hoehepunkt",
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Mitarbeiter, der anonym bleiben möchte, erhebt schwere Vorwürfe gegen die Geschäftsführung: „Wir haben aus LinkedIn erfahren, was bei uns los ist. Von oben kam tagelang nichts.“ Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
     },
     {
       "id": "LK11",

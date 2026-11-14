@@ -31,6 +31,7 @@ applyTheme(currentTheme);
 // automatisch: Ambient-Loop in der Vorlaufzeit, Ein-Mal-Sound pro Lagekarte.
 let soundEnabled = false;
 let lastLagekarteId = null;
+let lastReplay = null; // Zaehler aus der Moderation: "Ton noch einmal abspielen"
 const ambientAudio = document.getElementById('ambient-audio');
 const eventAudio = document.getElementById('event-audio');
 document.getElementById('btn-enable-sound').addEventListener('click', () => {
@@ -45,6 +46,9 @@ document.getElementById('btn-enable-sound').addEventListener('click', () => {
 
 function applySound(s) {
   if (!soundEnabled) return;
+  const replay = s.soundReplay || 0;
+  const replayRequested = lastReplay !== null && replay !== lastReplay;
+  lastReplay = replay;
   if (s.status === 'ended') {
     if (!ambientAudio.paused) ambientAudio.pause();
     if (!eventAudio.paused) eventAudio.pause();
@@ -76,8 +80,9 @@ function applySound(s) {
     return;
   }
   if (!ambientAudio.paused) ambientAudio.pause();
-  if (lk.sound && lk.id !== lastLagekarteId) {
+  if (lk.sound && (lk.id !== lastLagekarteId || replayRequested)) {
     eventAudio.src = lk.sound.src;
+    eventAudio.currentTime = 0;
     eventAudio.loop = !!lk.sound.loop;
     eventAudio.volume = lk.sound.volume != null ? lk.sound.volume : 0.7;
     eventAudio.play().catch(() => {});

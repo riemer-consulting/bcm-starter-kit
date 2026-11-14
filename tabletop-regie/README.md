@@ -227,6 +227,15 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    (z. B. Lösegeld gezahlt?), hakst du in der Moderation an oder ab. Alle
    Zahlen sind fiktive Beispielrechnungen, das steht auch auf der Bühne. Im
    Zieldauer-Modus ist dafür Zeit reserviert (10 % der Dauer, 4–15 Min.).
+   **Nachrichtenbericht live oder als Aufnahme:** Beim Nordkanal-Sonderbericht
+   zeigt die Moderation einen fertigen Sprechertext (ca. 50 Sekunden). Den
+   können Sie live über Mikrofon und Box vorlesen. Alternativ sprechen Sie ihn
+   vorher im Setup unter **„Eigene Töne für Lagekarten“** ein (oder wählen
+   eine Audiodatei). Dann spielt die Bühne ihn automatisch ab, und in der
+   Moderation gibt es „Ton noch einmal abspielen“. Das geht für jede
+   Lagekarte. Aufnahmen bleiben nur auf diesem Rechner (`media/custom/`) und
+   sind im Browser nur möglich, wenn die App unter `http://localhost:4173`
+   geöffnet ist.
 11. Bewertung direkt während/nach der Übung in der Matrix eintragen (die
    generische "Teilnehmer"-Rolle ohne feste Funktion erscheint hier bewusst
    nicht), danach pro Person unter "Urkunden" auf "Per E-Mail senden"
@@ -305,6 +314,9 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.
 - `bonuskarten[]` — manuell einsetzbare Zusatzereignisse (ebenfalls mit
   `fallbackEmpfaenger`, optional `moderatorHinweis`)
+- Lagekarten können `sprechertext` haben: ein Text zum Vorlesen oder
+  Einsprechen (z. B. ein Nachrichtenbericht), der in der Moderation und im
+  Setup unter „Eigene Töne“ erscheint.
 - `nachspiel` — der Abschluss: `titel`, `einleitung`, `nacharbeiten[]`
   (`zahl`, `text`), `rechnung[]` (`posten`, `betrag`, `bcmHebel` = was vorher
   geholfen hätte), `optionalePosten[]` (zusätzlich `id` und `frage`, in der

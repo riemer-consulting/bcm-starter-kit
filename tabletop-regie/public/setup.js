@@ -613,6 +613,101 @@ document.getElementById('input-import-template').addEventListener('change', asyn
   }
 });
 
+// ---- Eigene Toene fuer Lagekarten (Aufnahme per Mikrofon oder Datei) ----
+let toeneRecorder = null;
+const escHtml = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+async function loadToene() {
+  const data = await (await fetch('/api/lagekarten-toene')).json();
+  const canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  document.getElementById('toene-hinweis').textContent = canRecord
+    ? 'Tipp: ruhiger Raum, Headset oder Laptop-Mikrofon aus ca. 30 cm Abstand. Vor dem Übernehmen einmal anhören.'
+    : 'Aufnehmen ist hier nicht möglich: Der Browser erlaubt das Mikrofon nur, wenn die App unter http://localhost:4173 geöffnet ist. Eine fertige Audiodatei können Sie trotzdem wählen.';
+  // Lagekarten mit Sprechertext oder eigener Aufnahme oben, alle weiteren eingeklappt
+  const oben = data.lagekarten.filter(lk => lk.sprechertext || lk.eigenerTon);
+  const rest = data.lagekarten.filter(lk => !(lk.sprechertext || lk.eigenerTon));
+  const row = lk => `
+    <div class="ton-row" data-id="${escHtml(lk.id)}" style="border-top:1px solid var(--border);padding:10px 0;">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:10px;">
+        <span><b>${escHtml(lk.titel)}</b> <span class="muted mini">${escHtml(lk.simZeit)}</span>
+          <span class="mini" style="margin-left:6px;color:${lk.eigenerTon ? 'var(--ok)' : 'var(--muted)'};">${lk.eigenerTon ? 'eigene Aufnahme' : (lk.sound ? 'Ton aus dem Drehbuch' : 'kein Ton')}</span></span>
+        <span class="row" style="width:auto;gap:6px;">
+          ${lk.sound ? `<button class="secondary ton-play" type="button" data-src="${escHtml(lk.sound)}" title="Den aktuell hinterlegten Ton hier anhören.">Anhören</button>` : ''}
+          ${canRecord ? '<button class="secondary ton-rec" type="button" title="Startet die Aufnahme über das Mikrofon. Noch einmal klicken beendet sie.">Aufnehmen</button>' : ''}
+          <label class="secondary" style="display:inline-flex;align-items:center;width:auto;padding:7px 12px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:13px;" title="Fertige Audiodatei für diese Lagekarte wählen.">Datei wählen<input type="file" class="ton-file" accept="audio/*" style="display:none;"></label>
+          ${lk.eigenerTon ? '<button class="secondary ton-del" type="button" title="Eigene Aufnahme löschen. Danach gilt wieder der Ton aus dem Drehbuch (falls vorhanden).">Entfernen</button>' : ''}
+        </span>
+      </div>
+      ${lk.sprechertext ? `<details class="mini" style="margin-top:6px;" ${lk.eigenerTon ? '' : 'open'}><summary>Sprechertext (ca. ${Math.round(lk.sprechertext.split(/\s+/).length / 2.3)} Sekunden)</summary><p style="font-size:15px;line-height:1.6;max-width:820px;">${escHtml(lk.sprechertext)}</p></details>` : ''}
+      <div class="ton-preview mini" style="margin-top:6px;"></div>
+    </div>`;
+  const offen = document.querySelector('#toene-liste details.ton-rest');
+  const warOffen = offen ? offen.open : false;
+  document.getElementById('toene-liste').innerHTML = oben.map(row).join('') +
+    (rest.length ? `<details class="ton-rest" ${warOffen ? 'open' : ''} style="border-top:1px solid var(--border);padding-top:10px;"><summary style="cursor:pointer;">Weitere Lagekarten (${rest.length})</summary>${rest.map(row).join('')}</details>` : '');
+}
+async function uploadTon(id, blob, filename) {
+  const fd = new FormData();
+  fd.append('ton', blob, filename);
+  const r = await (await fetch('/api/lagekarten/' + encodeURIComponent(id) + '/ton', { method: 'POST', body: fd })).json();
+  if (!r.ok) alert('Speichern fehlgeschlagen: ' + r.error);
+  await loadToene();
+}
+document.getElementById('toene-liste').addEventListener('click', async e => {
+  const row = e.target.closest('.ton-row');
+  if (!row) return;
+  const id = row.dataset.id;
+  const preview = row.querySelector('.ton-preview');
+  if (e.target.classList.contains('ton-play')) {
+    preview.innerHTML = `<audio controls autoplay src="${escHtml(e.target.dataset.src)}"></audio>`;
+  }
+  if (e.target.classList.contains('ton-del')) {
+    if (!confirm('Eigene Aufnahme für diese Lagekarte löschen?')) return;
+    await fetch('/api/lagekarten/' + encodeURIComponent(id) + '/ton', { method: 'DELETE' });
+    await loadToene();
+  }
+  if (e.target.classList.contains('ton-rec')) {
+    const btn = e.target;
+    if (toeneRecorder && toeneRecorder.state === 'recording') { toeneRecorder.stop(); return; }
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch (err) { preview.textContent = 'Kein Zugriff auf das Mikrofon: ' + err.message; return; }
+    const chunks = [];
+    toeneRecorder = new MediaRecorder(stream);
+    const started = Date.now();
+    const timer = setInterval(() => { const s = Math.round((Date.now() - started) / 1000); btn.textContent = `Stopp (${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')})`; }, 250);
+    btn.textContent = 'Stopp (0:00)';
+    btn.style.borderColor = 'var(--bad)'; btn.style.color = 'var(--bad)';
+    toeneRecorder.ondataavailable = ev => { if (ev.data.size) chunks.push(ev.data); };
+    toeneRecorder.onstop = () => {
+      clearInterval(timer);
+      stream.getTracks().forEach(t => t.stop());
+      const type = toeneRecorder.mimeType || 'audio/webm';
+      const blob = new Blob(chunks, { type });
+      const url = URL.createObjectURL(blob);
+      btn.textContent = 'Neu aufnehmen'; btn.style.borderColor = ''; btn.style.color = '';
+      preview.innerHTML = `<audio controls src="${url}"></audio>
+        <button class="ton-ok" type="button" title="Diese Aufnahme für die Lagekarte verwenden.">Übernehmen</button>
+        <button class="secondary ton-discard" type="button">Verwerfen</button>`;
+      preview.querySelector('.ton-ok').onclick = () => {
+        const ext = type.includes('mp4') ? 'm4a' : (type.includes('ogg') ? 'ogg' : 'webm');
+        preview.textContent = 'Speichere …';
+        uploadTon(id, blob, 'aufnahme.' + ext);
+      };
+      preview.querySelector('.ton-discard').onclick = () => { preview.innerHTML = ''; };
+    };
+    toeneRecorder.start();
+  }
+});
+document.getElementById('toene-liste').addEventListener('change', async e => {
+  if (!e.target.classList.contains('ton-file')) return;
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  const row = e.target.closest('.ton-row');
+  row.querySelector('.ton-preview').textContent = 'Speichere …';
+  await uploadTon(row.dataset.id, file, file.name);
+});
+
 async function init() {
   meta = await (await fetch('/api/scenario-meta')).json();
   document.getElementById('scenario-title').textContent = meta.title;
@@ -636,5 +731,6 @@ async function init() {
   }
   renderParticipants();
   await loadSettings();
+  await loadToene();
 }
 init();

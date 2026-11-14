@@ -41,6 +41,18 @@ const logoUpload = multer({
 // vergebbar, bekommt keine Sonderlagekarten/Bewertung, aber eine Urkunde.
 // Wird dem geladenen Szenario zur Laufzeit angehaengt, nicht in der JSON-
 // Datei gespeichert.
+// Eigene Toene je Lagekarte (z. B. ein selbst eingesprochener Nachrichten-
+// bericht). Liegen nur lokal unter media/custom und in data/settings.json --
+// nicht im Repository, nicht im Drehbuch.
+function applyMediaOverrides(sc, file) {
+  const ov = ((store.loadSettings().mediaOverrides || {})[file]) || {};
+  sc.lagekarten.forEach(lk => {
+    const o = ov[lk.id];
+    if (o && o.sound) { lk.sound = o.sound; lk.eigenerTon = true; }
+  });
+  return sc;
+}
+
 function augmentWithGenericRole(scenario) {
   if (!scenario.roles.find(r => r.id === 'teilnehmer')) {
     scenario.roles.push({
@@ -67,7 +79,7 @@ if (!scenario) {
   console.error('Konnte Szenario nicht laden:', scenarioFile);
   process.exit(1);
 }
-scenario = augmentWithGenericRole(scenario);
+scenario = applyMediaOverrides(augmentWithGenericRole(scenario), scenarioFile);
 
 // Drehbuch-Pruefung bei jedem Laden: Fehler (z. B. Rolle ohne eigene Karte,
 // Verweis auf unbekannte Rolle) sollen auffallen, bevor eine Übung laeuft.
@@ -254,7 +266,7 @@ function switchScenario(file) {
   const previousParticipants = state.participants || [];
   const previousActive = state.activeRoleIds || [];
   scenarioFile = loaded.file;
-  scenario = augmentWithGenericRole(loaded.scenario);
+  scenario = applyMediaOverrides(augmentWithGenericRole(loaded.scenario), scenarioFile);
   checkScenario();
   const validIds = new Set(scenario.roles.map(r => r.id));
   state = engine.newRunState(scenario);
@@ -423,7 +435,8 @@ function mergeSettings(incoming) {
     branding: Object.assign({}, current.branding, incoming.branding || {}),
     runDefaults: Object.assign({}, current.runDefaults, incoming.runDefaults || {}),
     testMode: Object.assign({}, current.testMode, incoming.testMode || {}),
-    activeScenarioFile: current.activeScenarioFile
+    activeScenarioFile: current.activeScenarioFile,
+    mediaOverrides: current.mediaOverrides || {}
   };
   store.saveSettings(merged);
   return merged;
@@ -443,6 +456,80 @@ app.post('/api/settings/upload-logo', (req, res) => {
     res.json({ ok: true, url });
   });
 });
+// ---- Eigene Toene fuer Lagekarten ----
+const customMediaDir = path.join(__dirname, '..', 'media', 'custom');
+fs.mkdirSync(customMediaDir, { recursive: true });
+const AUDIO_EXT = { 'audio/webm': '.webm', 'video/webm': '.webm', 'audio/ogg': '.ogg', 'audio/mp4': '.m4a', 'audio/x-m4a': '.m4a', 'audio/aac': '.aac', 'audio/mpeg': '.mp3', 'audio/mp3': '.mp3', 'audio/wav': '.wav', 'audio/x-wav': '.wav', 'audio/wave': '.wav' };
+const audioUpload = multer({
+  storage: multer.diskStorage({
+    destination: customMediaDir,
+    filename: (req, file, cb) => {
+      const base = (file.mimetype || '').split(';')[0];
+      const ext = AUDIO_EXT[base] || path.extname(file.originalname || '').toLowerCase() || '.webm';
+      const key = path.basename(scenarioFile, '.json').replace(/^scenario\./, '');
+      cb(null, `${key}-${String(req.params.id).replace(/[^A-Za-z0-9_-]/g, '')}-${Date.now()}${ext}`);
+    }
+  }),
+  limits: { fileSize: 40 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => cb(null, /^(audio\/|video\/webm)/.test(file.mimetype || ''))
+});
+function reloadScenarioKeepState() {
+  const loaded = store.loadScenario(scenarioFile);
+  if (loaded.scenario) scenario = applyMediaOverrides(augmentWithGenericRole(loaded.scenario), scenarioFile);
+}
+function removeCustomFile(src) {
+  if (!src || !src.startsWith('/media/custom/')) return;
+  const f = path.join(customMediaDir, path.basename(src));
+  try { fs.unlinkSync(f); } catch (e) { /* schon weg */ }
+}
+app.get('/api/lagekarten-toene', (req, res) => {
+  const list = scenario.lagekarten.slice().sort((a, b) => a.minuteOffset - b.minuteOffset).map(lk => ({
+    id: lk.id, simZeit: lk.simZeit, titel: lk.titel, akt: lk.akt || null,
+    sprechertext: lk.sprechertext || null, sound: lk.sound ? lk.sound.src : null, eigenerTon: !!lk.eigenerTon
+  }));
+  res.json({ scenarioTitle: scenario.title, lagekarten: list });
+});
+app.post('/api/lagekarten/:id/ton', (req, res) => {
+  if (!scenario.lagekarten.find(l => l.id === req.params.id)) return res.status(404).json({ ok: false, error: 'Unbekannte Lagekarte.' });
+  audioUpload.single('ton')(req, res, (err) => {
+    if (err) return res.status(400).json({ ok: false, error: err.message });
+    if (!req.file) return res.status(400).json({ ok: false, error: 'Keine Audiodatei empfangen (erlaubt: MP3, M4A, WAV, OGG, WebM).' });
+    const settings = store.loadSettings();
+    const all = settings.mediaOverrides || {};
+    const mine = all[scenarioFile] || {};
+    if (mine[req.params.id] && mine[req.params.id].sound) removeCustomFile(mine[req.params.id].sound.src);
+    mine[req.params.id] = { sound: { src: '/media/custom/' + req.file.filename, loop: false, volume: 1 } };
+    all[scenarioFile] = mine;
+    store.saveSettings(Object.assign({}, settings, { mediaOverrides: all }));
+    reloadScenarioKeepState();
+    log('info', `Eigener Ton für Lagekarte ${req.params.id} gespeichert.`);
+    persist();
+    res.json({ ok: true, src: '/media/custom/' + req.file.filename });
+  });
+});
+app.delete('/api/lagekarten/:id/ton', (req, res) => {
+  const settings = store.loadSettings();
+  const all = settings.mediaOverrides || {};
+  const mine = all[scenarioFile] || {};
+  if (mine[req.params.id]) {
+    if (mine[req.params.id].sound) removeCustomFile(mine[req.params.id].sound.src);
+    delete mine[req.params.id];
+    all[scenarioFile] = mine;
+    store.saveSettings(Object.assign({}, settings, { mediaOverrides: all }));
+    reloadScenarioKeepState();
+    log('info', `Eigener Ton für Lagekarte ${req.params.id} entfernt.`);
+    persist();
+  }
+  res.json({ ok: true });
+});
+// Ton der aktuellen Lagekarte auf der Buehne erneut abspielen (z. B. wenn es
+// im Raum zu laut war).
+app.post('/api/run/replay-sound', (req, res) => {
+  state.soundReplay = (state.soundReplay || 0) + 1;
+  persist();
+  res.json({ ok: true });
+});
+
 app.post('/api/settings/test-email', async (req, res) => {
   const settings = store.loadSettings();
   const to = req.body && req.body.to;
@@ -579,6 +666,7 @@ app.get('/api/run/stage-state', (req, res) => {
     lagekartenTotal: lagekartenProgress().total,
     lagekartenGezeigt: lagekartenProgress().gezeigt,
     finaleMinutes: state.finaleMinutes || 0,
+    soundReplay: state.soundReplay || 0,
     finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null
   });
 });
