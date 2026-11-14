@@ -231,13 +231,13 @@ function renderMedia(media, gross) {
     return `<div style="margin:8px 0 12px;width:100%;max-width:1100px;flex-shrink:0;"><img src="${src}" alt="${escapeHtml(media.caption || '')}" style="width:100%;max-height:46vh;object-fit:contain;border-radius:10px;display:block;"></div>`;
   }
   const src = escapeHtml(media.src || '');
-  const caption = media.caption ? `<div class="muted" style="font-size:14px;margin-top:6px;">${escapeHtml(media.caption)}</div>` : '';
+  const caption = media.caption ? `<div style="color:var(--muted);font-size:14px;margin-top:6px;">${escapeHtml(media.caption)}</div>` : '';
   // max-height statt fixer Breite: verhindert, dass ein hohes Bild zusammen
   // mit Text/Aufgaben den verfügbaren Platz sprengt (siehe .content overflow-y).
   if (media.type === 'video') {
-    return `<div style="margin:0 0 16px;max-width:720px;flex-shrink:0;"><video src="${src}" controls autoplay style="max-width:100%;max-height:34vh;border-radius:8px;"></video>${caption}</div>`;
+    return `<div style="margin:0 0 16px;max-width:960px;flex-shrink:0;"><video src="${src}" controls autoplay style="max-width:100%;max-height:40vh;border-radius:8px;"></video>${caption}</div>`;
   }
-  return `<div style="margin:0 0 16px;max-width:720px;flex-shrink:0;"><img src="${src}" style="max-width:100%;max-height:34vh;border-radius:8px;display:block;">${caption}</div>`;
+  return `<div style="margin:0 0 16px;max-width:960px;flex-shrink:0;"><img src="${src}" style="max-width:100%;max-height:40vh;border-radius:8px;display:block;">${caption}</div>`;
 }
 
 function escapeHtml(s) {

@@ -587,8 +587,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk11-pharmakunde-eskaliert.png",
-        "caption": "Pharmakunde droht mit Schadensersatz."
+        "src": "/media/nordtech/lk11-pharmakunde-foto.webp",
+        "caption": "Krisengespräch mit dem Pharmakunden: Lieferausfälle gefährden die Patientenversorgung."
       },
       "prioritaet": 3,
       "zustaendig": [
@@ -613,8 +613,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk12-teilweiser-wiederanlauf.png",
-        "caption": "Werk Süd kann wieder produzieren."
+        "src": "/media/nordtech/lk12-werk-sued-online-foto.webp",
+        "caption": "Werk Süd produziert wieder."
       },
       "prioritaet": 2,
       "zustaendig": [
@@ -640,8 +640,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk13-cyberversicherung.png",
-        "caption": "Die Cyberversicherung bestätigt die Deckung."
+        "src": "/media/nordtech/lk13-cyberversicherung-foto.webp",
+        "caption": "Das Incident-Response-Team der Cyberversicherung ist vor Ort."
       },
       "prioritaet": 3,
       "zustaendig": [
@@ -666,8 +666,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk14-erp-testbetrieb.png",
-        "caption": "ERP-Testbetrieb läuft."
+        "src": "/media/nordtech/lk14-erp-testbetrieb-foto.webp",
+        "caption": "Das ERP läuft im Testbetrieb."
       },
       "prioritaet": 3,
       "zustaendig": [
