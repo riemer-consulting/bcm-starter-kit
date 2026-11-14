@@ -226,9 +226,9 @@ function renderFinale(f) {
 
 function renderMedia(media, gross) {
   if (gross && media.type !== 'video') {
-    // Die Startbilder tragen ihre Beschriftung selbst -- keine zweite Zeile.
     const src = escapeHtml(media.src || '');
-    return `<div style="margin:8px 0 12px;width:100%;max-width:1100px;flex-shrink:0;"><img src="${src}" alt="${escapeHtml(media.caption || '')}" style="width:100%;max-height:46vh;object-fit:contain;border-radius:10px;display:block;"></div>`;
+    const cap = media.caption ? `<div style="color:var(--muted);font-size:15px;margin-top:8px;">${escapeHtml(media.caption)}</div>` : '';
+    return `<div style="margin:8px 0 12px;width:100%;max-width:1100px;flex-shrink:0;"><img src="${src}" alt="${escapeHtml(media.caption || '')}" style="width:100%;max-height:46vh;object-fit:contain;border-radius:10px;display:block;">${cap}</div>`;
   }
   const src = escapeHtml(media.src || '');
   const caption = media.caption ? `<div style="color:var(--muted);font-size:14px;margin-top:6px;">${escapeHtml(media.caption)}</div>` : '';

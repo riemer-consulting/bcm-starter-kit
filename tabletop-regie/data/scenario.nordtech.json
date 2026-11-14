@@ -262,8 +262,8 @@
     "highlightHinweis": "Die stärkste Szene ist die Lagekarte „Beirat fordert Lagebericht“: Die Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen, und IT, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – müssen gemeinsam liefern. Kurz vorher erhält die Krisenstabsleitung vertraulich einen zusätzlichen persönlichen Druck.",
     "idleMedia": {
       "type": "image",
-      "src": "/media/nordtech/idle-ruhe-vor-dem-sturm.png",
-      "caption": "Normalbetrieb: Die Frühschicht trifft ein, die Linien laufen an."
+      "src": "/media/nordtech/idle-hauptsitz-foto.webp",
+      "caption": "Montag, 6:30 Uhr · Hauptsitz der NordTech Components GmbH. Alles läuft."
     }
   },
   "debriefMinutes": 13,
@@ -720,8 +720,8 @@
       "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung – Sie haben jetzt fünf Minuten, sie mit dem Krisenstab vorzubereiten.“ Danach lässt du dir den Bericht vortragen und fragst als Beirat kritisch nach. Dies ist die stärkste Szene der Übung.",
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk17-beirat-sondersitzung.png",
-        "caption": "Einladung zur außerordentlichen Beiratssitzung."
+        "src": "/media/nordtech/lk17-zwischenfazit-foto.webp",
+        "caption": "In 30 Minuten muss der Lagebericht vor dem Beirat stehen."
       },
       "prioritaet": 1,
       "zustaendig": [

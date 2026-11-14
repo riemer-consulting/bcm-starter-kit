@@ -234,8 +234,7 @@
     "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte „Pressekonferenz“), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund – je nach besetzten Rollen – vertrauliche Hinweise zu Brandschutzmängeln und zur Versicherungs-Deckungslücke kursieren.",
     "idleMedia": {
       "type": "image",
-      "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png",
-      "caption": "Normalbetrieb: letzte Vorbereitungen für den Saisonstart."
+      "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png"
     }
   },
   "debriefMinutes": 12,
