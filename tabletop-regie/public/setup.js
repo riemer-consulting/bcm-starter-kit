@@ -606,7 +606,7 @@ document.getElementById('input-import-template').addEventListener('change', asyn
     const res = await fetch('/api/template/import', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(tpl) });
     const r = await res.json();
     if (!r.ok) { statusEl.textContent = 'Fehler: ' + r.error; return; }
-    statusEl.textContent = `Vorlage eingespielt (${r.title}).`;
+    statusEl.textContent = `Vorlage eingespielt (${r.title}).` + (r.hinweis ? ' ' + r.hinweis : '');
     await init();
   } catch (err) {
     statusEl.textContent = 'Datei konnte nicht gelesen werden: ' + err.message;

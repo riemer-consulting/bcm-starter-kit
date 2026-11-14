@@ -13,7 +13,7 @@ const { validateScenario } = require('./validate');
 const finale = require('./finale');
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '20mb' }));
 // Endet der 30-Sekunden-Countdown zwischen zwei Ticks, sollen Zeitsprung,
 // Pause usw. trotzdem sofort den laufenden Zustand sehen.
 app.use('/api/run', (req, res, next) => { maybeStartCrisisFromCountdown(); next(); });
@@ -550,12 +550,22 @@ app.post('/api/settings/test-email', async (req, res) => {
 // nutzlos. Die Datei bleibt lokal beim Moderator, wie alle anderen
 // Konfigurationsdaten dieser App auch.
 app.get('/api/template/export', (req, res) => {
+  const settings = store.loadSettings();
+  // Ein selbst hochgeladenes Logo liegt nur lokal -- deshalb das Bild selbst
+  // mitnehmen, nicht nur den Pfad. Sonst fehlt es auf einem anderen Rechner.
+  let brandingLogoFile = null;
+  const logoUrl = settings.branding && settings.branding.logo;
+  const logoPath = mediaUrlToFile(logoUrl);
+  if (logoUrl && logoUrl.startsWith('/media/branding/custom-logo-') && logoPath && fs.existsSync(logoPath)) {
+    brandingLogoFile = { name: path.basename(logoPath), data: fs.readFileSync(logoPath).toString('base64') };
+  }
   res.json({
     exportedAt: new Date().toISOString(),
     scenarioFile,
     activeRoleIds: state.activeRoleIds,
     participants: state.participants,
-    settings: store.loadSettings()
+    settings,
+    brandingLogoFile
   });
 });
 
@@ -566,6 +576,22 @@ app.post('/api/template/import', (req, res) => {
     if (!switchResult.ok) return res.status(400).json(switchResult);
   }
   if (tpl.settings) mergeSettings(tpl.settings);
+  let logoHinweis = '';
+  const f = tpl.brandingLogoFile;
+  if (f && typeof f.data === 'string' && f.data.length) {
+    const ext = (path.extname(f.name || '').toLowerCase().match(/^\.(png|jpe?g|gif|svg|webp)$/) || ['.png'])[0];
+    const name = `custom-logo-${Date.now()}${ext}`;
+    fs.writeFileSync(path.join(brandingMediaDir, name), Buffer.from(f.data, 'base64'));
+    const cur = store.loadSettings();
+    store.saveSettings(Object.assign({}, cur, { branding: Object.assign({}, cur.branding, { logo: '/media/branding/' + name }) }));
+    logoHinweis = ' Logo übernommen.';
+  } else {
+    const cur = store.loadSettings();
+    if (effectiveBrandingLogo(cur) !== cur.branding.logo) {
+      store.saveSettings(Object.assign({}, cur, { branding: Object.assign({}, cur.branding, { logo: DEFAULT_BRANDING_LOGO }) }));
+      logoHinweis = ' Das Logo aus der Vorlage fehlt auf diesem Rechner (ältere Vorlage) – Standard-Logo gesetzt, bitte eigenes Logo neu hochladen.';
+    }
+  }
   if (Array.isArray(tpl.activeRoleIds)) {
     const validIds = new Set(scenario.roles.map(r => r.id));
     state.activeRoleIds = tpl.activeRoleIds.filter(id => validIds.has(id));
@@ -575,7 +601,7 @@ app.post('/api/template/import', (req, res) => {
   }
   log('info', 'Vorlage eingespielt: Teilnehmer, Rollen und Einstellungen übernommen.');
   persist();
-  res.json({ ok: true, title: scenario.title, companyName: scenario.company.name });
+  res.json({ ok: true, title: scenario.title, companyName: scenario.company.name, hinweis: logoHinweis.trim() });
 });
 
 // ---- Lauf-Steuerung ----
@@ -918,6 +944,16 @@ function scoreForParticipant(participant) {
 // Absoluter Dateipfad zu einem "/media/..."-Verweis — fuer E-Mail-Anhaenge,
 // da ein relativer Browser-Pfad im Mail-Client des Empfaengers nicht
 // aufgeloest werden kann (der zeigt sonst auf dessen eigenes "localhost").
+// Logo der durchfuehrenden Organisation: fehlt die hinterlegte Datei (z. B.
+// alte Vorlage auf einem anderen Rechner), lieber das Standard-Logo als ein
+// kaputtes Bild auf der Urkunde.
+const DEFAULT_BRANDING_LOGO = '/media/branding/excon-logo.png';
+function effectiveBrandingLogo(settings) {
+  const url = settings && settings.branding && settings.branding.logo;
+  const file = mediaUrlToFile(url);
+  if (url && (!file || fs.existsSync(file))) return url;
+  return DEFAULT_BRANDING_LOGO;
+}
 function mediaUrlToFile(mediaUrl) {
   if (!mediaUrl || !mediaUrl.startsWith('/media/')) return null;
   return path.join(__dirname, '..', 'media', mediaUrl.slice('/media/'.length));
@@ -947,7 +983,7 @@ app.get('/api/certificate/participant/:id', async (req, res) => {
   const starterKitUrl = settings.branding.starterKitUrl;
   res.send(renderCertificate({
     scenario, role: roles[0], roles, participant, score, branding: settings.branding,
-    companyLogoSrc: scenario.company.logo, brandingLogoSrc: settings.branding.logo,
+    companyLogoSrc: scenario.company.logo, brandingLogoSrc: effectiveBrandingLogo(settings),
     ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE'),
     starterKitUrl, starterKitLabel: settings.branding.starterKitLabel,
     starterKitScreenshotSrc: '/media/starterkit/dashboard-screenshot.png',
@@ -965,7 +1001,7 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
   const score = scoreForParticipant(participant);
   const attachments = [];
   const companyLogoFile = mediaUrlToFile(scenario.company.logo);
-  const brandingLogoFile = mediaUrlToFile(settings.branding.logo);
+  const brandingLogoFile = mediaUrlToFile(effectiveBrandingLogo(settings));
   const starterKitUrl = settings.branding.starterKitUrl;
   const screenshotFile = path.join(__dirname, '..', 'media', 'starterkit', 'dashboard-screenshot.png');
   const qrBuffer = await renderStarterKitQrBuffer(starterKitUrl);
