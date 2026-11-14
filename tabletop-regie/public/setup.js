@@ -178,7 +178,9 @@ async function updateDurationPreview() {
           ? `Achtung: ${r.uncoveredRoles.length} von ${r.rolesAssigned} Rollen bekommen keine eigene Karte.`
           : `Jede der ${r.rolesAssigned} besetzten Rollen bekommt mindestens eine eigene Karte.`) : '');
       const detail = [r.uncoveredRoles.length ? `Ohne eigene Karte: ${r.uncoveredRoles.join(', ')}.` : '', r.warning || ''].filter(Boolean).join(' ');
-      document.getElementById('duration-preview-detail').textContent = detail;
+      const reroute = (r.reroutedSummary || []).length
+        ? ` Weil nicht alle Rollen besetzt sind, gehen Karten an Ersatzrollen: ${r.reroutedSummary.join(', ')}.` : '';
+      document.getElementById('duration-preview-detail').textContent = detail + reroute;
       document.getElementById('duration-preview-detail').style.color = detail ? 'var(--warn)' : '';
     } catch (e) {
       document.getElementById('duration-preview').textContent = 'Vorschau konnte nicht geladen werden.';
@@ -561,6 +563,16 @@ async function init() {
   meta = await (await fetch('/api/scenario-meta')).json();
   document.getElementById('scenario-title').textContent = meta.title;
   document.getElementById('scenario-subtitle').textContent = meta.subtitle;
+  const check = meta.pruefung || { errors: [], warnings: [] };
+  const checkEl = document.getElementById('scenario-check');
+  if (check.errors.length) {
+    checkEl.style.color = 'var(--bad)';
+    checkEl.textContent = `Drehbuch-Prüfung: ${check.errors.length} Fehler – ${check.errors.slice(0, 3).join(' · ')}${check.errors.length > 3 ? ' …' : ''}`;
+  } else {
+    checkEl.style.color = 'var(--ok)';
+    checkEl.textContent = 'Drehbuch-Prüfung bestanden: Jede Rolle hat eigene Aufgaben, alle Karten passen zur Besetzung und Zeitplanung.'
+      + (check.warnings.length ? ` (${check.warnings.length} Hinweise, Details: npm run pruefen)` : '');
+  }
   await loadScenarioList();
   activeRoleIds = await (await fetch('/api/active-roles')).json();
   renderRoleCheckboxes();

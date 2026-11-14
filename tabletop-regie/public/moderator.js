@@ -99,9 +99,18 @@ function render(s) {
 
   // Aktuelle Lagekarte
   const lkBox = document.getElementById('m-current-lk');
+  const staffed = new Set((s.participants || []).flatMap(p => p.roleIds || []));
+  const funktion = rid => (scenario.roles.find(r => r.id === rid) || {}).funktion || rid;
   if (s.currentLagekarte) {
     const lk = s.currentLagekarte;
-    lkBox.innerHTML = `<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` +
+    // Wer ist bei dieser Lage fachlich gefordert -- und ist das ueberhaupt besetzt?
+    const zust = lk.zustaendig || [];
+    const zustHtml = zust.length
+      ? (zust.some(rid => staffed.has(rid))
+        ? `<p class="mini muted">Besonders gefordert: ${zust.map(rid => staffed.has(rid) ? `<b>${escapeHtml(funktion(rid))}</b>` : `<s>${escapeHtml(funktion(rid))}</s>`).join(', ')}</p>`
+        : `<p class="mini" style="color:var(--warn);">Keine der hier geforderten Rollen ist besetzt (${zust.map(rid => escapeHtml(funktion(rid))).join(', ')}). Bring die Fachperspektive selbst ein oder gib die Frage an die Krisenstabsleitung.</p>`)
+      : '';
+    lkBox.innerHTML = `<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zustHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -130,30 +139,41 @@ function render(s) {
       <td><button class="secondary jump-to-event" data-type="${ev.type}" data-id="${ev.id}" title="Springt direkt auf diese Karte — fällig werdende Sonderlagekarten dazwischen werden dabei mit ausgelöst/verschickt.">Zeitsprung hierhin</button></td></tr>
   `).join('') || '<tr><td colspan="4" class="muted">Keine weiteren geplanten Ereignisse.</td></tr>';
 
-  // Manuell ausloesbare Sonderlagekarten — zeigt den echten, zugeordneten
-  // Teilnehmernamen, wenn vorhanden, sonst die Funktionsbezeichnung der Rolle.
-  // Rollen, die fuer diesen Lauf nicht aktiv sind, werden hier ausgeblendet.
-  const activeRoleIds = s.activeRoleIds || scenario.roles.map(r => r.id);
-  function roleLabel(role, participants) {
-    const p = participantFor(role.id, participants);
-    return p && p.name ? `${escapeHtml(p.name)} (${escapeHtml(role.funktion)})` : escapeHtml(role.funktion);
+  // Manuell ausloesbare Karten — Empfaenger ist die tatsaechlich besetzte
+  // Rolle (ggf. Ersatzrolle); Karten, die niemanden erreichen, sind ausgeblendet.
+  function recipientHtml(card) {
+    const p = participantFor(card.recipientRoleId, s.participants);
+    return (p && p.name ? `${escapeHtml(p.name)}, ` : '') + escapeHtml(card.recipientLabel);
   }
-  document.getElementById('m-unscheduled-sk').innerHTML = s.unscheduledSonderlagekarten.filter(sk => activeRoleIds.includes(sk.empfaenger)).map(sk => {
-    const role = scenario.roles.find(r => r.id === sk.empfaenger);
-    return `<div class="row" style="justify-content:space-between;margin-bottom:6px;">
-      <span class="mini">${sk.id} — für ${roleLabel(role, s.participants)}</span>
+  document.getElementById('m-unscheduled-sk').innerHTML = s.unscheduledSonderlagekarten.filter(sk => sk.recipientRoleId).map(sk => `
+    <div class="row" style="justify-content:space-between;margin-bottom:6px;">
+      <span class="mini">${sk.id} — für ${recipientHtml(sk)}</span>
       <button class="secondary fire-sk" data-id="${sk.id}" title="Verschickt diese vertrauliche Sonderlagekarte sofort per E-Mail an die zugeordnete Person.">Jetzt auslösen</button>
-    </div>`;
-  }).join('') || '<p class="muted mini">Keine offenen Karten.</p>';
+    </div>`).join('') || '<p class="muted mini">Keine offenen Karten.</p>';
 
-  document.getElementById('m-bonus').innerHTML = scenario.bonuskarten.filter(b => activeRoleIds.includes(b.empfaenger)).map(b => {
-    const role = scenario.roles.find(r => r.id === b.empfaenger);
-    const fired = b.fired;
-    return `<div class="row" style="justify-content:space-between;margin-bottom:6px;">
-      <span class="mini">${b.id} — für ${roleLabel(role, s.participants)}: ${escapeHtml(b.text)}</span>
-      <button class="secondary fire-bonus" data-id="${b.id}" ${fired ? 'disabled' : ''} title="Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.">${fired ? 'Ausgelöst' : 'Auslösen'}</button>
+  document.getElementById('m-bonus').innerHTML = (s.bonuskarten || []).filter(b => b.recipientRoleId).map(b => `
+    <div class="row" style="justify-content:space-between;margin-bottom:6px;">
+      <span class="mini">${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
+      <button class="secondary fire-bonus" data-id="${b.id}" ${b.fired ? 'disabled' : ''} title="Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.">${b.fired ? 'Ausgelöst' : 'Auslösen'}</button>
+    </div>`).join('') || '<p class="muted mini">Für die aktuelle Besetzung keine Bonuskarten verfügbar.</p>';
+
+  // Verschickte vertrauliche Karten: was kursiert gerade bei wem, und woran
+  // erkennt die Moderation einen guten bzw. schlechten Umgang damit?
+  document.getElementById('m-sent-sk').innerHTML = (s.firedSonderlagekarten || []).slice().reverse().map(f => {
+    const sk = scenario.sonderlagekarten.find(x => x.id === f.id);
+    if (!sk) return '';
+    const p = participantFor(f.recipientRoleId || sk.empfaenger, s.participants);
+    const empf = f.recipientRoleId
+      ? `${p && p.name ? escapeHtml(p.name) + ', ' : ''}${escapeHtml(funktion(f.recipientRoleId))}${f.recipientRoleId !== sk.empfaenger ? ` (statt ${escapeHtml(funktion(sk.empfaenger))})` : ''}`
+      : '<span style="color:var(--warn);">niemand besetzt</span>';
+    return `<div class="log-entry" style="padding:8px 0;">
+      <div><b>${sk.id}</b> · ${new Date(f.at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · an ${empf}</div>
+      <div class="muted">${escapeHtml(sk.text)}</div>
+      ${sk.moderatorHinweis ? `<div style="color:var(--warn);">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
+      ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
+      ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
     </div>`;
-  }).join('');
+  }).join('') || '<p class="muted mini">Noch keine vertraulichen Karten verschickt.</p>';
 
   // Versand-Log
   document.getElementById('m-log').innerHTML = s.log.map(l =>

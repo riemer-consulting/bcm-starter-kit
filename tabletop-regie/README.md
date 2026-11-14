@@ -45,7 +45,7 @@ nebeneinander.
 
 ## Installation & Start
 
-Voraussetzung: [Node.js](https://nodejs.org/) (LTS-Version) ist auf dem Rechner
+Voraussetzung: [Node.js](https://nodejs.org/) **ab Version 20** (aktuelle LTS-Version) ist auf dem Rechner
 installiert — Windows, macOS und Linux funktionieren alle gleich gut, es gibt
 keine Linux-spezifischen Pfade oder Abhängigkeiten.
 
@@ -186,6 +186,12 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    per Mail verschickt. Nicht zeitlich festgelegte Sonderlagekarten, die
    Bonuskarten und — im Zieldauer-Modus — aus Zeitgründen übersprungene Karten
    löst/holst du bei Bedarf manuell in der Moderationsansicht nach.
+   Ist die eigentliche Rolle einer vertraulichen Karte nicht besetzt, geht sie
+   automatisch an eine passende Ersatzrolle (z. B. Kündigung in der IT an die
+   Geschäftsführung, wenn Personal fehlt). Unter **"Verschickte vertrauliche
+   Karten"** siehst du jederzeit, was bei wem kursiert, inklusive
+   Bewertungshilfe. Bei jeder Lagekarte zeigt die Moderation, welche Rollen
+   besonders gefordert sind und ob sie besetzt sind.
    Der **Prozessablauf** oben in der Moderationsansicht zeigt jederzeit, wo du
    stehst und was noch kommt. Läuft eine Diskussion deutlich kürzer oder
    länger als geplant, hast du zwei Möglichkeiten: bei der gewünschten Karte
@@ -233,8 +239,25 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - `sonderlagekarten[]` — vertrauliche, rollenbezogene Karten mit `prioritaet`
   (wie oben) sowie
   `empfaenger` (Rollen-ID), optionalem `minuteOffset` (leer = nur manuell
-  auslösbar) und `moderatorGut`/`moderatorSchlecht` als Einschätzungshilfe
-- `bonuskarten[]` — manuell einsetzbare Zusatzereignisse
+  auslösbar), `moderatorGut`/`moderatorSchlecht` als Einschätzungshilfe
+  (in der Moderation sichtbar, sobald die Karte verschickt ist) und
+  `fallbackEmpfaenger` (Liste von Rollen-IDs): Ist die eigentliche Rolle
+  nicht besetzt, geht die Karte an die erste besetzte Ersatzrolle, mit einem
+  Hinweis in der Mail, warum sie dort landet. Ist auch keine Ersatzrolle
+  besetzt, wird die Karte gar nicht erst eingeplant. Texte deshalb so
+  formulieren, dass sie auch für die Ersatzrolle Sinn ergeben.
+- Lagekarten haben zusätzlich `zustaendig` (Rollen-IDs): Die Moderation zeigt
+  an, welche davon besetzt sind, und warnt, wenn keine besetzt ist. Im
+  Zieldauer-Modus werden solche Lagekarten beim Auffüllen hintangestellt.
+- `bonuskarten[]` — manuell einsetzbare Zusatzereignisse (ebenfalls mit
+  `fallbackEmpfaenger`, optional `moderatorHinweis`)
+
+**Drehbuch prüfen:** Nach jeder Änderung `npm run pruefen` ausführen. Die
+Prüfung kontrolliert Verweise auf Rollen, Prioritäten und feste Zeitangaben
+in Texten und simuliert je Szenario 2000 zufällige Besetzungen mit
+unterschiedlicher Dauer und Schwierigkeit: Jede besetzte Rolle muss eine
+eigene Karte bekommen, und keine Karte darf ins Leere laufen. Das Ergebnis
+steht außerdem im Setup unter dem Szenario.
 
 **Weitere Dateien (Bilder, Video, PDF) ablegen:** einfach in `media/` speichern
 — z. B. `media/lk10-ndr-ausschnitt.mp4`. Dann bei der betreffenden Lagekarte

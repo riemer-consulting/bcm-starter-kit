@@ -9,9 +9,13 @@ const store = require('./store');
 const engine = require('./runEngine');
 const mailer = require('./mailer');
 const { renderCertificate } = require('./certificate');
+const { validateScenario } = require('./validate');
 
 const app = express();
 app.use(express.json());
+// Endet der 30-Sekunden-Countdown zwischen zwei Ticks, sollen Zeitsprung,
+// Pause usw. trotzdem sofort den laufenden Zustand sehen.
+app.use('/api/run', (req, res, next) => { maybeStartCrisisFromCountdown(); next(); });
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/media', express.static(path.join(__dirname, '..', 'media')));
 
@@ -64,6 +68,17 @@ if (!scenario) {
 }
 scenario = augmentWithGenericRole(scenario);
 
+// Drehbuch-Pruefung bei jedem Laden: Fehler (z. B. Rolle ohne eigene Karte,
+// Verweis auf unbekannte Rolle) sollen auffallen, bevor eine Übung laeuft.
+let scenarioCheck = { errors: [], warnings: [] };
+function checkScenario() {
+  scenarioCheck = validateScenario(scenario, { simulations: 200 });
+  if (scenarioCheck.errors.length || scenarioCheck.warnings.length) {
+    console.log(`Drehbuch-Prüfung ${scenarioFile}: ${scenarioCheck.errors.length} Fehler, ${scenarioCheck.warnings.length} Hinweise (Details: npm run pruefen)`);
+  }
+}
+checkScenario();
+
 let state = store.loadRunState() || engine.newRunState(scenario);
 state.scenarioFile = scenarioFile;
 // Abwaertskompatibel: ein vor diesem Feature gespeicherter run-state.json
@@ -88,18 +103,37 @@ function log(type, message) {
   state.log = state.log.slice(0, 200);
 }
 
+// Tatsaechlicher Empfaenger einer vertraulichen Karte bei der aktuellen
+// Besetzung: eigentliche Rolle oder erste besetzte Ersatzrolle.
+function recipientRoleFor(card) {
+  return engine.resolveRecipient(card, new Set(engine.assignedRoleIds(state)));
+}
+function recipientLabel(card) {
+  const rid = recipientRoleFor(card);
+  const primary = roleById(card.empfaenger);
+  if (!rid) return `${primary ? primary.funktion : card.empfaenger} (niemand besetzt)`;
+  if (rid === card.empfaenger) return primary ? primary.funktion : rid;
+  return `${(roleById(rid) || {}).funktion || rid} (statt ${primary ? primary.funktion : card.empfaenger})`;
+}
+function fallbackNote(card, recipientRoleId) {
+  if (recipientRoleId === card.empfaenger) return '';
+  const primary = roleById(card.empfaenger);
+  return `\n\n(Diese Information wäre eigentlich bei der Funktion „${primary ? primary.funktion : card.empfaenger}“ gelandet. Die ist heute nicht besetzt, deshalb landet sie bei dir.)`;
+}
+
 async function fireSonderlagekarte(sk, { manual } = {}) {
   if (state.firedSonderlagekarten.find(f => f.id === sk.id)) return;
-  const role = roleById(sk.empfaenger);
-  const recipients = participantsForRole(sk.empfaenger);
-  const entry = { id: sk.id, at: Date.now(), manual: !!manual, emailResults: [] };
+  const recipientRoleId = recipientRoleFor(sk);
+  const role = roleById(recipientRoleId || sk.empfaenger);
+  const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
+  const entry = { id: sk.id, at: Date.now(), manual: !!manual, recipientRoleId, emailResults: [] };
   if (recipients.length === 0) {
-    log('warn', `Sonderlagekarte ${sk.id} (${role ? role.funktion : sk.empfaenger}) fällig, aber niemand ist dieser Rolle zugeordnet.`);
+    log('warn', `Sonderlagekarte ${sk.id} (${recipientLabel(sk)}) fällig, aber weder diese Rolle noch eine Ersatzrolle ist besetzt.`);
   } else {
     const settings = store.loadSettings();
     for (const p of recipients) {
       const subject = `Vertrauliche Information – ${scenario.company.name} Krisenstab`;
-      const text = `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${sk.text}`;
+      const text = `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${sk.text}${fallbackNote(sk, recipientRoleId)}`;
       const result = await mailer.sendMail(settings.smtp, { to: p.email, subject, text }, settings.testMode);
       entry.emailResults.push({ participantId: p.id, email: p.email, ok: result.ok, error: result.error });
       log(result.ok ? 'mail' : 'error',
@@ -155,7 +189,8 @@ app.get('/api/scenario-meta', (req, res) => {
     roles: scenario.roles, roleGroups: scenario.roleGroups,
     bewertungskriterien: scenario.bewertungskriterien,
     lagekartenCount: scenario.lagekarten.length, sonderlagekartenCount: scenario.sonderlagekarten.length,
-    bonuskartenCount: scenario.bonuskarten.length, moderationsleitfaden: scenario.moderationsleitfaden
+    bonuskartenCount: scenario.bonuskarten.length, moderationsleitfaden: scenario.moderationsleitfaden,
+    pruefung: scenarioCheck
   });
 });
 
@@ -186,6 +221,7 @@ function switchScenario(file) {
   const previousActive = state.activeRoleIds || [];
   scenarioFile = loaded.file;
   scenario = augmentWithGenericRole(loaded.scenario);
+  checkScenario();
   const validIds = new Set(scenario.roles.map(r => r.id));
   state = engine.newRunState(scenario);
   state.scenarioFile = scenarioFile;
@@ -220,13 +256,23 @@ app.post('/api/preview-schedule', (req, res) => {
   const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel', roleCount, activeRoleIds: roleIds });
   const assigned = Array.from(new Set((roleIds || []).filter(Boolean)));
   const recipientsInPlan = new Set(plan.schedule.filter(e => e.type === 'sonderlagekarte')
-    .map(e => (scenario.sonderlagekarten.find(sk => sk.id === e.id) || {}).empfaenger));
+    .map(e => engine.resolveRecipient(scenario.sonderlagekarten.find(sk => sk.id === e.id) || {}, new Set(assigned))));
   const uncoveredRoles = assigned.filter(rid => rid !== 'teilnehmer' && !recipientsInPlan.has(rid))
     .map(rid => (roleById(rid) || {}).funktion || rid);
+  // Welche Karten landen bei einer Ersatzrolle, weil die eigentliche Rolle
+  // unbesetzt ist -- und bei wem haeuft sich das?
+  const rerouted = {};
+  plan.schedule.filter(e => e.type === 'sonderlagekarte').forEach(e => {
+    const sk = scenario.sonderlagekarten.find(x => x.id === e.id);
+    const rid = sk && engine.resolveRecipient(sk, new Set(assigned));
+    if (rid && rid !== sk.empfaenger) rerouted[rid] = (rerouted[rid] || 0) + 1;
+  });
+  const reroutedSummary = Object.entries(rerouted).map(([rid, n]) => `${n}× an ${(roleById(rid) || {}).funktion || rid}`);
   res.json({
     activeRoleGroups: roleCount,
     rolesAssigned: assigned.filter(rid => rid !== 'teilnehmer').length,
     uncoveredRoles,
+    reroutedSummary,
     lagekartenCount: plan.schedule.filter(e => e.type === 'lagekarte').length,
     sonderlagekartenCount: plan.schedule.filter(e => e.type === 'sonderlagekarte').length,
     skippedCount: plan.skipped.length,
@@ -407,19 +453,19 @@ app.get('/api/run/moderator-state', (req, res) => {
     (ev.type === 'sonderlagekarte' && state.firedSonderlagekarten.find(f => f.id === ev.id))
   )).slice(0, 6).map(ev => ({
     type: ev.type, id: ev.id, minute: Math.round(ev.minute * 10) / 10,
-    titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${roleById(ev.ref.empfaenger).funktion}`
+    titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${recipientLabel(ev.ref)}`
   }));
   // Kompletter Ablaufplan fuer die Prozessuebersicht/den Zeit-Schieberegler
   // in der Moderation (nicht nur die naechsten paar Ereignisse).
   const fullTimeline = schedule.map(ev => ({
     type: ev.type, id: ev.id, minute: Math.round(ev.minute * 10) / 10,
-    titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${roleById(ev.ref.empfaenger).funktion}`,
+    titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${recipientLabel(ev.ref)}`,
     fired: ev.type === 'lagekarte' ? state.firedLagekarten.includes(ev.id) : !!state.firedSonderlagekarten.find(f => f.id === ev.id),
     isCurrent: !!(currentLk && ev.type === 'lagekarte' && ev.id === currentLk.id)
   }));
   const skippedDetailed = (state.skippedEvents || []).map(sk => ({
     type: sk.type, id: sk.id, reason: sk.reason,
-    titel: sk.type === 'lagekarte' ? scenario.lagekarten.find(lk => lk.id === sk.id).titel : `Sonderlagekarte für ${roleById(scenario.sonderlagekarten.find(s => s.id === sk.id).empfaenger).funktion}`
+    titel: sk.type === 'lagekarte' ? scenario.lagekarten.find(lk => lk.id === sk.id).titel : `Sonderlagekarte für ${recipientLabel(scenario.sonderlagekarten.find(s => s.id === sk.id))}`
   }));
   res.json({
     status: state.status,
@@ -437,8 +483,9 @@ app.get('/api/run/moderator-state', (req, res) => {
     fullTimeline,
     skipped: skippedDetailed,
     firedSonderlagekarten: state.firedSonderlagekarten,
-    unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id)),
-    bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, { fired: state.firedLagekarten.includes('BONUS_' + b.id) })),
+    unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
+      .map(sk => Object.assign({}, sk, { recipientRoleId: recipientRoleFor(sk), recipientLabel: recipientLabel(sk) })),
+    bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, { fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b) })),
     participants: state.participants,
     activeRoleIds: state.activeRoleIds,
     bewertung: state.bewertung,
@@ -612,17 +659,18 @@ app.post('/api/run/fire-sonderkarte/:id', async (req, res) => {
 app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   const b = scenario.bonuskarten.find(x => x.id === req.params.id);
   if (!b) return res.status(404).json({ ok: false, error: 'Unbekannte Bonuskarte.' });
-  const role = roleById(b.empfaenger);
-  const recipients = participantsForRole(b.empfaenger);
+  const recipientRoleId = recipientRoleFor(b);
+  const role = roleById(recipientRoleId || b.empfaenger);
+  const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
   state.firedLagekarten.push('BONUS_' + b.id);
   if (recipients.length === 0) {
-    log('warn', `Bonuskarte ${b.id} ausgelöst, aber niemand ist ${role ? role.funktion : b.empfaenger} zugeordnet.`);
+    log('warn', `Bonuskarte ${b.id} ausgelöst, aber weder ${recipientLabel(b)} noch eine Ersatzrolle ist besetzt.`);
   } else {
     const settings = store.loadSettings();
     for (const p of recipients) {
       const result = await mailer.sendMail(settings.smtp, {
         to: p.email, subject: `Bonusereignis – ${scenario.company.name} Krisenstab`,
-        text: `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${b.text}`
+        text: `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${b.text}${fallbackNote(b, recipientRoleId)}`
       }, settings.testMode);
       log(result.ok ? 'mail' : 'error', result.ok ? `Bonuskarte ${b.id} an ${p.name} gesendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}` : `Bonuskarte ${b.id} Versand an ${p.name} fehlgeschlagen: ${result.error}`);
     }

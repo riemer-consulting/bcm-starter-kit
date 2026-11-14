@@ -21,6 +21,10 @@ case "$choice" in
     fi
     ;;
   2)
+    if ! command -v node >/dev/null 2>&1 || ! node -e "process.exit(+process.versions.node.split('.')[0] >= 20 ? 0 : 1)"; then
+      echo "Node.js 20 oder neuer wird benötigt (https://nodejs.org/, LTS-Version installieren)."
+      exit 1
+    fi
     cd tabletop-regie
     if [ ! -d node_modules ]; then
       echo "Erster Start: installiere Abhängigkeiten …"

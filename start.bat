@@ -12,6 +12,12 @@ if "%choice%"=="1" (
   goto :eof
 )
 if "%choice%"=="2" (
+  node -e "process.exit(+process.versions.node.split('.')[0] >= 20 ? 0 : 1)" >nul 2>&1
+  if errorlevel 1 (
+    echo Node.js 20 oder neuer wird benoetigt - bitte die LTS-Version von https://nodejs.org/ installieren.
+    pause
+    goto :eof
+  )
   cd tabletop-regie
   if not exist node_modules (
     echo Erster Start: installiere Abhaengigkeiten ...

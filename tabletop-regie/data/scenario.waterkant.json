@@ -205,13 +205,14 @@
     }
   ],
   "moderationsleitfaden": {
-    "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Sie alle vertreten Ihre Funktion im Unternehmen. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir innerhalb der nächsten Stunde durchlaufen werden. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Dienstag, kurz nach 3 Uhr nachts. Das Zentrallager der Waterkant Baumärkte GmbH liegt still, nur die Nachtschicht ist vor Ort. In wenigen Stunden beginnt das wichtigste Geschäft des Jahres: der Start der Frühjahrssaison in allen 14 Filialen. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in einer Stunde.",
+    "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
+    "eroeffnungstext": "Dienstag, kurz nach 3 Uhr nachts. Das Zentrallager der Waterkant Baumärkte GmbH liegt still, nur die Nachtschicht ist vor Ort. In wenigen Stunden beginnt das wichtigste Geschäft des Jahres: der Start der Frühjahrssaison in allen 14 Filialen. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in verdichteter Form.",
     "spielregeln": [
-      "Jeder Teilnehmer vertritt ausschließlich seinen Verantwortungsbereich.",
+      "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
       "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
-      "Anschließend erfolgt die Abstimmung im Krisenstab."
+      "Anschließend erfolgt die Abstimmung im Krisenstab.",
+      "Teilnehmende ohne feste Rolle beobachten, bringen auf Nachfrage ihre Sicht ein und notieren Auffälligkeiten für das Debriefing."
     ],
     "moderationsregel": "Nicht diskutieren lassen. Nicht in technische oder bauliche Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
     "debriefingFragen": [
@@ -228,7 +229,7 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte 'Pressekonferenz'), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund die Sonderlagekarten zur fehlenden Rauchmelder-Wartung und zur Versicherungs-Deckungslücke bereits kursieren.",
+    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte „Pressekonferenz“), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund – je nach besetzten Rollen – vertrauliche Hinweise zu Brandschutzmängeln und zur Versicherungs-Deckungslücke kursieren.",
     "idleMedia": {
       "type": "image",
       "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png",
@@ -257,7 +258,12 @@
         "src": "/media/waterkant/lk01-feueralarm.png",
         "caption": "Feueralarm im Zentrallager."
       },
-      "prioritaet": 1
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "schichtleiter-zentrallager",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK02",
@@ -273,13 +279,18 @@
         "Welche Kunden/Filialen sind betroffen?",
         "Welche Prioritäten setzen Sie?"
       ],
-      "moderatorHinweis": "Jetzt das Lagerbrand-Bild zeigen.",
+      "moderatorHinweis": "Das Bild erscheint automatisch auf der Bühne – kurz darauf hinweisen.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk02-lagerbrand.png",
         "caption": "Überwachungskamera-Aufnahme aus dem Zentrallager."
       },
-      "prioritaet": 1
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiterin-logistik-zentrallager",
+        "leiter-arbeitssicherheit",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK03",
@@ -301,7 +312,11 @@
         "src": "/media/waterkant/lk03-serverraum-betroffen.png",
         "caption": "Warenwirtschaft und Kassenanbindung sind ausgefallen."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-it",
+        "online-shop-leitung"
+      ]
     },
     {
       "id": "LK04",
@@ -328,7 +343,12 @@
         "src": "/media/waterkant/lk04-unruhe-kasse.mp3",
         "loop": false,
         "volume": 0.8
-      }
+      },
+      "zustaendig": [
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "leiter-it"
+      ]
     },
     {
       "id": "LK13",
@@ -350,7 +370,12 @@
         "src": "/media/waterkant/lk13-stoerfall-behoerde.png",
         "caption": "Die Gewerbeaufsicht fordert Sicherheitsbericht und Gefahrenabwehrplan."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "notfallmanagement-bcm",
+        "leiterin-kommunikation-pr"
+      ]
     },
     {
       "id": "LK05",
@@ -366,13 +391,17 @@
         "Reagieren Sie öffentlich oder beobachten Sie zunächst?",
         "Welche Fakten können Sie bereits bestätigen?"
       ],
-      "moderatorHinweis": "Jetzt den Social-Media-Beitrag zeigen.",
+      "moderatorHinweis": "Der Social-Media-Beitrag erscheint automatisch auf der Bühne – kurz darauf hinweisen.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk05-social-post.png",
         "caption": "Öffentlicher Beitrag einer Anwohnerin, 12 Minuten alt."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiterin-kommunikation-pr",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK06",
@@ -394,7 +423,11 @@
         "src": "/media/waterkant/lk06-pressekontakt.png",
         "caption": "Presseanfrage von Lokalzeitung und Nordkanal."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiterin-kommunikation-pr",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK07",
@@ -416,7 +449,12 @@
         "src": "/media/waterkant/lk07-grosskunde-storniert.png",
         "caption": "Großkunde storniert einen Großauftrag."
       },
-      "prioritaet": 3
+      "prioritaet": 3,
+      "zustaendig": [
+        "leiter-einkauf",
+        "leiterin-logistik-zentrallager",
+        "leiter-finanzen-cfo"
+      ]
     },
     {
       "id": "LK14",
@@ -438,7 +476,12 @@
         "src": "/media/waterkant/lk14-loeschwasser.png",
         "caption": "Kontaminiertes Löschwasser gelangt in einen angrenzenden Bach."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "leiterin-kommunikation-pr",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK08",
@@ -447,7 +490,7 @@
       "titel": "Online-Shop bricht ein",
       "minuteOffset": 50,
       "diskussionMinuten": 4,
-      "text": "Der Online-Shop zeigt weiterhin falsche Lagerbestände. Dutzende Bestellungen können nicht ausgeliefert werden. Erste negative Bewertungen häufen sich.",
+      "text": "Der Online-Shop zeigt weiterhin falsche Lagerbestände. Über 200 Bestellungen können nicht ausgeliefert werden. Erste negative Bewertungen häufen sich.",
       "kriseninfo": "237 betroffene Bestellungen · Bewertungsschnitt sinkt auf 2,1 Sterne",
       "aufgabe": [
         "Wie informieren Sie betroffene Kunden?",
@@ -460,7 +503,12 @@
         "src": "/media/waterkant/lk08-online-shop-bricht-ein.png",
         "caption": "Der Online-Shop zeigt falsche Lagerbestände."
       },
-      "prioritaet": 3
+      "prioritaet": 3,
+      "zustaendig": [
+        "online-shop-leitung",
+        "leiter-it",
+        "leiterin-kommunikation-pr"
+      ]
     },
     {
       "id": "LK09",
@@ -482,7 +530,11 @@
         "src": "/media/waterkant/lk09-ersatzlager-gefunden.png",
         "caption": "Ein Logistikpartner stellt Ersatzlagerflächen bereit."
       },
-      "prioritaet": 3
+      "prioritaet": 3,
+      "zustaendig": [
+        "leiterin-logistik-zentrallager",
+        "leiter-einkauf"
+      ]
     },
     {
       "id": "LK10",
@@ -498,13 +550,17 @@
         "Welche Botschaft hat oberste Priorität?",
         "Wie gehen Sie mit unbeantworteten Fragen um?"
       ],
-      "moderatorHinweis": "JETZT WIRD ES SPANNEND: sprich den Krisenstabsleiter direkt an: 'In einer Stunde stehen Sie vor laufenden Kameras.' Der ganze Raum muss liefern. Dies ist laut Drehbuch die stärkste Szene der Übung.",
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Person mit der Rolle Geschäftsführung/Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „In einer Stunde stehen Sie vor laufenden Kameras.“ Der ganze Raum muss liefern. Dies ist die stärkste Szene der Übung.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk10-nordkanal-ankuendigung.png",
         "caption": "Nordkanal kündigt den Sonderbericht an."
       },
-      "prioritaet": 1
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiterin-kommunikation-pr"
+      ]
     },
     {
       "id": "LK11",
@@ -513,7 +569,7 @@
       "titel": "Gutachter vor Ort",
       "minuteOffset": 76,
       "diskussionMinuten": 4,
-      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police sieht eine Karenzzeit von 10 Tagen vor (bereits selbst getragen) und eine Haftzeit von 12 Monaten – der Gutachter bezweifelt, ob der Wiederaufbau rechtzeitig abgeschlossen werden kann.",
+      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police sieht eine Karenzzeit von 10 Tagen vor (die trägt Waterkant selbst) und eine Haftzeit von 12 Monaten – der Gutachter bezweifelt, ob der Wiederaufbau rechtzeitig abgeschlossen werden kann.",
       "kriseninfo": "Geschätzter Schaden: 18 Mio. € · Zweifel, ob der Wiederaufbau innerhalb der 12-Monats-Haftzeit gelingt",
       "aufgabe": [
         "Welche finanziellen Risiken ergeben sich?",
@@ -526,7 +582,11 @@
         "src": "/media/waterkant/lk11-gutachter-vor-ort.png",
         "caption": "Der Versicherungsgutachter schätzt den Schaden."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-finanzen-cfo",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "LK15",
@@ -548,7 +608,12 @@
         "src": "/media/waterkant/lk15-ermittlungsverfahren.png",
         "caption": "Die Staatsanwaltschaft eröffnet ein Ermittlungsverfahren."
       },
-      "prioritaet": 2
+      "prioritaet": 2,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiterin-personal",
+        "leiter-arbeitssicherheit"
+      ]
     },
     {
       "id": "LK12",
@@ -564,13 +629,17 @@
         "Was muss sich strukturell ändern?",
         "Wie schließen Sie die Krise nach außen ab?"
       ],
-      "moderatorHinweis": "Letzte Lagekarte. Übungsende bei minuteOffset 83.",
+      "moderatorHinweis": "Letzte Lagekarte. Danach Abschlussfragen und Debriefing.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk12-wiederanlauf.png",
         "caption": "Das Interims-Zentrallager nimmt den Betrieb auf."
       },
-      "prioritaet": 1
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiterin-logistik-zentrallager"
+      ]
     }
   ],
   "sonderlagekarten": [
@@ -580,10 +649,14 @@
       "empfaenger": "leiter-arbeitssicherheit",
       "minuteOffset": 12,
       "vertraulich": true,
-      "text": "Ein Ersthelfer berichtet dir vertraulich: Der Brand könnte von einer defekten Ladestation für Gabelstapler-Akkus ausgegangen sein. Noch ist nichts bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
-      "moderatorGut": "Arbeitssicherheit informiert den Krisenstab zeitnah und transparent über den Verdacht.",
-      "moderatorSchlecht": "Arbeitssicherheit behält die Information für sich, bis Behörden oder Presse selbst darauf stoßen.",
-      "prioritaet": 1
+      "text": "Ein Ersthelfer berichtet dir vertraulich: Der Brand könnte von einer defekten Ladestation für Gabelstapler-Akkus direkt neben dem Farben- und Gefahrstofflager ausgegangen sein. Noch ist nichts bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Der Verdacht wird zeitnah und transparent in den Krisenstab getragen.",
+      "moderatorSchlecht": "Die Information wird zurückgehalten, bis Behörden oder Presse selbst darauf stoßen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "SK02",
@@ -592,9 +665,13 @@
       "minuteOffset": 20,
       "vertraulich": true,
       "text": "Dir wird vertraulich zugetragen: Der verletzte Mitarbeiter hatte vor sechs Wochen schriftlich einen defekten Rauchmelder im Lagerbereich gemeldet. Die Meldung liegt dokumentiert in der internen Mängelliste vor.",
-      "moderatorGut": "Personal eskaliert das Thema intern an Geschäftsführung und Arbeitssicherheit.",
-      "moderatorSchlecht": "Personal ignoriert die Information oder behält sie für sich.",
-      "prioritaet": 1
+      "moderatorGut": "Die Information wird sofort in den Krisenstab eskaliert.",
+      "moderatorSchlecht": "Die Information wird ignoriert oder zurückgehalten.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "leiter-arbeitssicherheit",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "SK03",
@@ -602,10 +679,14 @@
       "empfaenger": "leiter-it",
       "minuteOffset": 24,
       "vertraulich": true,
-      "text": "Dir wird klar: Das lokale Backup des Warenwirtschaftssystems lag im selben Serverraum und ist ebenfalls zerstört. Ein Cloud-Backup existiert, ist aber rund drei Wochen alt.",
-      "moderatorGut": "IT kommuniziert den Datenverlust offen und schlägt eine Übergangslösung vor.",
-      "moderatorSchlecht": "IT verschweigt das Alter des Backups und lässt den Krisenstab im Unklaren über den tatsächlichen Datenverlust.",
-      "prioritaet": 2
+      "text": "Du erfährst: Das lokale Backup des Warenwirtschaftssystems lag im selben Serverraum und ist ebenfalls zerstört. Ein Cloud-Backup existiert, ist aber rund drei Wochen alt.",
+      "moderatorGut": "Der Datenverlust wird offen kommuniziert, eine Übergangslösung vorgeschlagen.",
+      "moderatorSchlecht": "Das Alter des Backups wird verschwiegen, der Krisenstab bleibt im Unklaren.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "online-shop-leitung",
+        "notfallmanagement-bcm"
+      ]
     },
     {
       "id": "SK04",
@@ -614,9 +695,12 @@
       "minuteOffset": 32,
       "vertraulich": true,
       "text": "Deine Prüfung der Versicherungspolice zeigt: Es gilt eine Karenzzeit von 10 Tagen – die ersten 10 Tage Ertragsausfall tragt ihr komplett selbst. Danach zahlt die Versicherung, aber nur für die vereinbarte Haftzeit von 12 Monaten.",
-      "moderatorGut": "Finanzen informiert den Krisenstab frühzeitig über die Deckungslücke.",
-      "moderatorSchlecht": "Finanzen behält die Information zurück, bis es zu spät für Gegenmaßnahmen ist.",
-      "prioritaet": 2
+      "moderatorGut": "Die Deckungslücke wird frühzeitig im Krisenstab offengelegt.",
+      "moderatorSchlecht": "Die Information wird zurückgehalten, bis es für Gegenmaßnahmen zu spät ist.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "SK05",
@@ -625,9 +709,13 @@
       "minuteOffset": 30,
       "vertraulich": true,
       "text": "Zwei Mitarbeitende berichten dir anonym: Die letzte Brandschutzwartung wurde vor vier Monaten von einer neuen, günstigeren Fremdfirma durchgeführt. Es gab danach mehrfach Beschwerden über offene Mängel.",
-      "moderatorGut": "Logistik gibt die Information an den Krisenstab weiter, auch wenn sie unangenehm ist.",
-      "moderatorSchlecht": "Logistik spielt die Beschwerden herunter oder leugnet deren Existenz.",
-      "prioritaet": 2
+      "moderatorGut": "Die Information geht offen an den Krisenstab, auch wenn sie unangenehm ist.",
+      "moderatorSchlecht": "Die Beschwerden werden heruntergespielt oder geleugnet.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "schichtleiter-zentrallager",
+        "leiter-arbeitssicherheit"
+      ]
     },
     {
       "id": "SK06",
@@ -635,10 +723,14 @@
       "empfaenger": "leiterin-kommunikation-pr",
       "minuteOffset": 31,
       "vertraulich": true,
-      "text": "Ein Journalist von Nordkanal deutet dir gegenüber an, bereits Kenntnis von der gemeldeten Rauchmelder-Mängelliste zu haben – offenbar durch einen internen Hinweisgeber. Eine Veröffentlichung sei in Vorbereitung.",
-      "moderatorGut": "Kommunikation bereitet den Krisenstab proaktiv auf die mögliche Veröffentlichung vor.",
-      "moderatorSchlecht": "Kommunikation hofft, dass die Information nicht veröffentlicht wird, und bereitet nichts vor.",
-      "prioritaet": 1
+      "text": "Ein Journalist von Nordkanal deutet dir gegenüber an, von einer internen Mängelliste zu wissen, in der ein defekter Rauchmelder im Lagerbereich gemeldet wurde – offenbar durch einen internen Hinweisgeber. Eine Veröffentlichung sei in Vorbereitung.",
+      "moderatorGut": "Der Krisenstab wird proaktiv auf die mögliche Veröffentlichung vorbereitet.",
+      "moderatorSchlecht": "Man hofft, dass nichts veröffentlicht wird, und bereitet nichts vor.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "notfallmanagement-bcm"
+      ]
     },
     {
       "id": "SK07",
@@ -646,10 +738,14 @@
       "empfaenger": "leiter-einkauf",
       "minuteOffset": 44,
       "vertraulich": true,
-      "text": "Dein wichtigster Baustofflieferant kann aufgrund eigener Kapazitätsengpässe kurzfristig nicht aushelfen. Ein Ausweichlieferant wäre verfügbar, verlangt aber rund 30 % höhere Preise.",
-      "moderatorGut": "Einkauf legt die Mehrkosten transparent dem Krisenstab vor.",
-      "moderatorSchlecht": "Einkauf trifft die teure Entscheidung im Alleingang, ohne den Krisenstab einzubeziehen.",
-      "prioritaet": 3
+      "text": "Der wichtigste Baustofflieferant kann wegen eigener Kapazitätsengpässe kurzfristig nicht aushelfen. Ein Ausweichlieferant wäre verfügbar, verlangt aber rund 30 % höhere Preise.",
+      "moderatorGut": "Die Mehrkosten werden transparent dem Krisenstab vorgelegt.",
+      "moderatorSchlecht": "Die teure Entscheidung fällt im Alleingang, ohne den Krisenstab.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "leiter-finanzen-cfo"
+      ]
     },
     {
       "id": "SK08",
@@ -657,10 +753,14 @@
       "empfaenger": "regionalleiterin-filialen-nord",
       "minuteOffset": 23,
       "vertraulich": true,
-      "text": "Mehrere Filialleitungen in deiner Region melden dir vertraulich: Das Personal ist verunsichert, erste Krankmeldungen für das Wochenende gehen ein.",
-      "moderatorGut": "Die Regionalleitung bringt das Thema aktiv in den Krisenstab ein und fordert Unterstützung.",
-      "moderatorSchlecht": "Die Regionalleitung behandelt es als reines Personalproblem der einzelnen Filialen.",
-      "prioritaet": 3
+      "text": "Mehrere Filialleitungen melden dir vertraulich: Das Personal in den Filialen ist verunsichert, für die kommenden Tage gehen erste Krankmeldungen ein.",
+      "moderatorGut": "Das Thema wird aktiv in den Krisenstab eingebracht, Unterstützung wird angefordert.",
+      "moderatorSchlecht": "Es wird als Einzelproblem der Filialen behandelt.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "regionalleiter-filialen-sued",
+        "leiterin-personal"
+      ]
     },
     {
       "id": "SK09",
@@ -669,9 +769,13 @@
       "minuteOffset": 62,
       "vertraulich": true,
       "text": "Für Großformat-Baustoffe (Bauholz, Zement-Silos) gibt es keine Ausweichkapazität in der Region. Anders als bei kleineren Sortimenten bleibt dieser Bereich bis zum Wiederaufbau blockiert.",
-      "moderatorGut": "Einkauf kommuniziert diese Einschränkung offen, statt falsche Hoffnungen zu wecken.",
-      "moderatorSchlecht": "Einkauf verspricht eine schnelle Lösung, die es für dieses Sortiment gar nicht geben kann.",
-      "prioritaet": 3
+      "moderatorGut": "Die Einschränkung wird offen kommuniziert, statt falsche Hoffnungen zu wecken.",
+      "moderatorSchlecht": "Es wird eine schnelle Lösung versprochen, die es für dieses Sortiment nicht geben kann.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "regionalleiter-filialen-sued"
+      ]
     },
     {
       "id": "SK10",
@@ -679,10 +783,15 @@
       "empfaenger": "schichtleiter-zentrallager",
       "minuteOffset": 13,
       "vertraulich": true,
-      "text": "Du warst in der Brandnacht vor Ort. Dir fällt ein: Zwei Leiharbeitskräfte aus der Nachtschicht hast du seit der Evakuierung nicht mehr gesehen. Die Anwesenheitsliste lag im Schichtbüro im Lager – das ist nicht mehr zugänglich, ihre Handys sind aus.",
+      "text": "Aus der Nachtschicht kommt eine beunruhigende Meldung: Zwei Leiharbeitskräfte hat seit der Evakuierung niemand mehr gesehen. Die Anwesenheitsliste lag im Schichtbüro im Lager – das ist nicht mehr zugänglich, die Handys der beiden sind aus.",
       "moderatorGut": "Sofortige Meldung an Krisenstab und Einsatzleitung, Abgleich mit der Zeitarbeitsfirma.",
       "moderatorSchlecht": "Information bleibt bei der Schichtleitung, Vollzähligkeit bleibt unklar.",
-      "prioritaet": 2
+      "prioritaet": 2,
+      "moderatorHinweis": "Nach wenigen Minuten durch die Moderation auflösen: Beide haben das Gelände unverletzt über den Notausgang verlassen und sind nach Hause gefahren.",
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "leiter-arbeitssicherheit"
+      ]
     },
     {
       "id": "SK11",
@@ -690,10 +799,14 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "minuteOffset": 56,
       "vertraulich": true,
-      "text": "Der Mehrheitsgesellschafter ruft dich direkt an. Er hat aus der Presse vom Brand erfahren und erwartet bis 18 Uhr eine schriftliche Einschätzung: Schadenshöhe, Lieferfähigkeit der Filialen, Kommunikationslinie. Er deutet an, notfalls selbst vor die Presse zu gehen.",
+      "text": "Der Mehrheitsgesellschafter meldet sich direkt bei dir. Er beschwert sich, alles aus der Presse erfahren zu haben, und erwartet bis 18 Uhr eine schriftliche Einschätzung: Schadenshöhe, Lieferfähigkeit der Filialen, Kommunikationslinie. Er deutet an, notfalls selbst vor die Presse zu gehen.",
       "moderatorGut": "Lagebild aus dem Krisenstab einholen, abgestimmte Einschätzung, Kommunikationsführung klar behalten.",
-      "moderatorSchlecht": "Antwort aus dem Bauch heraus, ohne Abstimmung mit Finanzen und Kommunikation.",
-      "prioritaet": 2
+      "moderatorSchlecht": "Antwort aus dem Bauch heraus, ohne Abstimmung im Krisenstab.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-finanzen-cfo",
+        "leiterin-kommunikation-pr"
+      ]
     },
     {
       "id": "SK12",
@@ -701,10 +814,14 @@
       "empfaenger": "regionalleiter-filialen-sued",
       "minuteOffset": 38,
       "vertraulich": true,
-      "text": "In zwei Filialen deiner Region sind die Artikel der aktuellen Prospektaktion ausverkauft – der Nachschub sollte aus dem abgebrannten Zentrallager kommen. Kundschaft beschwert sich, laut Prospekt läuft die Aktion noch zehn Tage.",
-      "moderatorGut": "Abstimmung mit Einkauf und Kommunikation: Aktion anpassen oder Kundschaft aktiv informieren.",
+      "text": "In zwei Filialen sind die Artikel der aktuellen Prospektaktion ausverkauft – der Nachschub sollte aus dem abgebrannten Zentrallager kommen. Kundschaft beschwert sich, laut Prospekt läuft die Aktion noch zehn Tage.",
+      "moderatorGut": "Abstimmung im Krisenstab: Aktion anpassen oder Kundschaft aktiv informieren.",
       "moderatorSchlecht": "Filialen improvisieren unterschiedlich, widersprüchliche Aussagen an der Kasse.",
-      "prioritaet": 2
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "regionalleiterin-filialen-nord",
+        "leiter-einkauf"
+      ]
     },
     {
       "id": "SK13",
@@ -712,10 +829,14 @@
       "empfaenger": "online-shop-leitung",
       "minuteOffset": 48,
       "vertraulich": true,
-      "text": "Der Online-Shop zeigt weiterhin Bestände aus dem Zentrallager als „sofort lieferbar“. Seit dem Brand sind rund 600 Bestellungen eingegangen, die nicht ausgeliefert werden können. Du könntest den Shop in den Wartungsmodus schalten – dann bricht der Online-Umsatz komplett weg.",
+      "text": "Der Online-Shop zeigt weiterhin Bestände aus dem Zentrallager als „sofort lieferbar“. Seit dem Brand sind über 200 Bestellungen eingegangen, die nicht ausgeliefert werden können. Der Shop ließe sich in den Wartungsmodus schalten – dann bricht der Online-Umsatz komplett weg.",
       "moderatorGut": "Entscheidung mit dem Krisenstab: Bestände korrigieren, betroffene Kundschaft proaktiv informieren.",
       "moderatorSchlecht": "Weiterverkaufen, als wäre nichts passiert.",
-      "prioritaet": 2
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "leiterin-kommunikation-pr"
+      ]
     },
     {
       "id": "SK14",
@@ -726,40 +847,63 @@
       "text": "Du stellst fest: Der Notfallplan für das Zentrallager stammt von 2021. Die dort genannte Ausweichfläche wurde letztes Jahr gekündigt, zwei der genannten Ansprechpersonen sind nicht mehr im Unternehmen.",
       "moderatorGut": "Lücke offen in den Krisenstab tragen, Plan pragmatisch aktualisieren, Ausweichoptionen aktiv suchen.",
       "moderatorSchlecht": "Plan wird stillschweigend ignoriert.",
-      "prioritaet": 2
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "assistenz-gf-dokumentation",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "SK15",
       "nr": 15,
       "empfaenger": "assistenz-gf-dokumentation",
-      "minuteOffset": 72,
+      "minuteOffset": 77,
       "vertraulich": true,
       "text": "Versicherung und Gutachter verlangen eine lückenlose Chronologie aller Entscheidungen seit dem Brandalarm – mit Uhrzeit und verantwortlicher Funktion. Prüfe, ob eure Dokumentation das hergibt, und melde Lücken an den Krisenstab.",
       "moderatorGut": "Entscheidungsprotokoll liegt vor oder wird sofort rekonstruiert.",
       "moderatorSchlecht": "Keine nachvollziehbare Dokumentation vorhanden.",
-      "prioritaet": 2
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "geschaeftsfuehrer-ceo"
+      ]
     }
   ],
   "bonuskarten": [
     {
       "id": "B1",
       "empfaenger": "leiterin-personal",
-      "text": "Verlasse den Raum für 10 Minuten. Du führst ein dringendes Gespräch mit der Familie des verletzten Mitarbeiters."
+      "text": "Verlasse den Raum für 10 Minuten. Du führst ein dringendes Gespräch mit der Familie des verletzten Mitarbeiters.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-arbeitssicherheit"
+      ]
     },
     {
       "id": "B2",
       "empfaenger": "leiter-it",
-      "text": "Ein Phishing-Versuch nutzt die Verwirrung aus: Eine E-Mail mit dem Betreff 'Aktuelle Informationen zum Brand' verlangt Zugangsdaten. Mehrere Mitarbeitende haben bereits geklickt."
+      "text": "Ein Phishing-Versuch nutzt die Verwirrung aus: Eine E-Mail mit dem Betreff 'Aktuelle Informationen zum Brand' verlangt Zugangsdaten. Mehrere Mitarbeitende haben bereits geklickt.",
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "geschaeftsfuehrer-ceo"
+      ]
     },
     {
       "id": "B3",
       "empfaenger": "leiterin-kommunikation-pr",
-      "text": "Ein Video vom Brand wird auf Social Media viral: über 500.000 Aufrufe in zwei Stunden."
+      "text": "Ein Video vom Brand wird auf Social Media viral: über 500.000 Aufrufe in zwei Stunden.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "online-shop-leitung"
+      ]
     },
     {
       "id": "B4",
       "empfaenger": "leiter-finanzen-cfo",
-      "text": "Die Hausbank meldet sich und fragt nach einer aktuellen Liquiditätsplanung für die nächsten Wochen."
+      "text": "Die Hausbank meldet sich und fragt nach einer aktuellen Liquiditätsplanung für die nächsten Wochen.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ]
     }
   ],
   "bewertungskriterien": [

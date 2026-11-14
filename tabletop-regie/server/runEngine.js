@@ -58,17 +58,28 @@ function activeRoleGroupCount(scenario, state) {
   return Array.from(activeGroups).filter(g => scenario.standardablauf.speakingOrder.includes(g)).length;
 }
 
-/** Berechnet effektive Trigger-Minuten je Ereignis, abhaengig vom gewaehlten Modus. */
 function assignedRoleIds(state) {
   return Array.from(new Set((state.participants || []).flatMap(p => p.roleIds || []).filter(Boolean)));
 }
 
+// Wer bekommt eine vertrauliche Karte tatsaechlich? Die eigentliche Rolle,
+// sonst die erste besetzte Ersatzrolle aus "fallbackEmpfaenger" (z. B.
+// Personalthema -> Geschaeftsfuehrung, wenn Personal nicht besetzt ist).
+// null = niemand Passendes besetzt -> Karte entfaellt. Ohne bekannte
+// Besetzung (leere Menge) gilt die eigentliche Rolle.
+function resolveRecipient(card, staffedRoleIds) {
+  const staffed = staffedRoleIds instanceof Set ? staffedRoleIds : new Set(staffedRoleIds || []);
+  if (staffed.size === 0) return card.empfaenger;
+  return [card.empfaenger, ...(card.fallbackEmpfaenger || [])].find(rid => staffed.has(rid)) || null;
+}
+
+/** Berechnet effektive Trigger-Minuten je Ereignis, abhaengig vom gewaehlten Modus. */
 function computeEffectiveSchedule(scenario, state) {
-  // Sonderlagekarten fuer unbesetzte Rollen erreichen niemanden -- sie sollen
-  // weder im Ablauf auftauchen noch (im berechneten Modus) Zeit belegen.
+  // Sonderlagekarten, die niemanden erreichen (weder Rolle noch Ersatzrolle
+  // besetzt), sollen weder im Ablauf auftauchen noch Zeit belegen.
   const assigned = new Set(assignedRoleIds(state));
   const timeline = buildTimeline(scenario).filter(ev =>
-    ev.type !== 'sonderlagekarte' || assigned.size === 0 || assigned.has(ev.ref.empfaenger));
+    ev.type !== 'sonderlagekarte' || resolveRecipient(ev.ref, assigned) !== null);
   if (state.durationMode === 'authored') {
     return timeline.map(ev => Object.assign({}, ev, { minute: ev.authoredMinute }));
   }
@@ -116,38 +127,48 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     return ev.type === 'lagekarte' ? lagekarteCost(decisionMinutes) : sonderSlot;
   }
 
-  // Sonderlagekarten fuer Rollen, die gar nicht besetzt sind, sollen kein
-  // Zeitbudget belegen -- die Karte erreicht ohnehin niemanden. Lagekarten
-  // sind oeffentlich (kein "empfaenger") und bleiben davon unberuehrt.
+  // Sonderlagekarten, die niemanden erreichen (weder Rolle noch Ersatzrolle
+  // besetzt), sollen kein Zeitbudget belegen. Lagekarten sind oeffentlich
+  // (kein "empfaenger") und bleiben davon unberuehrt.
   const roleFilterActive = Array.isArray(activeRoleIds) && activeRoleIds.length > 0;
   const activeRoleSet = new Set(activeRoleIds || []);
-  const isRoleRelevant = ev => ev.type !== 'sonderlagekarte' || !roleFilterActive || activeRoleSet.has(ev.ref.empfaenger);
+  const recipientOf = ev => resolveRecipient(ev.ref, activeRoleSet);
+  const isRoleRelevant = ev => ev.type !== 'sonderlagekarte' || recipientOf(ev) !== null;
+
+  // Lagekarten, fuer die keine der zustaendigen Rollen besetzt ist, werden
+  // beim Auffuellen hintangestellt -- sie laufen sonst ins Leere, weil
+  // niemand die Fachperspektive einbringt. Kernszenen bleiben unberuehrt.
+  const lkOwned = ev => ev.type !== 'lagekarte' || !roleFilterActive
+    || !(ev.ref.zustaendig || []).length || ev.ref.zustaendig.some(rid => activeRoleSet.has(rid));
 
   const byPrio = p => timeline.filter(ev => (ev.ref.prioritaet || 2) === p);
-  // Auch Kern-Sonderlagekarten nur fuer besetzte Rollen: eine vertrauliche
-  // Karte an eine unbesetzte Rolle erreicht niemanden. Kern-Lagekarten
-  // (oeffentlich, auf der Buehne) bleiben immer enthalten.
+  // Auch Kern-Sonderlagekarten nur, wenn sie jemanden erreichen. Kern-
+  // Lagekarten (oeffentlich, auf der Buehne) bleiben immer enthalten.
   const prio1 = byPrio(1).filter(isRoleRelevant);
   const prio2 = byPrio(2).filter(isRoleRelevant);
   const prio3 = byPrio(3).filter(isRoleRelevant);
 
-  // Rollenabdeckung: jede besetzte Rolle, die im Drehbuch mindestens eine
-  // terminierte Sonderlagekarte hat, bekommt garantiert eine davon in den
-  // Plan -- sonst koennte eine zugewiesene Person durch reine Prioritaets-
-  // auswahl die gesamte Übung ohne einen einzigen eigenen Moment erleben.
+  // Rollenabdeckung: jede besetzte Rolle, die mindestens eine terminierte
+  // Sonderlagekarte bekommen kann, bekommt garantiert eine in den Plan --
+  // sonst koennte eine zugewiesene Person durch reine Prioritaetsauswahl die
+  // gesamte Übung ohne einen einzigen eigenen Moment erleben. Eigene Karten
+  // (Rolle = eigentlicher Empfaenger) haben dabei Vorrang vor Ersatz-Karten.
   const coverage = [];
   if (roleFilterActive) {
-    const alreadyCovered = new Set(prio1.filter(ev => ev.type === 'sonderlagekarte').map(ev => ev.ref.empfaenger));
+    const alreadyCovered = new Set(prio1.filter(ev => ev.type === 'sonderlagekarte').map(recipientOf));
     activeRoleSet.forEach(roleId => {
       if (alreadyCovered.has(roleId)) return;
       const candidates = [...prio2, ...prio3]
-        .filter(ev => ev.type === 'sonderlagekarte' && ev.ref.empfaenger === roleId)
-        .sort((a, b) => (a.ref.prioritaet || 2) - (b.ref.prioritaet || 2) || a.authoredMinute - b.authoredMinute);
+        .filter(ev => ev.type === 'sonderlagekarte' && recipientOf(ev) === roleId)
+        .sort((a, b) => ((a.ref.empfaenger === roleId ? 0 : 1) - (b.ref.empfaenger === roleId ? 0 : 1))
+          || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
+          || (a.authoredMinute - b.authoredMinute));
       if (candidates.length) coverage.push(candidates[0]);
     });
   }
   const coverageIds = new Set(coverage.map(ev => ev.type + ':' + ev.id));
-  const fillPool = [...prio2, ...prio3].filter(ev => !coverageIds.has(ev.type + ':' + ev.id));
+  const remainingPool = [...prio2, ...prio3].filter(ev => !coverageIds.has(ev.type + ':' + ev.id));
+  const fillPool = remainingPool.filter(lkOwned).concat(remainingPool.filter(ev => !lkOwned(ev)));
 
   let decisionMinutes = nominalDecision;
   let sonderSlot = 2;
@@ -300,6 +321,7 @@ module.exports = {
   buildTimeline,
   activeRoleGroupCount,
   assignedRoleIds,
+  resolveRecipient,
   computeEffectiveSchedule,
   buildAdaptiveSchedule,
   getActiveSchedule,

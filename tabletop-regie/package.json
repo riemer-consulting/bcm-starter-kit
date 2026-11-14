@@ -4,14 +4,18 @@
   "private": true,
   "description": "Lokale Regie-App für BCM-Tabletop-Übungen: Drehbuch, Timer, Rollen, E-Mail-Benachrichtigungen, Bewertungsmatrix.",
   "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "pruefen": "node server/validate.js"
   },
   "dependencies": {
     "express": "^4.19.2",
     "multer": "^2.5.0",
-    "nodemailer": "^6.9.14",
+    "nodemailer": "^10.5.0",
     "qrcode": "^1.5.4"
   }
 }
