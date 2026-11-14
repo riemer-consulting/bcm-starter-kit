@@ -1040,7 +1040,7 @@ app.get('/api/certificate/participant/:id', async (req, res) => {
     ort: settings.branding.ort, datum: new Date().toLocaleDateString('de-DE'),
     starterKitUrl, starterKitLabel: settings.branding.starterKitLabel,
     starterKitScreenshotSrc: '/media/starterkit/dashboard-screenshot.png',
-    starterKitQrSrc: await renderStarterKitQrDataUrl(starterKitUrl)
+    starterKitQrSrc: settings.branding.starterKitQr === false ? null : await renderStarterKitQrDataUrl(starterKitUrl)
   }));
 });
 
@@ -1057,7 +1057,7 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
   const brandingLogoFile = mediaUrlToFile(effectiveBrandingLogo(settings));
   const starterKitUrl = settings.branding.starterKitUrl;
   const screenshotFile = path.join(__dirname, '..', 'media', 'starterkit', 'dashboard-screenshot.png');
-  const qrBuffer = await renderStarterKitQrBuffer(starterKitUrl);
+  const qrBuffer = settings.branding.starterKitQr === false ? null : await renderStarterKitQrBuffer(starterKitUrl);
   if (companyLogoFile) attachments.push({ filename: 'company-logo.png', path: companyLogoFile, cid: 'company-logo' });
   if (brandingLogoFile) attachments.push({ filename: 'branding-logo.png', path: brandingLogoFile, cid: 'branding-logo' });
   if (fs.existsSync(screenshotFile)) attachments.push({ filename: 'starter-kit-screenshot.png', path: screenshotFile, cid: 'starterkit-screenshot' });
@@ -1073,8 +1073,16 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
   });
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
   const rollenText = roles.map(r => r.funktion).join(', ');
+  // Zusaetzlich eine reine Textfassung: reine HTML-Mails mit Bildern werten
+  // Spamfilter deutlich schlechter.
+  const orgName = (settings.branding && settings.branding.organisationName) || '';
+  const text = `Hallo ${participant.name},\n\nvielen Dank für deine Teilnahme an der Übung „${veranstaltung}“` +
+    `${rollenText ? ` als ${rollenText}` : ''}. Deine Urkunde ist in dieser E-Mail enthalten` +
+    ` (falls sie nicht angezeigt wird: Bilder bzw. HTML-Ansicht im Mailprogramm erlauben).` +
+    `${starterKitUrl ? `\n\nWeiter geht es hier: ${settings.branding.starterKitLabel || starterKitUrl} – ${starterKitUrl}` : ''}` +
+    `\n\nViele Grüße${orgName ? `\n${orgName}` : ''}`;
   const result = await mailer.sendMail(settings.smtp, {
-    to: participant.email, subject: `Deine Urkunde – ${veranstaltung}`, html, attachments
+    to: participant.email, subject: `Deine Urkunde – ${veranstaltung}`, text, html, attachments
   }, settings.testMode);
   log(result.ok ? 'mail' : 'error',
     result.ok

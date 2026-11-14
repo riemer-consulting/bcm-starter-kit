@@ -41,7 +41,10 @@ const DEFAULT_SETTINGS = {
     // Call-to-Action auf der Urkunde: Link + QR-Code zum BCM Starter Kit
     // (dem eigentlichen Produkt, dem diese Übung als Einstieg dient).
     starterKitUrl: 'https://github.com/riemer-consulting/bcm-starter-kit',
-    starterKitLabel: 'BCM Starter Kit'
+    starterKitLabel: 'BCM Starter Kit',
+    // QR-Code in der Urkunden-Mail: manche Firmen-Mailfilter stellen Mails mit
+    // QR-Codes unter Quarantaene (Schutz vor "Quishing") -- dann abschalten.
+    starterKitQr: true
   },
   // Eigene Toene je Lagekarte, nur lokal: { [scenarioFile]: { [lagekartenId]: { sound } } }
   mediaOverrides: {},

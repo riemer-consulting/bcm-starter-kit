@@ -534,6 +534,7 @@ async function loadSettings() {
   document.getElementById('brand-ort').value = (s.branding && s.branding.ort) || '';
   document.getElementById('brand-starterkit-url').value = (s.branding && s.branding.starterKitUrl) || '';
   document.getElementById('brand-starterkit-label').value = (s.branding && s.branding.starterKitLabel) || '';
+  document.getElementById('brand-starterkit-qr').checked = !(s.branding && s.branding.starterKitQr === false);
   updateBrandLogoPreview();
   applyRunDefaults(s.runDefaults);
   const tm = s.testMode || {};
@@ -611,7 +612,8 @@ document.getElementById('btn-save-branding').addEventListener('click', async () 
     logo: document.getElementById('brand-logo').value,
     ort: document.getElementById('brand-ort').value,
     starterKitUrl: document.getElementById('brand-starterkit-url').value,
-    starterKitLabel: document.getElementById('brand-starterkit-label').value
+    starterKitLabel: document.getElementById('brand-starterkit-label').value,
+    starterKitQr: document.getElementById('brand-starterkit-qr').checked
   } });
   document.getElementById('settings-status').textContent = 'Branding gespeichert.';
 });
