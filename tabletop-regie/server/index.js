@@ -134,6 +134,23 @@ function fallbackNote(card, recipientRoleId) {
   return `\n\n(Diese Information wäre eigentlich bei der Funktion „${primary ? primary.funktion : card.empfaenger}“ gelandet. Die ist heute nicht besetzt, deshalb landet sie bei dir.)`;
 }
 
+function testModeActive() {
+  const tm = store.loadSettings().testMode || {};
+  return !!(tm.enabled && tm.dummyEmail);
+}
+async function sendTestModeCard(card, role, recipients, recipientRoleId, art) {
+  const settings = store.loadSettings();
+  const namen = recipients.map(p => p.name || p.email).join(', ');
+  const adressen = recipients.map(p => p.email).filter(Boolean).join(', ');
+  const subject = `Vertraulich für ${namen} (${role.funktion}) – ${art} ${card.id}`;
+  const text = `Vertraulich – nur für ${namen} (${role.funktion})\n\n${card.text}${fallbackNote(card, recipientRoleId)}`;
+  const result = await mailer.sendMail(settings.smtp, { to: adressen || settings.testMode.dummyEmail, subject, text }, settings.testMode);
+  log(result.ok ? 'mail' : 'error', result.ok
+    ? `${art} ${card.id} [TESTLAUF] als eine Mail an ${settings.testMode.dummyEmail} – eigentlich an ${namen} (${role.funktion}).`
+    : `${art} ${card.id} [TESTLAUF] Versand fehlgeschlagen: ${result.error}`);
+  return result;
+}
+
 async function fireSonderlagekarte(sk, { manual } = {}) {
   if (state.firedSonderlagekarten.find(f => f.id === sk.id)) return;
   const recipientRoleId = recipientRoleFor(sk);
@@ -142,10 +159,17 @@ async function fireSonderlagekarte(sk, { manual } = {}) {
   const entry = { id: sk.id, at: Date.now(), manual: !!manual, recipientRoleId, emailResults: [] };
   if (recipients.length === 0) {
     log('warn', `Sonderlagekarte ${sk.id} (${recipientLabel(sk)}) fällig, aber weder diese Rolle noch eine Ersatzrolle ist besetzt.`);
+  } else if (testModeActive()) {
+    // Trockenlauf: pro Karte genau EINE Mail an die Dummy-Adresse, mit allen
+    // eigentlichen Empfaengern -- nicht eine Kopie je Teammitglied.
+    const result = await sendTestModeCard(sk, role, recipients, recipientRoleId, 'Lageinformation');
+    recipients.forEach(p => entry.emailResults.push({ participantId: p.id, email: p.email, ok: result.ok, error: result.error }));
   } else {
     const settings = store.loadSettings();
     for (const p of recipients) {
-      const subject = `Vertrauliche Information – ${scenario.company.name} Krisenstab`;
+      // Betreff nennt Empfaenger und Karte -- im Trockenlauf landen alle Mails in
+      // einem Postfach, dort muss man sie auseinanderhalten koennen.
+      const subject = `Vertraulich für ${p.name || role.funktion} (${role.funktion}) – Lageinformation ${sk.id}`;
       const text = `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${sk.text}${fallbackNote(sk, recipientRoleId)}`;
       const result = await mailer.sendMail(settings.smtp, { to: p.email, subject, text }, settings.testMode);
       entry.emailResults.push({ participantId: p.id, email: p.email, ok: result.ok, error: result.error });
@@ -522,6 +546,16 @@ app.delete('/api/lagekarten/:id/ton', (req, res) => {
   }
   res.json({ ok: true });
 });
+// Nur EIN Buehnenfenster spielt Ton. Sind zwei offen (Beamer + Laptop),
+// hoert man sonst alles doppelt und leicht versetzt.
+let soundOwner = null;
+app.post('/api/stage/sound-claim', (req, res) => {
+  const id = String((req.body || {}).id || '').slice(0, 64);
+  if (!id) return res.status(400).json({ ok: false });
+  soundOwner = id;
+  res.json({ ok: true, soundOwner });
+});
+
 // Ton der aktuellen Lagekarte auf der Buehne erneut abspielen (z. B. wenn es
 // im Raum zu laut war).
 app.post('/api/run/replay-sound', (req, res) => {
@@ -693,6 +727,7 @@ app.get('/api/run/stage-state', (req, res) => {
     lagekartenGezeigt: lagekartenProgress().gezeigt,
     finaleMinutes: state.finaleMinutes || 0,
     soundReplay: state.soundReplay || 0,
+    soundOwner,
     finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null
   });
 });
@@ -899,11 +934,13 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   state.firedLagekarten.push('BONUS_' + b.id);
   if (recipients.length === 0) {
     log('warn', `Bonuskarte ${b.id} ausgelöst, aber weder ${recipientLabel(b)} noch eine Ersatzrolle ist besetzt.`);
+  } else if (testModeActive()) {
+    await sendTestModeCard(b, role, recipients, recipientRoleId, 'Bonusereignis');
   } else {
     const settings = store.loadSettings();
     for (const p of recipients) {
       const result = await mailer.sendMail(settings.smtp, {
-        to: p.email, subject: `Bonusereignis – ${scenario.company.name} Krisenstab`,
+        to: p.email, subject: `Vertraulich für ${p.name || role.funktion} (${role.funktion}) – Bonusereignis ${b.id}`,
         text: `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${b.text}${fallbackNote(b, recipientRoleId)}`
       }, settings.testMode);
       log(result.ok ? 'mail' : 'error', result.ok ? `Bonuskarte ${b.id} an ${p.name} gesendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}` : `Bonuskarte ${b.id} Versand an ${p.name} fehlgeschlagen: ${result.error}`);

@@ -179,7 +179,9 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   const finaleMinutes = finaleMinutesFor(scenario, targetMinutes);
   const budget = targetMinutes - finaleMinutes;
   const lkSlotFor = d => scenario.standardablauf.readingMinutes + speakingMinutes + d;
-  const vm = vorbotenMinutes(scenario);
+  // Vorboten bekommen normalerweise ihre volle Zeit; wird es knapp, schrumpfen
+  // sie zuerst (auf mind. 2 Min.), bevor Entscheidungszeit gekuerzt wird.
+  let vm = vorbotenMinutes(scenario);
   const costOf = (ev, d) => (ev.type !== 'lagekarte' ? 0 : (isVorbote(ev) ? vm : lkSlotFor(d)));
   const fullLk = ev => ev.type === 'lagekarte' && !isVorbote(ev);
   const keyOf = ev => ev.type + ':' + ev.id;
@@ -240,7 +242,11 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   const skPool = remainingPool.filter(ev => ev.type !== 'lagekarte');
 
   let decisionMinutes = nominalDecision;
-  const baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes), 0);
+  let baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes), 0);
+  if (baseCost > budget && vm > 2) {
+    vm = Math.max(2, vm - (baseCost - budget) / Math.max(1, baseline.filter(isVorbote).length));
+    baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes), 0);
+  }
   let compression = null;
   let warning = null;
   const selected = baseline.slice();

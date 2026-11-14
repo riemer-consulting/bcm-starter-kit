@@ -1,3 +1,4 @@
+const escHtml = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 let meta = null;
 let participants = [];
 let activeRoleIds = [];
@@ -158,11 +159,40 @@ function renderParticipants() {
     <tr data-idx="${i}">
       <td><input class="p-name" value="${p.name || ''}"></td>
       <td><input class="p-email" value="${p.email || ''}" placeholder="name@firma.de"></td>
-      <td><select class="p-roles" multiple size="2" style="min-width:220px;">${roleOptionsHtml(p.roleIds)}</select></td>
+      <td class="p-roles" data-roles="${escHtml((p.roleIds || []).join(','))}" style="min-width:240px;">${roleCellHtml(p.roleIds || [])}</td>
       <td><button class="secondary p-remove" type="button">✕</button></td>
     </tr>`).join('');
   updateDurationPreview();
 }
+
+// Rollen je Person: sichtbare Felder mit "x" plus eine Auswahl, die immer
+// nur EINE Rolle hinzufuegt. Die fruehere Mehrfachauswahl-Liste zeigte nur
+// zwei Zeilen -- dort waren durch Ziehen oder Strg+A unbemerkt alle Rollen
+// markiert, und jede Person bekam die Karten aller Rollen.
+function roleCellHtml(roleIds) {
+  const funktion = rid => (meta.roles.find(r => r.id === rid) || {}).funktion || rid;
+  const chips = roleIds.map(rid => `<span class="role-chip" style="display:inline-flex;align-items:center;gap:4px;background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:2px 4px 2px 10px;margin:0 4px 4px 0;font-size:12px;">${escHtml(funktion(rid))}<button type="button" class="role-chip-x" data-rid="${escHtml(rid)}" title="Rolle entfernen" style="border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 4px;font-size:13px;">×</button></span>`).join('');
+  const options = roleOptionsHtml([]).replace(/<option value="([^"]+)"/g, (m, rid) => roleIds.includes(rid) ? `<option value="${rid}" disabled` : m);
+  return `<div>${chips || '<span class="mini" style="color:var(--warn);">keine Rolle</span>'}</div>
+    <select class="p-role-add" style="width:auto;font-size:12px;padding:3px 6px;"><option value="">+ Rolle hinzufügen …</option>${options}</select>`;
+}
+function setRowRoles(cell, roleIds) {
+  cell.dataset.roles = roleIds.join(',');
+  cell.innerHTML = roleCellHtml(roleIds);
+  updateDurationPreview();
+}
+document.getElementById('participants-body').addEventListener('change', e => {
+  if (!e.target.classList.contains('p-role-add') || !e.target.value) return;
+  const cell = e.target.closest('.p-roles');
+  const roles = (cell.dataset.roles ? cell.dataset.roles.split(',') : []).filter(Boolean);
+  if (!roles.includes(e.target.value)) roles.push(e.target.value);
+  setRowRoles(cell, roles);
+});
+document.getElementById('participants-body').addEventListener('click', e => {
+  if (!e.target.classList.contains('role-chip-x')) return;
+  const cell = e.target.closest('.p-roles');
+  setRowRoles(cell, (cell.dataset.roles || '').split(',').filter(r => r && r !== e.target.dataset.rid));
+});
 
 function collectParticipantsFromDom() {
   const rows = Array.from(document.querySelectorAll('#participants-body tr'));
@@ -170,7 +200,7 @@ function collectParticipantsFromDom() {
     id: participants[i] && participants[i].id,
     name: row.querySelector('.p-name').value,
     email: row.querySelector('.p-email').value,
-    roleIds: Array.from(row.querySelector('.p-roles').selectedOptions).map(o => o.value)
+    roleIds: (row.querySelector('.p-roles').dataset.roles || '').split(',').filter(Boolean)
   }));
 }
 
@@ -180,8 +210,33 @@ function currentTargetMinutes() {
   return Number(preset);
 }
 
+// Wer bekommt welche vertraulichen Karten? Jede Karte geht an ALLE Personen
+// einer Rolle. Geteilte Rollen (Teams) und Personen mit mehreren Rollen
+// deshalb deutlich zeigen -- sonst wundert man sich im Trockenlauf ueber
+// scheinbar doppelte Karten.
+function updateRoleShareInfo(current) {
+  const el = document.getElementById('role-share-info');
+  const named = current.filter(p => p.name.trim() || p.email.trim());
+  const perRole = {};
+  named.forEach(p => (p.roleIds || []).filter(r => r !== 'teilnehmer').forEach(r => { (perRole[r] = perRole[r] || []).push(p.name.trim() || p.email.trim()); }));
+  const funktion = rid => (meta.roles.find(r => r.id === rid) || {}).funktion || rid;
+  const geteilt = Object.entries(perRole).filter(([, ps]) => ps.length > 1);
+  const mehrfach = named.filter(p => (p.roleIds || []).filter(r => r !== 'teilnehmer').length > 1);
+  if (!named.length) { el.textContent = ''; return; }
+  if (!geteilt.length && !mehrfach.length) {
+    el.style.color = 'var(--ok)';
+    el.textContent = 'Jede Person hat genau eine eigene Rolle – jede vertrauliche Karte geht an genau eine Person.';
+    return;
+  }
+  el.style.color = 'var(--warn)';
+  el.innerHTML = 'Vertrauliche Karten gehen an <b>alle</b> Personen einer Rolle. ' +
+    (geteilt.length ? `Geteilte Rollen (Teams, alle bekommen dieselben Karten): ${geteilt.map(([r, ps]) => `${escHtml(funktion(r))} – ${ps.length} Personen`).join('; ')}. ` : '') +
+    (mehrfach.length ? `Personen mit mehreren Rollen (bekommen die Karten aller ihrer Rollen): ${mehrfach.slice(0, 8).map(p => `${escHtml(p.name || p.email)} (${p.roleIds.filter(r => r !== 'teilnehmer').length})`).join(', ')}${mehrfach.length > 8 ? ' …' : ''}.` : '');
+}
+
 async function updateDurationPreview() {
   const current = collectParticipantsFromDom();
+  updateRoleShareInfo(current);
   const allRoleIds = current.flatMap(p => p.roleIds);
   const assignedGroups = new Set();
   allRoleIds.forEach(rid => {
@@ -418,6 +473,10 @@ document.getElementById('btn-start').addEventListener('click', async () => {
   const current = await (await fetch('/api/run/stage-state')).json();
   if (current.status !== 'idle' && current.status !== 'ended' &&
       !confirm('Es ist bereits eine Übung vorbereitet oder läuft gerade. Neu vorbereiten?\n\nDer aktuelle Lauf wird zurückgesetzt und alle Teilnehmer bekommen Begrüßung und Rollenbeschreibung noch einmal per E-Mail.')) return;
+  // Ungewoehnlich viele Rollen bei einer Person? Dann bekommt sie die Karten
+  // aller dieser Rollen -- lieber einmal nachfragen.
+  const viele = collectParticipantsFromDom().filter(p => (p.name.trim() || p.email.trim()) && p.roleIds.filter(r => r !== 'teilnehmer').length > 3);
+  if (viele.length && !confirm(`${viele.length} Person(en) haben mehr als 3 Rollen, z. B. ${viele[0].name || viele[0].email} mit ${viele[0].roleIds.length} Rollen. Sie bekommen dann die vertraulichen Karten ALLER dieser Rollen.\n\nTrotzdem so vorbereiten? („Abbrechen“, um die Rollen in der Teilnehmerliste zu korrigieren.)`)) return;
   // Moderation sofort beim Klick oeffnen -- nach den Wartezeiten fuer den
   // Mailversand blockieren viele Browser das neue Fenster als Pop-up.
   const modWin = window.open('moderator.html', '_blank');
@@ -615,12 +674,11 @@ document.getElementById('input-import-template').addEventListener('change', asyn
 
 // ---- Eigene Toene fuer Lagekarten (Aufnahme per Mikrofon oder Datei) ----
 let toeneRecorder = null;
-const escHtml = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 async function loadToene() {
   const data = await (await fetch('/api/lagekarten-toene')).json();
   const canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
   document.getElementById('toene-hinweis').textContent = canRecord
-    ? 'Tipp: ruhiger Raum, Headset oder Laptop-Mikrofon aus ca. 30 cm Abstand. Vor dem Übernehmen einmal anhören.'
+    ? 'Tipp: ruhiger Raum, Headset oder Laptop-Mikrofon aus ca. 30 cm Abstand. Lautsprecher bzw. Box während der Aufnahme leise oder aus – sonst nimmt das Mikrofon die eigene Stimme ein zweites Mal auf. Vor dem Übernehmen einmal anhören.'
     : 'Aufnehmen ist hier nicht möglich: Der Browser erlaubt das Mikrofon nur, wenn die App unter http://localhost:4173 geöffnet ist. Eine fertige Audiodatei können Sie trotzdem wählen.';
   // Lagekarten mit Sprechertext oder eigener Aufnahme oben, alle weiteren eingeklappt
   const oben = data.lagekarten.filter(lk => lk.sprechertext || lk.eigenerTon);
@@ -669,7 +727,9 @@ document.getElementById('toene-liste').addEventListener('click', async e => {
     const btn = e.target;
     if (toeneRecorder && toeneRecorder.state === 'recording') { toeneRecorder.stop(); return; }
     let stream;
-    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    // Ohne Echo-Unterdrueckung/Rauschfilter/automatische Lautstaerke: diese
+    // Filter lassen gesprochene Aufnahmen oft verzerrt oder "doppelt" klingen.
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } }); }
     catch (err) { preview.textContent = 'Kein Zugriff auf das Mikrofon: ' + err.message; return; }
     const chunks = [];
     toeneRecorder = new MediaRecorder(stream);

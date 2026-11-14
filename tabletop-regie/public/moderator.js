@@ -26,12 +26,51 @@ function participantFor(roleId, participants) {
 let timelineDragging = false;
 const timelineSlider = document.getElementById('timeline-slider');
 timelineSlider.addEventListener('pointerdown', () => { timelineDragging = true; });
+// Vorschau: Was steht bei Minute m auf der Buehne, und welche vertraulichen
+// Karten wuerden beim Sprung dorthin verschickt?
+function previewAt(s, m) {
+  const tl = (s && s.fullTimeline) || [];
+  const lks = tl.filter(e => e.type === 'lagekarte' && e.minute <= m);
+  const lk = lks[lks.length - 1];
+  const next = tl.find(e => e.type === 'lagekarte' && e.minute > m);
+  const sks = tl.filter(e => e.type === 'sonderlagekarte' && !e.fired && e.minute <= m && e.minute > s.elapsedMinutes);
+  let html = `<b>Minute ${m.toFixed(1)}:</b> Bühne zeigt ${lk ? '„' + escapeHtml(lk.titel) + '“' : 'noch keine Lagekarte'}`;
+  if (next) html += ` · nächste Lagekarte „${escapeHtml(next.titel)}“ bei Minute ${next.minute}`;
+  if (sks.length) {
+    const count = {};
+    sks.forEach(e => { const r = e.titel.replace('Sonderlagekarte für ', '').replace(/ \(statt .*\)$/, ''); count[r] = (count[r] || 0) + 1; });
+    const wer = Object.entries(count).map(([r, n]) => escapeHtml(r) + (n > 1 ? ` ×${n}` : '')).join(', ');
+    html += `<br><span style="color:var(--warn);">Bis hierher werden noch ${sks.length} vertrauliche Karte(n) verschickt – an: ${wer}</span>`;
+  }
+  return html;
+}
+function showPreview(m) {
+  if (!lastState) return;
+  const total = lastState.totalPlannedMinutes || 1;
+  const ghost = document.getElementById('timeline-ghost');
+  ghost.style.display = 'block';
+  ghost.style.left = Math.min(100, Math.max(0, m / total * 100)) + '%';
+  document.getElementById('timeline-preview').innerHTML = previewAt(lastState, m);
+}
+function hidePreview() {
+  document.getElementById('timeline-ghost').style.display = 'none';
+  document.getElementById('timeline-preview').innerHTML = '';
+}
 timelineSlider.addEventListener('input', () => {
   document.getElementById('timeline-drag-label').textContent = `Springe zu: ${Number(timelineSlider.value).toFixed(1)} Min. …`;
+  showPreview(Number(timelineSlider.value));
 });
+// Vorschau schon beim Darueberfahren, ohne zu klicken
+timelineSlider.addEventListener('mousemove', e => {
+  if (timelineDragging) return;
+  const r = timelineSlider.getBoundingClientRect();
+  const m = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * (lastState ? lastState.totalPlannedMinutes : 0);
+  showPreview(m);
+});
+timelineSlider.addEventListener('mouseleave', () => { if (!timelineDragging) hidePreview(); });
 timelineSlider.addEventListener('change', () => {
   api('/api/run/jump-to-minute', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ minute: Number(timelineSlider.value) }) })
-    .then(() => { timelineDragging = false; document.getElementById('timeline-drag-label').textContent = ''; refresh(); });
+    .then(() => { timelineDragging = false; document.getElementById('timeline-drag-label').textContent = ''; hidePreview(); refresh(); });
 });
 document.addEventListener('pointerup', () => { timelineDragging = false; });
 
@@ -54,9 +93,67 @@ function renderTimeline(s) {
   timelineSlider.disabled = !canJump;
 }
 
+// ---- Hinweis: vertrauliche Karte wurde gerade verschickt ----
+let seenFired = null;
+const skAlerts = [];
+function beep() {
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.18].forEach(t => {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.value = 880; g.gain.value = 0.08;
+      o.connect(g); g.connect(ac.destination);
+      o.start(ac.currentTime + t); o.stop(ac.currentTime + t + 0.12);
+    });
+  } catch (e) { /* ohne Ton weiter */ }
+}
+function updateSkAlerts(s) {
+  const fired = s.firedSonderlagekarten || [];
+  if (seenFired === null || fired.length < seenFired.size) seenFired = new Set(fired.map(f => f.id)); // erstes Laden / Lauf zurueckgesetzt
+  let neu = false;
+  fired.forEach(f => { if (!seenFired.has(f.id)) { seenFired.add(f.id); skAlerts.unshift(f); neu = true; } });
+  if (neu) { beep(); document.title = '● Neue vertrauliche Karte – Moderation'; }
+  const funktion = rid => (s.scenario.roles.find(r => r.id === rid) || {}).funktion || rid;
+  const karte = (f, i) => {
+    const sk = s.scenario.sonderlagekarten.find(x => x.id === f.id) || {};
+    const results = f.emailResults || [];
+    const fehler = results.filter(r => !r.ok);
+    const namen = results.map(r => { const p = (s.participants || []).find(x => x.id === r.participantId); return p && p.name ? p.name : r.email; });
+    const an = f.recipientRoleId
+      ? `${escapeHtml(funktion(f.recipientRoleId))}${f.recipientRoleId !== sk.empfaenger ? ` (statt ${escapeHtml(funktion(sk.empfaenger))})` : ''}${namen.length ? ' – ' + escapeHtml(namen.join(', ')) : ''}`
+      : 'niemand (Rolle nicht besetzt)';
+    const status = !f.recipientRoleId ? '<span style="color:var(--warn);">Nicht verschickt – Rolle und Ersatzrolle unbesetzt.</span>'
+      : fehler.length ? `<span style="color:var(--bad);font-weight:700;">E-Mail fehlgeschlagen (${fehler.length}/${results.length}): ${escapeHtml(fehler[0].error || '')} – Karte bitte mündlich oder auf Papier übergeben.</span>`
+      : `<span style="color:var(--ok);">E-Mail zugestellt (${results.length}).</span>`;
+    return `<div class="sk-alert ${fehler.length || !f.recipientRoleId ? 'fehler' : ''}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div class="kopf" style="flex:1;">${f.manual ? 'Manuell ausgelöst' : 'Soeben verschickt'}: vertrauliche Karte ${escapeHtml(f.id)} an ${an}</div>
+        <button class="secondary sk-alert-ok" data-idx="${i}" style="flex-shrink:0;" title="Hinweis schließen. Die Karte bleibt unten unter „Verschickte vertrauliche Karten“ einsehbar.">Gesehen</button>
+      </div>
+      <div>${escapeHtml(sk.text || '')}</div>
+      ${sk.moderatorHinweis ? `<div style="color:var(--warn);margin-top:4px;">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
+      ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
+      ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
+      <div style="margin-top:4px;">${status}</div>
+    </div>`;
+  };
+  // Die zwei neuesten voll, aeltere eingeklappt -- sonst verdeckt ein grosser
+  // Zeitsprung die ganze Moderation.
+  const voll = skAlerts.slice(0, 2).map(karte).join('');
+  const rest = skAlerts.slice(2);
+  const restHtml = rest.length ? `<div class="sk-alert" style="border-style:dashed;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <span><b>${rest.length} weitere</b> verschickt: ${rest.map(f => escapeHtml(f.id)).join(', ')} <span class="muted">(Details unten unter „Verschickte vertrauliche Karten“)</span></span>
+        <button class="secondary sk-alert-all" style="flex-shrink:0;">Alle als gesehen markieren</button>
+      </div></div>` : '';
+  document.getElementById('m-alerts').innerHTML = voll + restHtml;
+  if (!skAlerts.length) document.title = 'Moderation – BCM Tabletop-Regie';
+}
+
 function render(s) {
   lastState = s;
   const scenario = s.scenario;
+  updateSkAlerts(s);
 
   document.getElementById('m-title').textContent = scenario.title;
   const tmBanner = document.getElementById('m-testmode-banner');
@@ -322,6 +419,14 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 });
 
 document.addEventListener('click', e => {
+  if (e.target.classList.contains('sk-alert-all')) {
+    skAlerts.length = 0;
+    if (lastState) updateSkAlerts(lastState);
+  }
+  if (e.target.classList.contains('sk-alert-ok')) {
+    skAlerts.splice(Number(e.target.dataset.idx), 1);
+    if (lastState) updateSkAlerts(lastState);
+  }
   if (e.target.classList.contains('replay-sound')) {
     api('/api/run/replay-sound', { method: 'POST' });
   }

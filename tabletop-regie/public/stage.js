@@ -34,7 +34,17 @@ let lastLagekarteId = null;
 let lastReplay = null; // Zaehler aus der Moderation: "Ton noch einmal abspielen"
 const ambientAudio = document.getElementById('ambient-audio');
 const eventAudio = document.getElementById('event-audio');
+// Jedes Buehnenfenster hat eine eigene Kennung; Ton spielt nur das Fenster,
+// das ihn zuletzt aktiviert hat.
+const stageId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+let isSoundOwner = false;
+function claimSound() {
+  fetch('/api/stage/sound-claim', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: stageId }) }).catch(() => {});
+  isSoundOwner = true;
+}
+document.getElementById('sound-elsewhere').addEventListener('click', () => { claimSound(); lastLagekarteId = null; refresh(); });
 document.getElementById('btn-enable-sound').addEventListener('click', () => {
+  claimSound();
   soundEnabled = true;
   document.getElementById('sound-unlock').style.display = 'none';
   ambientAudio.play().catch(() => {});
@@ -46,6 +56,17 @@ document.getElementById('btn-enable-sound').addEventListener('click', () => {
 
 function applySound(s) {
   if (!soundEnabled) return;
+  // Hat ein anderes Fenster den Ton uebernommen: hier stumm schalten.
+  if (!s.soundOwner) claimSound(); // z. B. nach Server-Neustart
+  isSoundOwner = !s.soundOwner || s.soundOwner === stageId;
+  document.getElementById('sound-elsewhere').style.display = isSoundOwner ? 'none' : '';
+  if (!isSoundOwner) {
+    if (!ambientAudio.paused) ambientAudio.pause();
+    if (!eventAudio.paused) eventAudio.pause();
+    lastLagekarteId = null;
+    lastReplay = s.soundReplay || 0;
+    return;
+  }
   const replay = s.soundReplay || 0;
   const replayRequested = lastReplay !== null && replay !== lastReplay;
   lastReplay = replay;
