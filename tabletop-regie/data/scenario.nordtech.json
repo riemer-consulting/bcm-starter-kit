@@ -344,8 +344,8 @@
       "moderatorHinweis": "Eine eigene Rolle Produktion gibt es nicht: Rückfragen an die Produktionsleitung beantwortet die Moderation.",
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk02-produktion-stoppt.png",
-        "caption": "Status: Fertigungsaufträge können nicht mehr gestartet werden."
+        "src": "/media/nordtech/lk02-produktion-gestoppt-foto.webp",
+        "caption": "Montag, 09:00 Uhr: Die Fertigung steht."
       },
       "prioritaet": 2,
       "zustaendig": [
@@ -362,18 +362,19 @@
       "titel": "LinkedIn-Beitrag",
       "minuteOffset": 18,
       "diskussionMinuten": 4,
-      "text": "Ein Mitarbeiter veröffentlicht einen Beitrag auf LinkedIn mit Bildern aus dem Unternehmen. Aussage: \"Heute läuft bei uns gar nichts mehr.\" Der Beitrag verbreitet sich schnell.",
+      "text": "Ein Teamleiter aus der Disposition postet auf LinkedIn über den Ausfall – mit einem Foto, auf dem die Lösegeldforderungen auf den Bildschirmen deutlich zu lesen sind. Der Beitrag verbreitet sich schnell.",
       "kriseninfo": "20.000 Aufrufe · mehrere Journalisten kommentieren",
       "aufgabe": [
         "Wer reagiert?",
         "Wie kommunizieren Sie?",
         "Müssen Mitarbeiter informiert werden?"
       ],
-      "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen.",
+      "moderatorHinweis": "Jetzt das vorbereitete LinkedIn-Bild zeigen. Auf das Foto hinweisen: Der Angriff ist damit öffentlich, bevor das Unternehmen selbst etwas gesagt hat.",
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk03-linkedin-post.png",
-        "caption": "Social-Media-Beitrag eines Mitarbeiters, wenige Minuten nach Veröffentlichung."
+        "src": "/media/nordtech/lk03-linkedin-post-foto.webp",
+        "caption": "Der Beitrag eines Mitarbeiters, eine Stunde nach Veröffentlichung.",
+        "hochformat": true
       },
       "prioritaet": 3,
       "zustaendig": [
@@ -427,8 +428,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk05-schluesselperson-faellt-aus.png",
-        "caption": "Der leitende Systemadministrator ist nicht erreichbar."
+        "src": "/media/nordtech/lk05-leerer-arbeitsplatz-foto.webp",
+        "caption": "Der Platz des leitenden Systemadministrators bleibt leer."
       },
       "prioritaet": 2,
       "zustaendig": [
@@ -454,8 +455,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk06-kunde-eskaliert.png",
-        "caption": "Automobilkunde droht mit Vertragsstrafe."
+        "src": "/media/nordtech/lk06-kunde-eskaliert-foto.webp",
+        "caption": "Dienstag, 10:00 Uhr: Der Automobilkunde ist am Apparat."
       },
       "prioritaet": 3,
       "zustaendig": [
@@ -535,8 +536,8 @@
       "moderatorHinweis": "Zweite gute Nachricht – Hoffnung zulassen, aber das Restrisiko ansprechen (Backups könnten kompromittiert sein).",
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk09-backups-gefunden.png",
-        "caption": "Offline-Backups sind verfügbar."
+        "src": "/media/nordtech/lk09-offline-backup-foto.webp",
+        "caption": "Offline-Backup gefunden: lesbar, aber noch nicht auf Schadcode geprüft."
       },
       "prioritaet": 2,
       "zustaendig": [

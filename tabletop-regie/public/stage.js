@@ -237,7 +237,9 @@ function renderMedia(media, gross) {
   if (media.type === 'video') {
     return `<div style="margin:0 0 16px;max-width:960px;flex-shrink:0;"><video src="${src}" controls autoplay style="max-width:100%;max-height:40vh;border-radius:8px;"></video>${caption}</div>`;
   }
-  return `<div style="margin:0 0 16px;max-width:960px;flex-shrink:0;"><img src="${src}" style="max-width:100%;max-height:40vh;border-radius:8px;display:block;">${caption}</div>`;
+  // Hochformat (z. B. Social-Media-Beitrag) darf hoeher werden, sonst ist er kaum lesbar.
+  const maxH = media.hochformat ? '58vh' : '40vh';
+  return `<div style="margin:0 0 16px;max-width:960px;flex-shrink:0;"><img src="${src}" style="max-width:100%;max-height:${maxH};border-radius:8px;display:block;">${caption}</div>`;
 }
 
 function escapeHtml(s) {
