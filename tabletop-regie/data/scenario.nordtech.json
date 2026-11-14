@@ -317,8 +317,8 @@
       "moderatorHinweis": null,
       "media": {
         "type": "image",
-        "src": "/media/nordtech/lk16-ot-trennung.png",
-        "caption": "Entscheidung: auch unbetroffene Anlagen vorsorglich vom Netz nehmen?"
+        "src": "/media/nordtech/lk16-incident-overview-foto.webp",
+        "caption": "Montag, 08:00 Uhr: Lagebesprechung der IT. Der Angreifer kam vermutlich über ein VPN-Konto, wie genau, ist noch unklar."
       },
       "prioritaet": 2,
       "zustaendig": [
@@ -500,7 +500,7 @@
       "titel": "Positive Entwicklung",
       "minuteOffset": 44,
       "diskussionMinuten": 3,
-      "text": "Forensiker identifizieren den Einbruchsvektor: Phishing-Mail. Derzeit keine Hinweise auf aktive Angreifer im Netzwerk.",
+      "text": "Forensiker bestätigen den Einbruchsvektor: Eine Phishing-Mail hat die Zugangsdaten eines VPN-Kontos abgegriffen. Derzeit keine Hinweise auf aktive Angreifer im Netzwerk.",
       "kriseninfo": "erste gute Nachricht der Übung",
       "aufgabe": [
         "Welche Maßnahmen ergeben sich daraus?",
