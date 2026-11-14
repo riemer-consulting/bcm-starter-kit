@@ -334,7 +334,16 @@ function getActiveSchedule(scenario, state) {
 }
 
 /** Ermittelt, welche Ereignisse beim aktuellen Stand bereits "faellig" sind (fuer Auto-Fire). */
+// Solange die Krise nicht wirklich laeuft (Vorbereitung, 30-Sekunden-
+// Countdown, nicht gestartet), ist NICHTS faellig -- auch keine Karte, die
+// fuer Minute 0 geplant ist. Sonst zeigt die Buehne schon in der "Ruhe vor
+// dem Sturm" das erste Lagebild und spielt dessen Ton ab.
+function crisisClockStarted(state) {
+  return !!state.startedAt && ['running', 'paused', 'ended'].includes(state.status);
+}
+
 function dueEvents(scenario, state) {
+  if (!crisisClockStarted(state)) return [];
   const nowMin = elapsedMinutes(state);
   const schedule = getActiveSchedule(scenario, state);
   return schedule.filter(ev => ev.minute <= nowMin);
@@ -430,6 +439,7 @@ module.exports = {
   getActiveSchedule,
   eventRef,
   dueEvents,
+  crisisClockStarted,
   currentLagekarte,
   totalPlannedMinutes
 };
