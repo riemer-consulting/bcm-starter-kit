@@ -113,25 +113,25 @@
   "roles": [
     {
       "id": "geschaeftsfuehrer-ceo",
-      "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
+      "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
       "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Aufsichtsrat) und musst das Team zusammenhalten."
     },
     {
       "id": "geschaeftsfuehrerin-vertrieb",
-      "funktion": "Geschäftsführerin Vertrieb, stellv. Krisenstabsleiterin",
+      "funktion": "Geschäftsführung Vertrieb, stellv. Krisenstabsleitung",
       "group": "vertrieb",
       "beschreibung": "Du vertrittst den Krisenstabsleiter bei Bedarf und verantwortest alle Kundenbeziehungen. Du musst Großkunden beruhigen, ohne Zusagen zu machen, die das Unternehmen nicht halten kann."
     },
     {
       "id": "leiter-it",
-      "funktion": "Leiter IT (CIO)",
+      "funktion": "IT-Leitung (CIO)",
       "group": "it",
       "beschreibung": "Du bist für die Wiederherstellung aller IT-Systeme verantwortlich. Du entscheidest über Forensik und Wiederanlauf-Reihenfolge und musst dem Krisenstab ehrlich sagen, was technisch wirklich möglich ist — auch wenn das unbequem ist."
     },
     {
       "id": "it-mitarbeiter",
-      "funktion": "IT-Mitarbeiter (Vertreter IT-Leitung)",
+      "funktion": "IT-Fachkraft (Vertretung IT-Leitung)",
       "group": "it",
       "beschreibung": "Du unterstützt die IT-Leitung operativ und vertrittst sie, falls sie ausfällt. Du kennst die Systeme im Detail und bist oft die erste Anlaufstelle für technische Rückfragen."
     },
@@ -161,7 +161,7 @@
     },
     {
       "id": "kaufmaennische-leiterin-cfo",
-      "funktion": "Kaufmännische Leiterin (CFO)",
+      "funktion": "Kaufmännische Leitung (CFO)",
       "group": "finanzen",
       "beschreibung": "Du verantwortest alle finanziellen Aspekte der Krise: Schadenshöhe, Liquidität, Versicherung, Bankkontakt. Du musst früh einschätzen, was sich das Unternehmen leisten kann."
     },
@@ -185,13 +185,13 @@
     },
     {
       "id": "leiter-einkauf",
-      "funktion": "Leiter Strategischer Einkauf",
+      "funktion": "Leitung Strategischer Einkauf",
       "group": "einkauf",
       "beschreibung": "Du verantwortest Lieferanten und Materialversorgung. Wenn Material knapp wird, musst du entscheiden, wen du zuerst belieferst oder wo du teurer nachkaufst."
     },
     {
       "id": "leiterin-personal",
-      "funktion": "Leiterin Personal",
+      "funktion": "Personalleitung",
       "group": "personal",
       "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden: Ausfälle von Schlüsselpersonen, Gerüchte im Haus, Belastung des Teams. Du entscheidest, wer wann was erfährt."
     },
@@ -203,19 +203,19 @@
     },
     {
       "id": "leiter-einzelhandel",
-      "funktion": "Leiter Einzelhandel",
+      "funktion": "Leitung Einzelhandel",
       "group": "vertrieb",
       "beschreibung": "Du verantwortest das Einzelhandelsgeschäft. Beschwerden von Fachhändlern landen zuerst bei dir."
     },
     {
       "id": "regionalleiter-west",
-      "funktion": "Regionalleiter West",
+      "funktion": "Regionalleitung West",
       "group": "vertrieb",
       "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
     },
     {
       "id": "regionalleiter-ost",
-      "funktion": "Regionalleiter Ost",
+      "funktion": "Regionalleitung Ost",
       "group": "vertrieb",
       "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
     },
@@ -372,7 +372,7 @@
         "Was wird kommuniziert?",
         "Was wird bewusst nicht kommuniziert?"
       ],
-      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
+      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Berichterstattung spielen.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk04-nordkanal-anfrage.png",

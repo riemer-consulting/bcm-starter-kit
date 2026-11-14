@@ -46,7 +46,28 @@ function renderRoleCheckboxes() {
   document.getElementById('btn-fill-compact').textContent = `Kompakt: ${compactGroups.length} Funktionsbereiche anlegen`;
 }
 
+function rolesUsedByNamedParticipants() {
+  const used = new Set();
+  collectParticipantsFromDom().forEach(p => {
+    if (p.name.trim() || p.email.trim()) (p.roleIds || []).forEach(rid => used.add(rid));
+  });
+  return used;
+}
+
 async function saveActiveRoles() {
+  // Egal wodurch activeRoleIds gerade neu berechnet wurde (Checkbox,
+  // "Alle"/"Keine", "Passende Rollen vorschlagen" mit geaenderter
+  // Teilnehmerzahl): eine Rolle, die bereits einer benannten Person
+  // zugeordnet ist, darf dabei nie herausfallen -- sonst verliert diese
+  // Person beim naechsten Speichern unbemerkt ihre Rollenzuweisung.
+  const used = rolesUsedByNamedParticipants();
+  const missing = Array.from(used).filter(rid => !activeRoleIds.includes(rid));
+  if (missing.length) {
+    activeRoleIds = Array.from(new Set([...activeRoleIds, ...missing]));
+    const namen = missing.map(rid => { const r = meta.roles.find(x => x.id === rid); return r ? r.funktion : rid; });
+    document.getElementById('role-select-status').textContent =
+      `Bleibt aktiv, weil bereits zugeordnet: ${namen.join(', ')}.`;
+  }
   await fetch('/api/active-roles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(activeRoleIds) });
   // Erst den aktuellen DOM-Stand uebernehmen (sonst gehen bereits getippte
   // Namen verloren), dann verwaiste, nie ausgefuellte Platzhalter-Zeilen

@@ -121,55 +121,55 @@
   "roles": [
     {
       "id": "geschaeftsfuehrer-ceo",
-      "funktion": "Geschäftsführer (CEO), Krisenstabsleiter",
+      "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
       "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen und musst am Ende öffentlich vor die Presse treten."
     },
     {
       "id": "leiterin-logistik-zentrallager",
-      "funktion": "Leiterin Logistik & Zentrallager",
+      "funktion": "Leitung Logistik & Zentrallager",
       "group": "logistik",
       "beschreibung": "Du verantwortest das Zentrallager und die Belieferung aller Filialen. Nach dem Brand musst du Alternativen organisieren, damit die Filialen weiter Ware bekommen."
     },
     {
       "id": "schichtleiter-zentrallager",
-      "funktion": "Schichtleiter Zentrallager (vor Ort in der Brandnacht)",
+      "funktion": "Schichtleitung Zentrallager (vor Ort in der Brandnacht)",
       "group": "logistik",
       "beschreibung": "Du warst in der Brandnacht vor Ort und kennst die Lage im Lager aus erster Hand — Zustand des Gebäudes, Verletzte, was sich noch retten lässt."
     },
     {
       "id": "leiter-it",
-      "funktion": "Leiter IT (Kassensysteme & Warenwirtschaft)",
+      "funktion": "IT-Leitung (Kassensysteme & Warenwirtschaft)",
       "group": "it",
       "beschreibung": "Du verantwortest Kassensysteme und Warenwirtschaft. Nach dem Serverausfall musst du entscheiden, wie Filialen und Online-Shop übergangsweise arbeiten können."
     },
     {
       "id": "leiter-einkauf",
-      "funktion": "Leiter Einkauf & Lieferantenmanagement",
+      "funktion": "Leitung Einkauf & Lieferantenmanagement",
       "group": "einkauf",
       "beschreibung": "Du verantwortest Lieferanten und Beschaffung. Du musst kurzfristig Ersatzlieferungen organisieren und entscheiden, wo sich Mehrkosten lohnen."
     },
     {
       "id": "leiterin-personal",
-      "funktion": "Leiterin Personal",
+      "funktion": "Personalleitung",
       "group": "personal",
       "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden, insbesondere den verletzten Kollegen aus der Nachtschicht und seine Familie, sowie die Stimmung im Team."
     },
     {
       "id": "leiter-arbeitssicherheit",
-      "funktion": "Leiter Arbeitssicherheit & Werkschutz",
+      "funktion": "Leitung Arbeitssicherheit & Werkschutz",
       "group": "arbeitssicherheit",
       "beschreibung": "Du verantwortest Arbeitssicherheit und Werkschutz. Die Brandursache und mögliche Versäumnisse bei der Wartung sind dein heikelstes Thema."
     },
     {
       "id": "regionalleiterin-filialen-nord",
-      "funktion": "Regionalleiterin Filialen Nord",
+      "funktion": "Regionalleitung Filialen Nord",
       "group": "vertrieb",
       "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erste mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
     },
     {
       "id": "regionalleiter-filialen-sued",
-      "funktion": "Regionalleiter Filialen Süd",
+      "funktion": "Regionalleitung Filialen Süd",
       "group": "vertrieb",
       "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erster mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
     },
@@ -181,13 +181,13 @@
     },
     {
       "id": "leiter-finanzen-cfo",
-      "funktion": "Leiter Finanzen & Versicherung (CFO)",
+      "funktion": "Leitung Finanzen & Versicherung (CFO)",
       "group": "finanzen",
       "beschreibung": "Du verantwortest Finanzen und Versicherung. Du musst früh einschätzen, was die Versicherung deckt und wo das Unternehmen selbst einspringen muss."
     },
     {
       "id": "leiterin-kommunikation-pr",
-      "funktion": "Leiterin Unternehmenskommunikation & Marketing",
+      "funktion": "Leitung Unternehmenskommunikation & Marketing",
       "group": "kommunikation",
       "beschreibung": "Du verantwortest die externe Kommunikation. Presse, soziale Medien und am Ende die Pressekonferenz laufen über deinen Tisch."
     },
@@ -388,7 +388,7 @@
         "Was wird kommuniziert, was bewusst nicht?",
         "Wie gehen Sie mit Spekulationen zu Gefahrstoffen um?"
       ],
-      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Reporterin spielen.",
+      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Berichterstattung spielen.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk06-pressekontakt.png",

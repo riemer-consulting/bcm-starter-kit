@@ -106,7 +106,13 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Teilnehmerzuweisung, der Bewertungsmatrix und bei "Manuell auslösen". Zu
    jeder Rolle steht direkt eine kurze **Rollenbeschreibung** (Zuständigkeit,
    worauf die Person im Verlauf achten muss), damit klar ist, was mit einer
-   Rolle überhaupt gemeint ist, bevor sie jemandem zugewiesen wird.
+   Rolle überhaupt gemeint ist, bevor sie jemandem zugewiesen wird. Alle
+   Rollenbezeichnungen sind bewusst **geschlechtsneutral** formuliert (z. B.
+   "Personalleitung" statt "Leiterin Personal") — keine Rolle schreibt beim
+   Zuweisen ein bestimmtes Geschlecht vor. Ändert sich die Teilnehmerzahl
+   nachträglich (z. B. über "Passende Rollen vorschlagen" neu berechnet,
+   oder "Alle"/"Keine"), bleiben Rollen, die bereits einer benannten Person
+   zugeordnet sind, automatisch aktiv — die Zuweisung geht dabei nie verloren.
 3. Teilnehmer eintragen (Name, E-Mail) und Rollen zuweisen — entweder "Alle N
    aktiven Rollen" (volle Besetzung der Auswahl) oder "Kompakt: X
    Funktionsbereiche" (für noch kleinere Gruppen), oder frei von Hand. Jede
