@@ -94,8 +94,10 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    einzutippen. Am Ende dieses Setups (Schritt 7) kannst du die aktuelle
    Konfiguration jederzeit wieder als neue Vorlage herunterladen.
 1. **Setup öffnen.** Oben zuerst das **Szenario** wählen (z. B. NordTech oder
-   Waterkant) — ein Wechsel setzt Lauf und Teilnehmerliste zurück, da Rollen
-   zwischen Szenarien nicht übertragbar sind. Die Auswahl wird gespeichert und
+   Waterkant) — ein Wechsel setzt nur den Lauf zurück. Alle eingetragenen
+   Personen bleiben erhalten; Rollen, die es im neuen Szenario genauso gibt
+   (z. B. IT-Leitung, Personalleitung), bleiben zugewiesen, die übrigen wählst
+   du neu. Die Auswahl wird gespeichert und
    bleibt auch nach einem Neustart erhalten (kein `SCENARIO_FILE` mehr nötig,
    außer du willst das gezielt per Kommandozeile erzwingen).
 2. **Rollen für diesen Lauf auswählen.** Bei kleineren Gruppen muss nicht
@@ -130,8 +132,23 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    ein. Die Buttons **"Begrüßung an alle senden"** und **"Rollenbeschreibungen
    per E-Mail senden"** bleiben zusätzlich hier, falls du das vorab schon mal
    testen oder nach einer späten Änderung erneut verschicken willst.
+   **Viele Personen auf einmal:** Unter **"Teilnehmer importieren"** die
+   Zeilen direkt aus Excel kopieren und einfügen (oder eine CSV-Datei wählen).
+   Erkannt werden Vorname, Nachname und E-Mail, auch wenn weitere Spalten wie
+   Firma oder Anmeldedatum dabei sind, mit oder ohne Kopfzeile. Leere
+   Rollen-Zeilen (z. B. nach "Alle N aktiven Rollen anlegen") werden zuerst
+   befüllt, überzählige Personen als "Teilnehmer" angelegt; doppelte
+   E-Mail-Adressen und Zeilen ohne gültige Adresse werden übersprungen.
 4. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
+   **Trockenlauf:** Im Abschnitt "Trockenlauf (Testmodus)" eine eigene
+   Dummy-Adresse eintragen und aktivieren. Dann bleiben alle echten Personen
+   und Rollen bestehen, aber **jede** Mail (Begrüßung, Rollenbeschreibung,
+   Sonderlagekarten, Bonuskarten, Urkunden) geht nur an die Dummy-Adresse —
+   mit Betreff "[TESTLAUF → eigentlicher Empfänger]" und einem Hinweis im
+   Text. So siehst du vorab, wie jede Mail ankommt. Solange der Testmodus an
+   ist, zeigen Setup und Moderation ein deutliches Warnbanner. Vor dem echten
+   Lauf wieder ausschalten.
 5. **Branding** (Name/Logo der durchführenden Organisation, Ort) für die
    Urkunden prüfen — Standard ist "EXCON" mit mitgeliefertem Logo, unabhängig
    vom Kundenlogo, das im Szenario selbst steckt (z. B. Waterkant Baumärkte).
@@ -189,7 +206,7 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 |---|---|---|
 | **Erprobte Zeiten** | Gruppe liegt nahe an der Referenzgröße (~18–20 Personen) | Feste, im Playbook bereits live getestete Minutenangaben (87 Min. Übungszeit), unverändert. |
 | **Berechnet** | Du willst das **vollständige** Drehbuch, aber die Dauer soll sich der tatsächlichen Rollenzahl/Schwierigkeit anpassen | Alle 15 Lagekarten + alle terminierten Sonderlagekarten bleiben erhalten; die Zeit je Lagekarte (Lesezeit + 30 Sek. je aktivem Funktionsbereich + Entscheidungszeit nach Schwierigkeit) bestimmt die Gesamtdauer — kann je nach Rollenzahl auch deutlich von 87 Min. abweichen. |
-| **Zieldauer** | Du hast ein festes Zeitfenster (z. B. 45 Min. Workshop-Slot, 90 Min. Standard, 2 Std. Deep-Dive) und die **Lage soll sich daran anpassen** | Du gibst die gewünschte Gesamtdauer vor (Presets 45/60/90/120 Min. oder eigene Minutenzahl). Die App wählt Karten nach Priorität: **Kernszenen** (Start, der Beirat-Höhepunkt, Ende) sind immer dabei, wichtige Karten kommen dazu, solange Zeit bleibt, optionale zuletzt. Reicht die Zeit selbst für die Kernszenen nicht, werden die Entscheidungsphasen komprimiert (mit Mindestdauer) statt weitere Karten zu streichen — reicht sie trotzdem nicht, wird das ehrlich als Warnung angezeigt, statt die Zieldauer stillschweigend zu überschreiten. Ist mehr Zeit vorhanden als nötig, werden die Entscheidungsphasen stattdessen verlängert. Übersprungene Karten lassen sich in der Moderationsansicht jederzeit einzeln nachträglich aufnehmen. |
+| **Zieldauer** | Du hast ein festes Zeitfenster (z. B. 45 Min. Workshop-Slot, 90 Min. Standard, 2 Std. Deep-Dive) und die **Lage soll sich daran anpassen** | Du gibst die gewünschte Gesamtdauer vor (Presets 45/60/90/120 Min. oder eigene Minutenzahl). Die App wählt Karten nach Priorität: **Kernszenen** (Start, der Beirat-Höhepunkt, Ende) sind immer dabei, danach bekommt **jede besetzte Rolle garantiert mindestens eine eigene Sonderlagekarte**, dann kommen wichtige Karten dazu, solange Zeit bleibt, optionale zuletzt. Vertrauliche Karten für Rollen, die niemand spielt, werden gar nicht erst eingeplant (in allen drei Zeitmodi). Die Setup-Vorschau zeigt an, ob wirklich jede besetzte Rolle eine Karte bekommt. Reicht die Zeit selbst für die Kernszenen nicht, werden die Entscheidungsphasen komprimiert (mit Mindestdauer) statt weitere Karten zu streichen — reicht sie trotzdem nicht, wird das ehrlich als Warnung angezeigt, statt die Zieldauer stillschweigend zu überschreiten. Ist mehr Zeit vorhanden als nötig, werden die Entscheidungsphasen stattdessen verlängert. Übersprungene Karten lassen sich in der Moderationsansicht jederzeit einzeln nachträglich aufnehmen. |
 
 ## Ein Drehbuch erweitern oder ein neues anlegen
 

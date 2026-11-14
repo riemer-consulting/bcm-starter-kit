@@ -28,6 +28,7 @@
 <div class="container">
   <div class="nav"><a href="index.html">Start</a><a href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a class="active" href="moderator.html">Moderation</a><a href="ablauf.html" target="_blank">Ablauf & Hilfe</a></div>
   <div class="not-shared-label">⚠ Diese Ansicht NICHT per Bildschirmfreigabe teilen</div>
+  <div id="m-testmode-banner" style="display:none;background:rgba(224,168,50,.15);border:2px solid var(--warn);color:var(--warn);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-weight:600;"></div>
 
   <div class="card">
     <div class="row" style="justify-content:space-between;">
@@ -107,7 +108,11 @@
       </div>
 
       <div class="card">
-        <h2>Urkunden</h2>
+        <div class="row" style="justify-content:space-between;">
+          <h2>Urkunden</h2>
+          <button id="btn-send-all-certs" class="secondary" title="Schickt jeder eingetragenen Person mit E-Mail ihre Urkunde (im Trockenlauf an die Dummy-Adresse).">Alle Urkunden senden</button>
+        </div>
+        <div id="m-certs-status" class="mini muted"></div>
         <div id="m-certs"></div>
       </div>
     </div>

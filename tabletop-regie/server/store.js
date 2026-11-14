@@ -46,7 +46,12 @@ const DEFAULT_SETTINGS = {
   // Zuletzt gewaehlter Zeitmodus/Schwierigkeit/Zieldauer -- wird beim
   // Start einer Uebung gemerkt, damit das Setup beim naechsten Mal nicht
   // wieder auf die Standardwerte zurueckfaellt.
-  runDefaults: { durationMode: 'authored', difficulty: 'mittel', targetPreset: '90', targetCustom: 90 }
+  runDefaults: { durationMode: 'authored', difficulty: 'mittel', targetPreset: '90', targetCustom: 90 },
+  // Trockenlauf: echte Teilnehmer/Rollen bleiben bestehen, aber JEDE Mail
+  // (Begrüßung, Rollenbeschreibung, Sonderlagekarten, Bonuskarten, Urkunde)
+  // geht an eine einzige Dummy-Adresse statt an die echten Empfänger --
+  // zum Testen, wie die Mails ankommen, ohne echte Teilnehmer zu behelligen.
+  testMode: { enabled: false, dummyEmail: '' }
 };
 
 function loadSettings() {

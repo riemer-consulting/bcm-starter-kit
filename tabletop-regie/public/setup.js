@@ -173,9 +173,13 @@ async function updateDurationPreview() {
       document.getElementById('duration-preview').textContent =
         `${current.length} Teilnehmer, ${r.activeRoleGroups} aktive Funktionsbereiche. ` +
         `Geplant: ${r.lagekartenCount} Lagekarten + ${r.sonderlagekartenCount} Sonderlagekarten (${r.skippedCount} entfallen), ` +
-        `Gesamtzeit ca. ${r.totalMinutes} von ${targetMinutes} Min.`;
-      document.getElementById('duration-preview-detail').textContent = r.warning || '';
-      document.getElementById('duration-preview-detail').style.color = r.warning ? 'var(--warn)' : '';
+        `Gesamtzeit ca. ${r.totalMinutes} von ${targetMinutes} Min. ` +
+        (r.rolesAssigned ? (r.uncoveredRoles.length
+          ? `Achtung: ${r.uncoveredRoles.length} von ${r.rolesAssigned} Rollen bekommen keine eigene Karte.`
+          : `Jede der ${r.rolesAssigned} besetzten Rollen bekommt mindestens eine eigene Karte.`) : '');
+      const detail = [r.uncoveredRoles.length ? `Ohne eigene Karte: ${r.uncoveredRoles.join(', ')}.` : '', r.warning || ''].filter(Boolean).join(' ');
+      document.getElementById('duration-preview-detail').textContent = detail;
+      document.getElementById('duration-preview-detail').style.color = detail ? 'var(--warn)' : '';
     } catch (e) {
       document.getElementById('duration-preview').textContent = 'Vorschau konnte nicht geladen werden.';
     }
@@ -219,6 +223,88 @@ document.getElementById('btn-add-teilnehmer').addEventListener('click', async ()
   for (let i = 0; i < count; i++) participants.push({ name: '', email: '', roleIds: ['teilnehmer'] });
   renderParticipants();
 });
+// Teilnehmer-Import aus Excel (Tab-getrennt beim Kopieren) oder CSV (; oder ,).
+// Mit Kopfzeile werden Spalten per Namen erkannt, ohne Kopfzeile gilt: die
+// Spalte mit "@" ist die E-Mail, die beiden davor sind Vorname/Nachname
+// (bzw. bei nur einer Spalte davor: der volle Name).
+function parseParticipantImport(raw) {
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return { people: [], invalid: 0 };
+  const sep = lines[0].includes('\t') ? '\t' : (lines[0].includes(';') ? ';' : ',');
+  const rows = lines.map(l => l.split(sep).map(c => c.trim().replace(/^"(.*)"$/, '$1')));
+  const norm = s => s.toLowerCase().replace(/[^a-zäöüß]/g, '');
+  const header = rows[0].map(norm);
+  const idx = names => header.findIndex(h => names.includes(h));
+  const hasHeader = !rows[0].some(c => c.includes('@'));
+  const col = hasHeader ? {
+    vorname: idx(['vorname', 'firstname']),
+    nachname: idx(['nachname', 'name2', 'lastname', 'familienname']),
+    name: idx(['name', 'teilnehmer', 'teilnehmerin']),
+    email: idx(['email', 'mail', 'emailadresse', 'mailadresse'])
+  } : null;
+  const people = [];
+  let invalid = 0;
+  rows.slice(hasHeader ? 1 : 0).forEach(cells => {
+    let email, name;
+    if (col && col.email >= 0) {
+      email = cells[col.email] || '';
+      name = col.vorname >= 0 || col.nachname >= 0
+        ? [cells[col.vorname] || '', cells[col.nachname] || ''].join(' ').trim()
+        : (col.name >= 0 ? cells[col.name] || '' : '');
+    } else {
+      const e = cells.findIndex(c => c.includes('@'));
+      email = e >= 0 ? cells[e] : '';
+      name = e >= 2 ? `${cells[e - 2]} ${cells[e - 1]}`.trim() : (e === 1 ? cells[0] : '');
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { invalid++; return; }
+    people.push({ name, email });
+  });
+  return { people, invalid };
+}
+
+async function importParticipants(raw) {
+  const statusEl = document.getElementById('import-status');
+  const { people, invalid } = parseParticipantImport(raw);
+  if (!people.length) { statusEl.textContent = 'Keine gültigen Zeilen mit E-Mail-Adresse gefunden.'; return; }
+  participants = collectParticipantsFromDom();
+  const known = new Set(participants.map(p => p.email.trim().toLowerCase()).filter(Boolean));
+  let filled = 0, added = 0, dupes = 0;
+  for (const person of people) {
+    if (known.has(person.email.toLowerCase())) { dupes++; continue; }
+    known.add(person.email.toLowerCase());
+    const placeholder = participants.find(p => !p.name.trim() && !p.email.trim());
+    if (placeholder) { placeholder.name = person.name; placeholder.email = person.email; filled++; }
+    else { participants.push({ name: person.name, email: person.email, roleIds: ['teilnehmer'] }); added++; }
+  }
+  if (added && !activeRoleIds.includes('teilnehmer')) {
+    activeRoleIds = activeRoleIds.concat(['teilnehmer']);
+    await fetch('/api/active-roles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(activeRoleIds) });
+    renderRoleCheckboxes();
+  }
+  const res = await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
+  participants = await res.json();
+  renderParticipants();
+  statusEl.textContent = `${filled + added} übernommen (${filled} auf vorhandene Rollen-Zeilen, ${added} als „Teilnehmer“)`
+    + (dupes ? `, ${dupes} bereits vorhanden übersprungen` : '')
+    + (invalid ? `, ${invalid} Zeilen ohne gültige E-Mail ignoriert` : '') + '. Gespeichert.';
+}
+
+document.getElementById('btn-import-participants').addEventListener('click', async () => {
+  await importParticipants(document.getElementById('import-text').value);
+  document.getElementById('import-text').value = '';
+});
+document.getElementById('import-file').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  // Excel speichert "CSV" oft als Windows-1252 statt UTF-8 -> sonst kaputte Umlaute.
+  const buf = await file.arrayBuffer();
+  let text;
+  try { text = new TextDecoder('utf-8', { fatal: true }).decode(buf); }
+  catch (err) { text = new TextDecoder('windows-1252').decode(buf); }
+  await importParticipants(text.replace(/^﻿/, ''));
+});
+
 document.getElementById('participants-body').addEventListener('click', e => {
   if (e.target.classList.contains('p-remove')) {
     participants = collectParticipantsFromDom();
@@ -236,7 +322,7 @@ async function loadScenarioList() {
 }
 document.getElementById('btn-switch-scenario').addEventListener('click', async () => {
   const file = document.getElementById('scenario-select').value;
-  if (!confirm('Szenario wirklich wechseln? Der aktuelle Lauf und die Teilnehmerliste werden dabei zurückgesetzt.')) return;
+  if (!confirm('Szenario wirklich wechseln? Der aktuelle Lauf wird zurückgesetzt. Alle Personen bleiben erhalten, Rollen, die es im neuen Szenario nicht gibt, musst du neu zuweisen.')) return;
   const res = await fetch('/api/scenarios/select', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ file }) });
   const r = await res.json();
   if (r.ok) {
@@ -337,7 +423,32 @@ async function loadSettings() {
   document.getElementById('brand-starterkit-label').value = (s.branding && s.branding.starterKitLabel) || '';
   updateBrandLogoPreview();
   applyRunDefaults(s.runDefaults);
+  const tm = s.testMode || {};
+  document.getElementById('testmode-enabled').checked = !!tm.enabled;
+  document.getElementById('testmode-dummy-email').value = tm.dummyEmail || '';
+  updateTestModeBanner(tm);
 }
+function updateTestModeBanner(tm) {
+  const banner = document.getElementById('testmode-banner');
+  if (tm && tm.enabled && tm.dummyEmail) {
+    banner.textContent = `TROCKENLAUF AKTIV — alle E-Mails gehen an ${tm.dummyEmail}, nicht an die Teilnehmer. Vor dem echten Lauf unten im Abschnitt „Trockenlauf“ ausschalten.`;
+    banner.style.display = '';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+document.getElementById('btn-save-testmode').addEventListener('click', async () => {
+  const enabled = document.getElementById('testmode-enabled').checked;
+  const dummyEmail = document.getElementById('testmode-dummy-email').value.trim();
+  const statusEl = document.getElementById('testmode-status');
+  if (enabled && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dummyEmail)) {
+    statusEl.textContent = 'Bitte eine gültige Dummy-Adresse eintragen.';
+    return;
+  }
+  await saveSettingsPart({ testMode: { enabled, dummyEmail } });
+  updateTestModeBanner({ enabled, dummyEmail });
+  statusEl.textContent = enabled ? `Testmodus aktiv: alle Mails an ${dummyEmail}.` : 'Testmodus aus: Mails gehen an die echten Teilnehmer.';
+});
 function applyRunDefaults(rd) {
   if (!rd) return;
   document.getElementById('duration-mode').value = rd.durationMode || 'authored';

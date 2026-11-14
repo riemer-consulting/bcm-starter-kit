@@ -100,11 +100,11 @@ async function fireSonderlagekarte(sk, { manual } = {}) {
     for (const p of recipients) {
       const subject = `Vertrauliche Information – ${scenario.company.name} Krisenstab`;
       const text = `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${sk.text}`;
-      const result = await mailer.sendMail(settings.smtp, { to: p.email, subject, text });
+      const result = await mailer.sendMail(settings.smtp, { to: p.email, subject, text }, settings.testMode);
       entry.emailResults.push({ participantId: p.id, email: p.email, ok: result.ok, error: result.error });
       log(result.ok ? 'mail' : 'error',
         result.ok
-          ? `Sonderlagekarte ${sk.id} per E-Mail an ${p.name} (${role.funktion}) gesendet.`
+          ? `Sonderlagekarte ${sk.id} per E-Mail an ${p.name} (${role.funktion}) gesendet.${result.testModeRedirectedFrom ? ` [TESTLAUF, eigentlich: ${result.testModeRedirectedFrom}]` : ''}`
           : `E-Mail-Versand für Sonderlagekarte ${sk.id} an ${p.name} fehlgeschlagen: ${result.error}`);
     }
   }
@@ -179,10 +179,22 @@ function switchScenario(file) {
   if (!store.listScenarioFiles().includes(file)) return { ok: false, error: 'Unbekannte Szenario-Datei.' };
   const loaded = store.loadScenario(file);
   if (!loaded.scenario) return { ok: false, error: 'Szenario konnte nicht geladen werden.' };
+  // Personen (Name/E-Mail) bleiben beim Wechsel erhalten. Rollen, die es im
+  // neuen Szenario unter derselben ID ebenfalls gibt, bleiben zugewiesen,
+  // alle anderen muessen neu gewaehlt werden.
+  const previousParticipants = state.participants || [];
+  const previousActive = state.activeRoleIds || [];
   scenarioFile = loaded.file;
   scenario = augmentWithGenericRole(loaded.scenario);
+  const validIds = new Set(scenario.roles.map(r => r.id));
   state = engine.newRunState(scenario);
   state.scenarioFile = scenarioFile;
+  state.participants = previousParticipants.map(p => Object.assign({}, p, { roleIds: (p.roleIds || []).filter(rid => validIds.has(rid)) }));
+  const keptActive = previousActive.filter(rid => validIds.has(rid));
+  if (keptActive.length) {
+    const used = state.participants.flatMap(p => p.roleIds);
+    state.activeRoleIds = Array.from(new Set([...keptActive, ...used]));
+  }
   const settings = store.loadSettings();
   settings.activeScenarioFile = scenarioFile;
   store.saveSettings(settings);
@@ -205,9 +217,16 @@ app.post('/api/preview-schedule', (req, res) => {
   scenario.roles.forEach(r => { roleToGroup[r.id] = r.group; });
   const activeGroups = new Set((roleIds || []).map(id => roleToGroup[id]).filter(Boolean));
   const roleCount = Array.from(activeGroups).filter(g => scenario.standardablauf.speakingOrder.includes(g)).length;
-  const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel', roleCount });
+  const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel', roleCount, activeRoleIds: roleIds });
+  const assigned = Array.from(new Set((roleIds || []).filter(Boolean)));
+  const recipientsInPlan = new Set(plan.schedule.filter(e => e.type === 'sonderlagekarte')
+    .map(e => (scenario.sonderlagekarten.find(sk => sk.id === e.id) || {}).empfaenger));
+  const uncoveredRoles = assigned.filter(rid => rid !== 'teilnehmer' && !recipientsInPlan.has(rid))
+    .map(rid => (roleById(rid) || {}).funktion || rid);
   res.json({
     activeRoleGroups: roleCount,
+    rolesAssigned: assigned.filter(rid => rid !== 'teilnehmer').length,
+    uncoveredRoles,
     lagekartenCount: plan.schedule.filter(e => e.type === 'lagekarte').length,
     sonderlagekartenCount: plan.schedule.filter(e => e.type === 'sonderlagekarte').length,
     skippedCount: plan.skipped.length,
@@ -248,9 +267,9 @@ app.post('/api/participants/send-briefings', async (req, res) => {
     const text = `Hallo ${p.name || ''},\n\ndeine Rolle${roles.length > 1 ? 'n' : ''} in der Übung "${scenario.title}":\n\n${rollenText}\n\nViel Erfolg!`;
     const result = await mailer.sendMail(settings.smtp, {
       to: p.email, subject: `Deine Rolle in der Übung: ${roles.map(r => r.funktion).join(', ')}`, text
-    });
+    }, settings.testMode);
     log(result.ok ? 'mail' : 'error',
-      result.ok ? `Rollenbeschreibung an ${p.name} (${p.email}) gesendet.` : `Rollenbeschreibung an ${p.name} fehlgeschlagen: ${result.error}`);
+      result.ok ? `Rollenbeschreibung an ${p.name} (${p.email}) gesendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}` : `Rollenbeschreibung an ${p.name} fehlgeschlagen: ${result.error}`);
     results.push({ participantId: p.id, ok: result.ok, error: result.error });
   }
   persist();
@@ -274,9 +293,9 @@ app.post('/api/participants/send-welcome', async (req, res) => {
       + `Deine konkrete Rolle bekommst du separat per E-Mail zugeschickt.\n\nBis bald!`;
     const result = await mailer.sendMail(settings.smtp, {
       to: p.email, subject: `Willkommen zur Übung: ${scenario.title}`, text
-    });
+    }, settings.testMode);
     log(result.ok ? 'mail' : 'error',
-      result.ok ? `Begrüßung an ${p.name} (${p.email}) gesendet.` : `Begrüßung an ${p.name} fehlgeschlagen: ${result.error}`);
+      result.ok ? `Begrüßung an ${p.name} (${p.email}) gesendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}` : `Begrüßung an ${p.name} fehlgeschlagen: ${result.error}`);
     results.push({ participantId: p.id, ok: result.ok, error: result.error });
   }
   persist();
@@ -309,6 +328,7 @@ function mergeSettings(incoming) {
     smtp: Object.assign({}, current.smtp, incoming.smtp || {}),
     branding: Object.assign({}, current.branding, incoming.branding || {}),
     runDefaults: Object.assign({}, current.runDefaults, incoming.runDefaults || {}),
+    testMode: Object.assign({}, current.testMode, incoming.testMode || {}),
     activeScenarioFile: current.activeScenarioFile
   };
   store.saveSettings(merged);
@@ -404,6 +424,7 @@ app.get('/api/run/moderator-state', (req, res) => {
   res.json({
     status: state.status,
     crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
+    testMode: (() => { const tm = store.loadSettings().testMode || {}; return { enabled: !!(tm.enabled && tm.dummyEmail), dummyEmail: tm.dummyEmail || '' }; })(),
     durationMode: state.durationMode,
     difficulty: state.difficulty,
     targetMinutes: state.targetMinutes,
@@ -491,7 +512,7 @@ app.post('/api/run/start', (req, res) => {
   if (state.durationMode === 'target') {
     const minutes = Math.max(10, Number(targetMinutes) || 90);
     const roleCount = engine.activeRoleGroupCount(scenario, state);
-    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: state.difficulty, roleCount });
+    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: state.difficulty, roleCount, activeRoleIds: engine.assignedRoleIds(state) });
     state.targetMinutes = minutes;
     state.plannedSchedule = plan.schedule;
     state.plannedTotalMinutes = plan.totalMinutes;
@@ -602,8 +623,8 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
       const result = await mailer.sendMail(settings.smtp, {
         to: p.email, subject: `Bonusereignis – ${scenario.company.name} Krisenstab`,
         text: `Vertraulich – nur für dich, ${p.name} (${role.funktion})\n\n${b.text}`
-      });
-      log(result.ok ? 'mail' : 'error', result.ok ? `Bonuskarte ${b.id} an ${p.name} gesendet.` : `Bonuskarte ${b.id} Versand an ${p.name} fehlgeschlagen: ${result.error}`);
+      }, settings.testMode);
+      log(result.ok ? 'mail' : 'error', result.ok ? `Bonuskarte ${b.id} an ${p.name} gesendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}` : `Bonuskarte ${b.id} Versand an ${p.name} fehlgeschlagen: ${result.error}`);
     }
   }
   persist();
@@ -709,10 +730,10 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
   const rollenText = roles.map(r => r.funktion).join(', ');
   const result = await mailer.sendMail(settings.smtp, {
     to: participant.email, subject: `Deine Urkunde – ${veranstaltung}`, html, attachments
-  });
+  }, settings.testMode);
   log(result.ok ? 'mail' : 'error',
     result.ok
-      ? `Urkunde für ${participant.name} (${rollenText}) per E-Mail versendet.`
+      ? `Urkunde für ${participant.name} (${rollenText}) per E-Mail versendet.${result.testModeRedirectedFrom ? ' [TESTLAUF]' : ''}`
       : `Urkunden-Versand an ${participant.name} fehlgeschlagen: ${result.error}`);
   persist();
   res.json(result);

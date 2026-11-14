@@ -59,8 +59,16 @@ function activeRoleGroupCount(scenario, state) {
 }
 
 /** Berechnet effektive Trigger-Minuten je Ereignis, abhaengig vom gewaehlten Modus. */
+function assignedRoleIds(state) {
+  return Array.from(new Set((state.participants || []).flatMap(p => p.roleIds || []).filter(Boolean)));
+}
+
 function computeEffectiveSchedule(scenario, state) {
-  const timeline = buildTimeline(scenario);
+  // Sonderlagekarten fuer unbesetzte Rollen erreichen niemanden -- sie sollen
+  // weder im Ablauf auftauchen noch (im berechneten Modus) Zeit belegen.
+  const assigned = new Set(assignedRoleIds(state));
+  const timeline = buildTimeline(scenario).filter(ev =>
+    ev.type !== 'sonderlagekarte' || assigned.size === 0 || assigned.has(ev.ref.empfaenger));
   if (state.durationMode === 'authored') {
     return timeline.map(ev => Object.assign({}, ev, { minute: ev.authoredMinute }));
   }
@@ -95,7 +103,7 @@ function eventRef(scenario, type, id) {
  * statt weitere Karten zu entfernen. Ist nach allen Karten noch Zeit übrig,
  * wird die Entscheidungszeit der enthaltenen Lagekarten gestreckt.
  */
-function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount }) {
+function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount, activeRoleIds }) {
   const timeline = buildTimeline(scenario);
   const nominalDecision = DIFFICULTY_DECISION_MINUTES[difficulty] || DIFFICULTY_DECISION_MINUTES.mittel;
   const effectiveRoleCount = Math.max(1, roleCount || 1);
@@ -108,41 +116,73 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount 
     return ev.type === 'lagekarte' ? lagekarteCost(decisionMinutes) : sonderSlot;
   }
 
+  // Sonderlagekarten fuer Rollen, die gar nicht besetzt sind, sollen kein
+  // Zeitbudget belegen -- die Karte erreicht ohnehin niemanden. Lagekarten
+  // sind oeffentlich (kein "empfaenger") und bleiben davon unberuehrt.
+  const roleFilterActive = Array.isArray(activeRoleIds) && activeRoleIds.length > 0;
+  const activeRoleSet = new Set(activeRoleIds || []);
+  const isRoleRelevant = ev => ev.type !== 'sonderlagekarte' || !roleFilterActive || activeRoleSet.has(ev.ref.empfaenger);
+
   const byPrio = p => timeline.filter(ev => (ev.ref.prioritaet || 2) === p);
-  const prio1 = byPrio(1), prio2 = byPrio(2), prio3 = byPrio(3);
+  // Auch Kern-Sonderlagekarten nur fuer besetzte Rollen: eine vertrauliche
+  // Karte an eine unbesetzte Rolle erreicht niemanden. Kern-Lagekarten
+  // (oeffentlich, auf der Buehne) bleiben immer enthalten.
+  const prio1 = byPrio(1).filter(isRoleRelevant);
+  const prio2 = byPrio(2).filter(isRoleRelevant);
+  const prio3 = byPrio(3).filter(isRoleRelevant);
+
+  // Rollenabdeckung: jede besetzte Rolle, die im Drehbuch mindestens eine
+  // terminierte Sonderlagekarte hat, bekommt garantiert eine davon in den
+  // Plan -- sonst koennte eine zugewiesene Person durch reine Prioritaets-
+  // auswahl die gesamte Übung ohne einen einzigen eigenen Moment erleben.
+  const coverage = [];
+  if (roleFilterActive) {
+    const alreadyCovered = new Set(prio1.filter(ev => ev.type === 'sonderlagekarte').map(ev => ev.ref.empfaenger));
+    activeRoleSet.forEach(roleId => {
+      if (alreadyCovered.has(roleId)) return;
+      const candidates = [...prio2, ...prio3]
+        .filter(ev => ev.type === 'sonderlagekarte' && ev.ref.empfaenger === roleId)
+        .sort((a, b) => (a.ref.prioritaet || 2) - (b.ref.prioritaet || 2) || a.authoredMinute - b.authoredMinute);
+      if (candidates.length) coverage.push(candidates[0]);
+    });
+  }
+  const coverageIds = new Set(coverage.map(ev => ev.type + ':' + ev.id));
+  const fillPool = [...prio2, ...prio3].filter(ev => !coverageIds.has(ev.type + ':' + ev.id));
 
   let decisionMinutes = nominalDecision;
   let sonderSlot = 2;
-  const baseCost = prio1.reduce((sum, ev) => sum + costOf(ev, decisionMinutes, sonderSlot), 0);
+  const baseline = prio1.concat(coverage);
+  const baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes, sonderSlot), 0);
 
   let compression = null;
   let warning = null;
-  let selected = prio1.slice();
+  let selected = baseline.slice();
   let skipped = [];
 
   if (baseCost > targetMinutes) {
-    // Selbst die Kernszenen passen nicht hinein: Entscheidungszeiten so weit
-    // komprimieren, dass sie passen, mit Untergrenze (sonst unbrauchbar kurz).
-    // Sonderlagekarten gehen dabei sofort auf ihre Mindestdauer (1 Min.) runter
-    // — dieselbe Zahl wird sowohl für die Budgetrechnung als auch am Ende
-    // tatsächlich verwendet, damit das Ergebnis nie über dem Zielbudget liegt.
+    // Selbst Kernszenen + Rollenabdeckung passen nicht hinein: Entscheidungs-
+    // zeiten so weit komprimieren, dass sie passen, mit Untergrenze (sonst
+    // unbrauchbar kurz). Sonderlagekarten gehen dabei sofort auf ihre
+    // Mindestdauer (1 Min.) runter — dieselbe Zahl wird sowohl für die
+    // Budgetrechnung als auch am Ende tatsächlich verwendet, damit das
+    // Ergebnis nie über dem Zielbudget liegt.
     const floor = 1;
     const sonderFloor = 1;
     const compressibleNominal = Math.max(0.01, nominalDecision - floor);
-    const fixedCost = prio1.reduce((sum, ev) => sum + (ev.type === 'lagekarte' ? scenario.standardablauf.readingMinutes + speakingMinutes + floor : sonderFloor), 0);
+    const fixedCost = baseline.reduce((sum, ev) => sum + (ev.type === 'lagekarte' ? scenario.standardablauf.readingMinutes + speakingMinutes + floor : sonderFloor), 0);
     const availableForDecision = targetMinutes - fixedCost;
-    const lkCountInPrio1 = prio1.filter(ev => ev.type === 'lagekarte').length;
-    const factor = lkCountInPrio1 > 0 ? Math.max(0, Math.min(1, availableForDecision / (lkCountInPrio1 * compressibleNominal))) : 1;
+    const lkCountInBaseline = baseline.filter(ev => ev.type === 'lagekarte').length;
+    const factor = lkCountInBaseline > 0 ? Math.max(0, Math.min(1, availableForDecision / (lkCountInBaseline * compressibleNominal))) : 1;
     decisionMinutes = Math.max(floor, floor + compressibleNominal * factor);
     sonderSlot = sonderFloor;
     compression = Math.round(factor * 100) / 100;
-    warning = `Zieldauer (${targetMinutes} Min.) reicht selbst für die Kernszenen nur sehr knapp. ` +
+    warning = `Zieldauer (${targetMinutes} Min.) reicht selbst für die Kernszenen${coverage.length ? ' und je eine Karte pro besetzter Rolle' : ''} nur sehr knapp. ` +
       `Entscheidungszeiten wurden auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. je Lagekarte komprimiert. ` +
       `Mehr Zeit oder weniger aktive Funktionsbereiche einplanen, wenn möglich.`;
-    skipped = prio2.concat(prio3).map(ev => ({ type: ev.type, id: ev.id, reason: 'Zeitbudget reicht nicht einmal für alle Kernszenen – alle optionalen Karten entfallen.' }));
+    skipped = fillPool.map(ev => ({ type: ev.type, id: ev.id, reason: 'Zeitbudget reicht nicht einmal für alle Kernszenen – alle optionalen Karten entfallen.' }));
   } else {
     let remaining = targetMinutes - baseCost;
-    [...prio2, ...prio3].forEach(ev => {
+    fillPool.forEach(ev => {
       const cost = costOf(ev, decisionMinutes, sonderSlot);
       if (cost <= remaining) {
         selected.push(ev);
@@ -259,6 +299,7 @@ module.exports = {
   setElapsedMinutes,
   buildTimeline,
   activeRoleGroupCount,
+  assignedRoleIds,
   computeEffectiveSchedule,
   buildAdaptiveSchedule,
   getActiveSchedule,

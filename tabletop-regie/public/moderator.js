@@ -54,6 +54,13 @@ function render(s) {
   const scenario = s.scenario;
 
   document.getElementById('m-title').textContent = scenario.title;
+  const tmBanner = document.getElementById('m-testmode-banner');
+  if (s.testMode && s.testMode.enabled) {
+    tmBanner.textContent = `TROCKENLAUF AKTIV — alle E-Mails gehen an ${s.testMode.dummyEmail}, nicht an die Teilnehmer.`;
+    tmBanner.style.display = '';
+  } else {
+    tmBanner.style.display = 'none';
+  }
   const statusBadge = document.getElementById('m-status');
   statusBadge.textContent = s.status === 'briefing' ? 'Vorbereitung'
     : s.status === 'countdown' ? `Start in ${s.crisisCountdownSeconds}s`
@@ -200,6 +207,19 @@ async function refresh() {
 }
 
 document.getElementById('btn-open-stage').addEventListener('click', () => window.open('stage.html', '_blank'));
+document.getElementById('btn-send-all-certs').addEventListener('click', async () => {
+  const people = ((lastState && lastState.participants) || []).filter(p => p.name && p.email);
+  const statusEl = document.getElementById('m-certs-status');
+  if (!people.length) { statusEl.textContent = 'Keine Personen mit Name und E-Mail eingetragen.'; return; }
+  if (!confirm(`${people.length} Urkunden jetzt per E-Mail versenden?`)) return;
+  let ok = 0;
+  for (const [i, p] of people.entries()) {
+    statusEl.textContent = `Sende ${i + 1}/${people.length} …`;
+    const r = await api('/api/certificate/participant/' + p.id + '/send', { method: 'POST' });
+    if (r.ok) ok++;
+  }
+  statusEl.textContent = `${ok}/${people.length} Urkunden versendet.` + (ok < people.length ? ' Fehler siehe Versand-Log.' : '');
+});
 document.getElementById('btn-begin-crisis').addEventListener('click', () => api('/api/run/begin-crisis', { method: 'POST' }).then(refresh));
 document.getElementById('btn-pause').addEventListener('click', () => api('/api/run/pause', { method: 'POST' }).then(refresh));
 document.getElementById('btn-resume').addEventListener('click', () => api('/api/run/resume', { method: 'POST' }).then(refresh));

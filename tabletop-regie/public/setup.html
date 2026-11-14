@@ -8,6 +8,7 @@
 <body>
 <div class="container">
   <div class="nav"><a href="index.html">Start</a><a class="active" href="setup.html">Setup</a><a href="stage.html" target="_blank">Bühne</a><a href="moderator.html" target="_blank">Moderation</a><a href="ablauf.html" target="_blank">Ablauf & Hilfe</a></div>
+  <div id="testmode-banner" style="display:none;background:rgba(224,168,50,.15);border:2px solid var(--warn);color:var(--warn);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-weight:600;"></div>
   <h1 id="scenario-title">Setup</h1>
   <p class="muted" id="scenario-subtitle"></p>
 
@@ -26,7 +27,7 @@
 
   <div class="card">
     <h2>Szenario</h2>
-    <p class="muted">Welches Unternehmen/Drehbuch soll simuliert werden? Ein Wechsel setzt den aktuellen Lauf und die Teilnehmerliste zurück, da Rollen zwischen Szenarien nicht übertragbar sind.</p>
+    <p class="muted">Welches Unternehmen/Drehbuch soll simuliert werden? Ein Wechsel setzt nur den aktuellen Lauf zurück. Alle eingetragenen Personen bleiben erhalten; Rollen, die es im neuen Szenario genauso gibt, bleiben zugewiesen, alle anderen wählst du danach neu.</p>
     <div class="row">
       <select id="scenario-select" style="max-width:420px;" title="Welches Drehbuch/Unternehmen geladen werden soll."></select>
       <button id="btn-switch-scenario" class="secondary" title="Lädt das ausgewählte Szenario neu — setzt Teilnehmerliste und laufende Übung zurück!">Szenario wechseln</button>
@@ -60,6 +61,19 @@
       <input type="number" id="teilnehmer-count" min="1" value="5" style="width:60px;" title="Anzahl der zusätzlichen Teilnehmer-Zeilen, die angelegt werden sollen.">
       <button id="btn-add-teilnehmer" class="secondary" type="button" title="Legt die angegebene Anzahl an Personen mit der allgemeinen Rolle 'Teilnehmer' an (keine feste Funktion, aber eigene Urkunde).">hinzufügen</button>
     </div>
+    <details id="import-box" style="margin-bottom:12px;border:1px solid var(--border);border-radius:8px;padding:10px 14px;">
+      <summary style="cursor:pointer;font-weight:600;">Teilnehmer importieren (aus Excel oder CSV)</summary>
+      <p class="muted" style="font-size:13px;margin:8px 0;">Zeilen direkt aus Excel kopieren und hier einfügen — mit oder ohne Kopfzeile. Erkannt werden Vorname, Nachname und E-Mail (auch wenn weitere Spalten wie Firma oder Datum dabei sind). Vorhandene leere Rollen-Zeilen werden zuerst befüllt, überzählige Personen werden als „Teilnehmer“ ohne feste Rolle angelegt. Bereits vorhandene E-Mail-Adressen werden übersprungen.</p>
+      <textarea id="import-text" rows="6" placeholder="Vorname&#9;Nachname&#9;E-Mail&#10;Anna&#9;Beispiel&#9;anna@example.com" style="font-family:monospace;font-size:12px;"></textarea>
+      <div class="row" style="margin-top:8px;">
+        <button id="btn-import-participants" type="button" title="Liest die eingefügten Zeilen ein und legt daraus Teilnehmer an.">Übernehmen</button>
+        <label class="secondary" style="display:inline-flex;align-items:center;gap:8px;width:auto;padding:9px 16px;border:1px solid var(--border);border-radius:6px;cursor:pointer;" title="CSV-Datei (z. B. aus Excel „Speichern unter → CSV“) einlesen.">
+          CSV-Datei wählen …
+          <input type="file" id="import-file" accept=".csv,.txt,text/csv,text/plain" style="display:none;">
+        </label>
+        <span id="import-status" class="muted"></span>
+      </div>
+    </details>
     <table id="participants-table">
       <thead><tr><th>Name</th><th>E-Mail</th><th>Rolle(n)</th><th></th></tr></thead>
       <tbody id="participants-body"></tbody>
@@ -141,6 +155,17 @@
       <input id="test-email-to" placeholder="Test-Empfänger@example.com" style="max-width:260px;" title="Adresse, an die eine Testnachricht geschickt wird.">
       <button id="btn-test-email" class="secondary" title="Schickt eine Testnachricht, um die SMTP-Einstellungen zu prüfen.">Test-E-Mail senden</button>
       <span id="settings-status" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card" id="testmode-card" style="border-color:var(--warn);">
+    <h2 style="color:var(--warn);">Trockenlauf (Testmodus)</h2>
+    <p class="muted">Alle echten Teilnehmer und Rollen bleiben wie eingetragen — aber <b>jede</b> E-Mail (Begrüßung, Rollenbeschreibung, Sonderlagekarten, Bonuskarten, Urkunde) geht statt an die echte Adresse an die Dummy-Adresse unten, mit einem deutlichen Hinweis, wer eigentlich gemeint war. So siehst du vor dem echten Lauf, wie jede Mail aussieht.</p>
+    <div class="row" style="align-items:center;">
+      <label style="display:flex;align-items:center;gap:6px;width:auto;"><input type="checkbox" id="testmode-enabled" style="width:auto;" title="Solange aktiv, gehen ALLE Mails an die Dummy-Adresse statt an echte Teilnehmer."> Testmodus aktiv</label>
+      <input id="testmode-dummy-email" placeholder="dummy@deine-domain.de" style="max-width:280px;" title="Alle E-Mails landen hier, egal wer der eigentliche Empfänger wäre.">
+      <button id="btn-save-testmode" class="secondary" title="Speichert Testmodus-Einstellung.">Speichern</button>
+      <span id="testmode-status" class="muted"></span>
     </div>
   </div>
 
