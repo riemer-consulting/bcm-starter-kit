@@ -24,7 +24,7 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
   [...scenario.sonderlagekarten, ...(scenario.bonuskarten || [])].forEach(c => {
     checkRole(c.empfaenger, `Karte ${c.id}`);
     (c.fallbackEmpfaenger || []).forEach(rid => checkRole(rid, `Karte ${c.id} (Ersatz)`));
-    if (!(c.fallbackEmpfaenger || []).length) warnings.push(`Karte ${c.id} hat keine Ersatz-Empfänger – bei unbesetzter Rolle entfällt sie.`);
+    if (!Array.isArray(c.fallbackEmpfaenger)) warnings.push(`Karte ${c.id} hat keine Ersatz-Empfänger – bei unbesetzter Rolle entfällt sie.`);
   });
   scenario.lagekarten.forEach(lk => {
     (lk.zustaendig || []).forEach(rid => checkRole(rid, `Lagekarte ${lk.id} (zuständig)`));

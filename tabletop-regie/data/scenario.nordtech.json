@@ -115,7 +115,7 @@
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
-      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Aufsichtsrat) und musst das Team zusammenhalten."
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Beirat) und musst das Team zusammenhalten."
     },
     {
       "id": "geschaeftsfuehrerin-vertrieb",
@@ -257,7 +257,7 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene ist vermutlich nicht der Cyberangriff selbst, sondern der Moment, in dem die Krisenstabsleitung dem Beirat Bericht erstatten muss (Sonderlagekarte „Beirat fordert Lagebericht“, im erprobten Ablauf ca. Minute 51) und IT, Vertrieb, Personal, Finanzen und Einkauf kurzfristig eine gemeinsame Lage erzeugen müssen.",
+    "highlightHinweis": "Die stärkste Szene ist vermutlich nicht der Cyberangriff selbst, sondern der Moment, in dem die Krisenstabsleitung (bzw. die Person, die die Sonderlagekarte „Beirat fordert Lagebericht“ erhält) dem Beirat Bericht erstatten muss und IT, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – kurzfristig eine gemeinsame Lage erzeugen müssen.",
     "idleMedia": {
       "type": "image",
       "src": "/media/nordtech/idle-ruhe-vor-dem-sturm.png",
@@ -330,7 +330,7 @@
       "titel": "Produktion stoppt",
       "minuteOffset": 10,
       "diskussionMinuten": 4,
-      "text": "Die Produktionsleitung meldet: Es können keine Fertigungsaufträge mehr gestartet werden. Bereits laufende Aufträge werden in wenigen Stunden abgeschlossen sein. Danach steht die Fertigung.",
+      "text": "Die Produktionsleitung meldet: Es können keine Fertigungsaufträge mehr gestartet werden. Sofern die Anlagen am Netz bleiben, werden bereits laufende Aufträge in wenigen Stunden abgeschlossen sein. Danach steht die Fertigung.",
       "kriseninfo": "Lagerbestand reicht noch für: 48 Stunden",
       "aufgabe": [
         "Welche Folgen erwarten Sie?",
@@ -515,7 +515,7 @@
       "minuteOffset": 47,
       "diskussionMinuten": 4,
       "text": "Offline-Backups sind verfügbar. Stand: Samstag 23:00 Uhr.",
-      "kriseninfo": "Ein Arbeitstag Datenverlust",
+      "kriseninfo": "Datenverlust: rund 32 Stunden (Sonntag bis Montagfrüh)",
       "aufgabe": [
         "Wiederherstellung starten?",
         "Weitere Analysen durchführen?",
@@ -859,7 +859,7 @@
       "empfaenger": "erp-stammdaten",
       "minuteOffset": 77,
       "vertraulich": true,
-      "text": "Im ERP-Testsystem fehlen neben dem bekannten Datenverlust seit Samstag offenbar weitere Datensätze – betroffen sind Kundenaufträge aus dem laufenden Monat. Ob die Daten verloren sind, ist unklar. Wie reagierst du?",
+      "text": "Die IT hat das ERP-System aus dem Backup (Stand: Samstag 23:00 Uhr) in einer Testumgebung wiederhergestellt. Dabei fällt dir auf: Neben dem erwarteten Datenverlust seit Samstag fehlen offenbar weitere Datensätze – betroffen sind Kundenaufträge aus dem laufenden Monat. Ob die Daten verloren sind, ist unklar. Wie reagierst du?",
       "moderatorGut": "Prüfung wird veranlasst.",
       "moderatorSchlecht": "Daten werden ungeprüft übernommen.",
       "prioritaet": 3,
@@ -939,7 +939,7 @@
       "text": "Der Beirat fordert in 30 Minuten: Schadenshöhe, Wiederanlaufprognose, Kommunikationsstrategie. Du musst eine Lageeinschätzung vorbereiten.",
       "moderatorGut": "Krisenstab liefert Fakten.",
       "moderatorSchlecht": "Keine abgestimmte Lage.",
-      "moderatorHinweis": "JETZT WIRD ES SPANNEND: sprich den Krisenstabsleiter direkt an: 'Der Beirat erwartet in fünf Minuten eine Lageeinschätzung von Ihnen.' Der ganze Raum muss liefern. Dies ist laut Playbook die stärkste Szene der Übung.",
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Person mit dieser Karte direkt an: „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung – Sie haben jetzt fünf Minuten, sie mit dem Krisenstab vorzubereiten.“ Der ganze Raum muss liefern. Dies ist die stärkste Szene der Übung.",
       "prioritaet": 1,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
@@ -952,7 +952,7 @@
       "empfaenger": "geschaeftsfuehrerin-vertrieb",
       "minuteOffset": 69,
       "vertraulich": true,
-      "text": "Ein Pharmakunde bietet an, auf Vertragsstrafen zu verzichten. Voraussetzung: eine verbindliche Lieferzusage. Wie bewertest du die Situation?",
+      "text": "Ein Pharmakunde bietet an, auf Schadensersatzforderungen zu verzichten. Voraussetzung: eine verbindliche Lieferzusage. Wie bewertest du die Situation?",
       "moderatorGut": "Risiken und Chancen abwägen.",
       "moderatorSchlecht": "Unüberlegte Zusagen.",
       "prioritaet": 2,
@@ -970,7 +970,7 @@
       "text": "Die Forensiker empfehlen: Kein System wird wieder hochgefahren oder aus dem Backup wiederhergestellt, bevor das Backup auf Schadcode geprüft ist – das dauert mindestens zwei Tage. Gleichzeitig steigt der Druck aus den Fachbereichen. Wie gehst du damit um?",
       "moderatorGut": "Risiken transparent machen.",
       "moderatorSchlecht": "Business und IT arbeiten gegeneinander.",
-      "moderatorHinweis": "Erzeugt bewussten Konflikt mit SK18 (Vertrieb will liefern, IT will warten).",
+      "moderatorHinweis": "Erzeugt bewussten Konflikt mit dem Lieferdruck aus Vertrieb und Kunden: Vertrieb will liefern, IT will warten.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "it-mitarbeiter",
@@ -1091,11 +1091,8 @@
       "id": "B1",
       "empfaenger": "it-mitarbeiter",
       "text": "Verlasse den Raum für 5 Minuten. Du bist aufgrund eines medizinischen Notfalls nicht verfügbar.",
-      "moderatorHinweis": "Nur auslösen, wenn danach noch mindestens eine weitere IT-Person im Raum ist.",
-      "fallbackEmpfaenger": [
-        "leiter-it",
-        "erp-beratung"
-      ]
+      "moderatorHinweis": "Nur auslösen, wenn danach noch mindestens eine weitere IT-Person im Raum ist. Ohne besetzte Rolle IT-Fachkraft entfällt die Karte bewusst.",
+      "fallbackEmpfaenger": []
     },
     {
       "id": "B2",
