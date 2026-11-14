@@ -1,0 +1,5 @@
+# Windows-Batchdateien brauchen CRLF, sonst arbeitet cmd.exe sie fehlerhaft ab.
+# -text: Git konvertiert nichts, die Datei liegt im Repository bereits mit CRLF.
+*.bat -text
+# Shell-Skripte immer mit LF, sonst laufen sie unter macOS/Linux nicht.
+*.sh text eol=lf
