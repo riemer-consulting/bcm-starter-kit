@@ -257,7 +257,7 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene ist vermutlich nicht der Cyberangriff selbst, sondern der Moment, in dem die Krisenstabsleitung (bzw. die Person, die die Sonderlagekarte „Beirat fordert Lagebericht“ erhält) dem Beirat Bericht erstatten muss und IT, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – kurzfristig eine gemeinsame Lage erzeugen müssen.",
+    "highlightHinweis": "Die stärkste Szene ist die Lagekarte „Beirat fordert Lagebericht“: Die Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen, und IT, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – müssen gemeinsam liefern. Kurz vorher erhält die Krisenstabsleitung vertraulich einen zusätzlichen persönlichen Druck.",
     "idleMedia": {
       "type": "image",
       "src": "/media/nordtech/idle-ruhe-vor-dem-sturm.png",
@@ -295,7 +295,8 @@
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
         "leiter-it"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK16",
@@ -321,7 +322,8 @@
       "zustaendig": [
         "leiter-it",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK02",
@@ -348,7 +350,8 @@
         "geschaeftsfuehrer-ceo",
         "leiter-einkauf",
         "geschaeftsfuehrerin-vertrieb"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK03",
@@ -375,7 +378,8 @@
         "marketing-ecommerce",
         "office-management",
         "leiterin-personal"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK04",
@@ -401,7 +405,8 @@
       "zustaendig": [
         "marketing-ecommerce",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK05",
@@ -427,7 +432,8 @@
       "zustaendig": [
         "leiterin-personal",
         "leiter-it"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK06",
@@ -453,7 +459,8 @@
       "zustaendig": [
         "geschaeftsfuehrerin-vertrieb",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK07",
@@ -480,7 +487,8 @@
         "notfallmanagement-bcm",
         "leiter-it",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK08",
@@ -505,7 +513,8 @@
       "zustaendig": [
         "leiter-it",
         "marketing-ecommerce"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK09",
@@ -531,7 +540,8 @@
       "zustaendig": [
         "leiter-it",
         "erp-stammdaten"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK10",
@@ -556,7 +566,8 @@
       "zustaendig": [
         "marketing-ecommerce",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "hoehepunkt"
     },
     {
       "id": "LK11",
@@ -581,7 +592,8 @@
       "zustaendig": [
         "geschaeftsfuehrerin-vertrieb",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "hoehepunkt"
     },
     {
       "id": "LK12",
@@ -607,7 +619,8 @@
         "geschaeftsfuehrer-ceo",
         "geschaeftsfuehrerin-vertrieb",
         "leiter-einkauf"
-      ]
+      ],
+      "akt": "folgen"
     },
     {
       "id": "LK13",
@@ -632,7 +645,8 @@
       "zustaendig": [
         "kaufmaennische-leiterin-cfo",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "folgen"
     },
     {
       "id": "LK14",
@@ -658,7 +672,8 @@
         "leiter-it",
         "erp-beratung",
         "erp-stammdaten"
-      ]
+      ],
+      "akt": "wiederanlauf"
     },
     {
       "id": "LK15",
@@ -673,7 +688,7 @@
         "Welche Botschaft senden Sie an Kunden, Mitarbeiter, Öffentlichkeit?",
         "Welche Maßnahmen folgen nach der Krise?"
       ],
-      "moderatorHinweis": "Letzte Lagekarte. Danach Abschlussfragen und Debriefing.",
+      "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk15-wiederanlauf.png",
@@ -683,7 +698,36 @@
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
         "marketing-ecommerce"
-      ]
+      ],
+      "akt": "wiederanlauf"
+    },
+    {
+      "id": "LK17",
+      "nr": 17,
+      "simZeit": "Donnerstag 07:00 Uhr",
+      "titel": "Beirat fordert Lagebericht",
+      "minuteOffset": 51,
+      "diskussionMinuten": 5,
+      "text": "Der Beirat hat für heute Vormittag eine Sondersitzung einberufen. Er erwartet in 30 Minuten einen Lagebericht: Schadenshöhe, Wiederanlaufprognose, Kommunikationsstrategie – und die Frage, ob das Management die Lage im Griff hat.",
+      "kriseninfo": "Sondersitzung in 30 Minuten · alle Bereiche müssen zuliefern",
+      "aufgabe": [
+        "Was meldet Ihr Bereich in höchstens drei Sätzen?",
+        "Welche Zahl können Sie belastbar nennen – und welche nicht?",
+        "Wer trägt vor, und was sagen Sie bewusst nicht?"
+      ],
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung – Sie haben jetzt fünf Minuten, sie mit dem Krisenstab vorzubereiten.“ Danach lässt du dir den Bericht vortragen und fragst als Beirat kritisch nach. Dies ist die stärkste Szene der Übung.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk17-beirat-sondersitzung.png",
+        "caption": "Einladung zur außerordentlichen Beiratssitzung."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "kaufmaennische-leiterin-cfo",
+        "leiter-it"
+      ],
+      "akt": "hoehepunkt"
     }
   ],
   "sonderlagekarten": [
@@ -934,13 +978,13 @@
       "id": "SK17",
       "nr": 17,
       "empfaenger": "geschaeftsfuehrer-ceo",
-      "minuteOffset": 51,
+      "minuteOffset": 50,
       "vertraulich": true,
-      "text": "Der Beirat fordert in 30 Minuten: Schadenshöhe, Wiederanlaufprognose, Kommunikationsstrategie. Du musst eine Lageeinschätzung vorbereiten.",
-      "moderatorGut": "Krisenstab liefert Fakten.",
-      "moderatorSchlecht": "Keine abgestimmte Lage.",
-      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Person mit dieser Karte direkt an: „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung – Sie haben jetzt fünf Minuten, sie mit dem Krisenstab vorzubereiten.“ Der ganze Raum muss liefern. Dies ist die stärkste Szene der Übung.",
-      "prioritaet": 1,
+      "text": "Ein Beiratsmitglied ruft dich vor der Sondersitzung privat an: „Wenn heute keine belastbaren Zahlen und kein Plan auf dem Tisch liegen, stelle ich im Beirat die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.",
+      "moderatorGut": "Ruhig bleiben, das Lagebild ehrlich mit allen Unsicherheiten vortragen, keine Schönfärberei.",
+      "moderatorSchlecht": "Unter Druck geschönte Zahlen oder Zusagen, die später nicht zu halten sind.",
+      "moderatorHinweis": "Vorbereitung auf die Lagekarte „Beirat fordert Lagebericht“. Beobachte, ob die Person den Druck in den Krisenstab trägt oder allein damit bleibt.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
         "kaufmaennische-leiterin-cfo"
@@ -1150,5 +1194,110 @@
       "loop": true,
       "volume": 0.5
     }
+  },
+  "nachspiel": {
+    "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
+    "einleitung": "Sonntag, 12:00 Uhr. Die Produktion läuft zu 70 %, die Systeme sind weitgehend zurück. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "nacharbeiten": [
+      {
+        "zahl": "5.600",
+        "text": "handschriftliche Lieferscheine und Notfallbelege müssen ins ERP nacherfasst werden"
+      },
+      {
+        "zahl": "190.000",
+        "text": "E-Mails aus den Ausfalltagen liegen im Rückstau – Kundenanfragen bleiben unbeantwortet, bis sie gesichtet sind"
+      },
+      {
+        "zahl": "87",
+        "text": "Lkw-Ladungen Rückstand müssen nachproduziert, priorisiert und ausgeliefert werden"
+      },
+      {
+        "zahl": "32 Stunden",
+        "text": "verlorene Daten (Sonntag bis Montagfrüh): Aufträge, Buchungen und Zeiterfassung werden rekonstruiert"
+      },
+      {
+        "zahl": "900",
+        "text": "Rechner und Server werden geprüft oder neu aufgesetzt, 620 Passwörter zurückgesetzt"
+      },
+      {
+        "zahl": "4 Wochen",
+        "text": "Sonderschichten in der Produktion, um den Rückstand aufzuholen"
+      },
+      {
+        "zahl": "3",
+        "text": "Großkunden kündigen ein Sicherheits-Audit an, bevor sie wieder voll bestellen"
+      }
+    ],
+    "rechnung": [
+      {
+        "posten": "Entgangener Deckungsbeitrag (rund 6 Produktionstage)",
+        "betrag": 1550000,
+        "bcmHebel": "Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand."
+      },
+      {
+        "posten": "Forensik und Incident Response (7 Tage rund um die Uhr)",
+        "betrag": 420000,
+        "bcmHebel": "Ein vorab vereinbarter Dienstleister aus dem Versicherungsnetzwerk – die Kosten werden erstattet."
+      },
+      {
+        "posten": "IT-Wiederherstellung, Ersatzhardware, Überstunden IT",
+        "betrag": 380000,
+        "bcmHebel": "Dokumentierte Notfallpasswörter und Konfigurationen – kein Wissen nur in einem Kopf."
+      },
+      {
+        "posten": "Sonderschichten und Überstunden in der Produktion",
+        "betrag": 310000,
+        "bcmHebel": "Eine vorab festgelegte Wiederanlauf-Reihenfolge der Aufträge."
+      },
+      {
+        "posten": "Vertragsstrafen Automobilkunde (4 Tage à 50.000 €)",
+        "betrag": 200000,
+        "bcmHebel": "Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden."
+      },
+      {
+        "posten": "Kulanz und Schadensersatz Pharmakunde",
+        "betrag": 250000,
+        "bcmHebel": "Kritische Kunden und Lieferzusagen vorab identifiziert und priorisiert."
+      },
+      {
+        "posten": "Recht, Datenschutz, Meldungen, Krisenkommunikation",
+        "betrag": 160000,
+        "bcmHebel": "Meldepflichten (NIS2, DSGVO) und Zuständigkeiten vorab geklärt."
+      },
+      {
+        "posten": "Nacherfassung und Rekonstruktion durch externe Kräfte",
+        "betrag": 90000,
+        "bcmHebel": "Notfallbelege mit klarem Nacherfassungsprozess."
+      },
+      {
+        "posten": "Verlorene Folgeaufträge: zwei Kunden wechseln dauerhaft zum Wettbewerber (Deckungsbeitrag im 1. Jahr)",
+        "betrag": 900000,
+        "bcmHebel": "Schnelle, ehrliche Kommunikation hält Kunden – Schweigen treibt sie zum Wettbewerber."
+      }
+    ],
+    "optionalePosten": [
+      {
+        "id": "loesegeld",
+        "frage": "Hat der Krisenstab entschieden, das Lösegeld zu zahlen?",
+        "posten": "Lösegeldzahlung an die Erpresser",
+        "betrag": 2000000,
+        "bcmHebel": "Funktionierende, getestete Offline-Backups nehmen den Erpressern das Druckmittel."
+      },
+      {
+        "id": "kundenkommunikation",
+        "frage": "Haben Kunden in der Übung zuerst aus der Presse vom Angriff erfahren?",
+        "posten": "Weitere Kundenabwanderung durch fehlende Kommunikation",
+        "betrag": 600000,
+        "bcmHebel": "Ein vorbereiteter Kommunikationsplan für Kunden in den ersten Stunden."
+      }
+    ],
+    "versicherung": {
+      "text": "Erstattung Cyberversicherung (vorläufige Kostenzusage, nur Partnernetzwerk)",
+      "betrag": 1400000
+    },
+    "jahresumsatz": 185000000,
+    "umsatzrendite": 0.05,
+    "fazit": "Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt."
   }
 }

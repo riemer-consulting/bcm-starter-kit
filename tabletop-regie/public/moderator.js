@@ -9,8 +9,13 @@ async function api(path, opts) {
   return res.json();
 }
 
+// Bei Teams (mehrere Personen pro Rolle) alle Namen zeigen -- vertrauliche
+// Karten gehen ohnehin an jedes Teammitglied.
 function participantFor(roleId, participants) {
-  return participants.find(p => (p.roleIds || []).includes(roleId));
+  const team = (participants || []).filter(p => (p.roleIds || []).includes(roleId));
+  if (!team.length) return undefined;
+  const names = team.map(p => p.name).filter(Boolean);
+  return { name: names.length > 3 ? `${names.slice(0, 3).join(', ')} +${names.length - 3}` : names.join(', ') };
 }
 
 // Prozessablauf-Zeitleiste + freier Zeit-Schieberegler: zeigt alle geplanten
@@ -64,12 +69,17 @@ function render(s) {
   const statusBadge = document.getElementById('m-status');
   statusBadge.textContent = s.status === 'briefing' ? 'Vorbereitung'
     : s.status === 'countdown' ? `Start in ${s.crisisCountdownSeconds}s`
-    : s.status;
+    : s.status === 'running' ? 'Krise läuft'
+    : s.status === 'paused' ? 'Pausiert'
+    : s.status === 'ended' ? (s.finale && s.finale.step ? 'Abschluss' : 'Beendet')
+    : 'Bereit';
   statusBadge.className = 'badge ' + (s.status === 'running' ? 'ok' : s.status === 'ended' ? 'bad' : 'warn');
   document.getElementById('btn-begin-crisis').style.display = s.status === 'briefing' ? '' : 'none';
   document.getElementById('btn-pause').style.display = s.status === 'running' ? '' : 'none';
   document.getElementById('btn-resume').style.display = s.status === 'paused' ? '' : 'none';
-  document.getElementById('m-elapsed').textContent = `${s.elapsedMinutes} / ${s.totalPlannedMinutes} Min.`;
+  document.getElementById('m-elapsed').textContent = `${s.elapsedMinutes} / ${s.totalPlannedMinutes} Min.` +
+    (s.finaleMinutes ? ` + ca. ${s.finaleMinutes} Min. Abschluss` : '') +
+    (s.lagekarten && s.lagekarten.total ? ` · Lagekarte ${s.lagekarten.gezeigt} von ${s.lagekarten.total}` : '');
   const modeLabel = s.durationMode === 'target' ? `Zieldauer ${s.targetMinutes} Min. (${s.difficulty})`
     : s.durationMode === 'computed' ? `Berechnet (${s.difficulty})` : 'Erprobte feste Zeiten';
   document.getElementById('m-mode').textContent = `Modus: ${modeLabel}`;
@@ -110,7 +120,8 @@ function render(s) {
         ? `<p class="mini muted">Besonders gefordert: ${zust.map(rid => staffed.has(rid) ? `<b>${escapeHtml(funktion(rid))}</b>` : `<s>${escapeHtml(funktion(rid))}</s>`).join(', ')}</p>`
         : `<p class="mini" style="color:var(--warn);">Keine der hier geforderten Rollen ist besetzt (${zust.map(rid => escapeHtml(funktion(rid))).join(', ')}). Bring die Fachperspektive selbst ein oder gib die Frage an die Krisenstabsleitung.</p>`)
       : '';
-    lkBox.innerHTML = `<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zustHtml +
+    const aktHtml = lk.aktLabel ? `<span class="badge" style="margin-right:8px;" title="Station im Spannungsbogen: Ausbruch – Eskalation – Höhepunkt – Folgen – Wiederanlauf">${escapeHtml(lk.aktLabel)}</span>` : '';
+    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zustHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -131,11 +142,13 @@ function render(s) {
     lkBox.textContent = s.status === 'idle' ? 'Noch nicht gestartet.' : s.status === 'paused' ? 'Pausiert.' : 'Übung beendet.';
   }
 
+  renderFinaleCard(s);
+
   // Naechste Ereignisse — "Zeitsprung hierhin" ueberspringt Leerlauf oder
   // springt gezielt zu einer bestimmten Karte, wenn eine Diskussion kuerzer
   // oder laenger lief als geplant.
   document.getElementById('m-upcoming').innerHTML = s.upcoming.map(ev => `
-    <tr><td>${ev.minute}</td><td>${ev.type === 'lagekarte' ? 'Lagekarte' : 'Sonderlagekarte'}</td><td>${escapeHtml(ev.titel)}</td>
+    <tr><td>${ev.minute}</td><td>${ev.type === 'lagekarte' ? 'Lagekarte' + (ev.akt ? ` <span class="muted">(${escapeHtml(ev.akt)})</span>` : '') : 'Sonderlagekarte'}</td><td>${escapeHtml(ev.titel)}</td>
       <td><button class="secondary jump-to-event" data-type="${ev.type}" data-id="${ev.id}" title="Springt direkt auf diese Karte — fällig werdende Sonderlagekarten dazwischen werden dabei mit ausgelöst/verschickt.">Zeitsprung hierhin</button></td></tr>
   `).join('') || '<tr><td colspan="4" class="muted">Keine weiteren geplanten Ereignisse.</td></tr>';
 
@@ -193,7 +206,7 @@ function render(s) {
   // Bewertungsmatrix
   const kriterien = scenario.bewertungskriterien;
   document.getElementById('m-bewertung-head').innerHTML = `<tr><th>Rolle</th><th>Teilnehmer</th>${kriterien.map(k => `<th>${k.slice(0,4)}.</th>`).join('')}<th>Ø</th></tr>`;
-  document.getElementById('m-bewertung-body').innerHTML = scenario.roles.filter(role => activeRoleIds.includes(role.id) && role.id !== 'teilnehmer').map(role => {
+  document.getElementById('m-bewertung-body').innerHTML = scenario.roles.filter(role => (s.activeRoleIds || []).includes(role.id) && role.id !== 'teilnehmer').map(role => {
     const p = participantFor(role.id, s.participants);
     const scores = s.bewertung[role.id] || {};
     const cells = kriterien.map(k => `
@@ -222,6 +235,48 @@ function render(s) {
   }).join('') || '<p class="muted mini">Teilnehmer im Setup eintragen, um Urkunden zu erzeugen.</p>';
 }
 
+const euro = n => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+function renderFinaleCard(s) {
+  const card = document.getElementById('m-finale-card');
+  const f = s.finale || {};
+  if (!f.verfuegbar || s.status === 'idle') { card.style.display = 'none'; return; }
+  card.style.display = '';
+  const aktiv = !!f.step;
+  document.getElementById('m-finale-optionen').innerHTML = (f.optionen || []).length
+    ? '<b>Je nach Verlauf der Übung einrechnen:</b>' + f.optionen.map(o => `
+      <label style="display:flex;gap:8px;align-items:flex-start;width:auto;margin-top:6px;">
+        <input type="checkbox" class="finale-option" data-id="${escapeHtml(o.id)}" ${o.aktiv ? 'checked' : ''} style="width:auto;margin-top:2px;">
+        <span>${escapeHtml(o.frage)} <span class="muted">→ ${escapeHtml(o.posten)}: ${euro(o.betrag)}</span></span>
+      </label>`).join('')
+    : '';
+  const r = f.rechnung || {};
+  const summary = `<p class="muted">Rechnung aktuell: Schaden ${euro(r.summe || 0)}, Versicherung ${euro(r.versicherung || 0)}, bleibt beim Unternehmen <b>${euro(r.eigenanteil || 0)}</b>` +
+    (r.anteilJahresgewinn ? ` (${Math.round(r.anteilJahresgewinn * 100)} % des Jahresgewinns)` : '') + '.</p>';
+  document.getElementById('m-finale-body').innerHTML = aktiv
+    ? `<p><b>Schritt ${f.step} von ${f.steps}</b> – auf der Bühne: ${escapeHtml(stepText(f.view))}</p>` +
+      (f.naechster ? `<p class="muted">Nächster Klick: ${escapeHtml(f.naechster)}</p>` : '<p style="color:var(--ok);">Letzter Schritt erreicht – jetzt ins Debriefing.</p>') + summary
+    : summary + (s.status === 'ended' ? '<p class="muted">Abschluss ist ausgeblendet.</p>' : '');
+  document.getElementById('btn-finale-start').style.display = aktiv ? 'none' : '';
+  document.getElementById('btn-finale-start').textContent = s.status === 'ended' ? 'Abschluss zeigen' : 'Krise beenden – Abschluss zeigen';
+  document.getElementById('btn-finale-prev').style.display = aktiv ? '' : 'none';
+  document.getElementById('btn-finale-next').style.display = aktiv ? '' : 'none';
+  document.getElementById('btn-finale-close').style.display = aktiv ? '' : 'none';
+  document.getElementById('btn-finale-prev').disabled = f.step <= 1;
+  document.getElementById('btn-finale-next').disabled = f.step >= f.steps;
+}
+function stepText(v) {
+  if (!v) return '';
+  switch (v.phase) {
+    case 'intro': return 'Einleitung „' + v.titel + '“';
+    case 'nacharbeiten': return `Nacharbeiten (${v.nacharbeiten.length} von ${v.nacharbeitenGesamt})`;
+    case 'rechnung': return `Rechnung (${v.posten.length} von ${v.postenGesamt} Posten, Zwischensumme ${euro(v.laufendeSumme)})`;
+    case 'bilanz': return 'Bilanz: Schaden, Versicherung, Eigenanteil';
+    case 'aha': return 'Anteil am Jahresgewinn und nötiger Zusatzumsatz';
+    case 'fazit': return 'Fazit';
+    default: return v.phase;
+  }
+}
+
 async function refresh() {
   try { render(await api('/api/run/moderator-state')); } catch (e) { /* Server evtl. kurz nicht erreichbar */ }
 }
@@ -239,6 +294,20 @@ document.getElementById('btn-send-all-certs').addEventListener('click', async ()
     if (r.ok) ok++;
   }
   statusEl.textContent = `${ok}/${people.length} Urkunden versendet.` + (ok < people.length ? ' Fehler siehe Versand-Log.' : '');
+});
+document.getElementById('btn-finale-start').addEventListener('click', () => {
+  if (lastState && lastState.status !== 'ended' && !confirm('Krisenphase jetzt beenden und den Abschluss (Nacharbeiten und Rechnung) auf der Bühne zeigen?')) return;
+  api('/api/run/finale/start', { method: 'POST' }).then(refresh);
+});
+document.getElementById('btn-finale-next').addEventListener('click', () => api('/api/run/finale/next', { method: 'POST' }).then(refresh));
+document.getElementById('btn-finale-prev').addEventListener('click', () => api('/api/run/finale/prev', { method: 'POST' }).then(refresh));
+document.getElementById('btn-finale-close').addEventListener('click', () => api('/api/run/finale/close', { method: 'POST' }).then(refresh));
+// Pfeiltasten/Leertaste blaettern im Abschluss -- praktisch mit Presenter.
+document.addEventListener('keydown', e => {
+  if (!lastState || !lastState.finale || !lastState.finale.step) return;
+  if (['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(document.activeElement && document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); api('/api/run/finale/next', { method: 'POST' }).then(refresh); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); api('/api/run/finale/prev', { method: 'POST' }).then(refresh); }
 });
 document.getElementById('btn-begin-crisis').addEventListener('click', () => api('/api/run/begin-crisis', { method: 'POST' }).then(refresh));
 document.getElementById('btn-pause').addEventListener('click', () => api('/api/run/pause', { method: 'POST' }).then(refresh));
@@ -271,6 +340,9 @@ document.addEventListener('click', e => {
   }
 });
 document.addEventListener('change', e => {
+  if (e.target.classList.contains('finale-option')) {
+    api('/api/run/finale/option', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: e.target.dataset.id, aktiv: e.target.checked }) }).then(refresh);
+  }
   if (e.target.classList.contains('score-select')) {
     api('/api/bewertung', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },

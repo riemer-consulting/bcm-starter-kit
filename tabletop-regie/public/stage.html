@@ -36,6 +36,37 @@
   .sound-unlock { position:fixed; inset:0; background:rgba(5,7,11,.92); z-index:100; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; }
   .sound-unlock button { font-size:20px; padding:16px 32px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
   .sound-unlock p { color:var(--muted); font-size:14px; }
+  .finale { display:flex; flex-direction:column; min-height:100%; }
+  .fin-center { flex:1; display:flex; flex-direction:column; justify-content:center; max-width:1000px; }
+  .fin-kicker { font-size:clamp(13px,1.3vw,17px); color:var(--accent); font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+  .fin-titel { font-size:clamp(30px,4.6vw,60px); font-weight:800; line-height:1.1; margin-bottom:24px; }
+  .fin-h { font-size:clamp(20px,2.4vw,30px); font-weight:800; margin-bottom:18px; }
+  .fin-text { font-size:clamp(17px,1.9vw,25px); line-height:1.5; color:var(--muted); }
+  .fin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:14px 22px; }
+  .fin-item { display:flex; gap:18px; align-items:baseline; padding:12px 16px; border-left:4px solid var(--border); background:var(--panel); border-radius:6px; }
+  .fin-item.neu { border-left-color:#d9534f; animation: finIn .6s ease-out; }
+  .fin-zahl { font-size:clamp(26px,3vw,42px); font-weight:800; color:#d9534f; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .fin-itemtext { font-size:clamp(14px,1.3vw,18px); line-height:1.4; }
+  .fin-cols { display:grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap:32px; align-items:start; }
+  .fin-stat { padding:12px 0 14px; border-bottom:1px solid var(--border); }
+  .fin-stat .k { font-size:clamp(13px,1.2vw,16px); color:var(--muted); line-height:1.35; margin-bottom:4px; }
+  .fin-stat .v { font-size:clamp(22px,2.6vw,36px); font-weight:800; font-variant-numeric:tabular-nums; }
+  .fin-stat .v.rot { color:#d9534f; }
+  .fin-stat.eigen { border-bottom:3px solid #d9534f; animation: finIn .8s ease-out; }
+  .fin-stat.eigen .v { font-size:clamp(30px,3.6vw,52px); }
+  @media (max-width: 1100px) { .fin-cols { grid-template-columns: 1fr; } }
+  .fin-tabelle { width:100%; border-collapse:collapse; font-size:clamp(14px,1.3vw,18px); }
+  .fin-tabelle td { padding:7px 6px; border-bottom:1px solid var(--border); }
+  .fin-tabelle tr.neu td { color:#d9534f; font-weight:700; animation: finIn .6s ease-out; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .fin-tag { font-size:11px; color:var(--accent); border:1px solid var(--accent); border-radius:4px; padding:1px 5px; margin-left:6px; white-space:nowrap; }
+  .fin-hebel { margin-top:18px; padding:14px 18px; background:rgba(59,130,196,.12); border-left:4px solid var(--accent); font-size:clamp(14px,1.3vw,18px); line-height:1.45; }
+  .fin-aha { display:flex; gap:32px; align-items:center; margin:18px 0 26px; animation: finIn .8s ease-out; }
+  .fin-aha-zahl { font-size:clamp(40px,6vw,88px); font-weight:800; color:#d9534f; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .fin-aha-text { font-size:clamp(17px,1.9vw,26px); line-height:1.4; max-width:640px; }
+  .fin-fazit { font-size:clamp(26px,3.6vw,48px); font-weight:800; line-height:1.25; animation: finIn 1s ease-out; }
+  .fin-hinweis { margin-top:auto; padding-top:18px; font-size:12px; color:var(--muted); }
+  @keyframes finIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
 </style>
 </head>
 <body>

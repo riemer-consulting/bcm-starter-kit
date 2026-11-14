@@ -24,6 +24,8 @@ function newRunState(scenario) {
     activeRoleIds: scenario.roles.map(r => r.id), // welche Rollen fuer diesen Lauf ueberhaupt zur Auswahl stehen
     firedLagekarten: [], // ids
     firedSonderlagekarten: [], // { id, emailStatus }
+    finale: { step: 0, optionen: {} }, // Abschluss (Nacharbeiten + Rechnung), 0 = nicht aktiv
+    finaleMinutes: 0,
     manualFires: [], // ids, die der Moderator vorzeitig/zusätzlich ausgelöst hat
     bewertung: {}, // { [roleId]: { [kriterium]: 1-5 } }
     log: []
@@ -32,7 +34,8 @@ function newRunState(scenario) {
 
 function elapsedMinutes(state) {
   if (!state.startedAt) return 0;
-  const now = state.status === 'paused' && state.pausedAt ? state.pausedAt : Date.now();
+  const now = state.status === 'paused' && state.pausedAt ? state.pausedAt
+    : (state.status === 'ended' && state.endedAt ? state.endedAt : Date.now());
   const raw = now - state.startedAt - state.totalPausedMs;
   return Math.max(0, raw / 60000);
 }
@@ -83,20 +86,17 @@ function computeEffectiveSchedule(scenario, state) {
   if (state.durationMode === 'authored') {
     return timeline.map(ev => Object.assign({}, ev, { minute: ev.authoredMinute }));
   }
-  // computed: pro Lagekarte Lesezeit + (aktive Rollen * Sprechzeit) + Entscheidungszeit nach Schwierigkeit;
-  // Sonderlagekarten bekommen einen festen kurzen Slot, in der urspruenglich erprobten Reihenfolge.
+  // computed: pro Lagekarte Lesezeit + (aktive Rollen * Sprechzeit) + Entscheidungszeit
+  // nach Schwierigkeit; Sonderlagekarten laufen ohne eigene Zeit in der Diskussion mit.
+  const { placed } = placeEvents(timeline, computedLagekarteSlot(scenario, state));
+  return placed.map(({ ev, minute }) => Object.assign({}, ev, { minute }));
+}
+
+function computedLagekarteSlot(scenario, state) {
   const roleCount = Math.max(1, activeRoleGroupCount(scenario, state));
-  const decisionMinutes = DIFFICULTY_DECISION_MINUTES[state.difficulty] || DIFFICULTY_DECISION_MINUTES.mittel;
-  const lagekarteSlot = scenario.standardablauf.readingMinutes
+  return scenario.standardablauf.readingMinutes
     + (roleCount * scenario.standardablauf.perRoleSeconds / 60)
-    + decisionMinutes;
-  const sonderSlot = 2;
-  let cumulative = 0;
-  return timeline.map(ev => {
-    const minute = cumulative;
-    cumulative += ev.type === 'lagekarte' ? lagekarteSlot : sonderSlot;
-    return Object.assign({}, ev, { minute });
-  });
+    + (DIFFICULTY_DECISION_MINUTES[state.difficulty] || DIFFICULTY_DECISION_MINUTES.mittel);
 }
 
 function eventRef(scenario, type, id) {
@@ -105,54 +105,100 @@ function eventRef(scenario, type, id) {
     : scenario.sonderlagekarten.find(sk => sk.id === id);
 }
 
+// Dramaturgischer Bogen: jede Lagekarte gehoert zu einem Akt. Im Zieldauer-
+// Modus ist jeder Akt mindestens einmal vertreten -- auch bei 45 Minuten
+// fuehrt die Übung vom Ausbruch ueber Eskalation und Hoehepunkt bis zum
+// Wiederanlauf, statt vom Angriff direkt zum Wiederanlauf zu springen.
+const AKTE = [
+  { key: 'ausbruch', label: 'Ausbruch' },
+  { key: 'eskalation', label: 'Eskalation' },
+  { key: 'hoehepunkt', label: 'Höhepunkt' },
+  { key: 'folgen', label: 'Folgen' },
+  { key: 'wiederanlauf', label: 'Wiederanlauf' }
+];
+
+// Zeit, die am Ende fuer den Abschluss (Nacharbeiten + Rechnung) bleibt.
+function finaleMinutesFor(scenario, targetMinutes) {
+  if (!scenario.nachspiel) return 0;
+  return Math.round(Math.min(15, Math.max(4, targetMinutes * 0.1)));
+}
+
+// Vertrauliche Karten kosten -- wie im erprobten Ablauf -- keine eigene
+// Spielzeit: sie landen in der Diskussionsphase der vorangehenden Lagekarte,
+// mehrere Karten im selben Fenster gleichmaessig verteilt.
+function placeEvents(sortedEvents, lkSlot) {
+  let windowIdx = -1;
+  const windowOf = sortedEvents.map(ev => (ev.type === 'lagekarte' ? ++windowIdx : windowIdx));
+  const perWindow = {};
+  sortedEvents.forEach((ev, i) => { if (ev.type !== 'lagekarte') perWindow[windowOf[i]] = (perWindow[windowOf[i]] || 0) + 1; });
+  const seen = {};
+  let cumulative = 0;
+  let windowStart = 0;
+  const placed = sortedEvents.map((ev, i) => {
+    if (ev.type === 'lagekarte') {
+      windowStart = cumulative;
+      cumulative += lkSlot;
+      return { ev, minute: windowStart };
+    }
+    if (windowOf[i] < 0) return { ev, minute: 0 };
+    const k = seen[windowOf[i]] = (seen[windowOf[i]] || 0) + 1;
+    return { ev, minute: windowStart + lkSlot * (0.3 + 0.55 * k / (perWindow[windowOf[i]] + 1)) };
+  });
+  return { placed, total: cumulative };
+}
+
 /**
- * Baut einen auf eine Zielgesamtdauer zugeschnittenen Ablaufplan: Priorität-1-
- * Ereignisse (Kernszenen, z. B. Start, Beirat-Highlight, Ende) sind immer
- * enthalten; Priorität 2 und danach 3 werden in chronologischer Reihenfolge
- * ergänzt, solange das Zeitbudget reicht. Reicht die Zeit nicht einmal für
- * die Kernszenen, werden deren Entscheidungszeiten komprimiert (mit Untergrenze)
- * statt weitere Karten zu entfernen. Ist nach allen Karten noch Zeit übrig,
- * wird die Entscheidungszeit der enthaltenen Lagekarten gestreckt.
+ * Baut einen auf eine Zielgesamtdauer zugeschnittenen Ablaufplan. Immer
+ * enthalten: Kernszenen (Prioritaet 1), je eine Lagekarte pro Akt des
+ * Spannungsbogens und je eine eigene Sonderlagekarte pro besetzter Rolle.
+ * Danach werden wichtige (2) und optionale (3) Karten ergaenzt, solange die
+ * Zeit reicht. Am Ende bleibt Zeit fuer den Abschluss (Nacharbeiten und
+ * Rechnung). Reicht die Zeit nicht, werden Entscheidungsphasen komprimiert
+ * (mit Untergrenze); bleibt Zeit uebrig, werden sie gestreckt.
  */
 function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount, activeRoleIds }) {
   const timeline = buildTimeline(scenario);
   const nominalDecision = DIFFICULTY_DECISION_MINUTES[difficulty] || DIFFICULTY_DECISION_MINUTES.mittel;
   const effectiveRoleCount = Math.max(1, roleCount || 1);
   const speakingMinutes = effectiveRoleCount * scenario.standardablauf.perRoleSeconds / 60;
-
-  function lagekarteCost(decisionMinutes) {
-    return scenario.standardablauf.readingMinutes + speakingMinutes + decisionMinutes;
-  }
-  function costOf(ev, decisionMinutes, sonderSlot) {
-    return ev.type === 'lagekarte' ? lagekarteCost(decisionMinutes) : sonderSlot;
-  }
+  const finaleMinutes = finaleMinutesFor(scenario, targetMinutes);
+  const budget = targetMinutes - finaleMinutes;
+  const lkSlotFor = d => scenario.standardablauf.readingMinutes + speakingMinutes + d;
+  const costOf = (ev, d) => (ev.type === 'lagekarte' ? lkSlotFor(d) : 0);
+  const keyOf = ev => ev.type + ':' + ev.id;
 
   // Sonderlagekarten, die niemanden erreichen (weder Rolle noch Ersatzrolle
-  // besetzt), sollen kein Zeitbudget belegen. Lagekarten sind oeffentlich
-  // (kein "empfaenger") und bleiben davon unberuehrt.
+  // besetzt), werden nicht eingeplant. Lagekarten sind oeffentlich.
   const roleFilterActive = Array.isArray(activeRoleIds) && activeRoleIds.length > 0;
   const activeRoleSet = new Set(activeRoleIds || []);
   const recipientOf = ev => resolveRecipient(ev.ref, activeRoleSet);
   const isRoleRelevant = ev => ev.type !== 'sonderlagekarte' || recipientOf(ev) !== null;
 
   // Lagekarten, fuer die keine der zustaendigen Rollen besetzt ist, werden
-  // beim Auffuellen hintangestellt -- sie laufen sonst ins Leere, weil
-  // niemand die Fachperspektive einbringt. Kernszenen bleiben unberuehrt.
+  // beim Auswaehlen hintangestellt -- dort bringt niemand die Fachsicht ein.
   const lkOwned = ev => ev.type !== 'lagekarte' || !roleFilterActive
     || !(ev.ref.zustaendig || []).length || ev.ref.zustaendig.some(rid => activeRoleSet.has(rid));
 
   const byPrio = p => timeline.filter(ev => (ev.ref.prioritaet || 2) === p);
-  // Auch Kern-Sonderlagekarten nur, wenn sie jemanden erreichen. Kern-
-  // Lagekarten (oeffentlich, auf der Buehne) bleiben immer enthalten.
   const prio1 = byPrio(1).filter(isRoleRelevant);
   const prio2 = byPrio(2).filter(isRoleRelevant);
   const prio3 = byPrio(3).filter(isRoleRelevant);
 
-  // Rollenabdeckung: jede besetzte Rolle, die mindestens eine terminierte
-  // Sonderlagekarte bekommen kann, bekommt garantiert eine in den Plan --
-  // sonst koennte eine zugewiesene Person durch reine Prioritaetsauswahl die
-  // gesamte Übung ohne einen einzigen eigenen Moment erleben. Eigene Karten
-  // (Rolle = eigentlicher Empfaenger) haben dabei Vorrang vor Ersatz-Karten.
+  // Spannungsbogen: fehlt einem Akt eine Kernszene, kommt die beste Lagekarte
+  // dieses Akts fest dazu (besetzte Zustaendigkeit vor Prioritaet vor Zeit).
+  const actPicks = [];
+  AKTE.forEach(a => {
+    const inAct = ev => ev.type === 'lagekarte' && ev.ref.akt === a.key;
+    if (prio1.some(inAct)) return;
+    const candidates = [...prio2, ...prio3].filter(inAct)
+      .sort((x, y) => ((lkOwned(x) ? 0 : 1) - (lkOwned(y) ? 0 : 1))
+        || ((x.ref.prioritaet || 2) - (y.ref.prioritaet || 2))
+        || (x.authoredMinute - y.authoredMinute));
+    if (candidates.length) actPicks.push(candidates[0]);
+  });
+
+  // Rollenabdeckung: jede besetzte Rolle bekommt mindestens eine eigene
+  // Sonderlagekarte (eigene Karten vor Ersatz-Karten).
   const coverage = [];
   if (roleFilterActive) {
     const alreadyCovered = new Set(prio1.filter(ev => ev.type === 'sonderlagekarte').map(recipientOf));
@@ -166,45 +212,41 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
       if (candidates.length) coverage.push(candidates[0]);
     });
   }
-  const coverageIds = new Set(coverage.map(ev => ev.type + ':' + ev.id));
-  const remainingPool = [...prio2, ...prio3].filter(ev => !coverageIds.has(ev.type + ':' + ev.id));
-  const fillPool = remainingPool.filter(lkOwned).concat(remainingPool.filter(ev => !lkOwned(ev)));
+
+  const baseline = [];
+  const baseIds = new Set();
+  [...prio1, ...actPicks, ...coverage].forEach(ev => { if (!baseIds.has(keyOf(ev))) { baseIds.add(keyOf(ev)); baseline.push(ev); } });
+  const remainingPool = [...prio2, ...prio3].filter(ev => !baseIds.has(keyOf(ev)));
+  // Erst Lagekarten nach Zeitbudget, danach vertrauliche Karten nach Menge.
+  const lkPool = remainingPool.filter(ev => ev.type === 'lagekarte');
+  const fillPool = lkPool.filter(lkOwned).concat(lkPool.filter(ev => !lkOwned(ev)));
+  const skPool = remainingPool.filter(ev => ev.type !== 'lagekarte');
 
   let decisionMinutes = nominalDecision;
-  let sonderSlot = 2;
-  const baseline = prio1.concat(coverage);
-  const baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes, sonderSlot), 0);
-
+  const baseCost = baseline.reduce((sum, ev) => sum + costOf(ev, decisionMinutes), 0);
   let compression = null;
   let warning = null;
-  let selected = baseline.slice();
+  const selected = baseline.slice();
   let skipped = [];
 
-  if (baseCost > targetMinutes) {
-    // Selbst Kernszenen + Rollenabdeckung passen nicht hinein: Entscheidungs-
-    // zeiten so weit komprimieren, dass sie passen, mit Untergrenze (sonst
-    // unbrauchbar kurz). Sonderlagekarten gehen dabei sofort auf ihre
-    // Mindestdauer (1 Min.) runter — dieselbe Zahl wird sowohl für die
-    // Budgetrechnung als auch am Ende tatsächlich verwendet, damit das
-    // Ergebnis nie über dem Zielbudget liegt.
+  if (baseCost > budget) {
+    // Selbst der komplette Spannungsbogen passt nicht: Entscheidungszeiten
+    // komprimieren (Untergrenze 1 Min.), statt Akte zu streichen.
     const floor = 1;
-    const sonderFloor = 1;
     const compressibleNominal = Math.max(0.01, nominalDecision - floor);
-    const fixedCost = baseline.reduce((sum, ev) => sum + (ev.type === 'lagekarte' ? scenario.standardablauf.readingMinutes + speakingMinutes + floor : sonderFloor), 0);
-    const availableForDecision = targetMinutes - fixedCost;
-    const lkCountInBaseline = baseline.filter(ev => ev.type === 'lagekarte').length;
-    const factor = lkCountInBaseline > 0 ? Math.max(0, Math.min(1, availableForDecision / (lkCountInBaseline * compressibleNominal))) : 1;
+    const lkCount = baseline.filter(ev => ev.type === 'lagekarte').length;
+    const fixedCost = lkCount * (scenario.standardablauf.readingMinutes + speakingMinutes + floor);
+    const factor = lkCount > 0 ? Math.max(0, Math.min(1, (budget - fixedCost) / (lkCount * compressibleNominal))) : 1;
     decisionMinutes = Math.max(floor, floor + compressibleNominal * factor);
-    sonderSlot = sonderFloor;
     compression = Math.round(factor * 100) / 100;
-    warning = `Zieldauer (${targetMinutes} Min.) reicht selbst für die Kernszenen${coverage.length ? ' und je eine Karte pro besetzter Rolle' : ''} nur sehr knapp. ` +
+    warning = `Zieldauer (${targetMinutes} Min.) reicht für den kompletten Spannungsbogen nur knapp. ` +
       `Entscheidungszeiten wurden auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. je Lagekarte komprimiert. ` +
-      `Mehr Zeit oder weniger aktive Funktionsbereiche einplanen, wenn möglich.`;
-    skipped = fillPool.map(ev => ({ type: ev.type, id: ev.id, reason: 'Zeitbudget reicht nicht einmal für alle Kernszenen – alle optionalen Karten entfallen.' }));
+      `Mehr Zeit oder weniger Funktionsbereiche einplanen, wenn möglich.`;
+    skipped = fillPool.map(ev => ({ type: ev.type, id: ev.id, reason: 'Zeitbudget reicht nur für den Spannungsbogen – zusätzliche Karten entfallen.' }));
   } else {
-    let remaining = targetMinutes - baseCost;
+    let remaining = budget - baseCost;
     fillPool.forEach(ev => {
-      const cost = costOf(ev, decisionMinutes, sonderSlot);
+      const cost = costOf(ev, decisionMinutes);
       if (cost <= remaining) {
         selected.push(ev);
         remaining -= cost;
@@ -213,48 +255,66 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
         skipped.push({ type: ev.type, id: ev.id, reason: `Für die gewählte Zieldauer nicht enthalten (${tier} Karte, Zeitbudget ausgeschöpft).` });
       }
     });
-    // Alles passte hinein und es bleibt nennenswert Zeit übrig -> Entscheidungszeit strecken statt Leerlauf.
-    if (skipped.length === 0 && remaining > 0.5) {
+    // Alles passt und es bleibt Zeit -> Entscheidungsphasen strecken (max. Verdopplung).
+    if (!skipped.some(s => s.type === 'lagekarte') && remaining > 0.5) {
       const lkInSelected = selected.filter(ev => ev.type === 'lagekarte').length;
       if (lkInSelected > 0) {
-        const extraPerLk = Math.min(nominalDecision, remaining / lkInSelected); // Deckel: max. Verdopplung
+        const extraPerLk = Math.min(nominalDecision, remaining / lkInSelected);
         decisionMinutes = nominalDecision + extraPerLk;
         const stillUnused = remaining - extraPerLk * lkInSelected;
-        warning = `Alle Lagekarten und terminierten Sonderlagekarten sind bereits enthalten. ` +
-          `Die Entscheidungsphasen je Lagekarte wurden von ${nominalDecision} auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. verlängert.` +
+        warning = `Alle Lagekarten sind enthalten. Die Entscheidungsphasen wurden von ${nominalDecision} auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. verlängert.` +
           (stillUnused > 1
-            ? ` Es bleiben dabei bewusst noch ca. ${Math.round(stillUnused)} ungenutzte Minuten (Entscheidungszeit wird nicht beliebig weiter gestreckt) – diese Zeit eignet sich für ein ausführlicheres Debriefing oder Bonuskarten.`
+            ? ` Es bleiben bewusst noch ca. ${Math.round(stillUnused)} Minuten frei – gut für Bonuskarten oder ein ausführlicheres Debriefing.`
             : '');
       }
     }
   }
 
-  selected.sort((a, b) => a.authoredMinute - b.authoredMinute);
-  let cumulative = 0;
-  const schedule = selected.map(ev => {
-    const minute = cumulative;
-    cumulative += costOf(ev, decisionMinutes, sonderSlot);
-    return { type: ev.type, id: ev.id, minute: Math.round(minute * 100) / 100 };
-  });
+  // Vertrauliche Karten kosten keine Spielzeit, duerfen aber nicht ueberfluten:
+  // insgesamt so viele wie im erprobten Ablauf (ca. 1,6 je Lagekarte), eigene
+  // Karten einer Rolle vor umgeleiteten, und keine Person bekommt deutlich
+  // mehr als die anderen.
+  const lkCount = selected.filter(ev => ev.type === 'lagekarte').length;
+  const skSelected = selected.filter(ev => ev.type !== 'lagekarte');
+  const skBudget = Math.max(skSelected.length, Math.round(lkCount * 1.6));
+  const recipients = Math.max(1, roleFilterActive ? activeRoleSet.size : 1);
+  const perRecipientCap = Math.max(2, Math.ceil(skBudget / recipients) + 1);
+  const load = {};
+  skSelected.forEach(ev => { const r = recipientOf(ev) || ev.ref.empfaenger; load[r] = (load[r] || 0) + 1; });
+  skPool
+    .slice()
+    .sort((a, b) => ((recipientOf(a) === a.ref.empfaenger ? 0 : 1) - (recipientOf(b) === b.ref.empfaenger ? 0 : 1))
+      || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
+      || (a.authoredMinute - b.authoredMinute))
+    .forEach(ev => {
+      const r = recipientOf(ev) || ev.ref.empfaenger;
+      if (skSelected.length < skBudget && (load[r] || 0) < perRecipientCap) {
+        selected.push(ev); skSelected.push(ev); load[r] = (load[r] || 0) + 1;
+      } else {
+        skipped.push({ type: ev.type, id: ev.id, reason: 'Für diese Dauer nicht enthalten – sonst kämen zu viele vertrauliche Karten auf einmal.' });
+      }
+    });
 
-  // Auch mit maximaler Kompression (Lesezeit/Sprechzeit sind nicht weiter
-  // kürzbar) kann die Zieldauer bei vielen aktiven Rollen unerreichbar sein.
-  // Das klar sagen, statt eine nicht eingehaltene Zieldauer zu verschweigen.
-  if (cumulative > targetMinutes + 0.05) {
-    warning = `Zieldauer (${targetMinutes} Min.) ist mit ${prio1.filter(e => e.type === 'lagekarte').length} ` +
-      `Kernszenen und ${effectiveRoleCount} aktiven Funktionsbereichen nicht erreichbar, selbst mit auf das ` +
-      `Minimum (1 Min.) komprimierten Entscheidungs- und Sonderlagekartenzeiten: Lesezeit und Sprechzeit allein ` +
-      `benötigen bereits ${Math.round(cumulative * 10) / 10} Min. Weniger aktive Funktionsbereiche zuweisen oder ` +
-      `mehr Zeit einplanen.`;
+  selected.sort((a, b) => a.authoredMinute - b.authoredMinute);
+  const { placed, total } = placeEvents(selected, lkSlotFor(decisionMinutes));
+  const schedule = placed.map(({ ev, minute }) => ({ type: ev.type, id: ev.id, minute: Math.round(minute * 100) / 100 }));
+
+  if (total > budget + 0.05) {
+    warning = `Zieldauer (${targetMinutes} Min.) ist mit ${effectiveRoleCount} aktiven Funktionsbereichen nicht erreichbar, ` +
+      `selbst mit auf 1 Min. komprimierten Entscheidungsphasen: Lese- und Sprechzeit für den Spannungsbogen brauchen bereits ` +
+      `${Math.round(total * 10) / 10} Min. (plus ${finaleMinutes} Min. Abschluss). Weniger Funktionsbereiche besetzen – ` +
+      `größere Teams statt mehr Rollen – oder mehr Zeit einplanen.`;
   }
 
   return {
     schedule,
     skipped,
-    totalMinutes: Math.round(cumulative * 100) / 100,
+    totalMinutes: Math.round(total * 100) / 100,
+    finaleMinutes,
     decisionMinutesUsed: Math.round(decisionMinutes * 100) / 100,
     compression,
-    warning
+    warning,
+    akte: AKTE.map(a => ({ key: a.key, label: a.label, enthalten: selected.some(ev => ev.type === 'lagekarte' && ev.ref.akt === a.key) }))
   };
 }
 
@@ -300,17 +360,57 @@ function setElapsedMinutes(state, targetMinutes) {
   state.totalPausedMs = (now - state.startedAt) - Math.max(0, targetMinutes) * 60000;
 }
 
+// Rollenempfehlung nach Dauer: Mehr Rollen bedeuten mehr Sprechzeit je
+// Lagekarte und mehr vertrauliche Karten -- in 45 Minuten ersticken 20 Rollen
+// jede Diskussion. Darum richtet sich die Rollenzahl nach der Zeit, nicht nach
+// der Teilnehmerzahl; bei vielen Personen werden Teams pro Rolle gebildet.
+const ROLE_RECOMMENDATION = [
+  { maxMinutes: 45, groups: 5, roles: 5 },
+  { maxMinutes: 60, groups: 6, roles: 6 },
+  { maxMinutes: 90, groups: 7, roles: 9 },
+  { maxMinutes: 120, groups: 8, roles: 12 },
+  { maxMinutes: Infinity, groups: 99, roles: 99 }
+];
+
+function recommendRoles(scenario, { targetMinutes, difficulty }) {
+  const minutes = Math.max(10, Number(targetMinutes) || 90);
+  const rule = ROLE_RECOMMENDATION.find(r => minutes <= r.maxMinutes);
+  const speaking = scenario.standardablauf.speakingOrder;
+  const groupOf = {};
+  scenario.roles.forEach(r => { groupOf[r.id] = r.group; });
+  const playable = scenario.roles.filter(r => r.id !== 'teilnehmer' && groupOf[r.id] && groupOf[r.id] !== 'krisenstab-support');
+  const maxGroups = Math.min(rule.groups, speaking.length);
+  const maxRoles = Math.min(rule.roles, playable.length);
+  // Welche Rollen sind in den Lagekarten dieser Dauer am meisten gefordert?
+  const plan = buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: difficulty || 'mittel', roleCount: maxGroups });
+  const weight = {};
+  plan.schedule.filter(e => e.type === 'lagekarte').forEach(e => {
+    const lk = scenario.lagekarten.find(x => x.id === e.id);
+    (lk && lk.zustaendig || []).forEach(rid => { weight[rid] = (weight[rid] || 0) + 1; });
+  });
+  const ranked = playable.slice().sort((a, b) => ((weight[b.id] || 0) - (weight[a.id] || 0))
+    || (speaking.indexOf(a.group) - speaking.indexOf(b.group)));
+  const picked = [];
+  const groups = new Set();
+  // Erst je eine Rolle pro Funktionsbereich (breite Fachsicht), dann auffuellen.
+  ranked.forEach(r => { if (picked.length < maxRoles && !groups.has(r.group) && groups.size < maxGroups) { picked.push(r.id); groups.add(r.group); } });
+  ranked.forEach(r => { if (picked.length < maxRoles && !picked.includes(r.id) && groups.has(r.group)) picked.push(r.id); });
+  return { targetMinutes: minutes, maxGroups, maxRoles, roleIds: picked, groups: Array.from(groups) };
+}
+
 function totalPlannedMinutes(scenario, state) {
   if (state.durationMode === 'target' && state.plannedTotalMinutes != null) {
     return state.plannedTotalMinutes;
   }
   const schedule = computeEffectiveSchedule(scenario, state);
-  const last = schedule[schedule.length - 1];
-  const lastLagekarte = scenario.lagekarten[scenario.lagekarten.length - 1];
-  const tailDuration = state.durationMode === 'authored'
-    ? (lastLagekarte.diskussionMinuten || 5)
-    : (scenario.standardablauf.readingMinutes + (Math.max(1, activeRoleGroupCount(scenario, state)) * scenario.standardablauf.perRoleSeconds / 60) + (DIFFICULTY_DECISION_MINUTES[state.difficulty] || 4));
-  return (last ? last.minute : 0) + tailDuration;
+  const lks = schedule.filter(ev => ev.type === 'lagekarte');
+  const lastLk = lks[lks.length - 1];
+  if (!lastLk) return 0;
+  // Ende = Ende der letzten Lagekarte im Ablauf (nicht der letzten im Array).
+  if (state.durationMode === 'authored') {
+    return Math.max(lastLk.minute + (lastLk.ref.diskussionMinuten || 5), ...schedule.map(ev => ev.minute));
+  }
+  return lastLk.minute + computedLagekarteSlot(scenario, state);
 }
 
 module.exports = {
@@ -324,6 +424,9 @@ module.exports = {
   resolveRecipient,
   computeEffectiveSchedule,
   buildAdaptiveSchedule,
+  finaleMinutesFor,
+  recommendRoles,
+  AKTE,
   getActiveSchedule,
   eventRef,
   dueEvents,

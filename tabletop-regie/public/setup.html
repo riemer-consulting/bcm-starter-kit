@@ -38,10 +38,16 @@
 
   <div class="card">
     <h2>Rollen für diesen Lauf</h2>
-    <p class="muted">Welche Rollen sollen diesmal überhaupt zur Auswahl stehen? Nicht angehakte Rollen verschwinden aus der Rollenzuweisung unten — macht die Liste kürzer und passend zur tatsächlichen Teilnehmerzahl.</p>
+    <p class="muted">Welche Rollen sollen diesmal überhaupt zur Auswahl stehen? Die Zahl der Rollen richtet sich nach der <b>Dauer</b>, nicht nach der Zahl der Personen: Jede Rolle kostet Sprechzeit pro Lagekarte und bekommt eigene vertrauliche Karten. In 45 Minuten tragen 5 Rollen eine dichte Übung – 20 Rollen nicht. Kommen mehr Personen, spielen sie in <b>Teams</b> (mehrere Personen pro Rolle, alle bekommen dieselben Karten).</p>
     <div class="row" style="margin-bottom:10px;">
-      <input id="role-count-hint" type="number" min="1" placeholder="Teilnehmerzahl" style="max-width:160px;" title="Wie viele Personen mit aktiver Rolle teilnehmen — Grundlage für den Rollenvorschlag.">
-      <button id="btn-suggest-roles" class="secondary" title="Wählt automatisch eine fachlich breite Rollenauswahl für die eingetragene Teilnehmerzahl.">Passende Rollen vorschlagen</button>
+      <select id="role-duration" style="max-width:200px;" title="Geplante Dauer der Übung – Grundlage für den Rollenvorschlag. Wird mit der Zieldauer im Abschnitt „Ablauf“ abgeglichen.">
+        <option value="45">für 45 Minuten</option>
+        <option value="60">für 60 Minuten</option>
+        <option value="90" selected>für 90 Minuten</option>
+        <option value="120">für 2 Stunden</option>
+        <option value="180">für 3 Stunden</option>
+      </select>
+      <button id="btn-suggest-roles" class="secondary" title="Wählt die Rollen, die in den Lagekarten dieser Dauer am meisten gefordert sind – so viele, wie in der Zeit sinnvoll spielbar sind.">Passende Rollen vorschlagen</button>
       <button id="btn-roles-all" class="secondary" title="Hakt alle Rollen dieses Szenarios an.">Alle</button>
       <button id="btn-roles-none" class="secondary" title="Hakt alle Rollen ab.">Keine</button>
       <span id="role-select-status" class="muted"></span>
@@ -56,7 +62,9 @@
       <button id="btn-fill-full" class="secondary" title="Legt für jede aktive Rolle eine eigene leere Teilnehmerzeile an.">Alle 20 Einzelrollen anlegen</button>
       <button id="btn-fill-compact" class="secondary" title="Fasst pro Funktionsbereich mehrere Rollen auf eine Person zusammen — für kleinere Gruppen.">Kompakt: 8 Funktionsbereiche anlegen</button>
       <button id="btn-add-row" class="secondary" title="Fügt eine einzelne leere Teilnehmerzeile hinzu.">+ Teilnehmer</button>
+      <button id="btn-distribute-teams" class="secondary" title="Verteilt alle eingetragenen Personen gleichmäßig auf die aktiven Rollen (ohne „Teilnehmer“). Ideal nach einem Import: aus 40 Personen werden z. B. 5 Teams à 8 Personen.">Auf Teams verteilen</button>
     </div>
+    <p class="mini muted" id="team-status" style="margin:-4px 0 10px;"></p>
     <div class="row" style="margin-bottom:12px;align-items:center;">
       <label class="mini muted" for="teilnehmer-count" style="margin-right:6px;">Teilnehmer ohne aktive Rolle (bekommen trotzdem eine Urkunde):</label>
       <input type="number" id="teilnehmer-count" min="1" value="5" style="width:60px;" title="Anzahl der zusätzlichen Teilnehmer-Zeilen, die angelegt werden sollen.">
@@ -115,6 +123,7 @@
           <option value="60">60 Minuten</option>
           <option value="90" selected>90 Minuten (Standard)</option>
           <option value="120">120 Minuten (2 Stunden)</option>
+          <option value="180">180 Minuten (3 Stunden)</option>
           <option value="custom">Eigene Angabe …</option>
         </select>
       </div>

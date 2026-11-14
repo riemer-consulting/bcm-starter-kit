@@ -103,11 +103,16 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    du neu. Die Auswahl wird gespeichert und
    bleibt auch nach einem Neustart erhalten (kein `SCENARIO_FILE` mehr nötig,
    außer du willst das gezielt per Kommandozeile erzwingen).
-2. **Rollen für diesen Lauf auswählen.** Bei kleineren Gruppen muss nicht
-   die komplette Rollenliste (15-20 Einträge) zur Auswahl stehen — Teilnehmerzahl
-   eintragen und auf "Passende Rollen vorschlagen" klicken (wählt automatisch
-   eine fachlich breite Auswahl über alle Funktionsbereiche hinweg), oder
-   Rollen einzeln anhaken. Nur angehakte Rollen erscheinen danach in der
+2. **Rollen für diesen Lauf auswählen.** Die Zahl der Rollen richtet sich
+   nach der **Dauer**, nicht nach der Zahl der Personen: Jede Rolle kostet
+   Sprechzeit pro Lagekarte und bekommt eigene vertrauliche Karten. Dauer
+   wählen (45 Min. bis 3 Std.) und auf **"Passende Rollen vorschlagen"**
+   klicken — die App wählt die Rollen, die in den Lagekarten dieser Dauer am
+   meisten gefordert sind (45 Min.: 5 Rollen, 60 Min.: 6, 90 Min.: 9,
+   2 Std.: 12, 3 Std.: alle). Sind schon Personen anderen Rollen zugeordnet
+   (z. B. nach einem Import), fragt die App, ob alle Personen als **Teams**
+   auf die vorgeschlagenen Rollen verteilt werden sollen — niemand wird
+   dabei gelöscht. Rollen lassen sich auch einzeln anhaken. Nur angehakte Rollen erscheinen danach in der
    Teilnehmerzuweisung, der Bewertungsmatrix und bei "Manuell auslösen". Zu
    jeder Rolle steht direkt eine kurze **Rollenbeschreibung** (Zuständigkeit,
    worauf die Person im Verlauf achten muss), damit klar ist, was mit einer
@@ -142,6 +147,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Rollen-Zeilen (z. B. nach "Alle N aktiven Rollen anlegen") werden zuerst
    befüllt, überzählige Personen als "Teilnehmer" angelegt; doppelte
    E-Mail-Adressen und Zeilen ohne gültige Adresse werden übersprungen.
+   **Mehr Personen als Rollen (Teams):** "Auf Teams verteilen" verteilt alle
+   eingetragenen Personen gleichmäßig auf die aktiven Rollen — aus 40
+   Personen und 5 Rollen werden 5 Teams à 8. Vertrauliche Karten gehen an
+   jedes Teammitglied, die Moderation zeigt die Teamnamen. Die Setup-Vorschau
+   warnt, wenn für die gewählte Dauer zu viele Rollen besetzt sind.
 4. **SMTP-Server eintragen** und mit "Test-E-Mail senden" prüfen. Bei internen
    Servern mit selbstsigniertem Zertifikat die entsprechende Checkbox setzen.
    **Trockenlauf:** Im Abschnitt "Trockenlauf (Testmodus)" eine eigene
@@ -203,19 +213,48 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    (z. B. 43,2 statt nur die nächste Kartenminute). Beides überspringt dabei
    fällig werdende Sonderlagekarten nicht (sie werden beim Zeitsprung mit
    ausgelöst/verschickt).
-10. Bewertung direkt während/nach der Übung in der Matrix eintragen (die
+10. **Abschluss: "Alles läuft wieder?"** Ist die Übungszeit abgelaufen,
+   wechselt die Bühne automatisch in den Abschluss (oder vorher per Klick auf
+   "Krise beenden – Abschluss zeigen" in der Moderation). Mit **"Weiter"**
+   (oder Pfeiltaste/Leertaste in der Moderation) deckst du Schritt für Schritt
+   auf: erst die **Nacharbeiten** (z. B. 5.600 handschriftliche Lieferscheine,
+   190.000 E-Mails im Rückstau, 87 Lkw-Ladungen Rückstand), dann die
+   **Rechnung** Posten für Posten mit laufender Summe und jeweils "Was vorher
+   geholfen hätte", dann die **Bilanz** (Schaden, Versicherung, Eigenanteil),
+   dann **was das bedeutet** (Anteil am Jahresgewinn, nötiger Zusatzumsatz)
+   und zum Schluss das **Fazit**: Eine Krise ist erst vorbei, wenn die Kunden
+   wieder vertrauen. Posten, die von Entscheidungen in der Übung abhängen
+   (z. B. Lösegeld gezahlt?), hakst du in der Moderation an oder ab. Alle
+   Zahlen sind fiktive Beispielrechnungen, das steht auch auf der Bühne. Im
+   Zieldauer-Modus ist dafür Zeit reserviert (10 % der Dauer, 4–15 Min.).
+11. Bewertung direkt während/nach der Übung in der Matrix eintragen (die
    generische "Teilnehmer"-Rolle ohne feste Funktion erscheint hier bewusst
    nicht), danach pro Person unter "Urkunden" auf "Per E-Mail senden"
    klicken — die Urkunde geht direkt an die hinterlegte Adresse, mit Ort und
    Tagesdatum. "Vorschau" zeigt sie zusätzlich im Browser an.
+
+## Spannungsbogen: von "alles läuft" bis "alles läuft wieder"
+
+Jede Lagekarte gehört zu einem Akt: **Ausbruch → Eskalation → Höhepunkt →
+Folgen → Wiederanlauf**. Egal ob 45 Minuten oder 3 Stunden: Die Übung beginnt
+mit der "Ruhe vor dem Sturm" (alles läuft), durchläuft jeden Akt mindestens
+einmal und endet mit dem Wiederanlauf, gefolgt vom Abschluss (Nacharbeiten und
+Rechnung). Kürzere Übungen bekommen weniger Karten pro Akt, nicht weniger
+Akte. Bei NordTech ist der Höhepunkt "Beirat fordert Lagebericht": Die
+Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen,
+kurz vorher bekommt sie vertraulich zusätzlichen persönlichen Druck.
+Vertrauliche Karten kosten keine eigene Spielzeit, sie landen in der
+Diskussionsphase der vorangehenden Lagekarte; ihre Menge ist gedeckelt, damit
+niemand mit Karten überflutet wird. Die Moderation zeigt bei jeder Lagekarte
+den Akt an, die Setup-Vorschau zeigt den geplanten Bogen.
 
 ## Die drei Zeitmodi
 
 | Modus | Wann nutzen | Was passiert |
 |---|---|---|
 | **Erprobte Zeiten** | Gruppe liegt nahe an der Referenzgröße (~18–20 Personen) | Feste, im Playbook bereits live getestete Minutenangaben (87 Min. Übungszeit), unverändert. |
-| **Berechnet** | Du willst das **vollständige** Drehbuch, aber die Dauer soll sich der tatsächlichen Rollenzahl/Schwierigkeit anpassen | Alle 15 Lagekarten + alle terminierten Sonderlagekarten bleiben erhalten; die Zeit je Lagekarte (Lesezeit + 30 Sek. je aktivem Funktionsbereich + Entscheidungszeit nach Schwierigkeit) bestimmt die Gesamtdauer — kann je nach Rollenzahl auch deutlich von 87 Min. abweichen. |
-| **Zieldauer** | Du hast ein festes Zeitfenster (z. B. 45 Min. Workshop-Slot, 90 Min. Standard, 2 Std. Deep-Dive) und die **Lage soll sich daran anpassen** | Du gibst die gewünschte Gesamtdauer vor (Presets 45/60/90/120 Min. oder eigene Minutenzahl). Die App wählt Karten nach Priorität: **Kernszenen** (Start, der Beirat-Höhepunkt, Ende) sind immer dabei, danach bekommt **jede besetzte Rolle garantiert mindestens eine eigene Sonderlagekarte**, dann kommen wichtige Karten dazu, solange Zeit bleibt, optionale zuletzt. Vertrauliche Karten für Rollen, die niemand spielt, werden gar nicht erst eingeplant (in allen drei Zeitmodi). Die Setup-Vorschau zeigt an, ob wirklich jede besetzte Rolle eine Karte bekommt. Reicht die Zeit selbst für die Kernszenen nicht, werden die Entscheidungsphasen komprimiert (mit Mindestdauer) statt weitere Karten zu streichen — reicht sie trotzdem nicht, wird das ehrlich als Warnung angezeigt, statt die Zieldauer stillschweigend zu überschreiten. Ist mehr Zeit vorhanden als nötig, werden die Entscheidungsphasen stattdessen verlängert. Übersprungene Karten lassen sich in der Moderationsansicht jederzeit einzeln nachträglich aufnehmen. |
+| **Berechnet** | Du willst das **vollständige** Drehbuch, aber die Dauer soll sich der tatsächlichen Rollenzahl/Schwierigkeit anpassen | Alle Lagekarten + alle terminierten Sonderlagekarten bleiben erhalten; die Zeit je Lagekarte (Lesezeit + 30 Sek. je aktivem Funktionsbereich + Entscheidungszeit nach Schwierigkeit) bestimmt die Gesamtdauer — kann je nach Rollenzahl auch deutlich von 87 Min. abweichen. |
+| **Zieldauer** | Du hast ein festes Zeitfenster (z. B. 45 Min. Workshop-Slot, 90 Min. Standard, 2 Std. Deep-Dive) und die **Lage soll sich daran anpassen** | Du gibst die gewünschte Gesamtdauer vor (Presets 45/60/90/120/180 Min. oder eigene Minutenzahl). Davon gehen ca. 10 % (4–15 Min.) für den Abschluss ab. Die App wählt Karten nach Priorität: **Kernszenen** und **mindestens eine Lagekarte je Akt des Spannungsbogens** sind immer dabei, danach bekommt **jede besetzte Rolle garantiert mindestens eine eigene Sonderlagekarte**, dann kommen wichtige Karten dazu, solange Zeit bleibt, optionale zuletzt. Vertrauliche Karten für Rollen, die niemand spielt, werden gar nicht erst eingeplant (in allen drei Zeitmodi). Die Setup-Vorschau zeigt an, ob wirklich jede besetzte Rolle eine Karte bekommt. Reicht die Zeit selbst für die Kernszenen nicht, werden die Entscheidungsphasen komprimiert (mit Mindestdauer) statt weitere Karten zu streichen — reicht sie trotzdem nicht, wird das ehrlich als Warnung angezeigt, statt die Zieldauer stillschweigend zu überschreiten. Ist mehr Zeit vorhanden als nötig, werden die Entscheidungsphasen stattdessen verlängert. Übersprungene Karten lassen sich in der Moderationsansicht jederzeit einzeln nachträglich aufnehmen. |
 
 ## Ein Drehbuch erweitern oder ein neues anlegen
 
@@ -252,14 +291,26 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Lagekarten haben zusätzlich `zustaendig` (Rollen-IDs): Die Moderation zeigt
   an, welche davon besetzt sind, und warnt, wenn keine besetzt ist. Im
   Zieldauer-Modus werden solche Lagekarten beim Auffüllen hintangestellt.
+- Lagekarten haben außerdem `akt` (`ausbruch`, `eskalation`, `hoehepunkt`,
+  `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
+  Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.
 - `bonuskarten[]` — manuell einsetzbare Zusatzereignisse (ebenfalls mit
   `fallbackEmpfaenger`, optional `moderatorHinweis`)
+- `nachspiel` — der Abschluss: `titel`, `einleitung`, `nacharbeiten[]`
+  (`zahl`, `text`), `rechnung[]` (`posten`, `betrag`, `bcmHebel` = was vorher
+  geholfen hätte), `optionalePosten[]` (zusätzlich `id` und `frage`, in der
+  Moderation an-/abwählbar), `versicherung` (`text`, `betrag`),
+  `jahresumsatz`, `umsatzrendite` (z. B. `0.05`), `fazit` und `hinweis`
+  (z. B. "Fiktive Beispielrechnung")
 
 **Drehbuch prüfen:** Nach jeder Änderung `npm run pruefen` ausführen. Die
 Prüfung kontrolliert Verweise auf Rollen, Prioritäten und feste Zeitangaben
 in Texten und simuliert je Szenario 2000 zufällige Besetzungen mit
-unterschiedlicher Dauer und Schwierigkeit: Jede besetzte Rolle muss eine
-eigene Karte bekommen, und keine Karte darf ins Leere laufen. Das Ergebnis
+unterschiedlicher Dauer (25 Min. bis 3 Std.) und Schwierigkeit: Jede besetzte
+Rolle muss eine eigene Karte bekommen, keine Karte darf ins Leere laufen, und
+jeder Plan muss mit dem Ausbruch beginnen, alle Akte enthalten und mit dem
+Wiederanlauf enden. Außerdem wird der Abschluss geprüft (Beträge,
+Versicherung nicht höher als der Schaden, Fazit vorhanden). Das Ergebnis
 steht außerdem im Setup unter dem Szenario.
 
 **Weitere Dateien (Bilder, Video, PDF) ablegen:** einfach in `media/` speichern

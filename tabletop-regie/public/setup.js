@@ -80,27 +80,6 @@ async function saveActiveRoles() {
   renderParticipants();
 }
 
-// Rundenweise je ein Mitglied pro Funktionsbereich (Krisenstab-Unterstuetzung
-// zuletzt) -- ergibt bei kleinen Teilnehmerzahlen eine breite fachliche
-// Abdeckung statt z. B. nur lauter Vertriebsrollen.
-function suggestRoleIds(count) {
-  const groups = meta.roleGroups.filter(g => g.key !== 'krisenstab-support')
-    .concat(meta.roleGroups.filter(g => g.key === 'krisenstab-support'));
-  const picked = [];
-  let round = 0;
-  while (picked.length < count) {
-    const before = picked.length;
-    groups.forEach(g => {
-      if (picked.length >= count) return;
-      const member = g.members[round];
-      if (member) picked.push(member);
-    });
-    if (picked.length === before) break; // alle Rollen ausgeschoepft
-    round++;
-  }
-  return picked;
-}
-
 document.getElementById('role-checkboxes').addEventListener('change', e => {
   if (!e.target.classList.contains('role-check')) return;
   activeRoleIds = Array.from(document.querySelectorAll('.role-check:checked')).map(el => el.value);
@@ -114,11 +93,63 @@ document.getElementById('btn-roles-none').addEventListener('click', () => {
   activeRoleIds = [];
   saveActiveRoles();
 });
-document.getElementById('btn-suggest-roles').addEventListener('click', () => {
-  const count = Math.max(1, Number(document.getElementById('role-count-hint').value) || 1);
-  activeRoleIds = suggestRoleIds(Math.min(count, meta.roles.length));
-  document.getElementById('role-select-status').textContent = `${activeRoleIds.length} Rollen vorgeschlagen.`;
+document.getElementById('btn-suggest-roles').addEventListener('click', async () => {
+  const minutes = Number(document.getElementById('role-duration').value) || 90;
+  const difficulty = document.getElementById('difficulty').value;
+  const r = await (await fetch(`/api/recommend-roles?minutes=${minutes}&difficulty=${encodeURIComponent(difficulty)}`)).json();
+  // Sind schon Personen anderen Rollen zugeordnet (z. B. nach einem Import),
+  // wuerde der Schutz "zugeordnete Rollen bleiben aktiv" den Vorschlag
+  // aushebeln. Deshalb nachfragen: alle Personen als Teams auf die
+  // vorgeschlagenen Rollen verteilen? Niemand wird dabei geloescht.
+  const people = collectParticipantsFromDom().filter(p => p.name.trim() || p.email.trim());
+  const outside = people.filter(p => (p.roleIds || []).some(rid => !r.roleIds.includes(rid)));
+  let distributed = false;
+  if (outside.length && confirm(`Für ${minutes} Min. passen ${r.roleIds.length} Rollen: ${r.rollen.join(', ')}.\n\n` +
+      `${outside.length} eingetragene Personen sind anderen Rollen zugeordnet. Alle ${people.length} Personen jetzt als Teams auf diese ${r.roleIds.length} Rollen verteilen? (Niemand wird gelöscht.)\n\n` +
+      `„Abbrechen“ lässt die bisherigen Zuordnungen stehen – die Rollen bleiben dann zusätzlich aktiv.`)) {
+    activeRoleIds = r.roleIds.slice();
+    participants = distributeIntoTeams(r.roleIds, people);
+    renderParticipants();
+    await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) })
+      .then(res => res.json()).then(saved => { participants = saved; });
+    distributed = true;
+  } else {
+    // "Teilnehmer" (ohne feste Funktion) bleibt aktiv, falls schon genutzt.
+    activeRoleIds = r.roleIds.concat(activeRoleIds.includes('teilnehmer') ? ['teilnehmer'] : []);
+  }
+  document.getElementById('role-select-status').textContent =
+    `${r.roleIds.length} Rollen für ${minutes} Min. vorgeschlagen (in den Lagekarten dieser Dauer am meisten gefordert).` +
+    (distributed ? ` ${people.length} Personen als Teams verteilt und gespeichert.` : '');
+  // Zieldauer im Ablauf gleich mitziehen, damit Vorschau und Vorschlag zusammenpassen.
+  document.getElementById('duration-mode').value = 'target';
+  const preset = document.getElementById('target-preset');
+  if (Array.from(preset.options).some(o => o.value === String(minutes))) { preset.value = String(minutes); document.getElementById('target-custom-wrap').style.display = 'none'; }
+  else { preset.value = 'custom'; document.getElementById('target-custom').value = minutes; document.getElementById('target-custom-wrap').style.display = 'block'; }
   saveActiveRoles();
+});
+
+// Reihum verteilen: Rollen in der Reihenfolge des Vorschlags, damit die
+// wichtigsten Rollen bei ungerader Verteilung die zusaetzliche Person bekommen.
+function distributeIntoTeams(roleIds, people) {
+  return people.map((p, i) => Object.assign({}, p, { roleIds: [roleIds[i % roleIds.length]] }));
+}
+
+// Viele Personen, wenige Rollen: alle benannten Personen gleichmaessig auf
+// die aktiven Rollen verteilen -- jede Rolle wird zum Team. Sonderlagekarten
+// gehen an alle Mitglieder eines Teams.
+document.getElementById('btn-distribute-teams').addEventListener('click', () => {
+  const roles = meta.roles.filter(r => activeRoleIds.includes(r.id) && r.id !== 'teilnehmer');
+  const statusEl = document.getElementById('team-status');
+  const current = collectParticipantsFromDom();
+  const people = current.filter(p => p.name.trim() || p.email.trim());
+  if (!roles.length) { statusEl.textContent = 'Zuerst oben Rollen auswählen (z. B. „Passende Rollen vorschlagen“).'; return; }
+  if (!people.length) { statusEl.textContent = 'Noch keine Personen eingetragen – zuerst importieren oder Namen eintragen.'; return; }
+  if (!confirm(`${people.length} Personen gleichmäßig auf ${roles.length} Rollen verteilen? Bisherige Rollenzuweisungen werden dabei ersetzt.`)) return;
+  participants = distributeIntoTeams(roles.map(r => r.id), people);
+  renderParticipants();
+  const min = Math.floor(people.length / roles.length);
+  const max = Math.ceil(people.length / roles.length);
+  statusEl.textContent = `${people.length} Personen auf ${roles.length} Rollen verteilt: Teams mit ${min === max ? min : min + '–' + max} Personen. Leere Zeilen entfernt. Bitte noch „Teilnehmerliste speichern“.`;
 });
 
 function renderParticipants() {
@@ -177,7 +208,16 @@ async function updateDurationPreview() {
         (r.rolesAssigned ? (r.uncoveredRoles.length
           ? `Achtung: ${r.uncoveredRoles.length} von ${r.rolesAssigned} Rollen bekommen keine eigene Karte.`
           : `Jede der ${r.rolesAssigned} besetzten Rollen bekommt mindestens eine eigene Karte.`) : '');
-      const detail = [r.uncoveredRoles.length ? `Ohne eigene Karte: ${r.uncoveredRoles.join(', ')}.` : '', r.warning || ''].filter(Boolean).join(' ');
+      const bogen = (r.akte || []).map(a => a.enthalten ? a.label : `(${a.label} fehlt)`).join(' → ');
+      document.getElementById('duration-preview').textContent +=
+        (bogen ? ` Spannungsbogen: ${bogen}` : '') +
+        (r.finaleMinutes ? `, danach ca. ${r.finaleMinutes} Min. Abschluss (Nacharbeiten und Rechnung).` : '.');
+      const zuViele = r.empfehlung && r.rolesAssigned > r.empfehlung.maxRoles
+        ? `Für ${targetMinutes} Min. sind höchstens ${r.empfehlung.maxRoles} Rollen sinnvoll, besetzt sind ${r.rolesAssigned}. ` +
+          `Mehr Rollen heißt weniger Diskussionszeit je Lagekarte (${r.decisionMinutes} Min.) und mehr vertrauliche Karten. ` +
+          `Besser: oben „Passende Rollen vorschlagen“, dann „Auf Teams verteilen“.`
+        : '';
+      const detail = [zuViele, r.uncoveredRoles.length ? `Ohne eigene Karte: ${r.uncoveredRoles.join(', ')}.` : '', r.warning || ''].filter(Boolean).join(' ');
       const reroute = (r.reroutedSummary || []).length
         ? ` Weil nicht alle Rollen besetzt sind, gehen Karten an Ersatzrollen: ${r.reroutedSummary.join(', ')}.` : '';
       document.getElementById('duration-preview-detail').textContent = detail + reroute;
@@ -192,13 +232,15 @@ async function updateDurationPreview() {
   document.getElementById('duration-preview').textContent = mode === 'computed'
     ? `${current.length} Teilnehmer, ${speakingGroups.length} aktive Funktionsbereiche mit fester Sprechzeit. ` +
       `Vollständiges Drehbuch, je Lagekarte ca. ${(1 + speakingGroups.length * 0.5).toFixed(1)}–${(1 + speakingGroups.length * 0.5 + 6).toFixed(1)} Minuten, je nach Schwierigkeit.`
-    : `${current.length} Teilnehmer, ${speakingGroups.length} aktive Funktionsbereiche. Feste, erprobte Zeiten (87 Min. Übungszeit für die Referenzgruppe).`;
+    : `${current.length} Teilnehmer, ${speakingGroups.length} aktive Funktionsbereiche. Feste, erprobte Zeiten (ca. 90 Min. Übungszeit plus Abschluss für die Referenzgruppe).`;
 }
 
 document.addEventListener('input', e => { if (e.target.closest('#participants-body')) updateDurationPreview(); });
 document.getElementById('duration-mode').addEventListener('change', updateDurationPreview);
 document.getElementById('difficulty').addEventListener('change', updateDurationPreview);
 document.getElementById('target-preset').addEventListener('change', () => {
+  const v = document.getElementById('target-preset').value;
+  if (Array.from(document.getElementById('role-duration').options).some(o => o.value === v)) document.getElementById('role-duration').value = v;
   document.getElementById('target-custom-wrap').style.display = document.getElementById('target-preset').value === 'custom' ? 'block' : 'none';
   updateDurationPreview();
 });
@@ -459,6 +501,8 @@ function applyRunDefaults(rd) {
   document.getElementById('target-custom').value = rd.targetCustom || 90;
   document.getElementById('target-duration-row').style.display = document.getElementById('duration-mode').value === 'target' ? 'grid' : 'none';
   document.getElementById('target-custom-wrap').style.display = document.getElementById('target-preset').value === 'custom' ? 'block' : 'none';
+  const rdMinutes = document.getElementById('target-preset').value === 'custom' ? String(rd.targetCustom || '') : document.getElementById('target-preset').value;
+  if (Array.from(document.getElementById('role-duration').options).some(o => o.value === rdMinutes)) document.getElementById('role-duration').value = rdMinutes;
   updateDurationPreview();
 }
 function updateBrandLogoPreview() {

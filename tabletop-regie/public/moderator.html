@@ -7,7 +7,8 @@
 <style>
   .not-shared { border: 2px dashed var(--bad); }
   .not-shared-label { color: var(--bad); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-  .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; align-items: start; }
+  .two-col { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 18px; align-items: start; }
+  #m-bewertung { display:block; overflow-x:auto; }
   .mini { font-size: 12px; }
   .score-select { width: 56px; display: inline-block; }
   .log-entry { font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--border); }
@@ -64,6 +65,19 @@
       <div class="card">
         <h2>Aktuelle Lagekarte (öffentlich)</h2>
         <div id="m-current-lk" class="muted">Noch nicht gestartet.</div>
+      </div>
+
+      <div class="card" id="m-finale-card" style="display:none;border-color:var(--accent);">
+        <h2>Abschluss: Nacharbeiten &amp; Rechnung</h2>
+        <p class="muted mini">„Alles läuft wieder“ ist nicht das Ende: Die Bühne zeigt Schritt für Schritt, was jetzt noch nachzuarbeiten ist und was der Ausfall wirklich gekostet hat. Startet automatisch, wenn die Übungszeit abgelaufen ist – oder hier per Klick.</p>
+        <div id="m-finale-optionen" class="mini" style="margin:8px 0;"></div>
+        <div id="m-finale-body" class="mini"></div>
+        <div class="row" style="margin-top:10px;">
+          <button id="btn-finale-start" title="Beendet die Krisenphase sofort und zeigt auf der Bühne den Abschluss (Nacharbeiten und Rechnung).">Krise beenden – Abschluss zeigen</button>
+          <button id="btn-finale-prev" class="secondary" title="Einen Schritt zurück (Taste: Pfeil links).">Zurück</button>
+          <button id="btn-finale-next" title="Nächste Zahl/nächsten Posten auf der Bühne aufdecken (Taste: Pfeil rechts oder Leertaste).">Weiter</button>
+          <button id="btn-finale-close" class="secondary" title="Blendet den Abschluss aus, die Bühne zeigt dann „Übung beendet – Debriefing“.">Ausblenden</button>
+        </div>
       </div>
 
       <div class="card" id="m-schedule-warning-card" style="display:none;border-color:var(--warn);">

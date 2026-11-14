@@ -39,6 +39,35 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
   const ownScheduled = new Set(scenario.sonderlagekarten.filter(sk => sk.minuteOffset != null).map(sk => sk.empfaenger));
   realRoles.forEach(r => { if (!ownScheduled.has(r.id)) errors.push(`Rolle "${r.funktion}" hat keine eigene terminierte Sonderlagekarte.`); });
 
+  // Spannungsbogen: jede Lagekarte gehoert zu einem Akt, jeder Akt existiert.
+  const aktKeys = engine.AKTE.map(a => a.key);
+  scenario.lagekarten.forEach(lk => {
+    if (!aktKeys.includes(lk.akt)) errors.push(`Lagekarte ${lk.id} hat keinen gültigen Akt (${aktKeys.join(', ')}).`);
+  });
+  engine.AKTE.forEach(a => {
+    if (!scenario.lagekarten.some(lk => lk.akt === a.key)) errors.push(`Der Spannungsbogen hat keine Lagekarte im Akt "${a.label}".`);
+  });
+
+  // Abschluss: Nacharbeiten und Rechnung
+  const n = scenario.nachspiel;
+  if (!n) {
+    warnings.push('Kein Abschluss (nachspiel) hinterlegt – die Übung endet ohne Nacharbeiten und Rechnung.');
+  } else {
+    if (!(n.nacharbeiten || []).length) errors.push('Abschluss: keine Nacharbeiten hinterlegt.');
+    (n.nacharbeiten || []).forEach((x, i) => { if (!x.zahl || !x.text) errors.push(`Abschluss: Nacharbeit ${i + 1} braucht "zahl" und "text".`); });
+    if (!(n.rechnung || []).length) errors.push('Abschluss: keine Rechnung hinterlegt.');
+    [...(n.rechnung || []), ...(n.optionalePosten || [])].forEach(p => {
+      if (!p.posten || typeof p.betrag !== 'number' || p.betrag <= 0) errors.push(`Abschluss: Posten "${p.posten || '?'}" braucht Text und positiven Betrag.`);
+      if (!p.bcmHebel) warnings.push(`Abschluss: Posten "${p.posten}" hat keinen BCM-Hebel ("was vorher geholfen hätte").`);
+    });
+    (n.optionalePosten || []).forEach(p => { if (!p.id || !p.frage) errors.push(`Abschluss: optionaler Posten "${p.posten}" braucht "id" und "frage".`); });
+    const summe = (n.rechnung || []).reduce((a, p) => a + (p.betrag || 0), 0);
+    if (n.versicherung && n.versicherung.betrag > summe) errors.push('Abschluss: Versicherungsleistung ist höher als der Schaden.');
+    if (!n.fazit) errors.push('Abschluss: kein Fazit hinterlegt.');
+    if (!n.hinweis) warnings.push('Abschluss: kein Hinweis, dass es sich um eine fiktive Beispielrechnung handelt.');
+    if (n.umsatzrendite && (n.umsatzrendite <= 0 || n.umsatzrendite >= 1)) errors.push('Abschluss: Umsatzrendite muss als Anteil angegeben werden (z. B. 0.05).');
+  }
+
   // Texte, die bei geaenderter Dauer/Besetzung falsch werden
   const timeRef = /(minuteOffset|Minute \d+|Sonderkarte \d+|innerhalb der nächsten Stunde|in einer Stunde\.)/;
   const mf = scenario.moderationsleitfaden || {};
@@ -59,10 +88,15 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     const n = 1 + Math.floor(rand() * realRoles.length);
     const staffed = realRoles.slice().sort(() => rand() - 0.5).slice(0, n).map(r => r.id);
     const staffedSet = new Set(staffed);
-    const targetMinutes = [25, 40, 60, 90, 120][Math.floor(rand() * 5)];
+    const targetMinutes = [25, 40, 45, 60, 90, 120, 180][Math.floor(rand() * 7)];
     const difficulty = ['leicht', 'mittel', 'hoch'][Math.floor(rand() * 3)];
 
     const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount: Math.min(n, 8), activeRoleIds: staffed });
+    const lks = plan.schedule.filter(e => e.type === 'lagekarte').map(e => scenario.lagekarten.find(x => x.id === e.id));
+    const fehlt = plan.akte.filter(a => !a.enthalten).map(a => a.label);
+    if (fehlt.length) note('akt:' + fehlt.join(','), `Bei ${targetMinutes} Min. fehlt im Spannungsbogen: ${fehlt.join(', ')}.`);
+    if (lks.length && lks[0].akt !== 'ausbruch') note('start', `Bei ${targetMinutes} Min. beginnt die Übung nicht mit dem Ausbruch (${lks[0].id}).`);
+    if (lks.length && lks[lks.length - 1].akt !== 'wiederanlauf') note('ende', `Bei ${targetMinutes} Min. endet die Übung nicht mit dem Wiederanlauf (${lks[lks.length - 1].id}).`);
     const recipients = new Set();
     plan.schedule.filter(e => e.type === 'sonderlagekarte').forEach(e => {
       const sk = scenario.sonderlagekarten.find(x => x.id === e.id);

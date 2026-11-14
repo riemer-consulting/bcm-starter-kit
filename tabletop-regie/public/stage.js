@@ -103,9 +103,18 @@ async function refresh() {
   else statusLabel.textContent = 'Krisenzeit';
 
   if (s.status === 'ended') {
+    if (s.finale) {
+      statusLabel.textContent = 'Abschluss';
+      document.getElementById('progress-label').textContent = 'Abschluss ' + s.finale.step + ' / ' + s.finale.steps;
+      document.getElementById('progress-fill').style.width = Math.round(s.finale.step / s.finale.steps * 100) + '%';
+      renderFinale(s.finale);
+      return;
+    }
+    lastFinaleKey = null;
     content.innerHTML = '<div class="ended"><h1>Übung beendet.</h1><p class="muted">Debriefing beginnt jetzt.</p></div>';
     return;
   }
+  lastFinaleKey = null;
 
   const lk = s.currentLagekarte;
   if (!lk) {
@@ -121,13 +130,80 @@ async function refresh() {
   const aufgabeHtml = (lk.aufgabe || []).map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const mediaHtml = lk.media ? renderMedia(lk.media) : '';
   content.innerHTML = `
-    <div class="simzeit">${escapeHtml(lk.simZeit)} · Lagekarte ${lk.nr}</div>
+    <div class="simzeit">${escapeHtml(lk.simZeit)} · Lagekarte ${lk.laufendeNr || lk.nr}${s.lagekartenTotal ? ' von ' + s.lagekartenTotal : ''}</div>
     <div class="titel">${escapeHtml(lk.titel)}</div>
     <div class="text">${escapeHtml(lk.text)}</div>
     ${krisenHtml}
     ${mediaHtml}
     <ul class="aufgabe">${aufgabeHtml}</ul>
   `;
+}
+
+// ---- Abschluss: Nacharbeiten und Rechnung ----
+// Nur neu zeichnen, wenn sich der Schritt aendert -- sonst startet die
+// Einblend-Animation jede Sekunde neu.
+let lastFinaleKey = null;
+const euro = n => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+const monate = m => m >= 12
+  ? new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 }).format(m / 12) + (m < 18 ? ' Jahr' : ' Jahren')
+  : new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 }).format(m) + (m < 1.5 ? ' Monat' : ' Monaten');
+const prozent = n => new Intl.NumberFormat('de-DE', { style: 'percent', maximumFractionDigits: 0 }).format(n);
+function renderFinale(f) {
+  const key = JSON.stringify(f);
+  if (key === lastFinaleKey) return;
+  lastFinaleKey = key;
+  const content = document.getElementById('content');
+  const hinweis = f.hinweis ? `<div class="fin-hinweis">${escapeHtml(f.hinweis)}</div>` : '';
+  let body = '';
+  if (f.phase === 'intro') {
+    body = `<div class="fin-center">
+      <div class="fin-kicker">Und dann läuft alles wieder …</div>
+      <div class="fin-titel">${escapeHtml(f.titel)}</div>
+      <div class="fin-text">${escapeHtml(f.einleitung || '')}</div></div>`;
+  } else if (f.phase === 'nacharbeiten') {
+    body = `<div class="fin-kicker">Was jetzt noch vor uns liegt</div>
+      <div class="fin-h">${escapeHtml(f.titel)}</div>
+      <div class="fin-grid">${f.nacharbeiten.map((n, i) => `
+        <div class="fin-item${i === f.nacharbeiten.length - 1 ? ' neu' : ''}">
+          <div class="fin-zahl">${escapeHtml(n.zahl)}</div>
+          <div class="fin-itemtext">${escapeHtml(n.text)}</div>
+        </div>`).join('')}</div>`;
+  } else if (f.phase === 'rechnung' || f.phase === 'bilanz' || f.phase === 'aha') {
+    const letzter = f.phase === 'rechnung' ? f.posten[f.posten.length - 1] : null;
+    const rows = f.posten.map((p, i) => `
+      <tr class="${f.phase === 'rechnung' && i === f.posten.length - 1 ? 'neu' : ''}">
+        <td>${escapeHtml(p.posten)}${p.optional ? ' <span class="fin-tag">Entscheidung in der Übung</span>' : ''}</td>
+        <td class="num">${euro(p.betrag)}</td></tr>`).join('');
+    let unten = '';
+    if (f.phase === 'rechnung') {
+      unten = `<div class="fin-stat"><div class="k">Zwischensumme</div><div class="v rot">${euro(f.laufendeSumme)}</div></div>` +
+        (letzter && letzter.bcmHebel ? `<div class="fin-hebel"><b>Was vorher geholfen hätte:</b> ${escapeHtml(letzter.bcmHebel)}</div>` : '');
+    } else {
+      const b = f.bilanz;
+      unten = `<div class="fin-stat"><div class="k">Gesamtschaden</div><div class="v">${euro(b.summe)}</div></div>
+        <div class="fin-stat"><div class="k">${escapeHtml(b.versicherungText || 'Versicherung')}</div><div class="v">− ${euro(b.versicherung)}</div></div>
+        <div class="fin-stat eigen"><div class="k">Bleibt beim Unternehmen</div><div class="v rot">${euro(b.eigenanteil)}</div></div>`;
+    }
+    const tabelle = `<table class="fin-tabelle">${rows}</table>`;
+    if (f.phase === 'aha' && f.aha) {
+      const a = f.aha;
+      body = `<div class="fin-kicker">Was das wirklich bedeutet</div>
+        <div class="fin-aha">
+          <div class="fin-aha-zahl">${prozent(a.anteilJahresgewinn)}</div>
+          <div class="fin-aha-text">des Jahresgewinns sind weg<br><span style="color:var(--muted);">(${euro(a.eigenanteil)} von ca. ${euro(a.jahresgewinn)})</span></div>
+        </div>
+        <div class="fin-aha">
+          <div class="fin-aha-zahl">${euro(a.noetigerZusatzumsatz)}</div>
+          <div class="fin-aha-text">zusätzlicher Umsatz ist nötig, um diesen Schaden bei ${prozent(a.umsatzrendite)} Umsatzrendite wieder zu verdienen – so viel, wie das ganze Unternehmen in ${monate(a.noetigerZusatzumsatz / a.jahresumsatz * 12)} umsetzt.</div>
+        </div>`;
+    } else {
+      body = `<div class="fin-kicker">${f.phase === 'bilanz' ? 'Die Bilanz' : 'Die Rechnung – was der Ausfall wirklich kostet'}</div>
+        <div class="fin-cols"><div>${tabelle}</div><div>${unten}</div></div>`;
+    }
+  } else if (f.phase === 'fazit') {
+    body = `<div class="fin-center"><div class="fin-fazit">${escapeHtml(f.fazit || '')}</div></div>`;
+  }
+  content.innerHTML = `<div class="finale">${body}${hinweis}</div>`;
 }
 
 function renderMedia(media) {

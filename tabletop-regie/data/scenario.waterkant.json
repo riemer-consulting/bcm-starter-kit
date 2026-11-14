@@ -263,7 +263,8 @@
         "leiter-arbeitssicherheit",
         "schichtleiter-zentrallager",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK02",
@@ -290,7 +291,8 @@
         "leiterin-logistik-zentrallager",
         "leiter-arbeitssicherheit",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK03",
@@ -316,7 +318,8 @@
       "zustaendig": [
         "leiter-it",
         "online-shop-leitung"
-      ]
+      ],
+      "akt": "ausbruch"
     },
     {
       "id": "LK04",
@@ -348,7 +351,8 @@
         "regionalleiterin-filialen-nord",
         "regionalleiter-filialen-sued",
         "leiter-it"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK13",
@@ -375,7 +379,8 @@
         "leiter-arbeitssicherheit",
         "notfallmanagement-bcm",
         "leiterin-kommunikation-pr"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK05",
@@ -401,7 +406,8 @@
       "zustaendig": [
         "leiterin-kommunikation-pr",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK06",
@@ -427,7 +433,8 @@
       "zustaendig": [
         "leiterin-kommunikation-pr",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK07",
@@ -454,7 +461,8 @@
         "leiter-einkauf",
         "leiterin-logistik-zentrallager",
         "leiter-finanzen-cfo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK14",
@@ -481,7 +489,8 @@
         "leiter-arbeitssicherheit",
         "leiterin-kommunikation-pr",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK08",
@@ -508,7 +517,8 @@
         "online-shop-leitung",
         "leiter-it",
         "leiterin-kommunikation-pr"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK09",
@@ -534,7 +544,8 @@
       "zustaendig": [
         "leiterin-logistik-zentrallager",
         "leiter-einkauf"
-      ]
+      ],
+      "akt": "eskalation"
     },
     {
       "id": "LK10",
@@ -560,7 +571,8 @@
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
         "leiterin-kommunikation-pr"
-      ]
+      ],
+      "akt": "hoehepunkt"
     },
     {
       "id": "LK11",
@@ -586,7 +598,8 @@
       "zustaendig": [
         "leiter-finanzen-cfo",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "akt": "folgen"
     },
     {
       "id": "LK15",
@@ -613,7 +626,8 @@
         "geschaeftsfuehrer-ceo",
         "leiterin-personal",
         "leiter-arbeitssicherheit"
-      ]
+      ],
+      "akt": "folgen"
     },
     {
       "id": "LK12",
@@ -629,7 +643,7 @@
         "Was muss sich strukturell ändern?",
         "Wie schließen Sie die Krise nach außen ab?"
       ],
-      "moderatorHinweis": "Letzte Lagekarte. Danach Abschlussfragen und Debriefing.",
+      "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk12-wiederanlauf.png",
@@ -639,7 +653,8 @@
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
         "leiterin-logistik-zentrallager"
-      ]
+      ],
+      "akt": "wiederanlauf"
     }
   ],
   "sonderlagekarten": [
@@ -925,5 +940,110 @@
       "loop": true,
       "volume": 0.5
     }
+  },
+  "nachspiel": {
+    "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
+    "einleitung": "Donnerstag, 16:00 Uhr. Das Interimslager läuft, die wichtigsten Filialen bekommen wieder Ware. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "nacharbeiten": [
+      {
+        "zahl": "5.600",
+        "text": "Kassenvorgänge aus dem Offline-Betrieb müssen nachgebucht und mit den Beständen abgeglichen werden"
+      },
+      {
+        "zahl": "12.000",
+        "text": "Artikel mit Preisen und Beständen werden aus dem drei Wochen alten Cloud-Backup korrigiert"
+      },
+      {
+        "zahl": "87",
+        "text": "Lkw-Ladungen Ware werden ins Interimslager umgelagert oder per Direktbelieferung umgeleitet"
+      },
+      {
+        "zahl": "237",
+        "text": "Online-Bestellungen werden nachgeliefert, storniert oder entschädigt – der Bewertungsschnitt liegt bei 2,1 Sternen"
+      },
+      {
+        "zahl": "14",
+        "text": "Filialen brauchen Inventur, Brandschutzprüfung und eine Schulung des Personals"
+      },
+      {
+        "zahl": "18 Monate",
+        "text": "dauert der Wiederaufbau des Zentrallagers – die Versicherung zahlt den Ertragsausfall nur 12 Monate"
+      },
+      {
+        "zahl": "1",
+        "text": "Ermittlungsverfahren läuft weiter, ebenso die Sanierung des Bachs und die Gespräche mit der Nachbarschaft"
+      }
+    ],
+    "rechnung": [
+      {
+        "posten": "Sachschaden an Gebäude, Technik und Beständen (Gutachter)",
+        "betrag": 18000000,
+        "bcmHebel": "Brandschutzwartung und Mängelmeldungen ernst nehmen – der defekte Rauchmelder war gemeldet."
+      },
+      {
+        "posten": "Ertragsausfall in der Karenzzeit (10 Tage, selbst getragen)",
+        "betrag": 1300000,
+        "bcmHebel": "Ausweichlager und Direktbelieferung vorab vertraglich gesichert."
+      },
+      {
+        "posten": "Ertragsausfall nach Ende der Haftzeit (Monate 13 bis 18)",
+        "betrag": 2100000,
+        "bcmHebel": "Haftzeit der Versicherung und realistische Wiederaufbaudauer abgeglichen."
+      },
+      {
+        "posten": "Mehrkosten Ausweichlieferant (+30 %) und Interimslager",
+        "betrag": 950000,
+        "bcmHebel": "Zweitlieferanten und Rahmenverträge vorab verhandelt."
+      },
+      {
+        "posten": "Umweltschaden durch Löschwasser: Sanierung, Gutachten, Bußgeld",
+        "betrag": 650000,
+        "bcmHebel": "Löschwasserrückhaltung und Gefahrstoffkonzept regelmäßig geprüft."
+      },
+      {
+        "posten": "Stornierter Großauftrag und verlorene Gewerbekunden",
+        "betrag": 400000,
+        "bcmHebel": "Proaktive Kommunikation mit Gewerbekunden in den ersten Stunden."
+      },
+      {
+        "posten": "Sonderschichten, Inventuren und Nacherfassung in 14 Filialen",
+        "betrag": 340000,
+        "bcmHebel": "Offline-Kassenbetrieb mit klarem Nacherfassungsprozess."
+      },
+      {
+        "posten": "Recht: Ermittlungsverfahren, Störfallverfahren, Krisenkommunikation",
+        "betrag": 280000,
+        "bcmHebel": "Störfallunterlagen aktuell und sofort greifbar."
+      },
+      {
+        "posten": "Online-Shop: Erstattungen, Gutscheine, Reputationsverlust",
+        "betrag": 120000,
+        "bcmHebel": "Shop-Bestände automatisch sperren, wenn das Lager ausfällt."
+      }
+    ],
+    "optionalePosten": [
+      {
+        "id": "nachbarschaft",
+        "frage": "Wurde die vorgeschriebene Information der Nachbarschaft versäumt?",
+        "posten": "Bußgeld nach Störfall-Verordnung und Anwaltskosten der Nachbarschaft",
+        "betrag": 180000,
+        "bcmHebel": "Alarm- und Gefahrenabwehrplan mit Nachbarschaftsinformation vorbereitet."
+      },
+      {
+        "id": "pressekonferenz",
+        "frage": "Ist die Pressekonferenz misslungen (keine klare Botschaft, Widersprüche)?",
+        "posten": "Zusätzlicher Umsatzverlust durch Vertrauensverlust in der Region (12 Monate)",
+        "betrag": 900000,
+        "bcmHebel": "Krisenkommunikation mit vorbereiteten Kernbotschaften geübt."
+      }
+    ],
+    "versicherung": {
+      "text": "Erstattung Sachversicherung (abzüglich 250.000 € Selbstbehalt)",
+      "betrag": 17750000
+    },
+    "jahresumsatz": 240000000,
+    "umsatzrendite": 0.05,
+    "fazit": "Das Lager läuft nach drei Tagen wieder an. Der Wiederaufbau dauert 18 Monate, das Vertrauen der Region womöglich länger. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt."
   }
 }

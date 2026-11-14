@@ -10,6 +10,7 @@ const engine = require('./runEngine');
 const mailer = require('./mailer');
 const { renderCertificate } = require('./certificate');
 const { validateScenario } = require('./validate');
+const finale = require('./finale');
 
 const app = express();
 app.use(express.json());
@@ -164,6 +165,37 @@ function maybeStartCrisisFromCountdown() {
   }
 }
 
+// Abschluss: "Alles läuft wieder?" -- Nacharbeiten und Rechnung. Startet
+// automatisch, sobald die Übung endet (falls das Szenario einen Abschluss hat).
+function ensureFinaleState() {
+  if (!state.finale) state.finale = { step: 0, optionen: {} };
+  if (!state.finale.optionen) state.finale.optionen = {};
+  return state.finale;
+}
+function enterFinale() {
+  const f = ensureFinaleState();
+  if (scenario.nachspiel && !f.step) {
+    f.step = 1;
+    log('info', 'Abschluss gestartet: Nacharbeiten und Rechnung auf der Bühne.');
+  }
+}
+function finaleStepCount() {
+  return finale.steps(scenario.nachspiel, ensureFinaleState().optionen).length;
+}
+// "Lagekarte 3 von 6": bezieht sich auf den tatsaechlichen Ablaufplan dieses
+// Laufs, nicht auf alle Karten im Drehbuch.
+function lagekartenProgress() {
+  const schedule = engine.getActiveSchedule(scenario, state).filter(ev => ev.type === 'lagekarte');
+  return {
+    total: schedule.length,
+    gezeigt: schedule.filter(ev => state.firedLagekarten.includes(ev.id)).length
+  };
+}
+function aktLabel(lk) {
+  const a = lk && engine.AKTE.find(x => x.key === lk.akt);
+  return a ? a.label : null;
+}
+
 function tick() {
   maybeStartCrisisFromCountdown();
   if (state.status !== 'running') return;
@@ -175,7 +207,9 @@ function tick() {
   const total = engine.totalPlannedMinutes(scenario, state);
   if (state.status === 'running' && engine.elapsedMinutes(state) >= total && state.status !== 'ended') {
     state.status = 'ended';
-    log('info', 'Geplante Übungszeit erreicht – Übung automatisch beendet. Debriefing kann beginnen.');
+    state.endedAt = Date.now();
+    log('info', 'Geplante Übungszeit erreicht – Übung automatisch beendet.');
+    enterFinale();
   }
   persist();
 }
@@ -244,6 +278,11 @@ app.post('/api/scenarios/select', (req, res) => {
   res.status(result.ok ? 200 : 400).json(result);
 });
 
+app.get('/api/recommend-roles', (req, res) => {
+  const r = engine.recommendRoles(scenario, { targetMinutes: Number(req.query.minutes) || 90, difficulty: req.query.difficulty });
+  res.json(Object.assign(r, { rollen: r.roleIds.map(rid => (roleById(rid) || {}).funktion || rid) }));
+});
+
 // Vorschau fuer den Zieldauer-Modus im Setup: nutzt die im Formular gerade
 // zugewiesenen Rollen (noch nicht gespeichert), ohne den Lauf zu starten.
 app.post('/api/preview-schedule', (req, res) => {
@@ -268,7 +307,16 @@ app.post('/api/preview-schedule', (req, res) => {
     if (rid && rid !== sk.empfaenger) rerouted[rid] = (rerouted[rid] || 0) + 1;
   });
   const reroutedSummary = Object.entries(rerouted).map(([rid, n]) => `${n}× an ${(roleById(rid) || {}).funktion || rid}`);
+  const empfehlung = engine.recommendRoles(scenario, { targetMinutes: minutes, difficulty });
   res.json({
+    finaleMinutes: plan.finaleMinutes,
+    akte: plan.akte,
+    decisionMinutes: plan.decisionMinutesUsed,
+    empfehlung: {
+      maxRoles: empfehlung.maxRoles, maxGroups: empfehlung.maxGroups, roleIds: empfehlung.roleIds,
+      rollen: empfehlung.roleIds.map(rid => (roleById(rid) || {}).funktion || rid)
+    },
+    personen: (state.participants || []).length,
     activeRoleGroups: roleCount,
     rolesAssigned: assigned.filter(rid => rid !== 'teilnehmer').length,
     uncoveredRoles,
@@ -460,6 +508,7 @@ app.get('/api/run/moderator-state', (req, res) => {
   const fullTimeline = schedule.map(ev => ({
     type: ev.type, id: ev.id, minute: Math.round(ev.minute * 10) / 10,
     titel: ev.type === 'lagekarte' ? ev.ref.titel : `Sonderlagekarte für ${recipientLabel(ev.ref)}`,
+    akt: ev.type === 'lagekarte' ? aktLabel(ev.ref) : null,
     fired: ev.type === 'lagekarte' ? state.firedLagekarten.includes(ev.id) : !!state.firedSonderlagekarten.find(f => f.id === ev.id),
     isCurrent: !!(currentLk && ev.type === 'lagekarte' && ev.id === currentLk.id)
   }));
@@ -477,8 +526,19 @@ app.get('/api/run/moderator-state', (req, res) => {
     scheduleWarning: state.scheduleWarning,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
+    finaleMinutes: state.finaleMinutes || 0,
     activeRoleGroups: engine.activeRoleGroupCount(scenario, state),
-    currentLagekarte: currentLk,
+    currentLagekarte: currentLk ? Object.assign({}, currentLk, { aktLabel: aktLabel(currentLk) }) : null,
+    lagekarten: lagekartenProgress(),
+    finale: scenario.nachspiel ? {
+      verfuegbar: true,
+      view: finale.view(scenario.nachspiel, ensureFinaleState()),
+      step: ensureFinaleState().step,
+      steps: finaleStepCount(),
+      naechster: finale.stepLabel(scenario.nachspiel, ensureFinaleState(), ensureFinaleState().step ? 1 : 0),
+      optionen: (scenario.nachspiel.optionalePosten || []).map(o => ({ id: o.id, frage: o.frage, posten: o.posten, betrag: o.betrag, aktiv: !!ensureFinaleState().optionen[o.id] })),
+      rechnung: finale.bill(scenario.nachspiel, ensureFinaleState().optionen)
+    } : { verfuegbar: false },
     upcoming,
     fullTimeline,
     skipped: skippedDetailed,
@@ -513,10 +573,13 @@ app.get('/api/run/stage-state', (req, res) => {
     currentLagekarte: currentLk ? {
       id: currentLk.id, nr: currentLk.nr, simZeit: currentLk.simZeit, titel: currentLk.titel,
       text: currentLk.text, kriseninfo: currentLk.kriseninfo, aufgabe: currentLk.aufgabe,
-      media: currentLk.media || null, sound: currentLk.sound || null
+      media: currentLk.media || null, sound: currentLk.sound || null,
+      laufendeNr: (() => { const sched = engine.getActiveSchedule(scenario, state).filter(ev => ev.type === 'lagekarte'); const i = sched.findIndex(ev => ev.id === currentLk.id); return i >= 0 ? i + 1 : null; })()
     } : null,
-    lagekartenTotal: scenario.lagekarten.length,
-    lagekartenGezeigt: state.firedLagekarten.filter(id => id.startsWith('LK')).length
+    lagekartenTotal: lagekartenProgress().total,
+    lagekartenGezeigt: lagekartenProgress().gezeigt,
+    finaleMinutes: state.finaleMinutes || 0,
+    finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null
   });
 });
 
@@ -565,9 +628,15 @@ app.post('/api/run/start', (req, res) => {
     state.plannedTotalMinutes = plan.totalMinutes;
     state.skippedEvents = plan.skipped;
     state.scheduleWarning = plan.warning;
+    state.finaleMinutes = plan.finaleMinutes;
     state.promotedEvents = [];
     log('info', `Zieldauer-Plan erstellt: ${minutes} Min. gewünscht, ${plan.schedule.length} Ereignisse ausgewählt (${plan.skipped.length} übersprungen), geplante Gesamtzeit ${plan.totalMinutes} Min.${plan.warning ? ' Hinweis: ' + plan.warning : ''}`);
   }
+
+  if (state.durationMode !== 'target') {
+    state.finaleMinutes = engine.finaleMinutesFor(scenario, engine.totalPlannedMinutes(scenario, state));
+  }
+  state.finale = { step: 0, optionen: {} };
 
   // Bewusst noch kein Timer-Start: die Buehne zeigt jetzt die "Ruhe vor dem
   // Sturm" (Eroeffnungstext/-bild), der Moderator liest Begruessung und
@@ -631,6 +700,55 @@ app.post('/api/run/jump-to-minute', (req, res) => {
   persist();
   res.json({ ok: true });
 });
+// ---- Abschluss (Nacharbeiten + Rechnung) ----
+app.post('/api/run/finale/start', (req, res) => {
+  if (!scenario.nachspiel) return res.status(400).json({ ok: false, error: 'Dieses Szenario hat keinen Abschluss.' });
+  if (state.status === 'idle') return res.status(400).json({ ok: false, error: 'Es läuft keine Übung.' });
+  if (state.status !== 'ended') {
+    if (state.status === 'paused' && state.pausedAt) { state.totalPausedMs += Date.now() - state.pausedAt; state.pausedAt = null; }
+    state.status = 'ended';
+    state.endedAt = Date.now();
+    log('info', 'Krisenphase vom Moderator beendet.');
+  }
+  ensureFinaleState().step = 0;
+  enterFinale();
+  persist();
+  res.json({ ok: true });
+});
+app.post('/api/run/finale/next', (req, res) => {
+  const f = ensureFinaleState();
+  if (!f.step) return res.status(400).json({ ok: false, error: 'Der Abschluss läuft noch nicht.' });
+  f.step = Math.min(finaleStepCount(), f.step + 1);
+  persist();
+  res.json({ ok: true, step: f.step });
+});
+app.post('/api/run/finale/prev', (req, res) => {
+  const f = ensureFinaleState();
+  if (!f.step) return res.status(400).json({ ok: false, error: 'Der Abschluss läuft noch nicht.' });
+  f.step = Math.max(1, f.step - 1);
+  persist();
+  res.json({ ok: true, step: f.step });
+});
+app.post('/api/run/finale/close', (req, res) => {
+  ensureFinaleState().step = 0;
+  log('info', 'Abschluss ausgeblendet – Bühne zeigt "Übung beendet".');
+  persist();
+  res.json({ ok: true });
+});
+// Optionale Posten (z. B. Lösegeld gezahlt?) je nach Entscheidung in der Übung.
+app.post('/api/run/finale/option', (req, res) => {
+  const { id, aktiv } = req.body || {};
+  const opt = scenario.nachspiel && (scenario.nachspiel.optionalePosten || []).find(o => o.id === id);
+  if (!opt) return res.status(404).json({ ok: false, error: 'Unbekannter Posten.' });
+  const f = ensureFinaleState();
+  f.optionen[id] = !!aktiv;
+  // Schrittzaehler bleibt innerhalb der (jetzt evtl. kuerzeren) Liste.
+  if (f.step) f.step = Math.min(f.step, finaleStepCount());
+  log('info', `Abschluss: Posten "${opt.posten}" ${aktiv ? 'eingerechnet' : 'nicht eingerechnet'}.`);
+  persist();
+  res.json({ ok: true });
+});
+
 app.post('/api/run/pause', (req, res) => {
   if (state.status === 'running') { state.status = 'paused'; state.pausedAt = Date.now(); log('info', 'Übung pausiert.'); persist(); }
   res.json({ ok: true });
