@@ -8,9 +8,7 @@
   .not-shared { border: 2px dashed var(--bad); }
   .not-shared-label { color: var(--bad); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
   .two-col { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 18px; align-items: start; }
-  #m-bewertung { display:block; overflow-x:auto; }
   .mini { font-size: 12px; }
-  .score-select { width: 56px; display: inline-block; }
   .log-entry { font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--border); }
   .log-entry.mail { color: var(--ok); }
   .log-entry.error { color: var(--bad); }
@@ -137,11 +135,6 @@
       <div class="card">
         <h2>Moderationsleitfaden</h2>
         <div id="m-leitfaden" class="mini"></div>
-      </div>
-
-      <div class="card">
-        <h2>Bewertungsmatrix</h2>
-        <table id="m-bewertung"><thead id="m-bewertung-head"></thead><tbody id="m-bewertung-body"></tbody></table>
       </div>
 
       <div class="card">

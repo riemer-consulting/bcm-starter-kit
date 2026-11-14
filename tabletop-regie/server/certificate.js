@@ -12,15 +12,18 @@ function escapeHtml(s) {
 // Browser-Vorschau (vom Server ausgeliefert), oder eine "cid:..."-Referenz
 // fuers E-Mail-Versenden (mit passendem nodemailer-Inline-Attachment).
 function renderCertificate({ scenario, role, roles, participant, score, branding, companyLogoSrc, brandingLogoSrc, ort, datum, starterKitUrl, starterKitLabel, starterKitScreenshotSrc, starterKitQrSrc }) {
-  const maxPunkte = (scenario.urkunde && scenario.urkunde.maxPunkte) || 10;
   const veranstaltung = (scenario.urkunde && scenario.urkunde.veranstaltung) || scenario.title;
   const orgName = (branding && branding.organisationName) || 'Durchführende Organisation';
-  const rollenText = (roles && roles.length ? roles : [role]).filter(Boolean).map(r => r.funktion).join(', ');
+  // Teilnahmebestaetigung ohne Note: Rolle(n) nennen, die allgemeine Rolle
+  // "Teilnehmer" (ohne feste Funktion) weglassen.
+  const echteRollen = (roles && roles.length ? roles : [role]).filter(r => r && r.id !== 'teilnehmer').map(r => r.funktion);
+  const rollenSatz = echteRollen.length === 0 ? ''
+    : echteRollen.length === 1 ? `in der Rolle ${echteRollen[0]}`
+    : `in den Rollen ${echteRollen.slice(0, -1).join(', ')} und ${echteRollen[echteRollen.length - 1]}`;
   const ortDatumText = [ort, datum].filter(Boolean).join(', ');
   const logoHtml = brandingLogoSrc
     ? `<img src="${escapeHtml(brandingLogoSrc)}" alt="${escapeHtml(orgName)}" style="height:48px;">`
     : `<div style="font-size:20px;font-weight:700;letter-spacing:2px;">${escapeHtml(orgName)}</div>`;
-  const scoreText = (score === null || score === undefined) ? '______' : escapeHtml(String(score));
   // Die Urkunde zeigt immer den echten, im Setup fuer diese Übung eingetragenen
   // Namen — niemals einen im Szenario fest hinterlegten Namen. Die Rolle
   // (Funktionsbezeichnung) erscheint nur als Zusatzinfo.
@@ -58,7 +61,6 @@ function renderCertificate({ scenario, role, roles, participant, score, branding
   .name { font-size:24pt; font-weight:700; margin:14pt 0; border-bottom:1pt solid #1c3d6b; padding-bottom:6pt; display:inline-block; min-width:320pt; }
   .role { font-size:12pt; color:#556; margin-top:-6pt; margin-bottom:10pt; }
   .text { font-size:13pt; max-width:560pt; line-height:1.6; margin: 10pt auto; }
-  .score { font-size:16pt; margin-top:18pt; }
   .footer { margin-top:30pt; font-size:11pt; color:#556; }
 </style>
 </head>
@@ -66,14 +68,12 @@ function renderCertificate({ scenario, role, roles, participant, score, branding
   <div class="frame">
     ${companyLogoHtml}
     <div class="company">${escapeHtml(companyName)}</div>
-    <h1>🏆 URKUNDE 🏆</h1>
+    <h1>URKUNDE</h1>
     <div class="text">Hiermit wird bestätigt, dass</div>
     <div class="name">${escapeHtml(displayName)}</div>
-    <div class="role">in der Rolle: ${escapeHtml(rollenText)}</div>
-    <div class="text">erfolgreich an der ${escapeHtml(veranstaltung)} teilgenommen hat.<br>
-    Die Teilnehmerin / Der Teilnehmer bewies Verantwortungsbewusstsein, Kommunikationsstärke,
-    Entscheidungsfähigkeit und Teamarbeit unter den Bedingungen einer simulierten Unternehmenskrise.</div>
-    <div class="score">Gesamtbewertung: ${scoreText} / ${maxPunkte} Punkten</div>
+    <div class="text">an der ${escapeHtml(veranstaltung)}${rollenSatz ? '<br>' + escapeHtml(rollenSatz) : ''}<br><b>erfolgreich teilgenommen</b> hat.</div>
+    <div class="text" style="font-size:11.5pt;color:#556;">Im Mittelpunkt standen Verantwortung, Kommunikation, Entscheidungen unter Zeitdruck
+    und Zusammenarbeit in einer simulierten Unternehmenskrise.</div>
     <div class="footer">${ortDatumText ? escapeHtml(ortDatumText) + '<br>' : ''}${logoHtml}<br>Ausgestellt durch ${escapeHtml(orgName)}</div>
   </div>
   ${starterKitHtml}

@@ -2,8 +2,7 @@
 
 Eine lokale Regie-App zum Durchführen von BCM-Tabletop-Übungen (Krisensimulationen)
 mit Live-Timer, Rollen, Bühnen-/Moderatoransicht, E-Mail-Benachrichtigungen an
-einzelne Rollen und einer Bewertungsmatrix mit E-Mail-Versand der Urkunden
-(kein Ausdrucken nötig).
+einzelne Rollen und Teilnahme-Urkunden per E-Mail (kein Ausdrucken nötig).
 
 **Eigenständiges Tool, getrennt vom [BCM Starter Kit](../README.md).** Es teilt
 weder Datenmodell noch Code mit dem Starter Kit — beide laufen unabhängig
@@ -26,8 +25,7 @@ nebeneinander.
   erledigt/aktuell/kommend) mit einem frei ziehbaren **Zeit-Schieberegler** —
   springe direkt auf jede beliebige Minute, statt dich nur von Karte zu Karte
   zu hangeln. Dazu kommende Ereignisse, manuelles Auslösen von Bonus-/
-  Sonderkarten, eine live ausfüllbare **Bewertungsmatrix** und **Urkunden
-  direkt per E-Mail** an jede einzelne Person — kein Drucken, kein manuelles
+  Sonderkarten und **Urkunden direkt per E-Mail** an jede einzelne Person — kein Drucken, kein manuelles
   "Als PDF speichern".
 - Die **Bühne** hat einen **Hell/Dunkel-Umschalter** (oben rechts) für helle
   Räume/Beamer — die Wahl merkt sich der Browser pro Gerät.
@@ -113,7 +111,7 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    (z. B. nach einem Import), fragt die App, ob alle Personen als **Teams**
    auf die vorgeschlagenen Rollen verteilt werden sollen — niemand wird
    dabei gelöscht. Rollen lassen sich auch einzeln anhaken. Nur angehakte Rollen erscheinen danach in der
-   Teilnehmerzuweisung, der Bewertungsmatrix und bei "Manuell auslösen". Zu
+   Teilnehmerzuweisung und bei "Manuell auslösen". Zu
    jeder Rolle steht direkt eine kurze **Rollenbeschreibung** (Zuständigkeit,
    worauf die Person im Verlauf achten muss), damit klar ist, was mit einer
    Rolle überhaupt gemeint ist, bevor sie jemandem zugewiesen wird. Alle
@@ -131,8 +129,8 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    aktive Funktion (reine Zuschauer/Zuhörer) trägst du über "Teilnehmer ohne
    aktive Rolle (bekommen trotzdem eine Urkunde)" ein — Anzahl eingeben,
    "hinzufügen" klicken, Namen/E-Mails ergänzen. Sie bekommen die öffentlichen
-   Lagekarten mit, tauchen nicht in der Bewertungsmatrix auf (keine feste
-   Funktion zu bewerten) und erhalten am Ende trotzdem eine eigene Urkunde.
+   Lagekarten mit, bekommen keine vertraulichen Karten und erhalten am Ende
+   trotzdem eine eigene Urkunde.
    Begrüßung/Spielregeln und Rollenbeschreibung sind **Pflicht, nicht
    optional**: Beim Klick auf "Übung vorbereiten" (Schritt 7) schickt die App
    automatisch an jede Person mit E-Mail sowohl die Begrüßung mit Spielregeln
@@ -236,11 +234,13 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Lagekarte. Aufnahmen bleiben nur auf diesem Rechner (`media/custom/`) und
    sind im Browser nur möglich, wenn die App unter `http://localhost:4173`
    geöffnet ist.
-11. Bewertung direkt während/nach der Übung in der Matrix eintragen (die
-   generische "Teilnehmer"-Rolle ohne feste Funktion erscheint hier bewusst
-   nicht), danach pro Person unter "Urkunden" auf "Per E-Mail senden"
-   klicken — die Urkunde geht direkt an die hinterlegte Adresse, mit Ort und
-   Tagesdatum. "Vorschau" zeigt sie zusätzlich im Browser an.
+11. **Urkunden:** Nach dem Debriefing in der Moderation auf "Alle Urkunden
+   senden" (oder pro Person "Per E-Mail senden") klicken. Die Urkunde ist
+   eine Teilnahmebestätigung ohne Note: "… hat an der BCM-Krisensimulation
+   … in der Rolle … erfolgreich teilgenommen", mit Ort und Tagesdatum.
+   Bewusst ohne Bewertung: Eine Übung lebt davon, dass Fehler erlaubt sind,
+   und eine schriftliche Leistungsbewertung von Mitarbeitenden ist ein
+   Personalthema. "Vorschau" zeigt die Urkunde im Browser an.
 
 ## Spannungsbogen: von "alles läuft" bis "alles läuft wieder"
 

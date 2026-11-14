@@ -318,22 +318,6 @@ function render(s) {
     <p class="mini" style="color:var(--warn);">${escapeHtml(leitfaden.highlightHinweis)}</p>
   `;
 
-  // Bewertungsmatrix
-  const kriterien = scenario.bewertungskriterien;
-  document.getElementById('m-bewertung-head').innerHTML = `<tr><th>Rolle</th><th>Teilnehmer</th>${kriterien.map(k => `<th>${k.slice(0,4)}.</th>`).join('')}<th>Ø</th></tr>`;
-  document.getElementById('m-bewertung-body').innerHTML = scenario.roles.filter(role => (s.activeRoleIds || []).includes(role.id) && role.id !== 'teilnehmer').map(role => {
-    const p = participantFor(role.id, s.participants);
-    const scores = s.bewertung[role.id] || {};
-    const cells = kriterien.map(k => `
-      <td><select class="score-select" data-role="${role.id}" data-kriterium="${k}">
-        <option value="">–</option>
-        ${[1,2,3,4,5].map(v => `<option value="${v}" ${scores[k]==v?'selected':''}>${v}</option>`).join('')}
-      </select></td>`).join('');
-    const values = Object.values(scores);
-    const avg = values.length ? (values.reduce((a,b)=>a+b,0)/values.length).toFixed(1) : '–';
-    return `<tr><td class="mini">${escapeHtml(role.funktion)}</td><td class="mini">${p ? escapeHtml(p.name) : '<span class="muted">nicht zugeordnet</span>'}</td>${cells}<td>${avg}</td></tr>`;
-  }).join('');
-
   // Urkunden — werden direkt per E-Mail verschickt (kein Ausdrucken mehr).
   // Pro Person (nicht pro Rolle), damit auch mehrere "Teilnehmer" ohne feste
   // Funktion jeweils ihre eigene Urkunde bekommen.
@@ -468,12 +452,6 @@ document.addEventListener('click', e => {
 document.addEventListener('change', e => {
   if (e.target.classList.contains('finale-option')) {
     api('/api/run/finale/option', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: e.target.dataset.id, aktiv: e.target.checked }) }).then(refresh);
-  }
-  if (e.target.classList.contains('score-select')) {
-    api('/api/bewertung', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ roleId: e.target.dataset.role, kriterium: e.target.dataset.kriterium, value: e.target.value || null })
-    });
   }
 });
 
