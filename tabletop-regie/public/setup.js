@@ -413,6 +413,14 @@ document.getElementById('btn-send-briefings').addEventListener('click', async ()
 
 document.getElementById('btn-start').addEventListener('click', async () => {
   const statusEl = document.getElementById('start-status');
+  // Laeuft schon eine Uebung, nicht stillschweigend neu vorbereiten (das
+  // wuerde alle Mails erneut verschicken und den Lauf zuruecksetzen).
+  const current = await (await fetch('/api/run/stage-state')).json();
+  if (current.status !== 'idle' && current.status !== 'ended' &&
+      !confirm('Es ist bereits eine Übung vorbereitet oder läuft gerade. Neu vorbereiten?\n\nDer aktuelle Lauf wird zurückgesetzt und alle Teilnehmer bekommen Begrüßung und Rollenbeschreibung noch einmal per E-Mail.')) return;
+  // Moderation sofort beim Klick oeffnen -- nach den Wartezeiten fuer den
+  // Mailversand blockieren viele Browser das neue Fenster als Pop-up.
+  const modWin = window.open('moderator.html', '_blank');
   participants = collectParticipantsFromDom();
   await fetch('/api/participants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(participants) });
   const durationMode = document.getElementById('duration-mode').value;
@@ -439,14 +447,16 @@ document.getElementById('btn-start').addEventListener('click', async () => {
   ]);
   const welcomeOk = welcome.results.filter(r => r.ok).length;
   const briefingsOk = briefings.results.filter(r => r.ok).length;
-  statusEl.textContent = `Übung gestartet. Begrüßung: ${welcomeOk}/${welcome.results.length} gesendet. `
+  statusEl.textContent = `Übung vorbereitet (die Krise beginnt erst per Klick in der Moderation). Begrüßung: ${welcomeOk}/${welcome.results.length} gesendet. `
     + `Rollenbeschreibungen: ${briefingsOk}/${briefings.results.length} gesendet.`
     + ((welcome.ok && briefings.ok) ? '' : ' Hinweis: nicht alle E-Mails gingen raus — SMTP-Einstellungen oben prüfen.');
 
   // Bewusst nur die Moderation oeffnen: die Buehne (und damit Ambience-Sound
   // fuers Publikum) oeffnet der Moderator von dort aus erst, wenn alle
   // bereit sind -- sonst laeuft die Vorbereitungszeit unbeaufsichtigt mit.
-  window.open('moderator.html', '_blank');
+  if (!modWin) {
+    statusEl.innerHTML += ' <b>Der Browser hat das Moderationsfenster blockiert:</b> <a href="moderator.html" target="_blank">Moderation hier öffnen</a>.';
+  }
 });
 
 // Einstellungen

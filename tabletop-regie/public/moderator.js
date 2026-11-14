@@ -120,7 +120,7 @@ function render(s) {
         ? `<p class="mini muted">Besonders gefordert: ${zust.map(rid => staffed.has(rid) ? `<b>${escapeHtml(funktion(rid))}</b>` : `<s>${escapeHtml(funktion(rid))}</s>`).join(', ')}</p>`
         : `<p class="mini" style="color:var(--warn);">Keine der hier geforderten Rollen ist besetzt (${zust.map(rid => escapeHtml(funktion(rid))).join(', ')}). Bring die Fachperspektive selbst ein oder gib die Frage an die Krisenstabsleitung.</p>`)
       : '';
-    const aktHtml = lk.aktLabel ? `<span class="badge" style="margin-right:8px;" title="Station im Spannungsbogen: Ausbruch – Eskalation – Höhepunkt – Folgen – Wiederanlauf">${escapeHtml(lk.aktLabel)}</span>` : '';
+    const aktHtml = lk.aktLabel ? `<span class="badge" style="margin-right:8px;" title="Station im Spannungsbogen: Vorboten – Ausbruch – Eskalation – Höhepunkt – Folgen – Wiederanlauf">${escapeHtml(lk.aktLabel)}</span>` : '';
     lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zustHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {

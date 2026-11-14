@@ -34,7 +34,8 @@
       "e-commerce",
       "finanzen",
       "kommunikation"
-    ]
+    ],
+    "vorbotenMinuten": 2
   },
   "roleGroups": [
     {
@@ -206,7 +207,7 @@
   ],
   "moderationsleitfaden": {
     "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Dienstag, kurz nach 3 Uhr nachts. Das Zentrallager der Waterkant Baumärkte GmbH liegt still, nur die Nachtschicht ist vor Ort. In wenigen Stunden beginnt das wichtigste Geschäft des Jahres: der Start der Frühjahrssaison in allen 14 Filialen. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in verdichteter Form.",
+    "eroeffnungstext": "Montag, 18 Uhr. In den 14 Filialen der Waterkant Baumärkte GmbH laufen die letzten Vorbereitungen für den wichtigsten Tag des Jahres: Morgen startet die Frühjahrssaison. Die Gartencenter sind voll, die Werbung läuft, das Zentrallager ist bis unters Dach gefüllt. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in verdichteter Form.",
     "spielregeln": [
       "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
@@ -217,6 +218,7 @@
     "moderationsregel": "Nicht diskutieren lassen. Nicht in technische oder bauliche Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
     "debriefingFragen": [
       "Wann wart ihr am stärksten unter Druck?",
+      "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
       "Welche Information hat gefehlt?",
       "Wer hätte früher eingebunden werden müssen?",
       "Welche BCM-Maßnahme hätte geholfen?",
@@ -233,7 +235,7 @@
     "idleMedia": {
       "type": "image",
       "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png",
-      "caption": "Ruhe vor dem Sturm: die Nachtschicht im Zentrallager."
+      "caption": "Normalbetrieb: letzte Vorbereitungen für den Saisonstart."
     }
   },
   "debriefMinutes": 12,
@@ -252,7 +254,7 @@
         "Welche Sofortmaßnahmen leiten Sie ein?",
         "Welche Entscheidungen benötigt der Krisenstab?"
       ],
-      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen.",
+      "moderatorHinweis": "Jetzt kommt der Knall: Die Vorboten (Störmeldung, Geruch, Lüftung) hingen zusammen. Kurz wirken lassen, dann Grundton der Übung setzen.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk01-feueralarm.png",
@@ -655,6 +657,83 @@
         "leiterin-logistik-zentrallager"
       ],
       "akt": "wiederanlauf"
+    },
+    {
+      "id": "LK16",
+      "nr": 16,
+      "simZeit": "Montag 22:40 Uhr",
+      "titel": "Störmeldung Brandmeldeanlage",
+      "minuteOffset": 0,
+      "diskussionMinuten": 1.5,
+      "text": "Die Brandmeldezentrale im Zentrallager meldet eine Störung des Rauchmelders in Halle 3, Gefahrstoff- und Farbenlager. Der Melder ist seit Wochen als fehleranfällig bekannt, die Wartung ist beauftragt, aber noch nicht erfolgt. Die Nachtschicht quittiert die Meldung.",
+      "aufgabe": [
+        "Was tun Sie mit einer Meldung, die schon oft falsch war?",
+        "Wer muss davon wissen?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/v1-stoermeldung-brandmelder.png",
+        "caption": "Anzeige der Brandmeldezentrale."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "schichtleiter-zentrallager"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK17",
+      "nr": 17,
+      "simZeit": "Dienstag 02:35 Uhr",
+      "titel": "Geruch in Halle 3",
+      "minuteOffset": 1.5,
+      "diskussionMinuten": 1.5,
+      "text": "Ein Staplerfahrer meldet stechenden Lösungsmittelgeruch im Gefahrstofflager, Gang C. Die Lüftung läuft, sichtbar ist nichts. Die Schichtleitung will nach der Pause selbst nachsehen. Außerhalb der Nachtschicht weiß niemand davon.",
+      "aufgabe": [
+        "Reicht es, nach der Pause nachzusehen?",
+        "Wen würden Sie jetzt wecken?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/v2-geruch-halle3.png",
+        "caption": "Eintrag im Schichtbuch der Nachtschicht."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "schichtleiter-zentrallager",
+        "leiterin-logistik-zentrallager",
+        "leiter-arbeitssicherheit"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK18",
+      "nr": 18,
+      "simZeit": "Dienstag 03:02 Uhr",
+      "titel": "Lüftung fällt aus",
+      "minuteOffset": 3,
+      "diskussionMinuten": 1.5,
+      "text": "Die Gebäudeleittechnik meldet: Die Abluft in Halle 3 ist ausgefallen, die Temperatur im Farbenlager steigt auf 41 °C. Parallel meldet die Klimatisierung des angrenzenden Serverraums Überhitzung. Die Rufbereitschaft der IT wird automatisch benachrichtigt.",
+      "aufgabe": [
+        "Ist das noch Haustechnik oder schon ein Notfall?",
+        "Wer entscheidet jetzt – und mit welchen Informationen?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/v3-lueftung-faellt-aus.png",
+        "caption": "Alarme der Gebäudeleittechnik."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-it",
+        "leiter-arbeitssicherheit",
+        "schichtleiter-zentrallager"
+      ],
+      "akt": "vorboten"
     }
   ],
   "sonderlagekarten": [

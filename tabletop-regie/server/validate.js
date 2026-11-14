@@ -95,7 +95,12 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     const lks = plan.schedule.filter(e => e.type === 'lagekarte').map(e => scenario.lagekarten.find(x => x.id === e.id));
     const fehlt = plan.akte.filter(a => !a.enthalten).map(a => a.label);
     if (fehlt.length) note('akt:' + fehlt.join(','), `Bei ${targetMinutes} Min. fehlt im Spannungsbogen: ${fehlt.join(', ')}.`);
-    if (lks.length && lks[0].akt !== 'ausbruch') note('start', `Bei ${targetMinutes} Min. beginnt die Übung nicht mit dem Ausbruch (${lks[0].id}).`);
+    const ersterAkt = engine.AKTE[0];
+    if (lks.length && lks[0].akt !== ersterAkt.key) note('start', `Bei ${targetMinutes} Min. beginnt die Übung nicht mit ${ersterAkt.label} (${lks[0].id}).`);
+    // Der Bogen darf nicht zurueckspringen (z. B. Wiederanlauf vor Hoehepunkt).
+    const idx = lks.map(l => aktKeys.indexOf(l.akt));
+    const rueck = idx.findIndex((x, i) => i > 0 && x < idx[i - 1]);
+    if (rueck > 0) note('ordnung:' + lks[rueck].id, `Bei ${targetMinutes} Min. springt der Spannungsbogen zurück: ${lks[rueck - 1].id} (${lks[rueck - 1].akt}) vor ${lks[rueck].id} (${lks[rueck].akt}).`);
     if (lks.length && lks[lks.length - 1].akt !== 'wiederanlauf') note('ende', `Bei ${targetMinutes} Min. endet die Übung nicht mit dem Wiederanlauf (${lks[lks.length - 1].id}).`);
     const recipients = new Set();
     plan.schedule.filter(e => e.type === 'sonderlagekarte').forEach(e => {

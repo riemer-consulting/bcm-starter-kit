@@ -32,7 +32,8 @@
       "einkauf",
       "vertrieb",
       "marketing"
-    ]
+    ],
+    "vorbotenMinuten": 2
   },
   "roleGroups": [
     {
@@ -234,7 +235,7 @@
   ],
   "moderationsleitfaden": {
     "begruessung": "Guten Morgen zusammen. Heute werden wir keine IT-Systeme reparieren. Wir werden auch keine technische Analyse durchführen. Heute erleben wir gemeinsam die schlimmste Woche in der Geschichte der NordTech Components GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst sieben Tage Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Montag, kurz vor 7 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Mitarbeiter, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
+    "eroeffnungstext": "Montag, 6:30 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Mitarbeiter, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
     "spielregeln": [
       "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
@@ -245,6 +246,7 @@
     "moderationsregel": "Nicht diskutieren lassen. Nicht in technische Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
     "debriefingFragen": [
       "Wann wart ihr am stärksten unter Druck?",
+      "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
       "Welche Information hat gefehlt?",
       "Wer hätte früher eingebunden werden müssen?",
       "Welche BCM-Maßnahme hätte geholfen?",
@@ -261,7 +263,7 @@
     "idleMedia": {
       "type": "image",
       "src": "/media/nordtech/idle-ruhe-vor-dem-sturm.png",
-      "caption": "Ruhe vor dem Sturm: ein ganz normaler Schichtbeginn."
+      "caption": "Normalbetrieb: Die Frühschicht trifft ein, die Linien laufen an."
     }
   },
   "debriefMinutes": 13,
@@ -273,14 +275,14 @@
       "titel": "Cyberangriff",
       "minuteOffset": 5,
       "diskussionMinuten": 5,
-      "text": "Die Frühschicht meldet massive IT-Probleme. Folgende Systeme sind nicht verfügbar: ERP, Fileserver, Zeiterfassung, E-Mail. Auf mehreren Bildschirmen erscheint eine Lösegeldforderung. Die Produktion kann keine neuen Fertigungsaufträge abrufen.",
+      "text": "Jetzt geht nichts mehr. Die Frühschicht meldet: ERP, Fileserver, Zeiterfassung und E-Mail sind ausgefallen. Auf immer mehr Bildschirmen erscheint eine Lösegeldforderung. Die Produktion kann keine neuen Fertigungsaufträge abrufen.",
       "kriseninfo": "Lösegeldforderung: 2.000.000 € · Frist: 48 Stunden",
       "aufgabe": [
         "Welche Auswirkungen hat dies auf Ihren Bereich?",
         "Welche Sofortmaßnahmen leiten Sie ein?",
         "Welche Entscheidungen benötigt der Krisenstab?"
       ],
-      "moderatorHinweis": "Erste Lagekarte, Grundton der Übung setzen. Die Lösegeldforderung jetzt auf der Bühne zeigen.",
+      "moderatorHinweis": "Jetzt kommt der Knall. Kurz wirken lassen: Die Vorboten (Anmeldung, Maschine 4 mit der Endung .shadowvault, keine Aufträge) hingen alle zusammen. Lösegeldforderung auf der Bühne zeigen, Grundton der Übung setzen.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk01-loesegeldforderung.png",
@@ -728,6 +730,84 @@
         "leiter-it"
       ],
       "akt": "hoehepunkt"
+    },
+    {
+      "id": "LK18",
+      "nr": 18,
+      "simZeit": "Montag 06:41 Uhr",
+      "titel": "Anmeldung hakt",
+      "minuteOffset": 0,
+      "diskussionMinuten": 1.5,
+      "text": "Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anmeldung bricht mit einer Zeitüberschreitung ab, ein Neustart hilft nicht. Die IT-Hotline ist erst ab 07:30 Uhr besetzt.",
+      "aufgabe": [
+        "Was ist Ihre erste Reaktion – und wen informieren Sie?",
+        "Ab wann ist das mehr als eine IT-Störung?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v1-anmeldung-hakt.png",
+        "caption": "Die ERP-Anmeldung schlägt fehl."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-it",
+        "it-mitarbeiter",
+        "erp-stammdaten"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK19",
+      "nr": 19,
+      "simZeit": "Montag 06:48 Uhr",
+      "titel": "Maschine 4 verhält sich seltsam",
+      "minuteOffset": 1.5,
+      "diskussionMinuten": 1.5,
+      "text": "An der Fräslinie 4 laufen die Programme nicht an. Im Programmverzeichnis haben alle Dateien plötzlich eine fremde Endung: .shadowvault. Die Schichtleitung startet das Bedienterminal neu und ruft die Instandhaltung.",
+      "aufgabe": [
+        "Wer muss jetzt informiert werden?",
+        "Wer entscheidet, ob das ein Notfall ist?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v2-maschine-seltsam.png",
+        "caption": "Bedienterminal der Fräslinie 4."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-it",
+        "it-mitarbeiter",
+        "notfallmanagement-bcm"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK20",
+      "nr": 20,
+      "simZeit": "Montag 06:55 Uhr",
+      "titel": "Keine Aufträge mehr",
+      "minuteOffset": 3,
+      "diskussionMinuten": 1.5,
+      "text": "Der Vertriebsinnendienst meldet: Seit 06:30 Uhr sind keine Abrufe der Automobilkunden mehr eingegangen – üblich sind um diese Zeit 40 bis 60. E-Mails an Kunden bleiben im Postausgang hängen. Erste Vermutung: ein Wartungsfenster beim Provider.",
+      "aufgabe": [
+        "Ist das schon eine Krise?",
+        "Wer ruft den Krisenstab zusammen – und wann?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v3-keine-auftraege.png",
+        "caption": "EDI-Eingang der Automobilkunden heute früh."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "akt": "vorboten"
     }
   ],
   "sonderlagekarten": [

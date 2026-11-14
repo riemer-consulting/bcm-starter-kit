@@ -134,7 +134,7 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Lagekarten mit, tauchen nicht in der Bewertungsmatrix auf (keine feste
    Funktion zu bewerten) und erhalten am Ende trotzdem eine eigene Urkunde.
    Begrüßung/Spielregeln und Rollenbeschreibung sind **Pflicht, nicht
-   optional**: Beim Klick auf "Übung starten" (Schritt 7) schickt die App
+   optional**: Beim Klick auf "Übung vorbereiten" (Schritt 7) schickt die App
    automatisch an jede Person mit E-Mail sowohl die Begrüßung mit Spielregeln
    als auch die eigene Rollenbeschreibung — niemand steigt ohne Vorab-Info
    ein. Die Buttons **"Begrüßung an alle senden"** und **"Rollenbeschreibungen
@@ -178,7 +178,7 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 6. **Zeitmodus** wählen (siehe "Die drei Zeitmodi" unten) und bei Bedarf die
    Schwierigkeit bzw. Zieldauer setzen. Im Zieldauer-Modus zeigt die Setup-Seite
    sofort eine Live-Vorschau, wie viele Karten das ergibt und was entfällt.
-7. **"Übung starten"** klickt — schickt automatisch Begrüßung, Spielregeln und
+7. **"Übung vorbereiten"** klicken — die Krise beginnt damit noch nicht. Schickt automatisch Begrüßung, Spielregeln und
    Rollenbeschreibungen an alle Teilnehmer mit E-Mail (siehe Schritt 3) und
    öffnet danach automatisch die **Moderationsansicht**
    in einem neuen Tab (noch nicht die Bühne!). Erst wenn ihr wirklich bereit
@@ -235,9 +235,18 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
 ## Spannungsbogen: von "alles läuft" bis "alles läuft wieder"
 
-Jede Lagekarte gehört zu einem Akt: **Ausbruch → Eskalation → Höhepunkt →
-Folgen → Wiederanlauf**. Egal ob 45 Minuten oder 3 Stunden: Die Übung beginnt
-mit der "Ruhe vor dem Sturm" (alles läuft), durchläuft jeden Akt mindestens
+Jede Lagekarte gehört zu einem Akt: **Vorboten → Ausbruch → Eskalation →
+Höhepunkt → Folgen → Wiederanlauf**. Egal ob 45 Minuten oder 3 Stunden: Die
+Bühne zeigt vorher das Unternehmen im Normalbetrieb (NordTech-Werk zum
+Schichtbeginn, Waterkant-Baumarkt vor dem Saisonstart) mit ruhigem
+Hintergrundgeräusch. Nach dem Krisenstart kommt nicht sofort der Knall,
+sondern erst zwei bis drei **Vorboten**, also kleine, harmlos wirkende
+Meldungen (NordTech: ERP-Anmeldung hakt, Maschine 4 zeigt Dateien mit der
+Endung .shadowvault, keine Aufträge mehr; Waterkant: Störmeldung des
+bekannten Rauchmelders, Geruch in Halle 3, Lüftung fällt aus). Das
+Hintergrundgeräusch läuft dabei weiter. Vorboten kosten nur 2 Minuten
+Lesezeit, ohne Sprechrunde. Erst dann folgt der Ausbruch. Die Übung
+durchläuft jeden Akt mindestens
 einmal und endet mit dem Wiederanlauf, gefolgt vom Abschluss (Nacharbeiten und
 Rechnung). Kürzere Übungen bekommen weniger Karten pro Akt, nicht weniger
 Akte. Bei NordTech ist der Höhepunkt "Beirat fordert Lagebericht": Die
@@ -291,8 +300,8 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Lagekarten haben zusätzlich `zustaendig` (Rollen-IDs): Die Moderation zeigt
   an, welche davon besetzt sind, und warnt, wenn keine besetzt ist. Im
   Zieldauer-Modus werden solche Lagekarten beim Auffüllen hintangestellt.
-- Lagekarten haben außerdem `akt` (`ausbruch`, `eskalation`, `hoehepunkt`,
-  `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
+- Lagekarten haben außerdem `akt` (`vorboten`, `ausbruch`, `eskalation`,
+  `hoehepunkt`, `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
   Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.
 - `bonuskarten[]` — manuell einsetzbare Zusatzereignisse (ebenfalls mit
   `fallbackEmpfaenger`, optional `moderatorHinweis`)
@@ -308,8 +317,8 @@ Prüfung kontrolliert Verweise auf Rollen, Prioritäten und feste Zeitangaben
 in Texten und simuliert je Szenario 2000 zufällige Besetzungen mit
 unterschiedlicher Dauer (25 Min. bis 3 Std.) und Schwierigkeit: Jede besetzte
 Rolle muss eine eigene Karte bekommen, keine Karte darf ins Leere laufen, und
-jeder Plan muss mit dem Ausbruch beginnen, alle Akte enthalten und mit dem
-Wiederanlauf enden. Außerdem wird der Abschluss geprüft (Beträge,
+jeder Plan muss mit den Vorboten beginnen, alle Akte in der richtigen
+Reihenfolge enthalten und mit dem Wiederanlauf enden. Außerdem wird der Abschluss geprüft (Beträge,
 Versicherung nicht höher als der Schaden, Fazit vorhanden). Das Ergebnis
 steht außerdem im Setup unter dem Szenario.
 

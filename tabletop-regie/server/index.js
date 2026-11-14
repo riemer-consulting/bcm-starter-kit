@@ -571,7 +571,7 @@ app.get('/api/run/stage-state', (req, res) => {
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
     currentLagekarte: currentLk ? {
-      id: currentLk.id, nr: currentLk.nr, simZeit: currentLk.simZeit, titel: currentLk.titel,
+      id: currentLk.id, nr: currentLk.nr, simZeit: currentLk.simZeit, titel: currentLk.titel, akt: currentLk.akt || null,
       text: currentLk.text, kriseninfo: currentLk.kriseninfo, aufgabe: currentLk.aufgabe,
       media: currentLk.media || null, sound: currentLk.sound || null,
       laufendeNr: (() => { const sched = engine.getActiveSchedule(scenario, state).filter(ev => ev.type === 'lagekarte'); const i = sched.findIndex(ev => ev.id === currentLk.id); return i >= 0 ? i + 1 : null; })()
@@ -608,7 +608,9 @@ app.get('/api/run/ablauf-state', (req, res) => {
 
 app.post('/api/run/start', (req, res) => {
   const { durationMode, difficulty, targetMinutes } = req.body || {};
-  if (state.status === 'idle' || state.status === 'ended') {
+  // Immer ein frischer Lauf -- auch wenn vorher schon vorbereitet oder
+  // gespielt wurde. Sonst blieben ausgeloeste Karten des alten Laufs haengen.
+  {
     const participants = state.participants;
     const activeRoleIds = state.activeRoleIds;
     state = engine.newRunState(scenario);

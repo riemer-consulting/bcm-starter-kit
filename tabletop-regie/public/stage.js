@@ -37,12 +37,15 @@ document.getElementById('btn-enable-sound').addEventListener('click', () => {
   soundEnabled = true;
   document.getElementById('sound-unlock').style.display = 'none';
   ambientAudio.play().catch(() => {});
-  eventAudio.play().then(() => eventAudio.pause()).catch(() => {});
+  // Den Ereignis-Kanal NICHT per play()/pause() "freischalten": Ohne geladene
+  // Datei bleibt dieses play() haengen und das pause() traefe spaeter genau
+  // den ersten echten Krisenton. Der Klick selbst genuegt dem Browser.
+  refresh();
 });
 
 function applySound(s) {
   if (!soundEnabled) return;
-  if (s.status === 'idle' || s.status === 'ended') {
+  if (s.status === 'ended') {
     if (!ambientAudio.paused) ambientAudio.pause();
     if (!eventAudio.paused) eventAudio.pause();
     lastLagekarteId = null;
@@ -59,6 +62,17 @@ function applySound(s) {
       ambientAudio.play().catch(() => {});
     }
     lastLagekarteId = null;
+    return;
+  }
+  // Vorboten ohne eigenen Ton: das ruhige "alles laeuft"-Geraeusch laeuft
+  // weiter -- der Kontrast kommt erst mit dem Ausbruch.
+  if (lk.akt === 'vorboten' && !lk.sound) {
+    if (idle && ambientAudio.getAttribute('src') !== idle.src) {
+      ambientAudio.src = idle.src;
+      ambientAudio.volume = idle.volume != null ? idle.volume : 0.5;
+    }
+    if (idle && ambientAudio.paused) ambientAudio.play().catch(() => {});
+    lastLagekarteId = lk.id;
     return;
   }
   if (!ambientAudio.paused) ambientAudio.pause();
@@ -92,8 +106,11 @@ async function refresh() {
   const statusLabel = document.getElementById('status-label');
 
   if (s.status === 'idle') {
-    statusLabel.textContent = 'Bereit';
-    content.innerHTML = '<div class="idle"><h1>Bereit.</h1><p class="muted">Die Übung startet im Setup.</p></div>';
+    // Auch vor der Vorbereitung: das Unternehmen im Normalbetrieb zeigen,
+    // nicht einen leeren "Bereit"-Bildschirm.
+    statusLabel.textContent = 'Normalbetrieb';
+    const idleMediaHtml = s.idleMedia ? renderMedia(s.idleMedia, true) : '';
+    content.innerHTML = `<div class="idle"><h1>${escapeHtml(s.companyName || 'Ruhe vor dem Sturm')}</h1>${idleMediaHtml}<p style="color:var(--muted);font-size:14px;">Alles läuft. Die Übung wird gleich vorbereitet.</p></div>`;
     return;
   }
   if (s.status === 'paused') statusLabel.textContent = 'Pausiert';
@@ -118,7 +135,7 @@ async function refresh() {
 
   const lk = s.currentLagekarte;
   if (!lk) {
-    const idleMediaHtml = s.idleMedia ? renderMedia(s.idleMedia) : '';
+    const idleMediaHtml = s.idleMedia ? renderMedia(s.idleMedia, true) : '';
     const introText = s.eroeffnungstext ? `<p class="text" style="max-width:820px;">${escapeHtml(s.eroeffnungstext)}</p>` : '';
     const heading = s.status === 'briefing' ? 'Ruhe vor dem Sturm'
       : s.status === 'countdown' ? `Die Krise beginnt in ${s.crisisCountdownSeconds}s …`
@@ -126,11 +143,12 @@ async function refresh() {
     content.innerHTML = `<div class="idle"><h1>${heading}</h1>${introText}${idleMediaHtml}</div>`;
     return;
   }
+  const vorbote = lk.akt === 'vorboten';
   const krisenHtml = lk.kriseninfo ? `<div class="krisen">${escapeHtml(lk.kriseninfo)}</div>` : '';
   const aufgabeHtml = (lk.aufgabe || []).map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const mediaHtml = lk.media ? renderMedia(lk.media) : '';
   content.innerHTML = `
-    <div class="simzeit">${escapeHtml(lk.simZeit)} · Lagekarte ${lk.laufendeNr || lk.nr}${s.lagekartenTotal ? ' von ' + s.lagekartenTotal : ''}</div>
+    <div class="simzeit">${escapeHtml(lk.simZeit)} · ${vorbote ? 'Meldung' : 'Lagekarte'} ${lk.laufendeNr || lk.nr}${s.lagekartenTotal ? ' von ' + s.lagekartenTotal : ''}</div>
     <div class="titel">${escapeHtml(lk.titel)}</div>
     <div class="text">${escapeHtml(lk.text)}</div>
     ${krisenHtml}
@@ -206,7 +224,12 @@ function renderFinale(f) {
   content.innerHTML = `<div class="finale">${body}${hinweis}</div>`;
 }
 
-function renderMedia(media) {
+function renderMedia(media, gross) {
+  if (gross && media.type !== 'video') {
+    // Die Startbilder tragen ihre Beschriftung selbst -- keine zweite Zeile.
+    const src = escapeHtml(media.src || '');
+    return `<div style="margin:8px 0 12px;width:100%;max-width:1100px;flex-shrink:0;"><img src="${src}" alt="${escapeHtml(media.caption || '')}" style="width:100%;max-height:46vh;object-fit:contain;border-radius:10px;display:block;"></div>`;
+  }
   const src = escapeHtml(media.src || '');
   const caption = media.caption ? `<div class="muted" style="font-size:14px;margin-top:6px;">${escapeHtml(media.caption)}</div>` : '';
   // max-height statt fixer Breite: verhindert, dass ein hohes Bild zusammen

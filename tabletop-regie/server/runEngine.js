@@ -88,7 +88,8 @@ function computeEffectiveSchedule(scenario, state) {
   }
   // computed: pro Lagekarte Lesezeit + (aktive Rollen * Sprechzeit) + Entscheidungszeit
   // nach Schwierigkeit; Sonderlagekarten laufen ohne eigene Zeit in der Diskussion mit.
-  const { placed } = placeEvents(timeline, computedLagekarteSlot(scenario, state));
+  const slot = computedLagekarteSlot(scenario, state);
+  const { placed } = placeEvents(timeline, ev => (isVorbote(ev) ? vorbotenMinutes(scenario) : slot));
   return placed.map(({ ev, minute }) => Object.assign({}, ev, { minute }));
 }
 
@@ -109,13 +110,24 @@ function eventRef(scenario, type, id) {
 // Modus ist jeder Akt mindestens einmal vertreten -- auch bei 45 Minuten
 // fuehrt die Übung vom Ausbruch ueber Eskalation und Hoehepunkt bis zum
 // Wiederanlauf, statt vom Angriff direkt zum Wiederanlauf zu springen.
+// Vorboten: Die Krise baut sich auf, bevor sie da ist -- kurze, harmlos
+// wirkende Meldungen (Anmeldung hakt, Geruch in der Halle). Sie kosten nur
+// Lesezeit, ohne Sprechrunde und Entscheidungsphase.
 const AKTE = [
+  { key: 'vorboten', label: 'Vorboten' },
   { key: 'ausbruch', label: 'Ausbruch' },
   { key: 'eskalation', label: 'Eskalation' },
   { key: 'hoehepunkt', label: 'Höhepunkt' },
   { key: 'folgen', label: 'Folgen' },
   { key: 'wiederanlauf', label: 'Wiederanlauf' }
 ];
+
+function isVorbote(ev) {
+  return ev.type === 'lagekarte' && !!ev.ref && ev.ref.akt === 'vorboten';
+}
+function vorbotenMinutes(scenario) {
+  return (scenario.standardablauf && scenario.standardablauf.vorbotenMinuten) || 2;
+}
 
 // Zeit, die am Ende fuer den Abschluss (Nacharbeiten + Rechnung) bleibt.
 function finaleMinutesFor(scenario, targetMinutes) {
@@ -126,7 +138,8 @@ function finaleMinutesFor(scenario, targetMinutes) {
 // Vertrauliche Karten kosten -- wie im erprobten Ablauf -- keine eigene
 // Spielzeit: sie landen in der Diskussionsphase der vorangehenden Lagekarte,
 // mehrere Karten im selben Fenster gleichmaessig verteilt.
-function placeEvents(sortedEvents, lkSlot) {
+function placeEvents(sortedEvents, slot) {
+  const slotOf = typeof slot === 'function' ? slot : () => slot;
   let windowIdx = -1;
   const windowOf = sortedEvents.map(ev => (ev.type === 'lagekarte' ? ++windowIdx : windowIdx));
   const perWindow = {};
@@ -134,15 +147,17 @@ function placeEvents(sortedEvents, lkSlot) {
   const seen = {};
   let cumulative = 0;
   let windowStart = 0;
+  let windowLen = 0;
   const placed = sortedEvents.map((ev, i) => {
     if (ev.type === 'lagekarte') {
       windowStart = cumulative;
-      cumulative += lkSlot;
+      windowLen = slotOf(ev);
+      cumulative += windowLen;
       return { ev, minute: windowStart };
     }
     if (windowOf[i] < 0) return { ev, minute: 0 };
     const k = seen[windowOf[i]] = (seen[windowOf[i]] || 0) + 1;
-    return { ev, minute: windowStart + lkSlot * (0.3 + 0.55 * k / (perWindow[windowOf[i]] + 1)) };
+    return { ev, minute: windowStart + windowLen * (0.3 + 0.55 * k / (perWindow[windowOf[i]] + 1)) };
   });
   return { placed, total: cumulative };
 }
@@ -164,7 +179,9 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   const finaleMinutes = finaleMinutesFor(scenario, targetMinutes);
   const budget = targetMinutes - finaleMinutes;
   const lkSlotFor = d => scenario.standardablauf.readingMinutes + speakingMinutes + d;
-  const costOf = (ev, d) => (ev.type === 'lagekarte' ? lkSlotFor(d) : 0);
+  const vm = vorbotenMinutes(scenario);
+  const costOf = (ev, d) => (ev.type !== 'lagekarte' ? 0 : (isVorbote(ev) ? vm : lkSlotFor(d)));
+  const fullLk = ev => ev.type === 'lagekarte' && !isVorbote(ev);
   const keyOf = ev => ev.type + ':' + ev.id;
 
   // Sonderlagekarten, die niemanden erreichen (weder Rolle noch Ersatzrolle
@@ -234,14 +251,18 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     // komprimieren (Untergrenze 1 Min.), statt Akte zu streichen.
     const floor = 1;
     const compressibleNominal = Math.max(0.01, nominalDecision - floor);
-    const lkCount = baseline.filter(ev => ev.type === 'lagekarte').length;
-    const fixedCost = lkCount * (scenario.standardablauf.readingMinutes + speakingMinutes + floor);
+    const lkCount = baseline.filter(fullLk).length;
+    const fixedCost = lkCount * (scenario.standardablauf.readingMinutes + speakingMinutes + floor)
+      + baseline.filter(isVorbote).length * vm;
     const factor = lkCount > 0 ? Math.max(0, Math.min(1, (budget - fixedCost) / (lkCount * compressibleNominal))) : 1;
     decisionMinutes = Math.max(floor, floor + compressibleNominal * factor);
     compression = Math.round(factor * 100) / 100;
-    warning = `Zieldauer (${targetMinutes} Min.) reicht für den kompletten Spannungsbogen nur knapp. ` +
-      `Entscheidungszeiten wurden auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. je Lagekarte komprimiert. ` +
-      `Mehr Zeit oder weniger Funktionsbereiche einplanen, wenn möglich.`;
+    // Nur warnen, wenn die Kuerzung spuerbar ist (mehr als eine halbe Minute).
+    warning = nominalDecision - decisionMinutes > 0.5
+      ? `Zieldauer (${targetMinutes} Min.) reicht für den kompletten Spannungsbogen nur knapp. ` +
+        `Entscheidungszeiten wurden auf ca. ${Math.round(decisionMinutes * 10) / 10} Min. je Lagekarte komprimiert. ` +
+        `Mehr Zeit oder weniger Funktionsbereiche einplanen, wenn möglich.`
+      : null;
     skipped = fillPool.map(ev => ({ type: ev.type, id: ev.id, reason: 'Zeitbudget reicht nur für den Spannungsbogen – zusätzliche Karten entfallen.' }));
   } else {
     let remaining = budget - baseCost;
@@ -257,7 +278,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     });
     // Alles passt und es bleibt Zeit -> Entscheidungsphasen strecken (max. Verdopplung).
     if (!skipped.some(s => s.type === 'lagekarte') && remaining > 0.5) {
-      const lkInSelected = selected.filter(ev => ev.type === 'lagekarte').length;
+      const lkInSelected = selected.filter(fullLk).length;
       if (lkInSelected > 0) {
         const extraPerLk = Math.min(nominalDecision, remaining / lkInSelected);
         decisionMinutes = nominalDecision + extraPerLk;
@@ -274,7 +295,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   // insgesamt so viele wie im erprobten Ablauf (ca. 1,6 je Lagekarte), eigene
   // Karten einer Rolle vor umgeleiteten, und keine Person bekommt deutlich
   // mehr als die anderen.
-  const lkCount = selected.filter(ev => ev.type === 'lagekarte').length;
+  const lkCount = selected.filter(fullLk).length;
   const skSelected = selected.filter(ev => ev.type !== 'lagekarte');
   const skBudget = Math.max(skSelected.length, Math.round(lkCount * 1.6));
   const recipients = Math.max(1, roleFilterActive ? activeRoleSet.size : 1);
@@ -296,7 +317,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     });
 
   selected.sort((a, b) => a.authoredMinute - b.authoredMinute);
-  const { placed, total } = placeEvents(selected, lkSlotFor(decisionMinutes));
+  const { placed, total } = placeEvents(selected, ev => (isVorbote(ev) ? vm : lkSlotFor(decisionMinutes)));
   const schedule = placed.map(({ ev, minute }) => ({ type: ev.type, id: ev.id, minute: Math.round(minute * 100) / 100 }));
 
   if (total > budget + 0.05) {
@@ -419,7 +440,7 @@ function totalPlannedMinutes(scenario, state) {
   if (state.durationMode === 'authored') {
     return Math.max(lastLk.minute + (lastLk.ref.diskussionMinuten || 5), ...schedule.map(ev => ev.minute));
   }
-  return lastLk.minute + computedLagekarteSlot(scenario, state);
+  return lastLk.minute + (isVorbote(lastLk) ? vorbotenMinutes(scenario) : computedLagekarteSlot(scenario, state));
 }
 
 module.exports = {
@@ -436,6 +457,7 @@ module.exports = {
   finaleMinutesFor,
   recommendRoles,
   AKTE,
+  isVorbote,
   getActiveSchedule,
   eventRef,
   dueEvents,
