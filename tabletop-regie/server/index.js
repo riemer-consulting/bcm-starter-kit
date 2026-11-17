@@ -847,7 +847,11 @@ app.get('/api/run/moderator-state', (req, res) => {
     firedSonderlagekarten: state.firedSonderlagekarten,
     unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => !sk.nurNachWeiche && (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
       .map(sk => Object.assign({}, sk, { recipientRoleId: recipientRoleFor(sk), recipientLabel: recipientLabel(sk) })),
-    bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, { fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b) })),
+    bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, {
+      fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b),
+      // Ueberraschungskarten mit Voraussetzung erst nach der genannten Lage
+      wartetAuf: (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id)).map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
+    })),
     participants: state.participants,
     activeRoleIds: state.activeRoleIds,
     bewertung: state.bewertung,
@@ -1104,6 +1108,8 @@ app.post('/api/run/fire-sonderkarte/:id', async (req, res) => {
 app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   const b = scenario.bonuskarten.find(x => x.id === req.params.id);
   if (!b) return res.status(404).json({ ok: false, error: 'Unbekannte Bonuskarte.' });
+  const offen = (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id));
+  if (offen.length) return res.status(400).json({ ok: false, error: `Diese Karte passt erst nach ${offen.join(', ')}.` });
   const recipientRoleId = recipientRoleFor(b);
   const role = roleById(recipientRoleId || b.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];

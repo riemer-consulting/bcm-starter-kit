@@ -215,7 +215,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   timeline.forEach(ev => { if (ev.type === 'lagekarte') lkEvById[ev.id] = ev; });
   const prereqsOf = ev => (ev.ref.voraussetzung || []).map(id => lkEvById[id]).filter(Boolean);
   const closureOf = (ev, acc = []) => {
-    prereqsOf(ev).forEach(p => { if (!acc.includes(p)) { closureOf(p, acc); acc.push(p); } });
+    prereqsOf(ev).forEach(p => { if (!acc.includes(p)) closureOf(p, acc); });
     if (!acc.includes(ev)) acc.push(ev);
     return acc;
   };
@@ -308,8 +308,11 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     selected.forEach(countAct);
     const pool = fillPool.slice();
     while (pool.length) {
+      // Karten, die keine weiteren Karten nachziehen muessen, zuerst.
+      const nachzug = ev => closureOf(ev).filter(x => x !== ev && !selKeys.has(keyOf(x))).length;
       pool.sort((a, b) => (effPrio(a) - effPrio(b))
         || ((lkOwned(a) ? 0 : 1) - (lkOwned(b) ? 0 : 1))
+        || (nachzug(a) - nachzug(b))
         || ((actCount[a.ref.akt] || 0) - (actCount[b.ref.akt] || 0))
         || (a.authoredMinute - b.authoredMinute));
       const ev = pool.shift();

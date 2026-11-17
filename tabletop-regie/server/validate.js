@@ -25,6 +25,9 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
 
   const checkRole = (rid, where) => { if (!roleIds.has(rid)) errors.push(`${where} verweist auf unbekannte Rolle "${rid}".`); };
   scenario.roleGroups.forEach(g => g.members.forEach(rid => checkRole(rid, `Rollengruppe ${g.key}`)));
+  (scenario.bonuskarten || []).forEach(b => (b.voraussetzung || []).forEach(id => {
+    if (!scenario.lagekarten.some(l => l.id === id)) errors.push(`Bonuskarte ${b.id}: Voraussetzung ${id} ist keine Lagekarte.`);
+  }));
   [...scenario.sonderlagekarten, ...(scenario.bonuskarten || [])].forEach(c => {
     checkRole(c.empfaenger, `Karte ${c.id}`);
     (c.fallbackEmpfaenger || []).forEach(rid => checkRole(rid, `Karte ${c.id} (Ersatz)`));
@@ -171,6 +174,8 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     const rueck = idx.findIndex((x, i) => i > 0 && x < idx[i - 1]);
     if (rueck > 0) note('ordnung:' + lks[rueck].id, `Bei ${targetMinutes} Min. springt der Spannungsbogen zurück: ${lks[rueck - 1].id} (${lks[rueck - 1].akt}) vor ${lks[rueck].id} (${lks[rueck].akt}).`);
     if (lks.length && lks[lks.length - 1].akt !== 'wiederanlauf') note('ende', `Bei ${targetMinutes} Min. endet die Übung nicht mit dem Wiederanlauf (${lks[lks.length - 1].id}).`);
+    const gesehen = new Set();
+    plan.schedule.forEach(e => { if (gesehen.has(e.id)) note('doppelt:' + e.id, `Bei ${targetMinutes} Min. steht ${e.id} doppelt im Ablauf.`); gesehen.add(e.id); });
     // Abhaengigkeiten im erzeugten Plan: Voraussetzung gespielt und vorher
     const at = {};
     plan.schedule.forEach(e => { at[e.id] = e.minute; });

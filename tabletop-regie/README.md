@@ -353,6 +353,10 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Rollen können `alteIds` haben: Wird eine Rolle umbenannt, übernehmen
   gespeicherte Teilnehmerlisten und Vorlagen mit der alten ID automatisch die
   neue Rolle.
+- Lagekarten können wie vertrauliche Karten `moderatorGut` und
+  `moderatorSchlecht` haben (Bewertungshilfe in der Moderation).
+  Bonuskarten können `voraussetzung` haben: Sie lassen sich erst auslösen,
+  wenn diese Lagekarten gezeigt wurden.
 - `schwerpunkte[]` (optional): Übungsschwerpunkte (`key`, `label`,
   `beschreibung`, `karten`: Liste von Lage-, vertraulichen und Bonuskarten).
   Im Setup bei „Zieldauer“ wählbar. Pflichtkarten und Spannungsbogen bleiben

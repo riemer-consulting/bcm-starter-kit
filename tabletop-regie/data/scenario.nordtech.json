@@ -1007,30 +1007,33 @@
       "titel": "Wer darf ins Werk?",
       "minuteOffset": 30.5,
       "diskussionMinuten": 4,
-      "text": "Durch die IT-Störung können Zutrittsberechtigungen am elektronischen Zugangssystem von Werk Süd nicht mehr zuverlässig geprüft werden. Vor einem gesicherten Werksbereich warten externe Techniker, die bei der Störungsbeseitigung helfen sollen. Der Werkschutz verlangt eine Entscheidung.",
-      "kriseninfo": "Externe warten am Tor · Zutrittsprüfung nicht verlässlich",
+      "text": "Die Zutrittsverwaltung eines gesicherten Fertigungsbereichs in Werk Süd ist wegen des IT-Ausfalls nicht zuverlässig erreichbar. Am Werkstor warten zwei externe Techniker, die einen ausgefallenen Produktionsrechner begutachten sollen. Der Werkschutz kann ihre Berechtigung nicht elektronisch prüfen. Zugleich fordert die Instandhaltung, die Techniker sofort hineinzulassen, um den Stillstand zu begrenzen.",
+      "kriseninfo": "Zutrittsfreigabe nicht elektronisch prüfbar · 2 externe Techniker warten · keine pauschale Aufhebung der Sicherheitsregeln",
       "aufgabe": [
-        "Wer darf einen manuellen Zutritt freigeben?",
-        "Wie werden Identität, Begleitung und Anwesenheit dokumentiert?",
-        "Wer stellt sicher, dass Sicherheitsregeln auch in der Krise gelten?"
+        "Wer entscheidet über einen manuellen Zutritt, und wer darf ihn anordnen?",
+        "Wie werden Identität, Auftrag, Begleitung, Zutrittsbereich und Verlassen des Werks dokumentiert?",
+        "Welche Arbeiten dürfen die Techniker vor einer IT-/OT-Sicherheitsfreigabe überhaupt durchführen?",
+        "Wie wird die gleiche Regel an allen Standorten durchgesetzt?"
       ],
-      "moderatorHinweis": "Ziel ist ein kontrolliertes Ersatzverfahren (Liste, Ausweis, Begleitung, Protokoll). Nicht annehmen lassen, dass alle Türen oder alle Standorte betroffen sind.",
+      "moderatorHinweis": "Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk23-zutritt.png",
-        "caption": "Werk Süd: Wer darf jetzt hinein?"
+        "caption": "Zutrittssystem nicht verfügbar – wer gibt frei?"
       },
       "prioritaet": 3,
       "zustaendig": [
-        "leitung-produktion",
         "standortleitung-werk-sued",
+        "leitung-produktion",
         "leiter-it",
         "geschaeftsfuehrer-ceo"
       ],
       "akt": "eskalation",
       "voraussetzung": [
         "LK01"
-      ]
+      ],
+      "moderatorGut": "Ein dokumentierter, zeitlich begrenzter Ausweichprozess mit Identitätsprüfung, autorisiertem Auftrag, Begleitung und Zutrittsprotokoll; IT und Produktion klären getrennt, welche Arbeiten am System zulässig sind; die Regel gilt an allen Standorten.",
+      "moderatorSchlecht": "Pauschaler Zugang aus Zeitdruck – oder Abweisung ohne Entscheidung, obwohl es eine kontrollierbare Alternative gäbe; niemand dokumentiert Zuständigkeiten."
     },
     {
       "id": "LK24",
@@ -1039,64 +1042,73 @@
       "titel": "Wer bekommt das erste System?",
       "minuteOffset": 53,
       "diskussionMinuten": 5,
-      "text": "Die IT hat eine isolierte Wiederherstellungsumgebung vorbereitet. Die Ressourcen reichen zunächst nur für einen größeren Geschäftsprozess. Der Vertrieb fordert Auftragsdaten, die Produktion braucht Fertigungsinformationen, die Finanzen verlangen Zugriff auf offene Forderungen. Das gefundene Backup wird weiterhin geprüft.",
-      "kriseninfo": "Kapazität für einen Prozess · Backup-Prüfung läuft",
+      "text": "Die IT hat eine vom betroffenen Unternehmensnetz getrennte Umgebung für die Vorbereitung und Prüfung der Wiederherstellung aufgebaut. Rechenleistung, Fachpersonal und Zeit reichen zunächst nur für einen größeren Geschäftsprozess. Der Vertrieb fordert Zugriff auf Kundenaufträge, die Produktion auf Fertigungsinformationen, die Finanzleitung auf offene Forderungen. Das am Vormittag gefundene Offline-Backup ist lesbar, aber noch nicht abschließend auf Integrität, Vollständigkeit und Schadcode geprüft – ein produktiver Wiederanlauf daraus ist nicht freigegeben.",
+      "kriseninfo": "Nur ein Geschäftsprozess kann zunächst vorbereitet werden · Backup-Prüfung läuft · keine Produktivfreigabe",
       "aufgabe": [
-        "Nach welchen Kriterien wird priorisiert?",
-        "Wer entscheidet bei gegensätzlichen Interessen?",
-        "Welche Notverfahren gelten bis zur Freigabe?"
+        "Welchen Geschäftsprozess bereiten Sie zuerst vor – nach welchen unternehmensweiten Kriterien?",
+        "Welche Abhängigkeiten bestehen zwischen Aufträgen, Material, Fertigung und Rechnungsstellung?",
+        "Wie unterscheiden Sie technische Vorbereitung, Sicherheitstest und fachliche Freigabe?",
+        "Wer dokumentiert die Priorisierung und informiert die zurückgestellten Bereiche?"
       ],
-      "moderatorHinweis": "Unterscheiden zwischen dem Vorbereiten von Systemen und der Freigabe für den Produktivbetrieb. Die Entscheidung darf die laufende Backup-Prüfung nicht umgehen.",
+      "moderatorHinweis": "Eine Priorität mit Verantwortung, Begründung, Abhängigkeiten, Prüfschritten und nächstem Statustermin einfordern. Wenn der Tisch „ERP sofort produktiv“ sagt: „Welche Prüfung wäre dafür abgeschlossen?“ – durch diese Karte ist nichts freigegeben. Das Ergebnis ist eine Priorisierungsentscheidung, es ändert die feststehende Wiederanlaufgeschichte nicht. Auch nach einer Lösegeldzahlung (Weiche W4) gelten dieselben Freigabeschritte.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk24-erstes-system.png",
-        "caption": "Ein Prozess zuerst – aber welcher?"
+        "caption": "Eine Ressource – drei Prioritäten"
       },
       "prioritaet": 2,
       "zustaendig": [
         "leiter-it",
+        "geschaeftsfuehrer-ceo",
         "leitung-produktion",
         "geschaeftsfuehrerin-vertrieb",
         "kaufmaennische-leiterin-cfo",
-        "geschaeftsfuehrer-ceo"
+        "erp-stammdaten"
       ],
       "akt": "eskalation",
       "voraussetzung": [
         "LK09"
-      ]
+      ],
+      "moderatorGut": "Kritikalität, externe Verpflichtungen und Abhängigkeiten werden gemeinsam bewertet; eine nachvollziehbare Reihenfolge wird beschlossen, Test- und Freigabekriterien werden benannt, Notverfahren laufen weiter.",
+      "moderatorSchlecht": "Die lauteste Abteilung gewinnt; das Backup wird ungeprüft produktiv genutzt; die IT entscheidet allein über Unternehmensprioritäten; nichts wird dokumentiert."
     },
     {
       "id": "LK25",
       "nr": 25,
       "simZeit": "Samstag 11:00 Uhr",
       "titel": "Zwei Listen, zwei Wahrheiten",
-      "minuteOffset": 81.5,
+      "minuteOffset": 83,
       "diskussionMinuten": 5,
-      "text": "Beim Abgleich der Papierlisten mit dem ERP-Testsystem fällt auf: Für mehrere Fertigungsaufträge unterscheiden sich Materialverbrauch und bestätigte Produktionsmengen. Noch ist unklar, ob Buchungen fehlen, doppelt erfasst wurden oder Bestände falsch sind. Einige betroffene Teile sollen kurzfristig ausgeliefert werden.",
-      "kriseninfo": "Abweichungen bei mehreren Fertigungsaufträgen",
+      "text": "Das ERP läuft seit Samstagmorgen in einer Testumgebung. Beim Abgleich mit den Papierlisten aus dem Notbetrieb zeigen sich für mehrere Fertigungsaufträge unterschiedliche Materialverbräuche und Produktionsmengen. Noch ist unklar, ob Buchungen fehlen, doppelt erfasst wurden oder die Papierlisten uneinheitlich geführt sind. Die Buchungen sind nicht als verlässlicher Datenstand freigegeben. Gleichzeitig erwartet ein Kunde kurzfristig eine Lieferentscheidung zu Ware aus den betroffenen Aufträgen.",
+      "kriseninfo": "Datenabgleich widersprüchlich · ERP nur im Test · Lieferentscheidung offen",
       "aufgabe": [
-        "Welche Daten gelten als belastbar?",
-        "Werden Lieferungen zurückgehalten?",
-        "Wer darf Differenzen klären und Bestände freigeben?"
+        "Wer verantwortet die Klärung der Abweichungen und die fachliche Freigabe der Buchungsdaten?",
+        "Wie prüfen Sie Mengen, Chargenbezug, Materialbewegungen und mögliche Doppelbuchungen nachvollziehbar?",
+        "Welche Lieferungen können mit unabhängig nachgewiesener Qualität freigegeben werden, welche bleiben gesperrt?",
+        "Wie verhindern Sie, dass eine fehlerhafte Nachbuchung weitere Probleme erzeugt?"
       ],
-      "moderatorHinweis": "Eine technische Wiederherstellung ist noch keine fachliche Datenfreigabe. Nicht unterstellen, dass tatsächlich fehlerhafte Produkte gefertigt wurden.",
+      "moderatorHinweis": "Der Konflikt ist Datenqualität und Prozessfreigabe, nicht „ERP läuft / läuft nicht“. Weder pauschal alles freigeben noch ohne Prüfung alles als verloren behandeln lassen. Die Zahlen aus SK31 (1.900 Nacherfassungen), SK12 (fehlende Datensätze) und LK21 (260 Chargen) bleiben unverändert. Bei wenig Zeit drei Ergebnisse einfordern: verantwortliche Fachfunktion, Sperr-/Freigabekriterium, Verfahren zur Differenzklärung.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk25-zwei-listen.png",
-        "caption": "Papierliste und ERP sagen Verschiedenes."
+        "caption": "Technisch verfügbar – fachlich noch nicht verlässlich"
       },
-      "prioritaet": 3,
+      "prioritaet": 2,
       "zustaendig": [
         "erp-stammdaten",
+        "erp-beratung",
         "leitung-qualitaet",
         "leitung-produktion",
-        "geschaeftsfuehrerin-vertrieb"
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-it"
       ],
       "akt": "wiederanlauf",
       "voraussetzung": [
         "LK09",
         "LK14"
-      ]
+      ],
+      "moderatorGut": "Abweichungen werden gesichert und bewertet; Daten- und Warenfreigabe sind getrennt; Qualität und Produktion entscheiden nach belastbaren Nachweisen; der Kunde bekommt einen überprüfbaren nächsten Termin statt einer unbelegten Zusage.",
+      "moderatorSchlecht": "Papierlisten werden ungeprüft importiert; die erste „grüne“ ERP-Maske gilt als Freigabe; Lieferung ohne ausreichende Rückverfolgbarkeit; Differenzen werden stillschweigend bereinigt."
     },
     {
       "id": "LK26",
@@ -1865,16 +1877,20 @@
       "empfaenger": "erp-stammdaten",
       "fallbackEmpfaenger": [
         "erp-beratung",
-        "leiter-it"
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
       ],
-      "minuteOffset": 80.5,
-      "prioritaet": 3,
+      "minuteOffset": 80,
+      "prioritaet": 2,
       "voraussetzung": [
-        "LK09"
+        "LK09",
+        "LK14"
       ],
-      "text": "Eine Fachabteilung bietet an, den Datenrückstand mit einer selbst erstellten Excel-Datei stark zu verkürzen: Die Daten wurden während der Ausfalltage gesammelt. Für einige Einträge fehlen allerdings Zeitstempel und eindeutige Belegnummern.",
-      "moderatorGut": "Datei sichern und kontrolliert prüfen; Änderungen nachvollziehbar dokumentieren und fachliche Freigaben einholen.",
-      "moderatorSchlecht": "Ungeprüfter Massenimport in die produktiven Daten."
+      "text": "Eine Fachabteilung bietet dir an, den Rückstand schneller aufzuarbeiten: Sie hat während der Ausfalltage Fertigungs- und Materialbuchungen in einer Excel-Datei gesammelt. Einige Einträge haben jedoch keine eindeutige Belegnummer und keinen verlässlichen Zeitstempel. Der Fachbereich möchte die Datei heute noch vollständig ins ERP übernehmen, damit die Bestände endlich wieder stimmen. Du musst entscheiden, wie du mit dem Vorschlag umgehst.",
+      "moderatorGut": "Vorschlag an IT, Fachverantwortliche und Krisenstab melden; Originaldatei unverändert sichern; Einträge auf Herkunft, Dubletten, Plausibilität und Vollständigkeit prüfen; zuerst kontrolliert in der Testumgebung verarbeiten, mit Vier-Augen-Prüfung und fachlicher Freigabe.",
+      "moderatorSchlecht": "Sofortiger Import ohne Protokoll – oder Ablehnung ohne Prüfung und ohne Alternative. Später ist nicht mehr erkennbar, was manuell ergänzt oder doppelt gebucht wurde.",
+      "nurInEigenerLage": true,
+      "moderatorHinweis": "Zielt auf Daten-Governance im Wiederanlauf. Landet die Karte bei der IT-Leitung: Sie koordiniert die technische Prüfung, entscheidet aber nicht allein über die fachliche Richtigkeit von Beständen und Chargen. Wird danach LK25 gespielt, entstehen die Abweichungen unabhängig davon, wie SK48 gelöst wurde."
     },
     {
       "id": "SK49",
@@ -1946,7 +1962,10 @@
         "geschaeftsfuehrer-ceo"
       ],
       "text": "In Werk Süd hat die Produktionsleitung angeordnet, die Rechner ausgeschaltet zu lassen. Gleichzeitig hat eine andere Führungskraft angewiesen, alle Geräte neu zu starten, um die Arbeitsfähigkeit zu prüfen. Beide Anweisungen sind schon bei den Beschäftigten angekommen. Bring das sofort in den Krisenstab.",
-      "moderatorHinweis": "Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Ersetzt eine andere Diskussion, verlängert nicht."
+      "moderatorHinweis": "Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Ersetzt eine andere Diskussion, verlängert nicht.",
+      "voraussetzung": [
+        "LK22"
+      ]
     },
     {
       "id": "B7",
@@ -1954,7 +1973,10 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "fallbackEmpfaenger": [],
       "text": "Du wirst für die nächsten fünf Minuten zu einem vertraulichen Gespräch abgerufen. Verlasse den Tisch und sprich in dieser Zeit nicht mit dem Krisenstab. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich.",
-      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, wenn die Vorbereitung zu sehr an der Krisenstabsleitung hängt. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Ohne besetzte Krisenstabsleitung entfällt die Karte."
+      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, wenn die Vorbereitung zu sehr an der Krisenstabsleitung hängt. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Ohne besetzte Krisenstabsleitung entfällt die Karte.",
+      "voraussetzung": [
+        "LK17"
+      ]
     },
     {
       "id": "B8",
@@ -1964,8 +1986,11 @@
         "leitung-produktion",
         "leiter-it"
       ],
-      "text": "Ein erster ERP-Funktionstest war erfolgreich. Kurz darauf fällt deinem Team auf, dass bei einem Testauftrag eine falsche Chargennummer angezeigt wird. Die Ursache ist ungeklärt.",
-      "moderatorHinweis": "Qualitätsstresstest nach „ERP-Testbetrieb“, wenn der Tisch einen zu schnellen Produktivstart will. Prüfziel: Wird die Freigabe zurückgehalten, bis die Abweichung verstanden ist? Gibt es Ursachenprüfung, Verantwortliche, nächsten Schritt?"
+      "text": "Ein erster Funktionstest des ERP ist erfolgreich. Kurz darauf fällt im Qualitätsmanagement auf: Bei einem Testauftrag wird eine Chargennummer angezeigt, die nicht zu den vorliegenden Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich argumentiert, das sei nur ein kleiner Datenfehler und dürfe den Produktivstart nicht aufhalten. Bring das in den Krisenstab.",
+      "moderatorHinweis": "Nur ziehen, wenn der Tisch nach „ERP-Testbetrieb“ einen sofortigen Produktivstart oder eine ungeprüfte Freigabe fordert – nicht, wenn Sicherheits- und Datenprüfung schon eingefordert sind. Fragen: Unter welchen Bedingungen stoppen Sie die Freigabe? Wer untersucht, wer gibt fachlich frei? Was bleibt im Notbetrieb? Was ist gegenüber Produktion und Kunden belastbar? Gut: Freigabe zurückstellen, Ursache und Umfang prüfen, Kriterien und Verantwortliche festhalten. Schwach: „Ein erfolgreicher Funktionstest reicht.“ Keine Katastrophe nachschieben; die Sonntags-Aussage (70 % technische Kapazität) bleibt unverändert. Fehlt die Qualitätsleitung, vertritt die Moderation deren Position – die Freigabe erteilt nie der Vertrieb. Wird LK25 gespielt, B8 nur einsetzen, wenn es eine andere Entscheidung prüft.",
+      "voraussetzung": [
+        "LK14"
+      ]
     }
   ],
   "bewertungskriterien": [

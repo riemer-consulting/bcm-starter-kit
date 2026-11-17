@@ -242,7 +242,9 @@ function render(s) {
         ${weicheButtons(aktWeiche)}
         <p class="mini muted" style="margin:6px 0 0;">Festhalten, was der Tisch entschieden hat – nicht vorab verraten, dass es Folgen hat.</p></div>` : '';
     const zusatzHtml = (lk.weichenZusatz || []).length ? `<p class="mini" style="color:var(--accent);">Wegen einer früheren Entscheidung ergänzt: ${escapeHtml(lk.weichenZusatz.join(' '))}</p>` : '';
-    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zusatzHtml + weicheHtml + tonHtml + zustHtml +
+    const bewertungHtml = (lk.moderatorGut || lk.moderatorSchlecht)
+      ? `<p class="mini" style="margin:4px 0;">${lk.moderatorGut ? `<span style="color:var(--ok);">Gut: ${escapeHtml(lk.moderatorGut)}</span>` : ''}${lk.moderatorSchlecht ? `<br><span style="color:var(--bad);">Schwach: ${escapeHtml(lk.moderatorSchlecht)}</span>` : ''}</p>` : '';
+    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zusatzHtml + weicheHtml + tonHtml + zustHtml + bewertungHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -292,7 +294,7 @@ function render(s) {
     .sort((x, y) => (spKarten.has(y.id) ? 1 : 0) - (spKarten.has(x.id) ? 1 : 0)).map(b => `
     <div class="row" style="justify-content:space-between;margin-bottom:6px;">
       <span class="mini">${b.titel ? `<b>${escapeHtml(b.titel)}</b> ` : ''}${spKarten.has(b.id) ? '<span class="badge ok">passt zum Schwerpunkt</span> ' : ''}${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
-      <button class="secondary fire-bonus" data-id="${b.id}" ${b.fired ? 'disabled' : ''} title="Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.">${b.fired ? 'Ausgelöst' : 'Auslösen'}</button>
+      <button class="secondary fire-bonus" data-id="${b.id}" ${b.fired || (b.wartetAuf || []).length ? 'disabled' : ''} title="${(b.wartetAuf || []).length ? 'Passt erst nach: ' + escapeHtml(b.wartetAuf.join(', ')) : 'Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.'}">${b.fired ? 'Ausgelöst' : (b.wartetAuf || []).length ? 'Noch nicht' : 'Auslösen'}</button>
     </div>`).join('') || '<p class="muted mini">Für die aktuelle Besetzung keine Bonuskarten verfügbar.</p>';
 
   // Verschickte vertrauliche Karten: was kursiert gerade bei wem, und woran
