@@ -51,6 +51,11 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     }
   });
   ((scenario.standardablauf || {}).rollenPrioritaet || []).forEach(rid => checkRole(rid, 'rollenPrioritaet'));
+  const alleKarten = new Set([...scenario.lagekarten, ...scenario.sonderlagekarten, ...(scenario.bonuskarten || [])].map(c => c.id));
+  (scenario.schwerpunkte || []).forEach(x => {
+    if (!x.key || !x.label) errors.push('Schwerpunkt ohne key/label.');
+    (x.karten || []).forEach(id => { if (!alleKarten.has(id)) errors.push(`Schwerpunkt ${x.key}: unbekannte Karte ${id}.`); });
+  });
   // Weichen: Entscheidungen mit Folgen
   const postenIds = new Set(((scenario.nachspiel || {}).optionalePosten || []).map(o => o.id));
   const genutzteFolgekarten = new Set();
@@ -153,7 +158,9 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     const targetMinutes = [25, 40, 45, 60, 90, 120, 180][Math.floor(rand() * 7)];
     const difficulty = ['leicht', 'mittel', 'hoch'][Math.floor(rand() * 3)];
 
-    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount: Math.min(n, 8), activeRoleIds: staffed });
+    const spKeys = [null, ...(scenario.schwerpunkte || []).map(x => x.key)];
+    const schwerpunkt = spKeys[Math.floor(rand() * spKeys.length)];
+    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount: Math.min(n, 8), activeRoleIds: staffed, schwerpunkt });
     const lks = plan.schedule.filter(e => e.type === 'lagekarte').map(e => scenario.lagekarten.find(x => x.id === e.id));
     const fehlt = plan.akte.filter(a => !a.enthalten).map(a => a.label);
     if (fehlt.length) note('akt:' + fehlt.join(','), `Bei ${targetMinutes} Min. fehlt im Spannungsbogen: ${fehlt.join(', ')}.`);

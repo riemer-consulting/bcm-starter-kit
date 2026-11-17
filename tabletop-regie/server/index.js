@@ -395,6 +395,7 @@ app.get('/api/scenario-meta', (req, res) => {
     bewertungskriterien: scenario.bewertungskriterien,
     lagekartenCount: scenario.lagekarten.length, sonderlagekartenCount: scenario.sonderlagekarten.length,
     bonuskartenCount: scenario.bonuskarten.length, moderationsleitfaden: scenario.moderationsleitfaden,
+    schwerpunkte: (scenario.schwerpunkte || []).map(x => ({ key: x.key, label: x.label, beschreibung: x.beschreibung })),
     pruefung: scenarioCheck
   });
 });
@@ -457,13 +458,13 @@ app.get('/api/recommend-roles', (req, res) => {
 // Vorschau fuer den Zieldauer-Modus im Setup: nutzt die im Formular gerade
 // zugewiesenen Rollen (noch nicht gespeichert), ohne den Lauf zu starten.
 app.post('/api/preview-schedule', (req, res) => {
-  const { targetMinutes, difficulty, roleIds } = req.body || {};
+  const { targetMinutes, difficulty, roleIds, schwerpunkt } = req.body || {};
   const minutes = Math.max(10, Number(targetMinutes) || 90);
   const roleToGroup = {};
   scenario.roles.forEach(r => { roleToGroup[r.id] = r.group; });
   const activeGroups = new Set((roleIds || []).map(id => roleToGroup[id]).filter(Boolean));
   const roleCount = Array.from(activeGroups).filter(g => scenario.standardablauf.speakingOrder.includes(g)).length;
-  const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel', roleCount, activeRoleIds: roleIds });
+  const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel', roleCount, activeRoleIds: roleIds, schwerpunkt });
   const assigned = Array.from(new Set((roleIds || []).filter(Boolean)));
   const recipientsInPlan = new Set(plan.schedule.filter(e => e.type === 'sonderlagekarte')
     .map(e => engine.resolveRecipient(scenario.sonderlagekarten.find(sk => sk.id === e.id) || {}, new Set(assigned))));
@@ -821,6 +822,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     durationMode: state.durationMode,
     difficulty: state.difficulty,
     targetMinutes: state.targetMinutes,
+    schwerpunkt: (() => { const x = (scenario.schwerpunkte || []).find(y => y.key === state.schwerpunkt); return x ? { key: x.key, label: x.label, karten: x.karten } : null; })(),
     scheduleWarning: state.scheduleWarning,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
@@ -911,7 +913,7 @@ app.get('/api/run/ablauf-state', (req, res) => {
 });
 
 app.post('/api/run/start', (req, res) => {
-  const { durationMode, difficulty, targetMinutes } = req.body || {};
+  const { durationMode, difficulty, targetMinutes, schwerpunkt } = req.body || {};
   // Immer ein frischer Lauf -- auch wenn vorher schon vorbereitet oder
   // gespielt wurde. Sonst blieben ausgeloeste Karten des alten Laufs haengen.
   {
@@ -924,11 +926,12 @@ app.post('/api/run/start', (req, res) => {
   }
   state.durationMode = ['computed', 'target'].includes(durationMode) ? durationMode : 'authored';
   state.difficulty = ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel';
+  state.schwerpunkt = (scenario.schwerpunkte || []).some(x => x.key === schwerpunkt) ? schwerpunkt : null;
 
   if (state.durationMode === 'target') {
     const minutes = Math.max(10, Number(targetMinutes) || 90);
     const roleCount = engine.activeRoleGroupCount(scenario, state);
-    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: state.difficulty, roleCount, activeRoleIds: engine.assignedRoleIds(state) });
+    const plan = engine.buildAdaptiveSchedule(scenario, { targetMinutes: minutes, difficulty: state.difficulty, roleCount, activeRoleIds: engine.assignedRoleIds(state), schwerpunkt: state.schwerpunkt });
     state.targetMinutes = minutes;
     state.plannedSchedule = plan.schedule;
     state.plannedTotalMinutes = plan.totalMinutes;

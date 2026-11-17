@@ -180,7 +180,7 @@ function render(s) {
     (s.lagekarten && s.lagekarten.total ? ` · Lagekarte ${s.lagekarten.gezeigt} von ${s.lagekarten.total}` : '');
   const modeLabel = s.durationMode === 'target' ? `Zieldauer ${s.targetMinutes} Min. (${s.difficulty})`
     : s.durationMode === 'computed' ? `Berechnet (${s.difficulty})` : 'Erprobte feste Zeiten';
-  document.getElementById('m-mode').textContent = `Modus: ${modeLabel}`;
+  document.getElementById('m-mode').textContent = `Modus: ${modeLabel}` + (s.schwerpunkt ? ` · Schwerpunkt: ${s.schwerpunkt.label}` : '');
   document.getElementById('m-roles').textContent = `${s.activeRoleGroups} aktive Funktionsbereiche`;
 
   renderTimeline(s);
@@ -287,9 +287,11 @@ function render(s) {
       <button class="secondary fire-sk" data-id="${sk.id}" title="Verschickt diese vertrauliche Sonderlagekarte sofort per E-Mail an die zugeordnete Person.">Jetzt auslösen</button>
     </div>`).join('') || '<p class="muted mini">Keine offenen Karten.</p>';
 
-  document.getElementById('m-bonus').innerHTML = (s.bonuskarten || []).filter(b => b.recipientRoleId).map(b => `
+  const spKarten = new Set((s.schwerpunkt && s.schwerpunkt.karten) || []);
+  document.getElementById('m-bonus').innerHTML = (s.bonuskarten || []).filter(b => b.recipientRoleId)
+    .sort((x, y) => (spKarten.has(y.id) ? 1 : 0) - (spKarten.has(x.id) ? 1 : 0)).map(b => `
     <div class="row" style="justify-content:space-between;margin-bottom:6px;">
-      <span class="mini">${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
+      <span class="mini">${b.titel ? `<b>${escapeHtml(b.titel)}</b> ` : ''}${spKarten.has(b.id) ? '<span class="badge ok">passt zum Schwerpunkt</span> ' : ''}${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
       <button class="secondary fire-bonus" data-id="${b.id}" ${b.fired ? 'disabled' : ''} title="Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.">${b.fired ? 'Ausgelöst' : 'Auslösen'}</button>
     </div>`).join('') || '<p class="muted mini">Für die aktuelle Besetzung keine Bonuskarten verfügbar.</p>';
 

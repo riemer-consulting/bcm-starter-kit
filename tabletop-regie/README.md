@@ -353,6 +353,12 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Rollen können `alteIds` haben: Wird eine Rolle umbenannt, übernehmen
   gespeicherte Teilnehmerlisten und Vorlagen mit der alten ID automatisch die
   neue Rolle.
+- `schwerpunkte[]` (optional): Übungsschwerpunkte (`key`, `label`,
+  `beschreibung`, `karten`: Liste von Lage-, vertraulichen und Bonuskarten).
+  Im Setup bei „Zieldauer“ wählbar. Pflichtkarten und Spannungsbogen bleiben
+  gleich; die Karten des Schwerpunkts werden beim Auffüllen bevorzugt, und
+  passende Bonuskarten stehen in der Moderation oben mit dem Hinweis „passt
+  zum Schwerpunkt“.
 - `standardablauf.rollenPrioritaet` (optional): feste Reihenfolge für
   „Passende Rollen vorschlagen“ – bei 45 Minuten die ersten 5, bei 90 die
   ersten 9 usw. Ohne Angabe wählt die App nach Häufigkeit auf den Lagekarten.

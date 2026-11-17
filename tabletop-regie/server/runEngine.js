@@ -174,7 +174,7 @@ function placeEvents(sortedEvents, slot) {
  * Rechnung). Reicht die Zeit nicht, werden Entscheidungsphasen komprimiert
  * (mit Untergrenze); bleibt Zeit uebrig, werden sie gestreckt.
  */
-function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount, activeRoleIds }) {
+function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount, activeRoleIds, schwerpunkt }) {
   const timeline = buildTimeline(scenario);
   const nominalDecision = DIFFICULTY_DECISION_MINUTES[difficulty] || DIFFICULTY_DECISION_MINUTES.mittel;
   const effectiveRoleCount = Math.max(1, roleCount || 1);
@@ -220,6 +220,16 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     return acc;
   };
   const allLks = timeline.filter(ev => ev.type === 'lagekarte');
+  // Uebungsschwerpunkt: Karten des gewaehlten Schwerpunkts ruecken beim
+  // Auffuellen eine halbe bis ganze Prioritaetsstufe nach vorn (Pflichtkarten
+  // bleiben Pflicht, der Spannungsbogen bleibt vollstaendig).
+  const sp = (scenario.schwerpunkte || []).find(x => x.key === schwerpunkt);
+  const spSet = new Set(sp ? sp.karten : []);
+  const effPrio = ev => {
+    const pr = ev.ref.prioritaet || 2;
+    if (!spSet.has(ev.id) || pr === 1) return pr;
+    return pr === 2 ? 1.5 : 2;
+  };
   const homeOf = ev => { let h = null; allLks.forEach(l => { if (l.authoredMinute <= ev.authoredMinute) h = l; }); return h; };
 
   const byPrio = p => timeline.filter(ev => (ev.ref.prioritaet || 2) === p);
@@ -298,7 +308,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     selected.forEach(countAct);
     const pool = fillPool.slice();
     while (pool.length) {
-      pool.sort((a, b) => ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
+      pool.sort((a, b) => (effPrio(a) - effPrio(b))
         || ((lkOwned(a) ? 0 : 1) - (lkOwned(b) ? 0 : 1))
         || ((actCount[a.ref.akt] || 0) - (actCount[b.ref.akt] || 0))
         || (a.authoredMinute - b.authoredMinute));
@@ -387,7 +397,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   selected.filter(ev => ev.type !== 'lagekarte').forEach(ev => take(ev, false));
   const balanced = (a, b) => (winLoad[windowOf(a)] - winLoad[windowOf(b)])
     || (own(a) - own(b))
-    || ((a.ref.prioritaet || 2) - (b.ref.prioritaet || 2))
+    || (effPrio(a) - effPrio(b))
     || (sortKey(a) - sortKey(b));
   // Rollenabdeckung: jede besetzte Rolle bekommt mindestens eine eigene Karte
   // (eigene Karte vor umgeleiteter, dann im am wenigsten belegten Abschnitt).

@@ -248,13 +248,14 @@ async function updateDurationPreview() {
   const difficulty = document.getElementById('difficulty').value;
 
   document.getElementById('target-duration-row').style.display = mode === 'target' ? 'grid' : 'none';
+  document.getElementById('schwerpunkt-row').style.display = mode === 'target' && (meta.schwerpunkte || []).length ? '' : 'none';
 
   if (mode === 'target') {
     const targetMinutes = currentTargetMinutes();
     try {
       const r = await fetch('/api/preview-schedule', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetMinutes, difficulty, roleIds: allRoleIds })
+        body: JSON.stringify({ targetMinutes, difficulty, roleIds: allRoleIds, schwerpunkt: document.getElementById('schwerpunkt').value || null })
       }).then(res => res.json());
       document.getElementById('duration-preview').textContent =
         `${current.length} Teilnehmer, ${r.activeRoleGroups} aktive Funktionsbereiche. ` +
@@ -293,6 +294,13 @@ async function updateDurationPreview() {
 document.addEventListener('input', e => { if (e.target.closest('#participants-body')) updateDurationPreview(); });
 document.getElementById('duration-mode').addEventListener('change', updateDurationPreview);
 document.getElementById('difficulty').addEventListener('change', updateDurationPreview);
+document.getElementById('schwerpunkt').addEventListener('change', updateDurationPreview);
+function fillSchwerpunkte() {
+  const sel = document.getElementById('schwerpunkt');
+  const keep = sel.value;
+  sel.innerHTML = '<option value="">Ausgewogen (alle Themen)</option>' + (meta.schwerpunkte || []).map(x => `<option value="${escHtml(x.key)}" title="${escHtml(x.beschreibung || '')}">${escHtml(x.label)}</option>`).join('');
+  if (Array.from(sel.options).some(o => o.value === keep)) sel.value = keep;
+}
 document.getElementById('target-preset').addEventListener('change', () => {
   const v = document.getElementById('target-preset').value;
   if (Array.from(document.getElementById('role-duration').options).some(o => o.value === v)) document.getElementById('role-duration').value = v;
@@ -485,11 +493,12 @@ document.getElementById('btn-start').addEventListener('click', async () => {
   const durationMode = document.getElementById('duration-mode').value;
   const difficulty = document.getElementById('difficulty').value;
   const targetMinutes = durationMode === 'target' ? currentTargetMinutes() : undefined;
-  await fetch('/api/run/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ durationMode, difficulty, targetMinutes }) });
+  const schwerpunkt = durationMode === 'target' ? (document.getElementById('schwerpunkt').value || null) : null;
+  await fetch('/api/run/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ durationMode, difficulty, targetMinutes, schwerpunkt }) });
   // Zeitmodus/Schwierigkeit/Zieldauer merken, damit das Setup sie beim
   // naechsten Mal (bzw. in einer exportierten Vorlage) wieder vorschlaegt.
   await saveSettingsPart({ runDefaults: {
-    durationMode, difficulty,
+    durationMode, difficulty, schwerpunkt,
     targetPreset: document.getElementById('target-preset').value,
     targetCustom: Number(document.getElementById('target-custom').value) || 90
   } });
@@ -567,6 +576,8 @@ function applyRunDefaults(rd) {
   if (!rd) return;
   document.getElementById('duration-mode').value = rd.durationMode || 'authored';
   document.getElementById('difficulty').value = rd.difficulty || 'mittel';
+  const spSel = document.getElementById('schwerpunkt');
+  if (Array.from(spSel.options).some(o => o.value === (rd.schwerpunkt || ''))) spSel.value = rd.schwerpunkt || '';
   document.getElementById('target-preset').value = rd.targetPreset || '90';
   document.getElementById('target-custom').value = rd.targetCustom || 90;
   document.getElementById('target-duration-row').style.display = document.getElementById('duration-mode').value === 'target' ? 'grid' : 'none';
@@ -780,6 +791,7 @@ document.getElementById('toene-liste').addEventListener('change', async e => {
 
 async function init() {
   meta = await (await fetch('/api/scenario-meta')).json();
+  fillSchwerpunkte();
   document.getElementById('scenario-title').textContent = meta.title;
   document.getElementById('scenario-subtitle').textContent = meta.subtitle;
   const check = meta.pruefung || { errors: [], warnings: [] };
