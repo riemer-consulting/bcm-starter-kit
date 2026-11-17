@@ -23,7 +23,8 @@ function newRunState(scenario) {
     participants: [], // { id, name, email, roleIds }
     activeRoleIds: scenario.roles.map(r => r.id), // welche Rollen fuer diesen Lauf ueberhaupt zur Auswahl stehen
     firedLagekarten: [], // ids
-    firedSonderlagekarten: [], // { id, emailStatus }
+    firedSonderlagekarten: [], // { id, at, atMinute, manual, recipientRoleId, emailResults }
+    firedBonusInfo: [], // { id, atMinute, recipientRoleId } -- fuer das Spielbrett
     finale: { step: 0, optionen: {} }, // Abschluss (Nacharbeiten + Rechnung), 0 = nicht aktiv
     finaleMinutes: 0,
     manualFires: [], // ids, die der Moderator vorzeitig/zusätzlich ausgelöst hat

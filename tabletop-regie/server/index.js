@@ -156,7 +156,7 @@ async function fireSonderlagekarte(sk, { manual } = {}) {
   const recipientRoleId = recipientRoleFor(sk);
   const role = roleById(recipientRoleId || sk.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
-  const entry = { id: sk.id, at: Date.now(), manual: !!manual, recipientRoleId, emailResults: [] };
+  const entry = { id: sk.id, at: Date.now(), atMinute: engine.elapsedMinutes(state), manual: !!manual, recipientRoleId, emailResults: [] };
   if (recipients.length === 0) {
     log('warn', `Sonderlagekarte ${sk.id} (${recipientLabel(sk)}) fällig, aber weder diese Rolle noch eine Ersatzrolle ist besetzt.`);
   } else if (testModeActive()) {
@@ -230,6 +230,57 @@ function lagekartenProgress() {
 function aktLabel(lk) {
   const a = lk && engine.AKTE.find(x => x.key === lk.akt);
   return a ? a.label : null;
+}
+
+// Spielbrett: Wer sitzt am Tisch, wer ist bei der aktuellen Lage gefordert,
+// wer hat seit Beginn dieser Lage eine neue vertrauliche Information bekommen?
+// Inhalte vertraulicher Karten werden hier NICHT verraten -- nur, dass es
+// etwas Neues gibt. Ebenen bilden den Meldeweg ab: Eingang (Anwender, Kunden,
+// Standorte) -> Krisenstab -> Weitergabe nach innen und außen.
+const EBENEN = ['eingang', 'krisenstab', 'verteilung'];
+function kurzRolle(funktion) {
+  let k = String(funktion || '').split(',')[0].trim();
+  // Lange Klammerzusaetze weglassen ("IT-Leitung (Kassensysteme & ...)"),
+  // kurze behalten ("Geschäftsführung (CEO)").
+  if (k.length > 26) k = k.replace(/\s*\([^)]*\)\s*$/, '');
+  return k;
+}
+function spielbrett() {
+  const currentLk = engine.currentLagekarte(scenario, state);
+  const schedule = engine.getActiveSchedule(scenario, state);
+  let seit = null;
+  if (currentLk) {
+    const ev = schedule.find(e => e.type === 'lagekarte' && e.id === currentLk.id);
+    seit = ev ? ev.minute : currentLk.minuteOffset;
+  }
+  // Zeitpunkt einer Karte: geplante Minute im Ablauf (ein Zeitsprung loest
+  // fruehere Karten nachtraeglich aus -- die zaehlen nicht als "neu" fuer die
+  // aktuelle Lage); manuell ausgeloeste Karten zaehlen ab Ausloesung.
+  const geplant = {};
+  schedule.forEach(e => { if (e.type === 'sonderlagekarte') geplant[e.id] = e.minute; });
+  const neu = {};
+  if (seit !== null) {
+    (state.firedSonderlagekarten || []).forEach(f => {
+      const m = !f.manual && geplant[f.id] !== undefined ? geplant[f.id] : f.atMinute;
+      if (f.recipientRoleId && typeof m === 'number' && m >= seit - 0.01) neu[f.recipientRoleId] = (neu[f.recipientRoleId] || 0) + 1;
+    });
+    (state.firedBonusInfo || []).forEach(f => {
+      if (f.recipientRoleId && typeof f.atMinute === 'number' && f.atMinute >= seit - 0.01) neu[f.recipientRoleId] = (neu[f.recipientRoleId] || 0) + 1;
+    });
+  }
+  const zust = new Set(currentLk ? (currentLk.zustaendig || []) : []);
+  const rollen = scenario.roles.filter(r => r.id !== 'teilnehmer').map(r => {
+    const team = participantsForRole(r.id);
+    if (!team.length) return null;
+    return {
+      id: r.id, rolle: kurzRolle(r.funktion), ebene: EBENEN.includes(r.ebene) ? r.ebene : 'krisenstab',
+      namen: team.map(p => p.name).filter(Boolean), anzahl: team.length,
+      gefordert: zust.has(r.id), neueInfo: neu[r.id] || 0
+    };
+  }).filter(Boolean);
+  const unbesetzt = [...zust].filter(rid => rid !== 'teilnehmer' && !participantsForRole(rid).length)
+    .map(rid => kurzRolle((roleById(rid) || {}).funktion || rid));
+  return { lageAktiv: !!currentLk, rollen, unbesetztGefordert: unbesetzt };
 }
 
 function tick() {
@@ -704,6 +755,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     } : { verfuegbar: false },
     upcoming,
     fullTimeline,
+    spielbrett: spielbrett(),
     skipped: skippedDetailed,
     firedSonderlagekarten: state.firedSonderlagekarten,
     unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
@@ -744,7 +796,8 @@ app.get('/api/run/stage-state', (req, res) => {
     finaleMinutes: state.finaleMinutes || 0,
     soundReplay: state.soundReplay || 0,
     soundOwner,
-    finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null
+    finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null,
+    spielbrett: spielbrett()
   });
 });
 
@@ -948,6 +1001,8 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   const role = roleById(recipientRoleId || b.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
   state.firedLagekarten.push('BONUS_' + b.id);
+  state.firedBonusInfo = state.firedBonusInfo || [];
+  state.firedBonusInfo.push({ id: b.id, atMinute: engine.elapsedMinutes(state), recipientRoleId });
   if (recipients.length === 0) {
     log('warn', `Bonuskarte ${b.id} ausgelöst, aber weder ${recipientLabel(b)} noch eine Ersatzrolle ist besetzt.`);
   } else if (testModeActive()) {

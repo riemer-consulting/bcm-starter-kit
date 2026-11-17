@@ -128,6 +128,8 @@ async function refresh() {
   const pct = s.totalPlannedMinutes ? Math.min(100, (s.elapsedMinutes / s.totalPlannedMinutes) * 100) : 0;
   document.getElementById('progress-fill').style.width = pct + '%';
 
+  renderBoard(s);
+
   const content = document.getElementById('content');
   const statusLabel = document.getElementById('status-label');
 
@@ -181,6 +183,47 @@ async function refresh() {
     ${mediaHtml}
     <ul class="aufgabe">${aufgabeHtml}</ul>
   `;
+}
+
+// Spielbrett in der Seitenleiste: Meldeweg von draußen ueber den Krisenstab
+// nach innen. Hervorgehoben: wer bei der aktuellen Lage gefordert ist und wer
+// seit Beginn dieser Lage eine neue vertrauliche Information hat (ohne Inhalt).
+const EBENEN_LABEL = {
+  eingang: ['Meldungen von draußen', 'Anwender, Kunden, Standorte'],
+  krisenstab: ['Krisenstab', 'bewertet und entscheidet'],
+  verteilung: ['Weitergabe', 'nach innen und außen']
+};
+let lastBoardKey = null;
+function renderBoard(s) {
+  const board = document.getElementById('board');
+  const b = s.spielbrett;
+  const zeigen = b && b.rollen.length && s.status !== 'idle' && !(s.status === 'ended' && s.finale);
+  document.getElementById('company-facts').style.display = zeigen ? 'none' : '';
+  document.querySelector('.side').classList.toggle('mit-brett', !!zeigen);
+  board.style.display = zeigen ? '' : 'none';
+  if (!zeigen) { lastBoardKey = null; return; }
+  const key = JSON.stringify(b);
+  if (key === lastBoardKey) return;
+  lastBoardKey = key;
+  board.classList.toggle('lage', b.lageAktiv);
+  board.classList.toggle('eng', b.rollen.length > 8);
+  const lanes = ['eingang', 'krisenstab', 'verteilung'].map(e => {
+    const rollen = b.rollen.filter(r => r.ebene === e);
+    if (!rollen.length) return '';
+    const tiles = rollen.map(r => {
+      const namen = r.namen.length ? r.namen.join(', ') : '';
+      const tags = (r.gefordert ? '<span class="tag zug">am Zug</span>' : '') + (r.neueInfo ? '<span class="tag info">neue Info</span>' : '');
+      return `<div class="tile${r.gefordert ? ' gefordert' : ''}${r.neueInfo ? ' info' : ''}" title="${escapeHtml(r.rolle + (namen ? ' – ' + namen : ''))}">
+        <div class="r">${escapeHtml(r.rolle)}</div><div class="n">${escapeHtml(namen)}${tags}</div></div>`;
+    }).join('');
+    return `<div class="lane"><div class="lane-k">${EBENEN_LABEL[e][0]} <span>· ${EBENEN_LABEL[e][1]}</span></div><div class="tiles">${tiles}</div></div>`;
+  }).filter(Boolean);
+  const fehlt = b.unbesetztGefordert.length ? `<div class="fehlt">Auch gefragt, aber nicht besetzt: ${escapeHtml(b.unbesetztGefordert.join(', '))}</div>` : '';
+  // Pfeile zwischen den Ebenen: von draußen wird gebündelt gemeldet, der
+  // Krisenstab gibt Anweisungen und Sprachregelung weiter.
+  const vorhanden = ['eingang', 'krisenstab', 'verteilung'].filter(e => b.rollen.some(r => r.ebene === e));
+  const pfeil = e => `<div class="pfeil">&#8595; ${e === 'eingang' ? 'meldet gebündelt' : 'Anweisung &amp; Sprachregelung'} &#8595;</div>`;
+  document.getElementById('board-body').innerHTML = fehlt + lanes.map((l, i) => (i ? pfeil(vorhanden[i - 1]) : '') + l).join('');
 }
 
 // ---- Abschluss: Nacharbeiten und Rechnung ----

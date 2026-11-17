@@ -33,7 +33,8 @@
       "vertrieb",
       "e-commerce",
       "finanzen",
-      "kommunikation"
+      "kommunikation",
+      "service"
     ],
     "vorbotenMinuten": 3
   },
@@ -111,6 +112,14 @@
       ]
     },
     {
+      "key": "service",
+      "label": "Service & Kundenkontakt",
+      "members": [
+        "it-support-filialen",
+        "kundenservice-hotline"
+      ]
+    },
+    {
       "key": "krisenstab-support",
       "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
       "members": [
@@ -124,85 +133,113 @@
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
-      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen und musst am Ende öffentlich vor die Presse treten."
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen und musst am Ende öffentlich vor die Presse treten.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiterin-logistik-zentrallager",
       "funktion": "Leitung Logistik & Zentrallager",
       "group": "logistik",
-      "beschreibung": "Du verantwortest das Zentrallager und die Belieferung aller Filialen. Nach dem Brand musst du Alternativen organisieren, damit die Filialen weiter Ware bekommen."
+      "beschreibung": "Du verantwortest das Zentrallager und die Belieferung aller Filialen. Nach dem Brand musst du Alternativen organisieren, damit die Filialen weiter Ware bekommen.",
+      "ebene": "krisenstab"
     },
     {
       "id": "schichtleiter-zentrallager",
       "funktion": "Schichtleitung Zentrallager (vor Ort in der Brandnacht)",
       "group": "logistik",
-      "beschreibung": "Du warst in der Brandnacht vor Ort und kennst die Lage im Lager aus erster Hand — Zustand des Gebäudes, Verletzte, was sich noch retten lässt."
+      "beschreibung": "Du warst in der Brandnacht vor Ort und kennst die Lage im Lager aus erster Hand — Zustand des Gebäudes, Verletzte, was sich noch retten lässt.",
+      "ebene": "eingang"
     },
     {
       "id": "leiter-it",
       "funktion": "IT-Leitung (Kassensysteme & Warenwirtschaft)",
       "group": "it",
-      "beschreibung": "Du verantwortest Kassensysteme und Warenwirtschaft. Nach dem Serverausfall musst du entscheiden, wie Filialen und Online-Shop übergangsweise arbeiten können."
+      "beschreibung": "Du verantwortest Kassensysteme und Warenwirtschaft. Nach dem Serverausfall musst du entscheiden, wie Filialen und Online-Shop übergangsweise arbeiten können.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiter-einkauf",
       "funktion": "Leitung Einkauf & Lieferantenmanagement",
       "group": "einkauf",
-      "beschreibung": "Du verantwortest Lieferanten und Beschaffung. Du musst kurzfristig Ersatzlieferungen organisieren und entscheiden, wo sich Mehrkosten lohnen."
+      "beschreibung": "Du verantwortest Lieferanten und Beschaffung. Du musst kurzfristig Ersatzlieferungen organisieren und entscheiden, wo sich Mehrkosten lohnen.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiterin-personal",
       "funktion": "Personalleitung",
       "group": "personal",
-      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden, insbesondere den verletzten Kollegen aus der Nachtschicht und seine Familie, sowie die Stimmung im Team."
+      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden, insbesondere den verletzten Kollegen aus der Nachtschicht und seine Familie, sowie die Stimmung im Team.",
+      "ebene": "verteilung"
     },
     {
       "id": "leiter-arbeitssicherheit",
       "funktion": "Leitung Arbeitssicherheit & Werkschutz",
       "group": "arbeitssicherheit",
-      "beschreibung": "Du verantwortest Arbeitssicherheit und Werkschutz. Die Brandursache und mögliche Versäumnisse bei der Wartung sind dein heikelstes Thema."
+      "beschreibung": "Du verantwortest Arbeitssicherheit und Werkschutz. Die Brandursache und mögliche Versäumnisse bei der Wartung sind dein heikelstes Thema.",
+      "ebene": "krisenstab"
     },
     {
       "id": "regionalleiterin-filialen-nord",
       "funktion": "Regionalleitung Filialen Nord",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erste mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
+      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erste mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren.",
+      "ebene": "eingang"
     },
     {
       "id": "regionalleiter-filialen-sued",
       "funktion": "Regionalleitung Filialen Süd",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erster mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren."
+      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erster mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren.",
+      "ebene": "eingang"
     },
     {
       "id": "online-shop-leitung",
       "funktion": "Leitung Online-Shop & E-Commerce",
       "group": "e-commerce",
-      "beschreibung": "Du verantwortest den Online-Shop. Falsche Lagerbestände und stornierte Bestellungen sind dein unmittelbares Problem."
+      "beschreibung": "Du verantwortest den Online-Shop. Falsche Lagerbestände und stornierte Bestellungen sind dein unmittelbares Problem.",
+      "ebene": "eingang"
     },
     {
       "id": "leiter-finanzen-cfo",
       "funktion": "Leitung Finanzen & Versicherung (CFO)",
       "group": "finanzen",
-      "beschreibung": "Du verantwortest Finanzen und Versicherung. Du musst früh einschätzen, was die Versicherung deckt und wo das Unternehmen selbst einspringen muss."
+      "beschreibung": "Du verantwortest Finanzen und Versicherung. Du musst früh einschätzen, was die Versicherung deckt und wo das Unternehmen selbst einspringen muss.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiterin-kommunikation-pr",
       "funktion": "Leitung Unternehmenskommunikation & Marketing",
       "group": "kommunikation",
-      "beschreibung": "Du verantwortest die externe Kommunikation. Presse, soziale Medien und am Ende die Pressekonferenz laufen über deinen Tisch."
+      "beschreibung": "Du verantwortest die externe Kommunikation. Presse, soziale Medien und am Ende die Pressekonferenz laufen über deinen Tisch.",
+      "ebene": "verteilung"
+    },
+    {
+      "group": "service",
+      "id": "it-support-filialen",
+      "funktion": "IT-Support (Filialen & Kassen)",
+      "beschreibung": "Du bist die Hotline für 14 Filialen: Kassen im Offline-Modus, fehlende Preise, Scanner, Drucker. Du bündelst die Meldungen der Filialen, gibst dem Krisenstab ein klares Lagebild und verteilst dessen Anweisungen an alle Filialen gleichzeitig.",
+      "ebene": "eingang"
+    },
+    {
+      "group": "service",
+      "id": "kundenservice-hotline",
+      "funktion": "Kundenservice-Hotline / Callcenter",
+      "beschreibung": "Du nimmst Anrufe, Mails und Chatnachrichten von Kundinnen und Kunden entgegen: Lieferungen, Online-Bestellungen, Sorgen wegen Rauch und Löschwasser. Du brauchst eine Sprachregelung vom Krisenstab und meldest zurück, was draußen ankommt.",
+      "ebene": "eingang"
     },
     {
       "id": "notfallmanagement-bcm",
       "funktion": "Notfallmanagement / BCM-Koordination",
       "group": "krisenstab-support",
-      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Behördenanfragen, Eskalationswege. Ohne feste Sprechzeit, aber wichtig, damit nichts untergeht."
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Behördenanfragen, Eskalationswege. Ohne feste Sprechzeit, aber wichtig, damit nichts untergeht.",
+      "ebene": "krisenstab"
     },
     {
       "id": "assistenz-gf-dokumentation",
       "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
       "group": "krisenstab-support",
-      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs für die spätere Nachbereitung. Ohne feste Sprechzeit, aber wichtig fürs Debriefing."
+      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs für die spätere Nachbereitung. Ohne feste Sprechzeit, aber wichtig fürs Debriefing.",
+      "ebene": "krisenstab"
     }
   ],
   "moderationsleitfaden": {
@@ -212,6 +249,7 @@
       "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
       "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
+      "Meldungen von draußen (Anwender, Kunden, Standorte) laufen gebündelt an den Krisenstab. Der Krisenstab entscheidet und gibt Anweisungen und eine einheitliche Sprachregelung zurück – an alle, die Fragen beantworten müssen.",
       "Anschließend erfolgt die Abstimmung im Krisenstab.",
       "Teilnehmende ohne feste Rolle beobachten, bringen auf Nachfrage ihre Sicht ein und notieren Auffälligkeiten für das Debriefing."
     ],
@@ -219,6 +257,7 @@
     "debriefingFragen": [
       "Wann wart ihr am stärksten unter Druck?",
       "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
+      "Wie kamen die Meldungen von IT-Support, Hotline und Filialen beim Krisenstab an – und wie kamen Anweisungen und Sprachregelung zu ihnen zurück?",
       "Welche Information hat gefehlt?",
       "Wer hätte früher eingebunden werden müssen?",
       "Welche BCM-Maßnahme hätte geholfen?",
@@ -318,7 +357,8 @@
       "prioritaet": 2,
       "zustaendig": [
         "leiter-it",
-        "online-shop-leitung"
+        "online-shop-leitung",
+        "it-support-filialen"
       ],
       "akt": "ausbruch"
     },
@@ -334,7 +374,8 @@
       "aufgabe": [
         "Was kommunizieren Sie an die Filialleitungen?",
         "Wie sichern Sie den Kassenbetrieb ab?",
-        "Wer informiert die Mitarbeitenden vor Ort?"
+        "Wer informiert die Mitarbeitenden vor Ort?",
+        "Welche einheitliche Anweisung bekommen alle 14 Filialen – und wer gibt sie raus?"
       ],
       "moderatorHinweis": null,
       "media": {
@@ -351,7 +392,9 @@
       "zustaendig": [
         "regionalleiterin-filialen-nord",
         "regionalleiter-filialen-sued",
-        "leiter-it"
+        "leiter-it",
+        "it-support-filialen",
+        "kundenservice-hotline"
       ],
       "akt": "eskalation"
     },
@@ -395,7 +438,8 @@
       "aufgabe": [
         "Wer beobachtet die Social-Media-Lage?",
         "Reagieren Sie öffentlich oder beobachten Sie zunächst?",
-        "Welche Fakten können Sie bereits bestätigen?"
+        "Welche Fakten können Sie bereits bestätigen?",
+        "Welche Auskunft gibt die Hotline Anwohnerinnen und Anwohnern?"
       ],
       "moderatorHinweis": "Der Social-Media-Beitrag erscheint automatisch auf der Bühne – kurz darauf hinweisen.",
       "media": {
@@ -406,7 +450,8 @@
       "prioritaet": 2,
       "zustaendig": [
         "leiterin-kommunikation-pr",
-        "geschaeftsfuehrer-ceo"
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-hotline"
       ],
       "akt": "eskalation"
     },
@@ -517,7 +562,8 @@
       "zustaendig": [
         "online-shop-leitung",
         "leiter-it",
-        "leiterin-kommunikation-pr"
+        "leiterin-kommunikation-pr",
+        "kundenservice-hotline"
       ],
       "akt": "eskalation"
     },
@@ -560,7 +606,8 @@
       "aufgabe": [
         "Wer tritt vor die Kamera?",
         "Welche Botschaft hat oberste Priorität?",
-        "Wie gehen Sie mit unbeantworteten Fragen um?"
+        "Wie gehen Sie mit unbeantworteten Fragen um?",
+        "Bekommen Hotline und Filialen die Botschaften der Pressekonferenz vorab?"
       ],
       "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Person mit der Rolle Geschäftsführung/Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „In einer Stunde stehen Sie vor laufenden Kameras.“ Der ganze Raum muss liefern. Dies ist die stärkste Szene der Übung.",
       "media": {
@@ -642,7 +689,8 @@
       "aufgabe": [
         "Was nehmen Sie aus den letzten 72 Stunden mit?",
         "Was muss sich strukturell ändern?",
-        "Wie schließen Sie die Krise nach außen ab?"
+        "Wie schließen Sie die Krise nach außen ab?",
+        "Wer informiert Filialen, Hotline und Belegschaft über den Wiederanlauf?"
       ],
       "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
       "media": {
@@ -653,7 +701,9 @@
       "prioritaet": 1,
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
-        "leiterin-logistik-zentrallager"
+        "leiterin-logistik-zentrallager",
+        "it-support-filialen",
+        "kundenservice-hotline"
       ],
       "akt": "wiederanlauf"
     },
@@ -1049,6 +1099,81 @@
         "regionalleiter-filialen-sued",
         "geschaeftsfuehrer-ceo"
       ]
+    },
+    {
+      "id": "SK22",
+      "nr": 22,
+      "empfaenger": "it-support-filialen",
+      "minuteOffset": 26,
+      "vertraulich": true,
+      "text": "Alle 14 Filialen rufen gleichzeitig an: Die Kassen laufen nur im Offline-Modus, Preise fehlen, Kartenzahlung geht nur teilweise. Jede Filiale fragt: Öffnen wir oder nicht? Vom Krisenstab gibt es noch keine Anweisung.",
+      "moderatorGut": "Die Meldungen werden gebündelt (welche Filialen, welche Funktionen), der Krisenstab gibt eine klare Anweisung an alle Filialen gleichzeitig.",
+      "moderatorSchlecht": "Jede Filiale bekommt eine andere Auskunft – einige öffnen, andere nicht.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "regionalleiterin-filialen-nord"
+      ]
+    },
+    {
+      "id": "SK23",
+      "nr": 23,
+      "empfaenger": "kundenservice-hotline",
+      "minuteOffset": 33,
+      "vertraulich": true,
+      "text": "Die Hotline ist überlastet: Anwohnerinnen und Anwohner fragen, ob der Rauch giftig ist und ob sie die Fenster schließen sollen; Kunden fragen nach Lieferterminen. Eine abgestimmte Auskunft gibt es nicht – und Gesundheitsfragen darfst du nicht selbst beantworten.",
+      "moderatorGut": "Verweis auf die offiziellen Warnungen der Behörden, Sprachregelung wird beim Krisenstab angefordert, die Lage wird zurückgemeldet.",
+      "moderatorSchlecht": "Am Telefon wird spekuliert („wird schon nicht so schlimm sein“).",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-kommunikation-pr",
+        "online-shop-leitung"
+      ]
+    },
+    {
+      "id": "SK24",
+      "nr": 24,
+      "empfaenger": "it-support-filialen",
+      "minuteOffset": 56,
+      "vertraulich": true,
+      "text": "In zwei Filialen läuft der Speicher der Offline-Kassen voll. Ohne Verbindung zur Zentrale können sie ab morgen früh keine Verkäufe mehr speichern.",
+      "moderatorGut": "Der Krisenstab entscheidet über eine Notlösung (z. B. Handbelege) und informiert alle Filialen einheitlich.",
+      "moderatorSchlecht": "Das Problem bleibt in der IT liegen, bis die Kassen stehen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "regionalleiter-filialen-sued"
+      ]
+    },
+    {
+      "id": "SK25",
+      "nr": 25,
+      "empfaenger": "kundenservice-hotline",
+      "minuteOffset": 74,
+      "vertraulich": true,
+      "text": "Nach der Pressekonferenz rufen Kunden an, die Online-Bestellungen stornieren wollen; andere fragen, ob Gutscheine noch gelten. Was in der Pressekonferenz gesagt wurde, kennst du nur aus dem Radio.",
+      "moderatorGut": "Die Botschaften der Pressekonferenz kommen schriftlich als Sprachregelung an die Hotline, offene Fragen gehen gesammelt an den Krisenstab.",
+      "moderatorSchlecht": "Die Hotline erfährt die Botschaften aus den Medien und widerspricht ihnen am Telefon.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-kommunikation-pr",
+        "online-shop-leitung"
+      ]
+    },
+    {
+      "id": "SK26",
+      "nr": 26,
+      "empfaenger": "it-support-filialen",
+      "minuteOffset": 88,
+      "vertraulich": true,
+      "text": "Die Kassen sind wieder online – aber die Offline-Bons und Handbelege der letzten Tage müssen nachgebucht werden. Jede Filiale will zuerst drankommen.",
+      "moderatorGut": "Der Krisenstab legt die Reihenfolge fest und teilt sie allen Filialen mit.",
+      "moderatorSchlecht": "Die Filialen drängeln, die Reihenfolge entscheidet der Zufall.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "regionalleiterin-filialen-nord"
+      ]
     }
   ],
   "bonuskarten": [
@@ -1113,7 +1238,7 @@
     "nacharbeiten": [
       {
         "zahl": "5.600",
-        "text": "Kassenvorgänge aus dem Offline-Betrieb müssen nachgebucht und mit den Beständen abgeglichen werden"
+        "text": "handschriftliche Lieferscheine und Kassenbelege aus dem Notbetrieb müssen nachgebucht und mit den Beständen abgeglichen werden"
       },
       {
         "zahl": "12.000",

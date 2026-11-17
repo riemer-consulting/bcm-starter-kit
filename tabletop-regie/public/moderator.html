@@ -35,6 +35,17 @@
   .sk-alert.fehler { border-color:var(--bad); }
   .sk-alert .kopf { font-weight:700; color:var(--warn); margin-bottom:4px; }
   .sk-alert.fehler .kopf { color:var(--bad); }
+  .mboard { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; align-items:start; }
+  .mboard .lane-k { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+  .mboard .tile { border:1px solid var(--border); border-radius:6px; padding:5px 8px; margin-bottom:5px; font-size:12px; }
+  .mboard.lage .tile { opacity:.5; }
+  .mboard.lage .tile.gefordert, .mboard.lage .tile.info { opacity:1; }
+  .mboard .tile.gefordert { border:2px solid var(--accent); }
+  .mboard .tile.info { background:rgba(224,168,50,.12); }
+  .mboard .tile .n { color:var(--muted); }
+  .mboard .tag { font-size:10px; font-weight:700; border-radius:3px; padding:0 4px; margin-left:4px; }
+  .mboard .tag.zug { background:var(--accent); color:#fff; }
+  .mboard .tag.info { background:var(--warn); color:#1a1300; }
 </style>
 </head>
 <body>
@@ -80,6 +91,12 @@
       <div class="card">
         <h2>Aktuelle Lagekarte (öffentlich)</h2>
         <div id="m-current-lk" class="muted">Noch nicht gestartet.</div>
+      </div>
+
+      <div class="card" id="m-board-card" style="display:none;">
+        <h2>Spielbrett: Wer ist am Zug?</h2>
+        <p class="muted mini">Steht auch auf der Bühne. Blau = bei dieser Lage gefordert, gelb = hat seit Beginn dieser Lage eine neue vertrauliche Information (Inhalt siehe „Verschickte vertrauliche Karten“). Gezielt ansprechen: „Was wissen Sie, was wir noch nicht wissen?“ – und darauf achten, dass Meldungen von draußen gebündelt beim Krisenstab ankommen und Anweisungen wieder zurückgehen.</p>
+        <div id="m-board"></div>
       </div>
 
       <div class="card" id="m-finale-card" style="display:none;border-color:var(--accent);">

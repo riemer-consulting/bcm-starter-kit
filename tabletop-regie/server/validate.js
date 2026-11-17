@@ -15,6 +15,10 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     list.forEach(x => { if (seen.has(x.id)) errors.push(`${label} ${x.id} ist doppelt vergeben.`); seen.add(x.id); });
   };
   dupes(scenario.roles, 'Rolle');
+  const EBENEN = ['eingang', 'krisenstab', 'verteilung'];
+  scenario.roles.forEach(r => {
+    if (r.ebene !== undefined && !EBENEN.includes(r.ebene)) errors.push(`Rolle ${r.id} hat eine unbekannte Ebene "${r.ebene}" (erlaubt: ${EBENEN.join(', ')}).`);
+  });
   dupes(scenario.lagekarten, 'Lagekarte');
   dupes(scenario.sonderlagekarten, 'Sonderlagekarte');
   dupes(scenario.bonuskarten || [], 'Bonuskarte');

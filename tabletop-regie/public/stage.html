@@ -18,7 +18,7 @@
   .clock .label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; }
   .clock .time { font-size:34px; font-weight:800; font-variant-numeric: tabular-nums; }
   .main { display:flex; height: calc(100vh - 88px); min-height:0; }
-  .side { width: 280px; flex-shrink:0; border-right:1px solid var(--border); padding: 24px; overflow-y:auto; }
+  .side { width: 300px; flex-shrink:0; border-right:1px solid var(--border); padding: 24px; overflow-y:auto; }
   .side .block { margin-bottom: 28px; }
   .side .block .k { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
   .side .block .v { font-size:22px; font-weight:700; }
@@ -66,6 +66,27 @@
   .fin-aha-text { font-size:clamp(17px,1.9vw,26px); line-height:1.4; max-width:640px; }
   .fin-fazit { font-size:clamp(26px,3.6vw,48px); font-weight:800; line-height:1.25; animation: finIn 1s ease-out; }
   .fin-hinweis { margin-top:auto; padding-top:18px; font-size:12px; color:var(--muted); }
+  .board .lane { margin-bottom:6px; }
+  .board .lane-k { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:5px; }
+  .board .lane-k span { text-transform:none; letter-spacing:0; }
+  .board .pfeil { text-align:center; color:var(--muted); font-size:12px; margin:2px 0 8px; letter-spacing:1px; }
+  .board .tiles { display:grid; grid-template-columns:1fr; gap:4px; }
+  .side.mit-brett .block { margin-bottom:14px; }
+  .side.mit-brett .block .v { font-size:18px; }
+  .tile { border:1px solid var(--border); border-radius:6px; padding:5px 8px; background:var(--panel); transition:opacity .3s, border-color .3s; min-width:0; }
+  .board.lage .tile { opacity:.45; }
+  .board.lage .tile.gefordert, .board.lage .tile.info { opacity:1; }
+  .tile.gefordert { border:2px solid var(--accent); box-shadow:0 0 0 3px rgba(59,130,196,.22); padding:4px 7px; }
+  .tile .r { font-weight:700; font-size:13px; line-height:1.25; }
+  .tile .n { font-size:12px; color:var(--muted); line-height:1.35; }
+  .board.eng .tile { padding:3px 7px; }
+  .board.eng .tile.gefordert { padding:2px 6px; }
+  .board.eng .tile .r { font-size:12px; }
+  .board.eng .tile .n { font-size:11px; }
+  .tile .tag { margin-left:4px; vertical-align:1px; font-size:10px; font-weight:700; border-radius:3px; padding:1px 5px; text-transform:uppercase; letter-spacing:.5px; }
+  .tile .tag.zug { background:var(--accent); color:#fff; }
+  .tile .tag.info { background:#e0a832; color:#1a1300; }
+  .board .fehlt { font-size:12px; color:#e0a832; margin:4px 0 8px; line-height:1.4; }
   @keyframes finIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
 </style>
 </head>
@@ -92,6 +113,7 @@
         <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div></div>
       <div class="block"><div class="k">Übungszeit</div><div class="v" id="elapsed-label">0 Min.</div></div>
       <div class="block muted" id="company-facts" style="font-size:13px;color:var(--muted);line-height:1.5;"></div>
+      <div class="block board" id="board" style="display:none;"><div class="k">Wer ist am Zug?</div><div id="board-body"></div></div>
     </div>
     <div class="content" id="content">
       <div class="idle"><h1>Bereit.</h1><p class="muted">Die Übung startet im Setup.</p></div>

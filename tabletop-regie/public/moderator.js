@@ -258,6 +258,7 @@ function render(s) {
   }
 
   renderFinaleCard(s);
+  renderBoard(s);
 
   // Naechste Ereignisse — "Zeitsprung hierhin" ueberspringt Leerlauf oder
   // springt gezielt zu einer bestimmten Karte, wenn eine Diskussion kuerzer
@@ -335,6 +336,26 @@ function render(s) {
 }
 
 const euro = n => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+// Spielbrett: Meldeweg von draußen -> Krisenstab -> Weitergabe, mit den
+// besetzten Rollen. Gleiche Daten wie auf der Bühne.
+const EBENEN_LABEL = { eingang: 'Meldungen von draußen', krisenstab: 'Krisenstab', verteilung: 'Weitergabe nach innen und außen' };
+function renderBoard(s) {
+  const card = document.getElementById('m-board-card');
+  const b = s.spielbrett;
+  if (!b || !b.rollen.length || s.status === 'idle') { card.style.display = 'none'; return; }
+  card.style.display = '';
+  const spalten = ['eingang', 'krisenstab', 'verteilung'].map(e => {
+    const tiles = b.rollen.filter(r => r.ebene === e).map(r => `
+      <div class="tile${r.gefordert ? ' gefordert' : ''}${r.neueInfo ? ' info' : ''}">
+        <b>${escapeHtml(r.rolle)}</b>${r.gefordert ? '<span class="tag zug">am Zug</span>' : ''}${r.neueInfo ? `<span class="tag info">${r.neueInfo > 1 ? r.neueInfo + ' neue Infos' : 'neue Info'}</span>` : ''}
+        <div class="n">${escapeHtml(r.namen.join(', '))}</div>
+      </div>`).join('');
+    return `<div><div class="lane-k">${EBENEN_LABEL[e]}</div>${tiles || '<div class="mini muted">niemand besetzt</div>'}</div>`;
+  }).join('');
+  const fehlt = b.unbesetztGefordert.length ? `<p class="mini" style="color:var(--warn);">Bei dieser Lage auch gefragt, aber nicht besetzt: ${escapeHtml(b.unbesetztGefordert.join(', '))}</p>` : '';
+  document.getElementById('m-board').innerHTML = fehlt + `<div class="mboard${b.lageAktiv ? ' lage' : ''}">${spalten}</div>`;
+}
+
 function renderFinaleCard(s) {
   const card = document.getElementById('m-finale-card');
   const f = s.finale || {};

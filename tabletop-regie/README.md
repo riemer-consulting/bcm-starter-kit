@@ -203,6 +203,14 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Karten"** siehst du jederzeit, was bei wem kursiert, inklusive
    Bewertungshilfe. Bei jeder Lagekarte zeigt die Moderation, welche Rollen
    besonders gefordert sind und ob sie besetzt sind.
+   Das **Spielbrett** ("Wer ist am Zug?") steht auf der Bühne in der
+   Seitenleiste und in der Moderation: alle besetzten Rollen mit Namen,
+   sortiert nach dem Meldeweg — **Meldungen von draußen** (Service-Desk,
+   Kundenservice/Hotline, Standorte), **Krisenstab**, **Weitergabe** nach innen
+   und außen. Blau markiert ("am Zug") sind die Rollen, die bei der aktuellen
+   Lage gefordert sind, gelb ("neue Info") die, die seit Beginn dieser Lage
+   eine vertrauliche Karte bekommen haben — ohne deren Inhalt zu verraten. So
+   behält der Tisch im Blick, wen er gerade fragen muss.
    Der **Prozessablauf** oben in der Moderationsansicht zeigt jederzeit, wo du
    stehst und was noch kommt. Läuft eine Diskussion deutlich kürzer oder
    länger als geplant, hast du zwei Möglichkeiten: bei der gewünschten Karte
@@ -309,6 +317,8 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Lagekarten haben zusätzlich `zustaendig` (Rollen-IDs): Die Moderation zeigt
   an, welche davon besetzt sind, und warnt, wenn keine besetzt ist. Im
   Zieldauer-Modus werden solche Lagekarten beim Auffüllen hintangestellt.
+- Rollen haben `ebene` (`eingang`, `krisenstab` oder `verteilung`): ordnet
+  sie auf dem Spielbrett dem Meldeweg zu. Ohne Angabe gilt `krisenstab`.
 - Lagekarten haben außerdem `akt` (`vorboten`, `ausbruch`, `eskalation`,
   `hoehepunkt`, `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
   Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.

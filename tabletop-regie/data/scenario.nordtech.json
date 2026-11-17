@@ -31,7 +31,8 @@
       "personal",
       "einkauf",
       "vertrieb",
-      "marketing"
+      "marketing",
+      "service"
     ],
     "vorbotenMinuten": 3
   },
@@ -102,6 +103,14 @@
       ]
     },
     {
+      "key": "service",
+      "label": "Service & Kundenkontakt",
+      "members": [
+        "it-service-desk",
+        "kundenservice-callcenter"
+      ]
+    },
+    {
       "key": "krisenstab-support",
       "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
       "members": [
@@ -116,121 +125,155 @@
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
-      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Beirat) und musst das Team zusammenhalten."
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Beirat) und musst das Team zusammenhalten.",
+      "ebene": "krisenstab"
     },
     {
       "id": "geschaeftsfuehrerin-vertrieb",
       "funktion": "Geschäftsführung Vertrieb, stellv. Krisenstabsleitung",
       "group": "vertrieb",
-      "beschreibung": "Du vertrittst die Krisenstabsleitung bei Bedarf und verantwortest alle Kundenbeziehungen. Du musst Großkunden beruhigen, ohne Zusagen zu machen, die das Unternehmen nicht halten kann."
+      "beschreibung": "Du vertrittst die Krisenstabsleitung bei Bedarf und verantwortest alle Kundenbeziehungen. Du musst Großkunden beruhigen, ohne Zusagen zu machen, die das Unternehmen nicht halten kann.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiter-it",
       "funktion": "IT-Leitung (CIO)",
       "group": "it",
-      "beschreibung": "Du bist für die Wiederherstellung aller IT-Systeme verantwortlich. Du entscheidest über Forensik und Wiederanlauf-Reihenfolge und musst dem Krisenstab ehrlich sagen, was technisch wirklich möglich ist — auch wenn das unbequem ist."
+      "beschreibung": "Du bist für die Wiederherstellung aller IT-Systeme verantwortlich. Du entscheidest über Forensik und Wiederanlauf-Reihenfolge und musst dem Krisenstab ehrlich sagen, was technisch wirklich möglich ist — auch wenn das unbequem ist.",
+      "ebene": "krisenstab"
     },
     {
       "id": "it-mitarbeiter",
       "funktion": "IT-Fachkraft (Vertretung IT-Leitung)",
       "group": "it",
-      "beschreibung": "Du unterstützt die IT-Leitung operativ und vertrittst sie, falls sie ausfällt. Du kennst die Systeme im Detail und bist oft die erste Anlaufstelle für technische Rückfragen."
+      "beschreibung": "Du unterstützt die IT-Leitung operativ und vertrittst sie, falls sie ausfällt. Du kennst die Systeme im Detail und bist oft die erste Anlaufstelle für technische Rückfragen.",
+      "ebene": "krisenstab"
+    },
+    {
+      "group": "service",
+      "id": "it-service-desk",
+      "funktion": "IT-Service-Desk (technischer Support)",
+      "beschreibung": "Du bist die erste Anlaufstelle für alle Anwenderinnen und Anwender: Anrufe, Tickets, Fragen wie „Darf ich meinen Rechner einschalten?“. Deine Aufgabe: Meldungen bündeln, dem Krisenstab ein klares Lagebild geben (wer, was, wie viele, seit wann) und dessen Anweisungen an alle weitergeben.",
+      "ebene": "eingang"
+    },
+    {
+      "group": "service",
+      "id": "kundenservice-callcenter",
+      "funktion": "Kundenservice / Callcenter",
+      "beschreibung": "Du nimmst Anrufe und Mails von Kunden entgegen. Sie wollen wissen, ob ihre Lieferung kommt und ob ihre Daten sicher sind. Du brauchst vom Krisenstab eine Sprachregelung – und meldest zurück, was draußen ankommt.",
+      "ebene": "eingang"
     },
     {
       "id": "notfallmanagement-bcm",
       "funktion": "Notfallmanagement / BCM",
       "group": "krisenstab-support",
-      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Meldepflichten, Eskalationswege. Du hast keine feste Sprechzeit, bringst dich aber ein, wenn eine wichtige Information sonst untergeht."
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Meldepflichten, Eskalationswege. Du hast keine feste Sprechzeit, bringst dich aber ein, wenn eine wichtige Information sonst untergeht.",
+      "ebene": "krisenstab"
     },
     {
       "id": "erp-stammdaten",
       "funktion": "ERP / Stammdaten",
       "group": "erp",
-      "beschreibung": "Du verantwortest die Unternehmensdaten im ERP-System. Du musst einschätzen, was an Daten wirklich verloren ist und was sich rekonstruieren lässt."
+      "beschreibung": "Du verantwortest die Unternehmensdaten im ERP-System. Du musst einschätzen, was an Daten wirklich verloren ist und was sich rekonstruieren lässt.",
+      "ebene": "krisenstab"
     },
     {
       "id": "erp-beratung",
       "funktion": "ERP-Beratung",
       "group": "erp",
-      "beschreibung": "Du unterstützt bei der Wiederherstellung der Geschäftsprozesse im ERP-System und berätst die Fachbereiche, wie sie ohne funktionierende Systeme übergangsweise arbeiten können."
+      "beschreibung": "Du unterstützt bei der Wiederherstellung der Geschäftsprozesse im ERP-System und berätst die Fachbereiche, wie sie ohne funktionierende Systeme übergangsweise arbeiten können.",
+      "ebene": "krisenstab"
     },
     {
       "id": "inventuren-spezialprozesse",
       "funktion": "Inventuren & Spezialprozesse",
       "group": "erp",
-      "beschreibung": "Du bist verantwortlich für Inventuren und Sonderprozesse. Ein anstehender Inventurstichtag ohne funktionierende Systeme ist dein größtes Problem."
+      "beschreibung": "Du bist verantwortlich für Inventuren und Sonderprozesse. Ein anstehender Inventurstichtag ohne funktionierende Systeme ist dein größtes Problem.",
+      "ebene": "krisenstab"
     },
     {
       "id": "kaufmaennische-leiterin-cfo",
       "funktion": "Kaufmännische Leitung (CFO)",
       "group": "finanzen",
-      "beschreibung": "Du verantwortest alle finanziellen Aspekte der Krise: Schadenshöhe, Liquidität, Versicherung, Bankkontakt. Du musst früh einschätzen, was sich das Unternehmen leisten kann."
+      "beschreibung": "Du verantwortest alle finanziellen Aspekte der Krise: Schadenshöhe, Liquidität, Versicherung, Bankkontakt. Du musst früh einschätzen, was sich das Unternehmen leisten kann.",
+      "ebene": "krisenstab"
     },
     {
       "id": "debitorenbuchhaltung",
       "funktion": "Debitorenbuchhaltung",
       "group": "finanzen",
-      "beschreibung": "Du bist verantwortlich für offene Forderungen. Wenn Kunden wegen der Krise nicht zahlen, ist das zuerst dein Problem."
+      "beschreibung": "Du bist verantwortlich für offene Forderungen. Wenn Kunden wegen der Krise nicht zahlen, ist das zuerst dein Problem.",
+      "ebene": "krisenstab"
     },
     {
       "id": "debitorenmanagement",
       "funktion": "Debitorenmanagement",
       "group": "finanzen",
-      "beschreibung": "Du gehst mit Kunden um, die mit Schadensersatz drohen oder Zahlungen zurückhalten. Du musst hart bleiben, ohne die Geschäftsbeziehung zu zerstören."
+      "beschreibung": "Du gehst mit Kunden um, die mit Schadensersatz drohen oder Zahlungen zurückhalten. Du musst hart bleiben, ohne die Geschäftsbeziehung zu zerstören.",
+      "ebene": "krisenstab"
     },
     {
       "id": "fakturierung",
       "funktion": "Fakturierung",
       "group": "finanzen",
-      "beschreibung": "Du stellst sicher, dass trotz der Krise weiter korrekt abgerechnet werden kann — oder dokumentierst sauber, warum das gerade nicht geht."
+      "beschreibung": "Du stellst sicher, dass trotz der Krise weiter korrekt abgerechnet werden kann — oder dokumentierst sauber, warum das gerade nicht geht.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiter-einkauf",
       "funktion": "Leitung Strategischer Einkauf",
       "group": "einkauf",
-      "beschreibung": "Du verantwortest Lieferanten und Materialversorgung. Wenn Material knapp wird, musst du entscheiden, wen du zuerst belieferst oder wo du teurer nachkaufst."
+      "beschreibung": "Du verantwortest Lieferanten und Materialversorgung. Wenn Material knapp wird, musst du entscheiden, wen du zuerst belieferst oder wo du teurer nachkaufst.",
+      "ebene": "krisenstab"
     },
     {
       "id": "leiterin-personal",
       "funktion": "Personalleitung",
       "group": "personal",
-      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden: Ausfälle von Schlüsselpersonen, Gerüchte im Haus, Belastung des Teams. Du entscheidest, wer wann was erfährt."
+      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden: Ausfälle von Schlüsselpersonen, Gerüchte im Haus, Belastung des Teams. Du entscheidest, wer wann was erfährt.",
+      "ebene": "verteilung"
     },
     {
       "id": "marketing-ecommerce",
       "funktion": "Marketing & eCommerce",
       "group": "marketing",
-      "beschreibung": "Du verantwortest die externe Kommunikation in sozialen Medien und den Online-Auftritt. Du bist meist die erste Anlaufstelle für Presseanfragen."
+      "beschreibung": "Du verantwortest die externe Kommunikation in sozialen Medien und den Online-Auftritt. Du bist meist die erste Anlaufstelle für Presseanfragen.",
+      "ebene": "verteilung"
     },
     {
       "id": "leiter-einzelhandel",
       "funktion": "Leitung Einzelhandel",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest das Einzelhandelsgeschäft. Beschwerden von Fachhändlern landen zuerst bei dir."
+      "beschreibung": "Du verantwortest das Einzelhandelsgeschäft. Beschwerden von Fachhändlern landen zuerst bei dir.",
+      "ebene": "eingang"
     },
     {
       "id": "regionalleiter-west",
       "funktion": "Regionalleitung West",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
+      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt.",
+      "ebene": "eingang"
     },
     {
       "id": "regionalleiter-ost",
       "funktion": "Regionalleitung Ost",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt."
+      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt.",
+      "ebene": "eingang"
     },
     {
       "id": "assistenz-gf-dokumentation",
       "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
       "group": "krisenstab-support",
-      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs, damit später nachvollziehbar ist, wer was wann entschieden hat. Ohne feste Sprechzeit, aber wichtig für die Nachbereitung."
+      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs, damit später nachvollziehbar ist, wer was wann entschieden hat. Ohne feste Sprechzeit, aber wichtig für die Nachbereitung.",
+      "ebene": "krisenstab"
     },
     {
       "id": "office-management",
       "funktion": "Office Management / interne Kommunikation",
       "group": "krisenstab-support",
-      "beschreibung": "Du verantwortest die interne Kommunikation im Haus und organisatorische Abläufe. Gerüchte und Unsicherheit im Team sind dein Thema."
+      "beschreibung": "Du verantwortest die interne Kommunikation im Haus und organisatorische Abläufe. Gerüchte und Unsicherheit im Team sind dein Thema.",
+      "ebene": "verteilung"
     }
   ],
   "moderationsleitfaden": {
@@ -240,6 +283,7 @@
       "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
       "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
+      "Meldungen von draußen (Anwender, Kunden, Standorte) laufen gebündelt an den Krisenstab. Der Krisenstab entscheidet und gibt Anweisungen und eine einheitliche Sprachregelung zurück – an alle, die Fragen beantworten müssen.",
       "Anschließend erfolgt die Abstimmung im Krisenstab.",
       "Teilnehmende ohne feste Rolle beobachten, bringen auf Nachfrage ihre Sicht ein und notieren Auffälligkeiten für das Debriefing."
     ],
@@ -247,6 +291,7 @@
     "debriefingFragen": [
       "Wann wart ihr am stärksten unter Druck?",
       "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
+      "Wie kamen die Meldungen von Service-Desk, Kundenservice und Standorten beim Krisenstab an – und wie kamen Anweisungen und Sprachregelung zu ihnen zurück?",
       "Welche Information hat gefehlt?",
       "Wer hätte früher eingebunden werden müssen?",
       "Welche BCM-Maßnahme hätte geholfen?",
@@ -280,7 +325,8 @@
       "aufgabe": [
         "Welche Auswirkungen hat dies auf Ihren Bereich?",
         "Welche Sofortmaßnahmen leiten Sie ein?",
-        "Welche Entscheidungen benötigt der Krisenstab?"
+        "Welche Entscheidungen benötigt der Krisenstab?",
+        "Welche Anweisung bekommen jetzt alle Mitarbeitenden – und über wen läuft sie?"
       ],
       "moderatorHinweis": "Jetzt kommt der Knall. Kurz wirken lassen: Die Vorboten (Anmeldung, Maschine 4 mit der Endung .shadowvault, keine Aufträge) hingen alle zusammen. Lösegeldforderung auf der Bühne zeigen, Grundton der Übung setzen.",
       "media": {
@@ -296,7 +342,8 @@
       },
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
-        "leiter-it"
+        "leiter-it",
+        "it-service-desk"
       ],
       "akt": "ausbruch"
     },
@@ -367,7 +414,8 @@
       "aufgabe": [
         "Wer reagiert?",
         "Wie kommunizieren Sie?",
-        "Müssen Mitarbeiter informiert werden?"
+        "Müssen Mitarbeiter informiert werden?",
+        "Welche Sprachregelung bekommen Kundenservice und Service-Desk?"
       ],
       "moderatorHinweis": "Das LinkedIn-Bild erscheint auf der Bühne. Auf das Foto im Beitrag hinweisen: Die Lösegeldforderung ist zu sehen, der Angriff ist damit öffentlich, bevor das Unternehmen selbst etwas gesagt hat.",
       "media": {
@@ -380,7 +428,8 @@
       "zustaendig": [
         "marketing-ecommerce",
         "office-management",
-        "leiterin-personal"
+        "leiterin-personal",
+        "kundenservice-callcenter"
       ],
       "akt": "eskalation"
     },
@@ -461,7 +510,8 @@
       "prioritaet": 3,
       "zustaendig": [
         "geschaeftsfuehrerin-vertrieb",
-        "geschaeftsfuehrer-ceo"
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter"
       ],
       "akt": "eskalation"
     },
@@ -557,7 +607,8 @@
       "kriseninfo": "Social Media reagiert massiv",
       "aufgabe": [
         "Reagieren oder ignorieren?",
-        "Wie schützen Sie den Ruf des Unternehmens?"
+        "Wie schützen Sie den Ruf des Unternehmens?",
+        "Wer informiert die Belegschaft, bevor sie es aus den Medien erfährt?"
       ],
       "moderatorHinweis": "Der Sonderbericht läuft auf der Bühne, wenn im Setup eine Aufnahme hinterlegt ist. Sonst den Sprechertext live vorlesen. Danach kurz Stille lassen und fragen: Was sagen wir jetzt – intern und extern?",
       "media": {
@@ -568,7 +619,8 @@
       "prioritaet": 3,
       "zustaendig": [
         "marketing-ecommerce",
-        "geschaeftsfuehrer-ceo"
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter"
       ],
       "akt": "hoehepunkt",
       "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Mitarbeiter, der anonym bleiben möchte, erhebt schwere Vorwürfe gegen die Geschäftsführung: „Wir haben aus LinkedIn erfahren, was bei uns los ist. Von oben kam tagelang nichts.“ Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
@@ -675,7 +727,8 @@
       "zustaendig": [
         "leiter-it",
         "erp-beratung",
-        "erp-stammdaten"
+        "erp-stammdaten",
+        "it-service-desk"
       ],
       "akt": "wiederanlauf"
     },
@@ -690,7 +743,8 @@
       "kriseninfo": null,
       "aufgabe": [
         "Welche Botschaft senden Sie an Kunden, Mitarbeiter, Öffentlichkeit?",
-        "Welche Maßnahmen folgen nach der Krise?"
+        "Welche Maßnahmen folgen nach der Krise?",
+        "Was sagen wir Kunden und Mitarbeitenden – und wer sagt es?"
       ],
       "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
       "media": {
@@ -701,7 +755,9 @@
       "prioritaet": 1,
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
-        "marketing-ecommerce"
+        "marketing-ecommerce",
+        "it-service-desk",
+        "kundenservice-callcenter"
       ],
       "akt": "wiederanlauf"
     },
@@ -755,7 +811,8 @@
       "zustaendig": [
         "leiter-it",
         "it-mitarbeiter",
-        "erp-stammdaten"
+        "erp-stammdaten",
+        "it-service-desk"
       ],
       "akt": "vorboten"
     },
@@ -781,7 +838,8 @@
       "zustaendig": [
         "leiter-it",
         "it-mitarbeiter",
-        "notfallmanagement-bcm"
+        "notfallmanagement-bcm",
+        "it-service-desk"
       ],
       "akt": "vorboten"
     },
@@ -807,7 +865,8 @@
       "zustaendig": [
         "geschaeftsfuehrerin-vertrieb",
         "leiter-it",
-        "geschaeftsfuehrer-ceo"
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter"
       ],
       "akt": "vorboten"
     }
@@ -1277,8 +1336,8 @@
       "empfaenger": "fakturierung",
       "minuteOffset": 80,
       "vertraulich": true,
-      "text": "Das ERP läuft im Test. Im Rückstau liegen rund 5.600 handschriftliche Lieferscheine aus den Ausfalltagen. Ohne Nacherfassung geht keine Rechnung raus – und ohne Rechnung zahlt kein Kunde.",
-      "moderatorGut": "Nacherfassung wird priorisiert und mit Zusatzkräften geplant, die Liquiditätsfolgen gehen an die Finanzleitung.",
+      "text": "Das ERP läuft im Test. Im Rückstau liegen rund 1.900 Fertigungsrückmeldungen und Materialbuchungen von Papierlisten aus den Ausfalltagen. Solange sie nicht nachgebucht sind, stimmen die Bestände nicht – und ohne gebuchte Lieferungen geht keine Rechnung raus.",
+      "moderatorGut": "Die Nachbuchung wird priorisiert und mit Zusatzkräften geplant, die Liquiditätsfolgen gehen an die Finanzleitung.",
       "moderatorSchlecht": "Die Abrechnung wird stillschweigend verschoben, die Liquiditätslücke fällt erst später auf.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
@@ -1314,6 +1373,96 @@
       "fallbackEmpfaenger": [
         "office-management",
         "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK34",
+      "nr": 34,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 10,
+      "vertraulich": true,
+      "text": "Seit 07:05 Uhr sind rund 140 Anrufe und Tickets eingegangen. Anwenderinnen und Anwender fragen: Darf ich meinen Rechner einschalten? Soll ich das Netzwerkkabel ziehen? Vom Krisenstab gibt es noch keine Anweisung – im Team antwortet jeder etwas anderes.",
+      "moderatorGut": "Die Anfragen werden gebündelt und als kurze Lagemeldung (wie viele, welche Bereiche, seit wann) an den Krisenstab gegeben; zurück kommt eine einheitliche Anweisung an alle.",
+      "moderatorSchlecht": "Jeder beantwortet Anrufe nach eigenem Ermessen – Rechner werden wieder eingeschaltet, der Angriff breitet sich weiter aus.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK35",
+      "nr": 35,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 24,
+      "vertraulich": true,
+      "text": "Die Leitungen glühen: Seit dem LinkedIn-Beitrag rufen Kunden an. Sie fragen, ob ihre Lieferung kommt, ob ihre Daten betroffen sind und ob NordTech Lösegeld zahlt. Du hast keine Sprachregelung.",
+      "moderatorGut": "Die Fragen werden gesammelt an den Krisenstab gemeldet, eine Sprachregelung wird angefordert, Kunden bekommen eine Rückmeldung zugesagt.",
+      "moderatorSchlecht": "Am Telefon wird improvisiert – die Aussagen widersprechen sich später.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "marketing-ecommerce"
+      ]
+    },
+    {
+      "id": "SK36",
+      "nr": 36,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 44,
+      "vertraulich": true,
+      "text": "Mehrere Mitarbeitende bekommen SMS auf ihre Diensthandys: „NordTech IT: Bitte Zugang hier neu bestätigen“ – mit Link auf eine fremde Seite. Zwei Personen haben ihre Zugangsdaten bereits eingegeben.",
+      "moderatorGut": "Sofortige Meldung an den Krisenstab, Warnung an alle Mitarbeitenden, betroffene Konten werden gesperrt.",
+      "moderatorSchlecht": "Die Einzelfälle werden still bearbeitet, eine Warnung an alle bleibt aus.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "it-mitarbeiter"
+      ]
+    },
+    {
+      "id": "SK37",
+      "nr": 37,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 61,
+      "vertraulich": true,
+      "text": "Seit dem Nordkanal-Bericht haben sich die Anrufe verdreifacht. Ein Anrufer gibt sich als Einkäufer eines Kunden aus und fragt auffällig gezielt nach Details zum Angriff und zur Lösegeldfrage. Die Rückrufnummer gehört zu einer Redaktion.",
+      "moderatorGut": "Der Anrufer wird an die Pressestelle verwiesen, der Vorfall geht an den Krisenstab, das Team wird gewarnt.",
+      "moderatorSchlecht": "Am Telefon werden Details preisgegeben, die morgen in der Zeitung stehen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "marketing-ecommerce"
+      ]
+    },
+    {
+      "id": "SK38",
+      "nr": 38,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 82,
+      "vertraulich": true,
+      "text": "Für den Wiederanlauf müssen 620 Passwörter zurückgesetzt und 900 Rechner geprüft werden. Vor dem Service-Desk bildet sich eine Schlange, die Produktion wartet auf Freigaben. Wer kommt zuerst dran?",
+      "moderatorGut": "Der Krisenstab legt die Reihenfolge nach Kritikalität fest und kommuniziert sie an alle.",
+      "moderatorSchlecht": "Wer zuerst kommt oder am lautesten ist, kommt zuerst dran.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK39",
+      "nr": 39,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 84,
+      "vertraulich": true,
+      "text": "Kunden melden gefälschte Rechnungen im Namen von NordTech – mit geänderter Bankverbindung. Einige fragen, ob sie überhaupt noch an NordTech zahlen sollen.",
+      "moderatorGut": "Sofort an den Krisenstab; abgestimmte Warnung an alle Kunden mit klarer Bestätigung der echten Bankverbindung.",
+      "moderatorSchlecht": "Einzelne Kunden werden am Telefon beruhigt, alle anderen erfahren nichts.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kaufmaennische-leiterin-cfo"
       ]
     }
   ],
@@ -1386,16 +1535,16 @@
     "einleitung": "Sonntag, 12:00 Uhr. Die Produktion läuft zu 70 %, die Systeme sind weitgehend zurück. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
     "nacharbeiten": [
       {
-        "zahl": "5.600",
-        "text": "handschriftliche Lieferscheine und Notfallbelege müssen ins ERP nacherfasst werden"
+        "zahl": "1.900",
+        "text": "Fertigungsrückmeldungen und Materialbuchungen von Papierlisten müssen ins ERP nachgebucht werden"
       },
       {
         "zahl": "190.000",
         "text": "E-Mails aus den Ausfalltagen liegen im Rückstau – Kundenanfragen bleiben unbeantwortet, bis sie gesichtet sind"
       },
       {
-        "zahl": "87",
-        "text": "Lkw-Ladungen Rückstand müssen nachproduziert, priorisiert und ausgeliefert werden"
+        "zahl": "260",
+        "text": "Chargen für Pharmakunden brauchen eine lückenlose Nachdokumentation, bevor sie freigegeben werden dürfen"
       },
       {
         "zahl": "32 Stunden",
