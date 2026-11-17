@@ -328,10 +328,16 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   einer Lagekarte zieht diese Lagekarten im Zieldauer-Modus mit in den Plan;
   an einer vertraulichen Karte bedeutet es: Die Karte kommt nur, wenn alle
   Voraussetzungen gespielt werden, und immer danach (z. B. „ERP aus dem
-  Backup wiederhergestellt“ nur nach „Backups gefunden“). `vorLagekarte`
-  setzt eine vertrauliche Karte unmittelbar vor eine bestimmte Lagekarte
-  (z. B. der Anruf des Beiratsmitglieds vor dem Beirats-Lagebericht).
-  `npm run pruefen` prüft beides in allen Simulationen.
+  Backup wiederhergestellt“ nur nach „Backups gefunden“). `zuBeginnVon`
+  lässt eine vertrauliche Karte direkt mit einer bestimmten Lagekarte
+  kommen (z. B. der Anruf des Beiratsmitglieds mit dem Beirats-Lagebericht).
+- Zeitbindung: Jede vertrauliche Karte gehört zu der Lage, in die ihre
+  Minute im vollständigen Drehbuch fällt („Heimatlage“). Sie kommt nie
+  früher; fehlt die Heimatlage in einer kurzen Übung, kommt sie mit der
+  nächsten gespielten Lage. Texte deshalb so formulieren, dass sie auch
+  etwas später noch stimmen. Mit `"nurInEigenerLage": true` entfällt die
+  Karte stattdessen, wenn ihre Heimatlage nicht gespielt wird.
+  `npm run pruefen` prüft Abhängigkeiten und Zeitbindung in allen Simulationen.
 - `weichen[]` (optional): Entscheidungen mit Folgen. Jede Weiche hängt an
   der ersten ihrer `lagekarten`, die im Plan ist, und hat eine `frage` und
   mindestens zwei `optionen`. Eine Option kann späteren Lagekarten einen Satz

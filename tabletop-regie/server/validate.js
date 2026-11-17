@@ -42,10 +42,12 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
       if (!pre) errors.push(`${c.id}: Voraussetzung ${id} ist keine Lagekarte.`);
       else if (c.minuteOffset != null && pre.minuteOffset >= c.minuteOffset) errors.push(`${c.id} kommt im Drehbuch vor seiner Voraussetzung ${id}.`);
     });
-    if (c.vorLagekarte) {
-      const ziel = lkById(c.vorLagekarte);
-      if (!ziel) errors.push(`${c.id}: vorLagekarte ${c.vorLagekarte} ist keine Lagekarte.`);
-      else if (c.minuteOffset != null && c.minuteOffset > ziel.minuteOffset) errors.push(`${c.id} soll vor ${c.vorLagekarte} kommen, steht im Drehbuch aber danach.`);
+    if (c.vorLagekarte) errors.push(`${c.id}: "vorLagekarte" heißt jetzt "zuBeginnVon".`);
+    if (c.zuBeginnVon) {
+      const ziel = lkById(c.zuBeginnVon);
+      const naechste = ziel && scenario.lagekarten.filter(l => l.minuteOffset > ziel.minuteOffset).sort((a, b) => a.minuteOffset - b.minuteOffset)[0];
+      if (!ziel) errors.push(`${c.id}: zuBeginnVon ${c.zuBeginnVon} ist keine Lagekarte.`);
+      else if (c.minuteOffset != null && (c.minuteOffset < ziel.minuteOffset || (naechste && c.minuteOffset >= naechste.minuteOffset))) errors.push(`${c.id} soll mit ${c.zuBeginnVon} kommen, steht im Drehbuch aber nicht in dieser Lage.`);
     }
   });
   ((scenario.standardablauf || {}).rollenPrioritaet || []).forEach(rid => checkRole(rid, 'rollenPrioritaet'));
@@ -171,9 +173,16 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
         if (at[id] === undefined) note('dep:' + c.id, `Bei ${targetMinutes} Min. wird ${c.id} gespielt, ohne die Voraussetzung ${id}.`);
         else if (at[id] > e.minute) note('deporder:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} vor seiner Voraussetzung ${id}.`);
       });
-      if (c.vorLagekarte) {
-        if (at[c.vorLagekarte] === undefined) note('vor:' + c.id, `Bei ${targetMinutes} Min. wird ${c.id} gespielt, ${c.vorLagekarte} aber nicht.`);
-        else if (at[c.vorLagekarte] < e.minute) note('vororder:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} erst nach ${c.vorLagekarte}.`);
+      if (c.zuBeginnVon) {
+        if (at[c.zuBeginnVon] === undefined) note('vor:' + c.id, `Bei ${targetMinutes} Min. wird ${c.id} gespielt, ${c.zuBeginnVon} aber nicht.`);
+        else if (e.minute < at[c.zuBeginnVon] || e.minute - at[c.zuBeginnVon] > 1) note('vororder:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} nicht direkt mit ${c.zuBeginnVon}.`);
+      }
+      // Zeitbindung: eine vertrauliche Karte nie vor ihrer Heimatlage
+      if (e.type !== 'lagekarte' && c.minuteOffset != null) {
+        const heimat = scenario.lagekarten.filter(l => l.minuteOffset <= c.minuteOffset).sort((a, b) => b.minuteOffset - a.minuteOffset)[0];
+        const fenster = plan.schedule.filter(x => x.type === 'lagekarte' && x.minute <= e.minute).pop();
+        const fensterLk = fenster && scenario.lagekarten.find(l => l.id === fenster.id);
+        if (heimat && (!fensterLk || fensterLk.minuteOffset < heimat.minuteOffset)) note('frueh:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} schon in der Lage ${fensterLk ? fensterLk.id : '(keiner)'}, gehört aber frühestens zu ${heimat.id}.`);
       }
     });
     const recipients = new Set();

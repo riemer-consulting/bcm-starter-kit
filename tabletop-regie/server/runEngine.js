@@ -158,6 +158,7 @@ function placeEvents(sortedEvents, slot) {
       return { ev, minute: windowStart };
     }
     if (windowOf[i] < 0) return { ev, minute: 0 };
+    if (ev.ref && ev.ref.zuBeginnVon) return { ev, minute: windowStart + Math.min(0.5, windowLen * 0.1) };
     const k = seen[windowOf[i]] = (seen[windowOf[i]] || 0) + 1;
     return { ev, minute: windowStart + windowLen * (0.3 + 0.55 * k / (perWindow[windowOf[i]] + 1)) };
   });
@@ -204,8 +205,12 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   // - "voraussetzung": [Lagekarten-IDs]. Eine Lagekarte zieht ihre
   //   Voraussetzungen mit in den Plan; eine vertrauliche Karte kommt nur, wenn
   //   alle Voraussetzungen gespielt werden, und immer erst danach.
-  // - "vorLagekarte": vertrauliche Karte kommt unmittelbar vor dieser
+  // - "zuBeginnVon": vertrauliche Karte kommt direkt mit Beginn dieser
   //   Lagekarte (und nur, wenn sie gespielt wird).
+  // - Zeitbindung: Jede vertrauliche Karte gehoert zu der Lage, in die sie im
+  //   vollstaendigen Drehbuch faellt ("Heimatlage"). Sie darf nie VOR dieser
+  //   Lage kommen; fehlt die Heimatlage im Plan, kommt sie mit der naechsten
+  //   gespielten Lage. Mit "nurInEigenerLage": true entfaellt sie stattdessen.
   const lkEvById = {};
   timeline.forEach(ev => { if (ev.type === 'lagekarte') lkEvById[ev.id] = ev; });
   const prereqsOf = ev => (ev.ref.voraussetzung || []).map(id => lkEvById[id]).filter(Boolean);
@@ -214,13 +219,8 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     if (!acc.includes(ev)) acc.push(ev);
     return acc;
   };
-  const sortKey = ev => {
-    if (ev.type === 'lagekarte') return ev.authoredMinute;
-    const vor = ev.ref.vorLagekarte && lkEvById[ev.ref.vorLagekarte];
-    if (vor) return vor.authoredMinute - 0.01;
-    const pre = prereqsOf(ev);
-    return pre.length ? Math.max(ev.authoredMinute, ...pre.map(p => p.authoredMinute + 0.01)) : ev.authoredMinute;
-  };
+  const allLks = timeline.filter(ev => ev.type === 'lagekarte');
+  const homeOf = ev => { let h = null; allLks.forEach(l => { if (l.authoredMinute <= ev.authoredMinute) h = l; }); return h; };
 
   const byPrio = p => timeline.filter(ev => (ev.ref.prioritaet || 2) === p);
   const prio1 = byPrio(1).filter(isRoleRelevant);
@@ -338,18 +338,41 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   // Abschnitt, der bisher die wenigsten vertraulichen Karten hat.
   const lkSel = selected.filter(ev => ev.type === 'lagekarte').sort((a, b) => a.authoredMinute - b.authoredMinute);
   const lkSelIds = new Set(lkSel.map(ev => ev.id));
-  const prereqsMet = ev => (ev.ref.voraussetzung || []).every(id => lkSelIds.has(id))
-    && (!ev.ref.vorLagekarte || lkSelIds.has(ev.ref.vorLagekarte));
-  const fehlendeVoraussetzung = ev => [...(ev.ref.voraussetzung || []), ...(ev.ref.vorLagekarte ? [ev.ref.vorLagekarte] : [])].filter(id => !lkSelIds.has(id));
+  // Fenster (gespielte Lage), in dem eine vertrauliche Karte kommt -- nie vor
+  // ihrer Heimatlage und nie vor ihren Voraussetzungen.
+  const windowLkOf = ev => {
+    const beginn = ev.ref.zuBeginnVon && lkEvById[ev.ref.zuBeginnVon];
+    if (beginn) return lkSelIds.has(beginn.id) ? beginn : null;
+    const home = homeOf(ev);
+    if (ev.ref.nurInEigenerLage) return home && lkSelIds.has(home.id) ? home : null;
+    const lower = Math.max(home ? home.authoredMinute : -Infinity, ...prereqsOf(ev).map(p => p.authoredMinute));
+    return lkSel.find(l => l.authoredMinute >= lower) || null;
+  };
+  const prereqsMet = ev => (ev.ref.voraussetzung || []).every(id => lkSelIds.has(id)) && !!windowLkOf(ev);
+  const fehlendeVoraussetzung = ev => {
+    const ids = [...(ev.ref.voraussetzung || []), ...(ev.ref.zuBeginnVon ? [ev.ref.zuBeginnVon] : [])].filter(id => !lkSelIds.has(id));
+    if (!ids.length && ev.ref.nurInEigenerLage) { const h = homeOf(ev); if (h) ids.push(h.id); }
+    return ids;
+  };
+  const grundOhneFenster = ev => {
+    const ids = fehlendeVoraussetzung(ev);
+    return ids.length ? `Baut auf ${ids.join(', ')} auf – diese Lagekarte ist nicht im Plan.` : 'Gehört zeitlich hinter die letzte gespielte Lage.';
+  };
+  const sortKey = ev => {
+    if (ev.type === 'lagekarte') return ev.authoredMinute;
+    const win = windowLkOf(ev);
+    if (!win) return ev.authoredMinute;
+    return win.authoredMinute + (ev.ref.zuBeginnVon ? 0.0001 : 0.001 + ev.authoredMinute / 1e5);
+  };
   // Vertrauliche Karten aus der Grundauswahl, deren Voraussetzung fehlt, fliegen raus.
   for (let i = selected.length - 1; i >= 0; i--) {
     const ev = selected[i];
     if (ev.type !== 'lagekarte' && !prereqsMet(ev)) {
       selected.splice(i, 1);
-      skipped.push({ type: ev.type, id: ev.id, reason: `Baut auf ${fehlendeVoraussetzung(ev).join(', ')} auf – diese Lagekarte ist nicht im Plan.` });
+      skipped.push({ type: ev.type, id: ev.id, reason: grundOhneFenster(ev) });
     }
   }
-  const windowOf = ev => { const k = sortKey(ev); let w = 0; lkSel.forEach((l, i) => { if (l.authoredMinute <= k) w = i; }); return w; };
+  const windowOf = ev => { const win = windowLkOf(ev); const i = win ? lkSel.indexOf(win) : 0; return i < 0 ? 0 : i; };
   const winLoad = new Array(Math.max(1, lkSel.length)).fill(0);
   const recLoad = {};
   const skSelected = [];
@@ -380,7 +403,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   // Bei stark verkuerzten Entscheidungsphasen (kurze Uebungen) bleibt keine
   // Zeit, viele vertrauliche Informationen zu verarbeiten: dann weniger Karten,
   // aber jede besetzte Rolle bekommt weiterhin mindestens eine.
-  const skFactor = decisionMinutes >= 2.5 ? 1.6 : Math.max(0.6, 1.6 * decisionMinutes / 2.5);
+  const skFactor = decisionMinutes >= 2.5 ? 1.3 : Math.max(0.6, 1.3 * decisionMinutes / 2.5);
   const skBudget = Math.max(skSelected.length, Math.round(lkCount * skFactor));
   const recipients = Math.max(1, roleFilterActive ? activeRoleSet.size : 1);
   const perRecipientCap = Math.max(2, Math.ceil(skBudget / recipients) + 1);
@@ -392,7 +415,7 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
   skPool.filter(ev => !taken.has(keyOf(ev))).forEach(ev => {
     skipped.push({ type: ev.type, id: ev.id, reason: prereqsMet(ev)
       ? 'Nicht eingeplant, damit die vertraulichen Karten gleichmäßig über die Übung verteilt sind und niemand überflutet wird.'
-      : `Baut auf ${fehlendeVoraussetzung(ev).join(', ')} auf – diese Lagekarte ist nicht im Plan.` });
+      : grundOhneFenster(ev) });
   });
 
   selected.sort((a, b) => sortKey(a) - sortKey(b));

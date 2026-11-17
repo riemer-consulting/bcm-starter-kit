@@ -176,7 +176,7 @@
       "group": "service",
       "id": "it-service-desk",
       "funktion": "IT-Service-Desk (technischer Support)",
-      "beschreibung": "Du bist die erste Anlaufstelle für alle Anwenderinnen und Anwender: Anrufe, Tickets, Fragen wie „Darf ich meinen Rechner einschalten?“. Deine Aufgabe: Meldungen bündeln, dem Krisenstab ein klares Lagebild geben (wer, was, wie viele, seit wann) und dessen Anweisungen an alle weitergeben.",
+      "beschreibung": "Du bist die erste Anlaufstelle für alle Anwenderinnen und Anwender: Anrufe, Tickets, Fragen wie „Darf ich meinen Rechner einschalten?“. Deine Aufgabe: Meldungen bündeln, dem Krisenstab ein klares Lagebild geben (wer, was, wie viele, seit wann) und die freigegebenen Anweisungen zurück an alle Anwenderinnen und Anwender bringen.",
       "ebene": "eingang"
     },
     {
@@ -304,7 +304,7 @@
       "id": "standortleitung-werk-sued",
       "funktion": "Standortleitung Werk Süd",
       "group": "produktion",
-      "beschreibung": "Du leitest Werk Süd, einen der drei Standorte. Was in den Hallen passiert – Schichtleitungen, Anlagen, Belegschaft vor Ort – erfährst du zuerst. Du meldest gebündelt an den Krisenstab und setzt dessen Anweisungen am Standort um.",
+      "beschreibung": "Du leitest Werk Süd, einen der drei Standorte. Was in den Hallen passiert – Schichtleitungen, Anlagen, Belegschaft vor Ort – erfährst du zuerst. Du meldest gebündelt an den Krisenstab und bringst dessen freigegebene Anweisungen zurück an den Standort.",
       "ebene": "eingang",
       "alteIds": [
         "regionalleiter-ost"
@@ -658,7 +658,7 @@
       "titel": "Nordkanal-Sonderbericht",
       "minuteOffset": 60,
       "diskussionMinuten": 4,
-      "text": "Nordkanal veröffentlicht einen Bericht: \"Cyber-Chaos bei NordTech\". Ein anonymer Mitarbeiter kritisiert die Unternehmensführung.",
+      "text": "Nordkanal veröffentlicht einen Bericht: „Cyber-Chaos bei NordTech“. Ein anonymer Beschäftigter kritisiert die interne Kommunikation.",
       "kriseninfo": "Social Media reagiert massiv",
       "aufgabe": [
         "Reagieren oder ignorieren?",
@@ -678,7 +678,7 @@
         "kundenservice-callcenter"
       ],
       "akt": "hoehepunkt",
-      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Mitarbeiter, der anonym bleiben möchte, erhebt schwere Vorwürfe gegen die Geschäftsführung: „Wir haben aus dem Internet erfahren, was bei uns los ist. Von oben kam tagelang nichts.“ Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
     },
     {
       "id": "LK11",
@@ -716,7 +716,7 @@
       "titel": "Teilweiser Wiederanlauf",
       "minuteOffset": 70,
       "diskussionMinuten": 3,
-      "text": "Werk Süd kann im eingeschränkten Notbetrieb wieder anlaufen: Die Produktionssysteme wurden isoliert neu aufgesetzt und unabhängig geprüft. Das ERP ist noch nicht für den Produktivbetrieb freigegeben – Aufträge und Rückmeldungen laufen vorerst über Papierlisten.",
+      "text": "Werk Süd kann im eingeschränkten Notbetrieb wieder anlaufen: Die Produktionssysteme wurden isoliert neu aufgesetzt und unabhängig geprüft. Dieser Notbetrieb nutzt keine ungeprüften Sicherungsdaten; die Prüfung des ERP-Backups dauert weiterhin an. Aufträge und Rückmeldungen laufen vorerst über Papierlisten.",
       "kriseninfo": "Kapazität: 30 %",
       "aufgabe": [
         "Welche Produkte und Kunden haben Vorrang?",
@@ -840,7 +840,7 @@
         "Welche Zahl können Sie belastbar nennen – und welche nicht?",
         "Wer trägt vor, und was sagen Sie bewusst nicht?"
       ],
-      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung – Sie haben jetzt fünf Minuten, sie mit dem Krisenstab vorzubereiten.“ Danach lässt du dir den Bericht vortragen und fragst als Beirat kritisch nach. Dies ist die stärkste Szene der Übung.",
+      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung.“ Bei 45–60 Minuten: zwei Minuten Vorbereitung mit dem Krisenstab, dann höchstens 60 Sekunden Vortrag und eine kritische Nachfrage. Bei längeren Übungen: fünf Minuten Vorbereitung, danach Vortrag und mehrere Nachfragen als Beirat. Auch bei ungeklärter Datenschutzlage muss die Krisenstabsleitung eine belastbare Aussage zu Zuständigkeiten, Prüfaufträgen und nächsten Entscheidungsterminen liefern. Dies ist die stärkste Szene der Übung.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk17-zwischenfazit-foto.webp",
@@ -1113,7 +1113,7 @@
       "empfaenger": "kaufmaennische-leiterin-cfo",
       "minuteOffset": 36,
       "vertraulich": true,
-      "text": "Die Hausbank fordert eine kurzfristige Einschätzung des finanziellen Schadens. Frist: 2 Stunden. Welche Informationen benötigst du?",
+      "text": "Die Hausbank hat von der Störung erfahren und verlangt eine kurzfristige Einschätzung des finanziellen Risikos. Frist: 2 Stunden. Welche Informationen benötigst du?",
       "moderatorGut": "Eine ehrliche Spanne statt einer Scheingenauigkeit, mit Annahmen und nächstem Update-Termin.",
       "moderatorSchlecht": "Keine Rückmeldung oder geschönte Zahlen – das Vertrauen der Bank leidet.",
       "prioritaet": 2,
@@ -1252,9 +1252,9 @@
       "id": "SK17",
       "nr": 17,
       "empfaenger": "geschaeftsfuehrer-ceo",
-      "minuteOffset": 54,
+      "minuteOffset": 55.5,
       "vertraulich": true,
-      "text": "Ein Beiratsmitglied ruft dich vor der Sondersitzung privat an: „Wenn heute keine belastbaren Zahlen und kein Plan auf dem Tisch liegen, stelle ich im Beirat die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.",
+      "text": "Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitzung privat an: „Wenn wir heute keine belastbaren Zahlen und keinen Plan sehen, stelle ich die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.",
       "moderatorGut": "Ruhig bleiben, das Lagebild ehrlich mit allen Unsicherheiten vortragen, keine Schönfärberei.",
       "moderatorSchlecht": "Unter Druck geschönte Zahlen oder Zusagen, die später nicht zu halten sind.",
       "moderatorHinweis": "Vorbereitung auf die Lagekarte „Beirat fordert Lagebericht“. Beobachte, ob die Person den Druck in den Krisenstab trägt oder allein damit bleibt.",
@@ -1263,7 +1263,7 @@
         "geschaeftsfuehrerin-vertrieb",
         "kaufmaennische-leiterin-cfo"
       ],
-      "vorLagekarte": "LK17"
+      "zuBeginnVon": "LK17"
     },
     {
       "id": "SK18",
@@ -1337,7 +1337,7 @@
       "empfaenger": "kaufmaennische-leiterin-cfo",
       "minuteOffset": 23,
       "vertraulich": true,
-      "text": "Eure Cyberversicherung weist darauf hin: Kosten für Dienstleister außerhalb ihres Partnernetzwerks (Forensik, Anwalt, Krisenkommunikation) werden nach den Vertragsbedingungen möglicherweise nicht oder nur teilweise erstattet. Wer schon andere beauftragt hat, sollte das umgehend klären.",
+      "text": "Die Cyberversicherung meldet sich und weist auf mögliche Einschränkungen bei der Kostenerstattung hin: Kosten für Dienstleister außerhalb ihres Partnernetzwerks (Forensik, Anwalt, Krisenkommunikation) werden nach den Vertragsbedingungen möglicherweise nicht oder nur teilweise erstattet. Wer schon andere beauftragt hat, sollte das umgehend klären.",
       "moderatorGut": "Die Einschränkung geht sofort an alle Bereiche, die externe Dienstleister beauftragen.",
       "moderatorSchlecht": "Die Information bleibt liegen, während bereits eigene, nicht erstattungsfähige Dienstleister beauftragt werden.",
       "prioritaet": 2,
@@ -1491,7 +1491,7 @@
       "empfaenger": "leiter-einkauf",
       "minuteOffset": 83,
       "vertraulich": true,
-      "text": "Ein wichtiger Rohstofflieferant liefert ab sofort nur noch gegen Vorkasse. Er hat von eurer Lage aus der Presse erfahren und will kein Risiko eingehen.",
+      "text": "Ein wichtiger Rohstofflieferant liefert ab sofort nur noch gegen Vorkasse. Er hat über die Branche von eurer Lage erfahren und will kein Risiko eingehen.",
       "moderatorGut": "Gespräch auf Leitungsebene, Zahlungsbedingungen werden mit der Finanzleitung abgestimmt.",
       "moderatorSchlecht": "Bestellungen werden einfach zurückgestellt – der Wiederanlauf stockt mangels Material.",
       "prioritaet": 3,
@@ -1506,7 +1506,7 @@
       "empfaenger": "kommunikation-marketing",
       "minuteOffset": 85,
       "vertraulich": true,
-      "text": "IT und Produktionsleitung stellen für Sonntag eine Kapazität von bis zu 70 % in Aussicht. Eine belastbare Freigabe steht noch aus. Die Geschäftsführung möchte bereits eine Erfolgsmeldung vorbereiten: „Alles wieder im Griff.“ Gleichzeitig ist offen, ob Kundendaten abgeflossen sind. Wie formulierst du die Botschaft?",
+      "text": "In der Geschäftsführung gibt es den Wunsch, öffentlich zu verkünden: „Alles wieder im Griff.“ Kapazität und Freigaben sind aber noch nicht belastbar bestätigt, und offen ist, ob Kundendaten abgeflossen sind. Wie formulierst du die Botschaft?",
       "moderatorGut": "Ehrliche, vorsichtige Botschaft; Kunden werden vor der Presse informiert, offene Punkte werden benannt.",
       "moderatorSchlecht": "Vorschnelle Entwarnung – sie fällt dem Unternehmen auf die Füße, sobald neue Fakten auftauchen.",
       "prioritaet": 2,
@@ -1521,7 +1521,7 @@
       "empfaenger": "it-service-desk",
       "minuteOffset": 10,
       "vertraulich": true,
-      "text": "Seit 07:05 Uhr sind rund 140 Anrufe und Tickets eingegangen. Anwenderinnen und Anwender fragen: Darf ich meinen Rechner einschalten? Soll ich das Netzwerkkabel ziehen? Vom Krisenstab gibt es noch keine Anweisung – im Team antwortet jeder etwas anderes.",
+      "text": "Seit Beginn der Störung gehen beim IT-Service-Desk im Minutentakt Anrufe und Meldungen ein, der Rückstau wächst schnell. Die Beschäftigten fragen: Darf ich meinen Rechner weiter nutzen? Soll ich das Netzwerkkabel ziehen? Eine abgestimmte Anweisung fehlt noch – im Team antwortet jeder etwas anderes.",
       "moderatorGut": "Die Anfragen werden gebündelt und als kurze Lagemeldung (wie viele, welche Bereiche, seit wann) an den Krisenstab gegeben; zurück kommt eine einheitliche Anweisung an alle.",
       "moderatorSchlecht": "Jeder beantwortet Anrufe nach eigenem Ermessen – Rechner werden wieder eingeschaltet, der Angriff breitet sich weiter aus.",
       "prioritaet": 2,
@@ -1566,7 +1566,7 @@
       "empfaenger": "kundenservice-callcenter",
       "minuteOffset": 61,
       "vertraulich": true,
-      "text": "Seit öffentliche Berichte über den Angriff kursieren, haben sich die Anrufe verdreifacht. Ein Anrufer gibt sich als Einkäufer eines Kunden aus und fragt auffällig gezielt nach Details zum Angriff und zur Lösegeldfrage. Die Rückrufnummer gehört zu einer Redaktion.",
+      "text": "Seit bekannt geworden ist, dass NordTech von einem Cyberangriff betroffen ist, nehmen die Kundenanrufe stark zu. Ein Anrufer gibt sich als Einkäufer eines Kunden aus und fragt auffällig gezielt nach vertraulichen Details zum Angriff und zur Lösegeldfrage. Die Rückrufnummer gehört zu einer Redaktion.",
       "moderatorGut": "Der Anrufer wird an die Pressestelle verwiesen, der Vorfall geht an den Krisenstab, das Team wird gewarnt.",
       "moderatorSchlecht": "Am Telefon werden Details preisgegeben, die morgen in der Zeitung stehen.",
       "prioritaet": 2,
@@ -1581,7 +1581,7 @@
       "empfaenger": "it-service-desk",
       "minuteOffset": 82,
       "vertraulich": true,
-      "text": "Für den Wiederanlauf müssen 900 Endgeräte, gemeinsam genutzte Produktionsrechner und Server geprüft und für 620 Beschäftigte die Zugänge kontrolliert wiederhergestellt werden. Vor dem Service-Desk bildet sich eine Schlange, die Produktion wartet auf Freigaben. Wer kommt zuerst dran?",
+      "text": "Für die nächste Wiederanlaufphase zeichnet sich erheblicher Prüfaufwand ab: 900 Endgeräte, Produktionsrechner und Server sind zu bewerten, die Zugänge von 620 Beschäftigten kontrolliert wiederherzustellen. Schon jetzt drängen Produktion und Verwaltung, zuerst dranzukommen. Welche Reihenfolge bereitest du vor?",
       "moderatorGut": "Der Krisenstab legt die Reihenfolge nach Kritikalität fest und kommuniziert sie an alle.",
       "moderatorSchlecht": "Wer zuerst kommt oder am lautesten ist, kommt zuerst dran.",
       "prioritaet": 2,
@@ -1609,12 +1609,12 @@
       "id": "SK40",
       "nr": 40,
       "empfaenger": "leitung-produktion",
-      "minuteOffset": 15,
+      "minuteOffset": 10.5,
       "vertraulich": true,
-      "text": "Die Schichtleitungen der drei Standorte rufen dich gleichzeitig an: Sollen die laufenden Aufträge zu Ende gefahren oder die Anlagen sofort gestoppt werden? An Fräslinie 4 sind die Programme verschlüsselt, an den anderen Linien läuft noch alles. Ein Automobilkunde erwartet heute Nachmittag eine Just-in-time-Lieferung.",
+      "text": "Die Schichtleitungen der drei Standorte rufen dich gleichzeitig an: Sollen die laufenden Aufträge zu Ende gefahren oder die Anlagen sofort gestoppt werden? An Fräslinie 4 sind die Programme verschlüsselt, an den anderen Linien läuft noch alles. Ein Automobilkunde erwartet heute Nachmittag eine Just-in-time-Lieferung. Wie weist du die Schichtleitungen an, bis der Krisenstab entschieden hat?",
       "moderatorGut": "Eine einheitliche Anweisung für alle Standorte, abgestimmt mit der IT (Sicherheit vor Ausbringung); Lieferfähigkeit und Folgen gehen gebündelt an den Krisenstab.",
       "moderatorSchlecht": "Jeder Standort entscheidet selbst – einige Linien bleiben ungeschützt am Netz, andere stehen ohne Not.",
-      "prioritaet": 2,
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo"
       ]
@@ -1625,8 +1625,8 @@
       "empfaenger": "leitung-qualitaet",
       "minuteOffset": 40,
       "vertraulich": true,
-      "text": "Die Messprotokolle für Pharma-Komponenten werden seit Montagfrüh nicht mehr ins Qualitätssystem übertragen. Die Fertigung prüft auf Papier weiter. Der Vertrieb will bereits gefertigte Teile trotzdem ausliefern, weil der Kunde drängt.",
-      "moderatorGut": "Betroffene Ware wird gesperrt, bis die Nachweise vollständig sind; der Kunde wird offen informiert, eine Sonderfreigabe nur dokumentiert und mit dem Kunden abgestimmt.",
+      "text": "Seit Beginn des IT-Ausfalls werden die Messprotokolle für Pharma-Komponenten nicht mehr elektronisch übertragen. Die Fertigung dokumentiert auf Papier. Der Vertrieb möchte vorhandene Ware trotzdem ausliefern, weil der Kunde drängt. Welche Nachweise verlangst du vor einer Freigabe?",
+      "moderatorGut": "Betroffene Ware bleibt gesperrt, bis Qualität und Rückverfolgbarkeit anhand belastbarer Nachweise bewertet sind. Etwaige Abweichungs- oder Sonderfreigabeverfahren werden fachlich geprüft, mit dem Kunden abgestimmt und dokumentiert.",
       "moderatorSchlecht": "Ware geht ohne vollständige Nachweise raus – bei einer Reklamation fehlt jede Rückverfolgbarkeit.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
@@ -1656,7 +1656,7 @@
       "minuteOffset": null,
       "vertraulich": true,
       "nurNachWeiche": true,
-      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat vom Angriff aus der Presse erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
+      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat über Dritte vom Cyberangriff erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
       "moderatorGut": "Sofortiger Rückruf auf Leitungsebene, ehrliche Lageinformation, regelmäßige Updates zugesagt.",
       "moderatorSchlecht": "Rechtfertigung statt Information – der Kunde fühlt sich übergangen.",
       "prioritaet": 2,
@@ -1672,9 +1672,9 @@
       "minuteOffset": null,
       "vertraulich": true,
       "nurNachWeiche": true,
-      "text": "Die Datenschutzaufsicht hat aus der Presse vom möglichen Datenabfluss erfahren. Sie fordert innerhalb von 24 Stunden eine Erklärung, warum bisher keine Meldung erfolgt ist.",
-      "moderatorGut": "Sofort fachlich prüfen lassen, Meldung nachholen, offen und sachlich erklären.",
-      "moderatorSchlecht": "Abwiegeln oder weiter abwarten.",
+      "text": "Die Datenschutzaufsicht fragt nach: Wann hat NordTech von einer möglichen Datenverletzung erfahren, welche Prüfung wurde vorgenommen, und weshalb ist bislang keine Meldung erfolgt? Ob eine Pflichtverletzung vorliegt, muss fachlich geprüft werden.",
+      "moderatorGut": "Sofort fachlich prüfen lassen, Zeitpunkte und Prüfschritte nachvollziehbar darlegen, eine Meldung bei Bedarf nachholen.",
+      "moderatorSchlecht": "Abwiegeln oder die Rückfrage liegen lassen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "notfallmanagement-bcm",
@@ -1821,7 +1821,7 @@
         "bcmHebel": "Notfallbelege mit klarem Nacherfassungsprozess."
       },
       {
-        "posten": "Verlorene Folgeaufträge nach der Krise: zwei Kunden wechseln dauerhaft zum Wettbewerber (Deckungsbeitrag der folgenden 12 Monate)",
+        "posten": "Verlorene Folgeaufträge infolge eingeschränkter Lieferfähigkeit und anhaltender Sicherheitsbedenken: zwei Kunden wechseln zum Wettbewerber (Deckungsbeitrag der folgenden 12 Monate)",
         "betrag": 900000,
         "bcmHebel": "Schnelle, ehrliche Kommunikation hält Kunden – Schweigen treibt sie zum Wettbewerber."
       }
@@ -1836,8 +1836,8 @@
       },
       {
         "id": "kundenkommunikation",
-        "frage": "Haben Kunden in der Übung zuerst aus der Presse vom Angriff erfahren?",
-        "posten": "Weitere Kundenabwanderung durch fehlende Kommunikation",
+        "frage": "Haben Kunden zuerst von Dritten statt von NordTech vom Angriff erfahren?",
+        "posten": "Zusätzliche Kundenabwanderung, weil Kunden zuerst von Dritten vom Angriff erfahren haben",
         "betrag": 600000,
         "bcmHebel": "Ein vorbereiteter Kommunikationsplan für Kunden in den ersten Stunden."
       },
@@ -1850,8 +1850,8 @@
       },
       {
         "id": "datenschutz-verspaetet",
-        "frage": "Wurde die Meldung an die Datenschutzaufsicht verzögert?",
-        "posten": "Zusätzlicher Beratungsaufwand und Bußgeldrisiko wegen verspäteter Meldung (Modellannahme)",
+        "frage": "Hat NordTech die Meldung an die Datenschutzaufsicht zurückgestellt, bis der Abfluss bestätigt war?",
+        "posten": "Zusätzlicher Prüf- und Beratungsaufwand wegen Rückfragen der Aufsicht (Modellannahme, kein Bußgeld eingerechnet)",
         "betrag": 150000,
         "bcmHebel": "Ein vorbereiteter Meldeprozess mit klaren Zuständigkeiten und Fristen."
       }
@@ -1863,7 +1863,7 @@
     "jahresumsatz": 185000000,
     "umsatzrendite": 0.05,
     "fazit": "Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
-    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt. Die Erstattung ist eine hypothetische Modellannahme, keine Zusage einer vollständigen Deckung bestimmter Schadenspositionen. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt. Zusatzposten aus Entscheidungen sind fiktive Übungsannahmen; sie veranschaulichen mögliche Folgen und sind keine Prognose oder rechtliche Bewertung. Die Erstattung ist eine hypothetische Modellannahme. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
   },
   "weichen": [
     {
@@ -1877,12 +1877,16 @@
         {
           "id": "am-netz",
           "label": "Anlagen bleiben am Netz, Aufträge werden fertiggestellt",
-          "wirkung": "Später sind zwei weitere Fräslinien verschlüsselt: Werk Süd startet mit 20 % statt 30 %. Zusatzposten in der Rechnung.",
+          "wirkung": "Später sind zwei weitere Fräslinien verschlüsselt: Werk Süd startet mit 20 % statt 30 %; bis Sonntag holen zusätzliche Teams das auf. Zusatzposten in der Rechnung.",
           "folgen": [
             {
               "lagekarte": "LK12",
               "zusatz": "Weil die Anlagen am Montag am Netz blieben, wurden zwei weitere Fräslinien verschlüsselt und müssen neu aufgesetzt werden.",
               "kriseninfo": "Kapazität: 20 % (zwei Linien zusätzlich verschlüsselt)"
+            },
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Zusätzliche Wiederherstellungsteams haben bis Sonntag auch die am Montag zusätzlich verschlüsselten Linien wieder freigegeben – der Schaden vom Montag hat den Wiederanlauf verteuert, aber nicht dauerhaft verhindert."
             }
           ],
           "posten": [
@@ -1891,7 +1895,7 @@
         },
         {
           "id": "trennen",
-          "label": "Anlagen sofort kontrolliert vom Netz trennen",
+          "label": "Übrige Anlagen nach abgestimmter Sicherheitsentscheidung so schnell wie vertretbar isolieren, laufende Aufträge kontrolliert abbrechen",
           "wirkung": "Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.",
           "folgen": [
             {
@@ -1923,11 +1927,11 @@
         {
           "id": "abwarten",
           "label": "Erst informieren, wenn die Lage klar ist",
-          "wirkung": "Der größte Automobilkunde erfährt es aus der Zeitung (vertrauliche Karte an den Vertrieb bei „Datenschutz“); beim Wiederanlauf öffentliche Kritik; Zusatzposten Kundenabwanderung.",
+          "wirkung": "Der größte Automobilkunde erfährt es über Dritte (vertrauliche Karte an den Vertrieb bei „Datenschutz“); beim Wiederanlauf öffentliche Kritik; Zusatzposten Kundenabwanderung.",
           "folgen": [
             {
               "lagekarte": "LK15",
-              "zusatz": "Zwei Großkunden kritisieren öffentlich, dass sie vom Angriff zuerst aus der Presse erfahren haben, und kündigen an, ihre Lieferantenstrategie zu überprüfen."
+              "zusatz": "Zwei Großkunden kritisieren öffentlich, dass sie vom Angriff zuerst über Dritte statt von NordTech erfahren haben, und kündigen an, ihre Lieferantenstrategie zu überprüfen."
             }
           ],
           "karte": {
@@ -1961,7 +1965,7 @@
         {
           "id": "abwarten",
           "label": "Abwarten, bis der Abfluss bestätigt ist",
-          "wirkung": "Kritische Nachfrage im Beirat; beim Wiederanlauf fordert die Aufsicht eine Erklärung (vertrauliche Karte an die Geschäftsführung); Zusatzposten.",
+          "wirkung": "Kritische Nachfrage im Beirat; später fragt die Aufsicht nach dem Ablauf (vertrauliche Karte an die Geschäftsführung); zusätzlicher Prüf- und Beratungsaufwand als Modellannahme in der Rechnung.",
           "folgen": [
             {
               "lagekarte": "LK17",
@@ -1983,7 +1987,7 @@
       "lagekarten": [
         "LK09"
       ],
-      "frage": "Die Frist der Erpresser ist heute um 07:00 Uhr abgelaufen. Wie hat der Krisenstab entschieden?",
+      "frage": "Rückblick auf die Entscheidung vor Ablauf der Erpresserfrist am Mittwoch um 07:00 Uhr: Hat NordTech Lösegeld gezahlt oder die Zahlung abgelehnt?",
       "optionen": [
         {
           "id": "nicht-gezahlt",
