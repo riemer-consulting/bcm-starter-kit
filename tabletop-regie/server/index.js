@@ -265,8 +265,16 @@ function weichenImPlan() {
     return lkId ? { w, lkId } : null;
   }).filter(Boolean);
 }
-function lageMitWeichen(lk) {
-  if (!lk) return lk;
+// Uebungsschwerpunkt: zusaetzliche Frage an den Tisch zu dieser Lage
+function aktiverSchwerpunkt() { return (scenario.schwerpunkte || []).find(x => x.key === state.schwerpunkt) || null; }
+function schwerpunktFrage(lk) {
+  const sp = aktiverSchwerpunkt();
+  return sp && sp.zusatzfragen && lk ? sp.zusatzfragen[lk.id] || null : null;
+}
+function lageMitWeichen(lkIn) {
+  if (!lkIn) return lkIn;
+  const frage = schwerpunktFrage(lkIn);
+  const lk = frage ? Object.assign({}, lkIn, { aufgabe: [...(lkIn.aufgabe || []), frage], schwerpunktFrage: frage }) : lkIn;
   const zusatz = [];
   let kriseninfo = lk.kriseninfo;
   weichenListe().forEach(w => {
@@ -822,7 +830,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     durationMode: state.durationMode,
     difficulty: state.difficulty,
     targetMinutes: state.targetMinutes,
-    schwerpunkt: (() => { const x = (scenario.schwerpunkte || []).find(y => y.key === state.schwerpunkt); return x ? { key: x.key, label: x.label, karten: x.karten } : null; })(),
+    schwerpunkt: (() => { const x = aktiverSchwerpunkt(); return x ? { key: x.key, label: x.label, karten: x.karten, leitfrage: x.leitfrage || '', debriefing: x.debriefing || [] } : null; })(),
     scheduleWarning: state.scheduleWarning,
     elapsedMinutes: Math.round(engine.elapsedMinutes(state) * 10) / 10,
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,

@@ -363,6 +363,12 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   gleich; die Karten des Schwerpunkts werden beim Auffüllen bevorzugt, und
   passende Bonuskarten stehen in der Moderation oben mit dem Hinweis „passt
   zum Schwerpunkt“.
+  Ein Schwerpunkt verändert auch, worüber der Tisch entscheidet:
+  `zusatzfragen` (Lagekarten-ID → Frage) ergänzt die Fragen auf der Bühne,
+  `leitfrage` steht für die Moderation bei jeder Lage, `debriefing` ergänzt
+  die Debriefing-Fragen, und `pflicht` (IDs vertraulicher Karten) setzt
+  Karten, die bei diesem Schwerpunkt immer kommen, sofern Rolle oder
+  Ersatzrolle besetzt sind.
 - `standardablauf.rollenPrioritaet` (optional): feste Reihenfolge für
   „Passende Rollen vorschlagen“ – bei 45 Minuten die ersten 5, bei 90 die
   ersten 9 usw. Ohne Angabe wählt die App nach Häufigkeit auf den Lagekarten.

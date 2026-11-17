@@ -244,7 +244,8 @@ function render(s) {
     const zusatzHtml = (lk.weichenZusatz || []).length ? `<p class="mini" style="color:var(--accent);">Wegen einer früheren Entscheidung ergänzt: ${escapeHtml(lk.weichenZusatz.join(' '))}</p>` : '';
     const bewertungHtml = (lk.moderatorGut || lk.moderatorSchlecht)
       ? `<p class="mini" style="margin:4px 0;">${lk.moderatorGut ? `<span style="color:var(--ok);">Gut: ${escapeHtml(lk.moderatorGut)}</span>` : ''}${lk.moderatorSchlecht ? `<br><span style="color:var(--bad);">Schwach: ${escapeHtml(lk.moderatorSchlecht)}</span>` : ''}</p>` : '';
-    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zusatzHtml + weicheHtml + tonHtml + zustHtml + bewertungHtml +
+    const spHtml = s.schwerpunkt ? `<p class="mini" style="color:var(--accent);"><b>Schwerpunkt ${escapeHtml(s.schwerpunkt.label)}:</b> ${escapeHtml(lk.schwerpunktFrage || s.schwerpunkt.leitfrage || '')}${lk.schwerpunktFrage ? ' <span class="muted">(steht auch auf der Bühne)</span>' : ' <span class="muted">(Leitfrage, nicht auf der Bühne)</span>'}</p>` : '';
+    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + spHtml + zusatzHtml + weicheHtml + tonHtml + zustHtml + bewertungHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -326,7 +327,7 @@ function render(s) {
     <p><b>Begrüßung:</b> ${escapeHtml(leitfaden.begruessung)}</p>
     <p><b>Moderationsregel:</b> ${escapeHtml(leitfaden.moderationsregel)}</p>
     <p><b>Debriefing-Fragen:</b></p>
-    <ul>${leitfaden.debriefingFragen.map(f => `<li>${escapeHtml(f)}</li>`).join('')}</ul>
+    <ul>${leitfaden.debriefingFragen.map(f => `<li>${escapeHtml(f)}</li>`).join('')}${((s.schwerpunkt && s.schwerpunkt.debriefing) || []).map(f => `<li><b>Schwerpunkt:</b> ${escapeHtml(f)}</li>`).join('')}</ul>
     <p class="mini" style="color:var(--warn);">${escapeHtml(leitfaden.highlightHinweis)}</p>
   `;
 

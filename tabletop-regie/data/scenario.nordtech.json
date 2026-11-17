@@ -345,6 +345,7 @@
       "Welche Person oder Rolle war kritisch – und gab es eine Vertretung?",
       "Wo waren Single Points of Failure?",
       "Welche eurer Entscheidungen hat den weiteren Verlauf verändert – und wie würdet ihr mit dem heutigen Wissen entscheiden?",
+      "„70 % technische Kapazität“ – wie viel davon war wirklich nutzbar, und was hat die reale Leistung begrenzt (Personal, Material, Freigaben)?",
       "Welche drei Verbesserungen setzen wir um – wer ist verantwortlich, mit welcher Priorität, bis wann?"
     ],
     "abschlussfragenVorDebrief": [
@@ -375,7 +376,7 @@
         "Welche Auswirkungen hat dies auf Ihren Bereich?",
         "Welche Sofortmaßnahmen leiten Sie ein?",
         "Welche Entscheidungen benötigt der Krisenstab?",
-        "Welche Anweisung bekommen jetzt alle Mitarbeitenden – und über wen läuft sie?"
+        "Welche Anweisung bekommen jetzt alle Beschäftigten – und über wen läuft sie?"
       ],
       "moderatorHinweis": "Jetzt kommt der Knall. Kurz wirken lassen: Die Vorboten (Anmeldung, Maschine 4 mit der Endung .shadowvault, keine Aufträge) hingen alle zusammen. Lösegeldforderung auf der Bühne zeigen, Grundton der Übung setzen.",
       "media": {
@@ -804,7 +805,7 @@
       "titel": "Wiederanlauf",
       "minuteOffset": 86,
       "diskussionMinuten": 5,
-      "text": "70 % der technischen Fertigungskapazität sind wieder verfügbar, die IT-Systeme weitgehend. Wegen Materialengpässen ist nicht sicher, dass diese Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
+      "text": "70 % der technischen Fertigungskapazität sind wieder verfügbar, die IT-Systeme weitgehend. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
       "kriseninfo": null,
       "aufgabe": [
         "Welche Botschaft senden Sie an Kunden, Beschäftigte und Öffentlichkeit – und wer sagt es?",
@@ -2014,7 +2015,7 @@
   },
   "nachspiel": {
     "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
-    "einleitung": "Sonntag, 12:00 Uhr. 70 % der Fertigungskapazität sind wieder verfügbar, die Systeme weitgehend zurück. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "einleitung": "Sonntag, 12:00 Uhr. 70 % der technischen Fertigungskapazität sind wieder verfügbar, die Systeme weitgehend zurück – Personal und Material begrenzen die reale Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
     "nacharbeiten": [
       {
         "zahl": "1.900",
@@ -2129,7 +2130,7 @@
     "jahresumsatz": 185000000,
     "umsatzrendite": 0.05,
     "fazit": "Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
-    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt. Zusatzposten aus Entscheidungen sind fiktive Übungsannahmen; sie veranschaulichen mögliche Folgen und sind keine Prognose oder rechtliche Bewertung. Die Erstattung ist eine hypothetische Modellannahme. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Sie gilt für den gesamten Krisenverlauf über sieben Tage – auch für Ereignisse wie Vertragsstrafen, die in kurzen Übungen nicht als eigene Karte vorkommen. Die Größenordnungen sind bewusst realistisch gewählt. Zusatzposten aus Entscheidungen sind fiktive Übungsannahmen; sie veranschaulichen mögliche Folgen und sind keine Prognose oder rechtliche Bewertung. Die Erstattung ist eine hypothetische Modellannahme. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
   },
   "weichen": [
     {
@@ -2264,11 +2265,11 @@
         {
           "id": "gezahlt",
           "label": "Lösegeld gezahlt",
-          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Erpresser fordern mehr (falls die Karte an die IT im Plan ist), die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
+          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Zahlung wird öffentlich; in längeren Übungen fordern die Erpresser danach mehr (vertrauliche Karte an die IT). Lösegeld steht in der Rechnung.",
           "folgen": [
             {
               "lagekarte": "LK12",
-              "zusatz": "Der nach der Zahlung gelieferte Schlüssel entschlüsselt nur einen Teil der Systeme und ist sehr langsam – die Wiederherstellung läuft trotzdem überwiegend über das Backup."
+              "zusatz": "Der nach der Zahlung gelieferte Schlüssel entschlüsselt nur einen Teil der übrigen Systeme und ist sehr langsam. Niemand verlässt sich darauf – die Wiederherstellung der übrigen Systeme wartet weiter auf das geprüfte Backup."
             },
             {
               "lagekarte": "LK15",
@@ -2301,7 +2302,27 @@
         "SK21",
         "SK23",
         "B7",
-        "B6"
+        "B6",
+        "LK17"
+      ],
+      "leitfrage": "Wer entscheidet, wer eskaliert, wer kommuniziert – und ist das allen klar?",
+      "zusatzfragen": {
+        "LK18": "Wer darf entscheiden, dass das kein Routinefall mehr ist?",
+        "LK01": "Wer übernimmt jetzt die Leitung – und wie erfahren alle davon?",
+        "LK02": "Was entscheidet der Krisenstab, was entscheiden die Fachbereiche selbst?",
+        "LK22": "Wer gibt Nachrichten frei – und wie schnell muss das gehen?",
+        "LK07": "Wer bekommt den Prüfauftrag, mit welchem Termin für die Rückmeldung?",
+        "LK09": "Welche Entscheidung muss jetzt fallen, welche kann warten – und wer hält das fest?",
+        "LK17": "Was ist gesichert, was geschätzt, was unbekannt – und sagt die Leitung das auch so?",
+        "LK12": "Wer entscheidet, wenn Vertrieb und Produktion unterschiedliche Prioritäten wollen?",
+        "LK15": "Wann und von wem wird die Krisenorganisation beendet – und was bleibt bestehen?"
+      },
+      "debriefing": [
+        "War jederzeit klar, wer entscheidet – und wer die Stellvertretung ist?",
+        "Wo sind Entscheidungen hängen geblieben oder doppelt getroffen worden?"
+      ],
+      "pflicht": [
+        "SK47"
       ]
     },
     {
@@ -2322,6 +2343,25 @@
         "SK36",
         "SK02",
         "B8"
+      ],
+      "leitfrage": "Was ist technisch bereit, was ist sicher, was ist fachlich freigegeben?",
+      "zusatzfragen": {
+        "LK18": "Welche technischen Sofortmaßnahmen sind jetzt richtig – und welche zerstören Spuren?",
+        "LK01": "Was wird jetzt vom Netz genommen, was bleibt an – und wer entscheidet das?",
+        "LK02": "Welche Anlagen dürfen ohne Netz weiterlaufen, und wie wird das abgesichert?",
+        "LK22": "Welche Kommunikationswege sind sicher, auch wenn der Angreifer noch im Netz sein könnte?",
+        "LK07": "Welche Logs und Spuren müssen gesichert werden, bevor Systeme neu aufgesetzt werden?",
+        "LK09": "Welche Prüfschritte braucht das Backup, bevor irgendetwas daraus produktiv wird?",
+        "LK17": "Welche Wiederanlauf-Prognose kann die IT belastbar nennen – und welche nicht?",
+        "LK12": "Nach welchen Kriterien sind die Systeme in Werk Süd freigegeben – und von wem?",
+        "LK15": "Was läuft produktiv, was noch im Test – und wie merken Sie, wenn der Angreifer zurückkommt?"
+      },
+      "debriefing": [
+        "Wo lagen technische Bereitstellung, Sicherheitsfreigabe und fachliche Freigabe zu dicht beieinander?",
+        "Welche Daten waren am Ende wirklich belastbar – und woher wusstet ihr das?"
+      ],
+      "pflicht": [
+        "SK19"
       ]
     },
     {
@@ -2341,6 +2381,25 @@
         "SK11",
         "SK26",
         "B8"
+      ],
+      "leitfrage": "Was können wir sicher fertigen und ausliefern – mit welchen Nachweisen?",
+      "zusatzfragen": {
+        "LK18": "Was bedeutet ein ERP-Ausfall für die laufende Schicht?",
+        "LK01": "Welche Linien laufen weiter, welche werden kontrolliert gestoppt?",
+        "LK02": "Welche Aufträge haben Vorrang – und reichen Material und Personal dafür?",
+        "LK22": "Wie erreichen Anweisungen jede Schicht und jede Linie, auch ohne E-Mail?",
+        "LK07": "Welche Produktions- und Prüfdaten könnten betroffen sein – und was heißt das für Kunden?",
+        "LK09": "Welche Daten aus dem Backup braucht die Fertigung zuerst – und welche Lücken bleiben?",
+        "LK17": "Welche Liefertermine kann die Produktion belastbar zusagen?",
+        "LK12": "Was wird in Werk Süd zuerst gefertigt – und wie wird ohne ERP dokumentiert und freigegeben?",
+        "LK15": "Wie viel der 70 % technischen Kapazität ist mit Personal und Material wirklich nutzbar?"
+      },
+      "debriefing": [
+        "Wurde Ware freigegeben, ohne dass die Nachweise vollständig waren?",
+        "Wie viel der technischen Kapazität war wirklich nutzbar – und was hat sie begrenzt?"
+      ],
+      "pflicht": [
+        "SK45"
       ]
     },
     {
@@ -2362,6 +2421,25 @@
         "SK33",
         "SK28",
         "B6"
+      ],
+      "leitfrage": "Wer erfährt was, wann, von wem – und passt das zusammen?",
+      "zusatzfragen": {
+        "LK18": "Ab wann müssten Kunden von einer Störung erfahren?",
+        "LK01": "Welche Kunden informieren Sie heute – mit welcher Botschaft?",
+        "LK02": "Welche Kunden sind zuerst betroffen, und wer ruft sie an?",
+        "LK22": "Wer formuliert die Botschaft für Beschäftigte, Kunden und Presse – und wer gibt sie frei?",
+        "LK07": "Was sagen Sie Kunden, deren Daten betroffen sein könnten, bevor alles geklärt ist?",
+        "LK09": "Wann ist eine gute Nachricht kommunizierbar, ohne zu viel zu versprechen?",
+        "LK17": "Welche Kernbotschaft trägt nach innen und außen gleichermaßen?",
+        "LK12": "Welche Kunden bekommen die erste Ware – und was sagen Sie den anderen?",
+        "LK15": "Wie verhindern Sie, dass „wieder in Betrieb“ als „alles wieder gut“ verstanden wird?"
+      },
+      "debriefing": [
+        "Haben Kunden, Beschäftigte und Presse dieselbe Geschichte gehört?",
+        "Wo kam eine Information zu spät oder über Dritte an?"
+      ],
+      "pflicht": [
+        "SK46"
       ]
     }
   ]

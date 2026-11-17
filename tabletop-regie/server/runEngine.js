@@ -398,7 +398,16 @@ function buildAdaptiveSchedule(scenario, { targetMinutes, difficulty, roleCount,
     winLoad[windowOf(ev)]++; recLoad[recOf(ev)] = (recLoad[recOf(ev)] || 0) + 1;
   };
   selected.filter(ev => ev.type !== 'lagekarte').forEach(ev => take(ev, false));
-  const balanced = (a, b) => (winLoad[windowOf(a)] - winLoad[windowOf(b)])
+  // Gesetzte vertrauliche Karten des Schwerpunkts ("pflicht") kommen vor der
+  // Rollenabdeckung -- sofern Rolle/Ersatzrolle besetzt und Voraussetzungen erfuellt.
+  ((sp && sp.pflicht) || []).forEach(id => {
+    const ev = skPool.find(x => x.id === id);
+    if (ev && !taken.has(keyOf(ev)) && prereqsMet(ev)) take(ev, true);
+  });
+  // Schwerpunkt-Karten gelten in ihrem Abschnitt als eine Karte "leichter"
+  // -- sie kommen bevorzugt, ohne die Verteilung ueber den Bogen aufzugeben.
+  const spBonus = ev => (spSet.has(ev.id) ? 1 : 0);
+  const balanced = (a, b) => ((winLoad[windowOf(a)] - spBonus(a)) - (winLoad[windowOf(b)] - spBonus(b)))
     || (own(a) - own(b))
     || (effPrio(a) - effPrio(b))
     || (sortKey(a) - sortKey(b));

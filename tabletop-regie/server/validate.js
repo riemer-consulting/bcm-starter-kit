@@ -58,6 +58,8 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
   (scenario.schwerpunkte || []).forEach(x => {
     if (!x.key || !x.label) errors.push('Schwerpunkt ohne key/label.');
     (x.karten || []).forEach(id => { if (!alleKarten.has(id)) errors.push(`Schwerpunkt ${x.key}: unbekannte Karte ${id}.`); });
+    (x.pflicht || []).forEach(id => { if (!scenario.sonderlagekarten.some(k => k.id === id)) errors.push(`Schwerpunkt ${x.key}: gesetzte Karte ${id} ist keine vertrauliche Karte.`); });
+    Object.keys(x.zusatzfragen || {}).forEach(id => { if (!scenario.lagekarten.some(l => l.id === id)) errors.push(`Schwerpunkt ${x.key}: Zusatzfrage zu unbekannter Lagekarte ${id}.`); });
   });
   // Weichen: Entscheidungen mit Folgen
   const postenIds = new Set(((scenario.nachspiel || {}).optionalePosten || []).map(o => o.id));
