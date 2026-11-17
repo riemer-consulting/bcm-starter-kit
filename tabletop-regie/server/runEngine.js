@@ -26,6 +26,7 @@ function newRunState(scenario) {
     firedSonderlagekarten: [], // { id, at, atMinute, manual, recipientRoleId, emailResults }
     firedBonusInfo: [], // { id, atMinute, recipientRoleId } -- fuer das Spielbrett
     finale: { step: 0, optionen: {} }, // Abschluss (Nacharbeiten + Rechnung), 0 = nicht aktiv
+    weichen: {}, // { [weichenId]: optionId } -- Entscheidungen mit Folgen fuer spaetere Karten
     finaleMinutes: 0,
     manualFires: [], // ids, die der Moderator vorzeitig/zusätzlich ausgelöst hat
     bewertung: {}, // { [roleId]: { [kriterium]: 1-5 } }

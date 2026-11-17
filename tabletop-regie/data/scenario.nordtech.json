@@ -44,7 +44,7 @@
       "kaufmaennische-leiterin-cfo",
       "leitung-qualitaet",
       "notfallmanagement-bcm",
-      "marketing-ecommerce",
+      "kommunikation-marketing",
       "it-service-desk",
       "kundenservice-callcenter",
       "leiterin-personal",
@@ -72,7 +72,8 @@
       "label": "Produktion & Qualität",
       "members": [
         "leitung-produktion",
-        "leitung-qualitaet"
+        "leitung-qualitaet",
+        "standortleitung-werk-sued"
       ]
     },
     {
@@ -113,16 +114,15 @@
       "label": "Kunden & Vertrieb",
       "members": [
         "geschaeftsfuehrerin-vertrieb",
-        "leiter-einzelhandel",
-        "regionalleiter-west",
-        "regionalleiter-ost"
+        "key-account-automotive",
+        "key-account-pharma"
       ]
     },
     {
       "key": "marketing",
-      "label": "Kommunikation / Marketing",
+      "label": "Kommunikation",
       "members": [
-        "marketing-ecommerce"
+        "kommunikation-marketing"
       ]
     },
     {
@@ -271,32 +271,44 @@
       "ebene": "verteilung"
     },
     {
-      "id": "marketing-ecommerce",
-      "funktion": "Marketing & eCommerce",
+      "id": "kommunikation-marketing",
+      "funktion": "Unternehmenskommunikation & Marketing",
       "group": "marketing",
-      "beschreibung": "Du verantwortest die externe Kommunikation in sozialen Medien und den Online-Auftritt. Du bist meist die erste Anlaufstelle für Presseanfragen.",
-      "ebene": "verteilung"
+      "beschreibung": "Du verantwortest Presse, Social Media, Website und Kundenmailings. Du bist meist die erste Anlaufstelle für Presseanfragen und formulierst die Botschaften, die der Krisenstab freigibt.",
+      "ebene": "verteilung",
+      "alteIds": [
+        "marketing-ecommerce"
+      ]
     },
     {
-      "id": "leiter-einzelhandel",
-      "funktion": "Leitung Einzelhandel",
+      "id": "key-account-automotive",
+      "funktion": "Key Account Management Automotive",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest das Einzelhandelsgeschäft. Beschwerden von Fachhändlern landen zuerst bei dir.",
-      "ebene": "eingang"
+      "beschreibung": "Du betreust die großen Automobilkunden: Just-in-time-Abrufe, Lieferantenhandbuch, Eskalationen aus dem Kundeneinkauf. Ihre Fragen und Forderungen landen zuerst bei dir. Du meldest sie gebündelt an den Krisenstab und brauchst eine abgestimmte Linie, bevor du etwas zusagst.",
+      "ebene": "eingang",
+      "alteIds": [
+        "leiter-einzelhandel"
+      ]
     },
     {
-      "id": "regionalleiter-west",
-      "funktion": "Regionalleitung West",
+      "id": "key-account-pharma",
+      "funktion": "Key Account Management Pharma",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt.",
-      "ebene": "eingang"
+      "beschreibung": "Du betreust die Pharmakunden. Für sie zählen Lieferfähigkeit und lückenlose Chargendokumentation – Ausfälle können bis zur Patientenversorgung durchschlagen. Du meldest Kundenanfragen gebündelt an den Krisenstab und stimmst Zusagen mit Produktion und Qualität ab.",
+      "ebene": "eingang",
+      "alteIds": [
+        "regionalleiter-west"
+      ]
     },
     {
-      "id": "regionalleiter-ost",
-      "funktion": "Regionalleitung Ost",
-      "group": "vertrieb",
-      "beschreibung": "Du verantwortest den Vertrieb in deiner Region. Du musst einschätzen, wie sich die Krise auf deine Kunden vor Ort auswirkt.",
-      "ebene": "eingang"
+      "id": "standortleitung-werk-sued",
+      "funktion": "Standortleitung Werk Süd",
+      "group": "produktion",
+      "beschreibung": "Du leitest Werk Süd, einen der drei Standorte. Was in den Hallen passiert – Schichtleitungen, Anlagen, Belegschaft vor Ort – erfährst du zuerst. Du meldest gebündelt an den Krisenstab und setzt dessen Anweisungen am Standort um.",
+      "ebene": "eingang",
+      "alteIds": [
+        "regionalleiter-ost"
+      ]
     },
     {
       "id": "assistenz-gf-dokumentation",
@@ -428,7 +440,7 @@
         "Welche Kunden sind betroffen?",
         "Welche Prioritäten setzen Sie?"
       ],
-      "moderatorHinweis": "Eine eigene Rolle Produktion gibt es nicht: Rückfragen an die Produktionsleitung beantwortet die Moderation.",
+      "moderatorHinweis": "Ist die Produktionsleitung nicht besetzt, beantwortet die Moderation Rückfragen zur Fertigung. Darauf achten, dass Produktion, Vertrieb und Einkauf gemeinsam priorisieren: welche Kunden, welche Aufträge, welches Material.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk02-produktion-gestoppt-foto.webp",
@@ -439,7 +451,8 @@
         "geschaeftsfuehrer-ceo",
         "leiter-einkauf",
         "geschaeftsfuehrerin-vertrieb",
-        "leitung-produktion"
+        "leitung-produktion",
+        "standortleitung-werk-sued"
       ],
       "akt": "ausbruch"
     },
@@ -468,7 +481,7 @@
       },
       "prioritaet": 3,
       "zustaendig": [
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "office-management",
         "leiterin-personal",
         "kundenservice-callcenter"
@@ -497,7 +510,7 @@
       },
       "prioritaet": 2,
       "zustaendig": [
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "geschaeftsfuehrer-ceo"
       ],
       "akt": "eskalation"
@@ -554,7 +567,8 @@
         "geschaeftsfuehrerin-vertrieb",
         "geschaeftsfuehrer-ceo",
         "kundenservice-callcenter",
-        "leitung-qualitaet"
+        "leitung-qualitaet",
+        "key-account-automotive"
       ],
       "akt": "eskalation"
     },
@@ -572,7 +586,7 @@
         "Wer prüft die Meldepflichten, und bis wann?",
         "Wer übernimmt die Kommunikation?"
       ],
-      "moderatorHinweis": "Eine datenschutzbeauftragte Person gibt es nicht als Rolle – die Frage an Notfallmanagement oder Krisenstabsleitung richten.",
+      "moderatorHinweis": "Eine datenschutzbeauftragte Person gibt es nicht als Rolle – die Frage an Notfallmanagement oder Krisenstabsleitung richten. Ziel ist nicht die richtige Rechtsauskunft, sondern: Wer prüft das, und bis wann?",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk07-datenschutz.png",
@@ -608,7 +622,7 @@
       "prioritaet": 3,
       "zustaendig": [
         "leiter-it",
-        "marketing-ecommerce"
+        "kommunikation-marketing"
       ],
       "akt": "eskalation"
     },
@@ -661,7 +675,7 @@
       },
       "prioritaet": 3,
       "zustaendig": [
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "geschaeftsfuehrer-ceo",
         "kundenservice-callcenter"
       ],
@@ -692,7 +706,8 @@
         "geschaeftsfuehrerin-vertrieb",
         "geschaeftsfuehrer-ceo",
         "leitung-qualitaet",
-        "leitung-produktion"
+        "leitung-produktion",
+        "key-account-pharma"
       ],
       "akt": "hoehepunkt"
     },
@@ -722,7 +737,8 @@
         "geschaeftsfuehrerin-vertrieb",
         "leiter-einkauf",
         "leitung-produktion",
-        "leitung-qualitaet"
+        "leitung-qualitaet",
+        "standortleitung-werk-sued"
       ],
       "akt": "folgen"
     },
@@ -806,7 +822,7 @@
       "prioritaet": 1,
       "zustaendig": [
         "geschaeftsfuehrer-ceo",
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "it-service-desk",
         "kundenservice-callcenter",
         "leitung-produktion"
@@ -920,7 +936,8 @@
         "geschaeftsfuehrerin-vertrieb",
         "leiter-it",
         "geschaeftsfuehrer-ceo",
-        "kundenservice-callcenter"
+        "kundenservice-callcenter",
+        "key-account-automotive"
       ],
       "akt": "vorboten"
     },
@@ -950,7 +967,7 @@
         "notfallmanagement-bcm",
         "leiter-it",
         "leitung-produktion",
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "leiterin-personal",
         "it-service-desk"
       ],
@@ -981,7 +998,8 @@
         "leitung-qualitaet",
         "leitung-produktion",
         "geschaeftsfuehrerin-vertrieb",
-        "geschaeftsfuehrer-ceo"
+        "geschaeftsfuehrer-ceo",
+        "key-account-pharma"
       ],
       "akt": "folgen"
     }
@@ -1057,30 +1075,30 @@
       "moderatorSchlecht": "Keine Kommunikation.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiter-einzelhandel",
-        "regionalleiter-west",
+        "key-account-automotive",
+        "key-account-pharma",
         "geschaeftsfuehrer-ceo"
       ]
     },
     {
       "id": "SK06",
       "nr": 6,
-      "empfaenger": "leiter-einzelhandel",
+      "empfaenger": "key-account-automotive",
       "minuteOffset": 30,
       "vertraulich": true,
-      "text": "Drei wichtige Fachhändler beschweren sich öffentlich. Die ersten Kommentare verbreiten sich in sozialen Medien. Wie gehst du damit um?",
-      "moderatorGut": "Die betroffenen Bereiche werden eingebunden, die Reaktion nach außen wird abgestimmt.",
-      "moderatorSchlecht": "Man wartet ab.",
+      "text": "Der Einkauf eines Automobilkunden meldet sich bei dir: Wenn bis morgen 10:00 Uhr kein belastbarer Lieferplan vorliegt, gibt er den Zweitlieferanten frei und stellt euch die Mehrkosten in Rechnung. Die Lage hat er bereits mit anderen Zulieferern im Branchennetzwerk besprochen.",
+      "moderatorGut": "Die Forderung geht gebündelt an den Krisenstab; der Lieferplan wird mit der Produktion abgestimmt, der Kunde bekommt einen festen Ansprechpartner.",
+      "moderatorSchlecht": "Eigene Zusagen ohne Abstimmung mit der Produktion – oder Funkstille bis zur Frist.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
-        "marketing-ecommerce"
+        "geschaeftsfuehrer-ceo"
       ]
     },
     {
       "id": "SK07",
       "nr": 7,
-      "empfaenger": "marketing-ecommerce",
+      "empfaenger": "kommunikation-marketing",
       "minuteOffset": 26,
       "vertraulich": true,
       "text": "Ein Journalist kontaktiert dich direkt über LinkedIn. Fragen: Zahlen Sie Lösegeld? Sind Kundendaten betroffen? Ist die Produktion ausgefallen? Wie reagierst du?",
@@ -1229,7 +1247,7 @@
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "leiterin-personal",
-        "marketing-ecommerce",
+        "kommunikation-marketing",
         "geschaeftsfuehrer-ceo"
       ]
     },
@@ -1261,9 +1279,9 @@
       "moderatorSchlecht": "Unüberlegte Zusagen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
+        "key-account-pharma",
         "leitung-qualitaet",
-        "geschaeftsfuehrer-ceo",
-        "leiter-einzelhandel"
+        "geschaeftsfuehrer-ceo"
       ]
     },
     {
@@ -1364,33 +1382,32 @@
     {
       "id": "SK25",
       "nr": 25,
-      "empfaenger": "regionalleiter-west",
+      "empfaenger": "key-account-pharma",
       "minuteOffset": 31,
       "vertraulich": true,
-      "text": "Ein großer Händler aus der Region West ruft persönlich an. Er hat von dem Angriff gehört – die Nachricht macht in der Branche bereits die Runde. Er will wissen, ob er seine Bestellung für nächste Woche lieber bei der Konkurrenz platzieren soll, und erwartet bis heute Abend eine Antwort.",
-      "moderatorGut": "Abstimmung im Krisenstab, einheitliche Sprachregelung, keine Einzelzusagen.",
-      "moderatorSchlecht": "Eigene Lieferzusagen ohne Rücksprache mit dem Krisenstab.",
+      "text": "Ein Pharmakunde ruft persönlich an. Er hat von dem Angriff gehört – die Nachricht macht in der Branche bereits die Runde. Bis heute Abend muss er entscheiden, ob er seine Bestellung für nächste Woche bei einem anderen Lieferanten platziert. Er fragt auch, ob die Chargendokumentation vollständig sein wird.",
+      "moderatorGut": "Abstimmung im Krisenstab mit Produktion und Qualität, einheitliche Sprachregelung, keine Einzelzusagen.",
+      "moderatorSchlecht": "Eigene Lieferzusagen ohne Rücksprache – oder Zusagen zur Dokumentation, die die Qualität nicht tragen kann.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "regionalleiter-ost",
         "geschaeftsfuehrerin-vertrieb",
-        "leiter-einzelhandel"
+        "leitung-qualitaet"
       ]
     },
     {
       "id": "SK26",
       "nr": 26,
-      "empfaenger": "regionalleiter-ost",
+      "empfaenger": "standortleitung-werk-sued",
       "minuteOffset": 62,
       "vertraulich": true,
-      "text": "Eine Person aus dem Außendienst der Region Ost berichtet: Ein Wettbewerber spricht eure Kunden gezielt an und bietet Sonderkonditionen „für die Zeit eures Ausfalls“. Zwei Kunden haben bereits Probebestellungen beim Wettbewerber platziert.",
-      "moderatorGut": "Information geht an den Krisenstab, gemeinsame Maßnahme zur Kundenbindung.",
-      "moderatorSchlecht": "Region reagiert allein mit Preisnachlässen.",
+      "text": "In Werk Süd kursiert unter den Schichten das Gerücht, der Standort werde nach dem Angriff geschlossen. Zwei erfahrene Einrichter haben Angebote eines Wettbewerbers aus der Nachbarschaft. Die Schichtleitungen fragen dich, was sie ihren Leuten sagen sollen.",
+      "moderatorGut": "Meldung an Krisenstab und Personalleitung; eine abgestimmte, ehrliche Information für alle Schichten, Schlüsselkräfte werden persönlich angesprochen.",
+      "moderatorSchlecht": "Eigene Beschwichtigung ohne Abstimmung – oder Schweigen, bis die ersten kündigen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "regionalleiter-west",
-        "geschaeftsfuehrerin-vertrieb",
-        "leiter-einzelhandel"
+        "leiterin-personal",
+        "leitung-produktion",
+        "geschaeftsfuehrer-ceo"
       ]
     },
     {
@@ -1449,7 +1466,7 @@
       "moderatorSchlecht": "Beschwichtigen („Alles wieder sicher“) ohne Nachweis – der Kunde wandert ab.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiter-einzelhandel",
+        "key-account-automotive",
         "geschaeftsfuehrer-ceo"
       ]
     },
@@ -1489,7 +1506,7 @@
     {
       "id": "SK33",
       "nr": 33,
-      "empfaenger": "marketing-ecommerce",
+      "empfaenger": "kommunikation-marketing",
       "minuteOffset": 85,
       "vertraulich": true,
       "text": "IT und Produktionsleitung stellen für Sonntag eine Kapazität von bis zu 70 % in Aussicht. Eine belastbare Freigabe steht noch aus. Die Geschäftsführung möchte bereits eine Erfolgsmeldung vorbereiten: „Alles wieder im Griff.“ Gleichzeitig ist offen, ob Kundendaten abgeflossen sind. Wie formulierst du die Botschaft?",
@@ -1528,7 +1545,7 @@
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
-        "marketing-ecommerce"
+        "kommunikation-marketing"
       ]
     },
     {
@@ -1558,7 +1575,7 @@
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
-        "marketing-ecommerce"
+        "kommunikation-marketing"
       ]
     },
     {
@@ -1634,6 +1651,38 @@
         "leiter-it",
         "geschaeftsfuehrer-ceo"
       ]
+    },
+    {
+      "id": "SK43",
+      "nr": 43,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "nurNachWeiche": true,
+      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat vom Angriff aus der Zeitung erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
+      "moderatorGut": "Sofortiger Rückruf auf Leitungsebene, ehrliche Lageinformation, regelmäßige Updates zugesagt.",
+      "moderatorSchlecht": "Rechtfertigung statt Information – der Kunde fühlt sich übergangen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "key-account-automotive",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK44",
+      "nr": 44,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "nurNachWeiche": true,
+      "text": "Die Datenschutzaufsicht hat aus der Presse vom möglichen Datenabfluss erfahren. Sie fordert innerhalb von 24 Stunden eine Erklärung, warum bisher keine Meldung erfolgt ist.",
+      "moderatorGut": "Sofort fachlich prüfen lassen, Meldung nachholen, offen und sachlich erklären.",
+      "moderatorSchlecht": "Abwiegeln oder weiter abwarten.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "kaufmaennische-leiterin-cfo"
+      ]
     }
   ],
   "bonuskarten": [
@@ -1646,7 +1695,7 @@
     },
     {
       "id": "B2",
-      "empfaenger": "marketing-ecommerce",
+      "empfaenger": "kommunikation-marketing",
       "text": "Ein Screenshot eines internen Dokuments taucht auf Social Media auf. Niemand weiß, wer ihn veröffentlicht hat.",
       "fallbackEmpfaenger": [
         "office-management",
@@ -1668,7 +1717,7 @@
       "text": "Ein Fernsehsender möchte in 15 Minuten ein Live-Interview. Du musst entscheiden, ob du zusagst.",
       "fallbackEmpfaenger": [
         "geschaeftsfuehrerin-vertrieb",
-        "marketing-ecommerce"
+        "kommunikation-marketing"
       ]
     },
     {
@@ -1794,6 +1843,20 @@
         "posten": "Weitere Kundenabwanderung durch fehlende Kommunikation",
         "betrag": 600000,
         "bcmHebel": "Ein vorbereiteter Kommunikationsplan für Kunden in den ersten Stunden."
+      },
+      {
+        "id": "ot-ausbreitung",
+        "frage": "Blieben die Anlagen am Montag am Netz, sodass sich der Angriff auf weitere Linien ausbreiten konnte?",
+        "posten": "Zwei zusätzlich verschlüsselte Fräslinien: Neuaufsetzen und längerer Stillstand",
+        "betrag": 350000,
+        "bcmHebel": "Vorab festgelegte Kriterien, wann Produktionsanlagen vom Netz getrennt werden – und wer das entscheidet."
+      },
+      {
+        "id": "datenschutz-verspaetet",
+        "frage": "Wurde die Meldung an die Datenschutzaufsicht verzögert?",
+        "posten": "Zusätzlicher Beratungsaufwand und Bußgeldrisiko wegen verspäteter Meldung (Modellannahme)",
+        "betrag": 150000,
+        "bcmHebel": "Ein vorbereiteter Meldeprozess mit klaren Zuständigkeiten und Fristen."
       }
     ],
     "versicherung": {
@@ -1804,5 +1867,152 @@
     "umsatzrendite": 0.05,
     "fazit": "Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
     "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt. Die Erstattung ist eine hypothetische Modellannahme, keine Zusage einer vollständigen Deckung bestimmter Schadenspositionen. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
-  }
+  },
+  "weichen": [
+    {
+      "id": "W1",
+      "lagekarten": [
+        "LK16",
+        "LK02"
+      ],
+      "frage": "Bleiben die übrigen Anlagen am Netz, bis die laufenden Aufträge fertig sind – oder werden sie sofort getrennt?",
+      "optionen": [
+        {
+          "id": "am-netz",
+          "label": "Anlagen bleiben am Netz, Aufträge werden fertiggestellt",
+          "wirkung": "Später sind zwei weitere Fräslinien verschlüsselt: Werk Süd startet mit 20 % statt 30 %. Zusatzposten in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Weil die Anlagen am Montag am Netz blieben, wurden zwei weitere Fräslinien verschlüsselt und müssen neu aufgesetzt werden.",
+              "kriseninfo": "Kapazität: 20 % (zwei Linien zusätzlich verschlüsselt)"
+            }
+          ],
+          "posten": [
+            "ot-ausbreitung"
+          ]
+        },
+        {
+          "id": "trennen",
+          "label": "Anlagen sofort kontrolliert vom Netz trennen",
+          "wirkung": "Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Die frühe Trennung vom Netz hat sich ausgezahlt: Keine Fertigungsanlage wurde zusätzlich verschlüsselt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "lagekarten": [
+        "LK22"
+      ],
+      "frage": "Informiert NordTech heute auch die Kunden proaktiv – oder erst, wenn die Lage klarer ist?",
+      "optionen": [
+        {
+          "id": "proaktiv",
+          "label": "Kunden heute proaktiv informieren (gesicherte Fakten, nächster Update-Termin)",
+          "wirkung": "Beim Wiederanlauf bedanken sich Großkunden für die Offenheit.",
+          "folgen": [
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Mehrere Großkunden bedanken sich ausdrücklich für die frühe und offene Information – das Vertrauen hat gelitten, ist aber nicht zerstört."
+            }
+          ]
+        },
+        {
+          "id": "abwarten",
+          "label": "Erst informieren, wenn die Lage klar ist",
+          "wirkung": "Der größte Automobilkunde erfährt es aus der Zeitung (vertrauliche Karte an den Vertrieb bei „Datenschutz“); beim Wiederanlauf öffentliche Kritik; Zusatzposten Kundenabwanderung.",
+          "folgen": [
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Zwei Großkunden kritisieren öffentlich, dass sie vom Angriff zuerst aus der Presse erfahren haben, und kündigen an, ihre Lieferantenstrategie zu überprüfen."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK43",
+            "beiLagekarte": "LK07"
+          },
+          "posten": [
+            "kundenkommunikation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "lagekarten": [
+        "LK07"
+      ],
+      "frage": "Meldet NordTech den möglichen Datenabfluss vorsorglich an die Datenschutzaufsicht – oder wartet sie die Bestätigung ab?",
+      "optionen": [
+        {
+          "id": "melden",
+          "label": "Vorsorglich fristgerecht melden, Informationen nachreichen",
+          "wirkung": "Der Beirat vermerkt die fristgerechte Meldung positiv.",
+          "folgen": [
+            {
+              "lagekarte": "LK17",
+              "zusatz": "Positiv vermerkt der Beirat: Die vorsorgliche Meldung an die Datenschutzaufsicht ist fristgerecht erfolgt."
+            }
+          ]
+        },
+        {
+          "id": "abwarten",
+          "label": "Abwarten, bis der Abfluss bestätigt ist",
+          "wirkung": "Kritische Nachfrage im Beirat; beim Wiederanlauf fordert die Aufsicht eine Erklärung (vertrauliche Karte an die Geschäftsführung); Zusatzposten.",
+          "folgen": [
+            {
+              "lagekarte": "LK17",
+              "zusatz": "Ein Beiratsmitglied will wissen, warum die Datenschutzaufsicht noch nicht informiert ist."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK44",
+            "beiLagekarte": "LK12"
+          },
+          "posten": [
+            "datenschutz-verspaetet"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W4",
+      "lagekarten": [
+        "LK09"
+      ],
+      "frage": "Die Frist der Erpresser ist heute um 07:00 Uhr abgelaufen. Wie hat der Krisenstab entschieden?",
+      "optionen": [
+        {
+          "id": "nicht-gezahlt",
+          "label": "Kein Lösegeld gezahlt",
+          "wirkung": "Wiederherstellung nur aus dem Backup, keine weiteren Änderungen.",
+          "folgen": []
+        },
+        {
+          "id": "gezahlt",
+          "label": "Lösegeld gezahlt",
+          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Der nach der Zahlung gelieferte Schlüssel entschlüsselt nur einen Teil der Systeme und ist sehr langsam – die Wiederherstellung läuft trotzdem überwiegend über das Backup."
+            },
+            {
+              "lagekarte": "LK15",
+              "zusatz": "In der Presse wird berichtet, dass NordTech Lösegeld gezahlt hat."
+            }
+          ],
+          "posten": [
+            "loesegeld"
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -203,6 +203,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    Karten"** siehst du jederzeit, was bei wem kursiert, inklusive
    Bewertungshilfe. Bei jeder Lagekarte zeigt die Moderation, welche Rollen
    besonders gefordert sind und ob sie besetzt sind.
+   An einigen Lagen hält die Moderation unter **„Entscheidungen mit
+   Folgen“** fest, wie der Tisch entschieden hat (z. B. Anlagen am Netz
+   lassen oder trennen, Lösegeld ja/nein). Spätere Lagekarten bekommen dann
+   einen passenden Satz dazu, manchmal folgt eine vertrauliche Karte, und die
+   Rechnung im Abschluss passt sich an. Die Geschichte bleibt im Kern gleich.
    Das **Spielbrett** ("Wer ist am Zug?") steht auf der Bühne in der
    Seitenleiste und in der Moderation: alle besetzten Rollen mit Namen,
    sortiert nach dem Meldeweg — **Meldungen von draußen** (Service-Desk,
@@ -327,6 +332,21 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   setzt eine vertrauliche Karte unmittelbar vor eine bestimmte Lagekarte
   (z. B. der Anruf des Beiratsmitglieds vor dem Beirats-Lagebericht).
   `npm run pruefen` prüft beides in allen Simulationen.
+- `weichen[]` (optional): Entscheidungen mit Folgen. Jede Weiche hängt an
+  der ersten ihrer `lagekarten`, die im Plan ist, und hat eine `frage` und
+  mindestens zwei `optionen`. Eine Option kann späteren Lagekarten einen Satz
+  hinzufügen oder ihre Krisen-Info ersetzen (`folgen`: `lagekarte`,
+  `zusatz`, `kriseninfo`), eine vertrauliche Folgekarte verschicken, sobald
+  eine bestimmte Lagekarte erreicht ist (`karte`: `sonderlagekarte`,
+  `beiLagekarte`; die Karte trägt `"nurNachWeiche": true` und hat keine
+  Minute), und Posten im Abschluss einrechnen (`posten`: IDs aus
+  `nachspiel.optionalePosten`). Die Moderation hält die Entscheidung in der
+  Karte „Entscheidungen mit Folgen“ fest; ohne Eintrag bleibt die Geschichte
+  wie im Drehbuch. Folgen sollten auf Lagekarten mit Priorität 1 zielen,
+  damit sie auch in kurzen Übungen ankommen (prüft `npm run pruefen`).
+- Rollen können `alteIds` haben: Wird eine Rolle umbenannt, übernehmen
+  gespeicherte Teilnehmerlisten und Vorlagen mit der alten ID automatisch die
+  neue Rolle.
 - `standardablauf.rollenPrioritaet` (optional): feste Reihenfolge für
   „Passende Rollen vorschlagen“ – bei 45 Minuten die ersten 5, bei 90 die
   ersten 9 usw. Ohne Angabe wählt die App nach Häufigkeit auf den Lagekarten.

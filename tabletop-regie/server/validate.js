@@ -49,8 +49,42 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     }
   });
   ((scenario.standardablauf || {}).rollenPrioritaet || []).forEach(rid => checkRole(rid, 'rollenPrioritaet'));
+  // Weichen: Entscheidungen mit Folgen
+  const postenIds = new Set(((scenario.nachspiel || {}).optionalePosten || []).map(o => o.id));
+  const genutzteFolgekarten = new Set();
+  (scenario.weichen || []).forEach(w => {
+    const lks = (w.lagekarten || []).map(lkById);
+    if (!lks.length || lks.some(l => !l)) { errors.push(`Weiche ${w.id}: unbekannte oder fehlende Lagekarte.`); return; }
+    if (!lks.some(l => l.prioritaet === 1)) warnings.push(`Weiche ${w.id}: keine ihrer Lagekarten hat Priorität 1 – bei kurzen Übungen entfällt sie.`);
+    const frueheste = Math.min(...lks.map(l => l.minuteOffset));
+    if (!w.frage || (w.optionen || []).length < 2) errors.push(`Weiche ${w.id} braucht eine Frage und mindestens zwei Optionen.`);
+    (w.optionen || []).forEach(o => {
+      if (!o.id || !o.label) errors.push(`Weiche ${w.id}: Option ohne id/label.`);
+      (o.folgen || []).forEach(f => {
+        const ziel = lkById(f.lagekarte);
+        if (!ziel) errors.push(`Weiche ${w.id}/${o.id}: Folge auf unbekannte Lagekarte ${f.lagekarte}.`);
+        else {
+          if (ziel.minuteOffset <= Math.max(...lks.map(l => l.minuteOffset))) errors.push(`Weiche ${w.id}/${o.id}: ${f.lagekarte} kommt nicht nach der Entscheidung.`);
+          if (ziel.prioritaet !== 1) warnings.push(`Weiche ${w.id}/${o.id}: Folge-Lagekarte ${f.lagekarte} hat nicht Priorität 1 – die Folge kann entfallen.`);
+        }
+      });
+      if (o.karte) {
+        const k = scenario.sonderlagekarten.find(x => x.id === o.karte.sonderlagekarte);
+        const bei = lkById(o.karte.beiLagekarte);
+        if (!k) errors.push(`Weiche ${w.id}/${o.id}: unbekannte Folgekarte ${o.karte.sonderlagekarte}.`);
+        else { genutzteFolgekarten.add(k.id); if (!k.nurNachWeiche) warnings.push(`Folgekarte ${k.id} sollte "nurNachWeiche": true haben.`); }
+        if (!bei) errors.push(`Weiche ${w.id}/${o.id}: unbekannte Lagekarte ${o.karte.beiLagekarte} für die Folgekarte.`);
+        else if (bei.minuteOffset <= frueheste) errors.push(`Weiche ${w.id}/${o.id}: Folgekarte käme vor der Entscheidung.`);
+        else if (bei.prioritaet !== 1) warnings.push(`Weiche ${w.id}/${o.id}: ${o.karte.beiLagekarte} hat nicht Priorität 1 – die Folgekarte kann entfallen.`);
+      }
+      (o.posten || []).forEach(pid => { if (!postenIds.has(pid)) errors.push(`Weiche ${w.id}/${o.id}: unbekannter Abschluss-Posten ${pid}.`); });
+    });
+  });
+  scenario.sonderlagekarten.filter(k => k.nurNachWeiche && !genutzteFolgekarten.has(k.id)).forEach(k => warnings.push(`Karte ${k.id} ist nur für Weichen gedacht, wird aber von keiner Weiche genutzt.`));
+  const aliasSeen = new Set(scenario.roles.map(r => r.id));
+  scenario.roles.forEach(r => (r.alteIds || []).forEach(a => { if (aliasSeen.has(a)) errors.push(`Alte Rollen-ID ${a} ist doppelt oder noch aktiv.`); aliasSeen.add(a); }));
   scenario.sonderlagekarten.forEach(sk => {
-    if (sk.minuteOffset === null || sk.minuteOffset === undefined) warnings.push(`Sonderlagekarte ${sk.id} hat keinen Zeitpunkt – kommt nur bei manueller Auslösung.`);
+    if ((sk.minuteOffset === null || sk.minuteOffset === undefined) && !sk.nurNachWeiche) warnings.push(`Sonderlagekarte ${sk.id} hat keinen Zeitpunkt – kommt nur bei manueller Auslösung.`);
     if (![1, 2, 3].includes(sk.prioritaet)) errors.push(`Sonderlagekarte ${sk.id} hat keine gültige Priorität (1–3).`);
   });
   scenario.lagekarten.forEach(lk => { if (![1, 2, 3].includes(lk.prioritaet)) errors.push(`Lagekarte ${lk.id} hat keine gültige Priorität (1–3).`); });

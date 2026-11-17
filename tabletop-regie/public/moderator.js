@@ -236,7 +236,13 @@ function render(s) {
     const tonHtml = lk.sound
       ? `<p class="mini"><button class="secondary replay-sound" title="Spielt den Ton dieser Lagekarte auf der Bühne noch einmal von vorn ab.">Ton noch einmal abspielen</button> <span class="muted">${lk.eigenerTon ? 'eigene Aufnahme' : 'Ton aus dem Drehbuch'}</span></p>`
       : (lk.sprechertext ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen)</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>` : '');
-    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + tonHtml + zustHtml +
+    const aktWeiche = (s.weichen || []).find(w => w.aktuell);
+    const weicheHtml = aktWeiche ? `<div style="border:2px solid var(--accent);border-radius:8px;padding:8px 12px;margin:8px 0;">
+        <p class="mini" style="margin:0 0 4px;"><b>Entscheidung mit Folgen:</b> ${escapeHtml(aktWeiche.frage)}</p>
+        ${weicheButtons(aktWeiche)}
+        <p class="mini muted" style="margin:6px 0 0;">Festhalten, was der Tisch entschieden hat – nicht vorab verraten, dass es Folgen hat.</p></div>` : '';
+    const zusatzHtml = (lk.weichenZusatz || []).length ? `<p class="mini" style="color:var(--accent);">Wegen einer früheren Entscheidung ergänzt: ${escapeHtml(lk.weichenZusatz.join(' '))}</p>` : '';
+    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + zusatzHtml + weicheHtml + tonHtml + zustHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -259,6 +265,7 @@ function render(s) {
 
   renderFinaleCard(s);
   renderBoard(s);
+  renderWeichen(s);
 
   // Naechste Ereignisse — "Zeitsprung hierhin" ueberspringt Leerlauf oder
   // springt gezielt zu einer bestimmten Karte, wenn eine Diskussion kuerzer
@@ -356,6 +363,30 @@ function renderBoard(s) {
   document.getElementById('m-board').innerHTML = fehlt + `<div class="mboard${b.lageAktiv ? ' lage' : ''}">${spalten}</div>`;
 }
 
+// Weichen: Entscheidungen des Tisches, die spaetere Lagen veraendern.
+function weicheButtons(w) {
+  return w.optionen.map(o => `
+    <div style="display:flex;gap:8px;align-items:flex-start;margin-top:4px;">
+      <button class="${w.gewaehlt === o.id ? '' : 'secondary '}weiche-opt" data-weiche="${escapeHtml(w.id)}" data-option="${w.gewaehlt === o.id ? '' : escapeHtml(o.id)}" style="flex-shrink:0;min-width:34px;" title="${w.gewaehlt === o.id ? 'Gewählt – noch einmal klicken nimmt die Entscheidung zurück.' : 'Diese Entscheidung festhalten.'}">${w.gewaehlt === o.id ? '&#10003;' : '&nbsp;'}</button>
+      <span class="mini"><b>${escapeHtml(o.label)}</b><br><span class="muted">Folge: ${escapeHtml(o.wirkung)}</span></span>
+    </div>`).join('');
+}
+function renderWeichen(s) {
+  const card = document.getElementById('m-weichen-card');
+  const list = s.weichen || [];
+  if (!list.length || s.status === 'idle') { card.style.display = 'none'; return; }
+  card.style.display = '';
+  document.getElementById('m-weichen').innerHTML = list.map(w => {
+    const gew = w.optionen.find(o => o.id === w.gewaehlt);
+    return `<div style="padding:8px 0;border-top:1px solid var(--border);">
+      <div class="mini">${w.aktuell ? '<span class="badge ok">jetzt</span> ' : ''}<span class="muted">${escapeHtml(w.simZeit || '')} · ${escapeHtml(w.lageTitel || '')}</span></div>
+      <div class="mini" style="margin:2px 0 4px;"><b>${escapeHtml(w.frage)}</b></div>
+      ${w.aktuell || w.erreicht ? weicheButtons(w) : `<div class="mini muted">kommt noch${gew ? ' – festgehalten: ' + escapeHtml(gew.label) : ''}</div>`}
+      ${!w.aktuell && w.erreicht && !gew ? '<div class="mini" style="color:var(--warn);">Noch nicht festgehalten – ohne Eintrag bleibt die Geschichte unverändert.</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
 function renderFinaleCard(s) {
   const card = document.getElementById('m-finale-card');
   const f = s.finale || {};
@@ -446,6 +477,10 @@ document.addEventListener('click', e => {
   if (e.target.classList.contains('sk-alert-ok')) {
     skAlerts.splice(Number(e.target.dataset.idx), 1);
     if (lastState) updateSkAlerts(lastState);
+  }
+  const wbtn = e.target.closest && e.target.closest('.weiche-opt');
+  if (wbtn) {
+    api('/api/run/weiche', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: wbtn.dataset.weiche, option: wbtn.dataset.option || null }) }).then(refresh);
   }
   if (e.target.classList.contains('replay-sound')) {
     api('/api/run/replay-sound', { method: 'POST' });

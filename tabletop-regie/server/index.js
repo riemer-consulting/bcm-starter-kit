@@ -98,6 +98,20 @@ state.scenarioFile = scenarioFile;
 // hat noch kein activeRoleIds -> alle Rollen als aktiv annehmen.
 if (!Array.isArray(state.activeRoleIds)) state.activeRoleIds = scenario.roles.map(r => r.id);
 
+// Umbenannte Rollen: Ein Drehbuch kann bei einer Rolle "alteIds" angeben.
+// Gespeicherte Teilnehmerlisten und Vorlagen mit alten IDs werden so
+// automatisch auf die neue Rolle uebertragen.
+function aliasRoleIds(ids) {
+  const map = {};
+  scenario.roles.forEach(r => (r.alteIds || []).forEach(a => { map[a] = r.id; }));
+  return Array.from(new Set((ids || []).map(id => map[id] || id)));
+}
+function applyRoleAliases() {
+  state.participants = (state.participants || []).map(p => Object.assign({}, p, { roleIds: aliasRoleIds(p.roleIds) }));
+  state.activeRoleIds = aliasRoleIds(state.activeRoleIds);
+}
+applyRoleAliases();
+
 function persist() { store.saveRunState(state); }
 
 function roleById(id) { return scenario.roles.find(r => r.id === id); }
@@ -232,6 +246,64 @@ function aktLabel(lk) {
   return a ? a.label : null;
 }
 
+// ---- Weichen: Entscheidungen, die den weiteren Verlauf (maßvoll) verändern ----
+// Eine Weiche haengt an der ersten ihrer Lagekarten, die im Plan ist. Die
+// Moderation haelt die Entscheidung des Tisches fest; die gewaehlte Option
+// ergaenzt spaetere Lagekarten um einen Satz (oder ersetzt die Krisen-Info),
+// kann eine vertrauliche Folgekarte ausloesen und Posten im Abschluss setzen.
+// Ohne Eintrag bleibt die Geschichte unveraendert.
+function weichenListe() { return scenario.weichen || []; }
+function chosenOption(w) {
+  const oid = (state.weichen || {})[w.id];
+  return oid ? (w.optionen || []).find(o => o.id === oid) || null : null;
+}
+function weichenImPlan() {
+  const lkOrder = engine.getActiveSchedule(scenario, state).filter(e => e.type === 'lagekarte').map(e => e.id);
+  return weichenListe().map(w => {
+    const lkId = lkOrder.find(id => (w.lagekarten || []).includes(id));
+    return lkId ? { w, lkId } : null;
+  }).filter(Boolean);
+}
+function lageMitWeichen(lk) {
+  if (!lk) return lk;
+  const zusatz = [];
+  let kriseninfo = lk.kriseninfo;
+  weichenListe().forEach(w => {
+    const o = chosenOption(w);
+    (o && o.folgen || []).filter(f => f.lagekarte === lk.id).forEach(f => {
+      if (f.zusatz) zusatz.push(f.zusatz);
+      if (f.kriseninfo) kriseninfo = f.kriseninfo;
+    });
+  });
+  if (!zusatz.length && kriseninfo === lk.kriseninfo) return lk;
+  return Object.assign({}, lk, { text: [lk.text, ...zusatz].join(' '), kriseninfo, weichenZusatz: zusatz });
+}
+async function fireWeichenKarten() {
+  for (const w of weichenListe()) {
+    const o = chosenOption(w);
+    if (!o || !o.karte) continue;
+    if (!state.firedLagekarten.includes(o.karte.beiLagekarte)) continue;
+    const sk = scenario.sonderlagekarten.find(x => x.id === o.karte.sonderlagekarte);
+    if (sk && !state.firedSonderlagekarten.find(f => f.id === sk.id)) {
+      log('info', `Folge der Entscheidung „${o.label}“: vertrauliche Karte ${sk.id} wird verschickt.`);
+      await fireSonderlagekarte(sk, { manual: false });
+    }
+  }
+}
+function weichenView() {
+  const currentLk = engine.currentLagekarte(scenario, state);
+  return weichenImPlan().map(({ w, lkId }) => {
+    const lk = scenario.lagekarten.find(l => l.id === lkId) || {};
+    return {
+      id: w.id, frage: w.frage, lagekarte: lkId, lageTitel: lk.titel, simZeit: lk.simZeit,
+      aktuell: !!(currentLk && currentLk.id === lkId),
+      erreicht: state.firedLagekarten.includes(lkId),
+      gewaehlt: (state.weichen || {})[w.id] || null,
+      optionen: (w.optionen || []).map(o => ({ id: o.id, label: o.label, wirkung: o.wirkung || '' }))
+    };
+  });
+}
+
 // Spielbrett: Wer sitzt am Tisch, wer ist bei der aktuellen Lage gefordert,
 // wer hat seit Beginn dieser Lage eine neue vertrauliche Information bekommen?
 // Inhalte vertraulicher Karten werden hier NICHT verraten -- nur, dass es
@@ -291,6 +363,7 @@ function tick() {
   lk.forEach(ev => { if (!state.firedLagekarten.includes(ev.id)) { state.firedLagekarten.push(ev.id); log('lagekarte', `Lagekarte ${ev.id} (${ev.ref.titel}) ist jetzt aktiv.`); } });
   const dueSk = due.filter(e => e.type === 'sonderlagekarte');
   dueSk.forEach(ev => { fireSonderlagekarte(ev.ref, { manual: false }); });
+  fireWeichenKarten();
   const total = engine.totalPlannedMinutes(scenario, state);
   if (state.status === 'running' && engine.elapsedMinutes(state) >= total && state.status !== 'ended') {
     state.status = 'ended';
@@ -346,8 +419,8 @@ function switchScenario(file) {
   const validIds = new Set(scenario.roles.map(r => r.id));
   state = engine.newRunState(scenario);
   state.scenarioFile = scenarioFile;
-  state.participants = previousParticipants.map(p => Object.assign({}, p, { roleIds: (p.roleIds || []).filter(rid => validIds.has(rid)) }));
-  const keptActive = previousActive.filter(rid => validIds.has(rid));
+  state.participants = previousParticipants.map(p => Object.assign({}, p, { roleIds: aliasRoleIds(p.roleIds).filter(rid => validIds.has(rid)) }));
+  const keptActive = aliasRoleIds(previousActive).filter(rid => validIds.has(rid));
   if (keptActive.length) {
     const used = state.participants.flatMap(p => p.roleIds);
     state.activeRoleIds = Array.from(new Set([...keptActive, ...used]));
@@ -424,7 +497,7 @@ function normalizeParticipants(list) {
     id: p.id || crypto.randomUUID(),
     name: String(p.name || '').trim(),
     email: String(p.email || '').trim(),
-    roleIds: Array.isArray(p.roleIds) ? p.roleIds : []
+    roleIds: Array.isArray(p.roleIds) ? aliasRoleIds(p.roleIds) : []
   }));
 }
 
@@ -490,7 +563,7 @@ app.get('/api/active-roles', (req, res) => res.json(state.activeRoleIds));
 app.post('/api/active-roles', (req, res) => {
   const validIds = new Set(scenario.roles.map(r => r.id));
   const incoming = Array.isArray(req.body) ? req.body : [];
-  state.activeRoleIds = incoming.filter(id => validIds.has(id));
+  state.activeRoleIds = aliasRoleIds(incoming).filter(id => validIds.has(id));
   persist();
   res.json(state.activeRoleIds);
 });
@@ -679,7 +752,7 @@ app.post('/api/template/import', (req, res) => {
   }
   if (Array.isArray(tpl.activeRoleIds)) {
     const validIds = new Set(scenario.roles.map(r => r.id));
-    state.activeRoleIds = tpl.activeRoleIds.filter(id => validIds.has(id));
+    state.activeRoleIds = aliasRoleIds(tpl.activeRoleIds).filter(id => validIds.has(id));
   }
   if (Array.isArray(tpl.participants)) {
     state.participants = normalizeParticipants(tpl.participants);
@@ -742,7 +815,8 @@ app.get('/api/run/moderator-state', (req, res) => {
     totalPlannedMinutes: Math.round(engine.totalPlannedMinutes(scenario, state) * 10) / 10,
     finaleMinutes: state.finaleMinutes || 0,
     activeRoleGroups: engine.activeRoleGroupCount(scenario, state),
-    currentLagekarte: currentLk ? Object.assign({}, currentLk, { aktLabel: aktLabel(currentLk) }) : null,
+    currentLagekarte: currentLk ? Object.assign({}, lageMitWeichen(currentLk), { aktLabel: aktLabel(currentLk) }) : null,
+    weichen: weichenView(),
     lagekarten: lagekartenProgress(),
     finale: scenario.nachspiel ? {
       verfuegbar: true,
@@ -758,7 +832,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     spielbrett: spielbrett(),
     skipped: skippedDetailed,
     firedSonderlagekarten: state.firedSonderlagekarten,
-    unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
+    unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => !sk.nurNachWeiche && (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
       .map(sk => Object.assign({}, sk, { recipientRoleId: recipientRoleFor(sk), recipientLabel: recipientLabel(sk) })),
     bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, { fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b) })),
     participants: state.participants,
@@ -771,7 +845,7 @@ app.get('/api/run/moderator-state', (req, res) => {
 
 app.get('/api/run/stage-state', (req, res) => {
   maybeStartCrisisFromCountdown();
-  const currentLk = engine.currentLagekarte(scenario, state);
+  const currentLk = lageMitWeichen(engine.currentLagekarte(scenario, state));
   res.json({
     status: state.status,
     crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
@@ -809,6 +883,7 @@ app.get('/api/run/ablauf-state', (req, res) => {
   const gezeigt = scenario.lagekarten
     .filter(lk => state.firedLagekarten.includes(lk.id))
     .sort((a, b) => a.minuteOffset - b.minuteOffset)
+    .map(lageMitWeichen)
     .map(lk => ({
       id: lk.id, simZeit: lk.simZeit, titel: lk.titel, text: lk.text,
       kriseninfo: lk.kriseninfo || null, media: lk.media || null
@@ -956,6 +1031,24 @@ app.post('/api/run/finale/close', (req, res) => {
   res.json({ ok: true });
 });
 // Optionale Posten (z. B. Lösegeld gezahlt?) je nach Entscheidung in der Übung.
+app.post('/api/run/weiche', async (req, res) => {
+  const { id, option } = req.body || {};
+  const w = weichenListe().find(x => x.id === id);
+  if (!w) return res.status(404).json({ ok: false, error: 'Unbekannte Weiche.' });
+  const o = option ? (w.optionen || []).find(x => x.id === option) : null;
+  if (option && !o) return res.status(400).json({ ok: false, error: 'Unbekannte Option.' });
+  state.weichen = state.weichen || {};
+  if (o) state.weichen[w.id] = o.id; else delete state.weichen[w.id];
+  // Posten im Abschluss, die an dieser Weiche haengen, folgen der Entscheidung.
+  const f = ensureFinaleState();
+  const gesteuert = new Set((w.optionen || []).flatMap(x => x.posten || []));
+  gesteuert.forEach(pid => { f.optionen[pid] = !!(o && (o.posten || []).includes(pid)); });
+  if (f.step) f.step = Math.min(f.step, finaleStepCount());
+  log('info', o ? `Entscheidung festgehalten: ${w.frage} → ${o.label}` : `Entscheidung zurückgenommen: ${w.frage}`);
+  await fireWeichenKarten();
+  persist();
+  res.json({ ok: true });
+});
 app.post('/api/run/finale/option', (req, res) => {
   const { id, aktiv } = req.body || {};
   const opt = scenario.nachspiel && (scenario.nachspiel.optionalePosten || []).find(o => o.id === id);
