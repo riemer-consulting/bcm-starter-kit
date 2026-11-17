@@ -61,6 +61,13 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     (w.optionen || []).forEach(o => {
       if (!o.id || !o.label) errors.push(`Weiche ${w.id}: Option ohne id/label.`);
       (o.folgen || []).forEach(f => {
+        if (f.sonderlagekarte) {
+          const k = scenario.sonderlagekarten.find(x => x.id === f.sonderlagekarte);
+          if (!k) errors.push(`Weiche ${w.id}/${o.id}: Textvariante für unbekannte Karte ${f.sonderlagekarte}.`);
+          else if (!f.text) errors.push(`Weiche ${w.id}/${o.id}: Textvariante für ${k.id} ohne Text.`);
+          else if (k.minuteOffset != null && k.minuteOffset <= frueheste) errors.push(`Weiche ${w.id}/${o.id}: ${k.id} kommt vor der Entscheidung, die ihren Text ändert.`);
+          return;
+        }
         const ziel = lkById(f.lagekarte);
         if (!ziel) errors.push(`Weiche ${w.id}/${o.id}: Folge auf unbekannte Lagekarte ${f.lagekarte}.`);
         else {

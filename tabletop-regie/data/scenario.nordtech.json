@@ -4,7 +4,7 @@
   "subtitle": "BCM Tabletop Exercise – Ransomware-Angriff auf die NordTech Components GmbH",
   "company": {
     "name": "NordTech Components GmbH",
-    "facts": "3 Standorte · ca. 620 Mitarbeiter · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
+    "facts": "3 Standorte · ca. 620 Beschäftigte · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
     "logo": "/media/nordtech/nordtech-logo.png",
     "stageLogo": "/media/nordtech/nordtech-logo-light.png"
   },
@@ -182,7 +182,7 @@
     {
       "group": "service",
       "id": "kundenservice-callcenter",
-      "funktion": "Kundenservice / Callcenter",
+      "funktion": "Kundenservice / Callcenter (Vertriebsinnendienst)",
       "beschreibung": "Du nimmst Anrufe und Mails von Kunden entgegen. Sie wollen wissen, ob ihre Lieferung kommt und ob ihre Daten sicher sind. Du brauchst vom Krisenstab eine Sprachregelung – und meldest zurück, was draußen ankommt.",
       "ebene": "eingang"
     },
@@ -327,9 +327,9 @@
   ],
   "moderationsleitfaden": {
     "begruessung": "Guten Morgen zusammen. Heute werden wir keine IT-Systeme reparieren. Wir werden auch keine technische Analyse durchführen. Heute erleben wir gemeinsam die schlimmste Woche in der Geschichte der NordTech Components GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst sieben Tage Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Montag, 6:30 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Mitarbeiter, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
+    "eroeffnungstext": "Montag, 6:30 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Beschäftigte, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
     "spielregeln": [
-      "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
+      "Alle vertreten den Verantwortungsbereich ihrer Rolle – auch wenn das nicht ihre Funktion im Alltag ist.",
       "Jede Lagekarte enthält neue Informationen.",
       "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
       "Meldungen von draußen (Anwender, Kunden, Standorte) laufen gebündelt an den Krisenstab. Der Krisenstab entscheidet und gibt Anweisungen und eine einheitliche Sprachregelung zurück – an alle, die Fragen beantworten müssen.",
@@ -341,11 +341,10 @@
       "Wann wart ihr am stärksten unter Druck?",
       "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
       "Wie kamen die Meldungen von Service-Desk, Kundenservice und Standorten beim Krisenstab an – und wie kamen Anweisungen und Sprachregelung zu ihnen zurück?",
-      "Welche Information hat gefehlt?",
       "Wer hätte früher eingebunden werden müssen?",
-      "Welche BCM-Maßnahme hätte geholfen?",
-      "Welche Person war kritisch?",
+      "Welche Person oder Rolle war kritisch – und gab es eine Vertretung?",
       "Wo waren Single Points of Failure?",
+      "Welche eurer Entscheidungen hat den weiteren Verlauf verändert – und wie würdet ihr mit dem heutigen Wissen entscheiden?",
       "Welche drei Verbesserungen setzen wir um – wer ist verantwortlich, mit welcher Priorität, bis wann?"
     ],
     "abschlussfragenVorDebrief": [
@@ -354,7 +353,7 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene ist die Lagekarte „Beirat fordert Lagebericht“: Die Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen, und IT, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – müssen gemeinsam liefern. Kurz vorher erhält die Krisenstabsleitung vertraulich einen zusätzlichen persönlichen Druck.",
+    "highlightHinweis": "Die stärkste Szene ist die Lagekarte „Beirat fordert Lagebericht“: Die Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen, und IT, Produktion, Qualität, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – müssen gemeinsam liefern. Kurz vorher erhält die Krisenstabsleitung vertraulich einen zusätzlichen persönlichen Druck.",
     "idleMedia": {
       "type": "image",
       "src": "/media/nordtech/idle-hauptsitz-foto.webp",
@@ -434,7 +433,7 @@
       "minuteOffset": 14,
       "diskussionMinuten": 4,
       "text": "Die Produktionsleitung meldet: Neue Fertigungsaufträge können nicht gestartet werden. Laufende Aufträge enden in den nächsten Stunden. Ohne Gegenmaßnahmen kommt die Fertigung an allen drei Standorten zum Stillstand.",
-      "kriseninfo": "Lagerbestand reicht noch für: 48 Stunden",
+      "kriseninfo": "Fertigwaren reichen für Lieferungen noch ca. 48 Stunden",
       "aufgabe": [
         "Welche Folgen erwarten Sie?",
         "Welche Kunden sind betroffen?",
@@ -468,7 +467,6 @@
       "aufgabe": [
         "Wer reagiert?",
         "Wie kommunizieren Sie?",
-        "Müssen Mitarbeiter informiert werden?",
         "Welche Sprachregelung bekommen Kundenservice und Service-Desk?",
         "Welche gesicherten Informationen geben Sie jetzt proaktiv an die Belegschaft – über welchen Kanal, und wann folgt das nächste Update?"
       ],
@@ -502,7 +500,7 @@
         "Was wird kommuniziert?",
         "Was wird bewusst nicht kommuniziert?"
       ],
-      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Berichterstattung spielen.",
+      "moderatorHinweis": "Die Moderation spielt die Redaktion von Nordkanal: Bei ausweichenden Antworten nachfragen. Darauf achten, wer spricht und ob die Antwort mit dem abgestimmt ist, was Kundenservice und Belegschaft gesagt wird.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk04-nordkanal-anfrage.png",
@@ -522,7 +520,7 @@
       "titel": "Schlüsselperson fällt aus",
       "minuteOffset": 33,
       "diskussionMinuten": 3,
-      "text": "Der leitende Systemadministrator ist nicht erreichbar, er befindet sich im Krankenhaus. Niemand kennt Backup-Konfiguration, Notfallpasswörter oder Firewallregeln.",
+      "text": "Der leitende Systemadministrator liegt seit Montag im Krankenhaus und ist nicht erreichbar. Erst jetzt wird klar: Niemand sonst kennt Backup-Konfiguration, Notfallpasswörter oder Firewallregeln vollständig.",
       "kriseninfo": null,
       "aufgabe": [
         "Welche Risiken entstehen?",
@@ -549,8 +547,8 @@
       "titel": "Kunde eskaliert",
       "minuteOffset": 38,
       "diskussionMinuten": 4,
-      "text": "Ein Automobilkunde fordert eine Stellungnahme und verlangt einen schriftlichen Störungsbericht nach Lieferantenhandbuch binnen 24 Stunden – eine mündliche Zusage reicht nicht. Bei Lieferausfall drohen 50.000 € Vertragsstrafe pro Tag.",
-      "kriseninfo": "Entscheidung vom Kunden gefordert bis 16 Uhr",
+      "text": "Ein Automobilkunde verlangt bis 16:00 Uhr einen Rückruf der Geschäftsführung und binnen 24 Stunden einen schriftlichen Störungsbericht nach Lieferantenhandbuch – eine mündliche Zusage reicht nicht. Für jeden Tag Lieferausfall drohen 50.000 € Vertragsstrafe.",
+      "kriseninfo": "Rückruf bis 16:00 Uhr · Bericht binnen 24 Stunden · 50.000 € Vertragsstrafe pro Tag",
       "aufgabe": [
         "Wer erstellt den schriftlichen Störungsbericht?",
         "Welche Zusagen machen Sie darüber hinaus?",
@@ -640,7 +638,7 @@
         "Welche Risiken bestehen, und wer gibt frei?",
         "Was bedeutet der Datenverlust für Ihren Bereich?"
       ],
-      "moderatorHinweis": "Zweite gute Nachricht – Hoffnung zulassen, aber das Restrisiko ansprechen (Backups könnten kompromittiert sein).",
+      "moderatorHinweis": "Eine gute Nachricht – Hoffnung zulassen, aber das Restrisiko ansprechen: Die Backups könnten kompromittiert sein, die Prüfung dauert.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk09-offline-backup-foto.webp",
@@ -680,7 +678,7 @@
         "kundenservice-callcenter"
       ],
       "akt": "hoehepunkt",
-      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Mitarbeiter, der anonym bleiben möchte, erhebt schwere Vorwürfe gegen die Geschäftsführung: „Wir haben aus LinkedIn erfahren, was bei uns los ist. Von oben kam tagelang nichts.“ Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Mitarbeiter, der anonym bleiben möchte, erhebt schwere Vorwürfe gegen die Geschäftsführung: „Wir haben aus dem Internet erfahren, was bei uns los ist. Von oben kam tagelang nichts.“ Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
     },
     {
       "id": "LK11",
@@ -689,8 +687,8 @@
       "titel": "Pharmakunde eskaliert",
       "minuteOffset": 66,
       "diskussionMinuten": 4,
-      "text": "Ein Pharmakunde droht mit Schadensersatz. Er benötigt dringend Ware.",
-      "kriseninfo": "Frist: 48 Stunden",
+      "text": "Ein Pharmakunde droht mit Schadensersatz: Ohne die vereinbarten Komponenten bis Samstag gerät seine eigene Produktion ins Stocken.",
+      "kriseninfo": "Frist: 48 Stunden (Samstag 13:00 Uhr)",
       "aufgabe": [
         "Welche Kunden priorisieren Sie?",
         "Welche Lieferungen haben Vorrang?"
@@ -809,9 +807,8 @@
       "text": "70 % der technischen Fertigungskapazität sind wieder verfügbar, die IT-Systeme weitgehend. Wegen Materialengpässen ist nicht sicher, dass diese Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
       "kriseninfo": null,
       "aufgabe": [
-        "Welche Botschaft senden Sie an Kunden, Mitarbeiter, Öffentlichkeit?",
-        "Welche Maßnahmen folgen nach der Krise?",
-        "Was sagen wir Kunden und Mitarbeitenden – und wer sagt es?"
+        "Welche Botschaft senden Sie an Kunden, Beschäftigte und Öffentlichkeit – und wer sagt es?",
+        "Welche Maßnahmen folgen nach der Krise?"
       ],
       "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
       "media": {
@@ -865,7 +862,7 @@
       "titel": "Anmeldung hakt",
       "minuteOffset": 0,
       "diskussionMinuten": 3,
-      "text": "Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anmeldung bricht mit einer Zeitüberschreitung ab, ein Neustart hilft nicht. Die IT-Hotline ist erst ab 07:30 Uhr besetzt.",
+      "text": "Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anmeldung bricht mit einer Zeitüberschreitung ab, ein Neustart hilft nicht. Der IT-Service-Desk ist erst ab 07:00 Uhr besetzt.",
       "aufgabe": [
         "Was ist Ihre erste Reaktion – und wen informieren Sie?",
         "Ab wann ist das mehr als eine IT-Störung?"
@@ -976,9 +973,9 @@
     {
       "id": "LK21",
       "nr": 22,
-      "simZeit": "Freitag 14:00 Uhr",
+      "simZeit": "Freitag 16:00 Uhr",
       "titel": "Chargenfreigabe",
-      "minuteOffset": 73,
+      "minuteOffset": 77,
       "diskussionMinuten": 4,
       "text": "Die Produktion ist teilweise wieder angelaufen. Für 260 Chargen für Pharmakunden fehlen durch den IT-Ausfall elektronische Produktions- und Prüfnachweise. Die Qualitätsleitung kann derzeit nicht bestätigen, welche Chargen freigegeben werden dürfen. Gleichzeitig fordert ein Pharmakunde eine verbindliche Lieferzusage.",
       "kriseninfo": "260 Chargen ohne vollständige Nachweise",
@@ -1012,7 +1009,7 @@
       "minuteOffset": 18,
       "vertraulich": true,
       "text": "Ein externer Dienstleister informiert dich: Die Backups könnten ebenfalls kompromittiert sein. Aktuell ist das nicht bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
-      "moderatorGut": "Das Risiko wird sofort im Krisenstab offengelegt.",
+      "moderatorGut": "Das Risiko wird sofort im Krisenstab offengelegt; die Backups werden vor jeder Nutzung isoliert geprüft.",
       "moderatorSchlecht": "Die Information bleibt liegen, alle verlassen sich auf die Backups.",
       "prioritaet": 1,
       "fallbackEmpfaenger": [
@@ -1027,8 +1024,8 @@
       "minuteOffset": 49,
       "vertraulich": true,
       "text": "Du entdeckst einen Offline-Datenträger. Möglicherweise befindet sich darauf ein älteres Backup. Der Zustand ist unbekannt. Du entscheidest selbst über das weitere Vorgehen.",
-      "moderatorGut": "IT prüft das Medium.",
-      "moderatorSchlecht": "Information bleibt liegen.",
+      "moderatorGut": "Der Datenträger wird unverändert gesichert und an die IT-Leitung gemeldet; geprüft wird isoliert.",
+      "moderatorSchlecht": "Der Datenträger wird an einen Rechner im Netz angeschlossen – oder die Information bleibt liegen.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "leiter-it"
@@ -1040,9 +1037,9 @@
       "empfaenger": "leiterin-personal",
       "minuteOffset": 18,
       "vertraulich": true,
-      "text": "Der Systemadministrator wurde heute Nacht ins Krankenhaus eingeliefert, Diagnose unklar, Rückkehr ungewiss. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
-      "moderatorGut": "Schlüsselpersonenrisiko wird sofort eskaliert.",
-      "moderatorSchlecht": "Niemand erfährt davon.",
+      "text": "Der leitende Systemadministrator wurde heute Nacht ins Krankenhaus eingeliefert, Diagnose unklar, Rückkehr ungewiss. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
+      "moderatorGut": "Das Schlüsselpersonen-Risiko geht sofort in den Krisenstab; Vertretung und fehlendes Wissen werden geklärt.",
+      "moderatorSchlecht": "Die Information bleibt bei der Personalleitung – die IT plant mit einer Person, die nicht kommt.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo",
@@ -1055,9 +1052,9 @@
       "empfaenger": "leiterin-personal",
       "minuteOffset": 34,
       "vertraulich": true,
-      "text": "Ein IT-Mitarbeiter hat heute gekündigt. Kündigungsfrist: 4 Wochen. Die Information ist bisher nur dir bekannt.",
-      "moderatorGut": "Die Information geht sofort in den Krisenstab.",
-      "moderatorSchlecht": "Das Thema wird ignoriert.",
+      "text": "Eine erfahrene Person aus dem IT-Team hat heute gekündigt. Kündigungsfrist: 4 Wochen. Die Information ist bisher nur dir bekannt.",
+      "moderatorGut": "Die Information geht vertraulich an IT-Leitung und Krisenstab; Wissenssicherung und Vertretung werden geplant.",
+      "moderatorSchlecht": "Das Thema wird bis nach der Krise liegen gelassen.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo",
@@ -1071,8 +1068,8 @@
       "minuteOffset": 26,
       "vertraulich": true,
       "text": "Ein Großkunde droht: Wenn heute keine verbindliche Aussage erfolgt, wird ein Wettbewerber beauftragt. Der Kunde erwartet zeitnah eine Reaktion.",
-      "moderatorGut": "Kunde wird aktiv betreut.",
-      "moderatorSchlecht": "Keine Kommunikation.",
+      "moderatorGut": "Abgestimmte, ehrliche Zwischenaussage mit nächstem Update-Termin; keine Lieferzusage ohne Produktion.",
+      "moderatorSchlecht": "Funkstille – oder eine Zusage, die die Produktion nicht halten kann.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "key-account-automotive",
@@ -1102,8 +1099,8 @@
       "minuteOffset": 26,
       "vertraulich": true,
       "text": "Ein Journalist kontaktiert dich direkt über LinkedIn. Fragen: Zahlen Sie Lösegeld? Sind Kundendaten betroffen? Ist die Produktion ausgefallen? Wie reagierst du?",
-      "moderatorGut": "Kommunikation erfolgt abgestimmt.",
-      "moderatorSchlecht": "Einzelantwort ohne Abstimmung.",
+      "moderatorGut": "Keine Einzelantwort; Weiterleitung an die abgestimmte Pressearbeit, Antwort im Rahmen der Sprachregelung.",
+      "moderatorSchlecht": "Spontane Antwort per Direktnachricht – sie steht morgen als Zitat in der Zeitung.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "office-management",
@@ -1117,8 +1114,8 @@
       "minuteOffset": 36,
       "vertraulich": true,
       "text": "Die Hausbank fordert eine kurzfristige Einschätzung des finanziellen Schadens. Frist: 2 Stunden. Welche Informationen benötigst du?",
-      "moderatorGut": "Schadensabschätzung wird vorbereitet.",
-      "moderatorSchlecht": "Keine Zahlen verfügbar.",
+      "moderatorGut": "Eine ehrliche Spanne statt einer Scheingenauigkeit, mit Annahmen und nächstem Update-Termin.",
+      "moderatorSchlecht": "Keine Rückmeldung oder geschönte Zahlen – das Vertrauen der Bank leidet.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo",
@@ -1132,8 +1129,8 @@
       "minuteOffset": 46,
       "vertraulich": true,
       "text": "Mehrere Kunden halten ihre Zahlungen zurück. Begründung: Unsicherheit über die Lieferfähigkeit. Wie gehst du vor?",
-      "moderatorGut": "Das Thema geht in den Krisenstab.",
-      "moderatorSchlecht": "Thema bleibt im Fachbereich.",
+      "moderatorGut": "Das Thema geht in den Krisenstab; Kunden bekommen eine abgestimmte Aussage zur Lieferfähigkeit, die Finanzleitung plant die Liquidität neu.",
+      "moderatorSchlecht": "Das Thema bleibt im Fachbereich, Mahnungen gehen ungeprüft raus.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "debitorenmanagement",
@@ -1147,8 +1144,8 @@
       "minuteOffset": 46,
       "vertraulich": true,
       "text": "Die ersten Kunden drohen mit Schadensersatzforderungen. Noch liegen keine offiziellen Schreiben vor. Was unternimmst du?",
-      "moderatorGut": "Rechtliche Bewertung wird angefordert.",
-      "moderatorSchlecht": "Keine Eskalation.",
+      "moderatorGut": "Rechtliche Bewertung wird angefordert, Vertrieb und Finanzleitung werden einbezogen, keine Zugeständnisse am Telefon.",
+      "moderatorSchlecht": "Keine Eskalation – oder voreilige Zugeständnisse ohne Abstimmung.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "debitorenbuchhaltung",
@@ -1163,7 +1160,7 @@
       "minuteOffset": 36,
       "vertraulich": true,
       "text": "Ein strategischer Lieferant meldet: Wegen eures Ausfalls hat er eure reservierten Kapazitäten an andere Kunden vergeben. Für den Wiederanlauf reicht das vorhandene Material nur für zwei Produktionstage, Nachschub kommt frühestens in drei Wochen.",
-      "moderatorGut": "Lieferantenmanagement wird aktiviert, die Wiederanlaufplanung berücksichtigt den Engpass.",
+      "moderatorGut": "Lieferantenmanagement wird aktiviert, die Wiederanlaufplanung berücksichtigt den Engpass; Alternativen und Kosten gehen an den Krisenstab.",
       "moderatorSchlecht": "Der Engpass fällt erst beim Wiederanlauf auf.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
@@ -1178,8 +1175,8 @@
       "minuteOffset": 81,
       "vertraulich": true,
       "text": "Die IT hat das ERP-System aus dem Backup (Stand: Samstag 23:00 Uhr) in einer Testumgebung wiederhergestellt. Dabei fällt dir auf: Neben dem erwarteten Datenverlust seit Samstag fehlen offenbar weitere Datensätze – betroffen sind Kundenaufträge aus dem laufenden Monat. Ob die Daten verloren sind, ist unklar. Wie reagierst du?",
-      "moderatorGut": "Prüfung wird veranlasst.",
-      "moderatorSchlecht": "Daten werden ungeprüft übernommen.",
+      "moderatorGut": "Die Lücke wird an IT und Krisenstab gemeldet; vor der Freigabe wird geprüft, welche Daten fehlen und wie sie rekonstruiert werden.",
+      "moderatorSchlecht": "Die Daten werden ungeprüft übernommen – fehlende Aufträge fallen erst beim Kunden auf.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "erp-beratung",
@@ -1196,8 +1193,8 @@
       "minuteOffset": 64,
       "vertraulich": true,
       "text": "Mehrere Fachbereiche führen Notfalllisten in Excel. Jeder Bereich arbeitet mit anderen Datenständen. Wie gehst du vor?",
-      "moderatorGut": "Koordination der Datenbasis.",
-      "moderatorSchlecht": "Jeder arbeitet weiter allein.",
+      "moderatorGut": "Eine führende Datenbasis wird festgelegt; alle Bereiche arbeiten mit demselben Stand und dokumentieren für die Nachbuchung.",
+      "moderatorSchlecht": "Jeder Bereich arbeitet mit eigener Liste weiter – die Nacherfassung wird doppelt so teuer.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "erp-stammdaten",
@@ -1211,8 +1208,8 @@
       "minuteOffset": 44,
       "vertraulich": true,
       "text": "In vier Tagen wäre Inventurstichtag. Die Systeme stehen weiterhin nicht zur Verfügung. Welche Risiken siehst du?",
-      "moderatorGut": "Alternativverfahren entwickeln.",
-      "moderatorSchlecht": "Problem ignorieren.",
+      "moderatorGut": "Inventur verschieben oder ein dokumentiertes Ersatzverfahren mit Wirtschaftsprüfung und Finanzleitung abstimmen.",
+      "moderatorSchlecht": "Der Stichtag wird ignoriert – später fehlen belastbare Bestände für Bilanz und Wiederanlauf.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "erp-stammdaten",
@@ -1226,8 +1223,8 @@
       "minuteOffset": 78,
       "vertraulich": true,
       "text": "Zwei Bereiche behaupten: „Das haben wir so nie beschlossen.“ Es geht um eine Entscheidung des Krisenstabs von heute Vormittag. Wie stellst du die Nachvollziehbarkeit sicher?",
-      "moderatorGut": "Beschlüsse dokumentieren.",
-      "moderatorSchlecht": "Keine Protokollierung.",
+      "moderatorGut": "Beschlüsse werden mit Zeitpunkt, Begründung und Verantwortlichen nachgewiesen; ab jetzt wird jede Entscheidung kurz protokolliert.",
+      "moderatorSchlecht": "Keine Protokollierung – Streit über Zuständigkeiten kostet Zeit und Vertrauen.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "notfallmanagement-bcm",
@@ -1242,8 +1239,8 @@
       "minuteOffset": 64,
       "vertraulich": true,
       "text": "Im Unternehmen kursieren Gerüchte. Mehrere Mitarbeitende behaupten: \"NordTech zahlt bereits Lösegeld.\" Wie gehst du mit dieser Situation um?",
-      "moderatorGut": "Interne Kommunikation anregen.",
-      "moderatorSchlecht": "Gerüchte laufen weiter.",
+      "moderatorGut": "Schnelle, abgestimmte interne Information mit dem tatsächlichen Stand – ohne Details, die die Verhandlungsposition schwächen.",
+      "moderatorSchlecht": "Die Gerüchte laufen weiter oder werden pauschal dementiert, obwohl die Lage offen ist.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "leiterin-personal",
@@ -1275,8 +1272,8 @@
       "minuteOffset": 73,
       "vertraulich": true,
       "text": "Ein Pharmakunde, der wegen der Lieferausfälle Schadensersatz prüft, bietet an, darauf zu verzichten. Voraussetzung: eine verbindliche Lieferzusage. Wie bewertest du die Situation?",
-      "moderatorGut": "Risiken und Chancen abwägen.",
-      "moderatorSchlecht": "Unüberlegte Zusagen.",
+      "moderatorGut": "Lieferzusage nur nach Abstimmung mit Produktion und Qualität; Vereinbarung schriftlich und realistisch.",
+      "moderatorSchlecht": "Eine schnelle Zusage, die Produktion oder Qualitätsfreigabe nicht halten können.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "key-account-pharma",
@@ -1291,8 +1288,8 @@
       "minuteOffset": 52,
       "vertraulich": true,
       "text": "Die Forensiker empfehlen: Kein System wird wieder hochgefahren oder aus dem Backup wiederhergestellt, bevor das Backup auf Schadcode geprüft ist – das dauert mindestens zwei Tage. Gleichzeitig steigt der Druck aus den Fachbereichen. Wie gehst du damit um?",
-      "moderatorGut": "Risiken transparent machen.",
-      "moderatorSchlecht": "Business und IT arbeiten gegeneinander.",
+      "moderatorGut": "Die Empfehlung und ihre Folgen für den Wiederanlauf gehen offen in den Krisenstab; Business und IT legen gemeinsam fest, was vorgezogen werden darf.",
+      "moderatorSchlecht": "Die IT blockt allein ab oder gibt dem Druck nach – Business und IT arbeiten gegeneinander.",
       "moderatorHinweis": "Erzeugt bewussten Konflikt mit dem Lieferdruck aus Vertrieb und Kunden: Vertrieb will liefern, IT will warten.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
@@ -1310,8 +1307,8 @@
       "minuteOffset": 44,
       "vertraulich": true,
       "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Der Beirat stellt die Frage: „Unter welchen Bedingungen würden Sie eine Lösegeldzahlung überhaupt in Betracht ziehen?“ Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position vor.",
-      "moderatorGut": "Begründete Entscheidung.",
-      "moderatorSchlecht": "Unklare Haltung.",
+      "moderatorGut": "Eine begründete Position mit klaren Kriterien, fachlich geprüft, im Krisenstab abgestimmt und dokumentiert.",
+      "moderatorSchlecht": "Eine unklare Haltung oder eine Entscheidung allein und unter Zeitdruck.",
       "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
       "prioritaet": 1,
       "fallbackEmpfaenger": [
@@ -1326,8 +1323,8 @@
       "minuteOffset": 16,
       "vertraulich": true,
       "text": "Es besteht der Verdacht, dass NordTech neben dem Datenschutz weiteren gesetzlichen Meldepflichten unterliegt (z. B. als Einrichtung nach NIS2 an das BSI) – mit Fristen ab Kenntnis des Vorfalls. Betroffenheit, zuständige Stellen und Fristen sind umgehend fachlich prüfen zu lassen.",
-      "moderatorGut": "Die NIS2-Meldepflicht wird aktiv in den Krisenstab gebracht, parallel zur DSGVO-Prüfung.",
-      "moderatorSchlecht": "Der Krisenstab verwechselt NIS2-Meldung mit der DSGVO-Meldung und hält nur eine der beiden Fristen ein.",
+      "moderatorGut": "Mögliche weitere Meldepflichten (z. B. NIS2) werden aktiv in den Krisenstab gebracht und parallel zur Datenschutz-Prüfung fachlich geklärt – mit Zuständigkeit und Termin.",
+      "moderatorSchlecht": "Der Krisenstab prüft nur den Datenschutz und übersieht weitere mögliche Meldepflichten und Fristen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "assistenz-gf-dokumentation",
@@ -1659,7 +1656,7 @@
       "minuteOffset": null,
       "vertraulich": true,
       "nurNachWeiche": true,
-      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat vom Angriff aus der Zeitung erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
+      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat vom Angriff aus der Presse erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
       "moderatorGut": "Sofortiger Rückruf auf Leitungsebene, ehrliche Lageinformation, regelmäßige Updates zugesagt.",
       "moderatorSchlecht": "Rechtfertigung statt Information – der Kunde fühlt sich übergangen.",
       "prioritaet": 2,
@@ -1751,7 +1748,7 @@
   },
   "nachspiel": {
     "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
-    "einleitung": "Sonntag, 12:00 Uhr. Die Produktion läuft zu 70 %, die Systeme sind weitgehend zurück. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "einleitung": "Sonntag, 12:00 Uhr. 70 % der Fertigungskapazität sind wieder verfügbar, die Systeme weitgehend zurück. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
     "nacharbeiten": [
       {
         "zahl": "1.900",
@@ -1771,7 +1768,7 @@
       },
       {
         "zahl": "900",
-        "text": "Rechner und Server werden geprüft oder neu aufgesetzt, 620 Passwörter zurückgesetzt"
+        "text": "Endgeräte, Produktionsrechner und Server werden geprüft oder neu aufgesetzt, die Zugänge von 620 Beschäftigten kontrolliert wiederhergestellt"
       },
       {
         "zahl": "4 Wochen",
@@ -1791,7 +1788,7 @@
       {
         "posten": "Forensik und Incident Response (7 Tage rund um die Uhr)",
         "betrag": 420000,
-        "bcmHebel": "Ein vorab vereinbarter Dienstleister aus dem Versicherungsnetzwerk – die Kosten werden erstattet."
+        "bcmHebel": "Ein vorab vereinbarter Dienstleister aus dem Versicherungsnetzwerk – die Kosten können dann erstattet werden."
       },
       {
         "posten": "IT-Wiederherstellung, Ersatzhardware, Überstunden IT",
@@ -1991,13 +1988,13 @@
         {
           "id": "nicht-gezahlt",
           "label": "Kein Lösegeld gezahlt",
-          "wirkung": "Wiederherstellung nur aus dem Backup, keine weiteren Änderungen.",
+          "wirkung": "Wiederherstellung nur aus dem Backup; die Geschichte läuft wie im Drehbuch weiter.",
           "folgen": []
         },
         {
           "id": "gezahlt",
           "label": "Lösegeld gezahlt",
-          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
+          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Erpresser fordern mehr (falls die Karte an die IT im Plan ist), die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
           "folgen": [
             {
               "lagekarte": "LK12",
@@ -2006,6 +2003,10 @@
             {
               "lagekarte": "LK15",
               "zusatz": "In der Presse wird berichtet, dass NordTech Lösegeld gezahlt hat."
+            },
+            {
+              "sonderlagekarte": "SK27",
+              "text": "Trotz der Zahlung melden sich die Erpresser erneut über das Tor-Portal: „Wir sind noch in eurem Netz. Für die übrigen Schlüssel und die Löschung eurer Daten will die Gruppe weitere 500.000 €. Ihr habt 12 Stunden.“ Die Forensik kann nicht ausschließen, dass sie noch Zugang haben. Du entscheidest selbst, wie du mit dieser Information umgehst."
             }
           ],
           "posten": [

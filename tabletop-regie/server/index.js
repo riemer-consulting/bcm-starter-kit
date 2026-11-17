@@ -165,12 +165,13 @@ async function sendTestModeCard(card, role, recipients, recipientRoleId, art) {
   return result;
 }
 
-async function fireSonderlagekarte(sk, { manual } = {}) {
-  if (state.firedSonderlagekarten.find(f => f.id === sk.id)) return;
+async function fireSonderlagekarte(skOriginal, { manual } = {}) {
+  if (state.firedSonderlagekarten.find(f => f.id === skOriginal.id)) return;
+  const sk = skMitWeichen(skOriginal);
   const recipientRoleId = recipientRoleFor(sk);
   const role = roleById(recipientRoleId || sk.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
-  const entry = { id: sk.id, at: Date.now(), atMinute: engine.elapsedMinutes(state), manual: !!manual, recipientRoleId, emailResults: [] };
+  const entry = { id: sk.id, at: Date.now(), atMinute: engine.elapsedMinutes(state), manual: !!manual, recipientRoleId, text: sk.text, emailResults: [] };
   if (recipients.length === 0) {
     log('warn', `Sonderlagekarte ${sk.id} (${recipientLabel(sk)}) fällig, aber weder diese Rolle noch eine Ersatzrolle ist besetzt.`);
   } else if (testModeActive()) {
@@ -277,6 +278,16 @@ function lageMitWeichen(lk) {
   });
   if (!zusatz.length && kriseninfo === lk.kriseninfo) return lk;
   return Object.assign({}, lk, { text: [lk.text, ...zusatz].join(' '), kriseninfo, weichenZusatz: zusatz });
+}
+// Vertrauliche Karte mit Textvariante aus einer Entscheidung (z. B. nach
+// gezahltem Loesegeld meldet sich der Erpresser anders).
+function skMitWeichen(sk) {
+  let text = null;
+  weichenListe().forEach(w => {
+    const o = chosenOption(w);
+    (o && o.folgen || []).filter(f => f.sonderlagekarte === sk.id && f.text).forEach(f => { text = f.text; });
+  });
+  return text ? Object.assign({}, sk, { text }) : sk;
 }
 async function fireWeichenKarten() {
   for (const w of weichenListe()) {

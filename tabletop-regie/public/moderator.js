@@ -131,7 +131,7 @@ function updateSkAlerts(s) {
         <div class="kopf" style="flex:1;">${f.manual ? 'Manuell ausgelöst' : 'Soeben verschickt'}: vertrauliche Karte ${escapeHtml(f.id)} an ${an}</div>
         <button class="secondary sk-alert-ok" data-idx="${i}" style="flex-shrink:0;" title="Hinweis schließen. Die Karte bleibt unten unter „Verschickte vertrauliche Karten“ einsehbar.">Gesehen</button>
       </div>
-      <div class="txt" title="Mit der Maus darüberfahren, um den ganzen Text zu sehen.">${escapeHtml(sk.text || '')}</div>
+      <div class="txt" title="Mit der Maus darüberfahren, um den ganzen Text zu sehen.">${escapeHtml(f.text || sk.text || '')}</div>
       ${sk.moderatorHinweis ? `<div style="color:var(--warn);margin-top:4px;">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
       ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
       ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
@@ -304,7 +304,7 @@ function render(s) {
       : '<span style="color:var(--warn);">niemand besetzt</span>';
     return `<div class="log-entry" style="padding:8px 0;">
       <div><b>${sk.id}</b> · ${new Date(f.at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · an ${empf}</div>
-      <div class="muted">${escapeHtml(sk.text)}</div>
+      <div class="muted">${escapeHtml(f.text || sk.text)}</div>
       ${sk.moderatorHinweis ? `<div style="color:var(--warn);">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
       ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
       ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
