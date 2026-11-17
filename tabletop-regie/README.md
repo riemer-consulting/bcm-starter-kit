@@ -105,9 +105,9 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    nach der **Dauer**, nicht nach der Zahl der Personen: Jede Rolle kostet
    Sprechzeit pro Lagekarte und bekommt eigene vertrauliche Karten. Dauer
    wählen (45 Min. bis 3 Std.) und auf **"Passende Rollen vorschlagen"**
-   klicken — die App wählt die Rollen, die in den Lagekarten dieser Dauer am
-   meisten gefordert sind (45 Min.: 5 Rollen, 60 Min.: 6, 90 Min.: 9,
-   2 Std.: 12, 3 Std.: alle). Sind schon Personen anderen Rollen zugeordnet
+   klicken — die App wählt die Rollen, die das Drehbuch als fachlich wichtigste festlegt (sonst die, die in den Lagekarten dieser Dauer am
+   meisten gefordert sind). Anzahl: 45 Min.: 5 Rollen, 60 Min.: 6, 90 Min.: 9,
+   2 Std.: 12, 3 Std.: alle. Sind schon Personen anderen Rollen zugeordnet
    (z. B. nach einem Import), fragt die App, ob alle Personen als **Teams**
    auf die vorgeschlagenen Rollen verteilt werden sollen — niemand wird
    dabei gelöscht. Rollen lassen sich auch einzeln anhaken. Nur angehakte Rollen erscheinen danach in der
@@ -319,6 +319,17 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   Zieldauer-Modus werden solche Lagekarten beim Auffüllen hintangestellt.
 - Rollen haben `ebene` (`eingang`, `krisenstab` oder `verteilung`): ordnet
   sie auf dem Spielbrett dem Meldeweg zu. Ohne Angabe gilt `krisenstab`.
+- Inhaltliche Abhängigkeiten: `voraussetzung` (Liste von Lagekarten-IDs) an
+  einer Lagekarte zieht diese Lagekarten im Zieldauer-Modus mit in den Plan;
+  an einer vertraulichen Karte bedeutet es: Die Karte kommt nur, wenn alle
+  Voraussetzungen gespielt werden, und immer danach (z. B. „ERP aus dem
+  Backup wiederhergestellt“ nur nach „Backups gefunden“). `vorLagekarte`
+  setzt eine vertrauliche Karte unmittelbar vor eine bestimmte Lagekarte
+  (z. B. der Anruf des Beiratsmitglieds vor dem Beirats-Lagebericht).
+  `npm run pruefen` prüft beides in allen Simulationen.
+- `standardablauf.rollenPrioritaet` (optional): feste Reihenfolge für
+  „Passende Rollen vorschlagen“ – bei 45 Minuten die ersten 5, bei 90 die
+  ersten 9 usw. Ohne Angabe wählt die App nach Häufigkeit auf den Lagekarten.
 - Lagekarten haben außerdem `akt` (`vorboten`, `ausbruch`, `eskalation`,
   `hoehepunkt`, `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
   Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.

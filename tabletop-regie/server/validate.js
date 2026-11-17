@@ -34,6 +34,21 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     (lk.zustaendig || []).forEach(rid => checkRole(rid, `Lagekarte ${lk.id} (zuständig)`));
     if (!(lk.zustaendig || []).length) warnings.push(`Lagekarte ${lk.id} hat keine zuständigen Rollen hinterlegt.`);
   });
+  // Inhaltliche Abhaengigkeiten: Verweise gueltig, Reihenfolge im Drehbuch stimmig
+  const lkById = id => scenario.lagekarten.find(l => l.id === id);
+  [...scenario.lagekarten, ...scenario.sonderlagekarten].forEach(c => {
+    (c.voraussetzung || []).forEach(id => {
+      const pre = lkById(id);
+      if (!pre) errors.push(`${c.id}: Voraussetzung ${id} ist keine Lagekarte.`);
+      else if (c.minuteOffset != null && pre.minuteOffset >= c.minuteOffset) errors.push(`${c.id} kommt im Drehbuch vor seiner Voraussetzung ${id}.`);
+    });
+    if (c.vorLagekarte) {
+      const ziel = lkById(c.vorLagekarte);
+      if (!ziel) errors.push(`${c.id}: vorLagekarte ${c.vorLagekarte} ist keine Lagekarte.`);
+      else if (c.minuteOffset != null && c.minuteOffset > ziel.minuteOffset) errors.push(`${c.id} soll vor ${c.vorLagekarte} kommen, steht im Drehbuch aber danach.`);
+    }
+  });
+  ((scenario.standardablauf || {}).rollenPrioritaet || []).forEach(rid => checkRole(rid, 'rollenPrioritaet'));
   scenario.sonderlagekarten.forEach(sk => {
     if (sk.minuteOffset === null || sk.minuteOffset === undefined) warnings.push(`Sonderlagekarte ${sk.id} hat keinen Zeitpunkt – kommt nur bei manueller Auslösung.`);
     if (![1, 2, 3].includes(sk.prioritaet)) errors.push(`Sonderlagekarte ${sk.id} hat keine gültige Priorität (1–3).`);
@@ -106,6 +121,20 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     const rueck = idx.findIndex((x, i) => i > 0 && x < idx[i - 1]);
     if (rueck > 0) note('ordnung:' + lks[rueck].id, `Bei ${targetMinutes} Min. springt der Spannungsbogen zurück: ${lks[rueck - 1].id} (${lks[rueck - 1].akt}) vor ${lks[rueck].id} (${lks[rueck].akt}).`);
     if (lks.length && lks[lks.length - 1].akt !== 'wiederanlauf') note('ende', `Bei ${targetMinutes} Min. endet die Übung nicht mit dem Wiederanlauf (${lks[lks.length - 1].id}).`);
+    // Abhaengigkeiten im erzeugten Plan: Voraussetzung gespielt und vorher
+    const at = {};
+    plan.schedule.forEach(e => { at[e.id] = e.minute; });
+    plan.schedule.forEach(e => {
+      const c = e.type === 'lagekarte' ? scenario.lagekarten.find(x => x.id === e.id) : scenario.sonderlagekarten.find(x => x.id === e.id);
+      (c.voraussetzung || []).forEach(id => {
+        if (at[id] === undefined) note('dep:' + c.id, `Bei ${targetMinutes} Min. wird ${c.id} gespielt, ohne die Voraussetzung ${id}.`);
+        else if (at[id] > e.minute) note('deporder:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} vor seiner Voraussetzung ${id}.`);
+      });
+      if (c.vorLagekarte) {
+        if (at[c.vorLagekarte] === undefined) note('vor:' + c.id, `Bei ${targetMinutes} Min. wird ${c.id} gespielt, ${c.vorLagekarte} aber nicht.`);
+        else if (at[c.vorLagekarte] < e.minute) note('vororder:' + c.id, `Bei ${targetMinutes} Min. kommt ${c.id} erst nach ${c.vorLagekarte}.`);
+      }
+    });
     const recipients = new Set();
     plan.schedule.filter(e => e.type === 'sonderlagekarte').forEach(e => {
       const sk = scenario.sonderlagekarten.find(x => x.id === e.id);
