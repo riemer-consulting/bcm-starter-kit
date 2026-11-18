@@ -85,6 +85,29 @@ Lies jede der sieben Geschichten von vorn nach hinten:
 - **Wissen:** Weiß eine Rolle etwas zu früh?
 - **Entscheidungen:** Passen die Folgen auf LK12, LK15, LK17, SK27, SK43 und SK44 sowie die Rechnung am Ende zu den gewählten Optionen?
 
+## Prüfschwerpunkt: Die Wiederanlaufkette
+
+Die sieben Schritte dürfen im Szenario nicht stillschweigend gleichgesetzt werden:
+
+**Backup vorhanden → Integrität geprüft → Systeme wiederhergestellt → Sicherheit bestätigt → Daten fachlich validiert → Produktion freigegeben → Kunden tatsächlich beliefert.**
+
+Die folgende Zuordnung ist eine **Orientierungshilfe aus dem Drehbuch, keine Bewertung**. Sie zeigt, wo jeder Schritt vorkommt und ob ein Kartentext ihn ausdrücklich abschließt. Prüfe die Zuordnung selbst und bewerte, ob offene Schritte ein Fehler sind oder zur Geschichte gehören. Die Geschichte endet am Sonntag bewusst mit „Drinnen beginnt jetzt die eigentliche Arbeit“.
+
+| Schritt | Wo im Szenario (ID, Zeit, Zitat) | Im Text ausdrücklich abgeschlossen? |
+|---|---|---|
+| 1. Backup vorhanden | LK09 Mi 11:00: „Offline-Backups sind verfügbar, Stand: Samstag 23:00 Uhr … Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.“ | ja (vorhanden, lesbar) |
+| 2. Integrität geprüft | SK19: „die Prüfung des Backups dauert mindestens zwei Tage“. LK24 Mi 15:00: „noch nicht abschließend … geprüft“. LK12 Fr 08:00: „die Prüfung des ERP-Backups dauert weiterhin an“. | keine Karte meldet den Abschluss der Prüfung |
+| 3. Systeme wiederhergestellt | LK12 Fr 08:00: Werk Süd „isoliert neu aufgesetzt“ (nicht aus dem Backup). LK14 Sa 09:00: „ERP-System läuft in einer Testumgebung“. LK15 So 12:00: „die IT-Systeme weitgehend“. Abschluss: „900 Endgeräte … werden geprüft oder neu aufgesetzt“. | teilweise; woraus das ERP im Test wiederhergestellt wurde, sagt keine Karte |
+| 4. Sicherheit bestätigt | LK08 Mi 08:00: „keine Hinweise auf aktive Angreifer“. LK12: „unabhängig geprüft“ (nur Werk Süd). SK19: „nach gesonderter Sicherheitsprüfung“. SK42: „Sicherheits- und Qualitätsfreigaben stehen aber noch aus“. | nur für Werk Süd; keine allgemeine Sicherheitsfreigabe |
+| 5. Daten fachlich validiert | LK25 Sa 11:00: „nicht als verlässlicher Datenstand freigegeben“. SK31: 1.900 Buchungen im Rückstau. SK48: ungeprüfte Excel-Datei. B8: falsche Chargennummer im Test. | nein, bis zum Ende offen |
+| 6. Produktion freigegeben | LK12: Notbetrieb mit 30 %. LK21 Fr 16:00: 260 Chargen „kann derzeit nicht bestätigen“. LK15: „70 % der technischen Fertigungskapazität“. SK33 nach LK15: „ausstehende Produktfreigaben“. | nein, technische Kapazität ist nicht gleich Freigabe |
+| 7. Kunden tatsächlich beliefert | LK15: „Personal und Material begrenzen die reale Leistung“. LK26 So 15:00: „Schichtplanung ab Montag offen“. Abschluss: „4 Wochen Produktionsaufholplan“, „3 Großkunden kündigen ein Sicherheits-Audit an“. | nein, bis zum Ende offen |
+
+Bewerte vor allem drei Fragen:
+- Erzeugen die Lücken bei Schritt 2 und 4 einen Widerspruch zu LK14 und LK15, zum Beispiel ein ERP im Test ohne geprüfte Datenbasis?
+- Fehlt dem Tisch an einer Stelle eine Entscheidung, etwa wer die Sicherheitsfreigabe erteilt?
+- Kann eine Karte den Eindruck erwecken, technische Verfügbarkeit sei schon Lieferfähigkeit?
+
 ## Antwortformat (genau so)
 
 1. **Gesamturteil in 5 Sätzen:** je Prüffrage tragfähig, mit Auflagen tragfähig oder nicht tragfähig, mit Begründung.
