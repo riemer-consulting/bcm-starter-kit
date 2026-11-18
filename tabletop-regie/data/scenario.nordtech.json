@@ -453,7 +453,9 @@
         "leiter-einkauf",
         "geschaeftsfuehrerin-vertrieb",
         "leitung-produktion",
-        "standortleitung-werk-sued"
+        "standortleitung-werk-sued",
+        "key-account-automotive",
+        "kaufmaennische-leiterin-cfo"
       ],
       "akt": "ausbruch"
     },
@@ -568,7 +570,9 @@
         "geschaeftsfuehrer-ceo",
         "kundenservice-callcenter",
         "leitung-qualitaet",
-        "key-account-automotive"
+        "key-account-automotive",
+        "debitorenmanagement",
+        "kaufmaennische-leiterin-cfo"
       ],
       "akt": "eskalation"
     },
@@ -707,7 +711,9 @@
         "geschaeftsfuehrer-ceo",
         "leitung-qualitaet",
         "leitung-produktion",
-        "key-account-pharma"
+        "key-account-pharma",
+        "debitorenmanagement",
+        "debitorenbuchhaltung"
       ],
       "akt": "hoehepunkt"
     },
@@ -738,7 +744,10 @@
         "leiter-einkauf",
         "leitung-produktion",
         "leitung-qualitaet",
-        "standortleitung-werk-sued"
+        "standortleitung-werk-sued",
+        "inventuren-spezialprozesse",
+        "debitorenbuchhaltung",
+        "key-account-automotive"
       ],
       "akt": "folgen"
     },
@@ -792,7 +801,8 @@
         "leiter-it",
         "erp-beratung",
         "erp-stammdaten",
-        "it-service-desk"
+        "it-service-desk",
+        "inventuren-spezialprozesse"
       ],
       "akt": "wiederanlauf",
       "voraussetzung": [
@@ -816,7 +826,7 @@
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk15-wiederanlauf.png",
-        "caption": "Wiederanlauf: 70 % der Kapazität sind wieder verfügbar."
+        "caption": "Wiederanlauf: 70 % technische Kapazität – noch nicht 70 % Lieferfähigkeit."
       },
       "prioritaet": 1,
       "zustaendig": [
@@ -853,7 +863,8 @@
         "geschaeftsfuehrer-ceo",
         "kaufmaennische-leiterin-cfo",
         "leiter-it",
-        "leitung-produktion"
+        "leitung-produktion",
+        "debitorenbuchhaltung"
       ],
       "akt": "hoehepunkt"
     },
@@ -1065,7 +1076,8 @@
         "leitung-produktion",
         "geschaeftsfuehrerin-vertrieb",
         "kaufmaennische-leiterin-cfo",
-        "erp-stammdaten"
+        "erp-stammdaten",
+        "debitorenbuchhaltung"
       ],
       "akt": "eskalation",
       "voraussetzung": [
@@ -1102,7 +1114,8 @@
         "leitung-qualitaet",
         "leitung-produktion",
         "geschaeftsfuehrerin-vertrieb",
-        "leiter-it"
+        "leiter-it",
+        "inventuren-spezialprozesse"
       ],
       "akt": "wiederanlauf",
       "voraussetzung": [

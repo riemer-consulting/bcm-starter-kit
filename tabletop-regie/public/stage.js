@@ -43,6 +43,12 @@ function claimSound() {
   isSoundOwner = true;
 }
 document.getElementById('sound-elsewhere').addEventListener('click', () => { claimSound(); lastLagekarteId = null; refresh(); });
+document.getElementById('btn-no-sound').addEventListener('click', () => {
+  // Ohne Ton: Bühne zeigt alles, spielt aber nie etwas ab.
+  soundEnabled = false;
+  document.getElementById('sound-unlock').style.display = 'none';
+  refresh();
+});
 document.getElementById('btn-enable-sound').addEventListener('click', () => {
   claimSound();
   soundEnabled = true;
@@ -56,6 +62,14 @@ document.getElementById('btn-enable-sound').addEventListener('click', () => {
 
 function applySound(s) {
   if (!soundEnabled) return;
+  // Stumm durch die Moderation: alles anhalten, nichts starten.
+  if (s.soundMuted) {
+    if (!ambientAudio.paused) ambientAudio.pause();
+    if (!eventAudio.paused) eventAudio.pause();
+    lastLagekarteId = s.currentLagekarte ? s.currentLagekarte.id : null;
+    lastReplay = s.soundReplay || 0;
+    return;
+  }
   // Hat ein anderes Fenster den Ton uebernommen: hier stumm schalten.
   if (!s.soundOwner) claimSound(); // z. B. nach Server-Neustart
   isSoundOwner = !s.soundOwner || s.soundOwner === stageId;

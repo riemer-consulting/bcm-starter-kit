@@ -85,6 +85,14 @@ Danach:
 Die App läuft ausschließlich lokal. Die einzige ausgehende Netzwerkverbindung
 ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
+## Unterlagen zum Szenario NordTech
+
+Im Ordner `docs/`:
+
+- `nordtech-moderationshandbuch.md` – Moderationshandbuch (Version 1.1, mit der Oberfläche abgeglichen)
+- `nordtech-medienmatrix.md` / `.csv` – jedes Bild und jeder Ton mit Datei, Prüfstand und Befund
+- `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
+
 ## Ablauf einer Übung
 
 0. **Bereitest du Übungen öfter vor?** Dann zuerst ganz oben im Setup unter

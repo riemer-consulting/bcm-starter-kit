@@ -173,6 +173,9 @@ function render(s) {
     : s.status === 'ended' ? (s.finale && s.finale.step ? 'Abschluss' : 'Beendet')
     : 'Bereit';
   statusBadge.className = 'badge ' + (s.status === 'running' ? 'ok' : s.status === 'ended' ? 'bad' : 'warn');
+  const tonBtn = document.getElementById('btn-ton');
+  tonBtn.textContent = s.soundMuted ? 'Ton an' : 'Ton aus';
+  tonBtn.classList.toggle('danger', !!s.soundMuted);
   document.getElementById('btn-begin-crisis').style.display = s.status === 'briefing' ? '' : 'none';
   document.getElementById('btn-pause').style.display = s.status === 'running' ? '' : 'none';
   document.getElementById('btn-resume').style.display = s.status === 'paused' ? '' : 'none';
@@ -439,6 +442,10 @@ async function refresh() {
 }
 
 document.getElementById('btn-open-stage').addEventListener('click', () => window.open('stage.html', '_blank'));
+document.getElementById('btn-ton').addEventListener('click', () => {
+  const stumm = !(lastState && lastState.soundMuted);
+  api('/api/run/ton', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stumm }) }).then(refresh);
+});
 document.getElementById('btn-protokoll').addEventListener('click', () => { window.location.href = '/api/run/protokoll'; });
 document.getElementById('btn-send-all-certs').addEventListener('click', async () => {
   const people = ((lastState && lastState.participants) || []).filter(p => p.name && p.email);

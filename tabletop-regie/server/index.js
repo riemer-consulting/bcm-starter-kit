@@ -709,6 +709,14 @@ app.post('/api/stage/sound-claim', (req, res) => {
 
 // Ton der aktuellen Lagekarte auf der Buehne erneut abspielen (z. B. wenn es
 // im Raum zu laut war).
+// Stumm-Schalter der Moderation: Ton auf der Buehne sofort aus/an -- auch
+// mitten in einer Lage. Bleibt beim Zuruecksetzen erhalten (Raumentscheidung).
+let soundMuted = false;
+app.post('/api/run/ton', (req, res) => {
+  soundMuted = !!(req.body || {}).stumm;
+  log('info', soundMuted ? 'Ton auf der Bühne stummgeschaltet.' : 'Ton auf der Bühne wieder eingeschaltet.');
+  res.json({ ok: true, soundMuted });
+});
 app.post('/api/run/replay-sound', (req, res) => {
   state.soundReplay = (state.soundReplay || 0) + 1;
   persist();
@@ -833,6 +841,7 @@ app.get('/api/run/moderator-state', (req, res) => {
   res.json({
     status: state.status,
     crisisCountdownSeconds: state.status === 'countdown' ? Math.max(0, Math.ceil((state.crisisStartsAt - Date.now()) / 1000)) : null,
+    soundMuted,
     testMode: (() => { const tm = store.loadSettings().testMode || {}; return { enabled: !!(tm.enabled && tm.dummyEmail), dummyEmail: tm.dummyEmail || '' }; })(),
     durationMode: state.durationMode,
     difficulty: state.difficulty,
@@ -904,6 +913,7 @@ app.get('/api/run/stage-state', (req, res) => {
     lagekartenGezeigt: lagekartenProgress().gezeigt,
     finaleMinutes: state.finaleMinutes || 0,
     soundReplay: state.soundReplay || 0,
+    soundMuted,
     soundOwner,
     finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null,
     spielbrett: spielbrett()
@@ -954,6 +964,10 @@ app.get('/api/run/protokoll', (req, res) => {
   }
   w('', '## Debriefing', '');
   [...(scenario.moderationsleitfaden.debriefingFragen || []), ...((sp && sp.debriefing) || [])].forEach(q => w(`**${q}**`, '', '_Notizen:_', '', ''));
+  w('## Gesamteinschätzung der Übung (Team)', '', 'Nach dem Moderationshandbuch: 0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig. Bewertet wird die Arbeit des Krisenstabs, nicht einzelne Personen. Beobachtungen mit Karten-ID belegen.', '',
+    '| Kriterium | 0 / 1 / 2 | Beobachtung (Karte) |', '|---|---|---|',
+    ...['Aktivierung / Lagebild', 'Entscheidung / Verantwortung', 'Kommunikation', 'IT-/OT-Sicherheit', 'Geschäftsfortführung', 'Qualität / Datenintegrität', 'Fachliche Prüfpflichten', 'Wiederanlauf / Nachsorge'].map(k => `| ${k} | | |`),
+    '| **Summe (max. 16, kein Grenzwert)** | | |', '');
   w('## Maßnahmenplan', '', '| Nr. | Maßnahme | Verantwortlich | Priorität | Bis wann |', '|---:|---|---|---|---|', '| 1 | | | | |', '| 2 | | | | |', '| 3 | | | | |', '');
   res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="uebungsprotokoll-${new Date().toISOString().slice(0, 10)}.md"`);
