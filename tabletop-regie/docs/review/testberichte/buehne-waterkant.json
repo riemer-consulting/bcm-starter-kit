@@ -1,0 +1,356 @@
+{
+  "szenario": "scenario.waterkant.json",
+  "zeitpunkt": "2026-11-18T16:57:50.291Z",
+  "ergebnisse": [
+    {
+      "id": "B",
+      "name": "Unterbrechung B7 (IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum), 5 Min.)",
+      "ok": true,
+      "erwartet": "Bühne zeigt die Unterbrechung mit Restzeit; Moderation sieht Rolle und Rückkehr",
+      "beobachtet": "Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja"
+    },
+    {
+      "id": "G",
+      "name": "Generalprobe: 28 Lagen und 4 öffentliche Überraschungen",
+      "ok": true,
+      "erwartet": "jedes Bild geladen; jeder vorgesehene Ton gestartet; Übungshinweis sichtbar, wo vorgesehen",
+      "beobachtet": "32 Bühnenzustände; Abweichungen: keine"
+    },
+    {
+      "id": "N3",
+      "name": "Stummschalten mitten im Ton (LK21)",
+      "ok": true,
+      "erwartet": "Kartenton stoppt sofort (≤ 3 s); nach Aufheben startet er nicht ungefragt neu, sondern über „Ton erneut abspielen“ (Hintergrundton gibt es nur vor der Krise und in den Vorboten)",
+      "beobachtet": "vorher: läuft lk21-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus"
+    },
+    {
+      "id": "N3",
+      "name": "Ton erneut abspielen nach Stummschaltung",
+      "ok": true,
+      "erwartet": "Kartenton startet von vorn",
+      "beobachtet": "Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 2.5 s)"
+    },
+    {
+      "id": "N4",
+      "name": "Zeitsprung mitten im Ton (LK21 → LK22)",
+      "ok": true,
+      "erwartet": "alter Ton endet, Ton der neuen Lage läuft",
+      "beobachtet": "danach: läuft lk22-kasse-startet.mp3; Hintergrund aus"
+    },
+    {
+      "id": "N2",
+      "name": "Bühne neu laden mitten im Lauf",
+      "ok": true,
+      "erwartet": "Bühne zeigt sofort wieder die aktuelle Lage; Ton braucht einen Klick (Browserregel)",
+      "beobachtet": "Ton-Freigabe angezeigt: ja; aktuelle Lage „Die Kassen laufen wieder“ sichtbar: ja; nach Klick Hintergrund aus"
+    },
+    {
+      "id": "F",
+      "name": "Abschluss auf der Bühne bis zum Fazit",
+      "ok": true,
+      "erwartet": "Nacharbeiten, Rechnung, Bilanz, Einordnung und Fazit erscheinen nacheinander",
+      "beobachtet": "6 Bildschirmfotos, letzte Phase: fazit"
+    },
+    {
+      "id": "M",
+      "name": "Keine Browserfehler in Bühne und Moderation",
+      "ok": true,
+      "erwartet": "keine JavaScript-Fehler",
+      "beobachtet": "keine"
+    }
+  ],
+  "generalprobe": [
+    {
+      "id": "LK01",
+      "titel": "USV meldet Batteriewarnung",
+      "bild": "02-LK01.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK02",
+      "titel": "Geruch im Technikflur",
+      "bild": "03-LK02.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK03",
+      "titel": "Serverraum wird warm",
+      "bild": "04-LK03.png",
+      "bildGeladen": true,
+      "sollTon": "lk03-klimaalarm.mp3",
+      "ton": "lk03-klimaalarm.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK04",
+      "titel": "Brandalarm im Rechenzentrum",
+      "bild": "05-LK04.png",
+      "bildGeladen": true,
+      "sollTon": "lk04-loeschanlage-durchsage.mp3",
+      "ton": "lk04-loeschanlage-durchsage.mp3",
+      "uebungshinweis": true
+    },
+    {
+      "id": "LK05",
+      "titel": "Feuerwehr im Einsatz",
+      "bild": "06-LK05.png",
+      "bildGeladen": true,
+      "sollTon": "funk-ruf.mp3",
+      "ton": "funk-ruf.mp3 (bereits zu Ende)",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK06",
+      "titel": "Lagebild nach dem Löschen",
+      "bild": "07-LK06.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK07",
+      "titel": "Was noch läuft – und was nicht",
+      "bild": "08-LK07.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK08",
+      "titel": "Saisonstart ohne Aktionspreise",
+      "bild": "09-LK08.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK09",
+      "titel": "Die Partnermärkte rufen an",
+      "bild": "10-LK09.png",
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B6",
+      "titel": "Wo hat es gebrannt?",
+      "bild": "11-B6.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK10",
+      "titel": "Serverraum gesperrt",
+      "bild": "12-LK10.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK11",
+      "titel": "Nordkanal fragt nach",
+      "bild": "13-LK11.png",
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK12",
+      "titel": "Das Zentrallager steht",
+      "bild": "14-LK12.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK13",
+      "titel": "Ersatz: Hardware oder Ausweich-Rack?",
+      "bild": "15-LK13.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK14",
+      "titel": "Den Backup-Server bergen?",
+      "bild": "16-LK14.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B5",
+      "titel": "Zweiter Alarm",
+      "bild": "17-B5.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": "b5-zweiter-alarm.mp3",
+      "ton": "b5-zweiter-alarm.mp3",
+      "uebungshinweis": true
+    },
+    {
+      "id": "LK15",
+      "titel": "Wie weit geht der Ausweichbetrieb?",
+      "bild": "18-LK15.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B7",
+      "titel": "Die IT-Leitung muss raus",
+      "bild": "19-B7.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B8",
+      "titel": "Ein Angebot mit Haken",
+      "bild": "20-B8.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK16",
+      "titel": "Ein Bauunternehmen will Vorrang",
+      "bild": "21-LK16.png",
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK17",
+      "titel": "Prospektpreise vor der Kasse",
+      "bild": "22-LK17.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK18",
+      "titel": "Der Verbundbeirat verlangt Antworten",
+      "bild": "23-LK18.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK19",
+      "titel": "Rücksicherung im Ausweich-Rack",
+      "bild": "24-LK19.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK20",
+      "titel": "Wer kassiert zuerst?",
+      "bild": "25-LK20.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK21",
+      "titel": "Nordkanal berichtet",
+      "bild": "26-LK21.png",
+      "bildGeladen": true,
+      "sollTon": "lk21-nordkanal-nachrichten.mp3",
+      "ton": "lk21-nordkanal-nachrichten.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK22",
+      "titel": "Die Kassen laufen wieder",
+      "bild": "27-LK22.png",
+      "bildGeladen": true,
+      "sollTon": "lk22-kasse-startet.mp3",
+      "ton": "lk22-kasse-startet.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK23",
+      "titel": "Die Datenlücke",
+      "bild": "28-LK23.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK24",
+      "titel": "Der Versicherer ist da",
+      "bild": "29-LK24.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK25",
+      "titel": "Der große Saisonsamstag",
+      "bild": "30-LK25.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK26",
+      "titel": "Die Brandursache",
+      "bild": "31-LK26.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK27",
+      "titel": "Stabiler Notbetrieb",
+      "bild": "32-LK27.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK28",
+      "titel": "Zurück ins eigene Rechenzentrum?",
+      "bild": "33-LK28.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    }
+  ]
+}

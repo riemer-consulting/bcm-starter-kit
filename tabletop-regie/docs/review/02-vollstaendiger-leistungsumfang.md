@@ -23,28 +23,28 @@ Alle Bildschirmfotos stammen aus den Testläufen dieser Runde (`screenshots/`), 
 
 ### 3.1 Vorbereitung durch die Übungsleitung (Organisation)
 
-1. Startseite öffnen (`screenshots/waterkant/persona-00-startseite.png`) → **Setup**.
-2. Szenario wählen; die Drehbuchprüfung erscheint direkt darunter (`persona-01-setup-oben.png`).
+1. Startseite öffnen (`screenshots/waterkant/persona-00-startseite.jpg`) → **Setup**.
+2. Szenario wählen; die Drehbuchprüfung erscheint direkt darunter (`persona-01-setup-oben.jpg`).
 3. Dauer wählen → „Passende Rollen vorschlagen“; Personen eintragen oder importieren; bei mehr Personen als Rollen Teams bilden.
 4. SMTP eintragen und Testmail senden; bei Bedarf Testmodus (alle Mails an eine Dummy-Adresse).
-5. Zeitmodus „Zieldauer“, Schwerpunkt, Schwierigkeit; die Vorschau zeigt Kartenzahl, entfallene Karten und Umleitungen an Ersatzrollen (`persona-02-setup-ganz.png`).
+5. Zeitmodus „Zieldauer“, Schwerpunkt, Schwierigkeit; die Vorschau zeigt Kartenzahl, entfallene Karten und Umleitungen an Ersatzrollen (`persona-02-setup-ganz.jpg`).
 6. „Übung vorbereiten“ verschickt Begrüßung und Rollenbriefing. Optional: Vorlage herunterladen (ohne SMTP-Passwort).
 
 ### 3.2 Moderation während der Übung
 
-1. **Moderation** auf dem eigenen Bildschirm öffnen – nie teilen (`persona-04-moderation-oben.png`). Bühne über „Bühne öffnen“ auf Beamer/zweiten Bildschirm.
-2. „Jetzt beginnt die Krise“ → 30 Sekunden Countdown (`screenshots/*/01-buehne-countdown.png`).
+1. **Moderation** auf dem eigenen Bildschirm öffnen – nie teilen (`persona-04-moderation-oben.jpg`). Bühne über „Bühne öffnen“ auf Beamer/zweiten Bildschirm.
+2. „Jetzt beginnt die Krise“ → 30 Sekunden Countdown (`screenshots/*/01-buehne-countdown.jpg`).
 3. Je Lage: Text, Fragen, Schwerpunktfrage, zuständige Rollen, Moderationshinweis, Bewertungshinweise; bei Telefon-/Funk-Karten Sprechertext und Gesprächsleitfaden für das Live-Gespräch.
 4. Entscheidung des Tisches unter „Entscheidungen mit Folgen“ festhalten; spätere Lagen und die Rechnung passen sich an.
-5. Überraschungen auslösen, wenn es passt; die Moderation sieht vorher, ob die Karte schon passt („wartet auf …“) und ob die nötige Rolle besetzt ist (`moderation-B7-unterbrechung.png`).
+5. Überraschungen auslösen, wenn es passt; die Moderation sieht vorher, ob die Karte schon passt („wartet auf …“) und ob die nötige Rolle besetzt ist (`moderation-B7-unterbrechung.jpg`).
 6. Bei Bedarf Ton aus, Pause, Zeitsprung, Karte manuell auslösen; fehlgeschlagene Mails stehen rot im Log.
-7. „Abschluss“ starten und Schritt für Schritt durch Nacharbeiten, Rechnung, Bilanz und Fazit führen (`abschluss-*.png`, `moderation-03-abschluss.png`).
+7. „Abschluss“ starten und Schritt für Schritt durch Nacharbeiten, Rechnung, Bilanz und Fazit führen (`abschluss-*.jpg`, `moderation-03-abschluss.jpg`).
 
 ### 3.3 Teilnehmende mit Rolle (Krisenstab)
 
 1. Vorab: Mail mit Begrüßung und Spielregeln, Mail mit der eigenen Rolle.
 2. In der Übung: Bühne lesen, bei „am Zug“ auf dem Spielbrett Stellung nehmen, vertrauliche Karten im eigenen Postfach lesen und selbst entscheiden, ob und wie sie die Information einbringen.
-3. Bei einer Unterbrechung (B7) den Tisch verlassen; die Stellvertretung übernimmt (`19-B7.png` bei Waterkant, `B7` bei NordTech).
+3. Bei einer Unterbrechung (B7) den Tisch verlassen; die Stellvertretung übernimmt (`19-B7.jpg` bei Waterkant, `B7` bei NordTech).
 4. Nach der Übung: Debriefing, Urkunde.
 
 ### 3.4 Teilnehmende ohne feste Rolle (Beobachtung)
@@ -62,4 +62,4 @@ Sieht ausschließlich öffentliche Inhalte: Unternehmen vor dem Start, Countdown
 
 ## 4. Ablaufseite für Teilnehmende
 
-`ablauf.html` zeigt Begrüßung, Regeln und nur bereits gezeigte Lagen – keine vertraulichen Inhalte, keine künftigen Karten (`persona-03-ablaufseite.png`). Sie ist wie alle Seiten standardmäßig nur auf dem Rechner der Moderation erreichbar.
+`ablauf.html` zeigt Begrüßung, Regeln und nur bereits gezeigte Lagen – keine vertraulichen Inhalte, keine künftigen Karten (`persona-03-ablaufseite.jpg`). Sie ist wie alle Seiten standardmäßig nur auf dem Rechner der Moderation erreichbar.

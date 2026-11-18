@@ -1,0 +1,147 @@
+{
+  "szenario": "scenario.waterkant.json",
+  "minuten": 90,
+  "zeitpunkt": "2026-11-18T16:37:08.730Z",
+  "ergebnisse": [
+    {
+      "id": "M1",
+      "name": "Begrüßung und Rollenbriefing je Person genau einmal",
+      "ok": true,
+      "erwartet": "9 Personen: je 1 Begrüßung, je 1 Briefing",
+      "beobachtet": "Begrüßungen 9, Briefings 9, Personen 9"
+    },
+    {
+      "id": "N5",
+      "name": "Öffentliche Überraschung vor laufender Lage",
+      "ok": true,
+      "erwartet": "abgelehnt mit verständlicher Meldung; nichts auf der Bühne",
+      "beobachtet": "vor Start: HTTP 400 „Diese Karte passt erst nach LK14.“; im Countdown: HTTP 400"
+    },
+    {
+      "id": "N5",
+      "name": "Überraschung B1 vor ihrer Lage LK15",
+      "ok": true,
+      "erwartet": "abgelehnt",
+      "beobachtet": "HTTP 400 „Diese Karte passt erst nach LK15.“"
+    },
+    {
+      "id": "N7",
+      "name": "Timer-Pause",
+      "ok": true,
+      "erwartet": "Zeit steht während der Pause und läuft danach weiter",
+      "beobachtet": "vor Pause 0 Min., nach 4 s Pause 0 Min., 2,5 s nach Fortsetzen 0.1 Min."
+    },
+    {
+      "id": "N8",
+      "name": "Entscheidung W1 geändert (herunterfahren → weiterlaufen)",
+      "ok": true,
+      "erwartet": "Posten der Rechnung folgen der neuen Entscheidung; Folgen der alten Option entfallen",
+      "beobachtet": "Posten vorher (Option 1): preisuebertragung; danach aktiv: datenbankreparatur; Bühne vorher Lage LK03"
+    },
+    {
+      "id": "N9",
+      "name": "Doppelauslösung: SK01 dreimal gleichzeitig",
+      "ok": true,
+      "erwartet": "genau 1 Mail(s) (eine je Person der Rolle)",
+      "beobachtet": "1 Mail(s)"
+    },
+    {
+      "id": "N9",
+      "name": "Doppelauslösung: öffentliche Überraschung B5 zweimal",
+      "ok": true,
+      "erwartet": "erste angenommen, zweite abgelehnt",
+      "beobachtet": "HTTP 200, dann HTTP 400 „Diese Karte wurde schon ausgelöst.“"
+    },
+    {
+      "id": "N6",
+      "name": "Überraschung B7 braucht leiter-it",
+      "ok": true,
+      "erwartet": "Rolle besetzt → angenommen",
+      "beobachtet": "Rolle besetzt: HTTP 200 "
+    },
+    {
+      "id": "M2",
+      "name": "Jede ausgelöste vertrauliche Karte genau einmal bei den richtigen Personen",
+      "ok": true,
+      "erwartet": "alle Empfänger der Rolle (inkl. Team), niemand sonst, keine Doppelung",
+      "beobachtet": "19 Karten, 22 Mails, Abweichungen: keine"
+    },
+    {
+      "id": "M3",
+      "name": "Folgekarten der gewählten Entscheidungen",
+      "ok": true,
+      "erwartet": "Folgekarte kommt, sobald ihre Lage gespielt ist",
+      "beobachtet": "SK41 bei LK15: Lage gespielt, zugestellt; SK42 bei LK14: Lage gespielt, zugestellt; SK45 bei LK25: Lage nicht gespielt, nicht zugestellt; SK44 bei LK22: Lage gespielt, zugestellt"
+    },
+    {
+      "id": "M4",
+      "name": "Private Überraschung per Mail, öffentliche nur auf der Bühne",
+      "ok": true,
+      "erwartet": "B1 per Mail an leiter-it; B5 auf der Bühne, keine Mail",
+      "beobachtet": "B1: person2@example.com; B5: Mails 0, Bühne zeigt Ereignis"
+    },
+    {
+      "id": "M5",
+      "name": "Ersatzrolle (Rolle facility-management bewusst nicht besetzt)",
+      "ok": true,
+      "erwartet": "Karten der freien Rolle gehen an die Ersatzrolle, mit Hinweis im Text",
+      "beobachtet": "6 Karte(n) an Ersatzrolle (SK04→leiter-arbeitssicherheit, SK08→leiter-it, SK35→leiter-it, SK13→leiter-arbeitssicherheit, SK18→leiter-finanzen-cfo, SK24→leiterin-kommunikation-pr), davon mit Hinweis: 6"
+    },
+    {
+      "id": "V1",
+      "name": "Keine vertraulichen Inhalte in Bühnen- und Ablaufdaten",
+      "ok": true,
+      "erwartet": "kein Text vertraulicher Karten, Moderationshinweise, Gesprächsleitfäden, privater Überraschungen; keine Mailadressen",
+      "beobachtet": "150 Texte geprüft; Treffer: keine; Adressen: 0"
+    },
+    {
+      "id": "N1",
+      "name": "Mailversand schlägt fehl (SMTP nicht erreichbar)",
+      "ok": true,
+      "erwartet": "Lauf geht weiter; Fehler im Moderations-Log je Person; Karte als ausgelöst mit Fehlerstatus vermerkt; keine erneute automatische Zustellung",
+      "beobachtet": "HTTP 200; Status running; Log-Einträge „fehlgeschlagen“: 1; Ergebnis je Person: Fehler; Hinweis: kein Knopf für erneuten Versand vorhanden – Moderation muss die Karte vorlesen oder manuell weitergeben"
+    },
+    {
+      "id": "N2",
+      "name": "Server-Neustart mitten im Lauf",
+      "ok": true,
+      "erwartet": "Lauf, Entscheidungen, ausgelöste Karten und aktuelle Lage bleiben erhalten; keine Karte wird doppelt verschickt",
+      "beobachtet": "Status running→running; Karten 20→20; Lage LK22→LK22; Zeit 72.1→72.1 Min. (die Ausfallzeit zählt als Übungszeit); Stummschaltung danach: aus"
+    },
+    {
+      "id": "N2",
+      "name": "Nach Neustart keine Doppelzustellung",
+      "ok": true,
+      "erwartet": "jede Karte je Person höchstens einmal",
+      "beobachtet": "0 doppelte Zustellungen"
+    },
+    {
+      "id": "R1",
+      "name": "Rechnung im Abschluss",
+      "ok": true,
+      "erwartet": "Brutto 3751000 € = Grundschaden 3176000 € + Posten der gewählten Optionen 575000 €; Erstattung 1600000 € (Modellannahme); beim Unternehmen 2151000 €",
+      "beobachtet": "Brutto 3751000 €, Erstattung 1600000 €, beim Unternehmen 2151000 €"
+    },
+    {
+      "id": "P1",
+      "name": "Übungsprotokoll (Export)",
+      "ok": true,
+      "erwartet": "Entscheidungen mit Wortlaut, Abschnitt Überraschungen, keine Namen oder Adressen, kein Passwort",
+      "beobachtet": "14607 Zeichen; Entscheidungen enthalten: 5/5; Namen/Adressen: 0"
+    },
+    {
+      "id": "N10",
+      "name": "Fehlende Mediendatei",
+      "ok": true,
+      "erwartet": "Prüfung meldet die fehlende Datei als Fehler, bevor geübt wird; Server liefert 404 statt Absturz",
+      "beobachtet": "Prüfung: „FEHLER  Karte LK01 (Bild): Datei /media/gibt-es-nicht.png fehlt.“; HTTP 404"
+    },
+    {
+      "id": "N6",
+      "name": "Überraschung B7, Pflichtrolle leiter-it nicht besetzt",
+      "ok": true,
+      "erwartet": "abgelehnt mit Begründung; Moderation sieht vorab, warum die Karte nicht passt",
+      "beobachtet": "HTTP 400 „Diese Karte setzt voraus, dass IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) besetzt ist.“; Anzeige in der Moderation: [\"nur wenn IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) besetzt ist\"]"
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+{
+  "szenario": "scenario.nordtech.json",
+  "zeitpunkt": "2026-11-18T16:54:38.259Z",
+  "ergebnisse": [
+    {
+      "id": "B",
+      "name": "Unterbrechung B7 (Geschäftsführung (CEO), Krisenstabsleitung, 5 Min.)",
+      "ok": true,
+      "erwartet": "Bühne zeigt die Unterbrechung mit Restzeit; Moderation sieht Rolle und Rückkehr",
+      "beobachtet": "Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja"
+    },
+    {
+      "id": "G",
+      "name": "Generalprobe: 26 Lagen und 3 öffentliche Überraschungen",
+      "ok": true,
+      "erwartet": "jedes Bild geladen; jeder vorgesehene Ton gestartet; Übungshinweis sichtbar, wo vorgesehen",
+      "beobachtet": "29 Bühnenzustände; Abweichungen: keine"
+    },
+    {
+      "id": "N3",
+      "name": "Stummschalten mitten im Ton (LK10)",
+      "ok": true,
+      "erwartet": "Kartenton stoppt sofort (≤ 3 s); nach Aufheben startet er nicht ungefragt neu, sondern über „Ton erneut abspielen“ (Hintergrundton gibt es nur vor der Krise und in den Vorboten)",
+      "beobachtet": "vorher: läuft lk10-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus"
+    },
+    {
+      "id": "N3",
+      "name": "Ton erneut abspielen nach Stummschaltung",
+      "ok": true,
+      "erwartet": "Kartenton startet von vorn",
+      "beobachtet": "Kartenton läuft (lk10-nordkanal-nachrichten.mp3, 1.9 s)"
+    },
+    {
+      "id": "N4",
+      "name": "Zeitsprung mitten im Ton (LK10 → LK11)",
+      "ok": true,
+      "erwartet": "alter Ton endet; neue Lage ohne eigenen Ton bleibt still",
+      "beobachtet": "danach: Kartenton aus; Hintergrund aus"
+    },
+    {
+      "id": "N2",
+      "name": "Bühne neu laden mitten im Lauf",
+      "ok": true,
+      "erwartet": "Bühne zeigt sofort wieder die aktuelle Lage; Ton braucht einen Klick (Browserregel)",
+      "beobachtet": "Ton-Freigabe angezeigt: ja; aktuelle Lage „Pharmakunde eskaliert“ sichtbar: ja; nach Klick Hintergrund aus"
+    },
+    {
+      "id": "F",
+      "name": "Abschluss auf der Bühne bis zum Fazit",
+      "ok": true,
+      "erwartet": "Nacharbeiten, Rechnung, Bilanz, Einordnung und Fazit erscheinen nacheinander",
+      "beobachtet": "6 Bildschirmfotos, letzte Phase: fazit"
+    },
+    {
+      "id": "M",
+      "name": "Keine Browserfehler in Bühne und Moderation",
+      "ok": true,
+      "erwartet": "keine JavaScript-Fehler",
+      "beobachtet": "keine"
+    }
+  ],
+  "generalprobe": [
+    {
+      "id": "LK18",
+      "titel": "Anmeldung hakt",
+      "bild": "02-LK18.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK19",
+      "titel": "Maschine 4 verhält sich seltsam",
+      "bild": "03-LK19.png",
+      "bildGeladen": true,
+      "sollTon": "lk19-fraeslinie-stoerung.mp3",
+      "ton": "lk19-fraeslinie-stoerung.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK20",
+      "titel": "Keine Aufträge mehr",
+      "bild": "04-LK20.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK01",
+      "titel": "Cyberangriff",
+      "bild": "05-LK01.png",
+      "bildGeladen": true,
+      "sollTon": "lk01-stille-gemurmel.mp3",
+      "ton": "lk01-stille-gemurmel.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK16",
+      "titel": "OT-Trennung",
+      "bild": "06-LK16.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK02",
+      "titel": "Produktion stoppt",
+      "bild": "07-LK02.png",
+      "bildGeladen": true,
+      "sollTon": "lk02-produktion-faehrt-herunter.mp3",
+      "ton": "lk02-produktion-faehrt-herunter.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK22",
+      "titel": "Kommunikation ohne IT",
+      "bild": "08-LK22.png",
+      "bildGeladen": true,
+      "sollTon": "lk22-funk-abgebrochen.mp3",
+      "ton": "lk22-funk-abgebrochen.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B6",
+      "titel": "Zwei widersprüchliche Anweisungen",
+      "bild": "09-B6.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": "b6-zwei-durchsagen.mp3",
+      "ton": "b6-zwei-durchsagen.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK03",
+      "titel": "LinkedIn-Beitrag",
+      "bild": "10-LK03.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK04",
+      "titel": "Nordkanal-Anfrage",
+      "bild": "11-LK04.png",
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK23",
+      "titel": "Wer darf ins Werk?",
+      "bild": "12-LK23.png",
+      "bildGeladen": true,
+      "sollTon": "funk-ruf.mp3",
+      "ton": "funk-ruf.mp3 (bereits zu Ende)",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK05",
+      "titel": "Schlüsselperson fällt aus",
+      "bild": "13-LK05.png",
+      "bildGeladen": true,
+      "sollTon": "lk05-it-bereitschaft.mp3",
+      "ton": "lk05-it-bereitschaft.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK06",
+      "titel": "Kunde eskaliert",
+      "bild": "14-LK06.png",
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK07",
+      "titel": "Datenschutz",
+      "bild": "15-LK07.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK08",
+      "titel": "Positive Entwicklung",
+      "bild": "16-LK08.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK09",
+      "titel": "Backups gefunden",
+      "bild": "17-LK09.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK24",
+      "titel": "Wer bekommt das erste System?",
+      "bild": "18-LK24.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK17",
+      "titel": "Beirat fordert Lagebericht",
+      "bild": "19-LK17.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B7",
+      "titel": "Die Krisenstabsleitung ist nicht erreichbar",
+      "bild": "20-B7.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": "telefon-klingeln.mp3",
+      "ton": "telefon-klingeln.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK10",
+      "titel": "Nordkanal-Sonderbericht",
+      "bild": "21-LK10.png",
+      "bildGeladen": true,
+      "sollTon": "lk10-nordkanal-nachrichten.mp3",
+      "ton": "lk10-nordkanal-nachrichten.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK11",
+      "titel": "Pharmakunde eskaliert",
+      "bild": "22-LK11.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK12",
+      "titel": "Teilweiser Wiederanlauf",
+      "bild": "23-LK12.png",
+      "bildGeladen": true,
+      "sollTon": "lk12-anlage-faehrt-hoch.mp3",
+      "ton": "lk12-anlage-faehrt-hoch.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK13",
+      "titel": "Cyberversicherung",
+      "bild": "24-LK13.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK21",
+      "titel": "Chargenfreigabe",
+      "bild": "25-LK21.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK14",
+      "titel": "ERP-Testbetrieb",
+      "bild": "26-LK14.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "B8",
+      "titel": "Ein vermeintlicher Erfolg",
+      "bild": "27-B8.png",
+      "ausgeloest": true,
+      "bildGeladen": true,
+      "sollTon": "b8-erp-test-meldung.mp3",
+      "ton": "b8-erp-test-meldung.mp3",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK25",
+      "titel": "Zwei Listen, zwei Wahrheiten",
+      "bild": "28-LK25.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK15",
+      "titel": "Wiederanlauf",
+      "bild": "29-LK15.png",
+      "bildGeladen": true,
+      "sollTon": null,
+      "ton": "–",
+      "uebungshinweis": null
+    },
+    {
+      "id": "LK26",
+      "titel": "Die Menschen sind am Limit",
+      "bild": "30-LK26.png",
+      "bildGeladen": true,
+      "sollTon": "lk26-schichtleitung-nachricht.mp3",
+      "ton": "lk26-schichtleitung-nachricht.mp3",
+      "uebungshinweis": null
+    }
+  ]
+}

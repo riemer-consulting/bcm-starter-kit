@@ -1,0 +1,1263 @@
+{
+ "paket": "BCM-FINAL-REVIEW-NORDTECH-WATERKANT",
+ "erstellt": "2026-11-18T17:01:36.238Z",
+ "commit": "07b0fb2186821bece4dda175917ea2b2a24cde5b",
+ "codestandEingecheckt": true,
+ "hinweis": "Alle Inhalte fiktiv. Keine Passwörter, Tokens oder realen Adressen; Testadressen enden auf @example.com.",
+ "dateien": [
+  {
+   "pfad": "02-vollstaendiger-leistungsumfang.md",
+   "zweck": "Leistungsumfang und Nutzerabläufe je Rolle",
+   "sha256": "61d87b35a1555770837425bffb00a515cb41dd960d6605076cdb4173c6236eda",
+   "bytes": 6467
+  },
+  {
+   "pfad": "03-architektur-und-datenfluesse.md",
+   "zweck": "Architektur, Datenmodell, Datenflüsse, Sicherheit",
+   "sha256": "dfe8b7baa7cdf81883672b063bf7a9ba46e903f5e767cb6d57efab94c2d1d14b",
+   "bytes": 54818
+  },
+  {
+   "pfad": "04-nordtech-vollstaendiges-szenario.md",
+   "zweck": "NordTech vollständig (eingefroren)",
+   "sha256": "01331d267ec90e53607951972e7f2a0738aa8d8f8379ada40ba01af268277485",
+   "bytes": 182690
+  },
+  {
+   "pfad": "05-waterkant-vollstaendiges-szenario.md",
+   "zweck": "Waterkant vollständig mit Bestandsanalyse",
+   "sha256": "207862be4d0a3747f38bfb1568512ea0a0b10fa5e2f422b99e4f61d780886bad",
+   "bytes": 193604
+  },
+  {
+   "pfad": "06-szenariovergleich.md",
+   "zweck": "Vergleich beider Szenarien",
+   "sha256": "4a52dc61faab6ca4b85c9b588f09a3af1723955b0280344b287c8bc13d67588b",
+   "bytes": 3293
+  },
+  {
+   "pfad": "07-funktions-und-testmatrix.md",
+   "zweck": "Funktionskatalog mit Umsetzungs- und Teststatus",
+   "sha256": "fb2f3095e721537a686280f3f92575ad9a552306b00f1ecdd7d7b848cad7487f",
+   "bytes": 54449
+  },
+  {
+   "pfad": "08-medien-und-audio.md",
+   "zweck": "Medien, Töne, Sprechertexte, Rechte",
+   "sha256": "539a0f5e2d49630f94e2156ddff0c5d443d5ba20d42dccec32a350e6f64953f4",
+   "bytes": 22749
+  },
+  {
+   "pfad": "09-alle-spielverlaeufe.md",
+   "zweck": "Durchgespielte Verläufe beider Szenarien",
+   "sha256": "925355ab71d75e389ef6bc4783063a5a5343e07528f3099b869bf750a19fc447",
+   "bytes": 318822
+  },
+  {
+   "pfad": "10-schaeden-sla-und-versicherungen.md",
+   "zweck": "Rechnungen, Annahmen, SLA/RTO/RPO, Versicherung",
+   "sha256": "463a11f4056e128e50152037f99fafb68b05eb392b95acb4571c76f0ee04b52a",
+   "bytes": 16721
+  },
+  {
+   "pfad": "12-release-readiness.md",
+   "zweck": "Abnahmekriterien und Freigabestand",
+   "sha256": "409a1ce0ea0004325bfc54f17477aeca4787644871184feabb440195cc1165c2",
+   "bytes": 4299
+  },
+  {
+   "pfad": "ablaufdiagramme/architektur-und-datenfluss.md",
+   "zweck": "Ablaufdiagramm (Mermaid)",
+   "sha256": "b5e126428d267336779d16164c25964b91fb7c24b9a8ead6b279c1589b7cbd5c",
+   "bytes": 3074
+  },
+  {
+   "pfad": "ablaufdiagramme/nordtech-ablauf.md",
+   "zweck": "Ablaufdiagramm (Mermaid)",
+   "sha256": "e57289afc1e96abcb4eb1f559ea9357f177de4e07c4f85765585a1676a28351c",
+   "bytes": 2881
+  },
+  {
+   "pfad": "ablaufdiagramme/waterkant-ablauf.md",
+   "zweck": "Ablaufdiagramm (Mermaid)",
+   "sha256": "465bb3483a359e69eaa76c426f3de6904bf27eaa091536b36babae875d5e66ae",
+   "bytes": 3717
+  },
+  {
+   "pfad": "exportierte-szenariodaten/archiv-scenario.waterkant-lagerbrand-v1.json",
+   "zweck": "Szenariodaten",
+   "sha256": "87f7cb056f8c44b6627cac861e233dd75a5c04658281e13459ec7bc49a090269",
+   "bytes": 58948
+  },
+  {
+   "pfad": "exportierte-szenariodaten/nordtech-drehbuch.md",
+   "zweck": "Szenariodaten",
+   "sha256": "4eee1474f7a571a64b836fabc886b029c840790ac6015d87a914498058c4e716",
+   "bytes": 144717
+  },
+  {
+   "pfad": "exportierte-szenariodaten/scenario.nordtech.json",
+   "zweck": "Szenariodaten",
+   "sha256": "7b5c26437379aab9132d930ec9ab982f4b5508a3c6ed003c25cd52ca9eff9d72",
+   "bytes": 139151
+  },
+  {
+   "pfad": "exportierte-szenariodaten/scenario.waterkant.json",
+   "zweck": "Szenariodaten",
+   "sha256": "651b6617c3d44dd9c39c6ec4c4da3bc0a1b17784232881ef32b5046807fd49fe",
+   "bytes": 131219
+  },
+  {
+   "pfad": "exportierte-szenariodaten/waterkant-drehbuch.md",
+   "zweck": "Szenariodaten",
+   "sha256": "ad0392efc4094675e607bd3b448c2e049dbc8589cfbf237cefa05514ae1e2254",
+   "bytes": 146414
+  },
+  {
+   "pfad": "testberichte/buehne-nordtech.json",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "2434b2e2c3985d090c3bb886bc6c1e3a8f41574bacd3cd5cfc698e19aa9f3103",
+   "bytes": 9004
+  },
+  {
+   "pfad": "testberichte/buehne-waterkant.json",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "f5b95bce92b4a538cd936e66e99b9f4ff70b2fdfae95dd42647e26690050ae53",
+   "bytes": 9483
+  },
+  {
+   "pfad": "testberichte/drehbuchpruefung.txt",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "d567d2c1375a475f147b3973772ef89ef8f99dd0b394a6c40a7afccdb2e337b5",
+   "bytes": 950
+  },
+  {
+   "pfad": "testberichte/lauf-nordtech.json",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "d2e0b8db7a4906c7d3f98cda6cc9f08a2c0e3f5c78a07864043de60665517526",
+   "bytes": 6798
+  },
+  {
+   "pfad": "testberichte/lauf-waterkant.json",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "2a19b9bd8fc5b3c638884520a73471dc3a3e1f6f7f57eea6d79a52beecfb70a3",
+   "bytes": 6468
+  },
+  {
+   "pfad": "testberichte/sicherheit.json",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "72fd7762d5097b77e55d5bdb7560b9407b1e4b3d0054979c369cafee0c316c55",
+   "bytes": 1295
+  },
+  {
+   "pfad": "testberichte/testbericht.md",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "c99fd85750de79dbc7f36779b6df03f093ec608effbd04f7cac3adc225baef37",
+   "bytes": 23380
+  },
+  {
+   "pfad": "testberichte/uebungsprotokoll-beispiel-nordtech.md",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "b0ff528ee65e679453e7927621067529ad7029a3a4b3b87cccf280643feb61bb",
+   "bytes": 14258
+  },
+  {
+   "pfad": "testberichte/uebungsprotokoll-beispiel-waterkant.md",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "9bf8a6c2eefb8304c4af8bd371322c8ec0653277bf9b65c1acdfa521fafea32e",
+   "bytes": 14872
+  },
+  {
+   "pfad": "testberichte/varianten-nordtech.md",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "734bd6328d555996e9e730db703688ad8102a827af353b474ca4b6558be28c06",
+   "bytes": 35238
+  },
+  {
+   "pfad": "testberichte/varianten-waterkant.md",
+   "zweck": "Testbericht / Rohdaten",
+   "sha256": "e6cf0adc2934f0faf16f89145929a83996b1a4f84879e1dd165b5c4cddceaa27",
+   "bytes": 41630
+  },
+  {
+   "pfad": "screenshots/nordtech/00-buehne-vor-start.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "4f66235115002ddee4ccb98efc7c1337365de0df2a89c4fa327f71f790811499",
+   "bytes": 635522
+  },
+  {
+   "pfad": "screenshots/nordtech/01-buehne-countdown.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "585597169fd3c4967123eb205f15abd9768be64c63485a4e85f061e078c23aa5",
+   "bytes": 638247
+  },
+  {
+   "pfad": "screenshots/nordtech/02-LK18.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "83559c475abc8a61befce7ca750de4dc28869ef013f31d267cc7951cbf6f1a45",
+   "bytes": 202648
+  },
+  {
+   "pfad": "screenshots/nordtech/03-LK19.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d3a8381322e95572078bcb07ee5e8323bd57b022efc985261f510847abdb1bba",
+   "bytes": 225981
+  },
+  {
+   "pfad": "screenshots/nordtech/04-LK20.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d78b333775415d62c4663771be049e147f4dd2a083cb27d3eb159abb2a2e5898",
+   "bytes": 225092
+  },
+  {
+   "pfad": "screenshots/nordtech/05-LK01.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "eeddc7733f377fb782c2ad9fe7c8f982d73a9012dd3d7f82d9094af9173abb98",
+   "bytes": 439836
+  },
+  {
+   "pfad": "screenshots/nordtech/06-LK16.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "325b690d9a920dd185758ba0efd9fb422c2a91ed639383054e70a52eabee29d8",
+   "bytes": 396335
+  },
+  {
+   "pfad": "screenshots/nordtech/07-LK02.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "beb4615ade98cf0b93e2b32c502b85d5806f143206b3d6d1c3351b8e62426490",
+   "bytes": 518084
+  },
+  {
+   "pfad": "screenshots/nordtech/08-LK22.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "4121694c8815188a531e772900800662c0ca580108764c8ec760187f5260409d",
+   "bytes": 211360
+  },
+  {
+   "pfad": "screenshots/nordtech/09-B6.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "cf63b52e87caf35711b28d02537c8ef94f942b6a520af32353442c848c876d0c",
+   "bytes": 202835
+  },
+  {
+   "pfad": "screenshots/nordtech/10-LK03.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d50539f21af7f6fb06917c08c33d1bf6cc4866a80429d6ac47d84da16f7978af",
+   "bytes": 354690
+  },
+  {
+   "pfad": "screenshots/nordtech/11-LK04.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "0f299687f8e115bec023d7857f9d7e4c21cfd1e964a21b297834b99248e704fd",
+   "bytes": 191390
+  },
+  {
+   "pfad": "screenshots/nordtech/12-LK23.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "0c9761f962d0a3611955f881a65197e8dc6ab8d622340abaaf49c37ae71f7c85",
+   "bytes": 247107
+  },
+  {
+   "pfad": "screenshots/nordtech/13-LK05.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "331f56c30781dce5db66398fc17252be156053cae005bb636c45a0d36bc8121a",
+   "bytes": 409613
+  },
+  {
+   "pfad": "screenshots/nordtech/14-LK06.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "751ad147aad7c6d588da0397778df41cc66ca524e7f8634c584069dc9f139f6e",
+   "bytes": 416664
+  },
+  {
+   "pfad": "screenshots/nordtech/15-LK07.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "cae3d7cb410aa0519ffb5c6c36521d30d444e2856d09914629ab369324467e8c",
+   "bytes": 204766
+  },
+  {
+   "pfad": "screenshots/nordtech/16-LK08.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "65ec4af7deb3eaa82dc699202371fae65f1230e0e217f0f8c9d126e67d1853bc",
+   "bytes": 190656
+  },
+  {
+   "pfad": "screenshots/nordtech/17-LK09.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "b142d94a40eaaaa560cc3de3ccc3859ee2dcb118dc77bf371de9d117153b1892",
+   "bytes": 431436
+  },
+  {
+   "pfad": "screenshots/nordtech/18-LK24.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "c7014313f011dac777666df7ff7f4603752165922cd4dab9475cca0fd4192763",
+   "bytes": 258222
+  },
+  {
+   "pfad": "screenshots/nordtech/19-LK17.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "69488386cde0c2785c57c6b273acf569e463982ee5f3e8e7713068ff23ad005d",
+   "bytes": 421613
+  },
+  {
+   "pfad": "screenshots/nordtech/20-B7.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "8bf40f0026b78a3d01c597a5f3bc3f7a913fb96660085d77204b177ba6661377",
+   "bytes": 202677
+  },
+  {
+   "pfad": "screenshots/nordtech/21-LK10.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "193cce6df64c6189fee9489cee975fbe26ff09b28ca98c71f0bd6fd7d85b9d23",
+   "bytes": 404169
+  },
+  {
+   "pfad": "screenshots/nordtech/22-LK11.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "28436c4832a0cda2c2bddf130f565184fa59b0ade3428015bad414b32822dbd2",
+   "bytes": 440302
+  },
+  {
+   "pfad": "screenshots/nordtech/23-LK12.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d41037a92161cc43cb456d544c2a87d263ed70b8b9cb8448b1e98ff926ca1168",
+   "bytes": 465697
+  },
+  {
+   "pfad": "screenshots/nordtech/24-LK13.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "3677584b60d9694baf1604d81cc446c46a77d5f8be03f8c5bf0cab5f48e5d6cc",
+   "bytes": 426608
+  },
+  {
+   "pfad": "screenshots/nordtech/25-LK21.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "608ab60cc93a69db828ab5e7ecaea21f3aaecf353917c682a0a5b8b307908fea",
+   "bytes": 215292
+  },
+  {
+   "pfad": "screenshots/nordtech/26-LK14.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "476ce616527b55da3c8413b25f7bc6c66dc8fc42ecf53c5d2cd1bbb12a004328",
+   "bytes": 424339
+  },
+  {
+   "pfad": "screenshots/nordtech/27-B8.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "e168b3463bb4f34b4b1d8d5c38448f4428ab6119b9376b4d0854bc81458323cf",
+   "bytes": 204293
+  },
+  {
+   "pfad": "screenshots/nordtech/28-LK25.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "f6c12a82eb402b5dfd095e176930df9100f07ce573938eda00f392d00df18051",
+   "bytes": 244164
+  },
+  {
+   "pfad": "screenshots/nordtech/29-LK15.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "5b2afff0390aaf9e0af3789f56e701094102421827161c15906c9dba624a9c7d",
+   "bytes": 245244
+  },
+  {
+   "pfad": "screenshots/nordtech/30-LK26.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "0e328d6a62e2e708d08e15bbb49ca3cdc748d451f90bc4382c8631d85e3d12c1",
+   "bytes": 221162
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-01-intro.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "976c6ed0a8ab43ce4be9277d12975c889bc6af0d5b82303bbe44ea5a3c22e2fb",
+   "bytes": 163069
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-02-nacharbeiten.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "02683b05da93160b9c7672ac7397b7078558b442125ad14d70c883770beb0e7d",
+   "bytes": 175458
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-03-rechnung.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "da65e1da20d8b1be35292fa4c21f1a812e6e73496ea4bbcf8907b24eb92b790d",
+   "bytes": 193297
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-04-bilanz.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "6aef103f572c80e61b228d1d3e0ccec25eceb4bc58a75fc5a65531f878df477b",
+   "bytes": 218861
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-05-aha.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "c281adc606fa5b3dd07385c652edc930135d894b1406b47c854e3d66a8b74bfa",
+   "bytes": 147756
+  },
+  {
+   "pfad": "screenshots/nordtech/abschluss-06-fazit.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "aee598e61a59ccd03979a8e3b981e270548b671d849d2e68465897dfc0e0cc6d",
+   "bytes": 123835
+  },
+  {
+   "pfad": "screenshots/nordtech/moderation-01-vor-start.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "7e3264449e18196f05d4f21c6631c80decf46141538384f4a6ba832aa8a9ad2a",
+   "bytes": 1206274
+  },
+  {
+   "pfad": "screenshots/nordtech/moderation-02-im-lauf.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "b54fd2120199d4c73865cb264ed2563082288dd975442cc38b1c84fd445ac24f",
+   "bytes": 3286528
+  },
+  {
+   "pfad": "screenshots/nordtech/moderation-03-abschluss.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "266ef5b6266be73de9bfb140d9b382b8290c5fab41aa6d58fd14adef83474722",
+   "bytes": 3289797
+  },
+  {
+   "pfad": "screenshots/nordtech/moderation-B7-unterbrechung.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "2388b8e73a10d633877c9366f6ab1eae5a0f1300b3a076ec85501fccc4cb70f7",
+   "bytes": 255008
+  },
+  {
+   "pfad": "screenshots/nordtech/n2-buehne-nach-neuladen.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "f23f87a6d3013bac97f1fbc917cc0d4a8994d754f560a2a279965a3261e721e2",
+   "bytes": 230920
+  },
+  {
+   "pfad": "media-nordtech/nordtech/nordtech-logo.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "089446a34d8c91fc67a034093aee6a0e99b0d12a2444bf96fea57780a3c6a647",
+   "bytes": 118382
+  },
+  {
+   "pfad": "media-nordtech/nordtech/nordtech-logo-light.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "d21fc6492dc472c24ac785b05a44b24a1120e8fc3ddc995ef57f1bd33638d3aa",
+   "bytes": 64360
+  },
+  {
+   "pfad": "media-nordtech/nordtech/idle-hauptsitz-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ba0721925ca75ba9433b7d2be5a768948e723d368af384612d5f73433ab89c74",
+   "bytes": 380746
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk01-loesegeld-kamera-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "f60caa6d64c2c8b47a5e609e638033e120a3cc87ca68e7d58097d44fad93ed92",
+   "bytes": 175416
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk01-stille-gemurmel.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "0db4a6afa8332072f67df849ab693673386a8adc8e2c213551b0385ac4ad038a",
+   "bytes": 69337
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk16-incident-overview-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "7a07ed38e3c5f06c659219777353bb6b7ae327ca5231f01ed2e8944b4b422068",
+   "bytes": 166444
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk02-produktion-gestoppt-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "50a3ad3e64809697708a89d4bae4654fe007b4da8ce3fcb9d639f2c3e3eeca17",
+   "bytes": 318320
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk02-produktion-faehrt-herunter.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "c422c94440eebfbad708877faf04daef5976f0f8156009fd49d8b176e01376b8",
+   "bytes": 224906
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk03-linkedin-post-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "7ced6d242f7a7320187d8864ebd29f967f0a636da276428916ea5dfe5cd0376a",
+   "bytes": 170912
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk04-nordkanal-anfrage.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "f2bff4d75f8b8f4d964cde4ae99a41999fbc87c6a5b9a22dd86d70c757d7c45c",
+   "bytes": 93972
+  },
+  {
+   "pfad": "media-nordtech/nordtech/telefon-klingeln.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ff8d5274ddab3735b016040e58cf1932f31aa6fdc06fdd38745354100bfcf728",
+   "bytes": 39123
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk05-leerer-arbeitsplatz-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "917114425f42140d836755df70d46fbe273b6e5c4975ef9793c79e1cae566ec0",
+   "bytes": 182066
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk05-it-bereitschaft.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "b9d0c0467c9f4925515648f28656402c67653c12113ce2fd7e7c341f8f769c24",
+   "bytes": 260850
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk06-kunde-eskaliert-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ea837e273580c586f2511c539f63898a20ffc0d7299fbc2eda3e7d1805c11b2c",
+   "bytes": 139264
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk07-datenschutz.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "3caf8c2ab76abf5c726086dc8b83ce8b34c1783c64368d44e4644eea4e828934",
+   "bytes": 97786
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk08-positive-entwicklung.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "8d418259476fcd14545b77d36cb2141baf7f07229eb7dd2d3183873ff24016aa",
+   "bytes": 97194
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk09-offline-backup-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "11616b82d15145c091ff1583dc484296524c792dc10775f0485bb2411c7f0faa",
+   "bytes": 171834
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk10-nordkanal-studio-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "98e7121cfc86c63076250c73d71beb1ddbc4187d7831d78b5794c14e54861aa3",
+   "bytes": 94466
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk10-nordkanal-nachrichten.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "74b652a65f23635cbd5d53dabcfde97bff91bd9493505163739cf561b84401f2",
+   "bytes": 678079
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk11-pharmakunde-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "251522e54a7aabd2a632557a4055e635237329f0adebee32a545fe182eb2ba1a",
+   "bytes": 209990
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk12-werk-sued-online-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "0436186b71003611a9d67e4ce4367b62184789c050787f3a45c9ca0e7b2c4dc1",
+   "bytes": 180770
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk12-anlage-faehrt-hoch.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "cfb699b76ea7cc47b3b8ab9aafb64a690cea46e3418dc652fec1668344523be3",
+   "bytes": 177258
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk13-cyberversicherung-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "80a3a8bd341cc502e63465e75a9fdc9ae9e1ed1a4f7324f2c4c472b43eae9986",
+   "bytes": 187270
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk14-erp-testbetrieb-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "41353da9167424b359cbf9f130c7bc7e6006743178d58eace66ddacda0389bfc",
+   "bytes": 167802
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk15-wiederanlauf.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "dd7de0a1bbf221028f72756b414ee29a0c7dadda0d6c1b3fc44a5dd13a43af03",
+   "bytes": 93554
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk17-zwischenfazit-foto.webp",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "3d44c806c2125924bc3f2df2b4bc3b8f130814907ef15f020c1d774fee1694e6",
+   "bytes": 153148
+  },
+  {
+   "pfad": "media-nordtech/nordtech/v1-anmeldung-hakt.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "29cf95429d6bd0d4aa870e210257763eece0e29976d8a0f2ab3ce180cee816df",
+   "bytes": 139139
+  },
+  {
+   "pfad": "media-nordtech/nordtech/v2-maschine-seltsam.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "fd5d5d7e3f23586bf0a08d763269e173ffd832932befe29f68d6295a2db26e92",
+   "bytes": 90655
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk19-fraeslinie-stoerung.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "b55eafbe63af44e6d23000d4c2ef06cd0b23a800e29511e36e271fff1486c443",
+   "bytes": 177258
+  },
+  {
+   "pfad": "media-nordtech/nordtech/v3-keine-auftraege.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "e408edb3cade12926f5c551909ab24ccec5edf2cafc9fd0eb84bd9b238747bc2",
+   "bytes": 84461
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk22-kommunikation-ohne-it.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "41edb7380a49e6dde141463791da4b7979ff63c979b6752545736ac1cb2a98f5",
+   "bytes": 100027
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk22-funk-abgebrochen.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "f7a903511e0e93273b2f8948755322ecb201535ea2170b8a2c755590e37917e5",
+   "bytes": 186871
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk21-chargenfreigabe.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "452c5b561a57286ee402a3734b19fd6916d9bc74163e449a1d0cadc06e05c2a9",
+   "bytes": 84428
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk23-zutritt.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "c35d06f5ec2cc11edf19ed5d6387b1a4c4bdde7d879b3a1a1fc37e67e4afb769",
+   "bytes": 99875
+  },
+  {
+   "pfad": "media-nordtech/nordtech/funk-ruf.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "b55f7997b6f3b993114d9bec07f9e8675a04de475a2a58daa7a4012c1f2c6e4a",
+   "bytes": 6522
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk24-erstes-system.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "4c0533eabab871c30f0924d0c2cbb126232c68ca855df6a30a76ee153b51ab5e",
+   "bytes": 104614
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk25-zwei-listen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "e06c313bad1248875f194de2390d81f233adbe54e26f69a6822f3a0bbe5ad78c",
+   "bytes": 99773
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk26-menschen-am-limit.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "e6a4f0a1c176f379cf2bbe761d1699ded04e962a1a500352903d508dd3cf04da",
+   "bytes": 98902
+  },
+  {
+   "pfad": "media-nordtech/nordtech/lk26-schichtleitung-nachricht.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "30a03895910c08221c6e39dc6da2d9f63997412c39745f765caaf107394d0ef6",
+   "bytes": 339844
+  },
+  {
+   "pfad": "media-nordtech/nordtech/b6-widerspruechliche-anweisungen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "eb6dbf9ccc64c077c212a2359a66c3a912c0384cfd5aa8f652e916af45063f97",
+   "bytes": 94837
+  },
+  {
+   "pfad": "media-nordtech/nordtech/b6-zwei-durchsagen.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "6e84ceb9300c50279ad8b52e328cfc741e85018016fe09d775662a51dee6f05d",
+   "bytes": 331382
+  },
+  {
+   "pfad": "media-nordtech/nordtech/b7-krisenstabsleitung-abgerufen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "e505f1de4319e2b43dbc842c5c78e5e4396b8fc31dc2b6c2943dff504cb4902d",
+   "bytes": 81082
+  },
+  {
+   "pfad": "media-nordtech/nordtech/b8-vermeintlicher-erfolg.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "7537bb65407189077b718cb900f3bb4a6c9500efd7bcec1b82c7d205ad158f9d",
+   "bytes": 103256
+  },
+  {
+   "pfad": "media-nordtech/nordtech/b8-erp-test-meldung.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "919f5885f627be9890bc9a7ef4e06693abe2d8c221d1ac7a1cded220341c74cb",
+   "bytes": 247999
+  },
+  {
+   "pfad": "media-nordtech/nordtech/ambience-maschinenraum.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "de94b5404c03fcfab347eb238bcb8a3a9019a7e85adbdf8f377c713a61067661",
+   "bytes": 151109
+  },
+  {
+   "pfad": "screenshots/waterkant/00-buehne-vor-start.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "87b60ecb3747e415a8720432c8af35ba40d16453001d63e9a0a7c413932d1c09",
+   "bytes": 225607
+  },
+  {
+   "pfad": "screenshots/waterkant/01-buehne-countdown.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "8836188a401b843702defac9cfe1855b4dcd09c4c022381a1cb7a525bc5613c6",
+   "bytes": 228417
+  },
+  {
+   "pfad": "screenshots/waterkant/02-LK01.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "8cf3b3da578cd9edfdaf5b7f13abc367c1bd51321bf84260e38abf3bb76af57f",
+   "bytes": 212888
+  },
+  {
+   "pfad": "screenshots/waterkant/03-LK02.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d82475a8ede50a97a432f7f810536b154a54389be72278462378dab7e158fdee",
+   "bytes": 209916
+  },
+  {
+   "pfad": "screenshots/waterkant/04-LK03.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "9878914d5fe2974a2784813d81477ac3818e1f70c1643d7c16edf67455790ace",
+   "bytes": 218075
+  },
+  {
+   "pfad": "screenshots/waterkant/05-LK04.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d98c803fa5ec5cbe3beef5484f23e018f8cca561bea6e5acd265ffbb5c70c132",
+   "bytes": 243715
+  },
+  {
+   "pfad": "screenshots/waterkant/06-LK05.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "6ec4a9d833358691ad6778d39a6a2f90dc9e6d565ad8a8907198a0485cc4cf09",
+   "bytes": 235752
+  },
+  {
+   "pfad": "screenshots/waterkant/07-LK06.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "f225b16c3c57f222fd2a2cdb8f72ee25f77ed5b3c4024b063b27eb99fe882f1c",
+   "bytes": 254088
+  },
+  {
+   "pfad": "screenshots/waterkant/08-LK07.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "ffa686244aa1c130c728f89c3e0a648b69927e5b45ec1149de713ff48261bccc",
+   "bytes": 250923
+  },
+  {
+   "pfad": "screenshots/waterkant/09-LK08.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "33d721f64dc3d42c5034c2ade4384a0e7e98ecb54e3a7f1bca0884b84613b21c",
+   "bytes": 243086
+  },
+  {
+   "pfad": "screenshots/waterkant/10-LK09.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "7a4f79a671d686bca8f640025775c0f47e6bac4aa27a27e6057f1d0bde908266",
+   "bytes": 241715
+  },
+  {
+   "pfad": "screenshots/waterkant/11-B6.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "3a2c6034430a5c1fcbeb2e5ddef5896f62d2fb23d055430bc4393b189554a689",
+   "bytes": 196161
+  },
+  {
+   "pfad": "screenshots/waterkant/12-LK10.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "be31f8600f4605407c804730cdb535273f9449f9ad021469652bc5678bd44fda",
+   "bytes": 244031
+  },
+  {
+   "pfad": "screenshots/waterkant/13-LK11.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "e83bd2cf3db35dc0421a9e02be52ab9e207a015f8783f80d0bc97dc60dc68dbd",
+   "bytes": 219805
+  },
+  {
+   "pfad": "screenshots/waterkant/14-LK12.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "56cddb56177a46854502eb98a3287544751895af9d874450364245480d9ce721",
+   "bytes": 234936
+  },
+  {
+   "pfad": "screenshots/waterkant/15-LK13.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "cf0c5ed560c184bc29f077818576d771d177c89de241fb51538dd0c9ddcff7c2",
+   "bytes": 258096
+  },
+  {
+   "pfad": "screenshots/waterkant/16-LK14.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "917904553fb21483844a5b742f70f951ac956eecdd72c38879a4dfc37300b4ac",
+   "bytes": 271359
+  },
+  {
+   "pfad": "screenshots/waterkant/17-B5.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "ea059cd4a99ad99dc420c1246022568bf322275cd061519cb27ca6bcbaec15e9",
+   "bytes": 202504
+  },
+  {
+   "pfad": "screenshots/waterkant/18-LK15.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "64ebf677c4544711680914a885fc73767b40c8b3b22cd7a32d779bab90038d04",
+   "bytes": 259844
+  },
+  {
+   "pfad": "screenshots/waterkant/19-B7.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "fc4af1562f4e451e1c1d3e9964fcea80582a202f93ff9b8ff32259b569b1b744",
+   "bytes": 199883
+  },
+  {
+   "pfad": "screenshots/waterkant/20-B8.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "ba6dc8594fe9cec0c361282396f08c69b517283a895ea8d223e07b7f5df084e1",
+   "bytes": 197082
+  },
+  {
+   "pfad": "screenshots/waterkant/21-LK16.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "b60a55af89e7b1b3b85c2ffb31277363fab3c582471847e3773794dd1c22d420",
+   "bytes": 234363
+  },
+  {
+   "pfad": "screenshots/waterkant/22-LK17.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "81d8e6ded39d5807dc93d68590e2b8e8d3c3800577ece0b14a900a7fe613f8a5",
+   "bytes": 235421
+  },
+  {
+   "pfad": "screenshots/waterkant/23-LK18.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "00a2996cb5f5d80db9ad1514a19dab4f7fc0c1adb7303449f8b88204a0427668",
+   "bytes": 244064
+  },
+  {
+   "pfad": "screenshots/waterkant/24-LK19.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "c63a6dad2111adf3fb51ce084839901184e62882689569ab3d40094c68a4e350",
+   "bytes": 251594
+  },
+  {
+   "pfad": "screenshots/waterkant/25-LK20.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "68a42ed2ff32112edee930114d5ef06378d28b7f2723cb9ef834f3fb32483967",
+   "bytes": 243179
+  },
+  {
+   "pfad": "screenshots/waterkant/26-LK21.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "6d178ad5526ca821df2e22241a85d35205e192925445e6485593b55a515f88fa",
+   "bytes": 196192
+  },
+  {
+   "pfad": "screenshots/waterkant/27-LK22.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "d76d93edcc60d998cc5f6747e0689259b4cf245aab0ff32618b7022a01e4b0f4",
+   "bytes": 228460
+  },
+  {
+   "pfad": "screenshots/waterkant/28-LK23.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "c30ef19d81a4438adf7854847612e48194f646b6413f6ab0b7418a34dcb116dd",
+   "bytes": 228582
+  },
+  {
+   "pfad": "screenshots/waterkant/29-LK24.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "f60b67c75f62233984a9fa040703742cc1dca4762794b87793f745aff1dc9e9b",
+   "bytes": 229555
+  },
+  {
+   "pfad": "screenshots/waterkant/30-LK25.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "15e7ff4ce19263c70f8a826219091acdc2758a7dc577e91853bd227ce02e3bcb",
+   "bytes": 237697
+  },
+  {
+   "pfad": "screenshots/waterkant/31-LK26.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "6ddebac3cf9bde5640aa50222eec02b3fccc698095153c72b2881c93543e3cd1",
+   "bytes": 243923
+  },
+  {
+   "pfad": "screenshots/waterkant/32-LK27.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "e3902193b8bd959eb172b9e97114bde5ca6e5c5276f16c7586b3dec31d29115e",
+   "bytes": 235024
+  },
+  {
+   "pfad": "screenshots/waterkant/33-LK28.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "b52390ea0431788035a62160cb190b0b54fa7c822ad248c9c29ab42ee3e3ee54",
+   "bytes": 240985
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-01-intro.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "18d7f13b6192b21df7f65c00b5734f33bcd7d4997a96d93e919920e08a206d49",
+   "bytes": 126857
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-02-nacharbeiten.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "deaa06b40327503e6399252c139dc533b768527350033dd93aaea6d0393dbb90",
+   "bytes": 154083
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-03-rechnung.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "0fe9f0b4777dbba3e0d7ec93a05068d2bd6b00775895c6a5b6a550a767a51942",
+   "bytes": 189906
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-04-bilanz.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "ca5a49090e229f27fb65ab37d22523009dc74f8255bc4995740331a69a500bf7",
+   "bytes": 222962
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-05-aha.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "98b703aae320e7cfc716203b682966d6415e5f722477106e84d845405e21224b",
+   "bytes": 135793
+  },
+  {
+   "pfad": "screenshots/waterkant/abschluss-06-fazit.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "9cb0c07fa33579f916028da1f58dabb3c32290a3fdb677b9439227343838150f",
+   "bytes": 144958
+  },
+  {
+   "pfad": "screenshots/waterkant/moderation-01-vor-start.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "af0ab99636ba78dfa2f6d40609ab584d7f5a1cf1125a65429975752285d72860",
+   "bytes": 1244425
+  },
+  {
+   "pfad": "screenshots/waterkant/moderation-02-im-lauf.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "bfd780aa1464992017bf68a9e4f3f8e23efae77f96cb09128c15cb75ce5c08b4",
+   "bytes": 2880549
+  },
+  {
+   "pfad": "screenshots/waterkant/moderation-03-abschluss.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "71155ddb71585091caad186e47dda2bc30d63d3465b945ad663409f94a694ea5",
+   "bytes": 2882915
+  },
+  {
+   "pfad": "screenshots/waterkant/moderation-B7-unterbrechung.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "377a11d9cc1d71eccfe165d35a83387afbcc0f7353cc78dcb9fc341a5c9d4a72",
+   "bytes": 209458
+  },
+  {
+   "pfad": "screenshots/waterkant/n2-buehne-nach-neuladen.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "1133ed02cc343c6f16d0ce1d845b71ca04812cbdebc6de82cc737767b0b772b8",
+   "bytes": 159651
+  },
+  {
+   "pfad": "screenshots/waterkant/persona-00-startseite.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "4d23a2ec067ea5f2b703479c1d910c69ff27743a5eec21b3da42752bd655933d",
+   "bytes": 55106
+  },
+  {
+   "pfad": "screenshots/waterkant/persona-01-setup-oben.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "fdb6398bda4cf9b388e9215859e2027a4778b795641796693417f602d20bb983",
+   "bytes": 149245
+  },
+  {
+   "pfad": "screenshots/waterkant/persona-02-setup-ganz.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "0d1c24438eda993d51dda503df56595b9c75888198f355ea2cc094d5b4f6d58b",
+   "bytes": 1210796
+  },
+  {
+   "pfad": "screenshots/waterkant/persona-03-ablaufseite.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "f259ee885424e4887e7379cd55ffae500dc002d3358cf19b89108d52f5081dd2",
+   "bytes": 655921
+  },
+  {
+   "pfad": "screenshots/waterkant/persona-04-moderation-oben.png",
+   "zweck": "Bildschirmfoto aus dem Browsertest",
+   "sha256": "de1be883bd218d5825c4af9d32b6f545d554337b672a633b6d76d568038fddaa",
+   "bytes": 218310
+  },
+  {
+   "pfad": "media-waterkant/waterkant/waterkant-logo.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "af770cdd78ceb0bcba9524fb1c66f8331e4cbde56e959bc6033093238f79053b",
+   "bytes": 18852
+  },
+  {
+   "pfad": "media-waterkant/waterkant/waterkant-logo-light.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "d9c834ecbf033c31d369e8aa9929e67861d85c1186be32d5fcceaa2346d09052",
+   "bytes": 19409
+  },
+  {
+   "pfad": "media-waterkant/waterkant/idle-ruhe-vor-dem-sturm.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "24c52e4c4eb6449320eae51e17feb9b028457980eabe1f68be9fbf970846884d",
+   "bytes": 72189
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk01-usv-warnung.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "e20d0ad2c0b4d96279bd9a305c642d0eda8010a942ad39d6e0d48095bcae1bdd",
+   "bytes": 76012
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk02-geruch-technikflur.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "658361a455cf98da146222b12a2a20bfcf1404ec68ca8a8995d34bdb0618ac2b",
+   "bytes": 75513
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk03-serverraum-warm.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "35b73ba3e8656b55e673c11a6fb497c729506c3077522dd6eeb94d2208743543",
+   "bytes": 73767
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk03-klimaalarm.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "2428cb0ab314f5f1aa750b2e1a50cc78c01c33bdc99774b23acdbef2e59ecbde",
+   "bytes": 97010
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk04-brandalarm.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "00b3e22388f4892a9593c0720e8e0a83b03e5128f094a66e14f85720af07cfc7",
+   "bytes": 87031
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk04-loeschanlage-durchsage.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "eca70a19bf9f40e046ed3cea016f7c8b5b499f7954780cb0d37495763d7e2af6",
+   "bytes": 302228
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk05-feuerwehr.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "7b6d80827fa17dc3a15775c7b830ef49dbb35d72a435ee33204a73dbdad46071",
+   "bytes": 83614
+  },
+  {
+   "pfad": "media-waterkant/waterkant/funk-ruf.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "b55f7997b6f3b993114d9bec07f9e8675a04de475a2a58daa7a4012c1f2c6e4a",
+   "bytes": 6522
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk06-lagebild.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "3ceb6fc9c1b65a5d3edda941471799aa66e4944eac23d038a10e47f25d92c70a",
+   "bytes": 84965
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk07-was-laeuft.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "1d03995b24e182afb85b4e727e11e2afa6113f840b8aca3b4193817464e8e35e",
+   "bytes": 77351
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk08-saisonstart.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "2fa224a509ab05ccc3384116b3f927138df26f7f4ac7a447a819176435052ca5",
+   "bytes": 79641
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk09-partnermaerkte.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ee9747a10bd5af63be4dbdacd51ba7e97a39a489a86902bce7291c729b6dc5b6",
+   "bytes": 75491
+  },
+  {
+   "pfad": "media-waterkant/waterkant/telefon-klingeln.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ff8d5274ddab3735b016040e58cf1932f31aa6fdc06fdd38745354100bfcf728",
+   "bytes": 39123
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk10-serverraum-gesperrt.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "028f37ea1f59014f22cb2b55c801354909e82366f86a1ad12d40f7c395972b68",
+   "bytes": 85225
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk11-nordkanal.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "568b76d6512bace5c052d72ec089aecfce4c6b70258e56bfca18f8053c7e4cd7",
+   "bytes": 74821
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk12-zentrallager.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "ef11300c26d8563c53b40de591adcd93b5bf4e57196d818b0e43c49996b75910",
+   "bytes": 76171
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk13-ersatz.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "0aa8a089f94fb711618c8b2b86499defee2c911cf2b78a72998df7ec92db0049",
+   "bytes": 79001
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk14-bergen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "58dec856e2148509bfa532405a34b7b715a8b46981f23c5031d27bba6cb0adc1",
+   "bytes": 87853
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk15-ausweich.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "6177d177160d6796af1852d61a503a2eb8f0c4c4e7cfeeb43236aa1e1ae025d0",
+   "bytes": 77262
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk16-bauunternehmen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "206150129fcf6a2acec24ea35f8db4369d76b4fb7c9101d4e3913f086d90f125",
+   "bytes": 77480
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk17-prospektpreise.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "040ea3199def489b10d189fe952d9da32f3c8d43145327186b8ca18ea088e68f",
+   "bytes": 83113
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk18-verbundbeirat.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "9ca42cfc858b40b9c6c882d556b9c84e57aaf0e1c94c46bb058fdecfe1c5d830",
+   "bytes": 85613
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk19-ruecksicherung.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "8ec3e84a499f546b1904c58a9d1b3e20dab362610c13eafe7e1222cab6916450",
+   "bytes": 77872
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk20-reihenfolge.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "f742e3237150b61d8a6030e85f1d2f3e735fbb95789c8c1f47aa574798b99f9d",
+   "bytes": 77745
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk21-nordkanal-bericht.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "99851010880a07270bc4b534e44a9d97620a4006cfbc17745b7144e095dc3016",
+   "bytes": 81687
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk21-nordkanal-nachrichten.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "1d24789c7c21644af1caf92465973f386c4553bb9b81bae3e1df65d3cdee11a3",
+   "bytes": 817154
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk22-kassen-laufen.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "82cb68cb0335f3c7272b515e0a7dadc5ab4c7381fbfd4f9772ddc2bb7e1cf0ee",
+   "bytes": 64657
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk22-kasse-startet.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "faf8939801d2a5ea69612bb293adb81161666b1c454ad3a76b231599ff52671d",
+   "bytes": 81128
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk23-datenluecke.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "3070a73a94e917a55a2c4ccf17ad4a005f93a3ca9148cc213740e153998db35f",
+   "bytes": 74921
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk24-versicherer.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "f4891addcbc3bd6e51c95f29c30a19a2b4b3ff434c93cdcdfeed0d6244b04f48",
+   "bytes": 72556
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk25-saisonsamstag.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "373ece102e9e8bd84388e70b0998c5250b76e218b76fc94de6f888d6fd6bb4e6",
+   "bytes": 79028
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk26-brandursache.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "5b4865f84ce206ce11d011cd5d11ebbf15af30027b13341adab55f9455dc2d52",
+   "bytes": 86551
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk27-notbetrieb.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "fcaf17ce5548312ceeec75b85127879248ba97b57330d6df93e651e8c3157b80",
+   "bytes": 63101
+  },
+  {
+   "pfad": "media-waterkant/waterkant/lk28-rueckkehr.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "563e36035e41fd8434f26b83e1730a4ec32b024f2b0ead038eb768d6c2783c68",
+   "bytes": 80938
+  },
+  {
+   "pfad": "media-waterkant/waterkant/b5-zweiter-alarm.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "1deb09ac878d2994ac9cc9ea302ee605af1d2d7de65eadab135cac8ccceb4de9",
+   "bytes": 82320
+  },
+  {
+   "pfad": "media-waterkant/waterkant/b5-zweiter-alarm.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "b790a4d338f66e24fa7f1f860df2586bed345033538ca55c68bbb4d65b4ebfaa",
+   "bytes": 176422
+  },
+  {
+   "pfad": "media-waterkant/waterkant/b6-falschmeldung.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "0ca1053c6004b3f97ee0f6e971e0bbc7ddb3ff3a2fd9d0dd52ef889bdb0dbdb9",
+   "bytes": 72533
+  },
+  {
+   "pfad": "media-waterkant/waterkant/b7-it-leitung-raus.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "46fdb20138bde4290fe504d85c25e7562fbbcd2acc01433a4391f63c6fbb2f85",
+   "bytes": 77981
+  },
+  {
+   "pfad": "media-waterkant/waterkant/b8-angebot.png",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "c3fd283a526293aa6311a6e98e50034ccb4c5ad441eb1e58db2b96af526d84e1",
+   "bytes": 74919
+  },
+  {
+   "pfad": "media-waterkant/waterkant/ambience-rechenzentrum.mp3",
+   "zweck": "Medium, im Drehbuch verwendet",
+   "sha256": "0144239d99213dae1ef2d117961f8124dd7dd55a1ac3ae828a480b1f60707540",
+   "bytes": 369102
+  }
+ ]
+}

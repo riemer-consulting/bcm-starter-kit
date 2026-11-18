@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Server nur auf 127.0.0.1 erreichbar",
+    "ok": true,
+    "beob": "Verbindung über 192.0.2.2:4173 abgelehnt"
+  },
+  {
+    "name": "Vorlagen-Export enthält kein SMTP-Passwort",
+    "ok": true,
+    "beob": "pass im Export: \"••••••••\""
+  },
+  {
+    "name": "Import des Platzhalters lässt gespeichertes Passwort unverändert",
+    "ok": true,
+    "beob": "data/settings.json enthält weiterhin das ursprüngliche Passwort"
+  },
+  {
+    "name": "Logo-Pfad mit \"../\" liest keine Datei außerhalb media/",
+    "ok": true,
+    "beob": "nichts eingebettet"
+  },
+  {
+    "name": "Logo-Upload lehnt SVG ab",
+    "ok": true,
+    "beob": "HTTP 400"
+  },
+  {
+    "name": "Logo-Upload lehnt text/html ab",
+    "ok": true,
+    "beob": "HTTP 400"
+  },
+  {
+    "name": "Logo-Upload: Dateiendung folgt dem Bildtyp, nicht dem Dateinamen",
+    "ok": true,
+    "beob": "HTTP 200, gespeichert als /media/branding/custom-logo-1795019052641.png"
+  },
+  {
+    "name": "Bewertung mit roleId \"__proto__\" abgelehnt",
+    "ok": true,
+    "beob": "HTTP 400"
+  },
+  {
+    "name": "Bewertung mit unbekannter Rolle abgelehnt",
+    "ok": true,
+    "beob": "HTTP 400"
+  },
+  {
+    "name": "Bewertung mit gültiger Rolle/Kriterium angenommen",
+    "ok": true,
+    "beob": "HTTP 200"
+  }
+]

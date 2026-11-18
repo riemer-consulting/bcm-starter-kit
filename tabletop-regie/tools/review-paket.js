@@ -96,7 +96,7 @@ for (const z of SZ) {
   if (b) {
     bericht.push(`## Browsertest ${z.name} (Chromium, ${b.zeitpunkt.slice(0, 16).replace('T', ' ')} UTC)`, '', ...tabelle('Ergebnisse', sammeln(b.ergebnisse)),
       '### Generalprobe: jede Lage und jede öffentliche Überraschung auf der Bühne', '', '| ID | Titel | Bildschirmfoto | Bild geladen | vorgesehener Ton | beobachteter Ton | Übungshinweis |', '|---|---|---|---|---|---|---|',
-      ...b.generalprobe.map(g => `| ${g.id} | ${g.titel} | \`screenshots/${z.key}/${g.bild}\` | ${g.bildGeladen ? 'ja' : '**nein**'} | ${g.sollTon || '–'} | ${g.ton} | ${g.uebungshinweis === null ? '–' : g.uebungshinweis ? 'sichtbar' : '**fehlt**'} |`), '');
+      ...b.generalprobe.map(g => `| ${g.id} | ${g.titel} | \`screenshots/${z.key}/${g.bild.replace(/\.png$/, '.jpg')}\` | ${g.bildGeladen ? 'ja' : '**nein**'} | ${g.sollTon || '–'} | ${g.ton} | ${g.uebungshinweis === null ? '–' : g.uebungshinweis ? 'sichtbar' : '**fehlt**'} |`), '');
     fs.copyFileSync(path.join(TEST, `buehne-${z.key}`, 'ergebnis.json'), path.join(D, 'testberichte', `buehne-${z.key}.json`));
   }
 }
@@ -139,7 +139,7 @@ fs.writeFileSync(path.join(D, 'ablaufdiagramme', 'architektur-und-datenfluss.md'
 for (const z of SZ) {
   const s = JSON.parse(lies(path.join(ROOT, z.datei)));
   const e = require(path.join(ROOT, 'server', 'runEngine'));
-  const L = [`# ${z.name}: Ablauf und Entscheidungen`, '', stand, '', 'Lagen in Drehbuch-Reihenfolge, gruppiert nach Station. Fett umrandet = Priorität 1 (in jeder Dauer enthalten). Rauten = Entscheidungen mit ihren Folgen.', '', '```mermaid', 'flowchart TD'];
+  const L = [`# ${z.name}: Ablauf und Entscheidungen`, '', stand, '', 'Lagen in Drehbuch-Reihenfolge, gruppiert nach Station. Doppelt umrandet = Priorität 1 (in jeder Dauer enthalten). Rauten = Entscheidungen mit ihren Folgen.', '', '```mermaid', 'flowchart TD'];
   const lks = s.lagekarten.slice().sort((a, b) => a.minuteOffset - b.minuteOffset);
   const q = t => '"' + String(t).replace(/"/g, "'") + '"';
   e.AKTE.forEach(a => { const inA = lks.filter(l => l.akt === a.key); if (!inA.length) return; L.push(`  subgraph ${a.key}[${q(a.label)}]`); inA.forEach(l => L.push(`    ${l.id}${l.prioritaet === 1 ? '[[' + q(l.id + ' ' + l.titel) + ']]' : '[' + q(l.id + ' ' + l.titel) + ']'}`)); L.push('  end'); });
@@ -170,7 +170,13 @@ const Z = path.join(tmp, 'BCM-FINAL-REVIEW-NORDTECH-WATERKANT'); mk(Z);
 dateien.forEach(({ p, r }) => { mk(path.dirname(path.join(Z, r))); fs.copyFileSync(p, path.join(Z, r)); });
 for (const z of SZ) {
   const src = path.join(TEST, `buehne-${z.key}`);
-  if (fs.existsSync(src)) fs.readdirSync(src).filter(f => f.endsWith('.png')).forEach(f => { mk(path.join(Z, 'screenshots', z.key)); fs.copyFileSync(path.join(src, f), path.join(Z, 'screenshots', z.key, f)); add(`screenshots/${z.key}/${f}`, path.join(src, f), 'Bildschirmfoto aus dem Browsertest'); });
+  // Bildschirmfotos als JPEG (deutlich kleiner); ohne ffmpeg bleiben sie PNG
+  if (fs.existsSync(src)) fs.readdirSync(src).filter(f => f.endsWith('.png')).forEach(f => {
+    mk(path.join(Z, 'screenshots', z.key));
+    const jpg = f.replace(/\.png$/, '.jpg'); let ziel = path.join(Z, 'screenshots', z.key, jpg), name = jpg;
+    try { execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', path.join(src, f), '-q:v', '3', ziel]); } catch (e) { name = f; ziel = path.join(Z, 'screenshots', z.key, f); fs.copyFileSync(path.join(src, f), ziel); }
+    add(`screenshots/${z.key}/${name}`, ziel, 'Bildschirmfoto aus dem Browsertest');
+  });
   const s = JSON.parse(lies(path.join(ROOT, z.datei)));
   const benutzt = [...new Set((JSON.stringify(s).match(/\/media\/[^"]+/g) || []))];
   benutzt.forEach(u => { const q = path.join(ROOT, u); if (!fs.existsSync(q)) return; const r = `media-${z.key}/${u.split('/').slice(2).join('/')}`; mk(path.dirname(path.join(Z, r))); fs.copyFileSync(q, path.join(Z, r)); add(r, q, 'Medium, im Drehbuch verwendet'); });

@@ -1,0 +1,2639 @@
+{
+  "id": "nordtech-7-tage-ausnahmezustand",
+  "title": "7 Tage im Ausnahmezustand",
+  "subtitle": "BCM Tabletop Exercise – Ransomware-Angriff auf die NordTech Components GmbH",
+  "company": {
+    "name": "NordTech Components GmbH",
+    "facts": "3 Standorte · ca. 620 Beschäftigte · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
+    "logo": "/media/nordtech/nordtech-logo.png",
+    "stageLogo": "/media/nordtech/nordtech-logo-light.png",
+    "produkte": "Automobil: Präzisions-Frästeile und Baugruppen, Abruf per EDI. Pharma: Präzisions-Metallkomponenten für Dosier- und Injektionssysteme, gefertigt nach Qualitätssicherungsvereinbarung mit den Pharmakunden; zu jeder Charge gehören Produktions- und Prüfnachweise, die Arzneimittelfreigabe liegt beim Kunden (fachliche Annahme)."
+  },
+  "difficulty": "mittel-hoch",
+  "recommendedParticipants": {
+    "min": 6,
+    "reference": 20,
+    "max": 24
+  },
+  "timing": {
+    "mode": "authored",
+    "referenceGroupSize": 20,
+    "note": "Die Minutenangaben sind auf eine Gruppe von ca. 18-20 Teilnehmenden zugeschnitten. In 'berechnet'-Modus leitet die App die Dauer stattdessen aus der Anzahl aktiver Rollen her (1 Min. Lesezeit + 30 Sek. je aktivem Funktionsbereich, max. 4 Min. Krisenstabsentscheidung je Lagekarte)."
+  },
+  "standardablauf": {
+    "readingMinutes": 1,
+    "perRoleSeconds": 30,
+    "maxDecisionMinutes": 4,
+    "speakingOrder": [
+      "geschaeftsfuehrung",
+      "it",
+      "produktion",
+      "erp",
+      "finanzen",
+      "personal",
+      "einkauf",
+      "vertrieb",
+      "marketing",
+      "service"
+    ],
+    "vorbotenMinuten": 3,
+    "rollenPrioritaet": [
+      "geschaeftsfuehrer-ceo",
+      "leiter-it",
+      "leitung-produktion",
+      "geschaeftsfuehrerin-vertrieb",
+      "kaufmaennische-leiterin-cfo",
+      "leitung-qualitaet",
+      "notfallmanagement-bcm",
+      "kommunikation-marketing",
+      "it-service-desk",
+      "kundenservice-callcenter",
+      "leiterin-personal",
+      "leiter-einkauf"
+    ]
+  },
+  "roleGroups": [
+    {
+      "key": "geschaeftsfuehrung",
+      "label": "Geschäftsführung",
+      "members": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "key": "it",
+      "label": "IT & Wiederanlauf",
+      "members": [
+        "leiter-it",
+        "it-mitarbeiter"
+      ]
+    },
+    {
+      "key": "produktion",
+      "label": "Produktion & Qualität",
+      "members": [
+        "leitung-produktion",
+        "leitung-qualitaet",
+        "standortleitung-werk-sued"
+      ]
+    },
+    {
+      "key": "erp",
+      "label": "ERP & Geschäftsprozesse",
+      "members": [
+        "erp-stammdaten",
+        "erp-beratung",
+        "inventuren-spezialprozesse"
+      ]
+    },
+    {
+      "key": "finanzen",
+      "label": "Finanzen",
+      "members": [
+        "kaufmaennische-leiterin-cfo",
+        "debitorenbuchhaltung",
+        "debitorenmanagement",
+        "fakturierung"
+      ]
+    },
+    {
+      "key": "personal",
+      "label": "Personal",
+      "members": [
+        "leiterin-personal"
+      ]
+    },
+    {
+      "key": "einkauf",
+      "label": "Lieferanten & Beschaffung",
+      "members": [
+        "leiter-einkauf"
+      ]
+    },
+    {
+      "key": "vertrieb",
+      "label": "Kunden & Vertrieb",
+      "members": [
+        "geschaeftsfuehrerin-vertrieb",
+        "key-account-automotive",
+        "key-account-pharma"
+      ]
+    },
+    {
+      "key": "marketing",
+      "label": "Kommunikation",
+      "members": [
+        "kommunikation-marketing"
+      ]
+    },
+    {
+      "key": "service",
+      "label": "Service & Kundenkontakt",
+      "members": [
+        "it-service-desk",
+        "kundenservice-callcenter"
+      ]
+    },
+    {
+      "key": "krisenstab-support",
+      "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
+      "members": [
+        "notfallmanagement-bcm",
+        "assistenz-gf-dokumentation",
+        "office-management"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "geschaeftsfuehrer-ceo",
+      "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
+      "group": "geschaeftsfuehrung",
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, trägst die Gesamtverantwortung nach außen (Presse, Beirat) und musst das Team zusammenhalten.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "geschaeftsfuehrerin-vertrieb",
+      "funktion": "Geschäftsführung Vertrieb, stellv. Krisenstabsleitung",
+      "group": "vertrieb",
+      "beschreibung": "Du vertrittst die Krisenstabsleitung bei Bedarf und verantwortest alle Kundenbeziehungen. Du musst Großkunden beruhigen, ohne Zusagen zu machen, die das Unternehmen nicht halten kann.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leiter-it",
+      "funktion": "IT-Leitung (CIO)",
+      "group": "it",
+      "beschreibung": "Du bist für die Wiederherstellung aller IT-Systeme verantwortlich. Du entscheidest über Forensik und Wiederanlauf-Reihenfolge und musst dem Krisenstab ehrlich sagen, was technisch wirklich möglich ist — auch wenn das unbequem ist.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "it-mitarbeiter",
+      "funktion": "IT-Fachkraft (Vertretung IT-Leitung)",
+      "group": "it",
+      "beschreibung": "Du unterstützt die IT-Leitung operativ und vertrittst sie, falls sie ausfällt. Du kennst die Systeme im Detail und bist oft die erste Anlaufstelle für technische Rückfragen.",
+      "ebene": "krisenstab"
+    },
+    {
+      "group": "service",
+      "id": "it-service-desk",
+      "funktion": "IT-Service-Desk (technischer Support)",
+      "beschreibung": "Du bist die erste Anlaufstelle für alle Anwenderinnen und Anwender: Anrufe, Tickets, Fragen wie „Darf ich meinen Rechner einschalten?“. Deine Aufgabe: Meldungen bündeln, dem Krisenstab ein klares Lagebild geben (wer, was, wie viele, seit wann) und die freigegebenen Anweisungen zurück an alle Anwenderinnen und Anwender bringen.",
+      "ebene": "eingang"
+    },
+    {
+      "group": "service",
+      "id": "kundenservice-callcenter",
+      "funktion": "Kundenservice / Callcenter (Vertriebsinnendienst)",
+      "beschreibung": "Du nimmst Anrufe und Mails von Kunden entgegen. Sie wollen wissen, ob ihre Lieferung kommt und ob ihre Daten sicher sind. Du brauchst vom Krisenstab eine Sprachregelung – und meldest zurück, was draußen ankommt.",
+      "ebene": "eingang"
+    },
+    {
+      "id": "notfallmanagement-bcm",
+      "funktion": "Notfallmanagement / BCM",
+      "group": "krisenstab-support",
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Meldepflichten, Eskalationswege. Du hast keine feste Sprechzeit, bringst dich aber ein, wenn eine wichtige Information sonst untergeht.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leitung-produktion",
+      "funktion": "Leitung Produktion (Werksleitung)",
+      "group": "produktion",
+      "ebene": "krisenstab",
+      "beschreibung": "Du verantwortest den sicheren Produktionsbetrieb an den drei Standorten. Du bewertest Stillstand, Notbetrieb, verfügbare Kapazitäten und den kontrollierten Wiederanlauf. Fertigungsaufträge gibst du erst nach abgestimmter technischer und organisatorischer Freigabe frei."
+    },
+    {
+      "id": "leitung-qualitaet",
+      "funktion": "Leitung Qualitätsmanagement",
+      "group": "produktion",
+      "ebene": "krisenstab",
+      "beschreibung": "Du bewertest die Auswirkungen auf Rückverfolgbarkeit, Chargendokumentation, Produktqualität und notwendige Prüfungen – besonders für Automobil- und Pharmakunden. Ohne belastbare Nachweise gibst du betroffene Produkte nicht frei, auch wenn Vertrieb und Kunden drängen."
+    },
+    {
+      "id": "erp-stammdaten",
+      "funktion": "ERP / Stammdaten",
+      "group": "erp",
+      "beschreibung": "Du verantwortest die Unternehmensdaten im ERP-System. Du musst einschätzen, was an Daten wirklich verloren ist und was sich rekonstruieren lässt.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "erp-beratung",
+      "funktion": "ERP-Beratung",
+      "group": "erp",
+      "beschreibung": "Du unterstützt bei der Wiederherstellung der Geschäftsprozesse im ERP-System und berätst die Fachbereiche, wie sie ohne funktionierende Systeme übergangsweise arbeiten können.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "inventuren-spezialprozesse",
+      "funktion": "Inventuren & Spezialprozesse",
+      "group": "erp",
+      "beschreibung": "Du bist verantwortlich für Inventuren und Sonderprozesse. Ein anstehender Inventurstichtag ohne funktionierende Systeme ist dein größtes Problem.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "kaufmaennische-leiterin-cfo",
+      "funktion": "Kaufmännische Leitung (CFO)",
+      "group": "finanzen",
+      "beschreibung": "Du verantwortest alle finanziellen Aspekte der Krise: Schadenshöhe, Liquidität, Versicherung, Bankkontakt. Du musst früh einschätzen, was sich das Unternehmen leisten kann.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "debitorenbuchhaltung",
+      "funktion": "Debitorenbuchhaltung",
+      "group": "finanzen",
+      "beschreibung": "Du bist verantwortlich für offene Forderungen. Wenn Kunden wegen der Krise nicht zahlen, ist das zuerst dein Problem.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "debitorenmanagement",
+      "funktion": "Debitorenmanagement",
+      "group": "finanzen",
+      "beschreibung": "Du gehst mit Kunden um, die mit Schadensersatz drohen oder Zahlungen zurückhalten. Du musst hart bleiben, ohne die Geschäftsbeziehung zu zerstören.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "fakturierung",
+      "funktion": "Fakturierung",
+      "group": "finanzen",
+      "beschreibung": "Du stellst sicher, dass trotz der Krise weiter korrekt abgerechnet werden kann — oder dokumentierst sauber, warum das gerade nicht geht.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leiter-einkauf",
+      "funktion": "Leitung Strategischer Einkauf",
+      "group": "einkauf",
+      "beschreibung": "Du verantwortest Lieferanten und Materialversorgung. Wenn Material knapp wird, musst du entscheiden, wen du zuerst belieferst oder wo du teurer nachkaufst.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leiterin-personal",
+      "funktion": "Personalleitung",
+      "group": "personal",
+      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden: Ausfälle von Schlüsselpersonen, Gerüchte im Haus, Belastung des Teams. Du entscheidest, wer wann was erfährt.",
+      "ebene": "verteilung"
+    },
+    {
+      "id": "kommunikation-marketing",
+      "funktion": "Unternehmenskommunikation & Marketing",
+      "group": "marketing",
+      "beschreibung": "Du verantwortest Presse, Social Media, Website und Kundenmailings. Du bist meist die erste Anlaufstelle für Presseanfragen und formulierst die Botschaften, die der Krisenstab freigibt.",
+      "ebene": "verteilung",
+      "alteIds": [
+        "marketing-ecommerce"
+      ]
+    },
+    {
+      "id": "key-account-automotive",
+      "funktion": "Key Account Management Automotive",
+      "group": "vertrieb",
+      "beschreibung": "Du betreust die großen Automobilkunden: Just-in-time-Abrufe, Lieferantenhandbuch, Eskalationen aus dem Kundeneinkauf. Ihre Fragen und Forderungen landen zuerst bei dir. Du meldest sie gebündelt an den Krisenstab und brauchst eine abgestimmte Linie, bevor du etwas zusagst.",
+      "ebene": "eingang",
+      "alteIds": [
+        "leiter-einzelhandel"
+      ]
+    },
+    {
+      "id": "key-account-pharma",
+      "funktion": "Key Account Management Pharma",
+      "group": "vertrieb",
+      "beschreibung": "Du betreust die Pharmakunden. Für sie zählen Lieferfähigkeit und lückenlose Chargendokumentation – Ausfälle können bis zur Patientenversorgung durchschlagen. Du meldest Kundenanfragen gebündelt an den Krisenstab und stimmst Zusagen mit Produktion und Qualität ab.",
+      "ebene": "eingang",
+      "alteIds": [
+        "regionalleiter-west"
+      ]
+    },
+    {
+      "id": "standortleitung-werk-sued",
+      "funktion": "Standortleitung Werk Süd",
+      "group": "produktion",
+      "beschreibung": "Du leitest Werk Süd, einen der drei Standorte. Was in den Hallen passiert – Schichtleitungen, Anlagen, Belegschaft vor Ort – erfährst du zuerst. Du meldest gebündelt an den Krisenstab und bringst dessen freigegebene Anweisungen zurück an den Standort.",
+      "ebene": "eingang",
+      "alteIds": [
+        "regionalleiter-ost"
+      ]
+    },
+    {
+      "id": "assistenz-gf-dokumentation",
+      "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
+      "group": "krisenstab-support",
+      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs, damit später nachvollziehbar ist, wer was wann entschieden hat. Ohne feste Sprechzeit, aber wichtig für die Nachbereitung.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "office-management",
+      "funktion": "Office Management / interne Kommunikation",
+      "group": "krisenstab-support",
+      "beschreibung": "Du verantwortest die interne Kommunikation im Haus und organisatorische Abläufe. Gerüchte und Unsicherheit im Team sind dein Thema.",
+      "ebene": "verteilung"
+    }
+  ],
+  "moderationsleitfaden": {
+    "begruessung": "Guten Morgen zusammen. Heute werden wir keine IT-Systeme reparieren. Wir werden auch keine technische Analyse durchführen. Heute erleben wir gemeinsam die schlimmste Woche in der Geschichte der NordTech Components GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst sieben Tage Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
+    "eroeffnungstext": "Montag, 6:30 Uhr. Die Frühschicht bei NordTech Components trifft ein wie an jedem anderen Tag. NordTech ist ein gesunder Mittelständler: 620 Beschäftigte, 185 Mio. Euro Umsatz, drei Standorte, Komponentenfertigung für Automobil- und Pharmaindustrie. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
+    "spielregeln": [
+      "Alle vertreten den Verantwortungsbereich ihrer Rolle – auch wenn das nicht ihre Funktion im Alltag ist.",
+      "Jede Lagekarte enthält neue Informationen.",
+      "Nach jeder Lagekarte beantwortet jeder Bereich: Was bedeutet diese Information für meinen Bereich? Welche Risiken entstehen? Welche Maßnahmen leite ich ein? Welche Unterstützung benötige ich vom Krisenstab?",
+      "Meldungen von draußen (Anwender, Kunden, Standorte) laufen gebündelt an den Krisenstab. Der Krisenstab entscheidet und gibt Anweisungen und eine einheitliche Sprachregelung zurück – an alle, die Fragen beantworten müssen.",
+      "Anschließend erfolgt die Abstimmung im Krisenstab.",
+      "Teilnehmende ohne feste Rolle beobachten, bringen auf Nachfrage ihre Sicht ein und notieren Auffälligkeiten für das Debriefing."
+    ],
+    "moderationsregel": "Diskussionen zeitlich begrenzen, nicht abwürgen. Jede Lagekarte endet mit einer Entscheidung, einer verantwortlichen Rolle oder einer ausdrücklich festgehaltenen offenen Frage. Bei zu tiefem Einstieg in technische Details: „Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?“ Danach nächste Person.",
+    "debriefingFragen": [
+      "Wann wart ihr am stärksten unter Druck?",
+      "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
+      "Wie kamen die Meldungen von Service-Desk, Kundenservice und Standorten beim Krisenstab an – und wie kamen Anweisungen und Sprachregelung zu ihnen zurück?",
+      "Wer hätte früher eingebunden werden müssen?",
+      "Welche Person oder Rolle war kritisch – und gab es eine Vertretung?",
+      "Wo waren Single Points of Failure?",
+      "Welche eurer Entscheidungen hat den weiteren Verlauf verändert – und wie würdet ihr mit dem heutigen Wissen entscheiden?",
+      "„70 % technische Kapazität“ – wie viel davon war wirklich nutzbar, und was hat die reale Leistung begrenzt (Personal, Material, Freigaben)?",
+      "Welche Kosten wären möglicherweise nicht von der Versicherung gedeckt – und wie verändert das den Liquiditätsbedarf?",
+      "Welche drei Verbesserungen setzen wir um – wer ist verantwortlich, mit welcher Priorität, bis wann?"
+    ],
+    "abschlussfragenVorDebrief": [
+      "Worüber haben wir am meisten diskutiert?",
+      "Welche Informationen haben gefehlt?",
+      "Welche Entscheidung fiel besonders schwer?",
+      "Welche BCM-Maßnahme hätte uns geholfen?"
+    ],
+    "highlightHinweis": "Die stärkste Szene ist die Lagekarte „Beirat fordert Lagebericht“: Die Krisenstabsleitung muss in kurzer Zeit eine belastbare Lage vortragen, und IT, Produktion, Qualität, Vertrieb, Personal, Finanzen und Einkauf – soweit besetzt – müssen gemeinsam liefern. Kurz vorher erhält die Krisenstabsleitung vertraulich einen zusätzlichen persönlichen Druck.",
+    "idleMedia": {
+      "type": "image",
+      "src": "/media/nordtech/idle-hauptsitz-foto.webp",
+      "caption": "Montag, 6:30 Uhr · Hauptsitz der NordTech Components GmbH. Alles läuft."
+    }
+  },
+  "debriefMinutes": 13,
+  "lagekarten": [
+    {
+      "id": "LK01",
+      "nr": 1,
+      "simZeit": "Montag 07:00 Uhr",
+      "titel": "Cyberangriff",
+      "minuteOffset": 9,
+      "diskussionMinuten": 5,
+      "text": "Jetzt geht nichts mehr. Die Frühschicht meldet: ERP, Fileserver, Zeiterfassung und E-Mail sind ausgefallen. Auf immer mehr Bildschirmen erscheint eine Lösegeldforderung. Die Produktion kann keine neuen Fertigungsaufträge abrufen.",
+      "kriseninfo": "Lösegeldforderung: 2.000.000 € · Frist: 48 Stunden",
+      "aufgabe": [
+        "Welche Auswirkungen hat dies auf Ihren Bereich?",
+        "Welche Sofortmaßnahmen leiten Sie ein?",
+        "Welche Entscheidungen benötigt der Krisenstab?",
+        "Welche Anweisung bekommen jetzt alle Beschäftigten – und über wen läuft sie?"
+      ],
+      "moderatorHinweis": "Jetzt kommt der Knall. Kurz wirken lassen: Die Vorboten (Anmeldung, Maschine 4 mit der Endung .shadowvault, keine Aufträge) hingen alle zusammen. Lösegeldforderung auf der Bühne zeigen, Grundton der Übung setzen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk01-loesegeld-kamera-foto.webp",
+        "caption": "Montag, 07:02 Uhr: Überwachungskamera in Produktionshalle 2."
+      },
+      "prioritaet": 1,
+      "sound": {
+        "src": "/media/nordtech/lk01-stille-gemurmel.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-it",
+        "it-service-desk",
+        "leitung-produktion"
+      ],
+      "akt": "ausbruch"
+    },
+    {
+      "id": "LK16",
+      "nr": 2,
+      "simZeit": "Montag 08:00 Uhr",
+      "titel": "OT-Trennung",
+      "minuteOffset": 12,
+      "diskussionMinuten": 3,
+      "text": "Die IT empfiehlt, auch unbetroffene Produktionsanlagen (OT) vorsorglich vom Netz zu nehmen, um eine Ausbreitung zu verhindern – das würde auch noch laufende, bislang unbetroffene Fertigungsaufträge stoppen.",
+      "kriseninfo": "Betrifft auch aktuell noch laufende, unbetroffene Anlagen",
+      "aufgabe": [
+        "Tragen Sie die vorsorgliche Trennung mit?",
+        "Welche Aufträge wären zusätzlich betroffen?",
+        "Wer entscheidet, wenn IT und Geschäftsführung unterschiedlicher Meinung sind?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk16-incident-overview-foto.webp",
+        "caption": "Montag, 08:00 Uhr: Lagebesprechung der IT. Der Angreifer kam vermutlich über ein VPN-Konto, wie genau, ist noch unklar."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo",
+        "leitung-produktion"
+      ],
+      "akt": "ausbruch"
+    },
+    {
+      "id": "LK02",
+      "nr": 3,
+      "simZeit": "Montag 09:00 Uhr",
+      "titel": "Produktion stoppt",
+      "minuteOffset": 14,
+      "diskussionMinuten": 4,
+      "text": "Die Produktionsleitung meldet: Neue Fertigungsaufträge können nicht gestartet werden. Laufende Aufträge enden in den nächsten Stunden. Ohne Gegenmaßnahmen kommt die Fertigung an allen drei Standorten zum Stillstand.",
+      "kriseninfo": "Fertigwaren reichen für Lieferungen noch ca. 48 Stunden",
+      "aufgabe": [
+        "Welche Folgen erwarten Sie?",
+        "Welche Kunden sind betroffen?",
+        "Welche Prioritäten setzen Sie?"
+      ],
+      "moderatorHinweis": "Ist die Produktionsleitung nicht besetzt, beantwortet die Moderation Rückfragen zur Fertigung. Darauf achten, dass Produktion, Vertrieb und Einkauf gemeinsam priorisieren: welche Kunden, welche Aufträge, welches Material.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk02-produktion-gestoppt-foto.webp",
+        "caption": "Montag, 09:00 Uhr: Die erste Linie steht – auf den anderen werden die letzten laufenden Aufträge abgearbeitet."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-einkauf",
+        "geschaeftsfuehrerin-vertrieb",
+        "leitung-produktion",
+        "standortleitung-werk-sued",
+        "key-account-automotive",
+        "kaufmaennische-leiterin-cfo"
+      ],
+      "akt": "ausbruch",
+      "sound": {
+        "src": "/media/nordtech/lk02-produktion-faehrt-herunter.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "LK03",
+      "nr": 4,
+      "simZeit": "Montag 11:00 Uhr",
+      "titel": "LinkedIn-Beitrag",
+      "minuteOffset": 22,
+      "diskussionMinuten": 4,
+      "text": "Ein Teamleiter aus der Disposition postet auf LinkedIn über den Ausfall – mit einem Foto, auf dem die Lösegeldforderungen auf den Bildschirmen deutlich zu lesen sind. Der Beitrag verbreitet sich schnell.",
+      "kriseninfo": "20.000 Aufrufe · mehrere Journalisten kommentieren",
+      "aufgabe": [
+        "Fordern Sie sofort die Löschung des Beitrags – oder veröffentlichen Sie zuerst eine eigene Stellungnahme?",
+        "Welche Sprachregelung bekommen Kundenservice und Service-Desk?",
+        "Welche gesicherten Informationen geben Sie jetzt proaktiv an die Belegschaft – über welchen Kanal, und wann folgt das nächste Update?"
+      ],
+      "moderatorHinweis": "Das LinkedIn-Bild erscheint auf der Bühne. Auf das Foto im Beitrag hinweisen: Die Lösegeldforderung ist zu sehen, der Angriff ist damit öffentlich, bevor das Unternehmen selbst etwas gesagt hat.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk03-linkedin-post-foto.webp",
+        "caption": "Der Beitrag eines Mitarbeiters, eine Stunde nach Veröffentlichung.",
+        "hochformat": true
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "kommunikation-marketing",
+        "office-management",
+        "leiterin-personal",
+        "kundenservice-callcenter"
+      ],
+      "akt": "eskalation"
+    },
+    {
+      "id": "LK04",
+      "nr": 5,
+      "simZeit": "Montag 14:00 Uhr",
+      "titel": "Nordkanal-Anfrage",
+      "minuteOffset": 28,
+      "diskussionMinuten": 5,
+      "text": "Der Regionalsender Nordkanal kontaktiert das Unternehmen. Fragen: Wurden Kundendaten gestohlen? Zahlen Sie Lösegeld? Ist die Produktion betroffen?",
+      "kriseninfo": "Antwortfrist: 2 Stunden",
+      "aufgabe": [
+        "Wer spricht?",
+        "Was wird kommuniziert?",
+        "Was wird bewusst nicht kommuniziert?"
+      ],
+      "moderatorHinweis": "Die Moderation spielt die Redaktion von Nordkanal: Bei ausweichenden Antworten nachfragen. Darauf achten, wer spricht und ob die Antwort mit dem abgestimmt ist, was Kundenservice und Belegschaft gesagt wird.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk04-nordkanal-anfrage.png",
+        "caption": "Presseanfrage von Nordkanal."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "kommunikation-marketing",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      },
+      "sprechertext": "Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme.",
+      "gespraech": {
+        "nachfragen": [
+          "Bei ausweichender Antwort: „Heißt das, Sie schließen aus, dass Kundendaten abgeflossen sind? Ja oder nein?“",
+          "„Aus der Belegschaft hören wir von einer Lösegeldforderung auf den Bildschirmen. Verhandeln Sie mit den Erpressern?“",
+          "„Können Ihre Kunden noch beliefert werden? Und wer ist ab jetzt mein Ansprechpartner?“"
+        ],
+        "abschluss": "„Gut, dann zitiere ich Sie mit: … (Kernsatz des Tisches wiederholen). Wir berichten heute Abend.“ Lehnt der Tisch ab: „Dann schreiben wir: Das Unternehmen wollte sich nicht äußern.“ Danach auflegen – höchstens zwei Minuten.",
+        "gut": "Eine abgestimmte Kernbotschaft, nichts Unbelegtes zu Daten oder Lösegeld, ein Ansprechpartner und ein Zeitpunkt für die nächste Information.",
+        "schwach": "Spekulieren, Lösegeld kommentieren, „kein Kommentar“ ohne Rückrufangebot – oder jemand antwortet, der nicht dafür vorgesehen ist."
+      }
+    },
+    {
+      "id": "LK05",
+      "nr": 6,
+      "simZeit": "Dienstag 08:00 Uhr",
+      "titel": "Schlüsselperson fällt aus",
+      "minuteOffset": 33,
+      "diskussionMinuten": 3,
+      "text": "Der leitende Systemadministrator liegt seit Montag im Krankenhaus und ist nicht erreichbar. Erst jetzt wird klar: Niemand sonst kennt Backup-Konfiguration, Notfallpasswörter oder Firewallregeln vollständig.",
+      "kriseninfo": null,
+      "aufgabe": [
+        "Welche Risiken entstehen?",
+        "Welche Aufgabe vergeben Sie sofort an externe Spezialisten, obwohl Zugriffsrechte und Sicherheitslage ungeklärt sind?",
+        "Welche Prioritäten ändern sich?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk05-leerer-arbeitsplatz-foto.webp",
+        "caption": "Der Platz des leitenden Systemadministrators bleibt leer."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiterin-personal",
+        "leiter-it"
+      ],
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/lk05-it-bereitschaft.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Telefon klingelt. „Hier ist die IT-Bereitschaft. Wir haben es jetzt mehrfach versucht. Wir erreichen ihn nicht, er liegt weiter im Krankenhaus. Und ehrlich gesagt: Die Zugänge für die Firewall und die Backup-Konsole hat keiner von uns vollständig.“"
+    },
+    {
+      "id": "LK06",
+      "nr": 7,
+      "simZeit": "Dienstag 10:00 Uhr",
+      "titel": "Kunde eskaliert",
+      "minuteOffset": 38,
+      "diskussionMinuten": 4,
+      "text": "Ein Automobilkunde verlangt bis 16:00 Uhr einen Rückruf der Geschäftsführung und binnen 24 Stunden einen schriftlichen Störungsbericht nach Lieferantenhandbuch – eine mündliche Zusage reicht nicht. Für jeden Tag Lieferausfall drohen 50.000 € Vertragsstrafe.",
+      "kriseninfo": "Rückruf bis 16:00 Uhr · Bericht binnen 24 Stunden · 50.000 € Vertragsstrafe pro Tag",
+      "aufgabe": [
+        "Wer erstellt den schriftlichen Störungsbericht?",
+        "Welche Zusagen machen Sie darüber hinaus?",
+        "Welche Risiken entstehen?"
+      ],
+      "moderatorHinweis": "Auf der Bühne klingelt das Telefon. Die Moderation spricht danach den Einkäufer des Automobilkunden (Sprechertext) und bleibt für Rückfragen in der Rolle: Wer ruft bis 16:00 Uhr zurück, wer schreibt den Bericht, was wird zugesagt – und was ausdrücklich nicht?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk06-kunde-eskaliert-foto.webp",
+        "caption": "Dienstag, 10:00 Uhr: Der Automobilkunde ist am Apparat."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "geschaeftsfuehrerin-vertrieb",
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter",
+        "leitung-qualitaet",
+        "key-account-automotive",
+        "debitorenmanagement",
+        "kaufmaennische-leiterin-cfo"
+      ],
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      },
+      "sprechertext": "Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall.",
+      "gespraech": {
+        "nachfragen": [
+          "„Wann genau können Sie wieder liefern? Ich brauche ein Datum, keine Hoffnung.“",
+          "„Haben Sie fertige Teile auf Lager, die Sie uns zuerst schicken? Kann ein anderes Werk einspringen?“",
+          "„Sind auch unsere Daten betroffen – Zeichnungen, Bestellungen, Ansprechpartner?“"
+        ],
+        "abschluss": "„Ich halte fest: Rückruf Ihrer Geschäftsführung heute bis 16 Uhr, schriftlicher Störungsbericht bis morgen 10 Uhr. Kommt beides nicht, geht die Sache an unseren Einkaufsvorstand.“ Danach auflegen.",
+        "gut": "Ehrliche Spanne statt Lieferzusage, Fertigwarenbestand (ca. 48 Stunden) gezielt einsetzen, Verantwortliche für Rückruf und Bericht benennen.",
+        "schwach": "Ein festes Lieferdatum versprechen, Datenabfluss ausschließen oder die Frage nach Vertragsstrafen ignorieren."
+      }
+    },
+    {
+      "id": "LK07",
+      "nr": 8,
+      "simZeit": "Dienstag 13:00 Uhr",
+      "titel": "Datenschutz",
+      "minuteOffset": 42,
+      "diskussionMinuten": 4,
+      "text": "Es gibt Hinweise auf einen möglichen Abfluss personenbezogener und geschäftskritischer Daten. Welche Melde-, Informations- und Dokumentationspflichten bestehen, ist unverzüglich fachlich prüfen zu lassen.",
+      "kriseninfo": "Mögliche Meldefristen laufen bereits (z. B. Datenschutz: 72 Stunden) – fachlich prüfen lassen",
+      "aufgabe": [
+        "Welche Informationen liegen vor – und welche fehlen?",
+        "Wer prüft die Meldepflichten, und bis wann?",
+        "Wer übernimmt die Kommunikation?"
+      ],
+      "moderatorHinweis": "Eine datenschutzbeauftragte Person gibt es nicht als Rolle – die Frage an Notfallmanagement oder Krisenstabsleitung richten. Ziel ist nicht die richtige Rechtsauskunft, sondern: Wer prüft das, und bis wann?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk07-datenschutz.png",
+        "caption": "Hinweise auf Datenabfluss: Was muss wem bis wann gemeldet werden?"
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "notfallmanagement-bcm",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "akt": "eskalation"
+    },
+    {
+      "id": "LK08",
+      "nr": 9,
+      "simZeit": "Mittwoch 08:00 Uhr",
+      "titel": "Positive Entwicklung",
+      "minuteOffset": 48,
+      "diskussionMinuten": 3,
+      "text": "Forensiker bestätigen den Einbruchsvektor: Eine Phishing-Mail hat die Zugangsdaten eines VPN-Kontos abgegriffen. Derzeit keine Hinweise auf aktive Angreifer im Netzwerk.",
+      "kriseninfo": "erste gute Nachricht der Übung",
+      "aufgabe": [
+        "Welche Einschränkungen heben Sie jetzt auf – und welche ausdrücklich nicht?",
+        "Kommunizieren Sie diesen Erfolg?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk08-positive-entwicklung.png",
+        "caption": "Forensik identifiziert den Einbruchsvektor."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "leiter-it",
+        "kommunikation-marketing"
+      ],
+      "akt": "eskalation"
+    },
+    {
+      "id": "LK09",
+      "nr": 10,
+      "simZeit": "Mittwoch 11:00 Uhr",
+      "titel": "Backups gefunden",
+      "minuteOffset": 51,
+      "diskussionMinuten": 4,
+      "text": "Im Tresor des Hauptsitzes wurden Offline-Backups gefunden, Stand: Samstag 23:00 Uhr. Der Sicherungsdatenträger ist lesbar. Die Zugangsdaten zur Sicherungssoftware lagen im versiegelten IT-Notfallumschlag – ohne ihn wäre ohne den erkrankten Administrator niemand an die Daten gekommen. Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.",
+      "kriseninfo": "Datenverlust: rund 32 Stunden (Sonntag bis Montagfrüh)",
+      "aufgabe": [
+        "Wiederherstellung vorbereiten – oder erst weiter prüfen?",
+        "Welche Risiken bestehen, und wer gibt frei?",
+        "Was bedeutet der Datenverlust für Ihren Bereich?"
+      ],
+      "moderatorHinweis": "Eine gute Nachricht – Hoffnung zulassen, aber das Restrisiko ansprechen: Die Backups könnten kompromittiert sein, die Prüfung dauert.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk09-offline-backup-foto.webp",
+        "caption": "Offline-Backup gefunden: lesbar, aber noch nicht auf Schadcode geprüft."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-it",
+        "erp-stammdaten"
+      ],
+      "akt": "eskalation"
+    },
+    {
+      "id": "LK10",
+      "nr": 11,
+      "simZeit": "Donnerstag 08:00 Uhr",
+      "titel": "Nordkanal-Sonderbericht",
+      "minuteOffset": 60,
+      "diskussionMinuten": 4,
+      "text": "Nordkanal veröffentlicht einen Bericht: „Cyber-Chaos bei NordTech“. Ein anonymer Beschäftigter kritisiert die interne Kommunikation.",
+      "kriseninfo": "Social Media reagiert massiv",
+      "aufgabe": [
+        "Reagieren oder ignorieren?",
+        "Wie schützen Sie den Ruf des Unternehmens?",
+        "Wer informiert die Belegschaft, bevor sie es aus den Medien erfährt?"
+      ],
+      "moderatorHinweis": "Der Sonderbericht läuft auf der Bühne, wenn im Setup eine Aufnahme hinterlegt ist. Sonst den Sprechertext live vorlesen. Danach kurz Stille lassen und fragen: Was sagen wir jetzt – intern und extern?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk10-nordkanal-studio-foto.webp",
+        "caption": "Donnerstag, 08:00 Uhr: Nordkanal sendet den Sonderbericht „Cyber-Chaos bei NordTech“."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "kommunikation-marketing",
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter"
+      ],
+      "akt": "hoehepunkt",
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran.",
+      "sound": {
+        "src": "/media/nordtech/lk10-nordkanal-nachrichten.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "LK11",
+      "nr": 12,
+      "simZeit": "Donnerstag 13:00 Uhr",
+      "titel": "Pharmakunde eskaliert",
+      "minuteOffset": 66,
+      "diskussionMinuten": 4,
+      "text": "Ein Pharmakunde droht mit Schadensersatz: Ohne die vereinbarten Komponenten bis Samstag gerät seine eigene Produktion ins Stocken.",
+      "kriseninfo": "Frist: 48 Stunden (Samstag 13:00 Uhr)",
+      "aufgabe": [
+        "Welche Kunden priorisieren Sie?",
+        "Welche Lieferungen haben Vorrang?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk11-pharmakunde-foto.webp",
+        "caption": "Krisengespräch mit dem Pharmakunden: Lieferausfälle gefährden die Patientenversorgung."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "geschaeftsfuehrerin-vertrieb",
+        "geschaeftsfuehrer-ceo",
+        "leitung-qualitaet",
+        "leitung-produktion",
+        "key-account-pharma",
+        "debitorenmanagement",
+        "debitorenbuchhaltung"
+      ],
+      "akt": "hoehepunkt"
+    },
+    {
+      "id": "LK12",
+      "nr": 13,
+      "simZeit": "Freitag 08:00 Uhr",
+      "titel": "Teilweiser Wiederanlauf",
+      "minuteOffset": 70,
+      "diskussionMinuten": 3,
+      "text": "Werk Süd kann im eingeschränkten Notbetrieb wieder anlaufen: Die Produktionssysteme wurden isoliert neu aufgesetzt und unabhängig geprüft. Dieser Notbetrieb nutzt keine ungeprüften Sicherungsdaten; die Prüfung des ERP-Backups dauert weiterhin an. Aufträge und Rückmeldungen laufen vorerst über Papierlisten.",
+      "kriseninfo": "Kapazität: 30 %",
+      "aufgabe": [
+        "Welche Produkte und Kunden haben Vorrang?",
+        "Wer gibt die Produktion frei – und nach welchen Kriterien?",
+        "Wie wird ohne ERP dokumentiert?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk12-werk-sued-online-foto.webp",
+        "caption": "Werk Süd fährt im Notbetrieb wieder an."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-einkauf",
+        "leitung-produktion",
+        "leitung-qualitaet",
+        "standortleitung-werk-sued",
+        "inventuren-spezialprozesse",
+        "debitorenbuchhaltung",
+        "key-account-automotive"
+      ],
+      "akt": "folgen",
+      "sound": {
+        "src": "/media/nordtech/lk12-anlage-faehrt-hoch.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "LK13",
+      "nr": 14,
+      "simZeit": "Freitag 11:00 Uhr",
+      "titel": "Cyberversicherung",
+      "minuteOffset": 76,
+      "diskussionMinuten": 3,
+      "text": "Die Cyberversicherung stellt unter Vorbehalt eine Kostenbeteiligung von bis zu 1,4 Mio. € in Aussicht. Vertragsbedingungen, Selbstbehalte und die Erstattungsfähigkeit einzelner Leistungen – etwa bereits beauftragter Dienstleister außerhalb ihres Partnernetzwerks – müssen fachlich geprüft werden.",
+      "kriseninfo": "In Aussicht gestellt: bis zu 1,4 Mio. € (unter Vorbehalt)",
+      "aufgabe": [
+        "Beauftragen Sie benötigte Spezialisten auch dann, wenn die Kostenerstattung ungeklärt ist?",
+        "Wer koordiniert die Zusammenarbeit?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk13-cyberversicherung-foto.webp",
+        "caption": "Das Incident-Response-Team der Cyberversicherung ist vor Ort."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "kaufmaennische-leiterin-cfo",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "akt": "folgen"
+    },
+    {
+      "id": "LK14",
+      "nr": 15,
+      "simZeit": "Samstag 09:00 Uhr",
+      "titel": "ERP-Testbetrieb",
+      "minuteOffset": 79,
+      "diskussionMinuten": 4,
+      "text": "Das ERP wurde aus dem inzwischen auf Schadcode und Vollständigkeit geprüften Offline-Backup in einer isolierten Testumgebung wiederhergestellt. Erste Funktionstests sind erfolgreich. Die fachliche Prüfung der Daten und die Sicherheitsfreigabe für den Produktivbetrieb stehen aus. Vertrieb und Versand drängen: Ohne ERP lassen sich ab Montag weder Lieferpapiere noch Rechnungen erstellen.",
+      "kriseninfo": "Funktionstest bestanden · Daten- und Sicherheitsfreigabe offen · Versand braucht das ERP ab Montag",
+      "aufgabe": [
+        "Welchen einzigen Geschäftsprozess würden Sie unter welchen Freigabebedingungen zuerst aktivieren?",
+        "Wer erteilt die Sicherheitsfreigabe – und was gilt, bis sie vorliegt?"
+      ],
+      "moderatorHinweis": null,
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk14-erp-testbetrieb-foto.webp",
+        "caption": "Das ERP läuft im Testbetrieb."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "leiter-it",
+        "erp-beratung",
+        "erp-stammdaten",
+        "it-service-desk",
+        "inventuren-spezialprozesse"
+      ],
+      "akt": "wiederanlauf",
+      "voraussetzung": [
+        "LK09"
+      ]
+    },
+    {
+      "id": "LK15",
+      "nr": 16,
+      "simZeit": "Sonntag 12:00 Uhr",
+      "titel": "Wiederanlauf",
+      "minuteOffset": 86,
+      "diskussionMinuten": 5,
+      "text": "70 % der technischen Fertigungskapazität sind auf priorisierten Anlagen wieder verfügbar – in isolierten, geprüften Produktionsumgebungen mit Sicherheitsfreigabe. Nicht alle 900 IT- und OT-Systeme sind wiederhergestellt; der ERP-Produktivbetrieb sowie die Freigaben von Daten und Ware werden gesondert bewertet. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
+      "kriseninfo": "70 % technische Kapazität auf priorisierten Anlagen · ERP-Produktivbetrieb und Freigaben offen",
+      "aufgabe": [
+        "Welche Botschaft senden Sie an Kunden, Beschäftigte und Öffentlichkeit – und wer sagt es?",
+        "Welchen Kunden vertrösten Sie bewusst, obwohl technische Kapazität vorhanden ist – und wer sagt es ihm?"
+      ],
+      "moderatorHinweis": "Nicht mit Erleichterung enden lassen. Folgen im Ablauf noch weitere Lagen (z. B. „Die Menschen sind am Limit“), erst nach der letzten Lage in den Abschluss (Nacharbeiten und Rechnung) überleiten – er startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst danach Debriefing.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk15-wiederanlauf.png",
+        "caption": "Wiederanlauf: 70 % technische Kapazität – noch nicht 70 % Lieferfähigkeit."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "kommunikation-marketing",
+        "it-service-desk",
+        "kundenservice-callcenter",
+        "leitung-produktion"
+      ],
+      "akt": "wiederanlauf"
+    },
+    {
+      "id": "LK17",
+      "nr": 17,
+      "simZeit": "Donnerstag 07:00 Uhr",
+      "titel": "Beirat fordert Lagebericht",
+      "minuteOffset": 55,
+      "diskussionMinuten": 5,
+      "text": "Der Beirat hat für heute Vormittag eine Sondersitzung einberufen. Er erwartet in 30 Minuten einen Lagebericht: Schadenshöhe, Wiederanlaufprognose, Kommunikationsstrategie – und die Frage, ob das Management die Lage im Griff hat.",
+      "kriseninfo": "Sondersitzung in 30 Minuten · alle Bereiche müssen zuliefern",
+      "aufgabe": [
+        "Was meldet Ihr Bereich in höchstens drei Sätzen?",
+        "Welche Zahl können Sie belastbar nennen – und welche nicht?",
+        "Wer trägt vor, und was sagen Sie bewusst nicht?"
+      ],
+      "moderatorHinweis": "Ablauf: Erst die Lagekarte zeigen, dann kommen die vertraulichen Karten zur Sondersitzung (ca. 30 Sekunden später) – erst danach beginnt die Vorbereitungszeit. JETZT WIRD ES SPANNEND: Sprich die Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „Der Beirat erwartet in 30 Minuten Ihre Lageeinschätzung.“ Bei 45–60 Minuten: zwei Minuten Vorbereitung mit dem Krisenstab, dann höchstens 60 Sekunden Vortrag und eine kritische Nachfrage. Bei längeren Übungen: fünf Minuten Vorbereitung, danach Vortrag und mehrere Nachfragen als Beirat. Auch bei ungeklärter Datenschutzlage muss die Krisenstabsleitung eine belastbare Aussage zu Zuständigkeiten, Prüfaufträgen und nächsten Entscheidungsterminen liefern. Dies ist die stärkste Szene der Übung.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk17-zwischenfazit-foto.webp",
+        "caption": "In 30 Minuten muss der Lagebericht vor dem Beirat stehen."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "kaufmaennische-leiterin-cfo",
+        "leiter-it",
+        "leitung-produktion",
+        "debitorenbuchhaltung"
+      ],
+      "akt": "hoehepunkt"
+    },
+    {
+      "id": "LK18",
+      "nr": 18,
+      "simZeit": "Montag 06:41 Uhr",
+      "titel": "Anmeldung hakt",
+      "minuteOffset": 0,
+      "diskussionMinuten": 3,
+      "text": "Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anmeldung bricht mit einer Zeitüberschreitung ab, ein Neustart hilft nicht. Der IT-Service-Desk ist erst ab 07:00 Uhr besetzt.",
+      "aufgabe": [
+        "Was ist Ihre erste Reaktion – und wen informieren Sie?",
+        "Welche Information würde Sie veranlassen, jetzt den IT-Notfallprozess auszulösen?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v1-anmeldung-hakt.png",
+        "caption": "Die ERP-Anmeldung schlägt fehl."
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "leiter-it",
+        "it-mitarbeiter",
+        "erp-stammdaten",
+        "it-service-desk"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK19",
+      "nr": 19,
+      "simZeit": "Montag 06:48 Uhr",
+      "titel": "Maschine 4 verhält sich seltsam",
+      "minuteOffset": 3,
+      "diskussionMinuten": 3,
+      "text": "An der Fräslinie 4 laufen die Programme nicht an. Im Programmverzeichnis haben alle Dateien plötzlich eine fremde Endung: .shadowvault. Die Schichtleitung startet das Bedienterminal neu und ruft die Instandhaltung.",
+      "aufgabe": [
+        "Wer muss jetzt informiert werden?",
+        "Würden Sie die Linie bereits stoppen, bevor ein Angriff bestätigt ist?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v2-maschine-seltsam.png",
+        "caption": "Bedienterminal der Fräslinie 4."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-it",
+        "it-mitarbeiter",
+        "notfallmanagement-bcm",
+        "it-service-desk",
+        "leitung-produktion"
+      ],
+      "akt": "vorboten",
+      "sound": {
+        "src": "/media/nordtech/lk19-fraeslinie-stoerung.mp3",
+        "loop": false,
+        "volume": 0.7
+      }
+    },
+    {
+      "id": "LK20",
+      "nr": 20,
+      "simZeit": "Montag 06:55 Uhr",
+      "titel": "Keine Aufträge mehr",
+      "minuteOffset": 6,
+      "diskussionMinuten": 3,
+      "text": "Der Vertriebsinnendienst meldet: Seit 06:30 Uhr sind keine Abrufe der Automobilkunden mehr eingegangen – üblich sind um diese Zeit 40 bis 60. E-Mails an Kunden bleiben im Postausgang hängen. Erste Vermutung: ein Wartungsfenster beim Provider.",
+      "aufgabe": [
+        "Wie lange warten Sie auf den Provider, bevor Sie Kunden selbst kontaktieren?",
+        "Wer ruft den Krisenstab zusammen – und wann?"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/v3-keine-auftraege.png",
+        "caption": "EDI-Eingang der Automobilkunden heute früh."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-callcenter",
+        "key-account-automotive"
+      ],
+      "akt": "vorboten"
+    },
+    {
+      "id": "LK22",
+      "nr": 21,
+      "simZeit": "Montag 10:00 Uhr",
+      "titel": "Kommunikation ohne IT",
+      "minuteOffset": 18,
+      "diskussionMinuten": 4,
+      "text": "E-Mail, ERP und Teile der Telefonie sind nicht verfügbar. Gleichzeitig müssen 620 Beschäftigte an drei Standorten Anweisungen erhalten. Einige arbeiten weiter, andere haben ihre Geräte ausgeschaltet. Es gibt keine einheitliche Information.",
+      "kriseninfo": "620 Beschäftigte · 3 Standorte · 3 Schichten · keine E-Mail",
+      "aufgabe": [
+        "Welchen unabhängigen Kanal nutzen Sie?",
+        "Wer gibt die Nachricht frei?",
+        "Wie stellen Sie sicher, dass jede Schicht und jeder Standort erreicht wird?"
+      ],
+      "moderatorHinweis": "Beobachten: Gibt es einen vorbereiteten Notfall-Kommunikationsweg (Telefonkette, SMS-Verteiler, Aushang)? Wer formuliert, wer gibt frei, wer verteilt? Auf das Spielbrett verweisen: Was kommt beim Service-Desk an, was geht zurück?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk22-kommunikation-ohne-it.png",
+        "caption": "Wie erreichen Sie jetzt alle Beschäftigten?"
+      },
+      "prioritaet": 1,
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "notfallmanagement-bcm",
+        "leiter-it",
+        "leitung-produktion",
+        "kommunikation-marketing",
+        "leiterin-personal",
+        "it-service-desk"
+      ],
+      "akt": "ausbruch",
+      "sound": {
+        "src": "/media/nordtech/lk22-funk-abgebrochen.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Funkrauschen. „Zentrale an Werk Süd, bitte kommen. Werk Süd, hören Sie mich?“ – Abriss, Rauschen. „Werk Süd hier. Wir haben keine Anweisung, die Leute wissen nicht, ob sie …“ – Abriss."
+    },
+    {
+      "id": "LK21",
+      "nr": 22,
+      "simZeit": "Freitag 16:00 Uhr",
+      "titel": "Chargenfreigabe",
+      "minuteOffset": 77,
+      "diskussionMinuten": 4,
+      "text": "Die Produktion ist teilweise wieder angelaufen. Für 260 Chargen für Pharmakunden fehlen durch den IT-Ausfall elektronische Produktions- und Prüfnachweise. Die Qualitätsleitung kann derzeit nicht bestätigen, welche Chargen freigegeben werden dürfen. Gleichzeitig fordert ein Pharmakunde eine verbindliche Lieferzusage.",
+      "kriseninfo": "260 Chargen ohne vollständige Nachweise",
+      "aufgabe": [
+        "Wer darf welche Produkte freigeben?",
+        "Wie wird die Nachdokumentation organisiert?",
+        "Was sagt NordTech dem Kunden bis zur Freigabe?"
+      ],
+      "moderatorHinweis": "Kernkonflikt: Lieferdruck gegen Qualitätsfreigabe. Darauf achten, dass die Freigabe nicht vom Vertrieb oder der IT entschieden wird. Rahmen (fachliche Annahme): NordTech liefert Komponenten nach Qualitätssicherungsvereinbarung; ohne vollständige Produktions- und Prüfnachweise darf NordTech eine Charge nicht als konform ausliefern, und der Pharmakunde kann sie nicht verwenden. Einzelheiten fachlich prüfen lassen.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk21-chargenfreigabe.png",
+        "caption": "Freigabe nur mit belastbaren Nachweisen."
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leitung-qualitaet",
+        "leitung-produktion",
+        "geschaeftsfuehrerin-vertrieb",
+        "geschaeftsfuehrer-ceo",
+        "key-account-pharma"
+      ],
+      "akt": "folgen"
+    },
+    {
+      "id": "LK23",
+      "nr": 23,
+      "simZeit": "Montag 16:00 Uhr",
+      "titel": "Wer darf ins Werk?",
+      "minuteOffset": 30.5,
+      "diskussionMinuten": 4,
+      "text": "Die Zutrittsverwaltung eines gesicherten Fertigungsbereichs in Werk Süd ist wegen des IT-Ausfalls nicht zuverlässig erreichbar. Am Werkstor warten zwei externe Techniker, die einen ausgefallenen Produktionsrechner begutachten sollen. Der Werkschutz kann ihre Berechtigung nicht elektronisch prüfen. Zugleich fordert die Instandhaltung, die Techniker sofort hineinzulassen, um den Stillstand zu begrenzen.",
+      "kriseninfo": "Zutrittsfreigabe nicht elektronisch prüfbar · 2 externe Techniker warten · keine pauschale Aufhebung der Sicherheitsregeln",
+      "aufgabe": [
+        "Wer entscheidet über einen manuellen Zutritt, und wer darf ihn anordnen?",
+        "Wie werden Identität, Auftrag, Begleitung, Zutrittsbereich und Verlassen des Werks dokumentiert?",
+        "Welche Arbeiten dürfen die Techniker vor einer IT-/OT-Sicherheitsfreigabe überhaupt durchführen?",
+        "Wie wird die gleiche Regel an allen Standorten durchgesetzt?"
+      ],
+      "moderatorHinweis": "Funkruf auf der Bühne: Die Moderation spricht den Werkschutz (Sprechertext). Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk23-zutritt.png",
+        "caption": "Zutrittssystem nicht verfügbar – wer gibt frei?"
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "standortleitung-werk-sued",
+        "leitung-produktion",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "akt": "eskalation",
+      "voraussetzung": [
+        "LK01"
+      ],
+      "moderatorGut": "Ein dokumentierter, zeitlich begrenzter Ausweichprozess mit Identitätsprüfung, autorisiertem Auftrag, Begleitung und Zutrittsprotokoll; IT und Produktion klären getrennt, welche Arbeiten am System zulässig sind; die Regel gilt an allen Standorten.",
+      "moderatorSchlecht": "Pauschaler Zugang aus Zeitdruck – oder Abweisung ohne Entscheidung, obwohl es eine kontrollierbare Alternative gäbe; niemand dokumentiert Zuständigkeiten.",
+      "sound": {
+        "src": "/media/nordtech/funk-ruf.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      },
+      "sprechertext": "Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?",
+      "gespraech": {
+        "nachfragen": [
+          "„Darf ich die beiden mit Begleitung reinlassen? Wer begleitet sie?“",
+          "„Die wollen ihre eigenen Laptops an die Anlage hängen. Ist das in Ordnung?“"
+        ],
+        "abschluss": "„Verstanden, ich trage ins Wachbuch ein: freigegeben durch … (Name/Rolle), begleitet von …“ – oder: „Dann bleiben sie draußen, bis ich etwas Schriftliches habe.“",
+        "gut": "Begleiteter Zutritt mit benannter Verantwortung; kein Anschluss fremder Geräte ohne Freigabe der IT.",
+        "schwach": "Pauschal „lass sie rein“ oder die Entscheidung allein dem Werkschutz überlassen."
+      }
+    },
+    {
+      "id": "LK24",
+      "nr": 24,
+      "simZeit": "Mittwoch 15:00 Uhr",
+      "titel": "Wer bekommt das erste System?",
+      "minuteOffset": 53,
+      "diskussionMinuten": 5,
+      "text": "Die IT hat eine vom betroffenen Unternehmensnetz getrennte Umgebung für die Vorbereitung und Prüfung der Wiederherstellung aufgebaut. Rechenleistung, Fachpersonal und Zeit reichen zunächst nur für einen größeren Geschäftsprozess. Der Vertrieb fordert Zugriff auf Kundenaufträge, die Produktion auf Fertigungsinformationen, die Finanzleitung auf offene Forderungen. Das am Vormittag gefundene Offline-Backup ist lesbar, aber noch nicht abschließend auf Integrität, Vollständigkeit und Schadcode geprüft – ein produktiver Wiederanlauf daraus ist nicht freigegeben.",
+      "kriseninfo": "Nur ein Geschäftsprozess kann zunächst vorbereitet werden · Backup-Prüfung läuft · keine Produktivfreigabe",
+      "aufgabe": [
+        "Welchen Geschäftsprozess bereiten Sie zuerst vor – nach welchen unternehmensweiten Kriterien?",
+        "Welche Abhängigkeiten bestehen zwischen Aufträgen, Material, Fertigung und Rechnungsstellung?",
+        "Wie unterscheiden Sie technische Vorbereitung, Sicherheitstest und fachliche Freigabe?",
+        "Wer dokumentiert die Priorisierung und informiert die zurückgestellten Bereiche?"
+      ],
+      "moderatorHinweis": "Eine Priorität mit Verantwortung, Begründung, Abhängigkeiten, Prüfschritten und nächstem Statustermin einfordern. Wenn der Tisch „ERP sofort produktiv“ sagt: „Welche Prüfung wäre dafür abgeschlossen?“ – durch diese Karte ist nichts freigegeben. Das Ergebnis ist eine Priorisierungsentscheidung, es ändert die feststehende Wiederanlaufgeschichte nicht. Auch nach einer Lösegeldzahlung (Weiche W4) gelten dieselben Freigabeschritte.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk24-erstes-system.png",
+        "caption": "Eine Ressource – drei Prioritäten"
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo",
+        "leitung-produktion",
+        "geschaeftsfuehrerin-vertrieb",
+        "kaufmaennische-leiterin-cfo",
+        "erp-stammdaten",
+        "debitorenbuchhaltung"
+      ],
+      "akt": "eskalation",
+      "voraussetzung": [
+        "LK09"
+      ],
+      "moderatorGut": "Kritikalität, externe Verpflichtungen und Abhängigkeiten werden gemeinsam bewertet; eine nachvollziehbare Reihenfolge wird beschlossen, Test- und Freigabekriterien werden benannt, Notverfahren laufen weiter.",
+      "moderatorSchlecht": "Die lauteste Abteilung gewinnt; das Backup wird ungeprüft produktiv genutzt; die IT entscheidet allein über Unternehmensprioritäten; nichts wird dokumentiert."
+    },
+    {
+      "id": "LK25",
+      "nr": 25,
+      "simZeit": "Samstag 11:00 Uhr",
+      "titel": "Zwei Listen, zwei Wahrheiten",
+      "minuteOffset": 83,
+      "diskussionMinuten": 5,
+      "text": "Das ERP läuft seit Samstagmorgen in einer Testumgebung. Beim Abgleich mit den Papierlisten aus dem Notbetrieb zeigen sich für mehrere Fertigungsaufträge unterschiedliche Materialverbräuche und Produktionsmengen. Noch ist unklar, ob Buchungen fehlen, doppelt erfasst wurden oder die Papierlisten uneinheitlich geführt sind. Die Buchungen sind nicht als verlässlicher Datenstand freigegeben. Gleichzeitig erwartet ein Kunde kurzfristig eine Lieferentscheidung zu Ware aus den betroffenen Aufträgen.",
+      "kriseninfo": "Datenabgleich widersprüchlich · ERP nur im Test · Lieferentscheidung offen",
+      "aufgabe": [
+        "Wer verantwortet die Klärung der Abweichungen und die fachliche Freigabe der Buchungsdaten?",
+        "Wie prüfen Sie Mengen, Chargenbezug, Materialbewegungen und mögliche Doppelbuchungen nachvollziehbar?",
+        "Welche Lieferungen können mit unabhängig nachgewiesener Qualität freigegeben werden, welche bleiben gesperrt?",
+        "Wie verhindern Sie, dass eine fehlerhafte Nachbuchung weitere Probleme erzeugt?"
+      ],
+      "moderatorHinweis": "Der Konflikt ist Datenqualität und Prozessfreigabe, nicht „ERP läuft / läuft nicht“. Weder pauschal alles freigeben noch ohne Prüfung alles als verloren behandeln lassen. Die Zahlen aus SK31 (1.900 Nacherfassungen), SK12 (fehlende Datensätze) und LK21 (260 Chargen) bleiben unverändert. Bei wenig Zeit drei Ergebnisse einfordern: verantwortliche Fachfunktion, Sperr-/Freigabekriterium, Verfahren zur Differenzklärung. Wurde SK48 (Excel-Import) bereits gespielt: den Import nicht erneut diskutieren, sondern die Klärung der festgestellten Differenzen und die Folgen für Lieferfreigaben.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk25-zwei-listen.png",
+        "caption": "Technisch verfügbar – fachlich noch nicht verlässlich"
+      },
+      "prioritaet": 2,
+      "zustaendig": [
+        "erp-stammdaten",
+        "erp-beratung",
+        "leitung-qualitaet",
+        "leitung-produktion",
+        "geschaeftsfuehrerin-vertrieb",
+        "leiter-it",
+        "inventuren-spezialprozesse"
+      ],
+      "akt": "wiederanlauf",
+      "voraussetzung": [
+        "LK09",
+        "LK14"
+      ],
+      "moderatorGut": "Abweichungen werden gesichert und bewertet; Daten- und Warenfreigabe sind getrennt; Qualität und Produktion entscheiden nach belastbaren Nachweisen; der Kunde bekommt einen überprüfbaren nächsten Termin statt einer unbelegten Zusage.",
+      "moderatorSchlecht": "Papierlisten werden ungeprüft importiert; die erste „grüne“ ERP-Maske gilt als Freigabe; Lieferung ohne ausreichende Rückverfolgbarkeit; Differenzen werden stillschweigend bereinigt."
+    },
+    {
+      "id": "LK26",
+      "nr": 26,
+      "simZeit": "Sonntag 15:00 Uhr",
+      "titel": "Die Menschen sind am Limit",
+      "minuteOffset": 88,
+      "diskussionMinuten": 4,
+      "text": "Die technischen Voraussetzungen für mehr Produktion verbessern sich. Gleichzeitig melden mehrere Schichtleitungen starke Überlastung nach den Krisentagen. Für den erweiterten Betrieb ab Montag fehlt eine belastbare Personalplanung. Die Geschäftsführung möchte trotzdem möglichst schnell hochfahren.",
+      "kriseninfo": "Schichtplanung ab Montag offen",
+      "aufgabe": [
+        "Welche Schichten können sicher besetzt werden?",
+        "Welche Aufträge haben Vorrang?",
+        "Wie verhindern Sie, dass Erschöpfung zu Sicherheits- oder Qualitätsproblemen führt?"
+      ],
+      "moderatorHinweis": "Die Sprachnachricht der Schichtleitung läuft auf der Bühne; Abschrift in der Moderation. Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/lk26-menschen-am-limit.png",
+        "caption": "Die Technik ist bereit – die Schichten nicht."
+      },
+      "prioritaet": 3,
+      "zustaendig": [
+        "leitung-produktion",
+        "leiterin-personal",
+        "leitung-qualitaet",
+        "geschaeftsfuehrer-ceo",
+        "standortleitung-werk-sued"
+      ],
+      "akt": "wiederanlauf",
+      "voraussetzung": [
+        "LK12"
+      ],
+      "sprechertext": "Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?",
+      "sound": {
+        "src": "/media/nordtech/lk26-schichtleitung-nachricht.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
+    }
+  ],
+  "sonderlagekarten": [
+    {
+      "id": "SK01",
+      "nr": 1,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 18,
+      "vertraulich": true,
+      "text": "Ein externer Dienstleister informiert dich: Die Backups könnten ebenfalls kompromittiert sein. Aktuell ist das nicht bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Das Risiko wird sofort im Krisenstab offengelegt; die Backups werden vor jeder Nutzung isoliert geprüft.",
+      "moderatorSchlecht": "Die Information bleibt liegen, alle verlassen sich auf die Backups.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK02",
+      "nr": 2,
+      "empfaenger": "it-mitarbeiter",
+      "minuteOffset": 53,
+      "vertraulich": true,
+      "text": "Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nur in eine isolierte Prüfumgebung, und die steht noch nicht vollständig. Ein Fachbereichsleiter bittet dich, „nur schnell“ die Auftragsdaten auf einen Laptop im Produktionsnetz zu kopieren, damit der Vertrieb wieder arbeiten kann. Du entscheidest selbst über das weitere Vorgehen.",
+      "moderatorGut": "Keine Kopie ins ungeprüfte Netz; Anfrage an die IT-Leitung eskaliert; Alternative angeboten (geprüfter Auszug, sobald die Prüfumgebung steht).",
+      "moderatorSchlecht": "Daten werden „ausnahmsweise“ kopiert – oder die Anfrage wird abgelehnt, ohne dass der Krisenstab davon erfährt.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "leiter-it"
+      ],
+      "voraussetzung": [
+        "LK09"
+      ]
+    },
+    {
+      "id": "SK03",
+      "nr": 3,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 18,
+      "vertraulich": true,
+      "text": "Der leitende Systemadministrator wurde heute Nacht ins Krankenhaus eingeliefert, Diagnose unklar, Rückkehr ungewiss. Du entscheidest selbst, wann und wem du diese Information mitteilst.",
+      "moderatorGut": "Das Schlüsselpersonen-Risiko geht sofort in den Krisenstab; Vertretung und fehlendes Wissen werden geklärt.",
+      "moderatorSchlecht": "Die Information bleibt bei der Personalleitung – die IT plant mit einer Person, die nicht kommt.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "office-management"
+      ]
+    },
+    {
+      "id": "SK04",
+      "nr": 4,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 34,
+      "vertraulich": true,
+      "text": "Eine erfahrene Person aus dem IT-Team hat heute gekündigt. Kündigungsfrist: 4 Wochen. Die Information ist bisher nur dir bekannt.",
+      "moderatorGut": "Die Information geht vertraulich an IT-Leitung und Krisenstab; Wissenssicherung und Vertretung werden geplant.",
+      "moderatorSchlecht": "Das Thema wird bis nach der Krise liegen gelassen.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK05",
+      "nr": 5,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 26,
+      "vertraulich": true,
+      "text": "Ein Großkunde droht: Wenn heute keine verbindliche Aussage erfolgt, wird ein Wettbewerber beauftragt. Der Kunde erwartet zeitnah eine Reaktion.",
+      "moderatorGut": "Abgestimmte, ehrliche Zwischenaussage mit nächstem Update-Termin; keine Lieferzusage ohne Produktion.",
+      "moderatorSchlecht": "Funkstille – oder eine Zusage, die die Produktion nicht halten kann.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "key-account-automotive",
+        "key-account-pharma",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK06",
+      "nr": 6,
+      "empfaenger": "key-account-automotive",
+      "minuteOffset": 30,
+      "vertraulich": true,
+      "text": "Der Einkauf eines Automobilkunden meldet sich bei dir: Wenn bis morgen 10:00 Uhr kein belastbarer Lieferplan vorliegt, gibt er den Zweitlieferanten frei und stellt euch die Mehrkosten in Rechnung. Die Lage hat er bereits mit anderen Zulieferern im Branchennetzwerk besprochen.",
+      "moderatorGut": "Die Forderung geht gebündelt an den Krisenstab; der Lieferplan wird mit der Produktion abgestimmt, der Kunde bekommt einen festen Ansprechpartner.",
+      "moderatorSchlecht": "Eigene Zusagen ohne Abstimmung mit der Produktion – oder Funkstille bis zur Frist.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK07",
+      "nr": 7,
+      "empfaenger": "kommunikation-marketing",
+      "minuteOffset": 26,
+      "vertraulich": true,
+      "text": "Ein Journalist kontaktiert dich direkt über LinkedIn. Fragen: Zahlen Sie Lösegeld? Sind Kundendaten betroffen? Ist die Produktion ausgefallen? Wie reagierst du?",
+      "moderatorGut": "Keine Einzelantwort; Weiterleitung an die abgestimmte Pressearbeit, Antwort im Rahmen der Sprachregelung.",
+      "moderatorSchlecht": "Spontane Antwort per Direktnachricht – sie steht morgen als Zitat in der Zeitung.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "office-management",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK08",
+      "nr": 8,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 36,
+      "vertraulich": true,
+      "text": "Die Hausbank hat von der Störung erfahren und verlangt eine kurzfristige Einschätzung des finanziellen Risikos. Frist: 2 Stunden. Welche Informationen benötigst du?",
+      "moderatorGut": "Eine ehrliche Spanne statt einer Scheingenauigkeit, mit Annahmen und nächstem Update-Termin.",
+      "moderatorSchlecht": "Keine Rückmeldung oder geschönte Zahlen – das Vertrauen der Bank leidet.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "debitorenbuchhaltung"
+      ]
+    },
+    {
+      "id": "SK09",
+      "nr": 9,
+      "empfaenger": "debitorenbuchhaltung",
+      "minuteOffset": 46,
+      "vertraulich": true,
+      "text": "Mehrere Kunden halten ihre Zahlungen zurück. Begründung: Unsicherheit über die Lieferfähigkeit. Wie gehst du vor?",
+      "moderatorGut": "Das Thema geht in den Krisenstab; Kunden bekommen eine abgestimmte Aussage zur Lieferfähigkeit, die Finanzleitung plant die Liquidität neu.",
+      "moderatorSchlecht": "Das Thema bleibt im Fachbereich, Mahnungen gehen ungeprüft raus.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "debitorenmanagement",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK10",
+      "nr": 10,
+      "empfaenger": "debitorenmanagement",
+      "minuteOffset": 46,
+      "vertraulich": true,
+      "text": "Die ersten Kunden drohen mit Schadensersatzforderungen. Noch liegen keine offiziellen Schreiben vor. Was unternimmst du?",
+      "moderatorGut": "Rechtliche Bewertung wird angefordert, Vertrieb und Finanzleitung werden einbezogen, keine Zugeständnisse am Telefon.",
+      "moderatorSchlecht": "Keine Eskalation – oder voreilige Zugeständnisse ohne Abstimmung.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "debitorenbuchhaltung",
+        "kaufmaennische-leiterin-cfo",
+        "geschaeftsfuehrerin-vertrieb"
+      ]
+    },
+    {
+      "id": "SK11",
+      "nr": 11,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 36,
+      "vertraulich": true,
+      "text": "Ein strategischer Lieferant meldet: Wegen eures Ausfalls hat er eure reservierten Kapazitäten an andere Kunden vergeben. Für den Wiederanlauf reicht das vorhandene Material nur für zwei Produktionstage, Nachschub kommt frühestens in drei Wochen.",
+      "moderatorGut": "Lieferantenmanagement wird aktiviert, die Wiederanlaufplanung berücksichtigt den Engpass; Alternativen und Kosten gehen an den Krisenstab.",
+      "moderatorSchlecht": "Der Engpass fällt erst beim Wiederanlauf auf.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK12",
+      "nr": 12,
+      "empfaenger": "erp-stammdaten",
+      "minuteOffset": 81,
+      "vertraulich": true,
+      "text": "Die IT hat das ERP-System aus dem Backup (Stand: Samstag 23:00 Uhr) in einer Testumgebung wiederhergestellt. Dabei fällt dir auf: Neben dem erwarteten Datenverlust seit Samstag fehlen offenbar weitere Datensätze – betroffen sind Kundenaufträge aus dem laufenden Monat. Ob die Daten verloren sind, ist unklar. Wie reagierst du?",
+      "moderatorGut": "Die Lücke wird an IT und Krisenstab gemeldet; vor der Freigabe wird geprüft, welche Daten fehlen und wie sie rekonstruiert werden.",
+      "moderatorSchlecht": "Die Daten werden ungeprüft übernommen – fehlende Aufträge fallen erst beim Kunden auf.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "erp-beratung",
+        "leiter-it"
+      ],
+      "voraussetzung": [
+        "LK09"
+      ]
+    },
+    {
+      "id": "SK13",
+      "nr": 13,
+      "empfaenger": "erp-beratung",
+      "minuteOffset": 64,
+      "vertraulich": true,
+      "text": "Mehrere Fachbereiche führen Notfalllisten in Excel. Jeder Bereich arbeitet mit anderen Datenständen. Wie gehst du vor?",
+      "moderatorGut": "Eine führende Datenbasis wird festgelegt; alle Bereiche arbeiten mit demselben Stand und dokumentieren für die Nachbuchung.",
+      "moderatorSchlecht": "Jeder Bereich arbeitet mit eigener Liste weiter – die Nacherfassung wird doppelt so teuer.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "erp-stammdaten",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK14",
+      "nr": 14,
+      "empfaenger": "inventuren-spezialprozesse",
+      "minuteOffset": 44,
+      "vertraulich": true,
+      "text": "In vier Tagen wäre Inventurstichtag. Die Systeme stehen weiterhin nicht zur Verfügung. Welche Risiken siehst du?",
+      "moderatorGut": "Inventur verschieben oder ein dokumentiertes Ersatzverfahren mit Wirtschaftsprüfung und Finanzleitung abstimmen.",
+      "moderatorSchlecht": "Der Stichtag wird ignoriert – später fehlen belastbare Bestände für Bilanz und Wiederanlauf.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "erp-stammdaten",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK15",
+      "nr": 15,
+      "empfaenger": "assistenz-gf-dokumentation",
+      "minuteOffset": 78,
+      "vertraulich": true,
+      "text": "Zwei Bereiche behaupten: „Das haben wir so nie beschlossen.“ Es geht um eine Entscheidung des Krisenstabs von heute Vormittag. Wie stellst du die Nachvollziehbarkeit sicher?",
+      "moderatorGut": "Beschlüsse werden mit Zeitpunkt, Begründung und Verantwortlichen nachgewiesen; ab jetzt wird jede Entscheidung kurz protokolliert.",
+      "moderatorSchlecht": "Keine Protokollierung – Streit über Zuständigkeiten kostet Zeit und Vertrauen.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "office-management",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK16",
+      "nr": 16,
+      "empfaenger": "office-management",
+      "minuteOffset": 64,
+      "vertraulich": true,
+      "text": "Im Unternehmen kursieren Gerüchte. Mehrere Mitarbeitende behaupten: \"NordTech zahlt bereits Lösegeld.\" Wie gehst du mit dieser Situation um?",
+      "moderatorGut": "Schnelle, abgestimmte interne Information mit dem tatsächlichen Stand – ohne Details, die die Verhandlungsposition schwächen.",
+      "moderatorSchlecht": "Die Gerüchte laufen weiter oder werden pauschal dementiert, obwohl die Lage offen ist.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "leiterin-personal",
+        "kommunikation-marketing",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK17",
+      "nr": 17,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 55.5,
+      "vertraulich": true,
+      "text": "Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitzung privat an: „Wenn wir heute keine belastbaren Zahlen und keinen Plan sehen, stelle ich die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.",
+      "moderatorGut": "Ruhig bleiben, das Lagebild ehrlich mit allen Unsicherheiten vortragen, keine Schönfärberei.",
+      "moderatorSchlecht": "Unter Druck geschönte Zahlen oder Zusagen, die später nicht zu halten sind.",
+      "moderatorHinweis": "Vorbereitung auf die Lagekarte „Beirat fordert Lagebericht“. Beobachte, ob die Person den Druck in den Krisenstab trägt oder allein damit bleibt.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kaufmaennische-leiterin-cfo"
+      ],
+      "zuBeginnVon": "LK17"
+    },
+    {
+      "id": "SK18",
+      "nr": 18,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 73,
+      "vertraulich": true,
+      "text": "Ein Pharmakunde, der wegen der Lieferausfälle Schadensersatz prüft, bietet an, darauf zu verzichten. Voraussetzung: eine verbindliche Lieferzusage. Wie bewertest du die Situation?",
+      "moderatorGut": "Lieferzusage nur nach Abstimmung mit Produktion und Qualität; Vereinbarung schriftlich und realistisch.",
+      "moderatorSchlecht": "Eine schnelle Zusage, die Produktion oder Qualitätsfreigabe nicht halten können.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "key-account-pharma",
+        "leitung-qualitaet",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK19",
+      "nr": 19,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 52,
+      "vertraulich": true,
+      "text": "Die Forensiker warnen davor, betroffene Systeme oder Daten aus ungeprüften Backups produktiv wiederherzustellen – die Prüfung des Backups dauert mindestens zwei Tage. Eine isolierte Neuinstallation unabhängig von diesen Sicherungen kann nach gesonderter Sicherheitsprüfung freigegeben werden. Gleichzeitig steigt der Druck aus den Fachbereichen. Wie gehst du damit um?",
+      "moderatorGut": "Die Empfehlung und ihre Folgen für den Wiederanlauf gehen offen in den Krisenstab; Business und IT legen gemeinsam fest, was vorgezogen werden darf.",
+      "moderatorSchlecht": "Die IT blockt allein ab oder gibt dem Druck nach – Business und IT arbeiten gegeneinander.",
+      "moderatorHinweis": "Erzeugt bewussten Konflikt mit dem Lieferdruck aus Vertrieb und Kunden: Vertrieb will liefern, IT will warten.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "voraussetzung": [
+        "LK09"
+      ]
+    },
+    {
+      "id": "SK20",
+      "nr": 20,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 44,
+      "vertraulich": true,
+      "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Die Finanzleitung rechnet vor: Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, und ein Backup ist bisher nicht gefunden. Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.",
+      "moderatorGut": "Eine begründete Position mit klaren Kriterien, fachlich geprüft, im Krisenstab abgestimmt und dokumentiert.",
+      "moderatorSchlecht": "Eine unklare Haltung oder eine Entscheidung allein und unter Zeitdruck.",
+      "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK21",
+      "nr": 21,
+      "empfaenger": "notfallmanagement-bcm",
+      "minuteOffset": 16,
+      "vertraulich": true,
+      "text": "Es besteht der Verdacht, dass NordTech neben dem Datenschutz weiteren gesetzlichen Meldepflichten unterliegt (z. B. als Einrichtung nach NIS2 an das BSI) – mit Fristen ab Kenntnis des Vorfalls. Betroffenheit, zuständige Stellen und Fristen sind umgehend fachlich prüfen zu lassen.",
+      "moderatorGut": "Mögliche weitere Meldepflichten (z. B. NIS2) werden aktiv in den Krisenstab gebracht und parallel zur Datenschutz-Prüfung fachlich geklärt – mit Zuständigkeit und Termin.",
+      "moderatorSchlecht": "Der Krisenstab prüft nur den Datenschutz und übersieht weitere mögliche Meldepflichten und Fristen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "assistenz-gf-dokumentation",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK22",
+      "nr": 22,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 23,
+      "vertraulich": true,
+      "text": "Die Cyberversicherung meldet sich und weist auf mögliche Einschränkungen bei der Kostenerstattung hin: Kosten für Dienstleister außerhalb ihres Partnernetzwerks (Forensik, Anwalt, Krisenkommunikation) werden nach den Vertragsbedingungen möglicherweise nicht oder nur teilweise erstattet. Wer schon andere beauftragt hat, sollte das umgehend klären.",
+      "moderatorGut": "Die Einschränkung geht sofort an alle Bereiche, die externe Dienstleister beauftragen.",
+      "moderatorSchlecht": "Die Information bleibt liegen, während bereits eigene, nicht erstattungsfähige Dienstleister beauftragt werden.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "debitorenbuchhaltung",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK23",
+      "nr": 23,
+      "empfaenger": "notfallmanagement-bcm",
+      "minuteOffset": 26,
+      "vertraulich": true,
+      "text": "Die Polizei (ZAC beim LKA) fragt an, ob bereits Anzeige erstattet wurde, und bietet Unterstützung bei der Beweissicherung an. Löscht niemand vorschnell Logs?",
+      "moderatorGut": "Die Anfrage geht sofort in den Krisenstab, bevor weitere Systeme bereinigt oder neu aufgesetzt werden.",
+      "moderatorSchlecht": "Die Anfrage bleibt liegen, während parallel Systeme neu aufgesetzt und Spuren vernichtet werden.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK24",
+      "nr": 24,
+      "empfaenger": "fakturierung",
+      "minuteOffset": 40,
+      "vertraulich": true,
+      "text": "Die Monatsrechnungen an rund 40 Kunden hätten heute rausgehen müssen. Ohne ERP lassen sich keine Rechnungen erzeugen. Aus der Buchhaltung kommt der Vorschlag, Rechnungen manuell in Word zu schreiben – mit dem Risiko falscher Beträge und doppelter Rechnungsnummern. Ohne Rechnungen wird die Liquidität in etwa drei Wochen knapp.",
+      "moderatorGut": "Abstimmung im Krisenstab, Großkunden priorisieren, Notfallrechnungen sauber dokumentieren.",
+      "moderatorSchlecht": "Rechnungen werden einfach verschoben oder unkontrolliert manuell erstellt.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "debitorenbuchhaltung",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK25",
+      "nr": 25,
+      "empfaenger": "key-account-pharma",
+      "minuteOffset": 31,
+      "vertraulich": true,
+      "text": "Ein Pharmakunde ruft persönlich an. Er hat von dem Angriff gehört – die Nachricht macht in der Branche bereits die Runde. Bis heute Abend muss er entscheiden, ob er seine Bestellung für nächste Woche bei einem anderen Lieferanten platziert. Er fragt auch, ob die Chargendokumentation vollständig sein wird.",
+      "moderatorGut": "Abstimmung im Krisenstab mit Produktion und Qualität, einheitliche Sprachregelung, keine Einzelzusagen.",
+      "moderatorSchlecht": "Eigene Lieferzusagen ohne Rücksprache – oder Zusagen zur Dokumentation, die die Qualität nicht tragen kann.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "leitung-qualitaet"
+      ]
+    },
+    {
+      "id": "SK26",
+      "nr": 26,
+      "empfaenger": "standortleitung-werk-sued",
+      "minuteOffset": 62,
+      "vertraulich": true,
+      "text": "In Werk Süd kursiert unter den Schichten das Gerücht, der Standort werde nach dem Angriff geschlossen. Zwei erfahrene Einrichter haben Angebote eines Wettbewerbers aus der Nachbarschaft. Die Schichtleitungen fragen dich, was sie ihren Leuten sagen sollen.",
+      "moderatorGut": "Meldung an Krisenstab und Personalleitung; eine abgestimmte, ehrliche Information für alle Schichten, Schlüsselkräfte werden persönlich angesprochen.",
+      "moderatorSchlecht": "Eigene Beschwichtigung ohne Abstimmung – oder Schweigen, bis die ersten kündigen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-personal",
+        "leitung-produktion",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK27",
+      "nr": 27,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 57,
+      "vertraulich": true,
+      "text": "Die Frist der Erpresser ist am Mittwoch um 07:00 Uhr abgelaufen. Jetzt melden sie sich erneut über das Tor-Portal: „Wir sind noch in eurem Netz. Ihr habt 12 Stunden.“ Die Forensik kann das weder bestätigen noch ausschließen. Du entscheidest selbst, wie du mit dieser Information umgehst.",
+      "moderatorGut": "Die Drohung geht sofort in den Krisenstab; Forensik prüft gezielt, der Wiederanlauf wird bewusst abgewogen statt hektisch gestoppt.",
+      "moderatorSchlecht": "Die Information bleibt in der IT, der Wiederanlauf läuft ungeprüft weiter – oder es wird ohne Abstimmung alles wieder abgeschaltet.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK28",
+      "nr": 28,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 63,
+      "vertraulich": true,
+      "text": "Der Betriebsrat verlangt bis heute Mittag eine Information an die Belegschaft: Wie sicher sind die Arbeitsplätze, und werden die Überstunden der letzten Tage bezahlt? In der Produktion wird schon über Dienst nach Vorschrift gesprochen.",
+      "moderatorGut": "Kurzfristige, ehrliche Information an die Belegschaft, abgestimmt mit der Geschäftsführung.",
+      "moderatorSchlecht": "Vertröstung auf später – die Gerüchte wachsen, die Stimmung kippt.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "office-management"
+      ]
+    },
+    {
+      "id": "SK29",
+      "nr": 29,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "minuteOffset": 72,
+      "vertraulich": true,
+      "text": "Die Hausbank meldet sich erneut: Wegen der Ausfälle will sie die Kreditlinie überprüfen und bittet bis Montag um eine Liquiditätsplanung für die nächsten acht Wochen – inklusive Annahmen zu Kundenzahlungen und Vertragsstrafen.",
+      "moderatorGut": "Realistische Planung gemeinsam mit Vertrieb und Einkauf, die Bank wird aktiv und ehrlich informiert.",
+      "moderatorSchlecht": "Die Zahlen werden schöngerechnet oder die Frist verstreicht.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "debitorenbuchhaltung"
+      ]
+    },
+    {
+      "id": "SK30",
+      "nr": 30,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": 74,
+      "vertraulich": true,
+      "text": "Ein großer Automobilkunde will erst wieder bestellen, wenn ein externes Sicherheits-Audit bestätigt, dass bei euch kein Angreifer mehr im Netz ist. Bis dahin gehen Folgeaufträge an den Zweitlieferanten.",
+      "moderatorGut": "Audit wird zugesagt und terminiert, der Kunde bekommt einen klaren Ansprechpartner und regelmäßige Updates.",
+      "moderatorSchlecht": "Beschwichtigen („Alles wieder sicher“) ohne Nachweis – der Kunde wandert ab.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "key-account-automotive",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK31",
+      "nr": 31,
+      "empfaenger": "fakturierung",
+      "minuteOffset": 80,
+      "vertraulich": true,
+      "text": "Das ERP läuft im Test. Im Rückstau liegen rund 1.900 Fertigungsrückmeldungen und Materialbuchungen von Papierlisten aus den Ausfalltagen. Solange sie nicht nachgebucht sind, stimmen die Bestände nicht – und ohne gebuchte Lieferungen geht keine Rechnung raus.",
+      "moderatorGut": "Die Nachbuchung wird priorisiert und mit Zusatzkräften geplant, die Liquiditätsfolgen gehen an die Finanzleitung.",
+      "moderatorSchlecht": "Die Abrechnung wird stillschweigend verschoben, die Liquiditätslücke fällt erst später auf.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "debitorenbuchhaltung",
+        "kaufmaennische-leiterin-cfo"
+      ],
+      "voraussetzung": [
+        "LK09"
+      ]
+    },
+    {
+      "id": "SK32",
+      "nr": 32,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 83,
+      "vertraulich": true,
+      "text": "Ein wichtiger Rohstofflieferant liefert ab sofort nur noch gegen Vorkasse. Er hat über die Branche von eurer Lage erfahren und will kein Risiko eingehen.",
+      "moderatorGut": "Gespräch auf Leitungsebene, Zahlungsbedingungen werden mit der Finanzleitung abgestimmt.",
+      "moderatorSchlecht": "Bestellungen werden einfach zurückgestellt – der Wiederanlauf stockt mangels Material.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "kaufmaennische-leiterin-cfo",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK33",
+      "nr": 33,
+      "empfaenger": "kommunikation-marketing",
+      "minuteOffset": 85,
+      "vertraulich": true,
+      "text": "Die Geschäftsführung erwartet, dass am Sonntag bis zu 70 % der technischen Fertigungskapazität wieder verfügbar sein könnten; eine abschließende Bestätigung steht noch aus. Trotzdem möchte sie schon öffentlich erklären: „Alles wieder im Griff.“ Offen ist auch, ob Kundendaten abgeflossen sind. Wie formulierst du eine belastbare Botschaft?",
+      "moderatorGut": "Ehrliche, vorsichtige Botschaft; Kunden werden vor der Presse informiert, offene Punkte werden benannt.",
+      "moderatorSchlecht": "Vorschnelle Entwarnung – sie fällt dem Unternehmen auf die Füße, sobald neue Fakten auftauchen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "office-management",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "textVarianten": [
+        {
+          "nachLagekarte": "LK15",
+          "text": "70 % der technischen Fertigungskapazität sind inzwischen bestätigt. Materialengpässe, personelle Belastung und ausstehende Produktfreigaben begrenzen jedoch die tatsächliche Lieferfähigkeit, und offen ist weiterhin, ob Kundendaten abgeflossen sind. Die Geschäftsführung möchte öffentlich erklären: „Alles wieder im Griff.“ Wie formulierst du eine belastbare Botschaft?"
+        }
+      ]
+    },
+    {
+      "id": "SK34",
+      "nr": 34,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 10,
+      "vertraulich": true,
+      "text": "Seit Beginn der Störung gehen beim IT-Service-Desk im Minutentakt Anrufe und Meldungen ein, der Rückstau wächst schnell. Die Beschäftigten fragen: Darf ich meinen Rechner weiter nutzen? Soll ich das Netzwerkkabel ziehen? Eine abgestimmte Anweisung fehlt noch – im Team antwortet jeder etwas anderes.",
+      "moderatorGut": "Die Anfragen werden gebündelt und als kurze Lagemeldung (wie viele, welche Bereiche, seit wann) an den Krisenstab gegeben; zurück kommt eine einheitliche Anweisung an alle.",
+      "moderatorSchlecht": "Jeder beantwortet Anrufe nach eigenem Ermessen – Rechner werden wieder eingeschaltet, der Angriff breitet sich weiter aus.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK35",
+      "nr": 35,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 24,
+      "vertraulich": true,
+      "text": "Die Leitungen glühen: Seit sich die Nachricht vom Angriff verbreitet, rufen Kunden an. Sie fragen, ob ihre Lieferung kommt, ob ihre Daten betroffen sind und ob NordTech Lösegeld zahlt. Du hast keine Sprachregelung.",
+      "moderatorGut": "Die Fragen werden gesammelt an den Krisenstab gemeldet, eine Sprachregelung wird angefordert, Kunden bekommen eine Rückmeldung zugesagt.",
+      "moderatorSchlecht": "Am Telefon wird improvisiert – die Aussagen widersprechen sich später.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kommunikation-marketing"
+      ]
+    },
+    {
+      "id": "SK36",
+      "nr": 36,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 44,
+      "vertraulich": true,
+      "text": "Mehrere Mitarbeitende bekommen SMS auf ihre Diensthandys: „NordTech IT: Bitte Zugang hier neu bestätigen“ – mit Link auf eine fremde Seite. Zwei Personen haben ihre Zugangsdaten bereits eingegeben.",
+      "moderatorGut": "Sofortige Meldung an den Krisenstab, Warnung an alle Mitarbeitenden, betroffene Konten werden gesperrt.",
+      "moderatorSchlecht": "Die Einzelfälle werden still bearbeitet, eine Warnung an alle bleibt aus.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "it-mitarbeiter"
+      ]
+    },
+    {
+      "id": "SK37",
+      "nr": 37,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 61,
+      "vertraulich": true,
+      "text": "Seit bekannt geworden ist, dass NordTech von einem Cyberangriff betroffen ist, nehmen die Kundenanrufe stark zu. Ein Anrufer gibt sich als Einkäufer eines Kunden aus und fragt auffällig gezielt nach vertraulichen Details zum Angriff und zur Lösegeldfrage. Die Rückrufnummer gehört zu einer Redaktion.",
+      "moderatorGut": "Der Anrufer wird an die Pressestelle verwiesen, der Vorfall geht an den Krisenstab, das Team wird gewarnt.",
+      "moderatorSchlecht": "Am Telefon werden Details preisgegeben, die morgen in der Zeitung stehen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kommunikation-marketing"
+      ]
+    },
+    {
+      "id": "SK38",
+      "nr": 38,
+      "empfaenger": "it-service-desk",
+      "minuteOffset": 82,
+      "vertraulich": true,
+      "text": "Für die nächste Wiederanlaufphase zeichnet sich erheblicher Prüfaufwand ab: 900 Endgeräte, Produktionsrechner und Server sind zu bewerten, die Zugänge von 620 Beschäftigten kontrolliert wiederherzustellen. Schon jetzt drängen Produktion und Verwaltung, zuerst dranzukommen. Welche Reihenfolge bereitest du vor?",
+      "moderatorGut": "Der Krisenstab legt die Reihenfolge nach Kritikalität fest und kommuniziert sie an alle.",
+      "moderatorSchlecht": "Wer zuerst kommt oder am lautesten ist, kommt zuerst dran.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "it-mitarbeiter",
+        "leiter-it"
+      ]
+    },
+    {
+      "id": "SK39",
+      "nr": 39,
+      "empfaenger": "kundenservice-callcenter",
+      "minuteOffset": 84,
+      "vertraulich": true,
+      "text": "Kunden melden gefälschte Rechnungen im Namen von NordTech – mit geänderter Bankverbindung. Einige fragen, ob sie überhaupt noch an NordTech zahlen sollen.",
+      "moderatorGut": "Sofort an den Krisenstab; abgestimmte Warnung an alle Kunden mit klarer Bestätigung der echten Bankverbindung.",
+      "moderatorSchlecht": "Einzelne Kunden werden am Telefon beruhigt, alle anderen erfahren nichts.",
+      "prioritaet": 3,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK40",
+      "nr": 40,
+      "empfaenger": "leitung-produktion",
+      "minuteOffset": 10.5,
+      "vertraulich": true,
+      "text": "Die Schichtleitungen der drei Standorte rufen dich gleichzeitig an: Sollen die laufenden Aufträge zu Ende gefahren oder die Anlagen sofort gestoppt werden? An Fräslinie 4 sind die Programme verschlüsselt, an den anderen Linien läuft noch alles. Ein Automobilkunde erwartet heute Nachmittag eine Just-in-time-Lieferung. Wie weist du die Schichtleitungen an, bis der Krisenstab entschieden hat?",
+      "moderatorGut": "Eine einheitliche Anweisung für alle Standorte, abgestimmt mit der IT (Sicherheit vor Ausbringung); Lieferfähigkeit und Folgen gehen gebündelt an den Krisenstab.",
+      "moderatorSchlecht": "Jeder Standort entscheidet selbst – einige Linien bleiben ungeschützt am Netz, andere stehen ohne Not.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK41",
+      "nr": 41,
+      "empfaenger": "leitung-qualitaet",
+      "minuteOffset": 40,
+      "vertraulich": true,
+      "text": "Seit Beginn des IT-Ausfalls werden die Messprotokolle für Pharma-Komponenten nicht mehr elektronisch übertragen. Die Fertigung dokumentiert auf Papier. Der Vertrieb möchte vorhandene Ware trotzdem ausliefern, weil der Kunde drängt. Welche Nachweise verlangst du vor einer Freigabe?",
+      "moderatorGut": "Betroffene Ware bleibt gesperrt, bis Qualität und Rückverfolgbarkeit anhand belastbarer Nachweise bewertet sind. Etwaige Abweichungs- oder Sonderfreigabeverfahren werden fachlich geprüft, mit dem Kunden abgestimmt und dokumentiert.",
+      "moderatorSchlecht": "Ware geht ohne vollständige Nachweise raus – bei einer Reklamation fehlt jede Rückverfolgbarkeit.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leitung-produktion",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK42",
+      "nr": 42,
+      "empfaenger": "leitung-produktion",
+      "minuteOffset": 85,
+      "vertraulich": true,
+      "text": "Für die nächste Erweiterung des Produktivbetriebs drängt die Produktion auf zusätzliche Systemfreigaben. Einzelne Tests sind abgeschlossen, die notwendigen Sicherheits- und Qualitätsfreigaben stehen aber noch aus. Ein wichtiger Kunde erwartet innerhalb von zwei Stunden eine Entscheidung.",
+      "moderatorGut": "Risiken transparent machen, abgestimmte Freigabekriterien anwenden und nur belastbare Liefermöglichkeiten zusagen.",
+      "moderatorSchlecht": "Produktion ohne nachvollziehbare Freigabe starten – oder die Entscheidung ohne Eskalation liegen lassen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK43",
+      "nr": 43,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "nurNachWeiche": true,
+      "text": "Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat über Dritte vom Cyberangriff erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.",
+      "moderatorGut": "Sofortiger Rückruf auf Leitungsebene, ehrliche Lageinformation, regelmäßige Updates zugesagt.",
+      "moderatorSchlecht": "Rechtfertigung statt Information – der Kunde fühlt sich übergangen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "key-account-automotive",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK44",
+      "nr": 44,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "nurNachWeiche": true,
+      "text": "Die Datenschutzaufsicht fragt nach: Wann hat NordTech von einer möglichen Datenverletzung erfahren, welche Prüfung wurde vorgenommen, und weshalb ist bislang keine Meldung erfolgt? Ob eine Pflichtverletzung vorliegt, muss fachlich geprüft werden.",
+      "moderatorGut": "Sofort fachlich prüfen lassen, Zeitpunkte und Prüfschritte nachvollziehbar darlegen, eine Meldung bei Bedarf nachholen.",
+      "moderatorSchlecht": "Abwiegeln oder die Rückfrage liegen lassen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "SK45",
+      "nr": 45,
+      "vertraulich": true,
+      "empfaenger": "standortleitung-werk-sued",
+      "fallbackEmpfaenger": [
+        "leitung-produktion",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "minuteOffset": 15.5,
+      "prioritaet": 2,
+      "text": "Ein Schichtleiter erklärt dir vertraulich, dass er einige Anlagen auch ohne zentrale IT weiterbetreiben könnte, und möchte die Produktion eigenständig fortsetzen. Eine technische Sicherheitsfreigabe gibt es nicht. Er bittet dich, diese Möglichkeit zunächst nicht an den Krisenstab weiterzugeben.",
+      "moderatorGut": "Sachlage und Risiken sofort offenlegen; die zuständigen Funktionen entscheiden kontrolliert.",
+      "moderatorSchlecht": "Eigenmächtig freigeben oder die Information verschweigen."
+    },
+    {
+      "id": "SK46",
+      "nr": 46,
+      "vertraulich": true,
+      "empfaenger": "geschaeftsfuehrerin-vertrieb",
+      "fallbackEmpfaenger": [
+        "key-account-automotive",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "minuteOffset": 39,
+      "prioritaet": 2,
+      "text": "Ein großer Automobilkunde bietet an, eigene IT-Spezialisten zur Unterstützung zu schicken. Voraussetzung: Sie bekommen kurzfristig Einblick in eure Systeme und in den Sicherheitsvorfall. Der Kunde verlangt noch heute eine Entscheidung.",
+      "moderatorGut": "Angebot mit IT-Leitung, Krisenstabsleitung und – soweit vorhanden – Datenschutz bewerten; Zugriffe, Vertraulichkeit und Auftrag schriftlich klären.",
+      "moderatorSchlecht": "Aus Angst vor Lieferausfällen unkontrollierten Zugriff gewähren – oder das Angebot ohne Prüfung abblocken."
+    },
+    {
+      "id": "SK47",
+      "nr": 47,
+      "vertraulich": true,
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "fallbackEmpfaenger": [
+        "assistenz-gf-dokumentation",
+        "notfallmanagement-bcm",
+        "geschaeftsfuehrerin-vertrieb"
+      ],
+      "minuteOffset": 55.6,
+      "zuBeginnVon": "LK17",
+      "prioritaet": 2,
+      "text": "Aus dem Kreis der Unternehmensführung kommt die Forderung, im Beiratsbericht nur den voraussichtlich versicherten Schaden zu nennen. Die noch nicht belastbar bezifferten Produktions- und Kundenverluste sollen vorerst nicht auftauchen: „Wir brauchen jetzt Vertrauen, keine Panik.“",
+      "moderatorGut": "Bestätigte Zahlen, Schätzungen und noch unbekannte Schäden getrennt darstellen; Unsicherheiten offen ausweisen.",
+      "moderatorSchlecht": "Die Schadenslage bewusst unvollständig darstellen."
+    },
+    {
+      "id": "SK48",
+      "nr": 48,
+      "vertraulich": true,
+      "empfaenger": "erp-stammdaten",
+      "fallbackEmpfaenger": [
+        "erp-beratung",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "minuteOffset": 80,
+      "prioritaet": 2,
+      "voraussetzung": [
+        "LK09",
+        "LK14"
+      ],
+      "text": "Eine Fachabteilung bietet dir an, den Rückstand schneller aufzuarbeiten: Sie hat während der Ausfalltage Fertigungs- und Materialbuchungen in einer Excel-Datei gesammelt. Einige Einträge haben jedoch keine eindeutige Belegnummer und keinen verlässlichen Zeitstempel. Der Fachbereich möchte die Datei heute noch vollständig ins ERP übernehmen, damit die Bestände endlich wieder stimmen. Du musst entscheiden, wie du mit dem Vorschlag umgehst.",
+      "moderatorGut": "Vorschlag an IT, Fachverantwortliche und Krisenstab melden; Originaldatei unverändert sichern; Einträge auf Herkunft, Dubletten, Plausibilität und Vollständigkeit prüfen; zuerst kontrolliert in der Testumgebung verarbeiten, mit Vier-Augen-Prüfung und fachlicher Freigabe.",
+      "moderatorSchlecht": "Sofortiger Import ohne Protokoll – oder Ablehnung ohne Prüfung und ohne Alternative. Später ist nicht mehr erkennbar, was manuell ergänzt oder doppelt gebucht wurde.",
+      "nurInEigenerLage": true,
+      "moderatorHinweis": "Zielt auf Daten-Governance im Wiederanlauf. Landet die Karte bei der IT-Leitung: Sie koordiniert die technische Prüfung, entscheidet aber nicht allein über die fachliche Richtigkeit von Beständen und Chargen. Wird danach LK25 gespielt, entstehen die Abweichungen unabhängig davon, wie SK48 gelöst wurde."
+    },
+    {
+      "id": "SK49",
+      "nr": 49,
+      "vertraulich": true,
+      "empfaenger": "leiterin-personal",
+      "fallbackEmpfaenger": [
+        "leitung-produktion",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "minuteOffset": 87,
+      "prioritaet": 3,
+      "text": "Mehrere Beschäftigte melden, dass sie nach den Sonderschichten nicht erneut kurzfristig einspringen können. Die Produktionsleitung plant bereits zusätzliche Schichten für die kommende Woche. Geprüft ist noch nicht, welche Besetzung tatsächlich verfügbar und zulässig ist.",
+      "moderatorGut": "Personalplanung auf Belastbarkeit prüfen, arbeitsrechtliche Fragen fachlich prüfen lassen und gemeinsam realistische Prioritäten setzen.",
+      "moderatorSchlecht": "Zusätzliche Kapazität versprechen, obwohl die Personalplanung sie nicht trägt."
+    }
+  ],
+  "bonuskarten": [
+    {
+      "id": "B1",
+      "empfaenger": "it-mitarbeiter",
+      "text": "Verlasse den Raum für 5 Minuten. Du bist aufgrund eines medizinischen Notfalls nicht verfügbar.",
+      "moderatorHinweis": "Nur auslösen, wenn danach noch mindestens eine weitere IT-Person im Raum ist. Ohne besetzte Rolle IT-Fachkraft entfällt die Karte bewusst.",
+      "fallbackEmpfaenger": []
+    },
+    {
+      "id": "B2",
+      "empfaenger": "kommunikation-marketing",
+      "text": "Ein Screenshot eines internen Dokuments taucht auf Social Media auf. Niemand weiß, wer ihn veröffentlicht hat.",
+      "fallbackEmpfaenger": [
+        "office-management",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "B3",
+      "empfaenger": "leiter-einkauf",
+      "text": "Ein Lieferant priorisiert einen Wettbewerber. Materiallieferung verzögert sich um 7 Tage.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "kaufmaennische-leiterin-cfo"
+      ]
+    },
+    {
+      "id": "B4",
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "text": "Ein Fernsehsender möchte in 15 Minuten ein Live-Interview. Du musst entscheiden, ob du zusagst.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrerin-vertrieb",
+        "kommunikation-marketing"
+      ]
+    },
+    {
+      "id": "B5",
+      "empfaenger": "kaufmaennische-leiterin-cfo",
+      "text": "Erste Schätzung: Der Schaden liegt bereits über 500.000 €. Die Zahlen sind noch nicht bestätigt.",
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "debitorenbuchhaltung"
+      ]
+    },
+    {
+      "id": "B6",
+      "titel": "Zwei widersprüchliche Anweisungen",
+      "empfaenger": "standortleitung-werk-sued",
+      "fallbackEmpfaenger": [
+        "leitung-produktion",
+        "it-service-desk",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "text": "In Werk Süd hat die Produktionsleitung angeordnet, die Rechner ausgeschaltet zu lassen. Gleichzeitig hat eine andere Führungskraft angewiesen, alle Geräte neu zu starten, um die Arbeitsfähigkeit zu prüfen. Beide Anweisungen sind schon bei den Beschäftigten angekommen. Bring das sofort in den Krisenstab.",
+      "moderatorHinweis": "Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Gut: eine Stelle entscheidet, die Anweisung geht über einen festgelegten Weg an alle (Durchsage, Aushang, Schichtleitungen). Schwach: beide Anweisungen stehen lassen oder „jeder Bereich entscheidet selbst“. Ersetzt eine andere Diskussion, verlängert nicht.",
+      "voraussetzung": [
+        "LK22"
+      ],
+      "oeffentlich": true,
+      "buehnentext": "Werk Süd, zwei Lautsprecherdurchsagen kurz nacheinander: Erst heißt es, alle Rechner bleiben aus, bis die IT etwas anderes sagt. Kurz darauf: Alle Rechner neu starten und prüfen, ob sie funktionieren. Beide Anweisungen sind bei den Beschäftigten angekommen.",
+      "kriseninfo": "Was gilt jetzt – und wie erfahren es alle?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b6-widerspruechliche-anweisungen.png",
+        "caption": "Zwei Durchsagen, zwei Anweisungen."
+      },
+      "sound": {
+        "src": "/media/nordtech/b6-zwei-durchsagen.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Gong. „Achtung, eine Durchsage der Produktionsleitung Werk Süd. Alle Rechner bleiben ausgeschaltet, bis die IT etwas anderes sagt. Ich wiederhole: Alle Rechner bleiben aus.“ – Gong. „Durchsage an alle Bereiche in Werk Süd. Bitte starten Sie jetzt alle Rechner neu und prüfen Sie, ob sie funktionieren. Melden Sie Probleme an Ihre Schichtleitung.“",
+      "beobachtung": [
+        "Entscheidet eine benannte Stelle, welche Anweisung gilt?",
+        "Erreicht die Korrektur alle Schichten und Standorte über einen festgelegten Weg?",
+        "Wird festgelegt, wer künftig Anweisungen an die Beschäftigten freigibt?"
+      ]
+    },
+    {
+      "id": "B7",
+      "titel": "Die Krisenstabsleitung ist nicht erreichbar",
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "fallbackEmpfaenger": [],
+      "text": "Du wirst für die nächsten fünf Minuten zu einem vertraulichen Gespräch abgerufen. Verlasse den Tisch und sprich in dieser Zeit nicht mit dem Krisenstab. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich.",
+      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr. B7 ersetzt fünf Minuten der Lagebearbeitung von LK17 und wird nicht addiert: Der Übungstimer läuft weiter, der Lagebericht entsteht in dieser Zeit.",
+      "voraussetzung": [
+        "LK17"
+      ],
+      "minDauer": 90,
+      "oeffentlich": true,
+      "erfordertBesetzt": "geschaeftsfuehrer-ceo",
+      "buehnentext": "Die Krisenstabsleitung wird zu einem vertraulichen Gespräch abgerufen und ist für die nächsten fünf Minuten nicht erreichbar. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich. Die Stellvertretung übernimmt – jetzt.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b7-krisenstabsleitung-abgerufen.png",
+        "caption": "Die Stellvertretung führt."
+      },
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      },
+      "unterbrechung": {
+        "rolle": "geschaeftsfuehrer-ceo",
+        "minuten": 5,
+        "text": "Bitte den Tisch verlassen und in dieser Zeit nicht mit dem Krisenstab sprechen.",
+        "rueckkehr": "Krisenstabsleitung an den Tisch bitten. Erst die Stellvertretung zwei Sätze übergeben lassen („Wir haben entschieden …, offen ist …“), dann fragen, ob die Krisenstabsleitung etwas davon ändern will – und warum."
+      },
+      "regie": "Nach dem Klingeln geht die Moderation zur Krisenstabsleitung und bittet sie hinaus (Flur oder Nebentisch). Die Bühne zählt fünf Minuten herunter. Danach zurückholen und als Erstes fragen: Was hat die Stellvertretung in dieser Zeit entschieden – und weiß die Krisenstabsleitung es jetzt?",
+      "sprechertext": "„Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“",
+      "beobachtung": [
+        "Übernimmt innerhalb von etwa einer Minute sichtbar jemand die Leitung – die vorgesehene Stellvertretung?",
+        "Fasst die Stellvertretung das Lagebild zusammen (gesichert / offen) und verteilt Aufgaben mit Namen?",
+        "Werden anstehende Entscheidungen getroffen statt auf die Rückkehr vertagt?",
+        "Steht der Lagebericht für den Beirat trotzdem rechtzeitig?",
+        "Bekommt die Krisenstabsleitung bei der Rückkehr eine kurze Übergabe (entschieden / offen / wer macht was)?"
+      ]
+    },
+    {
+      "id": "B8",
+      "titel": "Ein vermeintlicher Erfolg",
+      "empfaenger": "leitung-qualitaet",
+      "fallbackEmpfaenger": [
+        "leitung-produktion",
+        "leiter-it"
+      ],
+      "text": "Ein erster Funktionstest des ERP ist erfolgreich. Kurz darauf fällt im Qualitätsmanagement auf: Bei einem Testauftrag wird eine Chargennummer angezeigt, die nicht zu den vorliegenden Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich argumentiert, das sei nur ein kleiner Datenfehler und dürfe den Produktivstart nicht aufhalten. Bring das in den Krisenstab.",
+      "moderatorHinweis": "Nur ziehen, wenn der Tisch nach „ERP-Testbetrieb“ einen sofortigen Produktivstart oder eine ungeprüfte Freigabe fordert – nicht, wenn Sicherheits- und Datenprüfung schon eingefordert sind. Fragen: Unter welchen Bedingungen stoppen Sie die Freigabe? Wer untersucht, wer gibt fachlich frei? Was bleibt im Notbetrieb? Was ist gegenüber Produktion und Kunden belastbar? Gut: Freigabe zurückstellen, Ursache und Umfang prüfen, Kriterien und Verantwortliche festhalten. Schwach: „Ein erfolgreicher Funktionstest reicht.“ Keine Katastrophe nachschieben; die Sonntags-Aussage (70 % technische Kapazität) bleibt unverändert. Fehlt die Qualitätsleitung, vertritt die Moderation deren Position – die Freigabe erteilt nie der Vertrieb. Wird LK25 gespielt, B8 nur einsetzen, wenn es eine andere Entscheidung prüft.",
+      "voraussetzung": [
+        "LK14"
+      ],
+      "oeffentlich": true,
+      "buehnentext": "Erster Funktionstest des ERP: erfolgreich. Kurz darauf meldet das Qualitätsmanagement: Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu den Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich hält das für einen kleinen Datenfehler, der den Produktivstart nicht aufhalten darf.",
+      "kriseninfo": "Funktionstest bestanden · Chargennummer weicht von den Unterlagen ab · Ursache offen",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b8-vermeintlicher-erfolg.png",
+        "caption": "Grün im Test heißt noch nicht freigegeben."
+      },
+      "sound": {
+        "src": "/media/nordtech/b8-erp-test-meldung.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“",
+      "beobachtung": [
+        "Wird die Produktivfreigabe zurückgestellt, bis Ursache und Umfang geklärt sind?",
+        "Ist klar, wer untersucht und wer fachlich freigibt (Qualität, nicht Vertrieb)?",
+        "Wird abgestimmt, was Produktion und Kunden jetzt gesagt wird?"
+      ]
+    }
+  ],
+  "bewertungskriterien": [
+    "Rollenverständnis",
+    "Kommunikation",
+    "Entscheidungsfähigkeit",
+    "Zusammenarbeit",
+    "Krisenmanagement",
+    "Priorisierung",
+    "Dokumentation"
+  ],
+  "urkunde": {
+    "veranstaltung": "BCM-Krisensimulation „7 Tage im Ausnahmezustand“"
+  },
+  "sounds": {
+    "idle": {
+      "src": "/media/nordtech/ambience-maschinenraum.mp3",
+      "loop": true,
+      "volume": 0.5
+    }
+  },
+  "nachspiel": {
+    "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
+    "einleitung": "Sonntag, nach sieben Tagen Unternehmenskrise. Die priorisierten Anlagen laufen wieder, 70 % der technischen Fertigungskapazität sind wiederhergestellt. ERP-Produktivbetrieb, Datenabgleich und Warenfreigaben sind noch nicht abgeschlossen. Materialengpässe und die Belastung der Beschäftigten begrenzen weiterhin die tatsächliche Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "nacharbeiten": [
+      {
+        "zahl": "1.900",
+        "text": "Fertigungsrückmeldungen und Materialbuchungen von Papierlisten müssen ins ERP nachgebucht werden"
+      },
+      {
+        "zahl": "190.000",
+        "text": "E-Mails aus den Ausfalltagen liegen im Rückstau – Kundenanfragen bleiben unbeantwortet, bis sie gesichtet sind"
+      },
+      {
+        "zahl": "260",
+        "text": "Chargen für Pharmakunden brauchen eine lückenlose Nachdokumentation, bevor sie freigegeben werden dürfen"
+      },
+      {
+        "zahl": "32 Stunden",
+        "text": "verlorene Daten (Sonntag bis Montagfrüh): Aufträge, Buchungen und Zeiterfassung werden rekonstruiert"
+      },
+      {
+        "zahl": "900",
+        "text": "Endgeräte, Produktionsrechner und Server werden geprüft oder neu aufgesetzt, die Zugänge von 620 Beschäftigten kontrolliert wiederhergestellt"
+      },
+      {
+        "zahl": "4 Wochen",
+        "text": "Produktionsaufholplan – erstellt unter Berücksichtigung verfügbarer Beschäftigter, sicherer Schichtbesetzung und notwendiger Freigaben"
+      },
+      {
+        "zahl": "3",
+        "text": "Großkunden kündigen ein Sicherheits-Audit an, bevor sie wieder voll bestellen"
+      }
+    ],
+    "rechnung": [
+      {
+        "posten": "Entgangener Deckungsbeitrag (rund 6 Produktionstage)",
+        "betrag": 1550000,
+        "bcmHebel": "Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand.",
+        "herleitung": "Umsatz 185 Mio. € ÷ ca. 250 Arbeitstage ≈ 740.000 € je Tag; Deckungsbeitragsquote ca. 35 % (fachliche Annahme) ≈ 260.000 € je Tag; ca. 6 Ausfalltage-Äquivalente (Montag bis Donnerstag weitgehend Stillstand, Freitag bis Sonntag eingeschränkter Betrieb), abzüglich der aus Fertigware gelieferten und später nachholbaren Mengen vereinfacht berücksichtigt ≈ 1,55 Mio. €. Vom Controlling bestätigen lassen."
+      },
+      {
+        "posten": "Forensik und Incident Response (7 Tage rund um die Uhr)",
+        "betrag": 420000,
+        "bcmHebel": "Ein vorab vereinbarter Dienstleister aus dem Versicherungsnetzwerk – die Kosten können dann erstattet werden."
+      },
+      {
+        "posten": "IT-Wiederherstellung, Ersatzhardware, Überstunden IT",
+        "betrag": 380000,
+        "bcmHebel": "Dokumentierte Notfallpasswörter und Konfigurationen – kein Wissen nur in einem Kopf."
+      },
+      {
+        "posten": "Sonderschichten und Überstunden in der Produktion",
+        "betrag": 310000,
+        "bcmHebel": "Eine vorab festgelegte Wiederanlauf-Reihenfolge der Aufträge."
+      },
+      {
+        "posten": "Vertragsstrafen Automobilkunde (4 Tage à 50.000 €)",
+        "betrag": 200000,
+        "bcmHebel": "Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden.",
+        "herleitung": "Fertigware reicht ca. 48 Stunden (bis Mittwochfrüh); Lieferausfall beim Automobilkunden Mittwoch bis Samstag = 4 Tage à 50.000 € laut LK06."
+      },
+      {
+        "posten": "Kulanz und Schadensersatz Pharmakunde",
+        "betrag": 250000,
+        "bcmHebel": "Kritische Kunden und Lieferzusagen vorab identifiziert und priorisiert."
+      },
+      {
+        "posten": "Recht, Datenschutz, Meldungen, Krisenkommunikation",
+        "betrag": 160000,
+        "bcmHebel": "Meldepflichten (NIS2, DSGVO) und Zuständigkeiten vorab geklärt."
+      },
+      {
+        "posten": "Nacherfassung und Rekonstruktion durch externe Kräfte",
+        "betrag": 90000,
+        "bcmHebel": "Notfallbelege mit klarem Nacherfassungsprozess."
+      },
+      {
+        "posten": "Verlorene Folgeaufträge infolge eingeschränkter Lieferfähigkeit und anhaltender Sicherheitsbedenken: zwei Kunden wechseln zum Wettbewerber (Deckungsbeitrag der folgenden 12 Monate)",
+        "betrag": 900000,
+        "bcmHebel": "Schnelle, ehrliche Kommunikation hält Kunden – Schweigen treibt sie zum Wettbewerber."
+      }
+    ],
+    "optionalePosten": [
+      {
+        "id": "loesegeld",
+        "frage": "Hat der Krisenstab entschieden, das Lösegeld zu zahlen?",
+        "posten": "Lösegeldzahlung an die Erpresser",
+        "betrag": 2000000,
+        "bcmHebel": "Funktionierende, getestete Offline-Backups nehmen den Erpressern das Druckmittel."
+      },
+      {
+        "id": "kundenkommunikation",
+        "frage": "Haben Kunden zuerst von Dritten statt von NordTech vom Angriff erfahren?",
+        "posten": "Zusätzliche Kundenabwanderung, weil Kunden zuerst von Dritten vom Angriff erfahren haben",
+        "betrag": 600000,
+        "bcmHebel": "Ein vorbereiteter Kommunikationsplan für Kunden in den ersten Stunden."
+      },
+      {
+        "id": "ot-ausbreitung",
+        "frage": "Blieben die Anlagen am Montag am Netz, sodass sich der Angriff auf weitere Linien ausbreiten konnte?",
+        "posten": "Zwei zusätzlich verschlüsselte Fräslinien: Neuaufsetzen und längerer Stillstand",
+        "betrag": 350000,
+        "bcmHebel": "Vorab festgelegte Kriterien, wann Produktionsanlagen vom Netz getrennt werden – und wer das entscheidet."
+      },
+      {
+        "id": "datenschutz-verspaetet",
+        "frage": "Hat NordTech die Meldung an die Datenschutzaufsicht zurückgestellt, bis der Abfluss bestätigt war?",
+        "posten": "Zusätzlicher Prüf- und Beratungsaufwand wegen Rückfragen der Aufsicht (Modellannahme, kein Bußgeld eingerechnet)",
+        "betrag": 150000,
+        "bcmHebel": "Ein vorbereiteter Meldeprozess mit klaren Zuständigkeiten und Fristen."
+      }
+    ],
+    "versicherung": {
+      "text": "Mögliche Erstattung durch die Cyberversicherung (optimistische Modellannahme, nicht bestätigt)",
+      "betrag": 1400000,
+      "erlaeuterung": "Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,4 Mio. € ist eine unbestätigte Modellannahme; Vertragsbedingungen, Selbstbehalte, Ausschlüsse und die Anerkennung einzelner Kostenpositionen sind nicht bewertet. Ein Lösegeld ist darin nicht enthalten."
+    },
+    "jahresumsatz": 185000000,
+    "umsatzrendite": 0.05,
+    "fazit": "Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Sie gilt für den gesamten Krisenverlauf über sieben Tage – auch für Ereignisse wie Vertragsstrafen, die in kurzen Übungen nicht als eigene Karte vorkommen. Die Größenordnungen sind bewusst realistisch gewählt. Zusatzposten aus Entscheidungen sind fiktive Übungsannahmen; sie veranschaulichen mögliche Folgen und sind keine Prognose oder rechtliche Bewertung. Die Erstattung ist eine hypothetische Modellannahme. Offene Forderungen aus nicht gestellten Rechnungen sind ein Liquiditätsproblem, kein endgültiger Schaden, und deshalb nicht enthalten."
+  },
+  "weichen": [
+    {
+      "id": "W1",
+      "lagekarten": [
+        "LK16",
+        "LK02"
+      ],
+      "frage": "Bleiben die übrigen Anlagen am Netz, bis die laufenden Aufträge fertig sind – oder werden sie sofort getrennt?",
+      "optionen": [
+        {
+          "id": "am-netz",
+          "label": "Anlagen bleiben am Netz, Aufträge werden fertiggestellt",
+          "wirkung": "Später sind zwei weitere Fräslinien verschlüsselt: Werk Süd startet mit 20 % statt 30 %; bis Sonntag holen zusätzliche Teams das auf. Zusatzposten in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Weil die Anlagen am Montag am Netz blieben, wurden zwei weitere Fräslinien verschlüsselt und müssen neu aufgesetzt werden.",
+              "kriseninfo": "Kapazität: 20 % (zwei Linien zusätzlich verschlüsselt)"
+            },
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Zusätzliche Wiederherstellungsteams haben bis Sonntag auch die am Montag zusätzlich verschlüsselten Linien wieder freigegeben – der Schaden vom Montag hat den Wiederanlauf verteuert, aber nicht dauerhaft verhindert."
+            }
+          ],
+          "posten": [
+            "ot-ausbreitung"
+          ]
+        },
+        {
+          "id": "trennen",
+          "label": "Übrige Anlagen kontrolliert in einen sicheren Zustand fahren und ihre Verbindungen zum IT-Netz gezielt trennen, laufende Aufträge geordnet abbrechen",
+          "wirkung": "Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Die frühe Trennung vom Netz hat sich ausgezahlt: Keine Fertigungsanlage wurde zusätzlich verschlüsselt."
+            }
+          ]
+        }
+      ],
+      "hinweis": "Kontrollierte Isolierung ist nicht „Stecker ziehen“: Anlagen werden in einen sicheren Betriebszustand gebracht (Werkstücke, Kühlung, Sicherheitsfunktionen), dann werden einzelne Verbindungen zum IT-Netz getrennt; lokale Steuerungen bleiben funktionsfähig. Pauschales Abschalten kann Anlagen und Werkstücke schädigen. Beobachten, ob der Tisch IT und Produktion gemeinsam entscheiden lässt."
+    },
+    {
+      "id": "W2",
+      "lagekarten": [
+        "LK22"
+      ],
+      "frage": "Informiert NordTech heute auch die Kunden proaktiv – oder erst, wenn die Lage klarer ist?",
+      "optionen": [
+        {
+          "id": "proaktiv",
+          "label": "Kunden heute proaktiv informieren (gesicherte Fakten, nächster Update-Termin)",
+          "wirkung": "Beim Wiederanlauf danken einzelne Großkunden für die Offenheit; ein Kunde kritisiert, dass die erste Meldung mehr Fragen aufwarf als beantwortete.",
+          "folgen": [
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Einzelne Großkunden bedanken sich für die frühe Information. Ein Kunde merkt an, dass die erste Meldung mehr Fragen aufwarf als beantwortete – das Vertrauen hat gelitten, ist aber nicht zerstört."
+            }
+          ]
+        },
+        {
+          "id": "abwarten",
+          "label": "Erst informieren, wenn die Lage klar ist",
+          "wirkung": "Der größte Automobilkunde erfährt es über Dritte (vertrauliche Karte an den Vertrieb bei „Datenschutz“); beim Wiederanlauf öffentliche Kritik; Zusatzposten Kundenabwanderung.",
+          "folgen": [
+            {
+              "lagekarte": "LK15",
+              "zusatz": "Zwei Großkunden kritisieren öffentlich, dass sie vom Angriff zuerst über Dritte statt von NordTech erfahren haben, und kündigen an, ihre Lieferantenstrategie zu überprüfen."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK43",
+            "beiLagekarte": "LK07"
+          },
+          "posten": [
+            "kundenkommunikation"
+          ]
+        }
+      ],
+      "hinweis": "Beide Wege haben Risiken: Frühe Information mit unvollständigen Fakten kann Nachfragen, Spekulation und vertragliche Reaktionen auslösen. Abwarten riskiert, dass Kunden es von Dritten erfahren. Gut ist eine Entscheidung, die das abwägt – nicht automatisch „proaktiv“."
+    },
+    {
+      "id": "W3",
+      "lagekarten": [
+        "LK07"
+      ],
+      "frage": "Meldet NordTech den möglichen Datenabfluss vorsorglich an die Datenschutzaufsicht – oder wartet sie die Bestätigung ab?",
+      "optionen": [
+        {
+          "id": "melden",
+          "label": "Vorsorglich melden, Informationen nachreichen",
+          "wirkung": "Der Beirat vermerkt das frühe, dokumentierte Vorgehen positiv.",
+          "folgen": [
+            {
+              "lagekarte": "LK17",
+              "zusatz": "Positiv vermerkt der Beirat: NordTech hat die mögliche Datenverletzung frühzeitig adressiert und eine vorsorgliche Meldung mit dokumentierter fachlicher Bewertung veranlasst."
+            }
+          ]
+        },
+        {
+          "id": "abwarten",
+          "label": "Abwarten, bis der Abfluss bestätigt ist",
+          "wirkung": "Kritische Nachfrage im Beirat; später fragt die Aufsicht nach dem Ablauf (vertrauliche Karte an die Geschäftsführung); zusätzlicher Prüf- und Beratungsaufwand als Modellannahme in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK17",
+              "zusatz": "Ein Beiratsmitglied will wissen, warum die Datenschutzaufsicht noch nicht informiert ist."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK44",
+            "beiLagekarte": "LK12"
+          },
+          "posten": [
+            "datenschutz-verspaetet"
+          ]
+        }
+      ],
+      "hinweis": "Nicht die rechtliche Richtigkeit einer Option bewerten, sondern: Werden die Risiken erkannt, wird fachlich geprüft, sind Entscheidungsgrundlagen dokumentiert und fachlich bestätigte Fristen eingehalten? Bei knapper Zeit (z. B. 45 Minuten) die Lösegeldfrage priorisieren und den Datenschutz als dokumentierten Prüfauftrag festhalten (wer prüft bis wann). Ohne ausdrücklichen Beschluss zur vorsorglichen Meldung gilt das als „abwarten“."
+    },
+    {
+      "id": "W4",
+      "lagekarten": [
+        "LK07"
+      ],
+      "frage": "Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, ein Backup ist bisher nicht gefunden. Niemand weiß, ob ein Schlüssel funktionieren würde oder wie schnell ein unabhängiger Wiederanlauf gelingt. Welche wirtschaftlichen und betrieblichen Gründe sprechen unter diesen Unsicherheiten für oder gegen eine Zahlung – und wie entscheidet NordTech?",
+      "optionen": [
+        {
+          "id": "nicht-gezahlt",
+          "label": "Kein Lösegeld gezahlt",
+          "wirkung": "Keine Lösegeldzahlung. Die Wiederherstellung läuft über geprüfte Sicherungen und unabhängig neu aufgebaute Systeme nach dem festgelegten Wiederanlaufplan; die Geschichte bleibt wie im Drehbuch.",
+          "folgen": []
+        },
+        {
+          "id": "gezahlt",
+          "label": "Lösegeld gezahlt",
+          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Erpresser fordern danach mehr (vertrauliche Karte an die IT mit „Beirat fordert Lagebericht“), die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK12",
+              "zusatz": "Der nach der Zahlung gelieferte Schlüssel entschlüsselt nur einen Teil der übrigen Systeme und ist sehr langsam. Niemand verlässt sich darauf – die Wiederherstellung der übrigen Systeme wartet weiter auf das geprüfte Backup."
+            },
+            {
+              "lagekarte": "LK15",
+              "zusatz": "In der Presse wird berichtet, dass NordTech Lösegeld gezahlt hat."
+            },
+            {
+              "sonderlagekarte": "SK27",
+              "text": "Trotz der Zahlung melden sich die Erpresser erneut über das Tor-Portal: „Wir sind noch in eurem Netz. Für die übrigen Schlüssel und die Löschung eurer Daten will die Gruppe weitere 500.000 €. Ihr habt 12 Stunden.“ Die Forensik kann nicht ausschließen, dass sie noch Zugang haben. Du entscheidest selbst, wie du mit dieser Information umgehst."
+            }
+          ],
+          "posten": [
+            "loesegeld"
+          ],
+          "karte": {
+            "sonderlagekarte": "SK27",
+            "beiLagekarte": "LK17"
+          }
+        }
+      ],
+      "hinweis": "Am besten gegen Ende dieser Lage entscheiden lassen, nachdem die Krisenstabsleitung ihre vertrauliche Karte zur Lösegeldfrage hatte. Die Zahlung muss ernsthaft abwägbar sein: Stillstandskosten, kein bekanntes Backup und möglicher schneller Datenzugriff stehen gegen einen unsicheren Schlüssel, erneute Erpressung und offene rechtliche Fragen (Sanktionen, Versicherung – fachlich prüfen lassen). Neigt der Tisch vorschnell zu „nie zahlen“, vertritt die Moderation die Gegenposition. Der Tisch weiß noch nicht, dass am Mittwoch Backups gefunden werden."
+    }
+  ],
+  "schwerpunkte": [
+    {
+      "key": "fuehrung",
+      "label": "Krisenführung und BCM",
+      "beschreibung": "Priorisieren, Wahrheit unter Druck, Stellvertretung und Meldewege.",
+      "karten": [
+        "LK24",
+        "LK05",
+        "LK22",
+        "SK47",
+        "SK45",
+        "SK15",
+        "SK21",
+        "SK23",
+        "B7",
+        "B6",
+        "LK17"
+      ],
+      "leitfrage": "Wer entscheidet, wer eskaliert, wer kommuniziert – und ist das allen klar?",
+      "zusatzfragen": {
+        "LK18": "Wer darf entscheiden, dass das kein Routinefall mehr ist?",
+        "LK01": "Wer übernimmt jetzt die Leitung – und wie erfahren alle davon?",
+        "LK02": "Was entscheidet der Krisenstab, was entscheiden die Fachbereiche selbst?",
+        "LK22": "Wer gibt Nachrichten frei – und wie schnell muss das gehen?",
+        "LK07": "Wer bekommt den Prüfauftrag, mit welchem Termin für die Rückmeldung?",
+        "LK09": "Welche Entscheidung muss jetzt fallen, welche kann warten – und wer hält das fest?",
+        "LK17": "Was ist gesichert, was geschätzt, was unbekannt – und sagt die Leitung das auch so?",
+        "LK12": "Wer entscheidet, wenn Vertrieb und Produktion unterschiedliche Prioritäten wollen?",
+        "LK15": "Wann und von wem wird die Krisenorganisation beendet – und was bleibt bestehen?"
+      },
+      "debriefing": [
+        "War jederzeit klar, wer entscheidet – und wer die Stellvertretung ist?",
+        "Wo sind Entscheidungen hängen geblieben oder doppelt getroffen worden?"
+      ],
+      "pflicht": [
+        "SK47"
+      ]
+    },
+    {
+      "key": "it",
+      "label": "IT-Sicherheit und Wiederanlauf",
+      "beschreibung": "Sichere Wiederherstellung, Zugriffskontrolle, belastbare Daten.",
+      "karten": [
+        "LK16",
+        "LK23",
+        "LK24",
+        "LK25",
+        "LK14",
+        "LK08",
+        "SK48",
+        "SK46",
+        "SK19",
+        "SK27",
+        "SK36",
+        "SK02",
+        "B8",
+        "B6"
+      ],
+      "leitfrage": "Was ist technisch bereit, was ist sicher, was ist fachlich freigegeben?",
+      "zusatzfragen": {
+        "LK18": "Welche technischen Sofortmaßnahmen sind jetzt richtig – und welche zerstören Spuren?",
+        "LK01": "Was wird jetzt vom Netz genommen, was bleibt an – und wer entscheidet das?",
+        "LK02": "Welche Anlagen dürfen ohne Netz weiterlaufen, und wie wird das abgesichert?",
+        "LK22": "Welche Kommunikationswege sind sicher, auch wenn der Angreifer noch im Netz sein könnte?",
+        "LK07": "Welche Logs und Spuren müssen gesichert werden, bevor Systeme neu aufgesetzt werden?",
+        "LK09": "Welche Prüfschritte braucht das Backup, bevor irgendetwas daraus produktiv wird?",
+        "LK17": "Welche Wiederanlauf-Prognose kann die IT belastbar nennen – und welche nicht?",
+        "LK12": "Nach welchen Kriterien sind die Systeme in Werk Süd freigegeben – und von wem?",
+        "LK15": "Was läuft produktiv, was noch im Test – und wie merken Sie, wenn der Angreifer zurückkommt?"
+      },
+      "debriefing": [
+        "Wo lagen technische Bereitstellung, Sicherheitsfreigabe und fachliche Freigabe zu dicht beieinander?",
+        "Welche Daten waren am Ende wirklich belastbar – und woher wusstet ihr das?"
+      ],
+      "pflicht": [
+        "SK19"
+      ]
+    },
+    {
+      "key": "produktion",
+      "label": "Produktion und Qualitätsmanagement",
+      "beschreibung": "Notbetrieb, Freigaben, Rückverfolgbarkeit, Menschen in den Schichten.",
+      "karten": [
+        "LK16",
+        "LK19",
+        "LK21",
+        "LK25",
+        "LK26",
+        "SK45",
+        "SK41",
+        "SK42",
+        "SK49",
+        "SK11",
+        "SK26",
+        "B8",
+        "B6"
+      ],
+      "leitfrage": "Was können wir sicher fertigen und ausliefern – mit welchen Nachweisen?",
+      "zusatzfragen": {
+        "LK18": "Was bedeutet ein ERP-Ausfall für die laufende Schicht?",
+        "LK01": "Welche Linien laufen weiter, welche werden kontrolliert gestoppt?",
+        "LK02": "Welche Aufträge haben Vorrang – und reichen Material und Personal dafür?",
+        "LK22": "Wie erreichen Anweisungen jede Schicht und jede Linie, auch ohne E-Mail?",
+        "LK07": "Welche Produktions- und Prüfdaten könnten betroffen sein – und was heißt das für Kunden?",
+        "LK09": "Welche Daten aus dem Backup braucht die Fertigung zuerst – und welche Lücken bleiben?",
+        "LK17": "Welche Liefertermine kann die Produktion belastbar zusagen?",
+        "LK12": "Was wird in Werk Süd zuerst gefertigt – und wie wird ohne ERP dokumentiert und freigegeben?",
+        "LK15": "Was davon ist Anlagenverfügbarkeit, was ist durch Personal gedeckt – und was ist als Ware tatsächlich freigegeben?"
+      },
+      "debriefing": [
+        "Wurde Ware freigegeben, ohne dass die Nachweise vollständig waren?",
+        "Wie viel der technischen Kapazität war wirklich nutzbar – und was hat sie begrenzt?"
+      ],
+      "pflicht": [
+        "SK45"
+      ]
+    },
+    {
+      "key": "kunden",
+      "label": "Kunden und Krisenkommunikation",
+      "beschreibung": "Kunden, Medien, Belegschaft: wer sagt wann was.",
+      "karten": [
+        "LK03",
+        "LK04",
+        "LK06",
+        "LK10",
+        "LK11",
+        "SK46",
+        "SK05",
+        "SK06",
+        "SK25",
+        "SK35",
+        "SK37",
+        "SK33",
+        "SK28",
+        "B6"
+      ],
+      "leitfrage": "Wer erfährt was, wann, von wem – und passt das zusammen?",
+      "zusatzfragen": {
+        "LK18": "Ab wann müssten Kunden von einer Störung erfahren?",
+        "LK01": "Welche Kunden informieren Sie heute – mit welcher Botschaft?",
+        "LK02": "Welche Kunden sind zuerst betroffen, und wer ruft sie an?",
+        "LK22": "Wer formuliert die Botschaft für Beschäftigte, Kunden und Presse – und wer gibt sie frei?",
+        "LK07": "Was sagen Sie Kunden, deren Daten betroffen sein könnten, bevor alles geklärt ist?",
+        "LK09": "Wann ist eine gute Nachricht kommunizierbar, ohne zu viel zu versprechen?",
+        "LK17": "Welche Kernbotschaft trägt nach innen und außen gleichermaßen?",
+        "LK12": "Welche Kunden bekommen die erste Ware – und was sagen Sie den anderen?",
+        "LK15": "Welche Aussage ist nachweisbar, welche bleibt eine Prognose?"
+      },
+      "debriefing": [
+        "Haben Kunden, Beschäftigte und Presse dieselbe Geschichte gehört?",
+        "Wo kam eine Information zu spät oder über Dritte an?"
+      ],
+      "pflicht": [
+        "SK46"
+      ]
+    }
+  ]
+}

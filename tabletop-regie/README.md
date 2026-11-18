@@ -105,6 +105,21 @@ Im Ordner `docs/`:
 - `nordtech-generalprobe.md` – Medien-Generalprobe: jede Karte so, wie die Bühne sie zeigt, mit Ton und Sichtbefund
 - `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
 
+## Prüfwerkzeuge und Review-Paket
+
+Für beide Drehbücher (Aufruf jeweils mit `data/scenario.<name>.json`):
+
+- `npm run pruefen` – Drehbuchprüfung (Pflichtfelder, Verweise, Medien, Rollenabdeckung)
+- `node tools/varianten.js <drehbuch> bericht.md` – alle 25 Kombinationen aus Dauer und Schwerpunkt und alle Entscheidungskombinationen
+- `node tools/szenario-export.js <drehbuch> drehbuch.md` – das komplette Drehbuch als Text
+- `node tools/geschichten.js <drehbuch> verlaeufe.md` – durchgespielte Verläufe, wie der Tisch sie erlebt
+- `node tools/medienliste.js <drehbuch> medien.md` – alle Bilder und Töne mit Datei, Maßen, Dauer und Prüfsumme
+- `node tools/tests/lauf.js scenario.<name>.json ergebnis.json` – Lauftest mit echtem Server und lokalem Test-Mailempfänger (keine echten Mails)
+- `node tools/tests/buehne.js scenario.<name>.json ordner` – Browsertest der Bühne mit Bildschirmfotos (braucht Playwright)
+- `node tools/tests/sicherheit.js` – Sicherheitsprüfung gegen den laufenden Server
+
+Das Review-Paket aus dem Abschluss der Prüfung liegt unter `docs/review/` (zwölf Dokumente, Testberichte, Ablaufdiagramme, Szenariodaten, `manifest.json` mit Prüfsummen).
+
 ## Ablauf einer Übung
 
 0. **Bereitest du Übungen öfter vor?** Dann zuerst ganz oben im Setup unter

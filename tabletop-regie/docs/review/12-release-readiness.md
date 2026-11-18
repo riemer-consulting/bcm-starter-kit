@@ -33,6 +33,7 @@ Stand: siehe `manifest.json`.
 4. Waterkant-Medien und Stimmen anhören und abnehmen lassen; Rechteklärung dokumentieren.
 5. Annahmen der Rechnungen und Fristen von Fachabteilungen bestätigen lassen (kein Rechts- oder Versicherungsrat in den Karten; Hinweise „fachlich prüfen lassen“ bleiben).
 6. Urkunden, Testmodus und Teilnehmer-Import einmal durchklicken (in dieser Runde nicht getestet).
+7. Für Waterkant gibt es noch **kein eigenes Moderationshandbuch** wie für NordTech (`docs/nordtech-moderationshandbuch.md`). Die Moderationsinhalte (Hinweise, Bewertung, Gesprächsleitfäden, Regie, Beobachtungsbögen) stehen im Werkzeug und vollständig in Dokument 05; ein Handbuch sollte vor dem Pilot erstellt werden.
 
 ## 4. Restrisiken
 
