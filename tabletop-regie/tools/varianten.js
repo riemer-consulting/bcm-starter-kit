@@ -29,7 +29,7 @@ w(`# Variantenprüfung: ${s.title}`, '', `Stand: ${new Date().toISOString().slic
 
 // ---- 25 Kombinationen
 w('## Dauer × Schwerpunkt', '', '| Dauer | Schwerpunkt | Rollen | Lagen gespielt | ausgelassen | vertraulich | max. je Rolle | Krise + Abschluss | Entscheidung je Lage | Weichen im Ablauf | Überraschungen einsetzbar | Pflichtkarte | Befund |', '|---:|---|---:|---:|---:|---:|---:|---|---:|---|---|---|---|');
-const detail = [];
+const detail = []; const gespieltLk = new Set(), gespieltSk = new Set(); const verschoben = {};
 DAUERN.forEach(m => SP.forEach(sp => {
   const { rec, ids, p } = plan(m, sp);
   const set = new Set(ids);
@@ -60,10 +60,21 @@ DAUERN.forEach(m => SP.forEach(sp => {
   if (bOk.length < Math.ceil(s.bonuskarten.length / 2) && m >= 60) probleme.push(`nur ${bOk.length} von ${s.bonuskarten.length} Überraschungen einsetzbar`);
   if (probleme.length) fehler.push(`${m}/${spLabel(sp)}: ${probleme.join(', ')}`);
   w(`| ${m} | ${spLabel(sp)} | ${ids.length} | ${lks.length} | ${s.lagekarten.length - lks.length} | ${sks.length} | ${Math.max(0, ...Object.values(proRolle))} | ${p.totalMinutes} + ${p.finaleMinutes} Min. | ${String(p.decisionMinutesUsed).replace('.', ',')} Min. | ${weichen.join(', ') || '–'} | ${bOk.length}/${s.bonuskarten.length} (${s.bonuskarten.filter(b => !bOk.includes(b)).map(b => b.id).join(' ') || 'alle'}${bOk.length < s.bonuskarten.length ? ' nicht' : ''}) | ${pfl.join(', ') || '–'} | ${probleme.join('; ') || (ohne.length ? 'ohne eigene Karte: ' + ohne.length + ' Rolle(n)' : 'ok')} |`);
+  lks.forEach(id => gespieltLk.add(id)); sks.forEach(x => gespieltSk.add(x.id));
+  sks.forEach(x => { const ref = s.sonderlagekarten.find(k => k.id === x.id); if (typeof ref.minuteOffset !== 'number') return;
+    const heim = s.lagekarten.filter(l => l.minuteOffset <= ref.minuteOffset).sort((p, q) => q.minuteOffset - p.minuteOffset)[0];
+    const davor = p.schedule.slice(0, p.schedule.indexOf(x)).filter(y => y.type === 'lagekarte').map(y => lk(y.id)).pop();
+    const tag = l => (l && l.simZeit || '').split(' ')[0];
+    if (heim && davor && davor.id !== heim.id && tag(davor) !== tag(heim)) (verschoben[x.id] = verschoben[x.id] || new Set()).add(`${m}/${spLabel(sp)}: Heimatlage ${heim.id} (${tag(heim)}) → kommt nach ${davor.id} (${tag(davor)})`); });
   detail.push({ m, sp, lks, skipped: s.lagekarten.filter(l => !lks.includes(l.id)).map(l => l.id), ids, sks: sks.map(x => `${x.id}→${e.resolveRecipient(s.sonderlagekarten.find(k => k.id === x.id), set) || '–'}`), weichen });
 }));
 w('', `**Ergebnis:** ${fehler.length ? 'Befunde: ' + fehler.join(' · ') : 'In allen ' + DAUERN.length * SP.length + ' Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten; ab 60 Min. mindestens die Hälfte der Überraschungen einsetzbar (Voraussetzung gespielt, Mindestdauer erfüllt).'}`, '');
 
+w('### Abdeckung: in keiner der Kombinationen gespielt', '', 'Hinweis, kein Fehler: Im Modus „Erprobte Zeiten aus dem Drehbuch“ werden alle Lagen gespielt. In der Zieldauer entfallen Karten mit niedriger Priorität; was hier steht, erreicht den Tisch nur in diesem Modus, über einen Schwerpunkt mit anderer Auswahl oder durch manuelle Auslösung.', '',
+  `- Lagekarten: ${s.lagekarten.filter(l => !gespieltLk.has(l.id)).map(l => l.id + ' ' + l.titel).join(' · ') || 'keine'}`,
+  `- vertrauliche Karten (ohne Folgekarten): ${s.sonderlagekarten.filter(k => !k.nurNachWeiche && !gespieltSk.has(k.id)).map(k => k.id).join(', ') || 'keine'}`, '');
+w('### Vertrauliche Karten, die über eine Tagesgrenze verschoben werden', '', 'Hinweis: Fehlt die Heimatlage einer vertraulichen Karte im Plan, kommt sie mit der nächsten gespielten Lage. Liegt diese an einem anderen Wochentag, müssen Zeitangaben im Kartentext dazu passen (zeitneutral formulieren oder die Karte an eine Kernlage binden).', '',
+  ...(Object.keys(verschoben).length ? Object.entries(verschoben).map(([id, v]) => `- **${id}** (${v.size}×): ${[...v].slice(0, 3).join('; ')}${v.size > 3 ? ' …' : ''}`) : ['- keine']), '');
 w('### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)', '');
 detail.forEach(d => w(`- **${d.m} Min. · ${spLabel(d.sp)}** – gespielt: ${d.lks.join(' ')} · ausgelassen: ${d.skipped.join(' ') || '–'} · Rollen (${d.ids.length}): ${d.ids.join(', ')} · vertraulich: ${d.sks.join(', ')} · Weichen: ${d.weichen.join(', ') || '–'}`));
 w('');

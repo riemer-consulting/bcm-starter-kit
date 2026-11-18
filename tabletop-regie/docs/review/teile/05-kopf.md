@@ -28,8 +28,8 @@ Vorgefunden wurde die Fassung „72 Stunden in Flammen“ (Großbrand im Zentral
 - **Vorboten (Mo 22:40 – Di 03:02):** USV-Batteriewarnung, Geruch im Technikflur, Serverraum wird warm – W1: herunterfahren oder weiterlaufen.
 - **Ausbruch (Di 03:10 – 06:30):** Brandalarm und Gaslöschung, vermisste Person, Lagebild nach dem Löschen, was noch läuft.
 - **Eskalation (Di 07:00 – 17:00):** Filialöffnung ohne Aktionspreise, Partnermärkte (W2), Sperrung des Serverraums, Medienanfrage, Lager ohne Lagerverwaltung, Ersatz-Optionen.
-- **Höhepunkt (Mi 07:30 – 19:00):** Backup-Server bergen? (W3, Personenschutz gegen Datenlücke), Umfang des Ausweichbetriebs (W4, 12 Monate Bindung), Gewerbekunde, Kundschaft, Verbundbeirat.
-- **Folgen (Do 08:00 – 13:00):** Rücksicherung, Reihenfolge der Märkte (W5, eigene Filialen zuerst?), Medienbericht.
+- **Höhepunkt (Mi 07:30 – 19:00):** Backup-Server bergen? (W3: kleinere Datenlücke gegen Einsatz im kontaminierten Raum, spätere Reinigung und Abstimmung mit dem Versicherer), Umfang des Ausweichbetriebs (W4, 12 Monate Bindung), Gewerbekunde, Kundschaft, Verbundbeirat.
+- **Folgen (Do 08:00 – 13:00):** Rücksicherung, Reihenfolge der Umstellung (W5: drei Märkte schaffen die 72-Stunden-Grenze nicht – welche?), ausführlicher Medienbericht.
 - **Wiederanlauf (Do 18:00 – Mo 09:00):** Kassen laufen, Datenlücke nachbuchen, Versicherer, Samstag, vorläufige Ursache, stabiler Notbetrieb mit erschöpftem Team, Rückkehr-Entscheidung.
 
 ## 4. Lernziele
@@ -51,4 +51,4 @@ Vorgefunden wurde die Fassung „72 Stunden in Flammen“ (Großbrand im Zentral
 | Danach bekam die Krisenstabsleitung bei 60 Min. keine eigene Karte | neue Karte SK46 (Zustimmungsvorbehalt der Gesellschafter zur 12-Monats-Bindung bei LK15) |
 | Überraschungen hingen an Lagen mit Priorität 2/3 – bei 45–120 Min. waren nur 1–3 von 8 einsetzbar | Voraussetzungen auf passende Kernlagen gelegt: B1/B3/B7/B8 → LK15, B2/B5 → LK14, B4 → LK22, B6 → LK09; jetzt ab 90 Min. alle 8, bei 45/60 Min. 7 von 8 (B7 bewusst erst ab 90 Min.) |
 
-Befunde aus der unabhängigen Prüfung und ihr Umgang stehen in `11-finaler-unabhaengiger-review.md`.
+Danach hat eine unabhängige Prüfung 39 Befunde gemeldet (11 hoch). Alle hohen und zehn weitere sind umgesetzt; die offenen stehen mit Begründung in `11-finaler-unabhaengiger-review.md`. Dieses Dokument zeigt die korrigierte Fassung.

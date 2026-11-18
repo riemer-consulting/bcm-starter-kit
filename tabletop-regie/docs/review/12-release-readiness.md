@@ -19,7 +19,7 @@ Stand: siehe `manifest.json`.
 | F7 | Zehn Negativtests mit Methode, Erwartung, Beobachtung | erfüllt | 07 Abschnitt 3 |
 | F8 | Bühne und Ton im Browser geprüft, jede Karte fotografiert | erfüllt (Chromium) | `screenshots/`, Testbericht |
 | F9 | Sicherheitsbefunde der Inventur behoben oder als Restrisiko benannt | erfüllt | 03, Sicherheitstest 10/10 |
-| F10 | Unabhängige Prüfung von Waterkant durchgeführt, Befunde bearbeitet | siehe 11 | 11 |
+| F10 | Unabhängige Prüfung von Waterkant durchgeführt, Befunde bearbeitet | erfüllt für alle hohen Befunde; 18 mittlere/niedrige offen mit Begründung; zweite Prüfung der korrigierten Fassung **offen** | 11 |
 | F11 | Neue Medien rechtlich geklärt | **offen** – technisch geprüft, nicht endgültig freigegeben | 08 Abschnitt 2 |
 | F12 | Paket ohne Repository prüfbar, ohne Passwörter, Tokens, reale Adressen | erfüllt (automatische Prüfung beim Bau des Pakets) | `manifest.json` |
 | F13 | Moderierter Probelauf mit echten Personen | **offen** | – |
@@ -33,7 +33,8 @@ Stand: siehe `manifest.json`.
 4. Waterkant-Medien und Stimmen anhören und abnehmen lassen; Rechteklärung dokumentieren.
 5. Annahmen der Rechnungen und Fristen von Fachabteilungen bestätigen lassen (kein Rechts- oder Versicherungsrat in den Karten; Hinweise „fachlich prüfen lassen“ bleiben).
 6. Urkunden, Testmodus und Teilnehmer-Import einmal durchklicken (in dieser Runde nicht getestet).
-7. Für Waterkant gibt es noch **kein eigenes Moderationshandbuch** wie für NordTech (`docs/nordtech-moderationshandbuch.md`). Die Moderationsinhalte (Hinweise, Bewertung, Gesprächsleitfäden, Regie, Beobachtungsbögen) stehen im Werkzeug und vollständig in Dokument 05; ein Handbuch sollte vor dem Pilot erstellt werden.
+7. Offene mittlere Befunde der unabhängigen Prüfung bearbeiten (vor allem W-R14 bis W-R18: Vertragslage Ausweich-Rack, Zeitleiste Wiederanlauf und Sanierung, Basisdienste, Lithium-Ionen-Spezifika) und die korrigierte Fassung erneut unabhängig prüfen lassen.
+8. Für Waterkant gibt es noch **kein eigenes Moderationshandbuch** wie für NordTech (`docs/nordtech-moderationshandbuch.md`). Die Moderationsinhalte (Hinweise, Bewertung, Gesprächsleitfäden, Regie, Beobachtungsbögen) stehen im Werkzeug und vollständig in Dokument 05; ein Handbuch sollte vor dem Pilot erstellt werden.
 
 ## 4. Restrisiken
 

@@ -26,10 +26,20 @@
 
 Beide Wiederanläufe sind **Szenarioannahmen**: Das Drehbuch unterstellt, dass die genannten Freigaben erteilt werden. Ob das in der Realität gelingt, ist Gegenstand der Diskussion, nicht Inhalt der Karten.
 
-## 3. Waterkant: Warum der minimale Ausweichbetrieb im Modell teurer ist als die Erweiterung
+## 3. Waterkant: Jede Entscheidung hat ihren Preis
 
-W4 „nur das Nötigste“ kostet im Modell 260.000 € (Online-Shop und Gewerbeportal drei Wochen eingeschränkt), W4 „erweitern“ 210.000 € (zwölf Monate Mindestlaufzeit plus Einrichtung). Das ist gewollt: Die Erweiterung ist im Schaden günstiger, bindet aber zwölf Monate Liquidität und braucht die Zustimmung der Gesellschafter (SK46). Das Dilemma liegt damit zwischen kurzfristigem Ertrag und langfristiger Bindung, nicht zwischen „billig“ und „teuer“.
+Nach der unabhängigen Prüfung (W-R03) hat jede Option einer Entscheidung einen eigenen, hergeleiteten Posten. Die Beträge je Entscheidung liegen nah beieinander und zeigen nicht mehr durchgehend zugunsten der „Lehrbuch-Antwort“:
+
+| Entscheidung | Option A | Option B |
+|---|---:|---:|
+| W1 herunterfahren / weiterlaufen | 100.000 € (Kulanz, abgebrochene Partner-Tagesabschlüsse, Preisnachtrag) | 95.000 € (Hardwareersatz nach Rußeintrag) |
+| W2 früh / später informieren | 25.000 € (Mehrkosten von Partnern, die auf die Prognose hin geplant hatten) | 40.000 € (Kulanz und Sonderkonditionen) |
+| W3 bergen / abwarten | 95.000 € (Bergung, Datenrettung, ein Tag spätere Reinigung) | 110.000 € (Nacherfassung bis zur Datenrettung) |
+| W4 minimal / ausbauen | 180.000 € (entgangener Rohertrag Wochen 2–3) | 210.000 € (Erweiterung zwölf Monate; zugleich Liquiditätsbindung) |
+| W5 gleichrangig / eigene zuerst | 75.000 € (drei eigene Filialen Freitagmorgen ohne Kassen) | 90.000 € (Gutschriften, Risiko Partnerverlust) |
+
+Damit unterscheiden sich die Verläufe in der Summe kaum (Spanne rund 80.000 €). Das ist gewollt: Bei Waterkant entscheidet der Tisch über Menschen, Daten, Vertrauen der Partner und Vertragsbindung – nicht über die günstigste Rechnung. Die Bühne sagt dazu: „Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten.“
 
 ## 4. Unterschied in der Spanne
 
-Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio. € allein). Bei Waterkant liegt die Spanne bei etwa 0,26 Mio. €: Die Entscheidungen verändern dort vor allem Personenschutz, Datenlücke, Partnerbeziehung und Vertragsbindung, weniger die Summe. Das ist für die Moderation wichtig: Bei Waterkant ist die Rechnung nicht das stärkste Argument im Debriefing, sondern die Frage, welche Risiken (Menschen, Daten, Vertrauen) der Tisch dafür eingegangen ist.
+Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio. € allein). Bei Waterkant liegt die Spanne bei etwa 0,08 Mio. €. Für die Moderation heißt das: Bei Waterkant ist die Rechnung nicht das stärkste Argument im Debriefing, sondern die Frage, welche Risiken der Tisch für welchen Nutzen eingegangen ist.

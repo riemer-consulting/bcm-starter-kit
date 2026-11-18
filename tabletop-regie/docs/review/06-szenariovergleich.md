@@ -8,7 +8,7 @@ Stand: siehe `manifest.json`. Zahlen aus den Drehbüchern ermittelt.
 | Unternehmen (fiktiv) | produzierender Mittelständler, 3 Standorte, ca. 620 Beschäftigte, 185 Mio. € Umsatz | Baumarktkette, 14 Filialen, ca. 850 Beschäftigte, 240 Mio. € Umsatz, IT-Dienstleister für 9 Partnermärkte |
 | Krisenart | Cyberangriff (Ransomware, Erpressung, möglicher Datenabfluss) | physisches Ereignis (Brand im USV-Raum, Gaslöschung, gesperrtes Rechenzentrum) |
 | Zeitraum | Montag 06:41 – Sonntag 15:00 | Montag 22:40 – folgender Montag 09:00 |
-| Status | eingefroren (nach Red-Team-Test und Vorabnahme) | neu; Vorabnahme ausstehend |
+| Status | eingefroren (nach Red-Team-Test und Vorabnahme) | neu; unabhängig geprüft (39 Befunde, alle hohen umgesetzt), fachliche Abnahme ausstehend |
 | Lagekarten (Priorität 1) | 26 (9) | 28 (9) |
 | Vertrauliche Karten (davon Folgekarten) | 49 (2) | 46 (5) |
 | Entscheidungen mit Folgen | 4 → 16 Kombinationen | 5 → 32 Kombinationen |
@@ -17,13 +17,13 @@ Stand: siehe `manifest.json`. Zahlen aus den Drehbüchern ermittelt.
 | Rollen / Funktionsbereiche | 24 / 11 | 20 / 14 |
 | Schwerpunkte | Krisenführung und BCM · IT-Sicherheit und Wiederanlauf · Produktion und Qualität · Kunden und Kommunikation | Krisenführung und Personenschutz · IT-Wiederanlauf und Infrastruktur · Partner, Kunden und Kommunikation · Filialen, Lager und Saisonstart |
 | Töne an Lagen / Überraschungen | 11 / 3 | 8 / 1 |
-| Sprechertexte / Gesprächssimulationen | 10 / 3 | 7 / 4 |
+| Sprechertexte / Gesprächssimulationen | 10 / 3 | 8 / 4 |
 | Grundschaden | 4,26 Mio. € | 3,18 Mio. € |
-| Spanne der Entscheidungen (brutto) | bis + 3,1 Mio. € (Lösegeld 2 Mio. €) | bis + 0,26 Mio. € |
+| Spanne der Entscheidungen (brutto) | bis + 3,1 Mio. € (Lösegeld 2 Mio. €) | rund 0,08 Mio. € zwischen günstigstem und teuerstem Verlauf; jede Option hat einen eigenen Preis |
 | Mögliche Erstattung (Modellannahme) | bis 1,4 Mio. € (Cyberversicherung) | bis 1,6 Mio. € (Elektronik/BU) |
-| Kernkonflikte | Lösegeld zahlen? Kunden früh informieren? Meldung an Datenschutzaufsicht? Produktion am Netz? | Herunterfahren in der Nacht? Partner früh informieren? Bergung trotz Gefahrstoff? Vertragsbindung 12 Monate? Eigene Filialen zuerst? |
+| Kernkonflikte | Lösegeld zahlen? Kunden früh informieren? Meldung an Datenschutzaufsicht? Produktion am Netz? | Herunterfahren in der Nacht? Partner früh informieren? Bergung vor Freigabe und Gutachter? Vertragsbindung 12 Monate? Welche drei Märkte reißen die Kassen-Grenze? |
 | Wiederanlauf | Freigabekette Backup → Integrität → Wiederherstellung → Sicherheit → Daten → Produktion → Lieferung | Raumfreigabe und Messung → Ausweich-Rack → geprüfte Firewall-Regeln → Märkte nach Kriterium → Nachbuchen der Datenlücke |
-| Varianten- und Lauftests | ohne Befund | ohne Befund (nach vier Korrekturen dieser Runde) |
+| Varianten- und Lauftests | ohne Befund | ohne Befund (nach vier eigenen Korrekturen und Einarbeitung der unabhängigen Prüfung, Dokument 11) |
 
 ## Gemeinsame Qualitätskriterien
 

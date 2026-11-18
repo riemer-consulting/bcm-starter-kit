@@ -57,7 +57,7 @@ module.exports = {
   ],
   [
    "Ereignis",
-   "Montag 22:40 Uhr Warnung der USV; Dienstag 03:10 Uhr Brand im USV-Raum neben dem Serverraum, Gaslöschung im Serverraum; alle Personen wohlauf (eine Person zunächst vermisst, später wohlauf); vorläufige Ursache (Samstag): thermisches Durchgehen eines Batteriemoduls, ein Update war nicht eingespielt"
+   "Montag 22:40 Uhr Warnung der USV; Dienstag 03:10 Uhr Brand im USV-Raum neben dem Serverraum, Gaslöschung im Serverraum; alle Personen wohlauf (ein Kollege aus dem Rechenzentrumsteam zunächst vermisst, später wohlauf); vorläufige Ursache (Samstag): thermisches Durchgehen eines Batteriemoduls, ein angekündigtes Update war nicht eingespielt, die Wartung zweimal verschoben, Zuständigkeit zwischen IT und Gebäudetechnik ungeklärt"
   ],
   [
    "Gebäude",
@@ -69,7 +69,7 @@ module.exports = {
   ],
   [
    "Kassen",
-   "Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr"
+   "Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr; eine bis dahin nicht umgestellte Kasse sperrt sich und muss am Morgen vor Ort freigeschaltet werden"
   ],
   [
    "Datensicherung",
@@ -85,7 +85,7 @@ module.exports = {
   ],
   [
    "Wiederanlauf",
-   "Donnerstag 18:00 Uhr Kassen- und Preisdienste wieder verfügbar, Umstellung Markt für Markt (ca. 2 Märkte pro Stunde) bis in die Nacht; Sonntag 12:00 Uhr stabiler Notbetrieb aus dem Ausweich-Rack; eigenes Rechenzentrum weiter gesperrt (Szenarioannahme: der Notbetrieb gelingt, wenn die Freigaben wie beschrieben erteilt werden)"
+   "Donnerstag 18:00 Uhr Kassen- und Preisdienste wieder verfügbar, Umstellung ab ca. 17:00 Uhr Markt für Markt (ca. 2 Märkte pro Stunde); bis 03:00 Uhr ca. 20 von 23 Märkten, drei werden am Freitagmorgen vor Ort freigeschaltet; Sonntag 12:00 Uhr stabiler Notbetrieb aus dem Ausweich-Rack; eigenes Rechenzentrum weiter gesperrt (Szenarioannahme: der Notbetrieb gelingt, wenn die Freigaben wie beschrieben erteilt werden)"
   ],
   [
    "Saison",
@@ -93,7 +93,7 @@ module.exports = {
   ],
   [
    "Medien",
-   "Regionalsender „Nordkanal“: Anfrage Dienstag 11:30 Uhr (Frist 13:00 Uhr), Bericht Donnerstag 13:00 Uhr; Falschmeldung „Großbrand im Zentrallager“ eines Nachrichtenportals (Überraschung B6)"
+   "Regionalsender „Nordkanal“: Anfrage Dienstag 11:30 Uhr, Kurzmeldung Dienstag 13:00 Uhr, ausführlicher Beitrag Donnerstag 13:00 Uhr; Falschmeldung „Großbrand im Zentrallager“ eines Nachrichtenportals (Überraschung B6)"
   ],
   [
    "Geld",

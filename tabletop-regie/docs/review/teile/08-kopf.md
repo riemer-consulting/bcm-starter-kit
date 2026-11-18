@@ -5,7 +5,8 @@
 ## 1. Grundsätze (für beide Szenarien)
 
 - Jeder Ton gehört genau zu einer Karte, endet von selbst (außer der Hintergrund vor Krisenbeginn und in den Vorboten), ist in der Moderation jederzeit stummschaltbar und bringt keine Fakten, die nicht auch auf der Karte stehen.
-- Alarmtöne und Durchsagen tragen auf der Bühne das Schild **„Übungseinspielung – kein echter Alarm“** (Waterkant LK04, B5; NordTech wo vorgesehen). Durchsagen sagen hörbar „Übung“. Signaltöne sind kurz und synthetisch, keine Nachbildung realer Alarmanlagen.
+- Alarmtöne und Durchsagen tragen auf der Bühne das Schild **„Übungseinspielung – kein echter Alarm“** (Waterkant LK04, B5; NordTech wo vorgesehen). Durchsagen sagen hörbar „Übung“; bei Waterkant beginnen LK04 und B5 nach der unabhängigen Prüfung zusätzlich mit „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ und enden mit „Ende der Übungseinspielung.“ Signaltöne sind kurz und synthetisch, keine Nachbildung realer Alarmanlagen.
+- **Organisatorisch vor jeder Übung mit Alarmtönen:** Empfang, Sicherheitsdienst und Brandschutzbeauftragte am Übungsort informieren, Türschild „Übung läuft – Alarmtöne sind Einspielungen“, Lautstärke begrenzen, nie über Haus- oder Durchsageanlagen abspielen. Ohne Ton bleibt jede Karte spielbar; Einspielungen mit Sprache haben eine Abschrift in der Moderation.
 - Bei Karten mit **Signal** (z. B. Telefon, Funk) spielt der Ton nur das Signal; das Gespräch führt die Moderation live nach Sprechertext und Gesprächsleitfaden.
 - Bilder zeigen keine realen Marken, Personen oder Orte.
 

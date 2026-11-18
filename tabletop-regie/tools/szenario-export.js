@@ -63,8 +63,9 @@ w('### Vertrauliche Karten (per E-Mail an eine Rolle, chronologisch)', '');
 s.sonderlagekarten.filter(k => !k.nurNachWeiche).sort((a, b) => (a.minuteOffset ?? 999) - (b.minuteOffset ?? 999)).forEach(sk => {
   w(`#### ${sk.id} – an ${role(sk.empfaenger)}`, '',
     `*Drehbuch-Minute:* ${sk.minuteOffset ?? 'nur manuell'} · *fällt in die Lage:* ${lageVon(sk)} · *Priorität:* ${sk.prioritaet} · *Ersatzrollen:* ${(sk.fallbackEmpfaenger || []).map(role).join(' → ') || '–'}`, '',
+    ...(sk.nurInEigenerLage ? ['*Nur in ihrer eigenen Lage:* entfällt, wenn diese Lage nicht gespielt wird (statt mit einer späteren Lage zu kommen).', ''] : []),
     ...(sk.voraussetzung ? [`*Kommt nur nach:* ${sk.voraussetzung.map(id => id + ' ' + lkTitel(id)).join(', ')}`, ''] : []),
-    ...(sk.zuBeginnVon ? [`*Kommt immer direkt mit:* ${sk.zuBeginnVon} ${lkTitel(sk.zuBeginnVon)}`, ''] : []),
+    ...(sk.zuBeginnVon ? [`*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* ${sk.zuBeginnVon} ${lkTitel(sk.zuBeginnVon)}`, ''] : []),
     ...((sk.textVarianten || []).map(v => `*Text, wenn ${v.nachLagekarte} ${lkTitel(v.nachLagekarte)} schon gezeigt ist:* ${v.text}`).flatMap(x => [x, ''])),
     sk.text, '', `*Gute Reaktion:* ${sk.moderatorGut}  `, `*Schwache Reaktion:* ${sk.moderatorSchlecht}`, '');
 });
