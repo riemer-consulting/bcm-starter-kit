@@ -71,15 +71,17 @@ Diese Eckdaten gelten für alle Karten. Alles, was davon abweicht, ist ein Wider
 | Eckdatum | Wert |
 |---|---|
 | Unternehmen | NordTech Components GmbH (fiktiv), 3 Standorte · ca. 620 Beschäftigte · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma |
+| Produkte und Qualitätsrahmen | Automobil: Präzisions-Frästeile und Baugruppen, Abruf per EDI. Pharma: Präzisions-Metallkomponenten für Dosier- und Injektionssysteme, gefertigt nach Qualitätssicherungsvereinbarung mit den Pharmakunden; zu jeder Charge gehören Produktions- und Prüfnachweise, die Arzneimittelfreigabe liegt beim Kunden (fachliche Annahme). |
 | Standorte | 3, einer davon „Werk Süd“; Fertigungslinien u. a. „Fräslinie 4“ |
 | Beschäftigte / IT | ca. 620 Beschäftigte; 900 Endgeräte, Produktionsrechner und Server |
 | Angreifer | Ransomware „SHADOWVAULT“; Einstieg vermutlich über ein VPN-Konto (Phishing) |
 | Lösegeld | 2.000.000 €, Frist 48 Stunden ab Montag 07:00 Uhr → Mittwoch 07:00 Uhr |
-| Backup | Offline-Backup, Stand Samstag 23:00 Uhr (vor dem Angriff); Datenverlust rund 32 Stunden (Sonntag bis Montagfrüh); gefunden Mittwoch 11:00 Uhr, Prüfung mind. zwei Tage |
+| Backup | Offline-Backup, Stand Samstag 23:00 Uhr (vor dem Angriff), im Tresor des Hauptsitzes; Zugangsdaten im versiegelten IT-Notfallumschlag; Datenverlust rund 32 Stunden (Sonntag bis Montagfrüh); gefunden Mittwoch 11:00 Uhr, Prüfung mind. zwei Tage, abgeschlossen vor Samstag (ERP-Wiederherstellung im Test) |
 | Medien | Regionalsender „Nordkanal“: Anfrage Montag 14:00 Uhr, Sonderbericht Donnerstag 08:00 Uhr; LinkedIn-Beitrag Montag 11:00 Uhr |
 | Kunden | Automobilkunden (Just-in-time, Vertragsstrafe 50.000 € pro Tag Lieferausfall) und Pharmakunden (260 Chargen, Dokumentationspflichten) |
-| Wiederanlauf | Freitag 08:00 Uhr Werk Süd im Notbetrieb mit 30 % (isoliert neu aufgesetzte Produktionssysteme, ERP noch nicht produktiv); Samstag ERP im Testbetrieb; Sonntag 12:00 Uhr 70 % der Kapazität verfügbar, Material knapp |
-| Geld | Cyberversicherung: bis zu 1,4 Mio. € unter Vorbehalt; Jahresumsatz 185 Mio. €, Umsatzrendite 5 % |
+| Wiederanlauf | Freitag 08:00 Uhr Werk Süd im Notbetrieb mit 30 % (isoliert neu aufgesetzte Produktionssysteme, ERP noch nicht produktiv); Samstag ERP aus dem geprüften Backup im isolierten Testbetrieb, Daten- und Sicherheitsfreigabe offen; Sonntag 12:00 Uhr 70 % der technischen Kapazität auf priorisierten Anlagen (nicht alle 900 Systeme, ERP nicht produktiv, Freigaben von Daten und Ware offen), Personal und Material knapp |
+| Geld | Cyberversicherung: bis zu 1,4 Mio. € unter Vorbehalt (in der Rechnung als optimistische, unbestätigte Annahme getrennt vom Bruttoschaden); Jahresumsatz 185 Mio. €, Umsatzrendite 5 %; Deckungsbeitrag je Stillstandstag ca. 260.000 € (fachliche Annahme) |
+| Zeitmodell | ca. 30 Sekunden Sprechzeit je Funktionsbereich und Lage (bei 180 Min. 11 Bereiche für 21 Rollen), dazu Lese- und Entscheidungszeit; nicht jede Rolle spricht bei jeder Lage – gefordert sind die zuständigen |
 | Gremien | Beirat (Sondersitzung Donnerstag), Betriebsrat, Hausbank, Datenschutzaufsicht, Polizei (ZAC) |
 
 ### Zeitleiste der Lagekarten (Reihenfolge im vollständigen Drehbuch)
@@ -247,7 +249,7 @@ Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anme
 *Fragen an die Gruppe:*
 
 - Was ist Ihre erste Reaktion – und wen informieren Sie?
-- Ab wann ist das mehr als eine IT-Störung?
+- Welche Information würde Sie veranlassen, jetzt den IT-Notfallprozess auszulösen?
 
 *Bild auf der Bühne:* Die ERP-Anmeldung schlägt fehl.
 
@@ -264,7 +266,7 @@ An der Fräslinie 4 laufen die Programme nicht an. Im Programmverzeichnis haben 
 *Fragen an die Gruppe:*
 
 - Wer muss jetzt informiert werden?
-- Wer entscheidet, ob das ein Notfall ist?
+- Würden Sie die Linie bereits stoppen, bevor ein Angriff bestätigt ist?
 
 *Bild auf der Bühne:* Bedienterminal der Fräslinie 4.
 
@@ -280,7 +282,7 @@ Der Vertriebsinnendienst meldet: Seit 06:30 Uhr sind keine Abrufe der Automobilk
 
 *Fragen an die Gruppe:*
 
-- Ist das schon eine Krise?
+- Wie lange warten Sie auf den Provider, bevor Sie Kunden selbst kontaktieren?
 - Wer ruft den Krisenstab zusammen – und wann?
 
 *Bild auf der Bühne:* EDI-Eingang der Automobilkunden heute früh.
@@ -378,8 +380,7 @@ Ein Teamleiter aus der Disposition postet auf LinkedIn über den Ausfall – mit
 
 *Fragen an die Gruppe:*
 
-- Wer reagiert?
-- Wie kommunizieren Sie?
+- Fordern Sie sofort die Löschung des Beitrags – oder veröffentlichen Sie zuerst eine eigene Stellungnahme?
 - Welche Sprachregelung bekommen Kundenservice und Service-Desk?
 - Welche gesicherten Informationen geben Sie jetzt proaktiv an die Belegschaft – über welchen Kanal, und wann folgt das nächste Update?
 
@@ -454,7 +455,7 @@ Der leitende Systemadministrator liegt seit Montag im Krankenhaus und ist nicht 
 *Fragen an die Gruppe:*
 
 - Welche Risiken entstehen?
-- Welche Alternativen gibt es?
+- Welche Aufgabe vergeben Sie sofort an externe Spezialisten, obwohl Zugriffsrechte und Sicherheitslage ungeklärt sind?
 - Welche Prioritäten ändern sich?
 
 *Bild auf der Bühne:* Der Platz des leitenden Systemadministrators bleibt leer.
@@ -516,7 +517,7 @@ Forensiker bestätigen den Einbruchsvektor: Eine Phishing-Mail hat die Zugangsda
 
 *Fragen an die Gruppe:*
 
-- Welche Maßnahmen ergeben sich daraus?
+- Welche Einschränkungen heben Sie jetzt auf – und welche ausdrücklich nicht?
 - Kommunizieren Sie diesen Erfolg?
 
 *Bild auf der Bühne:* Forensik identifiziert den Einbruchsvektor.
@@ -527,7 +528,7 @@ Forensiker bestätigen den Einbruchsvektor: Eine Phishing-Mail hat die Zugangsda
 
 *Simulationszeit:* Mittwoch 11:00 Uhr · *Station:* Eskalation · *Priorität:* 1 · *Drehbuch-Minute:* 51 · *Diskussion:* 4 Min.
 
-Offline-Backups sind verfügbar, Stand: Samstag 23:00 Uhr. Der Sicherungsdatenträger ist lesbar. Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.
+Im Tresor des Hauptsitzes wurden Offline-Backups gefunden, Stand: Samstag 23:00 Uhr. Der Sicherungsdatenträger ist lesbar. Die Zugangsdaten zur Sicherungssoftware lagen im versiegelten IT-Notfallumschlag – ohne ihn wäre ohne den erkrankten Administrator niemand an die Daten gekommen. Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.
 
 *Krisen-Info (rot hervorgehoben):* Datenverlust: rund 32 Stunden (Sonntag bis Montagfrüh)
 
@@ -656,7 +657,7 @@ Die Cyberversicherung stellt unter Vorbehalt eine Kostenbeteiligung von bis zu 1
 
 *Fragen an die Gruppe:*
 
-- Welche Leistungen nutzen Sie zuerst?
+- Beauftragen Sie benötigte Spezialisten auch dann, wenn die Kostenerstattung ungeklärt ist?
 - Wer koordiniert die Zusammenarbeit?
 
 *Bild auf der Bühne:* Das Incident-Response-Team der Cyberversicherung ist vor Ort.
@@ -681,20 +682,20 @@ Die Produktion ist teilweise wieder angelaufen. Für 260 Chargen für Pharmakund
 
 *Zuständig:* Leitung Qualitätsmanagement, Leitung Produktion (Werksleitung), Geschäftsführung Vertrieb, stellv. Krisenstabsleitung, Geschäftsführung (CEO), Krisenstabsleitung, Key Account Management Pharma
 
-*Hinweis für die Moderation:* Kernkonflikt: Lieferdruck gegen Qualitätsfreigabe. Darauf achten, dass die Freigabe nicht vom Vertrieb oder der IT entschieden wird.
+*Hinweis für die Moderation:* Kernkonflikt: Lieferdruck gegen Qualitätsfreigabe. Darauf achten, dass die Freigabe nicht vom Vertrieb oder der IT entschieden wird. Rahmen (fachliche Annahme): NordTech liefert Komponenten nach Qualitätssicherungsvereinbarung; ohne vollständige Produktions- und Prüfnachweise darf NordTech eine Charge nicht als konform ausliefern, und der Pharmakunde kann sie nicht verwenden. Einzelheiten fachlich prüfen lassen.
 
 #### LK14 – ERP-Testbetrieb
 
 *Simulationszeit:* Samstag 09:00 Uhr · *Station:* Wiederanlauf · *Priorität:* 3 · *Drehbuch-Minute:* 79 · *Diskussion:* 4 Min.
 
-Das ERP-System läuft in einer Testumgebung. Erste Funktionstests erfolgreich.
+Das ERP wurde aus dem inzwischen auf Schadcode und Vollständigkeit geprüften Offline-Backup in einer isolierten Testumgebung wiederhergestellt. Erste Funktionstests sind erfolgreich. Die fachliche Prüfung der Daten und die Sicherheitsfreigabe für den Produktivbetrieb stehen aus. Vertrieb und Versand drängen: Ohne ERP lassen sich ab Montag weder Lieferpapiere noch Rechnungen erstellen.
 
-*Krisen-Info (rot hervorgehoben):* Ein Restrisiko bleibt bestehen
+*Krisen-Info (rot hervorgehoben):* Funktionstest bestanden · Daten- und Sicherheitsfreigabe offen · Versand braucht das ERP ab Montag
 
 *Fragen an die Gruppe:*
 
-- Sofort produktiv gehen?
-- Weitere Tests durchführen?
+- Welchen einzigen Geschäftsprozess würden Sie unter welchen Freigabebedingungen zuerst aktivieren?
+- Wer erteilt die Sicherheitsfreigabe – und was gilt, bis sie vorliegt?
 
 *Bild auf der Bühne:* Das ERP läuft im Testbetrieb.
 
@@ -732,12 +733,14 @@ Das ERP läuft seit Samstagmorgen in einer Testumgebung. Beim Abgleich mit den P
 
 *Simulationszeit:* Sonntag 12:00 Uhr · *Station:* Wiederanlauf · *Priorität:* 1 · *Drehbuch-Minute:* 86 · *Diskussion:* 5 Min.
 
-70 % der technischen Fertigungskapazität sind wieder verfügbar, die IT-Systeme weitgehend. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.
+70 % der technischen Fertigungskapazität sind auf priorisierten Anlagen wieder verfügbar – in isolierten, geprüften Produktionsumgebungen mit Sicherheitsfreigabe. Nicht alle 900 IT- und OT-Systeme sind wiederhergestellt; der ERP-Produktivbetrieb sowie die Freigaben von Daten und Ware werden gesondert bewertet. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.
+
+*Krisen-Info (rot hervorgehoben):* 70 % technische Kapazität auf priorisierten Anlagen · ERP-Produktivbetrieb und Freigaben offen
 
 *Fragen an die Gruppe:*
 
 - Welche Botschaft senden Sie an Kunden, Beschäftigte und Öffentlichkeit – und wer sagt es?
-- Welche Maßnahmen folgen nach der Krise?
+- Welchen Kunden vertrösten Sie bewusst, obwohl technische Kapazität vorhanden ist – und wer sagt es ihm?
 
 *Bild auf der Bühne:* Wiederanlauf: 70 % technische Kapazität – noch nicht 70 % Lieferfähigkeit.
 
@@ -955,7 +958,7 @@ In vier Tagen wäre Inventurstichtag. Die Systeme stehen weiterhin nicht zur Ver
 
 *Drehbuch-Minute:* 44 · *fällt in die Lage:* LK07 Datenschutz (Dienstag 13:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Geschäftsführung Vertrieb, stellv. Krisenstabsleitung → Kaufmännische Leitung (CFO)
 
-Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.
+Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Die Finanzleitung rechnet vor: Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, und ein Backup ist bisher nicht gefunden. Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.
 
 *Gute Reaktion:* Eine begründete Position mit klaren Kriterien, fachlich geprüft, im Krisenstab abgestimmt und dokumentiert.  
 *Schwache Reaktion:* Eine unklare Haltung oder eine Entscheidung allein und unter Zeitdruck.
@@ -987,15 +990,6 @@ Die ersten Kunden drohen mit Schadensersatzforderungen. Noch liegen keine offizi
 *Gute Reaktion:* Rechtliche Bewertung wird angefordert, Vertrieb und Finanzleitung werden einbezogen, keine Zugeständnisse am Telefon.  
 *Schwache Reaktion:* Keine Eskalation – oder voreilige Zugeständnisse ohne Abstimmung.
 
-#### SK02 – an IT-Fachkraft (Vertretung IT-Leitung)
-
-*Drehbuch-Minute:* 49 · *fällt in die Lage:* LK08 Positive Entwicklung (Mittwoch 08:00 Uhr) · *Priorität:* 3 · *Ersatzrollen:* IT-Leitung (CIO)
-
-Du entdeckst einen Offline-Datenträger. Möglicherweise befindet sich darauf ein älteres Backup. Der Zustand ist unbekannt. Du entscheidest selbst über das weitere Vorgehen.
-
-*Gute Reaktion:* Der Datenträger wird unverändert gesichert und an die IT-Leitung gemeldet; geprüft wird isoliert.  
-*Schwache Reaktion:* Der Datenträger wird an einen Rechner im Netz angeschlossen – oder die Information bleibt liegen.
-
 #### SK19 – an IT-Leitung (CIO)
 
 *Drehbuch-Minute:* 52 · *fällt in die Lage:* LK09 Backups gefunden (Mittwoch 11:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Fachkraft (Vertretung IT-Leitung) → Geschäftsführung (CEO), Krisenstabsleitung
@@ -1006,6 +1000,17 @@ Die Forensiker warnen davor, betroffene Systeme oder Daten aus ungeprüften Back
 
 *Gute Reaktion:* Die Empfehlung und ihre Folgen für den Wiederanlauf gehen offen in den Krisenstab; Business und IT legen gemeinsam fest, was vorgezogen werden darf.  
 *Schwache Reaktion:* Die IT blockt allein ab oder gibt dem Druck nach – Business und IT arbeiten gegeneinander.
+
+#### SK02 – an IT-Fachkraft (Vertretung IT-Leitung)
+
+*Drehbuch-Minute:* 53 · *fällt in die Lage:* LK24 Wer bekommt das erste System? (Mittwoch 15:00 Uhr) · *Priorität:* 3 · *Ersatzrollen:* IT-Leitung (CIO)
+
+*Kommt nur nach:* LK09 Backups gefunden
+
+Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nur in eine isolierte Prüfumgebung, und die steht noch nicht vollständig. Ein Fachbereichsleiter bittet dich, „nur schnell“ die Auftragsdaten auf einen Laptop im Produktionsnetz zu kopieren, damit der Vertrieb wieder arbeiten kann. Du entscheidest selbst über das weitere Vorgehen.
+
+*Gute Reaktion:* Keine Kopie ins ungeprüfte Netz; Anfrage an die IT-Leitung eskaliert; Alternative angeboten (geprüfter Auszug, sobald die Prüfumgebung steht).  
+*Schwache Reaktion:* Daten werden „ausnahmsweise“ kopiert – oder die Anfrage wird abgelehnt, ohne dass der Krisenstab davon erfährt.
 
 #### SK17 – an Geschäftsführung (CEO), Krisenstabsleitung
 
@@ -1220,15 +1225,15 @@ Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt di
   - LK12 bekommt dazu: „Weil die Anlagen am Montag am Netz blieben, wurden zwei weitere Fräslinien verschlüsselt und müssen neu aufgesetzt werden.“ · Krisen-Info: Kapazität: 20 % (zwei Linien zusätzlich verschlüsselt)
   - LK15 bekommt dazu: „Zusätzliche Wiederherstellungsteams haben bis Sonntag auch die am Montag zusätzlich verschlüsselten Linien wieder freigegeben – der Schaden vom Montag hat den Wiederanlauf verteuert, aber nicht dauerhaft verhindert.“
   - Abschluss: Zwei zusätzlich verschlüsselte Fräslinien: Neuaufsetzen und längerer Stillstand (350.000 €)
-- **Übrige Anlagen nach abgestimmter Sicherheitsentscheidung so schnell wie vertretbar isolieren, laufende Aufträge kontrolliert abbrechen** – Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.
+- **Übrige Anlagen kontrolliert in einen sicheren Zustand fahren und ihre Verbindungen zum IT-Netz gezielt trennen, laufende Aufträge geordnet abbrechen** – Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.
   - LK12 bekommt dazu: „Die frühe Trennung vom Netz hat sich ausgezahlt: Keine Fertigungsanlage wurde zusätzlich verschlüsselt.“
 
 #### W2 – bei LK22 Kommunikation ohne IT
 
 **Frage:** Informiert NordTech heute auch die Kunden proaktiv – oder erst, wenn die Lage klarer ist?
 
-- **Kunden heute proaktiv informieren (gesicherte Fakten, nächster Update-Termin)** – Beim Wiederanlauf bedanken sich Großkunden für die Offenheit.
-  - LK15 bekommt dazu: „Mehrere Großkunden bedanken sich ausdrücklich für die frühe und offene Information – das Vertrauen hat gelitten, ist aber nicht zerstört.“
+- **Kunden heute proaktiv informieren (gesicherte Fakten, nächster Update-Termin)** – Beim Wiederanlauf danken einzelne Großkunden für die Offenheit; ein Kunde kritisiert, dass die erste Meldung mehr Fragen aufwarf als beantwortete.
+  - LK15 bekommt dazu: „Einzelne Großkunden bedanken sich für die frühe Information. Ein Kunde merkt an, dass die erste Meldung mehr Fragen aufwarf als beantwortete – das Vertrauen hat gelitten, ist aber nicht zerstört.“
 - **Erst informieren, wenn die Lage klar ist** – Der größte Automobilkunde erfährt es über Dritte (vertrauliche Karte an den Vertrieb bei „Datenschutz“); beim Wiederanlauf öffentliche Kritik; Zusatzposten Kundenabwanderung.
   - LK15 bekommt dazu: „Zwei Großkunden kritisieren öffentlich, dass sie vom Angriff zuerst über Dritte statt von NordTech erfahren haben, und kündigen an, ihre Lieferantenstrategie zu überprüfen.“
   - Folgekarte SK43 an Geschäftsführung Vertrieb, stellv. Krisenstabsleitung bei LK07: „Der Einkaufsleiter eures größten Automobilkunden ruft an: Er hat über Dritte vom Cyberangriff erfahren, nicht von euch. Er verlangt bis heute Abend ein Gespräch mit der Geschäftsführung und eine schriftliche Lageinformation.“
@@ -1247,7 +1252,7 @@ Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt di
 
 #### W4 – bei LK07 Datenschutz
 
-**Frage:** Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Zahlt NordTech das Lösegeld – auf Grundlage dessen, was der Krisenstab heute weiß?
+**Frage:** Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, ein Backup ist bisher nicht gefunden. Niemand weiß, ob ein Schlüssel funktionieren würde oder wie schnell ein unabhängiger Wiederanlauf gelingt. Welche wirtschaftlichen und betrieblichen Gründe sprechen unter diesen Unsicherheiten für oder gegen eine Zahlung – und wie entscheidet NordTech?
 
 - **Kein Lösegeld gezahlt** – Keine Lösegeldzahlung. Die Wiederherstellung läuft über geprüfte Sicherungen und unabhängig neu aufgebaute Systeme nach dem festgelegten Wiederanlaufplan; die Geschichte bleibt wie im Drehbuch.
 - **Lösegeld gezahlt** – Der gelieferte Schlüssel hilft nur teilweise, die Erpresser fordern danach mehr (vertrauliche Karte an die IT mit „Beirat fordert Lagebericht“), die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.
@@ -1352,14 +1357,14 @@ Bevorzugt: LK03, LK04, LK06, LK10, LK11, SK46, SK05, SK06, SK25, SK35, SK37, SK3
 - **B7 – Die Krisenstabsleitung ist nicht erreichbar** (erst nach LK17), **öffentlich auf der Bühne** (Geschäftsführung (CEO), Krisenstabsleitung 5 Minuten nicht erreichbar, Countdown): Die Krisenstabsleitung wird zu einem vertraulichen Gespräch abgerufen und ist für die nächsten fünf Minuten nicht erreichbar. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich. Die Stellvertretung übernimmt – jetzt.  
   *Ton/Sprechertext:* „Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“  
   *Regie:* Nach dem Klingeln geht die Moderation zur Krisenstabsleitung und bittet sie hinaus (Flur oder Nebentisch). Die Bühne zählt fünf Minuten herunter. Danach zurückholen und als Erstes fragen: Was hat die Stellvertretung in dieser Zeit entschieden – und weiß die Krisenstabsleitung es jetzt?  
-  *Moderation:* Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr.
+  *Moderation:* Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr. B7 ersetzt fünf Minuten der Lagebearbeitung von LK17 und wird nicht addiert: Der Übungstimer läuft weiter, der Lagebericht entsteht in dieser Zeit.
 - **B8 – Ein vermeintlicher Erfolg** (erst nach LK14), **öffentlich auf der Bühne**: Erster Funktionstest des ERP: erfolgreich. Kurz darauf meldet das Qualitätsmanagement: Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu den Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich hält das für einen kleinen Datenfehler, der den Produktivstart nicht aufhalten darf. *Krisen-Info:* Funktionstest bestanden · Chargennummer weicht von den Unterlagen ab · Ursache offen  
   *Ton/Sprechertext:* Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“  
   *Moderation:* Nur ziehen, wenn der Tisch nach „ERP-Testbetrieb“ einen sofortigen Produktivstart oder eine ungeprüfte Freigabe fordert – nicht, wenn Sicherheits- und Datenprüfung schon eingefordert sind. Fragen: Unter welchen Bedingungen stoppen Sie die Freigabe? Wer untersucht, wer gibt fachlich frei? Was bleibt im Notbetrieb? Was ist gegenüber Produktion und Kunden belastbar? Gut: Freigabe zurückstellen, Ursache und Umfang prüfen, Kriterien und Verantwortliche festhalten. Schwach: „Ein erfolgreicher Funktionstest reicht.“ Keine Katastrophe nachschieben; die Sonntags-Aussage (70 % technische Kapazität) bleibt unverändert. Fehlt die Qualitätsleitung, vertritt die Moderation deren Position – die Freigabe erteilt nie der Vertrieb. Wird LK25 gespielt, B8 nur einsetzen, wenn es eine andere Entscheidung prüft.
 
 ### Abschluss: „Alles läuft wieder? Die Krise ist nicht vorbei.“
 
-Sonntag, nach sieben Tagen Unternehmenskrise. Die technischen Systeme sind weitgehend verfügbar, 70 % der technischen Fertigungskapazität sind wiederhergestellt. Materialengpässe und die Belastung der Beschäftigten begrenzen weiterhin die tatsächliche Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Sonntag, nach sieben Tagen Unternehmenskrise. Die priorisierten Anlagen laufen wieder, 70 % der technischen Fertigungskapazität sind wiederhergestellt. ERP-Produktivbetrieb, Datenabgleich und Warenfreigaben sind noch nicht abgeschlossen. Materialengpässe und die Belastung der Beschäftigten begrenzen weiterhin die tatsächliche Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
 **Nacharbeiten:**
 
@@ -1375,11 +1380,11 @@ Sonntag, nach sieben Tagen Unternehmenskrise. Die technischen Systeme sind weitg
 
 | Posten | Betrag | Was vorher geholfen hätte |
 |---|---:|---|
-| Entgangener Deckungsbeitrag (rund 6 Produktionstage) | 1.550.000 € | Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand. |
+| Entgangener Deckungsbeitrag (rund 6 Produktionstage)<br>*Rechenweg:* Umsatz 185 Mio. € ÷ ca. 250 Arbeitstage ≈ 740.000 € je Tag; Deckungsbeitragsquote ca. 35 % (fachliche Annahme) ≈ 260.000 € je Tag; ca. 6 Ausfalltage-Äquivalente (Montag bis Donnerstag weitgehend Stillstand, Freitag bis Sonntag eingeschränkter Betrieb), abzüglich der aus Fertigware gelieferten und später nachholbaren Mengen vereinfacht berücksichtigt ≈ 1,55 Mio. €. Vom Controlling bestätigen lassen. | 1.550.000 € | Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand. |
 | Forensik und Incident Response (7 Tage rund um die Uhr) | 420.000 € | Ein vorab vereinbarter Dienstleister aus dem Versicherungsnetzwerk – die Kosten können dann erstattet werden. |
 | IT-Wiederherstellung, Ersatzhardware, Überstunden IT | 380.000 € | Dokumentierte Notfallpasswörter und Konfigurationen – kein Wissen nur in einem Kopf. |
 | Sonderschichten und Überstunden in der Produktion | 310.000 € | Eine vorab festgelegte Wiederanlauf-Reihenfolge der Aufträge. |
-| Vertragsstrafen Automobilkunde (4 Tage à 50.000 €) | 200.000 € | Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden. |
+| Vertragsstrafen Automobilkunde (4 Tage à 50.000 €)<br>*Rechenweg:* Fertigware reicht ca. 48 Stunden (bis Mittwochfrüh); Lieferausfall beim Automobilkunden Mittwoch bis Samstag = 4 Tage à 50.000 € laut LK06. | 200.000 € | Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden. |
 | Kulanz und Schadensersatz Pharmakunde | 250.000 € | Kritische Kunden und Lieferzusagen vorab identifiziert und priorisiert. |
 | Recht, Datenschutz, Meldungen, Krisenkommunikation | 160.000 € | Meldepflichten (NIS2, DSGVO) und Zuständigkeiten vorab geklärt. |
 | Nacherfassung und Rekonstruktion durch externe Kräfte | 90.000 € | Notfallbelege mit klarem Nacherfassungsprozess. |
@@ -1394,7 +1399,8 @@ Sonntag, nach sieben Tagen Unternehmenskrise. Die technischen Systeme sind weitg
 | Blieben die Anlagen am Montag am Netz, sodass sich der Angriff auf weitere Linien ausbreiten konnte? | Zwei zusätzlich verschlüsselte Fräslinien: Neuaufsetzen und längerer Stillstand | 350.000 € |
 | Hat NordTech die Meldung an die Datenschutzaufsicht zurückgestellt, bis der Abfluss bestätigt war? | Zusätzlicher Prüf- und Beratungsaufwand wegen Rückfragen der Aufsicht (Modellannahme, kein Bußgeld eingerechnet) | 150.000 € |
 
-**Versicherung:** Modellannahme: Erstattung durch die Cyberversicherung (unter Vorbehalt der Vertragsbedingungen): − 1.400.000 €  
+**Versicherung:** Mögliche Erstattung durch die Cyberversicherung (optimistische Modellannahme, nicht bestätigt): − 1.400.000 €  
+*Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,4 Mio. € ist eine unbestätigte Modellannahme; Vertragsbedingungen, Selbstbehalte, Ausschlüsse und die Anerkennung einzelner Kostenpositionen sind nicht bewertet. Ein Lösegeld ist darin nicht enthalten.*  
 **Jahresumsatz:** 185.000.000 € · **Umsatzrendite:** 5 %
 
 **Fazit:** Die Systeme laufen nach sieben Tagen wieder. Das Vertrauen der Kunden braucht Monate. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.
@@ -1611,8 +1617,8 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 70.2 | vertraulich | SK09 | an Debitorenbuchhaltung: Mehrere Kunden halten ihre Zahlungen zurück. Begründung: Unsicherheit über die Lieferfähig… |
 | 71.0 | vertraulich | SK10 | an Debitorenmanagement: Die ersten Kunden drohen mit Schadensersatzforderungen. Noch liegen keine offiziellen Schr… |
 | 73.2 | Lagekarte (Eskalation) | LK09 | Mittwoch 11:00 Uhr: Backups gefunden |
-| 78.5 | vertraulich | SK02 | an IT-Fachkraft (Vertretung IT-Leitung): Du entdeckst einen Offline-Datenträger. Möglicherweise befindet sich darauf ein älteres Ba… |
 | 82.4 | Lagekarte (Eskalation) | LK24 | Mittwoch 15:00 Uhr: Wer bekommt das erste System? |
+| 87.7 | vertraulich | SK02 | an IT-Fachkraft (Vertretung IT-Leitung): Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nur in eine is… |
 | 91.6 | Lagekarte (Höhepunkt) | LK17 | Donnerstag 07:00 Uhr: Beirat fordert Lagebericht |
 | 92.1 | vertraulich | SK17 | an Geschäftsführung (CEO), Krisenstabsleitung: Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitzung privat… |
 | 100.8 | Lagekarte (Höhepunkt) | LK10 | Donnerstag 08:00 Uhr: Nordkanal-Sonderbericht |
@@ -1638,6 +1644,20 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 ---
 
 ## Teil E – Stand nach der Vorabnahme
+
+### Aus dem Red-Team-Test umgesetzt
+
+- R01 Wiederanlauf: LK15 nennt die Voraussetzungen der 70 % (priorisierte Anlagen, isolierte geprüfte Umgebungen, Sicherheitsfreigabe; nicht alle 900 Systeme; ERP-Produktivbetrieb und Freigaben offen). LK14: ERP aus dem inzwischen geprüften Backup in isolierter Testumgebung; Daten- und Sicherheitsfreigabe offen, mit Entscheidungsfrage, wer freigibt. Abschluss-Einleitung angepasst.
+- R02 Zeitmodell: Beschreibung korrigiert – 30 Sekunden je Funktionsbereich, nicht je Rolle; nur geforderte Funktionen nehmen Stellung (Handbuch 7.2).
+- R03 Lösegeld: Frage und SK20 nennen die wirtschaftlichen Gründe für eine Zahlung (rund 260.000 € Deckungsbeitrag je Stillstandstag, kein Backup bekannt); Moderation vertritt notfalls die Gegenposition. Folgen unverändert.
+- R04/R07 Rechnung: Rechenweg für Deckungsbeitrag und Vertragsstrafe; Bühne zeigt den Schaden brutto, die Erstattung als optimistische, unbestätigte Annahme und den Anteil am Jahresgewinn auch ohne Erstattung.
+- R05 Backup: LK09 trennt Fund (Tresor des Hauptsitzes) und Zugang (versiegelter IT-Notfallumschlag); SK02 neu als Entscheidung der IT-Fachkraft und immer nach LK09.
+- R06 W1: „Trennen“ als kontrolliertes Herunterfahren in einen sicheren Zustand mit gezielter Trennung vom IT-Netz; Moderationshinweis zu OT-Sicherheit.
+- R08 W2: Folge „proaktiv“ als Reaktion einzelner Kunden mit Kritik an der lückenhaften ersten Meldung; Hinweis, dass beide Wege Risiken haben.
+- R09 Faktenblatt: Produkte und Qualitätsrahmen (Komponenten nach Qualitätssicherungsvereinbarung, Arzneimittelfreigabe beim Kunden – fachliche Annahme); LK21-Hinweis ergänzt.
+- R10 LK14 und Abschnitt 3: Fragen mit Zielkonflikt bei LK18, LK19, LK20, LK03, LK05, LK08, LK13, LK14, LK15.
+- Nachprüfung der Fotos: reale Marken entfernt (LK14 „SAP S/4HANA“ → „NT-ERP“, LK01 „iiyama“).
+- R11 LK07: bei knapper Zeit Lösegeld priorisieren, Datenschutz als dokumentierter Prüfauftrag. R12 B7: ersetzt fünf Minuten von LK17, wird nicht addiert.
 
 ### Aus der Vorabnahme umgesetzt
 
@@ -1720,5 +1740,5 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 - **Rollen:** Teilnehmende spielen auch Rollen außerhalb ihrer echten Funktion. Datenschutz, Informationssicherheit und Recht sind keine eigenen Rollen; die Moderation bringt diese Perspektive ein bzw. richtet die Frage an Notfallmanagement/Krisenstabsleitung. Die Finanzrollen (Debitoren, Fakturierung) bleiben, kommen aber erst ab etwa 2,5 Stunden ins Spiel.
 - **Offene Fragen aus Runde 2:** Karten mit fehlender Lage werden nach hinten verschoben, nie nach vorn; eine nicht festgehaltene Entscheidung bedeutet „Drehbuch-Verlauf“ und wird in der Moderation als „noch nicht festgehalten“ angezeigt; bei 45 Minuten umfasst die Zeit Krise und Abschluss, das Debriefing (ca. 15 Minuten) kommt zusätzlich.
 - **Verzweigung:** maßvoll. Reihenfolge und Zeitplan ändern sich nie; Entscheidungen ergänzen spätere Karten um einen Satz, ersetzen höchstens eine Krisen-Info oder den Text einer vertraulichen Karte, lösen höchstens eine Folgekarte aus und setzen Posten in der Rechnung. Ohne Eintrag gilt das Drehbuch.
-- **Zeitmodell:** Jede besetzte Rolle hat pro Lagekarte rund 30 Sekunden Sprechzeit. Darum hat die 45-Minuten-Fassung neun Lagen mit sehr kurzen Entscheidungsphasen; längere Fassungen bekommen zusätzliche Lagen, verteilt über den ganzen Spannungsbogen.
+- **Zeitmodell:** Jeder besetzte Funktionsbereich hat pro Lagekarte rund 30 Sekunden Sprechzeit (bei 180 Minuten 11 Bereiche für 21 Rollen); nicht jede Rolle spricht bei jeder Lage, gefordert sind die zuständigen. (Bis zur Red-Team-Prüfung stand hier irrtümlich „jede Rolle“.) Darum hat die 45-Minuten-Fassung neun Lagen mit sehr kurzen Entscheidungsphasen; längere Fassungen bekommen zusätzliche Lagen, verteilt über den ganzen Spannungsbogen.
 - **Geschichte:** fester Verlauf über sieben Tage (Montag bis Sonntag); das Unternehmen bleibt fiktiv.

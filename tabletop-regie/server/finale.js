@@ -30,7 +30,9 @@ function bill(nachspiel, optionen) {
     summe,
     versicherung,
     versicherungText: nachspiel.versicherung ? nachspiel.versicherung.text : null,
+    versicherungErlaeuterung: nachspiel.versicherung ? (nachspiel.versicherung.erlaeuterung || null) : null,
     eigenanteil,
+    anteilJahresgewinnOhneErstattung: jahresgewinn ? summe / jahresgewinn : null,
     jahresumsatz: nachspiel.jahresumsatz || null,
     umsatzrendite: nachspiel.umsatzrendite || null,
     jahresgewinn,
@@ -80,11 +82,12 @@ function view(nachspiel, finaleState) {
     postenGesamt: b.posten.length,
     laufendeSumme: sichtbarePosten.reduce((s, p) => s + (Number(p.betrag) || 0), 0),
     bilanz: reached('bilanz') ? {
-      summe: b.summe, versicherung: b.versicherung, versicherungText: b.versicherungText, eigenanteil: b.eigenanteil
+      summe: b.summe, versicherung: b.versicherung, versicherungText: b.versicherungText, versicherungErlaeuterung: b.versicherungErlaeuterung, eigenanteil: b.eigenanteil
     } : null,
     aha: reached('aha') && b.jahresgewinn ? {
       jahresumsatz: b.jahresumsatz, umsatzrendite: b.umsatzrendite, jahresgewinn: b.jahresgewinn,
-      anteilJahresgewinn: b.anteilJahresgewinn, noetigerZusatzumsatz: b.noetigerZusatzumsatz, eigenanteil: b.eigenanteil
+      anteilJahresgewinn: b.anteilJahresgewinn, noetigerZusatzumsatz: b.noetigerZusatzumsatz, eigenanteil: b.eigenanteil,
+      summe: b.summe, versicherung: b.versicherung, anteilJahresgewinnOhneErstattung: b.anteilJahresgewinnOhneErstattung
     } : null,
     fazit: cur.phase === 'fazit' ? nachspiel.fazit : null,
     hinweis: nachspiel.hinweis || null

@@ -320,7 +320,8 @@ function renderFinale(f) {
       const b = f.bilanz;
       unten = `<div class="fin-stat"><div class="k">Gesamtschaden</div><div class="v">${euro(b.summe)}</div></div>
         <div class="fin-stat"><div class="k">${escapeHtml(b.versicherungText || 'Versicherung')}</div><div class="v">− ${euro(b.versicherung)}</div></div>
-        <div class="fin-stat eigen"><div class="k">Bleibt beim Unternehmen</div><div class="v rot">${euro(b.eigenanteil)}</div></div>`;
+        <div class="fin-stat eigen"><div class="k">${b.versicherung ? 'Bleibt beim Unternehmen – wenn die Versicherung wie angenommen zahlt' : 'Bleibt beim Unternehmen'}</div><div class="v rot">${euro(b.eigenanteil)}</div></div>
+        ${b.versicherungErlaeuterung ? `<div style="color:var(--muted);font-size:14px;margin-top:8px;max-width:520px;">${escapeHtml(b.versicherungErlaeuterung)}</div>` : ''}`;
     }
     const tabelle = `<table class="fin-tabelle">${rows}</table>`;
     if (f.phase === 'aha' && f.aha) {
@@ -328,7 +329,7 @@ function renderFinale(f) {
       body = `<div class="fin-kicker">Was das wirklich bedeutet</div>
         <div class="fin-aha">
           <div class="fin-aha-zahl">${prozent(a.anteilJahresgewinn)}</div>
-          <div class="fin-aha-text">des Jahresgewinns sind weg<br><span style="color:var(--muted);">(${euro(a.eigenanteil)} von ca. ${euro(a.jahresgewinn)})</span></div>
+          <div class="fin-aha-text">des Jahresgewinns sind weg<br><span style="color:var(--muted);">(${euro(a.eigenanteil)} von ca. ${euro(a.jahresgewinn)}${a.versicherung ? ` – mit angenommener Erstattung; ohne Erstattung ${prozent(a.anteilJahresgewinnOhneErstattung)}` : ''})</span></div>
         </div>
         <div class="fin-aha">
           <div class="fin-aha-zahl">${euro(a.noetigerZusatzumsatz)}</div>

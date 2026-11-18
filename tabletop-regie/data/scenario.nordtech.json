@@ -6,7 +6,8 @@
     "name": "NordTech Components GmbH",
     "facts": "3 Standorte · ca. 620 Beschäftigte · ca. 185 Mio. € Umsatz · Komponentenfertigung für Automobil & Pharma",
     "logo": "/media/nordtech/nordtech-logo.png",
-    "stageLogo": "/media/nordtech/nordtech-logo-light.png"
+    "stageLogo": "/media/nordtech/nordtech-logo-light.png",
+    "produkte": "Automobil: Präzisions-Frästeile und Baugruppen, Abruf per EDI. Pharma: Präzisions-Metallkomponenten für Dosier- und Injektionssysteme, gefertigt nach Qualitätssicherungsvereinbarung mit den Pharmakunden; zu jeder Charge gehören Produktions- und Prüfnachweise, die Arzneimittelfreigabe liegt beim Kunden (fachliche Annahme)."
   },
   "difficulty": "mittel-hoch",
   "recommendedParticipants": {
@@ -469,8 +470,7 @@
       "text": "Ein Teamleiter aus der Disposition postet auf LinkedIn über den Ausfall – mit einem Foto, auf dem die Lösegeldforderungen auf den Bildschirmen deutlich zu lesen sind. Der Beitrag verbreitet sich schnell.",
       "kriseninfo": "20.000 Aufrufe · mehrere Journalisten kommentieren",
       "aufgabe": [
-        "Wer reagiert?",
-        "Wie kommunizieren Sie?",
+        "Fordern Sie sofort die Löschung des Beitrags – oder veröffentlichen Sie zuerst eine eigene Stellungnahme?",
         "Welche Sprachregelung bekommen Kundenservice und Service-Desk?",
         "Welche gesicherten Informationen geben Sie jetzt proaktiv an die Belegschaft – über welchen Kanal, und wann folgt das nächste Update?"
       ],
@@ -545,7 +545,7 @@
       "kriseninfo": null,
       "aufgabe": [
         "Welche Risiken entstehen?",
-        "Welche Alternativen gibt es?",
+        "Welche Aufgabe vergeben Sie sofort an externe Spezialisten, obwohl Zugriffsrechte und Sicherheitslage ungeklärt sind?",
         "Welche Prioritäten ändern sich?"
       ],
       "moderatorHinweis": null,
@@ -648,7 +648,7 @@
       "text": "Forensiker bestätigen den Einbruchsvektor: Eine Phishing-Mail hat die Zugangsdaten eines VPN-Kontos abgegriffen. Derzeit keine Hinweise auf aktive Angreifer im Netzwerk.",
       "kriseninfo": "erste gute Nachricht der Übung",
       "aufgabe": [
-        "Welche Maßnahmen ergeben sich daraus?",
+        "Welche Einschränkungen heben Sie jetzt auf – und welche ausdrücklich nicht?",
         "Kommunizieren Sie diesen Erfolg?"
       ],
       "moderatorHinweis": null,
@@ -671,7 +671,7 @@
       "titel": "Backups gefunden",
       "minuteOffset": 51,
       "diskussionMinuten": 4,
-      "text": "Offline-Backups sind verfügbar, Stand: Samstag 23:00 Uhr. Der Sicherungsdatenträger ist lesbar. Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.",
+      "text": "Im Tresor des Hauptsitzes wurden Offline-Backups gefunden, Stand: Samstag 23:00 Uhr. Der Sicherungsdatenträger ist lesbar. Die Zugangsdaten zur Sicherungssoftware lagen im versiegelten IT-Notfallumschlag – ohne ihn wäre ohne den erkrankten Administrator niemand an die Daten gekommen. Integrität, Schadcodefreiheit und Vollständigkeit der Daten sind noch nicht bestätigt.",
       "kriseninfo": "Datenverlust: rund 32 Stunden (Sonntag bis Montagfrüh)",
       "aufgabe": [
         "Wiederherstellung vorbereiten – oder erst weiter prüfen?",
@@ -800,7 +800,7 @@
       "text": "Die Cyberversicherung stellt unter Vorbehalt eine Kostenbeteiligung von bis zu 1,4 Mio. € in Aussicht. Vertragsbedingungen, Selbstbehalte und die Erstattungsfähigkeit einzelner Leistungen – etwa bereits beauftragter Dienstleister außerhalb ihres Partnernetzwerks – müssen fachlich geprüft werden.",
       "kriseninfo": "In Aussicht gestellt: bis zu 1,4 Mio. € (unter Vorbehalt)",
       "aufgabe": [
-        "Welche Leistungen nutzen Sie zuerst?",
+        "Beauftragen Sie benötigte Spezialisten auch dann, wenn die Kostenerstattung ungeklärt ist?",
         "Wer koordiniert die Zusammenarbeit?"
       ],
       "moderatorHinweis": null,
@@ -823,11 +823,11 @@
       "titel": "ERP-Testbetrieb",
       "minuteOffset": 79,
       "diskussionMinuten": 4,
-      "text": "Das ERP-System läuft in einer Testumgebung. Erste Funktionstests erfolgreich.",
-      "kriseninfo": "Ein Restrisiko bleibt bestehen",
+      "text": "Das ERP wurde aus dem inzwischen auf Schadcode und Vollständigkeit geprüften Offline-Backup in einer isolierten Testumgebung wiederhergestellt. Erste Funktionstests sind erfolgreich. Die fachliche Prüfung der Daten und die Sicherheitsfreigabe für den Produktivbetrieb stehen aus. Vertrieb und Versand drängen: Ohne ERP lassen sich ab Montag weder Lieferpapiere noch Rechnungen erstellen.",
+      "kriseninfo": "Funktionstest bestanden · Daten- und Sicherheitsfreigabe offen · Versand braucht das ERP ab Montag",
       "aufgabe": [
-        "Sofort produktiv gehen?",
-        "Weitere Tests durchführen?"
+        "Welchen einzigen Geschäftsprozess würden Sie unter welchen Freigabebedingungen zuerst aktivieren?",
+        "Wer erteilt die Sicherheitsfreigabe – und was gilt, bis sie vorliegt?"
       ],
       "moderatorHinweis": null,
       "media": {
@@ -855,11 +855,11 @@
       "titel": "Wiederanlauf",
       "minuteOffset": 86,
       "diskussionMinuten": 5,
-      "text": "70 % der technischen Fertigungskapazität sind wieder verfügbar, die IT-Systeme weitgehend. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
-      "kriseninfo": null,
+      "text": "70 % der technischen Fertigungskapazität sind auf priorisierten Anlagen wieder verfügbar – in isolierten, geprüften Produktionsumgebungen mit Sicherheitsfreigabe. Nicht alle 900 IT- und OT-Systeme sind wiederhergestellt; der ERP-Produktivbetrieb sowie die Freigaben von Daten und Ware werden gesondert bewertet. Personal und Material begrenzen die reale Leistung: Nach den Krisentagen sind die Schichten erschöpft, und wegen Materialengpässen ist nicht sicher, dass die Kapazität durchgehend ausgelastet werden kann. Kunden und Presse beobachten die Situation weiterhin kritisch.",
+      "kriseninfo": "70 % technische Kapazität auf priorisierten Anlagen · ERP-Produktivbetrieb und Freigaben offen",
       "aufgabe": [
         "Welche Botschaft senden Sie an Kunden, Beschäftigte und Öffentlichkeit – und wer sagt es?",
-        "Welche Maßnahmen folgen nach der Krise?"
+        "Welchen Kunden vertrösten Sie bewusst, obwohl technische Kapazität vorhanden ist – und wer sagt es ihm?"
       ],
       "moderatorHinweis": "Nicht mit Erleichterung enden lassen. Folgen im Ablauf noch weitere Lagen (z. B. „Die Menschen sind am Limit“), erst nach der letzten Lage in den Abschluss (Nacharbeiten und Rechnung) überleiten – er startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst danach Debriefing.",
       "media": {
@@ -917,7 +917,7 @@
       "text": "Mehrere Kolleginnen und Kollegen der Frühschicht kommen nicht ins ERP. Die Anmeldung bricht mit einer Zeitüberschreitung ab, ein Neustart hilft nicht. Der IT-Service-Desk ist erst ab 07:00 Uhr besetzt.",
       "aufgabe": [
         "Was ist Ihre erste Reaktion – und wen informieren Sie?",
-        "Ab wann ist das mehr als eine IT-Störung?"
+        "Welche Information würde Sie veranlassen, jetzt den IT-Notfallprozess auszulösen?"
       ],
       "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
       "media": {
@@ -944,7 +944,7 @@
       "text": "An der Fräslinie 4 laufen die Programme nicht an. Im Programmverzeichnis haben alle Dateien plötzlich eine fremde Endung: .shadowvault. Die Schichtleitung startet das Bedienterminal neu und ruft die Instandhaltung.",
       "aufgabe": [
         "Wer muss jetzt informiert werden?",
-        "Wer entscheidet, ob das ein Notfall ist?"
+        "Würden Sie die Linie bereits stoppen, bevor ein Angriff bestätigt ist?"
       ],
       "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
       "media": {
@@ -971,7 +971,7 @@
       "diskussionMinuten": 3,
       "text": "Der Vertriebsinnendienst meldet: Seit 06:30 Uhr sind keine Abrufe der Automobilkunden mehr eingegangen – üblich sind um diese Zeit 40 bis 60. E-Mails an Kunden bleiben im Postausgang hängen. Erste Vermutung: ein Wartungsfenster beim Provider.",
       "aufgabe": [
-        "Ist das schon eine Krise?",
+        "Wie lange warten Sie auf den Provider, bevor Sie Kunden selbst kontaktieren?",
         "Wer ruft den Krisenstab zusammen – und wann?"
       ],
       "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
@@ -1036,7 +1036,7 @@
         "Wie wird die Nachdokumentation organisiert?",
         "Was sagt NordTech dem Kunden bis zur Freigabe?"
       ],
-      "moderatorHinweis": "Kernkonflikt: Lieferdruck gegen Qualitätsfreigabe. Darauf achten, dass die Freigabe nicht vom Vertrieb oder der IT entschieden wird.",
+      "moderatorHinweis": "Kernkonflikt: Lieferdruck gegen Qualitätsfreigabe. Darauf achten, dass die Freigabe nicht vom Vertrieb oder der IT entschieden wird. Rahmen (fachliche Annahme): NordTech liefert Komponenten nach Qualitätssicherungsvereinbarung; ohne vollständige Produktions- und Prüfnachweise darf NordTech eine Charge nicht als konform ausliefern, und der Pharmakunde kann sie nicht verwenden. Einzelheiten fachlich prüfen lassen.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk21-chargenfreigabe.png",
@@ -1235,14 +1235,17 @@
       "id": "SK02",
       "nr": 2,
       "empfaenger": "it-mitarbeiter",
-      "minuteOffset": 49,
+      "minuteOffset": 53,
       "vertraulich": true,
-      "text": "Du entdeckst einen Offline-Datenträger. Möglicherweise befindet sich darauf ein älteres Backup. Der Zustand ist unbekannt. Du entscheidest selbst über das weitere Vorgehen.",
-      "moderatorGut": "Der Datenträger wird unverändert gesichert und an die IT-Leitung gemeldet; geprüft wird isoliert.",
-      "moderatorSchlecht": "Der Datenträger wird an einen Rechner im Netz angeschlossen – oder die Information bleibt liegen.",
+      "text": "Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nur in eine isolierte Prüfumgebung, und die steht noch nicht vollständig. Ein Fachbereichsleiter bittet dich, „nur schnell“ die Auftragsdaten auf einen Laptop im Produktionsnetz zu kopieren, damit der Vertrieb wieder arbeiten kann. Du entscheidest selbst über das weitere Vorgehen.",
+      "moderatorGut": "Keine Kopie ins ungeprüfte Netz; Anfrage an die IT-Leitung eskaliert; Alternative angeboten (geprüfter Auszug, sobald die Prüfumgebung steht).",
+      "moderatorSchlecht": "Daten werden „ausnahmsweise“ kopiert – oder die Anfrage wird abgelehnt, ohne dass der Krisenstab davon erfährt.",
       "prioritaet": 3,
       "fallbackEmpfaenger": [
         "leiter-it"
+      ],
+      "voraussetzung": [
+        "LK09"
       ]
     },
     {
@@ -1520,7 +1523,7 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "minuteOffset": 44,
       "vertraulich": true,
-      "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.",
+      "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Die Finanzleitung rechnet vor: Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, und ein Backup ist bisher nicht gefunden. Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.",
       "moderatorGut": "Eine begründete Position mit klaren Kriterien, fachlich geprüft, im Krisenstab abgestimmt und dokumentiert.",
       "moderatorSchlecht": "Eine unklare Haltung oder eine Entscheidung allein und unter Zeitdruck.",
       "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
@@ -2070,7 +2073,7 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "fallbackEmpfaenger": [],
       "text": "Du wirst für die nächsten fünf Minuten zu einem vertraulichen Gespräch abgerufen. Verlasse den Tisch und sprich in dieser Zeit nicht mit dem Krisenstab. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich.",
-      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr.",
+      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr. B7 ersetzt fünf Minuten der Lagebearbeitung von LK17 und wird nicht addiert: Der Übungstimer läuft weiter, der Lagebericht entsteht in dieser Zeit.",
       "voraussetzung": [
         "LK17"
       ],
@@ -2160,7 +2163,7 @@
   },
   "nachspiel": {
     "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
-    "einleitung": "Sonntag, nach sieben Tagen Unternehmenskrise. Die technischen Systeme sind weitgehend verfügbar, 70 % der technischen Fertigungskapazität sind wiederhergestellt. Materialengpässe und die Belastung der Beschäftigten begrenzen weiterhin die tatsächliche Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "einleitung": "Sonntag, nach sieben Tagen Unternehmenskrise. Die priorisierten Anlagen laufen wieder, 70 % der technischen Fertigungskapazität sind wiederhergestellt. ERP-Produktivbetrieb, Datenabgleich und Warenfreigaben sind noch nicht abgeschlossen. Materialengpässe und die Belastung der Beschäftigten begrenzen weiterhin die tatsächliche Leistung. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
     "nacharbeiten": [
       {
         "zahl": "1.900",
@@ -2195,7 +2198,8 @@
       {
         "posten": "Entgangener Deckungsbeitrag (rund 6 Produktionstage)",
         "betrag": 1550000,
-        "bcmHebel": "Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand."
+        "bcmHebel": "Getestete Wiederanlaufpläne und Offline-Backups verkürzen den Stillstand.",
+        "herleitung": "Umsatz 185 Mio. € ÷ ca. 250 Arbeitstage ≈ 740.000 € je Tag; Deckungsbeitragsquote ca. 35 % (fachliche Annahme) ≈ 260.000 € je Tag; ca. 6 Ausfalltage-Äquivalente (Montag bis Donnerstag weitgehend Stillstand, Freitag bis Sonntag eingeschränkter Betrieb), abzüglich der aus Fertigware gelieferten und später nachholbaren Mengen vereinfacht berücksichtigt ≈ 1,55 Mio. €. Vom Controlling bestätigen lassen."
       },
       {
         "posten": "Forensik und Incident Response (7 Tage rund um die Uhr)",
@@ -2215,7 +2219,8 @@
       {
         "posten": "Vertragsstrafen Automobilkunde (4 Tage à 50.000 €)",
         "betrag": 200000,
-        "bcmHebel": "Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden."
+        "bcmHebel": "Vorbereitete Störungsberichte und Notfallkommunikation für Schlüsselkunden.",
+        "herleitung": "Fertigware reicht ca. 48 Stunden (bis Mittwochfrüh); Lieferausfall beim Automobilkunden Mittwoch bis Samstag = 4 Tage à 50.000 € laut LK06."
       },
       {
         "posten": "Kulanz und Schadensersatz Pharmakunde",
@@ -2269,8 +2274,9 @@
       }
     ],
     "versicherung": {
-      "text": "Modellannahme: Erstattung durch die Cyberversicherung (unter Vorbehalt der Vertragsbedingungen)",
-      "betrag": 1400000
+      "text": "Mögliche Erstattung durch die Cyberversicherung (optimistische Modellannahme, nicht bestätigt)",
+      "betrag": 1400000,
+      "erlaeuterung": "Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,4 Mio. € ist eine unbestätigte Modellannahme; Vertragsbedingungen, Selbstbehalte, Ausschlüsse und die Anerkennung einzelner Kostenpositionen sind nicht bewertet. Ein Lösegeld ist darin nicht enthalten."
     },
     "jahresumsatz": 185000000,
     "umsatzrendite": 0.05,
@@ -2307,7 +2313,7 @@
         },
         {
           "id": "trennen",
-          "label": "Übrige Anlagen nach abgestimmter Sicherheitsentscheidung so schnell wie vertretbar isolieren, laufende Aufträge kontrolliert abbrechen",
+          "label": "Übrige Anlagen kontrolliert in einen sicheren Zustand fahren und ihre Verbindungen zum IT-Netz gezielt trennen, laufende Aufträge geordnet abbrechen",
           "wirkung": "Laufende Aufträge brechen ab, aber keine Anlage wird zusätzlich befallen. Werk Süd startet wie geplant.",
           "folgen": [
             {
@@ -2316,7 +2322,8 @@
             }
           ]
         }
-      ]
+      ],
+      "hinweis": "Kontrollierte Isolierung ist nicht „Stecker ziehen“: Anlagen werden in einen sicheren Betriebszustand gebracht (Werkstücke, Kühlung, Sicherheitsfunktionen), dann werden einzelne Verbindungen zum IT-Netz getrennt; lokale Steuerungen bleiben funktionsfähig. Pauschales Abschalten kann Anlagen und Werkstücke schädigen. Beobachten, ob der Tisch IT und Produktion gemeinsam entscheiden lässt."
     },
     {
       "id": "W2",
@@ -2328,11 +2335,11 @@
         {
           "id": "proaktiv",
           "label": "Kunden heute proaktiv informieren (gesicherte Fakten, nächster Update-Termin)",
-          "wirkung": "Beim Wiederanlauf bedanken sich Großkunden für die Offenheit.",
+          "wirkung": "Beim Wiederanlauf danken einzelne Großkunden für die Offenheit; ein Kunde kritisiert, dass die erste Meldung mehr Fragen aufwarf als beantwortete.",
           "folgen": [
             {
               "lagekarte": "LK15",
-              "zusatz": "Mehrere Großkunden bedanken sich ausdrücklich für die frühe und offene Information – das Vertrauen hat gelitten, ist aber nicht zerstört."
+              "zusatz": "Einzelne Großkunden bedanken sich für die frühe Information. Ein Kunde merkt an, dass die erste Meldung mehr Fragen aufwarf als beantwortete – das Vertrauen hat gelitten, ist aber nicht zerstört."
             }
           ]
         },
@@ -2354,7 +2361,8 @@
             "kundenkommunikation"
           ]
         }
-      ]
+      ],
+      "hinweis": "Beide Wege haben Risiken: Frühe Information mit unvollständigen Fakten kann Nachfragen, Spekulation und vertragliche Reaktionen auslösen. Abwarten riskiert, dass Kunden es von Dritten erfahren. Gut ist eine Entscheidung, die das abwägt – nicht automatisch „proaktiv“."
     },
     {
       "id": "W3",
@@ -2393,14 +2401,14 @@
           ]
         }
       ],
-      "hinweis": "Nicht die rechtliche Richtigkeit einer Option bewerten, sondern: Werden die Risiken erkannt, wird fachlich geprüft, sind Entscheidungsgrundlagen dokumentiert und fachlich bestätigte Fristen eingehalten?"
+      "hinweis": "Nicht die rechtliche Richtigkeit einer Option bewerten, sondern: Werden die Risiken erkannt, wird fachlich geprüft, sind Entscheidungsgrundlagen dokumentiert und fachlich bestätigte Fristen eingehalten? Bei knapper Zeit (z. B. 45 Minuten) die Lösegeldfrage priorisieren und den Datenschutz als dokumentierten Prüfauftrag festhalten (wer prüft bis wann). Ohne ausdrücklichen Beschluss zur vorsorglichen Meldung gilt das als „abwarten“."
     },
     {
       "id": "W4",
       "lagekarten": [
         "LK07"
       ],
-      "frage": "Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Zahlt NordTech das Lösegeld – auf Grundlage dessen, was der Krisenstab heute weiß?",
+      "frage": "Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Jeder Stillstandstag kostet rund 260.000 € Deckungsbeitrag, ein Backup ist bisher nicht gefunden. Niemand weiß, ob ein Schlüssel funktionieren würde oder wie schnell ein unabhängiger Wiederanlauf gelingt. Welche wirtschaftlichen und betrieblichen Gründe sprechen unter diesen Unsicherheiten für oder gegen eine Zahlung – und wie entscheidet NordTech?",
       "optionen": [
         {
           "id": "nicht-gezahlt",
@@ -2435,7 +2443,7 @@
           }
         }
       ],
-      "hinweis": "Am besten gegen Ende dieser Lage entscheiden lassen, nachdem die Krisenstabsleitung ihre vertrauliche Karte zur Lösegeldfrage hatte. Der Tisch weiß noch nicht, dass am Mittwoch Backups gefunden werden."
+      "hinweis": "Am besten gegen Ende dieser Lage entscheiden lassen, nachdem die Krisenstabsleitung ihre vertrauliche Karte zur Lösegeldfrage hatte. Die Zahlung muss ernsthaft abwägbar sein: Stillstandskosten, kein bekanntes Backup und möglicher schneller Datenzugriff stehen gegen einen unsicheren Schlüssel, erneute Erpressung und offene rechtliche Fragen (Sanktionen, Versicherung – fachlich prüfen lassen). Neigt der Tisch vorschnell zu „nie zahlen“, vertritt die Moderation die Gegenposition. Der Tisch weiß noch nicht, dass am Mittwoch Backups gefunden werden."
     }
   ],
   "schwerpunkte": [

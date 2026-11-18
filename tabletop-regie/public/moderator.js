@@ -436,7 +436,7 @@ function renderFinaleCard(s) {
       </label>`).join('')
     : '';
   const r = f.rechnung || {};
-  const summary = `<p class="muted">Rechnung aktuell: Schaden ${euro(r.summe || 0)}, Versicherung ${euro(r.versicherung || 0)}, bleibt beim Unternehmen <b>${euro(r.eigenanteil || 0)}</b>` +
+  const summary = `<p class="muted">Rechnung aktuell: Schaden ${euro(r.summe || 0)}, angenommene Erstattung ${euro(r.versicherung || 0)}, bleibt beim Unternehmen <b>${euro(r.eigenanteil || 0)}</b>` +
     (r.anteilJahresgewinn ? ` (${Math.round(r.anteilJahresgewinn * 100)} % des Jahresgewinns)` : '') + '.</p>';
   document.getElementById('m-finale-body').innerHTML = aktiv
     ? `<p><b>Schritt ${f.step} von ${f.steps}</b> – auf der Bühne: ${escapeHtml(stepText(f.view))}</p>` +

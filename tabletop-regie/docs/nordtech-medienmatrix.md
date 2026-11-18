@@ -8,7 +8,7 @@ Stand: 2026-11-18 · erzeugt aus `data/scenario.nordtech.json` und `media/nordte
 
 | ID | Titel | Zeit | Bilddatei | da | Pixel | Art | Bildinhalt | Korrektur in dieser Abnahme | Ton |
 |---|---|---|---|---|---|---|---|---|---|
-| LK01 | Cyberangriff | Montag 07:00 Uhr | `lk01-loesegeld-kamera-foto.webp` | ja | 1673x940 | Foto | Standbild Überwachungskamera, Lösegeldforderung auf Hallenbildschirmen, Zeitstempel 07:02 | – | lk01-stille-gemurmel.mp3 (eigene Aufnahme, 7 s, einmalig) |
+| LK01 | Cyberangriff | Montag 07:00 Uhr | `lk01-loesegeld-kamera-foto.webp` | ja | 1673x940 | Foto | Standbild Überwachungskamera, Lösegeldforderung auf Hallenbildschirmen, Zeitstempel 07:02 | korrigiert: Herstellername „iiyama“ am Monitorrand entfernt (reale Marke) | lk01-stille-gemurmel.mp3 (eigene Aufnahme, 7 s, einmalig) |
 | LK02 | Produktion stoppt | Montag 09:00 Uhr | `lk02-produktion-gestoppt-foto.webp` | ja | 1536x1024 | Foto | stehende Fertigungslinie, keine Personen erkennbar im Fokus | – | – |
 | LK03 | LinkedIn-Beitrag | Montag 11:00 Uhr | `lk03-linkedin-post-foto.webp` | ja | 1149x1369 | Foto, Hochformat | Social-Media-Beitrag mit Foto der Lösegeldforderung; kein Plattformlogo | – | – |
 | LK04 | Nordkanal-Anfrage | Montag 14:00 Uhr | `lk04-nordkanal-anfrage.png` | ja | 1000x280 | Karte | Presseanfrage des fiktiven Senders Nordkanal | – | telefon-klingeln.mp3 (Telefonklingeln, 5 s, einmalig); danach Sprechertext live; Gesprächsleitfaden |
@@ -21,7 +21,7 @@ Stand: 2026-11-18 · erzeugt aus `data/scenario.nordtech.json` und `media/nordte
 | LK11 | Pharmakunde eskaliert | Donnerstag 13:00 Uhr | `lk11-pharmakunde-foto.webp` | ja | 1536x1024 | Foto | Krisengespräch mit dem Pharmakunden | – | – |
 | LK12 | Teilweiser Wiederanlauf | Freitag 08:00 Uhr | `lk12-werk-sued-online-foto.webp` | ja | 1536x1024 | Foto | Werk Süd im Notbetrieb | korrigiert: Leitstand zeigte Normalbetrieb; jetzt „WERK SÜD NOTBETRIEB“, Kapazität eingeschränkt, ERP offline/Papierlisten | – |
 | LK13 | Cyberversicherung | Freitag 11:00 Uhr | `lk13-cyberversicherung-foto.webp` | ja | 1536x1024 | Foto | Incident-Response-Team der Versicherung vor Ort | – | – |
-| LK14 | ERP-Testbetrieb | Samstag 09:00 Uhr | `lk14-erp-testbetrieb-foto.webp` | ja | 1536x1024 | Foto | ERP im Testbetrieb | – | – |
+| LK14 | ERP-Testbetrieb | Samstag 09:00 Uhr | `lk14-erp-testbetrieb-foto.webp` | ja | 1536x1024 | Foto | ERP im Testbetrieb, „NT-ERP · Testumgebung“ | korrigiert: Logo und Produktname „SAP S/4HANA“ auf dem Bildschirm durch „NT-ERP“ ersetzt (reale Marke) | – |
 | LK15 | Wiederanlauf | Sonntag 12:00 Uhr | `lk15-wiederanlauf.png` | ja | 1000x280 | Karte | Wiederanlauf mit Einschränkung | korrigiert: „70 %“ jetzt ausdrücklich technische Kapazität, nicht Lieferfähigkeit (Bildunterschrift und Karte) | – |
 | LK16 | OT-Trennung | Montag 08:00 Uhr | `lk16-incident-overview-foto.webp` | ja | 1536x1024 | Foto | IT-Lagebesprechung vor Übersichtsbildschirm, keine Aussage über Ergebnis | – | – |
 | LK17 | Beirat fordert Lagebericht | Donnerstag 07:00 Uhr | `lk17-zwischenfazit-foto.webp` | ja | 1536x1024 | Foto | Entwurf Lagebericht für den Beirat | korrigiert: Folie zeigte falschen Tag/Titel; jetzt „LAGEBERICHT FÜR DEN BEIRAT / ENTWURF · DONNERSTAG, 07:30 UHR“, Gliederung gesichert/geschätzt/offen | – |
@@ -39,7 +39,7 @@ Stand: 2026-11-18 · erzeugt aus `data/scenario.nordtech.json` und `media/nordte
 | B8 | Ein vermeintlicher Erfolg | nach LK14 | `b8-vermeintlicher-erfolg.png` | ja | 1000x280 | Karte | Bildschirm-Symbol, „Test bestanden – Charge falsch“ | neu | b8-erp-test-meldung.mp3 (Signal und Meldung, 21 s) |
 | Ruhebild | Hauptsitz | vor der Krise | `idle-hauptsitz-foto.webp` | ja | 1672x941 | Foto | Hauptsitz NordTech | – | ambience-maschinenraum.mp3 (synthetisch erzeugt, 24 s Schleife, Lautstärke 0,5) |
 
-**Ergebnis:** 30 von 30 Bildern vorhanden und eindeutig zugeordnet (jede Karte verweist auf eine eigene Datei). Sechs Bild-Text-Widersprüche wurden in der Abnahme behoben (LK08, LK09, LK12, LK15, LK17, LK18). In der Medien-Generalprobe wurde jede Karte auf der Bühne angezeigt und abfotografiert; alle Bilder luden, jeder Ton startete an der richtigen Karte (`docs/nordtech-generalprobe.md`).
+**Ergebnis:** 30 von 30 Bildern vorhanden und eindeutig zugeordnet (jede Karte verweist auf eine eigene Datei). Sechs Bild-Text-Widersprüche wurden in der Abnahme behoben (LK08, LK09, LK12, LK15, LK17, LK18), zwei reale Marken nach dem Red-Team-Test (LK01, LK14). In der Medien-Generalprobe wurde jede Karte auf der Bühne angezeigt und abfotografiert; alle Bilder luden, jeder Ton startete an der richtigen Karte (`docs/nordtech-generalprobe.md`).
 
 Hinweis Format: Karten (1000 × 280) sind Schlagzeilen-Banner, die die Bühne über dem Kartentext zeigt; Fotos sind 1536 × 1024 oder größer. Fotos zeigen an Gebäuden und Kleidung ein älteres NordTech-Zeichen (Dreieck), das Werkzeug das aktuelle N-Logo – inhaltlich unkritisch, optisch eine kleine Unschärfe.
 
