@@ -519,9 +519,20 @@
       "sound": {
         "src": "/media/nordtech/telefon-klingeln.mp3",
         "loop": false,
-        "volume": 0.6
+        "volume": 0.6,
+        "signal": true
       },
-      "sprechertext": "Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme."
+      "sprechertext": "Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme.",
+      "gespraech": {
+        "nachfragen": [
+          "Bei ausweichender Antwort: „Heißt das, Sie schließen aus, dass Kundendaten abgeflossen sind? Ja oder nein?“",
+          "„Aus der Belegschaft hören wir von einer Lösegeldforderung auf den Bildschirmen. Verhandeln Sie mit den Erpressern?“",
+          "„Können Ihre Kunden noch beliefert werden? Und wer ist ab jetzt mein Ansprechpartner?“"
+        ],
+        "abschluss": "„Gut, dann zitiere ich Sie mit: … (Kernsatz des Tisches wiederholen). Wir berichten heute Abend.“ Lehnt der Tisch ab: „Dann schreiben wir: Das Unternehmen wollte sich nicht äußern.“ Danach auflegen – höchstens zwei Minuten.",
+        "gut": "Eine abgestimmte Kernbotschaft, nichts Unbelegtes zu Daten oder Lösegeld, ein Ansprechpartner und ein Zeitpunkt für die nächste Information.",
+        "schwach": "Spekulieren, Lösegeld kommentieren, „kein Kommentar“ ohne Rückrufangebot – oder jemand antwortet, der nicht dafür vorgesehen ist."
+      }
     },
     {
       "id": "LK05",
@@ -584,9 +595,20 @@
       "sound": {
         "src": "/media/nordtech/telefon-klingeln.mp3",
         "loop": false,
-        "volume": 0.6
+        "volume": 0.6,
+        "signal": true
       },
-      "sprechertext": "Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall."
+      "sprechertext": "Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall.",
+      "gespraech": {
+        "nachfragen": [
+          "„Wann genau können Sie wieder liefern? Ich brauche ein Datum, keine Hoffnung.“",
+          "„Haben Sie fertige Teile auf Lager, die Sie uns zuerst schicken? Kann ein anderes Werk einspringen?“",
+          "„Sind auch unsere Daten betroffen – Zeichnungen, Bestellungen, Ansprechpartner?“"
+        ],
+        "abschluss": "„Ich halte fest: Rückruf Ihrer Geschäftsführung heute bis 16 Uhr, schriftlicher Störungsbericht bis morgen 10 Uhr. Kommt beides nicht, geht die Sache an unseren Einkaufsvorstand.“ Danach auflegen.",
+        "gut": "Ehrliche Spanne statt Lieferzusage, Fertigwarenbestand (ca. 48 Stunden) gezielt einsetzen, Verantwortliche für Rückruf und Bericht benennen.",
+        "schwach": "Ein festes Lieferdatum versprechen, Datenabfluss ausschließen oder die Frage nach Vertragsstrafen ignorieren."
+      }
     },
     {
       "id": "LK07",
@@ -696,7 +718,12 @@
         "kundenservice-callcenter"
       ],
       "akt": "hoehepunkt",
-      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran."
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran.",
+      "sound": {
+        "src": "/media/nordtech/lk10-nordkanal-nachrichten.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     },
     {
       "id": "LK11",
@@ -1062,9 +1089,19 @@
       "sound": {
         "src": "/media/nordtech/funk-ruf.mp3",
         "loop": false,
-        "volume": 0.6
+        "volume": 0.6,
+        "signal": true
       },
-      "sprechertext": "Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?"
+      "sprechertext": "Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?",
+      "gespraech": {
+        "nachfragen": [
+          "„Darf ich die beiden mit Begleitung reinlassen? Wer begleitet sie?“",
+          "„Die wollen ihre eigenen Laptops an die Anlage hängen. Ist das in Ordnung?“"
+        ],
+        "abschluss": "„Verstanden, ich trage ins Wachbuch ein: freigegeben durch … (Name/Rolle), begleitet von …“ – oder: „Dann bleiben sie draußen, bis ich etwas Schriftliches habe.“",
+        "gut": "Begleiteter Zutritt mit benannter Verantwortung; kein Anschluss fremder Geräte ohne Freigabe der IT.",
+        "schwach": "Pauschal „lass sie rein“ oder die Entscheidung allein dem Werkschutz überlassen."
+      }
     },
     {
       "id": "LK24",
@@ -2003,10 +2040,24 @@
         "geschaeftsfuehrer-ceo"
       ],
       "text": "In Werk Süd hat die Produktionsleitung angeordnet, die Rechner ausgeschaltet zu lassen. Gleichzeitig hat eine andere Führungskraft angewiesen, alle Geräte neu zu starten, um die Arbeitsfähigkeit zu prüfen. Beide Anweisungen sind schon bei den Beschäftigten angekommen. Bring das sofort in den Krisenstab.",
-      "moderatorHinweis": "Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Ersetzt eine andere Diskussion, verlängert nicht.",
+      "moderatorHinweis": "Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Gut: eine Stelle entscheidet, die Anweisung geht über einen festgelegten Weg an alle (Durchsage, Aushang, Schichtleitungen). Schwach: beide Anweisungen stehen lassen oder „jeder Bereich entscheidet selbst“. Ersetzt eine andere Diskussion, verlängert nicht.",
       "voraussetzung": [
         "LK22"
-      ]
+      ],
+      "oeffentlich": true,
+      "buehnentext": "Werk Süd, zwei Lautsprecherdurchsagen kurz nacheinander: Erst heißt es, alle Rechner bleiben aus, bis die IT etwas anderes sagt. Kurz darauf: Alle Rechner neu starten und prüfen, ob sie funktionieren. Beide Anweisungen sind bei den Beschäftigten angekommen.",
+      "kriseninfo": "Was gilt jetzt – und wie erfahren es alle?",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b6-widerspruechliche-anweisungen.png",
+        "caption": "Zwei Durchsagen, zwei Anweisungen."
+      },
+      "sound": {
+        "src": "/media/nordtech/b6-zwei-durchsagen.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Gong. „Achtung, eine Durchsage der Produktionsleitung Werk Süd. Alle Rechner bleiben ausgeschaltet, bis die IT etwas anderes sagt. Ich wiederhole: Alle Rechner bleiben aus.“ – Gong. „Durchsage an alle Bereiche in Werk Süd. Bitte starten Sie jetzt alle Rechner neu und prüfen Sie, ob sie funktionieren. Melden Sie Probleme an Ihre Schichtleitung.“"
     },
     {
       "id": "B7",
@@ -2014,11 +2065,32 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "fallbackEmpfaenger": [],
       "text": "Du wirst für die nächsten fünf Minuten zu einem vertraulichen Gespräch abgerufen. Verlasse den Tisch und sprich in dieser Zeit nicht mit dem Krisenstab. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich.",
-      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten. Die Stellvertretung bekommt den Auftrag zur Lagepräsentation, während die Krisenstabsleitung nicht erreichbar ist. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Ohne besetzte Krisenstabsleitung entfällt die Karte.",
+      "moderatorHinweis": "Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr.",
       "voraussetzung": [
         "LK17"
       ],
-      "minDauer": 90
+      "minDauer": 90,
+      "oeffentlich": true,
+      "erfordertBesetzt": "geschaeftsfuehrer-ceo",
+      "buehnentext": "Die Krisenstabsleitung wird zu einem vertraulichen Gespräch abgerufen und ist für die nächsten fünf Minuten nicht erreichbar. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich. Die Stellvertretung übernimmt – jetzt.",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b7-krisenstabsleitung-abgerufen.png",
+        "caption": "Die Stellvertretung führt."
+      },
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      },
+      "unterbrechung": {
+        "rolle": "geschaeftsfuehrer-ceo",
+        "minuten": 5,
+        "text": "Bitte den Tisch verlassen und in dieser Zeit nicht mit dem Krisenstab sprechen."
+      },
+      "regie": "Nach dem Klingeln geht die Moderation zur Krisenstabsleitung und bittet sie hinaus (Flur oder Nebentisch). Die Bühne zählt fünf Minuten herunter. Danach zurückholen und als Erstes fragen: Was hat die Stellvertretung in dieser Zeit entschieden – und weiß die Krisenstabsleitung es jetzt?",
+      "sprechertext": "„Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“"
     },
     {
       "id": "B8",
@@ -2032,7 +2104,21 @@
       "moderatorHinweis": "Nur ziehen, wenn der Tisch nach „ERP-Testbetrieb“ einen sofortigen Produktivstart oder eine ungeprüfte Freigabe fordert – nicht, wenn Sicherheits- und Datenprüfung schon eingefordert sind. Fragen: Unter welchen Bedingungen stoppen Sie die Freigabe? Wer untersucht, wer gibt fachlich frei? Was bleibt im Notbetrieb? Was ist gegenüber Produktion und Kunden belastbar? Gut: Freigabe zurückstellen, Ursache und Umfang prüfen, Kriterien und Verantwortliche festhalten. Schwach: „Ein erfolgreicher Funktionstest reicht.“ Keine Katastrophe nachschieben; die Sonntags-Aussage (70 % technische Kapazität) bleibt unverändert. Fehlt die Qualitätsleitung, vertritt die Moderation deren Position – die Freigabe erteilt nie der Vertrieb. Wird LK25 gespielt, B8 nur einsetzen, wenn es eine andere Entscheidung prüft.",
       "voraussetzung": [
         "LK14"
-      ]
+      ],
+      "oeffentlich": true,
+      "buehnentext": "Erster Funktionstest des ERP: erfolgreich. Kurz darauf meldet das Qualitätsmanagement: Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu den Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich hält das für einen kleinen Datenfehler, der den Produktivstart nicht aufhalten darf.",
+      "kriseninfo": "Funktionstest bestanden · Chargennummer weicht von den Unterlagen ab · Ursache offen",
+      "media": {
+        "type": "image",
+        "src": "/media/nordtech/b8-vermeintlicher-erfolg.png",
+        "caption": "Grün im Test heißt noch nicht freigegeben."
+      },
+      "sound": {
+        "src": "/media/nordtech/b8-erp-test-meldung.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“"
     }
   ],
   "bewertungskriterien": [

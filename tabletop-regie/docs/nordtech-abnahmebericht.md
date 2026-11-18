@@ -22,7 +22,7 @@ Kennzeichnungen:
 2. Alle 26 Lagekarten und das Ruhebild haben ein eigenes, eindeutig zugeordnetes Bild. Sechs Bilder widersprachen dem Text und sind korrigiert (LK08, LK09, LK12, LK15, LK17, LK18).
 3. Das Moderationshandbuch 1.0 widersprach dem Werkzeug in einem Kernpunkt: Es beschreibt die Lösegeld-Entscheidung W4 als Rückblende bei LK09, das Werkzeug stellt sie bei LK07 vor Fristablauf. Version 1.1 behebt das und nennt alle Schaltflächen so, wie sie im Werkzeug heißen.
 4. Der Ton ist sparsam eingesetzt: eine synthetisch erzeugte Halle und eine eigene Aufnahme. Er ist jederzeit stummschaltbar, ohne dass Information verloren geht.
-5. In einem Punkt weicht der Stand bewusst vom Abnahmeauftrag ab: Die Überraschungskarten B1–B8 sind wie vertrauliche Karten private E-Mails an eine Rolle und haben deshalb kein Bühnenbild. Das ist eine Designentscheidung, die du als Auftraggeber bestätigen solltest (Abschnitt 5).
+5. Überraschungskarten: Nach Rückmeldung des Auftraggebers sind B6–B8 öffentliche Ereignisse auf der Bühne. Sie haben ein eigenes Bild und einen eigenen Ton, B7 ist eine echte Spielunterbrechung mit Countdown. B1–B5 bleiben private Nachrichten an eine Rolle. Die Anrufe LK04, LK06 und LK23 sind Gesprächssimulationen mit Nachfragen und Gesprächsende. LK10 ist ein fertiger Nachrichteneinspieler. Die Medien-Generalprobe hat alle 29 Bühnenbilder und alle Töne im laufenden Werkzeug bestätigt (`docs/nordtech-generalprobe.md`).
 6. **Nicht geprüft** sind:
    - die Darstellung am Beamer und die Lautstärke im Veranstaltungsraum,
    - der E-Mail-Versand über den echten Mailserver,
@@ -39,7 +39,7 @@ Kennzeichnungen:
 | 5 | LK17, alle Storys (Do 07:00) | Folie im Foto trug falschen Tag / Titel | Zeitverwirrung genau in der Drucksituation | Folie: „LAGEBERICHT FÜR DEN BEIRAT / ENTWURF · DONNERSTAG, 07:30 UHR“, Gliederung gesichert / geschätzt / offen | Mittel | behoben, `lk17-zwischenfazit-foto.webp` |
 | 6 | LK18 (Vorbote Mo 06:41) | Karte deutete erreichbaren Service-Desk an; laut Drehbuch erst ab 07:00 besetzt | kleiner Zeitwiderspruch zu SK34 | Zusatz: „Service-Desk erst ab 07:00 Uhr besetzt“ | Mittel | behoben, `v1-anmeldung-hakt.png` |
 | 7 | LK08 | Karte war als Entwarnung lesbar | Tisch lockert Sicherheitsmaßnahmen zu früh | Zusatz: „Keine Hinweise auf aktive Angreifer“ | Mittel | behoben, `lk08-positive-entwicklung.png` |
-| 8 | Handbuch 1.0 Abschnitt 10, Abnahmeauftrag | Bildpflicht für B1–B8; Werkzeug zeigt B-Karten nie auf der Bühne | Abnahme wäre an einem Kriterium gescheitert, das es nicht gibt | Regel: B1–B8 und SK sind private E-Mails ohne Bild; Bühne zeigt nur, *dass* eine Rolle Neues hat | Mittel | Handbuch angepasst; **Bestätigung durch Auftraggeber offen** |
+| 8 | Handbuch 1.0 Abschnitt 10, Abnahmeauftrag | Bildpflicht für B1–B8; das Werkzeug zeigte B-Karten nie auf der Bühne | Überraschungen, die der ganze Tisch erleben soll, wurden privat zugestellt | B6–B8 öffentlich mit Bild und Ton; B1–B5 privat; Handbuch Abschnitt 9 | Mittel | behoben (Werkzeug, Drehbuch, Handbuch 1.2) |
 | 9 | Handbuch 1.0, Status-Absatz | „konkrete Buttonnamen … zu verifizieren“ | Moderation sucht Schaltflächen | Abschnitt 7.0 mit allen Schaltflächen im Wortlaut der Oberfläche | Mittel | behoben |
 | 10 | Handbuch Abschnitt 12 vs. Protokoll | Bewertungsraster (8 Kriterien, 0/1/2) fehlte im exportierten Protokoll | Auswertung musste von Hand nachgebaut werden | Protokoll enthält Abschnitt „Gesamteinschätzung der Übung (Team)“ mit allen acht Kriterien | Mittel | behoben, `server/index.js` |
 | 11 | 180 Min., Ausgewogen | Debitoren-, Bestands- und Key-Account-Rollen hatten eigene Karten, waren in Lagen aber kaum gefordert | Rollen sitzen lange still | Zuständigkeiten ergänzt in LK02, LK06, LK11, LK12, LK14, LK17, LK24, LK25 | Niedrig | behoben, Drehbuch |
@@ -181,14 +181,17 @@ Die vollständige Liste mit Dateinamen, Pixelmaßen und Bildinhalten steht in `d
 | Bild-Text-Widersprüche | sechs gefunden, sechs behoben (LK08, LK09, LK12, LK15, LK17, LK18) | Widerspruchstabelle Nr. 2–7 |
 | LK03 | Social-Media-Beitrag ohne Plattformlogo | Sichtprüfung |
 | SK (vertraulich) | nie auf der Bühne; per E-Mail an eine Rolle; Bühne zeigt nur gelbe Markierung im Spielbrett | Werkzeug |
-| B1–B8 | wie SK, kein Bühnenbild (Designentscheidung, siehe Urteil Punkt 5) | Werkzeug |
+| B1–B5 | wie SK, privat per E-Mail, kein Bühnenbild | Werkzeug |
+| B6–B8 | öffentlich auf der Bühne: eigene Karte (Megafon / Tür / Bildschirm), Ton; B7 mit Countdown und „nicht erreichbar“ im Spielbrett | Generalprobe, Browser-Test |
 | W1–W4 | bewusst kein Bühnenbild; nur in der Moderation | Werkzeug |
 | Ton: Halle | `ambience-maschinenraum.mp3`, 24 s Schleife, synthetisch erzeugt, endet mit LK01 | Datei, Browser-Test |
 | Ton: LK01 | `lk01-stille-gemurmel.mp3`, 7 s, einmalig, eigene Aufnahme | Datei |
 | Ton: LK04, LK06 | `telefon-klingeln.mp3`, 5 s, einmalig; danach spricht die Moderation den Anrufer live (Sprechertext) | Datei, Browser-Test |
 | Ton: LK23 | `funk-ruf.mp3`, 1 s, einmalig; danach Werkschutz live (Sprechertext) | Datei |
-| Ton: LK10, LK26 | Sprechertext zum Vorlesen; eigene Aufnahme optional | Drehbuch |
-| Medienpaket des Auftraggebers | Klingel- und Funksignal übernommen (Pegel auf ca. −4 dB angehoben); Sprechertexte an die Kartentexte angeglichen. Nicht übernommen: synthetische Sprachdemos (hörbar künstlich, beantworten keine Rückfragen), Audio zu SK17 und B6–B8 (vertraulich bzw. privat zugestellt), Bildbriefings für B1–B8 und W1–W4 (Designentscheidung), Briefings für LK01–LK26 (Bilder liegen geprüft vor) | Abgleich mit Drehbuch |
+| Ton: LK10 | `lk10-nordkanal-nachrichten.mp3`, 56 s: Erkennungsmelodie, Nachricht (Piper „Thorsten“, CC0), Abschluss-Ton; endet spätestens mit der nächsten Lage | Datei, Generalprobe |
+| Ton: B6, B8 | `b6-zwei-durchsagen.mp3` (27 s), `b8-erp-test-meldung.mp3` (21 s); Stimmen Piper „Kerstin“/„Thorsten“ (CC0) | Datei, Generalprobe |
+| Ton: LK26 | Sprechertext zum Vorlesen; eigene Aufnahme optional | Drehbuch |
+| Medienpaket des Auftraggebers | Übernommen: Klingel- und Funksignal, Signale für B8 (Pegel angehoben), Sprechertexte (an die Kartentexte angeglichen). Neu produziert statt der eSpeak-Demos: LK10, B6, B8 mit der freien Sprachsynthese Piper. Nicht übernommen: Audio zu SK17 (vertraulich), Bilder für W1–W4 (ein Bild würde verraten, wo eine Entscheidung Folgen hat), Briefings für LK01–LK26 (Bilder liegen geprüft vor) | Abgleich mit Drehbuch |
 | Stumm | „Ton aus“ stoppt die Halle sofort, „Ton an“ startet sie wieder; „Ohne Ton anzeigen“ spielt nie etwas ab | Browser-Test ohne Fehler |
 | Fallback ohne Ton | kein Ton trägt Information, die nicht auch auf der Bühne steht | Drehbuch |
 | **nicht geprüft** | Beamer-Darstellung und Lesbarkeit im Raum; Lautstärke im Raum; Herkunft und Nutzungsrechte der Fotos sowie Ähnlichkeit abgebildeter Personen mit realen Menschen | – |
@@ -259,7 +262,8 @@ Alle Punkte sind mit diesem Stand umgesetzt und geprüft.
 - [x] 27 / 27 Bilder vorhanden und inhaltlich zum Text passend
 - [x] Sperren B6 / B7 / B8 greifen auch serverseitig
 - [x] „Ton aus / Ton an“ und „Ohne Ton anzeigen“ funktionieren im Browser
-- [x] Protokoll-Export mit Entscheidungen, Rechnung, Raster, Maßnahmenplan, ohne Namen
+- [x] Protokoll-Export mit Entscheidungen, Überraschungen, Rechnung, Raster, Maßnahmenplan, ohne Namen
+- [x] Medien-Generalprobe: alle 26 Lagekarten und B6–B8 auf der Bühne angezeigt, alle Bilder geladen, jeder Ton an der richtigen Karte; ein Fehler gefunden und behoben (Ton lief über die nächste Lage weiter)
 
 **Vor dem Pilot im echten Raum (No-Go, solange offen):**
 - [ ] Beamer: Ruhebild, LK01, eine Karte (z. B. LK15) und das Spielbrett aus der letzten Reihe lesbar
@@ -268,7 +272,8 @@ Alle Punkte sind mit diesem Stand umgesetzt und geprüft.
 - [ ] Moderation auf eigenem Bildschirm, Bühne nur am Beamer (nichts aus der Moderation geteilt)
 - [ ] Protokoll nach der Generalprobe herunterladen und öffnen
 - [ ] Nutzung der Fotos für den vorgesehenen Teilnehmerkreis freigegeben (fachlich klären)
-- [ ] Bestätigung: B1–B8 ohne Bühnenbild (privat per E-Mail) ist so gewollt
+- [ ] B7 vorher mit der Person absprechen, die die Krisenstabsleitung spielt (wird hinausgebeten)
+- [ ] Live-Gespräche LK04/LK06/LK23 einmal mit einer zweiten Person durchspielen
 
 **Minimaler Funktionstest je Zeitformat und Schwerpunkt:** im Setup Dauer und Schwerpunkt wählen. Danach in der Ablaufvorschau prüfen:
 - LK07 und LK17 sind enthalten,

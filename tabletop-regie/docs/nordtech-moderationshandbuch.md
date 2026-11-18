@@ -1,8 +1,8 @@
 # NordTech – Handbuch für Moderation, Spielleitung und Qualitätssicherung
 
-**„7 Tage im Ausnahmezustand“ · Fiktives BCM-Tabletop · Handbuch-Version 1.1 · abgeglichen mit dem Werkzeugstand vom 18.11.2026**
+**„7 Tage im Ausnahmezustand“ · Fiktives BCM-Tabletop · Handbuch-Version 1.2 · abgeglichen mit dem Werkzeugstand vom 18.11.2026**
 
-> **Status:** Einsatzhandbuch als Ergänzung zum Werkzeug. Version 1.1 ist mit der laufenden Oberfläche abgeglichen: Alle genannten Schaltflächen und Bereiche heißen im Werkzeug genau so (siehe Abschnitt 7.0). Änderungen gegenüber 1.0: Lösegeld-Entscheidung W4 fällt bei LK07 vor Fristablauf; Überraschungskarten B1–B8 sind wie vertrauliche Karten privat (E-Mail an eine Rolle) und brauchen kein Bühnenbild; Entscheidungen werden bewusst nur in der Moderation angezeigt; Stumm-Schalter für die Bühne. Dieses Handbuch ersetzt weder das vollständige Drehbuch noch fachliche rechtliche Prüfungen. **Keine Pilotfreigabe ohne Bild-, Ton- und Funktionsabnahme im echten Raum.**
+> **Status:** Einsatzhandbuch als Ergänzung zum Werkzeug. Version 1.2 ist mit der laufenden Oberfläche abgeglichen: Alle genannten Schaltflächen und Bereiche heißen im Werkzeug genau so (siehe Abschnitt 7.0). Änderungen gegenüber 1.0: Lösegeld-Entscheidung W4 fällt bei LK07 vor Fristablauf; B1–B5 gehen privat an eine Rolle, **B6–B8 werden öffentlich auf der Bühne inszeniert** (Bild und Ton, B7 als echte Spielunterbrechung); Anrufe LK04, LK06, LK23 als Gesprächssimulation mit Nachfragen und Gesprächsende (Abschnitt 7.4); LK10 als fertiger Nachrichteneinspieler; Entscheidungen werden bewusst nur in der Moderation angezeigt; Stumm-Schalter für die Bühne. Dieses Handbuch ersetzt weder das vollständige Drehbuch noch fachliche rechtliche Prüfungen. **Keine Pilotfreigabe ohne Bild-, Ton- und Funktionsabnahme im echten Raum.**
 
 ## 1. Zweck und Lernziele
 
@@ -93,7 +93,9 @@ Fixe Eckdaten: 620 Beschäftigte; drei Standorte; 900 Endgeräte/Produktionsrech
 | Moderation | Aktuelle Lagekarte (öffentlich) | Text, Schwerpunktfrage, Bewertungshilfe (gut/schwach), Moderatorhinweis; „Ton noch einmal abspielen“ |
 | Moderation | Entscheidungen mit Folgen | Weichen W1–W4 festhalten, zurücknehmen per erneutem Klick |
 | Moderation | Spielbrett: Wer ist am Zug? | auch auf der Bühne; blau = gefordert, gelb = hat neue vertrauliche Information |
-| Moderation | Manuell auslösen → Bonuskarten „Auslösen“ / „Noch nicht“ | Überraschungskarten B1–B8, gesperrt bis zur Voraussetzung |
+| Moderation | Manuell auslösen → Bonuskarten „Auslösen“ / „Noch nicht“ | Überraschungskarten B1–B8, gesperrt bis zur Voraussetzung; B6–B8 mit Kennzeichen „auf der Bühne“ |
+| Moderation | „Jetzt auf der Bühne: Überraschung …“ → „Ton noch einmal abspielen“, „Von der Bühne nehmen“ bzw. bei B7 „Zur Lage zurück (Countdown bleibt sichtbar)“ | steuert eine öffentliche Überraschung; mit der nächsten Lage verschwindet sie automatisch |
+| Moderation | Aktuelle Lagekarte → „Sprechertext zum Vorlesen“, „Gespräch führen“, „Text der Einspielung“ | Anrufer-Text, Nachfragen und Gesprächsende bzw. Abschrift einer Aufnahme |
 | Moderation | Verschickte vertrauliche Karten | was bei wem kursiert, mit Bewertungshilfe; Hinweis bei Ersatzrolle |
 | Moderation | Abschluss: Krise beenden – Abschluss zeigen / Weiter / Zurück / Ausblenden | Nacharbeiten und Rechnung Schritt für Schritt (Pfeiltasten möglich) |
 | Moderation | Protokoll herunterladen | Markdown-Protokoll ohne Namen, mit Team-Einschätzung und Maßnahmenplan |
@@ -111,6 +113,21 @@ Vorlesen: „Heute stellen wir keine IT-Systeme wieder her. Sie übernehmen eine
 5. **Weiche W1–W4 (falls in der Moderation angezeigt):** Die Frage offen an den Tisch geben, ohne die Optionen oder Folgen vorzulesen. Am Ende der Lage festhalten, was der Tisch entschieden hat. Die Bühne zeigt bewusst kein Entscheidungsbild – die Folgen erscheinen erst in späteren Lagen. **Keine Auswahl = Drehbuch-Basisverlauf**, im Protokoll als „nicht festgehalten“ ausgewiesen.
 6. **Abschluss je Lage:** Entscheid/Prüfauftrag – verantwortlich – Kommunikationskanal/Empfänger – nächster Termin. Bei Unklarheit eine explizit offene Frage mit Owner protokollieren.
 7. **Überleitung:** Chronologie und den nächsten Simulationszeitpunkt nennen, ohne Folgewissen zu verraten.
+
+### 7.4 Anrufe als Gesprächssimulation (LK04, LK06, LK23)
+
+Bei diesen Lagen klingelt auf der Bühne das Telefon (LK04 Nordkanal, LK06 Automobilkunde) bzw. ertönt ein Funksignal (LK23 Werkschutz). Die Moderation **ist** danach der Anrufer:
+
+1. **Einstieg:** Sprechertext aus der Moderation sprechen – nicht vorlesen, sondern in der Rolle. Wer am Tisch nimmt ab? Nicht zuweisen, abwarten.
+2. **Reagieren:** Auf die Antwort mit einer der vorbereiteten Nachfragen (Moderation, Abschnitt „Gespräch führen“) nachsetzen. Ausweichende Antworten werden konkret hinterfragt, klare Antworten werden akzeptiert.
+3. **Gesprächsende:** Mit dem vorbereiteten Schlusssatz das Gespräch beenden („Ich halte fest: …“). Höchstens zwei Minuten, dann diskutiert der Tisch ohne Anrufer weiter.
+4. **Auswerten:** Die Hinweise „Gut“ und „Schwach“ unter „Gespräch führen“ dienen der Beobachtung, nicht der Benotung von Personen.
+
+| Lage | Anrufer | Nachfragen (Kurzform) | Gesprächsende |
+|---|---|---|---|
+| LK04 | Redaktion Nordkanal | Datenabfluss ja/nein? · Verhandeln Sie mit den Erpressern? · Lieferfähigkeit und Ansprechpartner? | „Wir zitieren Sie mit …“ bzw. „Das Unternehmen wollte sich nicht äußern.“ |
+| LK06 | Einkauf Automobilkunde | Liefertermin? · Fertigware zuerst an uns, anderes Werk? · Sind unsere Daten betroffen? | „Rückruf bis 16 Uhr, Bericht bis morgen 10 Uhr – sonst Einkaufsvorstand.“ |
+| LK23 | Werkschutz Werk Süd | Begleitet reinlassen – wer begleitet? · Eigene Laptops an die Anlage? | Eintrag ins Wachbuch mit Name/Rolle der Freigabe – oder Techniker bleiben draußen. |
 
 ### 7.3 Die vier Weichen in der Spielleitung
 
@@ -141,7 +158,12 @@ Einblendung der öffentlichen Lage → nach etwa 30 Sekunden vertrauliche Inform
 
 ## 9. Überraschungskarten B1–B8
 
-Diese Karten werden **manuell** und nur bei geeignetem Verlauf verwendet. Sie gehen wie vertrauliche Karten **per E-Mail an eine Rolle** (bei unbesetzter Rolle an die Ersatzrolle), die sie in den Krisenstab trägt – sie werden nicht auf der Bühne gezeigt. Zum Schwerpunkt passende Karten stehen in der Moderation oben mit „passt zum Schwerpunkt“. Überraschungen ersetzen Zeit für eine andere Diskussion, sie werden nicht einfach oben drauf addiert.
+Diese Karten werden **manuell** und nur bei geeignetem Verlauf verwendet – die Überraschung entsteht durch den Zeitpunkt. Es gibt zwei Arten:
+
+- **B1–B5 privat:** per E-Mail an eine Rolle (bei unbesetzter Rolle an die Ersatzrolle), die sie in den Krisenstab trägt.
+- **B6–B8 öffentlich:** erscheinen sofort auf der Bühne mit Kennzeichen „Überraschung“, eigenem Bild und Ton; keine E-Mail. Der ganze Krisenstab soll die Situation gleichzeitig erleben und auflösen. Mit der nächsten Lage verschwinden sie automatisch.
+
+Zum Schwerpunkt passende Karten stehen in der Moderation oben mit „passt zum Schwerpunkt“. Überraschungen ersetzen Zeit für eine andere Diskussion, sie werden nicht einfach oben drauf addiert.
 
 | ID | Geeigneter Anlass | Vorbedingung / Einschränkung | Hauptprüfziel |
 |---|---|---|---|
@@ -150,9 +172,11 @@ Diese Karten werden **manuell** und nur bei geeignetem Verlauf verwendet. Sie ge
 | B3 | Zusätzlicher Lieferengpass | Einkauf/entsprechende Ersatzrolle | Materialpriorisierung |
 | B4 | Interview in 15 Min. | passende Rolle besetzt | Sprecherfreigabe |
 | B5 | Schaden über 500.000 € | CFO/Vertretung | Umgang mit Schätzungen |
-| B6 | Widersprüchliche Anweisungen | erst **nach LK22**, nur wenn Kommunikation uneinheitlich | einheitliche Anweisung in 60 Sek. |
-| B7 | CEO plötzlich nicht erreichbar | **ab 90 Minuten und erst nach LK17**, CEO tatsächlich besetzt | Vertretung und gemeinsames Lagebild |
-| B8 | Zu früher ERP-Produktivstart | **erst nach LK14**, nur falls voreilige Freigabe diskutiert wird | Sicherheits- und Qualitäts-Gates |
+| B6 | Widersprüchliche Anweisungen – **Bühne:** zwei Lautsprecherdurchsagen nacheinander (Gong, Stimme 1 „alles aus lassen“, Gong, Stimme 2 „alles neu starten“) | erst **nach LK22**, nur wenn Kommunikation uneinheitlich | einheitliche Anweisung in 60 Sek. |
+| B7 | Krisenstabsleitung nicht erreichbar – **Bühne:** Telefon klingelt, Moderation bittet die Krisenstabsleitung hinaus, Countdown 5:00 auf der Bühne, im Spielbrett „nicht erreichbar“ | **ab 90 Minuten und erst nach LK17**, Krisenstabsleitung tatsächlich besetzt (sonst gesperrt) | Vertretung und gemeinsames Lagebild |
+| B8 | Vermeintlicher Erfolg im ERP-Test – **Bühne:** Erfolgssignal und Ansage, dann Warnton und Meldung des Qualitätsmanagements | **erst nach LK14**, nur falls voreilige Freigabe diskutiert wird | Sicherheits- und Qualitäts-Gates |
+
+**B7 Schritt für Schritt:** Auslösen → Telefon klingelt → Moderation geht zur Krisenstabsleitung („Sie werden dringend zu einem vertraulichen Gespräch gebeten …“) und begleitet sie hinaus → „Zur Lage zurück (Countdown bleibt sichtbar)“: Die Bühne zeigt wieder LK17, darüber den Countdown → nach Ablauf zurückholen und fragen: Was hat die Stellvertretung entschieden, und weiß die Krisenstabsleitung es jetzt?
 
 **Hinweis Zeitformate:** LK14 (ERP-Testbetrieb) ist automatisch nur bei 180 Minuten eingeplant. In kürzeren Fassungen ist B8 erst nutzbar, wenn LK14 unter „Nicht eingeplante Karten“ mit „Jetzt einsetzen“ gespielt wurde – das kostet ca. 5 Minuten an anderer Stelle. B7 ist unter 90 Minuten gesperrt.
 
@@ -160,11 +184,11 @@ Bei Bonuskarten keine irreversible Schädigung erfinden, die dem festen Drehbuch
 
 ## 10. Bild- und Tonregie
 
-**Verbindliches Qualitätsziel:** Alle 26 öffentlichen Lagekarten (LK01–LK26) und das Ruhebild haben ein eigenes, szenengerechtes Bild – Stand und Prüfung siehe `docs/nordtech-medienmatrix.md`. Vertrauliche Karten (SK) und Überraschungskarten (B1–B8) gehen als Text per E-Mail an einzelne Rollen und werden nie projiziert; ein Bild ist dafür nicht vorgesehen. Die Entscheidungen W1–W4 haben bewusst kein Bühnenbild, damit der Tisch nicht merkt, an welcher Stelle eine Entscheidung Folgen hat.
+**Verbindliches Qualitätsziel:** Alle 26 öffentlichen Lagekarten (LK01–LK26) und das Ruhebild haben ein eigenes, szenengerechtes Bild – Stand und Prüfung siehe `docs/nordtech-medienmatrix.md`. Die öffentlichen Überraschungen B6–B8 haben eigene Bühnenbilder. Vertrauliche Karten (SK) und die privaten Überraschungen B1–B5 gehen als Text per E-Mail an einzelne Rollen und werden nie projiziert; ein Bild ist dafür nicht vorgesehen. Die Entscheidungen W1–W4 haben bewusst kein Bühnenbild, damit der Tisch nicht merkt, an welcher Stelle eine Entscheidung Folgen hat.
 
 **Design:** Einheitlicher NordTech-Stil; fiktive Unternehmensbezeichnungen, neutrale Fahrzeuge/Anlagen, keine fremden Logos oder echte Kundendaten; klare visuelle Trennung von Fakten, Warnung und Prognose. Keine Bildunterschrift behauptet mehr als der Kartentext. **Keine fehlenden Bilder durch fremde Stockfotos kaschieren.** Bilddateien sollten zugänglich sein (Alternativtext, lesbarer Kontrast, ausreichende Auflösung), auch wenn der Ton deaktiviert ist.
 
-**Audio (tatsächlicher Stand):** Vor der Krise läuft eine leise Hallen-Atmosphäre in Schleife (synthetisch erzeugt, keine Fremdrechte); sie läuft während der Vorboten weiter. Mit LK01 verstummt sie, einmalig folgt die eigene Aufnahme „Stille und Gemurmel“. **Anrufe werden live gesprochen:** Bei LK04 (Nordkanal) und LK06 (Automobilkunde) klingelt auf der Bühne kurz das Telefon, bei LK23 (Werkschutz) ertönt ein Funksignal; danach spricht die Moderation den Anrufer nach dem Sprechertext, der in der Moderation erscheint, und beantwortet Rückfragen in der Rolle. LK26 (Schichtleitung) und LK10 (Nachrichtenbeitrag) haben ebenfalls einen Sprechertext. Wer möchte, nimmt Sprechertexte im Setup unter „Eigene Töne für Lagekarten“ mit eigener Stimme auf – die Aufnahme ersetzt dann Signal und Live-Sprechen. Synthetische Computerstimmen werden bewusst nicht verwendet. Vertrauliche Karten (z. B. der Beiratsanruf SK17) werden nie vertont, sondern nur privat per E-Mail zugestellt. Weitere Töne lassen sich dort je Lagekarte selbst aufnehmen. Kein Ton enthält Informationen, die nicht auch auf der Bühne stehen. **Stumm-Fallback:** Bühne mit „Ohne Ton anzeigen“ starten oder in der Moderation jederzeit „Ton aus“. Keine Musik- oder Audioaufnahmen aus fremden Quellen ohne Rechteklärung.
+**Audio (tatsächlicher Stand):** Vor der Krise läuft eine leise Hallen-Atmosphäre in Schleife (synthetisch erzeugt, keine Fremdrechte); sie läuft während der Vorboten weiter. Mit LK01 verstummt sie, einmalig folgt die eigene Aufnahme „Stille und Gemurmel“. **Anrufe werden live gesprochen:** Bei LK04 (Nordkanal) und LK06 (Automobilkunde) klingelt auf der Bühne kurz das Telefon, bei LK23 (Werkschutz) ertönt ein Funksignal; danach spricht die Moderation den Anrufer nach dem Sprechertext, der in der Moderation erscheint, und beantwortet Rückfragen in der Rolle. LK26 (Schichtleitung) hat ebenfalls einen Sprechertext. **Fertige Einspielungen** gibt es dort, wo kein Gespräch entsteht: LK10 (Nordkanal-Nachrichten, ca. 56 s mit Erkennungsmelodie), B6 (zwei Lautsprecherdurchsagen) und B8 (Testsignal und Qualitätsmeldung). Die Stimmen sind mit einer freien Sprachsynthese erzeugt (Piper, Stimmen „Thorsten“ und „Kerstin“, beide CC0) – deutlich natürlicher als einfache Computerstimmen, aber erkennbar synthetisch. Wer es noch echter möchte, nimmt die Texte im Setup unter „Eigene Töne für Lagekarten“ mit eigener Stimme auf; die Abschrift steht in der Moderation unter „Text der Einspielung“. Eine eigene Aufnahme ersetzt Signal bzw. Einspielung. Vertrauliche Karten (z. B. der Beiratsanruf SK17) werden nie vertont, sondern nur privat per E-Mail zugestellt. Weitere Töne lassen sich dort je Lagekarte selbst aufnehmen. Kein Ton enthält Informationen, die nicht auch auf der Bühne stehen. **Stumm-Fallback:** Bühne mit „Ohne Ton anzeigen“ starten oder in der Moderation jederzeit „Ton aus“. Keine Musik- oder Audioaufnahmen aus fremden Quellen ohne Rechteklärung.
 
 **Audio-Stillregel:** Spätestens bevor Fragen vorgelesen werden, ist der Ton aus. Keine Toninformation darf exklusiv sein; derselbe Sachverhalt muss visuell oder textlich zugänglich bleiben.
 
@@ -213,7 +237,7 @@ Für jedes Feld **0 = fehlt / riskant, 1 = teilweise, 2 = tragfähig**; Beobacht
 - [ ] Rollen, Empfänger und Ersatzrollen überprüft; Test-SK bleibt privat
 - [ ] Zu jeder gespielten Lage ist das richtige Bild sichtbar (Medienmatrix abgehakt)
 - [ ] Ton startet nur bewusst; Lautstärke im Raum geprüft; „Ton aus“ in der Moderation und „Ohne Ton anzeigen“ auf der Bühne getestet
-- [ ] Weichen W1–W4 und B6/B7/B8-Sperren geprüft
+- [ ] Weichen W1–W4 und B6/B7/B8-Sperren geprüft; B7-Ablauf (hinausbitten, Countdown, zurückholen) mit der Krisenstabsleitung abgesprochen
 - [ ] Timer, Beamer, Netzwerk und Offline-Notfallset einsatzfähig
 - [ ] Protokoll-Export ohne Namen getestet
 - [ ] Offene fachliche/technische Blocker: null
@@ -237,4 +261,4 @@ Für jedes Feld **0 = fehlt / riskant, 1 = teilweise, 2 = tragfähig**; Beobacht
 - **Welche drei Zielgruppen brauchen bis wann eine abgestimmte Aussage?**
 - **Welcher nächste Lagezeitpunkt ist verbindlich?**
 
-**Hinweis zur Qualität:** Vor der Pilotfreigabe sind tatsächliche Bilder/Töne und der genaue Bedienablauf anhand des laufenden Werkzeugs abzunehmen; aus diesem reinen Textpaket lässt sich deren Existenz oder technische Funktionsfähigkeit nicht bestätigen.
+**Hinweis zur Qualität:** Bilder, Töne und Bedienablauf sind im laufenden Werkzeug abgenommen (Medien-Generalprobe, `docs/nordtech-generalprobe.md`). Offen bleibt nur, was ein Rechner nicht prüfen kann: Raumakustik, Beamer und die Wirkung der Live-Gespräche.

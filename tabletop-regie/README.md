@@ -93,6 +93,7 @@ Im Ordner `docs/`:
 - `nordtech-medienmatrix.md` / `.csv` – jedes Bild und jeder Ton mit Datei, Prüfstand und Befund
 - `nordtech-gesamtpaket.md` – das komplette Szenario als Text (Faktenblatt, alle Karten, Zeitformate, Stand der Prüfrunden)
 - `nordtech-durchlaeufe.md` – sieben vollständig durchgespielte Geschichten, direkt aus dem Werkzeug erzeugt
+- `nordtech-generalprobe.md` – Medien-Generalprobe: jede Karte so, wie die Bühne sie zeigt, mit Ton und Sichtbefund
 - `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
 
 ## Ablauf einer Übung
@@ -402,13 +403,23 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   `hoehepunkt`, `folgen` oder `wiederanlauf`): Daraus baut der Zieldauer-Modus den
   Spannungsbogen. Jeder Akt braucht mindestens eine Lagekarte.
 - `bonuskarten[]` — manuell einsetzbare Zusatzereignisse (ebenfalls mit
-  `fallbackEmpfaenger`, optional `moderatorHinweis`)
+  `fallbackEmpfaenger`, optional `moderatorHinweis`). Standard: privat per
+  E-Mail an eine Rolle. Mit `oeffentlich: true` erscheinen sie stattdessen als
+  „Überraschung“ auf der Bühne: `titel`, `buehnentext`, optional `kriseninfo`,
+  `media`, `sound` (einmalig), `sprechertext` (Abschrift bzw. Text zum
+  Sprechen) und `regie` für die Moderation. `unterbrechung` (`rolle`,
+  `minuten`, `text`) nimmt eine Rolle für einige Minuten aus dem Spiel
+  (Countdown auf der Bühne, „nicht erreichbar“ im Spielbrett);
+  `erfordertBesetzt` sperrt die Karte, solange diese Rolle nicht besetzt ist.
 - Lagekarten können `sprechertext` haben: ein Text zum Vorlesen oder
   Einsprechen (z. B. ein Nachrichtenbericht), der in der Moderation und im
   Setup unter „Eigene Töne“ erscheint. Hat die Lagekarte zusätzlich einen
   kurzen `sound` (z. B. Telefonklingeln), spielt die Bühne das Signal und die
   Moderation spricht den Anrufer danach live – Rückfragen sind so möglich.
-  Eine eigene Aufnahme ersetzt beides.
+  Dafür `sound.signal: true` setzen; ohne `signal` gilt der Ton als fertige
+  Einspielung und der Sprechertext als Abschrift. `gespraech` (`nachfragen[]`,
+  `abschluss`, optional `gut`/`schwach`) gibt der Moderation einen
+  Gesprächsleitfaden. Eine eigene Aufnahme ersetzt Signal und Sprechertext.
 - `nachspiel` — der Abschluss: `titel`, `einleitung`, `nacharbeiten[]`
   (`zahl`, `text`), `rechnung[]` (`posten`, `betrag`, `bcmHebel` = was vorher
   geholfen hätte), `optionalePosten[]` (zusätzlich `id` und `frage`, in der

@@ -135,6 +135,28 @@ function log(type, message) {
 function recipientRoleFor(card) {
   return engine.resolveRecipient(card, new Set(engine.assignedRoleIds(state)));
 }
+// Oeffentliche Ueberraschung (Bonuskarte mit "oeffentlich"): steht auf der
+// Buehne ueber der aktuellen Lage, bis die Moderation sie ausblendet oder die
+// naechste Lage kommt. B7-artige Karten unterbrechen eine Rolle fuer einige
+// Minuten (Countdown in Echtzeit).
+function buehnenEreignis(fuerModeration) {
+  const e = state.buehnenEreignis;
+  if (!e || !['running', 'paused'].includes(state.status)) return null;
+  const lk = engine.currentLagekarte(scenario, state);
+  if (!lk || lk.id !== e.lkId) return null;
+  const b = scenario.bonuskarten.find(x => x.id === e.id);
+  if (!b) return null;
+  const u = b.unterbrechung;
+  const v = {
+    id: b.id, key: e.id + ':' + e.at + ':' + (e.replay || 0), minimiert: !!e.minimiert, titel: b.titel, text: b.buehnentext || b.text,
+    kriseninfo: b.kriseninfo || null, media: b.media || null, sound: b.sound || null,
+    unterbrechung: u ? { rolle: (roleById(u.rolle) || {}).funktion || u.rolle, text: u.text || '', restSekunden: Math.max(0, Math.round((e.endsAt - Date.now()) / 1000)) } : null
+  };
+  if (fuerModeration) Object.assign(v, { sprechertext: b.sprechertext || null, moderatorHinweis: b.moderatorHinweis || null, regie: b.regie || null });
+  return v;
+}
+function rolleBesetzt(roleId) { return participantsForRole(roleId).length > 0; }
+
 function recipientLabel(card) {
   const rid = recipientRoleFor(card);
   const primary = roleById(card.empfaenger);
@@ -367,13 +389,17 @@ function spielbrett() {
     });
   }
   const zust = new Set(currentLk ? (currentLk.zustaendig || []) : []);
+  // Laufende Unterbrechung (z. B. Krisenstabsleitung abgerufen): Rolle ist abwesend
+  const be = state.buehnenEreignis;
+  const ub = be && be.endsAt > Date.now() && (scenario.bonuskarten.find(x => x.id === be.id) || {}).unterbrechung;
+  const abwesend = ub && currentLk && be.lkId === currentLk.id ? ub.rolle : null;
   const rollen = scenario.roles.filter(r => r.id !== 'teilnehmer').map(r => {
     const team = participantsForRole(r.id);
     if (!team.length) return null;
     return {
       id: r.id, rolle: kurzRolle(r.funktion), ebene: EBENEN.includes(r.ebene) ? r.ebene : 'krisenstab',
       namen: team.map(p => p.name).filter(Boolean), anzahl: team.length,
-      gefordert: zust.has(r.id), neueInfo: neu[r.id] || 0
+      gefordert: zust.has(r.id) && r.id !== abwesend, neueInfo: neu[r.id] || 0, abwesend: r.id === abwesend
     };
   }).filter(Boolean);
   const unbesetzt = [...zust].filter(rid => rid !== 'teilnehmer' && !participantsForRole(rid).length)
@@ -872,13 +898,15 @@ app.get('/api/run/moderator-state', (req, res) => {
     unscheduledSonderlagekarten: scenario.sonderlagekarten.filter(sk => !sk.nurNachWeiche && (sk.minuteOffset === null || sk.minuteOffset === undefined) && !state.firedSonderlagekarten.find(f => f.id === sk.id))
       .map(sk => Object.assign({}, sk, { recipientRoleId: recipientRoleFor(sk), recipientLabel: recipientLabel(sk) })),
     bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, {
-      fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b),
+      fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: b.oeffentlich ? 'alle (Bühne)' : recipientLabel(b),
       // Ueberraschungskarten mit Voraussetzung erst nach der genannten Lage
       wartetAuf: [
         ...(b.minDauer && uebungsDauer() < b.minDauer ? [`nur in Übungen ab ${b.minDauer} Minuten`] : []),
+        ...(b.erfordertBesetzt && !rolleBesetzt(b.erfordertBesetzt) ? [`nur wenn ${(roleById(b.erfordertBesetzt) || {}).funktion || b.erfordertBesetzt} besetzt ist`] : []),
         ...(b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id)).map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
       ]
     })),
+    buehnenEreignis: buehnenEreignis(true),
     participants: state.participants,
     activeRoleIds: state.activeRoleIds,
     bewertung: state.bewertung,
@@ -915,6 +943,7 @@ app.get('/api/run/stage-state', (req, res) => {
     soundReplay: state.soundReplay || 0,
     soundMuted,
     soundOwner,
+    buehnenEreignis: buehnenEreignis(false),
     finale: scenario.nachspiel ? finale.view(scenario.nachspiel, ensureFinaleState()) : null,
     spielbrett: spielbrett()
   });
@@ -958,6 +987,14 @@ app.get('/api/run/protokoll', (req, res) => {
     const t = String(f.text || k.text || '').replace(/\|/g, '/');
     w(`| ${f.id} | ${f.recipientRoleId ? kurzRolle((roleById(f.recipientRoleId) || {}).funktion) : 'niemand besetzt'} | ${t.length > 140 ? t.slice(0, 137) + '…' : t} | ${String(k.moderatorGut || '').replace(/\|/g, '/')} |`);
   });
+  if ((state.firedBonusInfo || []).length) {
+    w('', '## Überraschungen', '', '| Karte | wie | bei Lage | Gute Reaktion wäre (Moderatorhinweis) |', '|---|---|---|---|');
+    state.firedBonusInfo.forEach(f => {
+      const b = scenario.bonuskarten.find(x => x.id === f.id) || {};
+      const lk = scenario.lagekarten.find(x => x.id === f.beiLage);
+      w(`| ${f.id}${b.titel ? ' ' + b.titel : ''} | ${f.oeffentlich ? 'auf der Bühne' : 'vertraulich an ' + (f.recipientRoleId ? kurzRolle((roleById(f.recipientRoleId) || {}).funktion) : 'niemand besetzt')} | ${lk ? lk.titel : '–'} | ${String(b.moderatorHinweis || '').replace(/\|/g, '/').slice(0, 200)} |`);
+    });
+  }
   if (scenario.nachspiel) {
     const r = finale.bill(scenario.nachspiel, ensureFinaleState().optionen);
     w('', '## Rechnung (fiktive Modellrechnung)', '', `Gesamtschaden ${eur(r.summe)}, modellierte Erstattung ${eur(r.versicherung)}, beim Unternehmen bleiben **${eur(r.eigenanteil)}**${r.anteilJahresgewinn ? ` (${Math.round(r.anteilJahresgewinn * 100)} % des Jahresgewinns)` : ''}.`);
@@ -1190,12 +1227,25 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   const offen = (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id));
   if (offen.length) return res.status(400).json({ ok: false, error: `Diese Karte passt erst nach ${offen.join(', ')}.` });
   if (b.minDauer && uebungsDauer() < b.minDauer) return res.status(400).json({ ok: false, error: `Diese Karte ist nur für Übungen ab ${b.minDauer} Minuten gedacht.` });
+  if (b.erfordertBesetzt && !rolleBesetzt(b.erfordertBesetzt)) return res.status(400).json({ ok: false, error: `Diese Karte setzt voraus, dass ${(roleById(b.erfordertBesetzt) || {}).funktion || b.erfordertBesetzt} besetzt ist.` });
+  if (state.firedLagekarten.includes('BONUS_' + b.id)) return res.status(400).json({ ok: false, error: 'Diese Karte wurde schon ausgelöst.' });
+  if (b.oeffentlich) {
+    const lk = engine.currentLagekarte(scenario, state);
+    if (!lk || !['running', 'paused'].includes(state.status)) return res.status(400).json({ ok: false, error: 'Öffentliche Überraschungen gehen nur während einer laufenden Lage.' });
+    state.firedLagekarten.push('BONUS_' + b.id);
+    state.firedBonusInfo = state.firedBonusInfo || [];
+    state.firedBonusInfo.push({ id: b.id, atMinute: engine.elapsedMinutes(state), oeffentlich: true, beiLage: lk.id });
+    state.buehnenEreignis = { id: b.id, at: Date.now(), lkId: lk.id, replay: 0, endsAt: b.unterbrechung ? Date.now() + b.unterbrechung.minuten * 60000 : null };
+    log('info', `Überraschung ${b.id} auf der Bühne: ${b.titel || ''}`);
+    persist();
+    return res.json({ ok: true, oeffentlich: true });
+  }
   const recipientRoleId = recipientRoleFor(b);
   const role = roleById(recipientRoleId || b.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];
   state.firedLagekarten.push('BONUS_' + b.id);
   state.firedBonusInfo = state.firedBonusInfo || [];
-  state.firedBonusInfo.push({ id: b.id, atMinute: engine.elapsedMinutes(state), recipientRoleId });
+  state.firedBonusInfo.push({ id: b.id, atMinute: engine.elapsedMinutes(state), recipientRoleId, beiLage: (engine.currentLagekarte(scenario, state) || {}).id || null });
   if (recipients.length === 0) {
     log('warn', `Bonuskarte ${b.id} ausgelöst, aber weder ${recipientLabel(b)} noch eine Ersatzrolle ist besetzt.`);
   } else if (testModeActive()) {
@@ -1212,6 +1262,18 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   }
   persist();
   res.json({ ok: true });
+});
+
+app.post('/api/run/buehnenereignis/ausblenden', (req, res) => {
+  const e = state.buehnenEreignis;
+  // Laufende Unterbrechung: erst nur verkleinern, damit der Countdown sichtbar bleibt
+  if (e && e.endsAt && !e.minimiert && e.endsAt > Date.now()) { e.minimiert = true; persist(); return res.json({ ok: true, minimiert: true }); }
+  if (e) log('info', `Überraschung ${e.id} von der Bühne genommen.`);
+  state.buehnenEreignis = null; persist(); res.json({ ok: true });
+});
+app.post('/api/run/buehnenereignis/replay', (req, res) => {
+  if (state.buehnenEreignis) state.buehnenEreignis.replay = (state.buehnenEreignis.replay || 0) + 1;
+  persist(); res.json({ ok: true });
 });
 
 // ---- Bewertungsmatrix ----

@@ -407,6 +407,9 @@ Der Regionalsender Nordkanal kontaktiert das Unternehmen. Fragen: Wurden Kundend
 
 *Sprechertext:* Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme.
 
+*Gespräch führen – Nachfragen:* Bei ausweichender Antwort: „Heißt das, Sie schließen aus, dass Kundendaten abgeflossen sind? Ja oder nein?“ · „Aus der Belegschaft hören wir von einer Lösegeldforderung auf den Bildschirmen. Verhandeln Sie mit den Erpressern?“ · „Können Ihre Kunden noch beliefert werden? Und wer ist ab jetzt mein Ansprechpartner?“  
+*Gesprächsende:* „Gut, dann zitiere ich Sie mit: … (Kernsatz des Tisches wiederholen). Wir berichten heute Abend.“ Lehnt der Tisch ab: „Dann schreiben wir: Das Unternehmen wollte sich nicht äußern.“ Danach auflegen – höchstens zwei Minuten.
+
 *Zuständig:* Unternehmenskommunikation & Marketing, Geschäftsführung (CEO), Krisenstabsleitung
 
 *Hinweis für die Moderation:* Die Moderation spielt die Redaktion von Nordkanal: Bei ausweichenden Antworten nachfragen. Darauf achten, wer spricht und ob die Antwort mit dem abgestimmt ist, was Kundenservice und Belegschaft gesagt wird.
@@ -429,6 +432,9 @@ Die Zutrittsverwaltung eines gesicherten Fertigungsbereichs in Werk Süd ist weg
 *Bild auf der Bühne:* Zutrittssystem nicht verfügbar – wer gibt frei?
 
 *Sprechertext:* Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?
+
+*Gespräch führen – Nachfragen:* „Darf ich die beiden mit Begleitung reinlassen? Wer begleitet sie?“ · „Die wollen ihre eigenen Laptops an die Anlage hängen. Ist das in Ordnung?“  
+*Gesprächsende:* „Verstanden, ich trage ins Wachbuch ein: freigegeben durch … (Name/Rolle), begleitet von …“ – oder: „Dann bleiben sie draußen, bis ich etwas Schriftliches habe.“
 
 *Zuständig:* Standortleitung Werk Süd, Leitung Produktion (Werksleitung), IT-Leitung (CIO), Geschäftsführung (CEO), Krisenstabsleitung
 
@@ -472,6 +478,9 @@ Ein Automobilkunde verlangt bis 16:00 Uhr einen Rückruf der Geschäftsführung 
 *Bild auf der Bühne:* Dienstag, 10:00 Uhr: Der Automobilkunde ist am Apparat.
 
 *Sprechertext:* Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall.
+
+*Gespräch führen – Nachfragen:* „Wann genau können Sie wieder liefern? Ich brauche ein Datum, keine Hoffnung.“ · „Haben Sie fertige Teile auf Lager, die Sie uns zuerst schicken? Kann ein anderes Werk einspringen?“ · „Sind auch unsere Daten betroffen – Zeichnungen, Bestellungen, Ansprechpartner?“  
+*Gesprächsende:* „Ich halte fest: Rückruf Ihrer Geschäftsführung heute bis 16 Uhr, schriftlicher Störungsbericht bis morgen 10 Uhr. Kommt beides nicht, geht die Sache an unseren Einkaufsvorstand.“ Danach auflegen.
 
 *Zuständig:* Geschäftsführung Vertrieb, stellv. Krisenstabsleitung, Geschäftsführung (CEO), Krisenstabsleitung, Kundenservice / Callcenter (Vertriebsinnendienst), Leitung Qualitätsmanagement, Key Account Management Automotive, Debitorenmanagement, Kaufmännische Leitung (CFO)
 
@@ -596,7 +605,7 @@ Nordkanal veröffentlicht einen Bericht: „Cyber-Chaos bei NordTech“. Ein ano
 
 *Bild auf der Bühne:* Donnerstag, 08:00 Uhr: Nordkanal sendet den Sonderbericht „Cyber-Chaos bei NordTech“.
 
-*Sprechertext:* Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran.
+*Einspielung (Ton):* Nordkanal Nachrichten, Donnerstag, acht Uhr. Guten Morgen. Seit Montag steht bei der NordTech Components GmbH die Produktion weitgehend still. Ein Cyberangriff hat zentrale IT-Systeme des Zulieferers für die Automobil- und Pharmaindustrie lahmgelegt. Auf Bildschirmen im Werk war eine Lösegeldforderung zu sehen, Fotos davon kursieren seit Montag im Netz. Ob Kundendaten abgeflossen sind, ist weiter unklar. Ein Beschäftigter, der anonym bleiben möchte, wirft dem Unternehmen vor, die interne Kommunikation sei unzureichend gewesen. Auch Kunden werden ungeduldig. Nach Informationen von Nordkanal drohen erste Abnehmer mit Vertragsstrafen. Wie lange der Ausfall noch dauert, sagt das Unternehmen bislang nicht. Für die rund 620 Beschäftigten bleibt die Ungewissheit. Wir bleiben für Sie dran.
 
 *Zuständig:* Unternehmenskommunikation & Marketing, Geschäftsführung (CEO), Krisenstabsleitung, Kundenservice / Callcenter (Vertriebsinnendienst)
 
@@ -1337,11 +1346,15 @@ Bevorzugt: LK03, LK04, LK06, LK10, LK11, SK46, SK05, SK06, SK25, SK35, SK37, SK3
 - **B3** an Leitung Strategischer Einkauf (Ersatz: Geschäftsführung (CEO), Krisenstabsleitung → Kaufmännische Leitung (CFO)): Ein Lieferant priorisiert einen Wettbewerber. Materiallieferung verzögert sich um 7 Tage.
 - **B4** an Geschäftsführung (CEO), Krisenstabsleitung (Ersatz: Geschäftsführung Vertrieb, stellv. Krisenstabsleitung → Unternehmenskommunikation & Marketing): Ein Fernsehsender möchte in 15 Minuten ein Live-Interview. Du musst entscheiden, ob du zusagst.
 - **B5** an Kaufmännische Leitung (CFO) (Ersatz: Geschäftsführung (CEO), Krisenstabsleitung → Debitorenbuchhaltung): Erste Schätzung: Der Schaden liegt bereits über 500.000 €. Die Zahlen sind noch nicht bestätigt.
-- **B6 – Zwei widersprüchliche Anweisungen** (erst nach LK22) an Standortleitung Werk Süd (Ersatz: Leitung Produktion (Werksleitung) → IT-Service-Desk (technischer Support) → Geschäftsführung (CEO), Krisenstabsleitung): In Werk Süd hat die Produktionsleitung angeordnet, die Rechner ausgeschaltet zu lassen. Gleichzeitig hat eine andere Führungskraft angewiesen, alle Geräte neu zu starten, um die Arbeitsfähigkeit zu prüfen. Beide Anweisungen sind schon bei den Beschäftigten angekommen. Bring das sofort in den Krisenstab.  
-  *Moderation:* Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Ersetzt eine andere Diskussion, verlängert nicht.
-- **B7 – Die Krisenstabsleitung ist nicht erreichbar** (erst nach LK17) an Geschäftsführung (CEO), Krisenstabsleitung: Du wirst für die nächsten fünf Minuten zu einem vertraulichen Gespräch abgerufen. Verlasse den Tisch und sprich in dieser Zeit nicht mit dem Krisenstab. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich.  
-  *Moderation:* Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten. Die Stellvertretung bekommt den Auftrag zur Lagepräsentation, während die Krisenstabsleitung nicht erreichbar ist. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Ohne besetzte Krisenstabsleitung entfällt die Karte.
-- **B8 – Ein vermeintlicher Erfolg** (erst nach LK14) an Leitung Qualitätsmanagement (Ersatz: Leitung Produktion (Werksleitung) → IT-Leitung (CIO)): Ein erster Funktionstest des ERP ist erfolgreich. Kurz darauf fällt im Qualitätsmanagement auf: Bei einem Testauftrag wird eine Chargennummer angezeigt, die nicht zu den vorliegenden Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich argumentiert, das sei nur ein kleiner Datenfehler und dürfe den Produktivstart nicht aufhalten. Bring das in den Krisenstab.  
+- **B6 – Zwei widersprüchliche Anweisungen** (erst nach LK22), **öffentlich auf der Bühne**: Werk Süd, zwei Lautsprecherdurchsagen kurz nacheinander: Erst heißt es, alle Rechner bleiben aus, bis die IT etwas anderes sagt. Kurz darauf: Alle Rechner neu starten und prüfen, ob sie funktionieren. Beide Anweisungen sind bei den Beschäftigten angekommen. *Krisen-Info:* Was gilt jetzt – und wie erfahren es alle?  
+  *Ton/Sprechertext:* Gong. „Achtung, eine Durchsage der Produktionsleitung Werk Süd. Alle Rechner bleiben ausgeschaltet, bis die IT etwas anderes sagt. Ich wiederhole: Alle Rechner bleiben aus.“ – Gong. „Durchsage an alle Bereiche in Werk Süd. Bitte starten Sie jetzt alle Rechner neu und prüfen Sie, ob sie funktionieren. Melden Sie Probleme an Ihre Schichtleitung.“  
+  *Moderation:* Führungsstresstest. Nach „Kommunikation ohne IT“ auslösen, nur wenn die Gruppe uneinheitlich kommuniziert. Die Gruppe hat 60 Sekunden für eine verbindliche Anweisung und einen Kommunikationsweg. Gut: eine Stelle entscheidet, die Anweisung geht über einen festgelegten Weg an alle (Durchsage, Aushang, Schichtleitungen). Schwach: beide Anweisungen stehen lassen oder „jeder Bereich entscheidet selbst“. Ersetzt eine andere Diskussion, verlängert nicht.
+- **B7 – Die Krisenstabsleitung ist nicht erreichbar** (erst nach LK17), **öffentlich auf der Bühne** (Geschäftsführung (CEO), Krisenstabsleitung 5 Minuten nicht erreichbar, Countdown): Die Krisenstabsleitung wird zu einem vertraulichen Gespräch abgerufen und ist für die nächsten fünf Minuten nicht erreichbar. Der Beirat erwartet die Lageeinschätzung trotzdem pünktlich. Die Stellvertretung übernimmt – jetzt.  
+  *Ton/Sprechertext:* „Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“  
+  *Regie:* Nach dem Klingeln geht die Moderation zur Krisenstabsleitung und bittet sie hinaus (Flur oder Nebentisch). Die Bühne zählt fünf Minuten herunter. Danach zurückholen und als Erstes fragen: Was hat die Stellvertretung in dieser Zeit entschieden – und weiß die Krisenstabsleitung es jetzt?  
+  *Moderation:* Vertretungsstresstest bei „Beirat fordert Lagebericht“, nur in Übungen ab 90 Minuten und nur mit besetzter Krisenstabsleitung. Prüfziel: Übernimmt die Stellvertretung? Gibt es ein gemeinsames Lagebild? Gut: Die Stellvertretung führt sichtbar, der Lagebericht steht trotzdem. Schwach: Der Tisch wartet auf die Rückkehr.
+- **B8 – Ein vermeintlicher Erfolg** (erst nach LK14), **öffentlich auf der Bühne**: Erster Funktionstest des ERP: erfolgreich. Kurz darauf meldet das Qualitätsmanagement: Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu den Unterlagen passt. Die Ursache ist ungeklärt. Ein Fachbereich hält das für einen kleinen Datenfehler, der den Produktivstart nicht aufhalten darf. *Krisen-Info:* Funktionstest bestanden · Chargennummer weicht von den Unterlagen ab · Ursache offen  
+  *Ton/Sprechertext:* Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“  
   *Moderation:* Nur ziehen, wenn der Tisch nach „ERP-Testbetrieb“ einen sofortigen Produktivstart oder eine ungeprüfte Freigabe fordert – nicht, wenn Sicherheits- und Datenprüfung schon eingefordert sind. Fragen: Unter welchen Bedingungen stoppen Sie die Freigabe? Wer untersucht, wer gibt fachlich frei? Was bleibt im Notbetrieb? Was ist gegenüber Produktion und Kunden belastbar? Gut: Freigabe zurückstellen, Ursache und Umfang prüfen, Kriterien und Verantwortliche festhalten. Schwach: „Ein erfolgreicher Funktionstest reicht.“ Keine Katastrophe nachschieben; die Sonntags-Aussage (70 % technische Kapazität) bleibt unverändert. Fehlt die Qualitätsleitung, vertritt die Moderation deren Position – die Freigabe erteilt nie der Vertrieb. Wird LK25 gespielt, B8 nur einsetzen, wenn es eine andere Entscheidung prüft.
 
 ### Abschluss: „Alles läuft wieder? Die Krise ist nicht vorbei.“
@@ -1632,7 +1645,10 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 - Stumm-Fallback: Bühne startbar mit „Ohne Ton anzeigen“; Moderation schaltet mit „Ton aus/Ton an“ jederzeit.
 - Übungsprotokoll enthält das Bewertungsraster des Moderationshandbuchs (acht Kriterien, 0/1/2, Team statt Personen).
 - Zuständigkeiten ergänzt (LK02, LK06, LK11, LK12, LK14, LK17, LK24, LK25), damit Finanz- und Bestandsrollen bei 180 Minuten in gespielten Lagen auch gefordert werden.
-- Moderationshandbuch v1.1 und Medienmatrix mit Prüfstand liegen im Werkzeug unter `docs/`.
+- Moderationshandbuch (jetzt v1.2) und Medienmatrix mit Prüfstand liegen im Werkzeug unter `docs/`.
+- Überraschungen B6–B8 sind öffentliche Ereignisse auf der Bühne mit eigenem Bild und Ton; B7 unterbricht die Krisenstabsleitung fünf Minuten (Countdown, „nicht erreichbar“ im Spielbrett) und setzt eine besetzte Krisenstabsleitung voraus. B1–B5 bleiben privat.
+- Anrufe LK04, LK06, LK23 als Gesprächssimulation: Signal, Einstieg, vorbereitete Nachfragen, definiertes Gesprächsende. LK10 als fertiger Nachrichteneinspieler.
+- Medien-Generalprobe: alle 26 Lagekarten und B6–B8 im laufenden Werkzeug abgespielt und abfotografiert (`docs/nordtech-generalprobe.md`).
 - Aus dem Medienpaket: Telefonklingeln bei LK04 und LK06, Funksignal bei LK23; Sprechertexte für LK04, LK06, LK23, LK26 – die Moderation spricht die Anrufer live. Synthetische Sprachdemos, Audio zu vertraulichen Karten sowie Bilder für B1–B8 und W1–W4 bewusst nicht übernommen.
 
 ### Aus Runde 1 umgesetzt

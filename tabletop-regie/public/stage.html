@@ -31,6 +31,10 @@
   .krisen { background: rgba(217,83,79,.12); border-left:4px solid #d9534f; padding: 12px 20px; font-size:clamp(14px,1.4vw,19px); margin-bottom: clamp(12px,2vh,24px); max-width:820px; flex-shrink:0; }
   .aufgabe { font-size:clamp(14px,1.3vw,18px); color: var(--muted); flex-shrink:0; }
   .aufgabe li { margin-bottom: 6px; }
+  .ueberraschung-kicker { display:inline-block; background:#d9534f; color:#fff; font-weight:800; letter-spacing:2px; text-transform:uppercase; font-size:clamp(13px,1.3vw,17px); padding:6px 14px; border-radius:6px; margin-bottom:12px; align-self:flex-start; flex-shrink:0; animation: blink 1.2s ease-in-out 3; }
+  @keyframes blink { 50% { opacity:.35; } }
+  .unterbrechung { border:3px solid #d9534f; border-radius:12px; padding:14px 22px; margin-bottom:clamp(12px,2vh,24px); max-width:820px; flex-shrink:0; }
+  .unterbrechung .uhr { font-size:clamp(34px,5vw,64px); font-weight:800; font-variant-numeric:tabular-nums; }
   .idle, .ended { display:flex; align-items:center; justify-content:center; min-height:100%; flex-direction:column; text-align:center; }
   .idle h1, .ended h1 { font-size: clamp(28px,4vw,46px); }
   .sound-unlock { position:fixed; inset:0; background:rgba(5,7,11,.92); z-index:100; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; }

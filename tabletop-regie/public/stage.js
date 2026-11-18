@@ -68,6 +68,7 @@ function applySound(s) {
     if (!eventAudio.paused) eventAudio.pause();
     lastLagekarteId = s.currentLagekarte ? s.currentLagekarte.id : null;
     lastReplay = s.soundReplay || 0;
+    if (s.buehnenEreignis) lastEventKey = s.buehnenEreignis.key;
     return;
   }
   // Hat ein anderes Fenster den Ton uebernommen: hier stumm schalten.
@@ -115,6 +116,23 @@ function applySound(s) {
     return;
   }
   if (!ambientAudio.paused) ambientAudio.pause();
+  // Oeffentliche Ueberraschung mit eigenem Ton: einmal abspielen, sobald sie
+  // erscheint (oder die Moderation sie erneut abspielt).
+  const ev = s.buehnenEreignis;
+  if (ev && ev.sound && ev.key !== lastEventKey) {
+    lastEventKey = ev.key;
+    eventAudio.src = ev.sound.src;
+    eventAudio.currentTime = 0;
+    eventAudio.loop = false;
+    eventAudio.volume = ev.sound.volume != null ? ev.sound.volume : 0.7;
+    eventAudio.play().catch(() => {});
+    lastLagekarteId = lk.id;
+    return;
+  }
+  if (ev) lastEventKey = ev.key;
+  // Neue Lage ohne eigenen Ton: ein noch laufender Ton der vorigen Lage oder
+  // Ueberraschung (z. B. Nachrichtenbeitrag) endet hier.
+  if (!lk.sound && lk.id !== lastLagekarteId && !eventAudio.paused) eventAudio.pause();
   if (lk.sound && (lk.id !== lastLagekarteId || replayRequested)) {
     eventAudio.src = lk.sound.src;
     eventAudio.currentTime = 0;
@@ -125,6 +143,7 @@ function applySound(s) {
   lastLagekarteId = lk.id;
 }
 
+let lastEventKey = null;
 async function refresh() {
   let s;
   try { s = await (await fetch('/api/run/stage-state')).json(); }
@@ -185,11 +204,29 @@ async function refresh() {
     content.innerHTML = `<div class="idle"><h1>${heading}</h1>${introText}${idleMediaHtml}</div>`;
     return;
   }
+  const ev = s.buehnenEreignis;
+  let bannerHtml = '';
+  if (ev && ev.minimiert && ev.unterbrechung) {
+    const u = ev.unterbrechung;
+    bannerHtml = `<div class="unterbrechung" style="padding:8px 16px;display:flex;gap:16px;align-items:baseline;"><b>${escapeHtml(u.rolle)}</b> ${u.restSekunden > 0 ? `nicht erreichbar – noch <span class="uhr" style="font-size:clamp(22px,2.6vw,34px);">${Math.floor(u.restSekunden / 60)}:${String(u.restSekunden % 60).padStart(2, '0')}</span>` : '<b>wieder erreichbar</b>'}</div>`;
+  } else if (ev) {
+    const u = ev.unterbrechung;
+    const mm = u ? Math.floor(u.restSekunden / 60) + ':' + String(u.restSekunden % 60).padStart(2, '0') : '';
+    content.innerHTML = `
+      <div class="ueberraschung-kicker">Überraschung · ${escapeHtml(lk.simZeit)}</div>
+      <div class="titel">${escapeHtml(ev.titel || '')}</div>
+      ${u ? `<div class="unterbrechung"><div style="font-weight:700;">${escapeHtml(u.rolle)}: ${u.restSekunden > 0 ? 'nicht erreichbar' : 'wieder erreichbar'}</div><div class="uhr">${u.restSekunden > 0 ? mm : 'zurück am Tisch'}</div>${u.text ? `<div style="color:var(--muted);">${escapeHtml(u.text)}</div>` : ''}</div>` : ''}
+      <div class="text">${escapeHtml(ev.text)}</div>
+      ${ev.kriseninfo ? `<div class="krisen">${escapeHtml(ev.kriseninfo)}</div>` : ''}
+      ${ev.media ? renderMedia(ev.media) : ''}
+    `;
+    return;
+  }
   const vorbote = lk.akt === 'vorboten';
   const krisenHtml = lk.kriseninfo ? `<div class="krisen">${escapeHtml(lk.kriseninfo)}</div>` : '';
   const aufgabeHtml = (lk.aufgabe || []).map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const mediaHtml = lk.media ? renderMedia(lk.media) : '';
-  content.innerHTML = `
+  content.innerHTML = bannerHtml + `
     <div class="simzeit">${escapeHtml(lk.simZeit)} · ${vorbote ? 'Meldung' : 'Lagekarte'} ${lk.laufendeNr || lk.nr}${s.lagekartenTotal ? ' von ' + s.lagekartenTotal : ''}</div>
     <div class="titel">${escapeHtml(lk.titel)}</div>
     <div class="text">${escapeHtml(lk.text)}</div>
@@ -226,7 +263,7 @@ function renderBoard(s) {
     if (!rollen.length) return '';
     const tiles = rollen.map(r => {
       const namen = r.namen.length ? r.namen.join(', ') : '';
-      const tags = (r.gefordert ? '<span class="tag zug">am Zug</span>' : '') + (r.neueInfo ? '<span class="tag info">neue Info</span>' : '');
+      const tags = (r.abwesend ? '<span class="tag" style="background:#d9534f;color:#fff;">nicht erreichbar</span>' : '') + (r.gefordert ? '<span class="tag zug">am Zug</span>' : '') + (r.neueInfo ? '<span class="tag info">neue Info</span>' : '');
       return `<div class="tile${r.gefordert ? ' gefordert' : ''}${r.neueInfo ? ' info' : ''}" title="${escapeHtml(r.rolle + (namen ? ' – ' + namen : ''))}">
         <div class="r">${escapeHtml(r.rolle)}</div><div class="n">${escapeHtml(namen)}${tags}</div></div>`;
     }).join('');

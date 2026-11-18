@@ -244,7 +244,16 @@ function render(s) {
       ? `<p class="mini"><button class="secondary replay-sound" title="Spielt den Ton dieser Lagekarte auf der Bühne noch einmal von vorn ab.">Ton noch einmal abspielen</button> <span class="muted">${lk.eigenerTon ? 'eigene Aufnahme' : 'Ton aus dem Drehbuch'}</span></p>`
       : '') +
       (lk.sprechertext && !lk.eigenerTon
-        ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (${lk.sound ? 'nach dem Signal live sprechen' : 'keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen'})</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>`
+        ? (lk.sound && !lk.sound.signal
+          ? `<details class="mini"><summary><b>Text der Einspielung</b> (läuft als Ton auf der Bühne)</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>`
+          : `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (${lk.sound ? 'nach dem Signal live sprechen' : 'keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen'})</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>`)
+        : '') +
+      (lk.gespraech
+        ? `<details class="mini" open><summary><b>Gespräch führen</b> – in der Rolle bleiben, auf Antworten reagieren</summary>
+            <p style="margin:4px 0;"><b>Nachfragen</b> (je nach Antwort):</p><ol style="margin:0 0 4px 18px;padding:0;">${lk.gespraech.nachfragen.map(q => `<li>${escapeHtml(q)}</li>`).join('')}</ol>
+            <p style="margin:4px 0;"><b>Gesprächsende:</b> ${escapeHtml(lk.gespraech.abschluss)}</p>
+            ${lk.gespraech.gut ? `<p style="margin:2px 0;color:var(--ok);">Gut: ${escapeHtml(lk.gespraech.gut)}</p>` : ''}${lk.gespraech.schwach ? `<p style="margin:2px 0;color:var(--bad);">Schwach: ${escapeHtml(lk.gespraech.schwach)}</p>` : ''}
+          </details>`
         : '');
     const weicheHtml = (s.weichen || []).filter(w => w.aktuell).map(aktWeiche => `<div style="border:2px solid var(--accent);border-radius:8px;padding:8px 12px;margin:8px 0;">
         <p class="mini" style="margin:0 0 4px;"><b>Entscheidung mit Folgen:</b> ${escapeHtml(aktWeiche.frage)}</p>
@@ -255,7 +264,16 @@ function render(s) {
     const bewertungHtml = (lk.moderatorGut || lk.moderatorSchlecht)
       ? `<p class="mini" style="margin:4px 0;">${lk.moderatorGut ? `<span style="color:var(--ok);">Gut: ${escapeHtml(lk.moderatorGut)}</span>` : ''}${lk.moderatorSchlecht ? `<br><span style="color:var(--bad);">Schwach: ${escapeHtml(lk.moderatorSchlecht)}</span>` : ''}</p>` : '';
     const spHtml = s.schwerpunkt ? `<p class="mini" style="color:var(--accent);"><b>Schwerpunkt ${escapeHtml(s.schwerpunkt.label)}:</b> ${escapeHtml(lk.schwerpunktFrage || s.schwerpunkt.leitfrage || '')}${lk.schwerpunktFrage ? ' <span class="muted">(steht auch auf der Bühne)</span>' : ' <span class="muted">(Leitfrage, nicht auf der Bühne)</span>'}</p>` : '';
-    lkBox.innerHTML = `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + spHtml + zusatzHtml + weicheHtml + tonHtml + zustHtml + bewertungHtml +
+    const ev = s.buehnenEreignis;
+    const evHtml = ev ? `<div style="border:2px solid var(--bad);border-radius:8px;padding:8px 12px;margin:0 0 10px;">
+        <p class="mini" style="margin:0 0 4px;color:var(--bad);font-weight:700;">Jetzt auf der Bühne: Überraschung ${escapeHtml(ev.id)} – ${escapeHtml(ev.titel || '')}</p>
+        ${ev.unterbrechung ? `<p class="mini" style="margin:0 0 4px;"><b>${escapeHtml(ev.unterbrechung.rolle)}</b> ${ev.unterbrechung.restSekunden > 0 ? `nicht erreichbar – noch ${Math.floor(ev.unterbrechung.restSekunden / 60)}:${String(ev.unterbrechung.restSekunden % 60).padStart(2, '0')} Min.` : '<b>darf zurück an den Tisch.</b>'}</p>` : ''}
+        ${ev.regie ? `<p class="mini" style="margin:0 0 4px;"><b>Regie:</b> ${escapeHtml(ev.regie)}</p>` : ''}
+        ${ev.sprechertext ? `<details class="mini" open><summary><b>${ev.sound && !ev.sound.signal ? 'Text der Einspielung' : 'Sprechertext'}</b>${ev.sound ? (ev.sound.signal ? ' (nach dem Signal live sprechen)' : ' (läuft als Ton auf der Bühne)') : ''}</summary><p style="white-space:pre-wrap;">${escapeHtml(ev.sprechertext)}</p></details>` : ''}
+        ${ev.moderatorHinweis ? `<p class="mini" style="color:var(--warn);margin:4px 0;">${escapeHtml(ev.moderatorHinweis)}</p>` : ''}
+        <p class="mini" style="margin:6px 0 0;">${ev.sound ? '<button class="secondary replay-event">Ton noch einmal abspielen</button> ' : ''}<button class="secondary hide-event" title="Die Bühne zeigt danach wieder die aktuelle Lage.">${ev.unterbrechung && !ev.minimiert && ev.unterbrechung.restSekunden > 0 ? 'Zur Lage zurück (Countdown bleibt sichtbar)' : 'Von der Bühne nehmen'}</button></p>
+      </div>` : '';
+    lkBox.innerHTML = evHtml + `${aktHtml}<b>${escapeHtml(lk.simZeit)} · ${escapeHtml(lk.titel)}</b><p>${escapeHtml(lk.text)}</p>` + spHtml + zusatzHtml + weicheHtml + tonHtml + zustHtml + bewertungHtml +
       (lk.moderatorHinweis ? `<p class="mini" style="color:var(--warn);">Moderatorhinweis: ${escapeHtml(lk.moderatorHinweis)}</p>` : '');
   } else if (s.status === 'running' || s.status === 'briefing' || s.status === 'countdown') {
     const mf = scenario.moderationsleitfaden;
@@ -301,10 +319,10 @@ function render(s) {
     </div>`).join('') || '<p class="muted mini">Keine offenen Karten.</p>';
 
   const spKarten = new Set((s.schwerpunkt && s.schwerpunkt.karten) || []);
-  document.getElementById('m-bonus').innerHTML = (s.bonuskarten || []).filter(b => b.recipientRoleId)
+  document.getElementById('m-bonus').innerHTML = (s.bonuskarten || []).filter(b => b.recipientRoleId || b.oeffentlich)
     .sort((x, y) => (spKarten.has(y.id) ? 1 : 0) - (spKarten.has(x.id) ? 1 : 0)).map(b => `
     <div class="row" style="justify-content:space-between;margin-bottom:6px;">
-      <span class="mini">${b.titel ? `<b>${escapeHtml(b.titel)}</b> ` : ''}${spKarten.has(b.id) ? '<span class="badge ok">passt zum Schwerpunkt</span> ' : ''}${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
+      <span class="mini">${b.titel ? `<b>${escapeHtml(b.titel)}</b> ` : ''}${spKarten.has(b.id) ? '<span class="badge ok">passt zum Schwerpunkt</span> ' : ''}${b.oeffentlich ? `<span class="badge">auf der Bühne</span> ${b.id}: ${escapeHtml(b.buehnentext || b.text)}` : `${b.id} — für ${recipientHtml(b)}: ${escapeHtml(b.text)}`}${b.moderatorHinweis ? `<br><span style="color:var(--warn);">Hinweis: ${escapeHtml(b.moderatorHinweis)}</span>` : ''}</span>
       <button class="secondary fire-bonus" data-id="${b.id}" ${b.fired || (b.wartetAuf || []).length ? 'disabled' : ''} title="${(b.wartetAuf || []).length ? 'Passt erst nach: ' + escapeHtml(b.wartetAuf.join(', ')) : 'Löst dieses optionale Zusatzereignis manuell aus — nur bei Bedarf für mehr Dynamik einsetzen.'}">${b.fired ? 'Ausgelöst' : (b.wartetAuf || []).length ? 'Noch nicht' : 'Auslösen'}</button>
     </div>`).join('') || '<p class="muted mini">Für die aktuelle Besetzung keine Bonuskarten verfügbar.</p>';
 
@@ -369,7 +387,7 @@ function renderBoard(s) {
   const spalten = ['eingang', 'krisenstab', 'verteilung'].map(e => {
     const tiles = b.rollen.filter(r => r.ebene === e).map(r => `
       <div class="tile${r.gefordert ? ' gefordert' : ''}${r.neueInfo ? ' info' : ''}">
-        <b>${escapeHtml(r.rolle)}</b>${r.gefordert ? '<span class="tag zug">am Zug</span>' : ''}${r.neueInfo ? `<span class="tag info">${r.neueInfo > 1 ? r.neueInfo + ' neue Infos' : 'neue Info'}</span>` : ''}
+        <b>${escapeHtml(r.rolle)}</b>${r.abwesend ? '<span class="tag" style="background:var(--bad);color:#fff;">nicht erreichbar</span>' : ''}${r.gefordert ? '<span class="tag zug">am Zug</span>' : ''}${r.neueInfo ? `<span class="tag info">${r.neueInfo > 1 ? r.neueInfo + ' neue Infos' : 'neue Info'}</span>` : ''}
         <div class="n">${escapeHtml(r.namen.join(', '))}</div>
       </div>`).join('');
     return `<div><div class="lane-k">${EBENEN_LABEL[e]}</div>${tiles || '<div class="mini muted">niemand besetzt</div>'}</div>`;
@@ -509,7 +527,13 @@ document.addEventListener('click', e => {
     api('/api/run/fire-sonderkarte/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
   }
   if (e.target.classList.contains('fire-bonus')) {
-    api('/api/run/fire-bonuskarte/' + e.target.dataset.id, { method: 'POST' }).then(refresh);
+    api('/api/run/fire-bonuskarte/' + e.target.dataset.id, { method: 'POST' }).then(r => { if (r && r.ok === false) alert(r.error); refresh(); });
+  }
+  if (e.target.classList.contains('hide-event')) {
+    api('/api/run/buehnenereignis/ausblenden', { method: 'POST' }).then(refresh);
+  }
+  if (e.target.classList.contains('replay-event')) {
+    api('/api/run/buehnenereignis/replay', { method: 'POST' });
   }
   if (e.target.classList.contains('promote-event')) {
     api('/api/run/promote/' + e.target.dataset.type + '/' + e.target.dataset.id, { method: 'POST' }).then(refresh);

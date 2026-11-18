@@ -37,7 +37,30 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     (c.fallbackEmpfaenger || []).forEach(rid => checkRole(rid, `Karte ${c.id} (Ersatz)`));
     if (!Array.isArray(c.fallbackEmpfaenger)) warnings.push(`Karte ${c.id} hat keine Ersatz-Empfänger – bei unbesetzter Rolle entfällt sie.`);
   });
+  // Medien: jede verwiesene Datei unter /media muss existieren
+  const fs = require('fs'), path = require('path');
+  const mediaOk = (src, where) => {
+    if (!src || !src.startsWith('/media/')) return;
+    if (!fs.existsSync(path.join(__dirname, '..', src))) errors.push(`${where}: Datei ${src} fehlt.`);
+  };
+  [...scenario.lagekarten, ...(scenario.bonuskarten || [])].forEach(c => {
+    if (c.media) mediaOk(c.media.src, `Karte ${c.id} (Bild)`);
+    if (c.sound) mediaOk(c.sound.src, `Karte ${c.id} (Ton)`);
+  });
+  (scenario.bonuskarten || []).forEach(b => {
+    if (b.erfordertBesetzt) checkRole(b.erfordertBesetzt, `Bonuskarte ${b.id} (erfordertBesetzt)`);
+    if (b.unterbrechung) {
+      checkRole(b.unterbrechung.rolle, `Bonuskarte ${b.id} (Unterbrechung)`);
+      if (!(b.unterbrechung.minuten > 0)) errors.push(`Bonuskarte ${b.id}: Unterbrechung ohne Minuten.`);
+      if (!b.oeffentlich) errors.push(`Bonuskarte ${b.id}: Unterbrechung geht nur bei öffentlichen Karten.`);
+    }
+    if (b.oeffentlich && !b.titel) warnings.push(`Bonuskarte ${b.id} ist öffentlich, hat aber keinen Titel für die Bühne.`);
+    if (b.oeffentlich && !b.media) warnings.push(`Bonuskarte ${b.id} ist öffentlich, hat aber kein Bild.`);
+  });
   scenario.lagekarten.forEach(lk => {
+    const g = lk.gespraech;
+    if (g && (!Array.isArray(g.nachfragen) || !g.nachfragen.length || !g.abschluss)) errors.push(`Lagekarte ${lk.id}: Gesprächsleitfaden braucht Nachfragen und einen Abschluss.`);
+    if (g && !lk.sprechertext) warnings.push(`Lagekarte ${lk.id}: Gesprächsleitfaden ohne Sprechertext für den Einstieg.`);
     (lk.zustaendig || []).forEach(rid => checkRole(rid, `Lagekarte ${lk.id} (zuständig)`));
     if (!(lk.zustaendig || []).length) warnings.push(`Lagekarte ${lk.id} hat keine zuständigen Rollen hinterlegt.`);
   });
