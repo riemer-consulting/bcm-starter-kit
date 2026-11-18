@@ -251,7 +251,8 @@ Die vollständige Liste mit Dateinamen, Pixelmaßen und Bildinhalten steht in `d
 | Ton: LK23 | `funk-ruf.mp3`, 1 s, einmalig; danach Werkschutz live (Sprechertext) | Datei |
 | Ton: LK10 | `lk10-nordkanal-nachrichten.mp3`, 56 s: Erkennungsmelodie, Nachricht (Piper „Thorsten“, CC0), Abschluss-Ton; endet spätestens mit der nächsten Lage | Datei, Generalprobe |
 | Ton: B6, B8 | `b6-zwei-durchsagen.mp3` (27 s), `b8-erp-test-meldung.mp3` (21 s); Stimmen Piper „Kerstin“/„Thorsten“ (CC0) | Datei, Generalprobe |
-| Ton: LK26 | Sprechertext zum Vorlesen; eigene Aufnahme optional | Drehbuch |
+| Ton: LK19, LK02, LK12 | Geräusche, synthetisch erzeugt: Fräslinie stottert und stoppt (über der Hallen-Atmosphäre), Linien fahren herunter (Halle deutlich leiser, nicht ganz still wegen W1), Anlage fährt hoch | Dateien, Browser-Test |
+| Ton: LK05, LK22, LK26 | Sprachaufnahmen (Piper, CC0): IT-Bereitschaft am Telefon, abgebrochener Werkfunk, Sprachnachricht der Schichtleitung; Abschrift in der Moderation | Dateien, Browser-Test |
 | Medienpaket des Auftraggebers | Übernommen: Klingel- und Funksignal, Signale für B8 (Pegel angehoben), Sprechertexte (an die Kartentexte angeglichen). Neu produziert statt der eSpeak-Demos: LK10, B6, B8 mit der freien Sprachsynthese Piper. Nicht übernommen: Audio zu SK17 (vertraulich), Bilder für W1–W4 (ein Bild würde verraten, wo eine Entscheidung Folgen hat), Briefings für LK01–LK26 (Bilder liegen geprüft vor) | Abgleich mit Drehbuch |
 | Stumm | „Ton aus“ stoppt die Halle sofort, „Ton an“ startet sie wieder; „Ohne Ton anzeigen“ spielt nie etwas ab | Browser-Test ohne Fehler |
 | Fallback ohne Ton | kein Ton trägt Information, die nicht auch auf der Bühne steht | Drehbuch |

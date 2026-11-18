@@ -458,7 +458,12 @@
         "key-account-automotive",
         "kaufmaennische-leiterin-cfo"
       ],
-      "akt": "ausbruch"
+      "akt": "ausbruch",
+      "sound": {
+        "src": "/media/nordtech/lk02-produktion-faehrt-herunter.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     },
     {
       "id": "LK03",
@@ -559,7 +564,13 @@
         "leiterin-personal",
         "leiter-it"
       ],
-      "akt": "eskalation"
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/lk05-it-bereitschaft.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Telefon klingelt. „Hier ist die IT-Bereitschaft. Wir haben es jetzt mehrfach versucht. Wir erreichen ihn nicht, er liegt weiter im Krankenhaus. Und ehrlich gesagt: Die Zugänge für die Firewall und die Backup-Konsole hat keiner von uns vollständig.“"
     },
     {
       "id": "LK06",
@@ -788,7 +799,12 @@
         "debitorenbuchhaltung",
         "key-account-automotive"
       ],
-      "akt": "folgen"
+      "akt": "folgen",
+      "sound": {
+        "src": "/media/nordtech/lk12-anlage-faehrt-hoch.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     },
     {
       "id": "LK13",
@@ -960,7 +976,12 @@
         "it-service-desk",
         "leitung-produktion"
       ],
-      "akt": "vorboten"
+      "akt": "vorboten",
+      "sound": {
+        "src": "/media/nordtech/lk19-fraeslinie-stoerung.mp3",
+        "loop": false,
+        "volume": 0.7
+      }
     },
     {
       "id": "LK20",
@@ -1020,7 +1041,13 @@
         "leiterin-personal",
         "it-service-desk"
       ],
-      "akt": "ausbruch"
+      "akt": "ausbruch",
+      "sound": {
+        "src": "/media/nordtech/lk22-funk-abgebrochen.mp3",
+        "loop": false,
+        "volume": 0.8
+      },
+      "sprechertext": "Funkrauschen. „Zentrale an Werk Süd, bitte kommen. Werk Süd, hören Sie mich?“ – Abriss, Rauschen. „Werk Süd hier. Wir haben keine Anweisung, die Leute wissen nicht, ob sie …“ – Abriss."
     },
     {
       "id": "LK21",
@@ -1194,7 +1221,7 @@
         "Welche Aufträge haben Vorrang?",
         "Wie verhindern Sie, dass Erschöpfung zu Sicherheits- oder Qualitätsproblemen führt?"
       ],
-      "moderatorHinweis": "Die Moderation spricht die Schichtleitung (Sprechertext). Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
+      "moderatorHinweis": "Die Sprachnachricht der Schichtleitung läuft auf der Bühne; Abschrift in der Moderation. Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk26-menschen-am-limit.png",
@@ -1212,7 +1239,12 @@
       "voraussetzung": [
         "LK12"
       ],
-      "sprechertext": "Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?"
+      "sprechertext": "Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?",
+      "sound": {
+        "src": "/media/nordtech/lk26-schichtleitung-nachricht.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
     }
   ],
   "sonderlagekarten": [

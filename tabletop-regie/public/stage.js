@@ -106,12 +106,19 @@ function applySound(s) {
   }
   // Vorboten ohne eigenen Ton: das ruhige "alles laeuft"-Geraeusch laeuft
   // weiter -- der Kontrast kommt erst mit dem Ausbruch.
-  if (lk.akt === 'vorboten' && !lk.sound) {
+  // Vorboten mit eigenem Ton (z. B. eine einzelne Maschine stoert): der Ton
+  // laeuft UEBER der Hallen-Atmosphaere, die Halle selbst laeuft weiter.
+  if (lk.akt === 'vorboten') {
     if (idle && ambientAudio.getAttribute('src') !== idle.src) {
       ambientAudio.src = idle.src;
       ambientAudio.volume = idle.volume != null ? idle.volume : 0.5;
     }
     if (idle && ambientAudio.paused) ambientAudio.play().catch(() => {});
+    if (lk.sound && (lk.id !== lastLagekarteId || replayRequested)) {
+      eventAudio.src = lk.sound.src; eventAudio.currentTime = 0; eventAudio.loop = false;
+      eventAudio.volume = lk.sound.volume != null ? lk.sound.volume : 0.7;
+      eventAudio.play().catch(() => {});
+    } else if (!lk.sound && lk.id !== lastLagekarteId && !eventAudio.paused) eventAudio.pause();
     lastLagekarteId = lk.id;
     return;
   }

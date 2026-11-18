@@ -366,6 +366,8 @@ E-Mail, ERP und Teile der Telefonie sind nicht verfügbar. Gleichzeitig müssen 
 
 *Bild auf der Bühne:* Wie erreichen Sie jetzt alle Beschäftigten?
 
+*Einspielung (Ton):* Funkrauschen. „Zentrale an Werk Süd, bitte kommen. Werk Süd, hören Sie mich?“ – Abriss, Rauschen. „Werk Süd hier. Wir haben keine Anweisung, die Leute wissen nicht, ob sie …“ – Abriss.
+
 *Zuständig:* Geschäftsführung (CEO), Krisenstabsleitung, Notfallmanagement / BCM, IT-Leitung (CIO), Leitung Produktion (Werksleitung), Unternehmenskommunikation & Marketing, Personalleitung, IT-Service-Desk (technischer Support)
 
 *Hinweis für die Moderation:* Beobachten: Gibt es einen vorbereiteten Notfall-Kommunikationsweg (Telefonkette, SMS-Verteiler, Aushang)? Wer formuliert, wer gibt frei, wer verteilt? Auf das Spielbrett verweisen: Was kommt beim Service-Desk an, was geht zurück?
@@ -459,6 +461,8 @@ Der leitende Systemadministrator liegt seit Montag im Krankenhaus und ist nicht 
 - Welche Prioritäten ändern sich?
 
 *Bild auf der Bühne:* Der Platz des leitenden Systemadministrators bleibt leer.
+
+*Einspielung (Ton):* Telefon klingelt. „Hier ist die IT-Bereitschaft. Wir haben es jetzt mehrfach versucht. Wir erreichen ihn nicht, er liegt weiter im Krankenhaus. Und ehrlich gesagt: Die Zugänge für die Firewall und die Backup-Konsole hat keiner von uns vollständig.“
 
 *Zuständig:* Personalleitung, IT-Leitung (CIO)
 
@@ -764,11 +768,11 @@ Die technischen Voraussetzungen für mehr Produktion verbessern sich. Gleichzeit
 
 *Bild auf der Bühne:* Die Technik ist bereit – die Schichten nicht.
 
-*Sprechertext:* Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?
+*Einspielung (Ton):* Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?
 
 *Zuständig:* Leitung Produktion (Werksleitung), Personalleitung, Leitung Qualitätsmanagement, Geschäftsführung (CEO), Krisenstabsleitung, Standortleitung Werk Süd
 
-*Hinweis für die Moderation:* Die Moderation spricht die Schichtleitung (Sprechertext). Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.
+*Hinweis für die Moderation:* Die Sprachnachricht der Schichtleitung läuft auf der Bühne; Abschrift in der Moderation. Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.
 
 *Kommt nur mit/nach:* LK12 Teilweiser Wiederanlauf
 
@@ -1656,6 +1660,7 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 - R08 W2: Folge „proaktiv“ als Reaktion einzelner Kunden mit Kritik an der lückenhaften ersten Meldung; Hinweis, dass beide Wege Risiken haben.
 - R09 Faktenblatt: Produkte und Qualitätsrahmen (Komponenten nach Qualitätssicherungsvereinbarung, Arzneimittelfreigabe beim Kunden – fachliche Annahme); LK21-Hinweis ergänzt.
 - R10 LK14 und Abschnitt 3: Fragen mit Zielkonflikt bei LK18, LK19, LK20, LK03, LK05, LK08, LK13, LK14, LK15.
+- Sechs zusätzliche Töne: LK19 Fräslinie stottert und stoppt (über der Hallen-Atmosphäre), LK02 Linien fahren herunter (bewusst nicht ganz still, W1 offen), LK22 abgebrochener Werkfunk, LK05 Nachricht der IT-Bereitschaft, LK12 Anlage fährt hoch, LK26 Sprachnachricht der Schichtleitung. Ohne Ton bleiben LK07, LK09, LK17, LK21, LK24, LK25.
 - Nachprüfung der Fotos: reale Marken entfernt (LK14 „SAP S/4HANA“ → „NT-ERP“, LK01 „iiyama“).
 - R11 LK07: bei knapper Zeit Lösegeld priorisieren, Datenschutz als dokumentierter Prüfauftrag. R12 B7: ersetzt fünf Minuten von LK17, wird nicht addiert.
 
