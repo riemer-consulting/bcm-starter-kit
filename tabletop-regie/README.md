@@ -85,6 +85,13 @@ Danach:
 Die App läuft ausschließlich lokal. Die einzige ausgehende Netzwerkverbindung
 ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
 
+**Erreichbarkeit:** Der Server lauscht standardmäßig nur auf `127.0.0.1` –
+Bühne und Moderation laufen auf demselben Rechner (zweiter Bildschirm oder
+Beamer). Es gibt keine Anmeldung: Wer die App mit `HOST=0.0.0.0 npm start`
+im Netzwerk freigibt, macht auch die Moderation mit allen vertraulichen
+Karten für alle im Netz zugänglich. Das nur in einem vertrauenswürdigen Netz
+tun. Der Vorlagen-Export enthält kein SMTP-Passwort.
+
 ## Unterlagen zum Szenario NordTech
 
 Im Ordner `docs/`:

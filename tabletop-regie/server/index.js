@@ -28,12 +28,13 @@ const logoUpload = multer({
   storage: multer.diskStorage({
     destination: brandingMediaDir,
     filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase() || '.png';
+      // Endung nur aus einer festen Liste (keine .html/.svg mit Script)
+      const ext = { 'image/png': '.png', 'image/jpeg': '.jpg', 'image/gif': '.gif', 'image/webp': '.webp' }[file.mimetype] || '.png';
       cb(null, `custom-logo-${Date.now()}${ext}`);
     }
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => cb(null, /^image\//.test(file.mimetype))
+  fileFilter: (req, file, cb) => cb(null, /^image\/(png|jpeg|gif|webp)$/.test(file.mimetype))
 });
 
 // Generische, szenario-unabhaengige Rolle "Teilnehmer": fuer Personen ohne
@@ -187,8 +188,15 @@ async function sendTestModeCard(card, role, recipients, recipientRoleId, art) {
   return result;
 }
 
+// Karten, deren Versand gerade laeuft: verhindert Doppelversand, wenn der
+// Mailserver langsam ist und dieselbe Karte erneut faellig gemeldet wird.
+const skImVersand = new Set();
 async function fireSonderlagekarte(skOriginal, { manual } = {}) {
-  if (state.firedSonderlagekarten.find(f => f.id === skOriginal.id)) return;
+  if (state.firedSonderlagekarten.find(f => f.id === skOriginal.id) || skImVersand.has(skOriginal.id)) return;
+  skImVersand.add(skOriginal.id);
+  try { await fireSonderlagekarteIntern(skOriginal, { manual }); } finally { skImVersand.delete(skOriginal.id); }
+}
+async function fireSonderlagekarteIntern(skOriginal, { manual } = {}) {
   const sk = skMitWeichen(skOriginal);
   const recipientRoleId = recipientRoleFor(sk);
   const role = roleById(recipientRoleId || sk.empfaenger);
@@ -650,7 +658,7 @@ app.post('/api/settings', (req, res) => {
 app.post('/api/settings/upload-logo', (req, res) => {
   logoUpload.single('logo')(req, res, (err) => {
     if (err) return res.status(400).json({ ok: false, error: err.message });
-    if (!req.file) return res.status(400).json({ ok: false, error: 'Keine Bilddatei empfangen (erlaubt: PNG/JPG/SVG/...).' });
+    if (!req.file) return res.status(400).json({ ok: false, error: 'Keine Bilddatei empfangen (erlaubt: PNG, JPG, GIF, WEBP).' });
     const url = '/media/branding/' + req.file.filename;
     const current = store.loadSettings();
     store.saveSettings({ ...current, branding: { ...current.branding, logo: url } });
@@ -783,7 +791,9 @@ app.get('/api/template/export', (req, res) => {
     scenarioFile,
     activeRoleIds: state.activeRoleIds,
     participants: state.participants,
-    settings,
+    // SMTP-Passwort nie exportieren; der Platzhalter laesst beim Import das
+    // vorhandene Passwort unveraendert.
+    settings: Object.assign({}, settings, { smtp: Object.assign({}, settings.smtp, { pass: settings.smtp && settings.smtp.pass ? '••••••••' : '' }) }),
     brandingLogoFile
   });
 });
@@ -798,7 +808,7 @@ app.post('/api/template/import', (req, res) => {
   let logoHinweis = '';
   const f = tpl.brandingLogoFile;
   if (f && typeof f.data === 'string' && f.data.length) {
-    const ext = (path.extname(f.name || '').toLowerCase().match(/^\.(png|jpe?g|gif|svg|webp)$/) || ['.png'])[0];
+    const ext = (path.extname(f.name || '').toLowerCase().match(/^\.(png|jpe?g|gif|webp)$/) || ['.png'])[0];
     const name = `custom-logo-${Date.now()}${ext}`;
     fs.writeFileSync(path.join(brandingMediaDir, name), Buffer.from(f.data, 'base64'));
     const cur = store.loadSettings();
@@ -1289,7 +1299,8 @@ app.post('/api/run/buehnenereignis/replay', (req, res) => {
 app.post('/api/bewertung', (req, res) => {
   const { roleId, kriterium, value } = req.body || {};
   if (!roleId || !kriterium) return res.status(400).json({ ok: false, error: 'roleId und kriterium erforderlich.' });
-  state.bewertung[roleId] = state.bewertung[roleId] || {};
+  if (!roleById(roleId) || !(scenario.bewertungskriterien || []).includes(kriterium)) return res.status(400).json({ ok: false, error: 'Unbekannte Rolle oder unbekanntes Kriterium.' });
+  if (!Object.prototype.hasOwnProperty.call(state.bewertung, roleId)) state.bewertung[roleId] = {};
   if (value === null || value === undefined || value === '') delete state.bewertung[roleId][kriterium];
   else state.bewertung[roleId][kriterium] = Number(value);
   persist();
@@ -1328,7 +1339,10 @@ function effectiveBrandingLogo(settings) {
 }
 function mediaUrlToFile(mediaUrl) {
   if (!mediaUrl || !mediaUrl.startsWith('/media/')) return null;
-  return path.join(__dirname, '..', 'media', mediaUrl.slice('/media/'.length));
+  const base = path.resolve(__dirname, '..', 'media');
+  const file = path.resolve(base, mediaUrl.slice('/media/'.length));
+  // Nur Dateien innerhalb von media/ (kein "../" aus dem Ordner heraus)
+  return file.startsWith(base + path.sep) ? file : null;
 }
 
 // Feste Breite/Format fuer den QR-Code auf der Urkunde (klein, aber noch gut
@@ -1412,8 +1426,12 @@ app.post('/api/certificate/participant/:id/send', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4173;
-app.listen(PORT, () => {
-  console.log(`BCM Tabletop-Regie läuft auf http://localhost:${PORT}`);
+// Standard: nur auf diesem Rechner erreichbar. Moderation und Schnittstellen
+// haben keine Anmeldung -- wer HOST=0.0.0.0 setzt, macht sie fuer das ganze
+// Netz zugaenglich (nur in einem vertrauenswuerdigen Netz).
+const HOST = process.env.HOST || '127.0.0.1';
+app.listen(PORT, HOST, () => {
+  console.log(`BCM Tabletop-Regie läuft auf http://localhost:${PORT}${HOST === '127.0.0.1' ? ' (nur dieser Rechner)' : ` (Netzwerk: ${HOST} – ohne Anmeldung, nur in vertrauenswürdigem Netz)`}`);
   console.log(`  Setup:      http://localhost:${PORT}/setup.html`);
   console.log(`  Bühne:      http://localhost:${PORT}/stage.html`);
   console.log(`  Moderation: http://localhost:${PORT}/moderator.html`);

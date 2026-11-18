@@ -917,7 +917,7 @@
       "minuteOffset": 65,
       "diskussionMinuten": 4,
       "akt": "hoehepunkt",
-      "prioritaet": 1,
+      "prioritaet": 2,
       "text": "Der Beirat des Einkaufsverbunds hat kurzfristig eine Videokonferenz einberufen. Die Partnermärkte wollen wissen: Wann laufen ihre Kassen wieder voll, wer kommt zuerst dran, und warum gab es für ein Rechenzentrum, das 23 Märkte versorgt, keinen funktionierenden Ausweichplan? Die Geschäftsführung hat 15 Minuten Redezeit.",
       "kriseninfo": "Videokonferenz in 30 Minuten · 15 Minuten Redezeit",
       "aufgabe": [
@@ -1925,6 +1925,21 @@
         "leiter-it"
       ],
       "nurNachWeiche": true
+    },
+    {
+      "id": "SK46",
+      "nr": 46,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 53.5,
+      "vertraulich": true,
+      "text": "Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“",
+      "moderatorGut": "Beide Wege mit Kosten und Folgen kurz darstellen, Zustimmung einholen und dokumentieren, bevor unterschrieben wird.",
+      "moderatorSchlecht": "Ohne Zustimmung unterschreiben – oder die Entscheidung bis Freitag liegen lassen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "leiter-finanzen-cfo"
+      ],
+      "zuBeginnVon": "LK15"
     }
   ],
   "bonuskarten": [
@@ -2532,6 +2547,7 @@
         "SK06",
         "SK21",
         "SK20",
+        "SK46",
         "SK34",
         "SK32",
         "B5",
@@ -2672,7 +2688,7 @@
         "Wo hätte eine vorbereitete Papierlösung geholfen?"
       ],
       "pflicht": [
-        "SK16"
+        "SK08"
       ]
     }
   ]

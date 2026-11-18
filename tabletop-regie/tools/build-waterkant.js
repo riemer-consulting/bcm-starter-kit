@@ -184,7 +184,7 @@ lk('LK17', 61, 'Mittwoch 16:00 Uhr', 'Prospektpreise vor der Kasse', 'eskalation
   zustaendig: ['leiterin-kommunikation-pr', 'kundenservice-hotline', 'regionalleiterin-filialen-nord', 'regionalleiter-filialen-sued', 'leiter-finanzen-cfo'],
   moderatorHinweis: 'Rechtliche Bewertung der Werbung nicht am Tisch klären („fachlich prüfen lassen“), sondern: Gibt es eine einheitliche Regel, und kommt sie überall an?',
   media: img('lk17-prospektpreise.png', 'Social-Media-Beitrag, Mittwoch 16:00 Uhr.') });
-lk('LK18', 65, 'Mittwoch 19:00 Uhr', 'Der Verbundbeirat verlangt Antworten', 'hoehepunkt', 1, {
+lk('LK18', 65, 'Mittwoch 19:00 Uhr', 'Der Verbundbeirat verlangt Antworten', 'hoehepunkt', 2, {
   text: 'Der Beirat des Einkaufsverbunds hat kurzfristig eine Videokonferenz einberufen. Die Partnermärkte wollen wissen: Wann laufen ihre Kassen wieder voll, wer kommt zuerst dran, und warum gab es für ein Rechenzentrum, das 23 Märkte versorgt, keinen funktionierenden Ausweichplan? Die Geschäftsführung hat 15 Minuten Redezeit.',
   kriseninfo: 'Videokonferenz in 30 Minuten · 15 Minuten Redezeit',
   aufgabe: ['Welche drei Aussagen müssen in den 15 Minuten fallen?', 'Was sagen Sie zur Reihenfolge, wenn sie noch nicht entschieden ist?', 'Welche Zusage geben Sie bewusst nicht?'],
@@ -308,6 +308,7 @@ sk('SK42', 'geschaeftsfuehrer-ceo', ['partnerbetreuung'], 'Der Verbundvorstand r
 sk('SK43', 'leiter-arbeitssicherheit', ['facility-management'], 'Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.', 'Unterlagen liegen vor und werden geliefert.', 'Es gibt keine schriftliche Grundlage.', { nurNachWeiche: true });
 sk('SK44', 'partnerbetreuung', ['geschaeftsfuehrer-ceo'], 'Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.', 'Reihenfolge und Kriterium offen erklären, Gespräch auf Leitungsebene anbieten.', 'Abstreiten oder kleinreden.', { nurNachWeiche: true, prioritaet: 1 });
 sk('SK45', 'online-shop-leitung', ['leiter-it'], 'Nach der schnellen Verlagerung zeigt der Online-Shop für 140 Artikel noch Preise von Montag – der Abgleich der Aktionspreise fehlt in der neuen Umgebung.', 'Betroffene Artikel sofort aus dem Verkauf nehmen und Abgleich nachholen.', 'Weiterverkaufen und später korrigieren.', { nurNachWeiche: true });
+sk('SK46', 'geschaeftsfuehrer-ceo', ['leiter-finanzen-cfo'], 'Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“', 'Beide Wege mit Kosten und Folgen kurz darstellen, Zustimmung einholen und dokumentieren, bevor unterschrieben wird.', 'Ohne Zustimmung unterschreiben – oder die Entscheidung bis Freitag liegen lassen.', { zuBeginnVon: 'LK15', minuteOffset: 53.5, prioritaet: 1 });
 
 // Zeitpunkt fuer Karten, die zu Beginn einer Lage kommen: knapp nach deren Minute
 S.forEach(k => { if (k.zuBeginnVon && (k.minuteOffset === null || k.minuteOffset === undefined)) k.minuteOffset = L.find(l => l.id === k.zuBeginnVon).minuteOffset + 0.5; });
@@ -391,7 +392,7 @@ const bonuskarten = [
 // ---------------- Schwerpunkte ----------------
 const schwerpunkte = [
   { key: 'fuehrung', label: 'Krisenführung und Personenschutz', beschreibung: 'Wer entscheidet in der Nacht, wer schützt die Menschen, wer vertritt wen?',
-    karten: ['LK04', 'LK05', 'LK14', 'LK18', 'LK27', 'SK04', 'SK05', 'SK06', 'SK21', 'SK20', 'SK34', 'SK32', 'B5', 'B7'],
+    karten: ['LK04', 'LK05', 'LK14', 'LK18', 'LK27', 'SK04', 'SK05', 'SK06', 'SK21', 'SK20', 'SK46', 'SK34', 'SK32', 'B5', 'B7'],
     leitfrage: 'Wer entscheidet – und gilt Personenschutz auch dann, wenn Daten und Umsatz auf dem Spiel stehen?',
     zusatzfragen: { LK03: 'Wer darf um 03:02 Uhr entscheiden – und wie erfährt die Geschäftsführung davon?', LK04: 'Wer übernimmt die Führung, bis der Krisenstab steht?', LK06: 'Ist jetzt allen klar, wer den Krisenstab leitet und wer die Vertretung ist?', LK14: 'Wer hat das letzte Wort beim Betreten – und ist das allen klar?', LK15: 'Wer trägt diese Entscheidung, und wie wird sie dokumentiert?', LK20: 'Wie wird die Entscheidung begründet und wem erklärt?', LK22: 'Wer prüft, dass „läuft wieder“ wirklich stimmt?', LK27: 'Wer achtet auf die Menschen, die seit Dienstag durcharbeiten?' },
     debriefing: ['War jederzeit klar, wer entscheidet – auch in der Nacht?', 'Wann stand Personenschutz gegen Daten oder Umsatz – und wie habt ihr entschieden?'], pflicht: ['SK21'] },
@@ -409,7 +410,7 @@ const schwerpunkte = [
     karten: ['LK08', 'LK12', 'LK16', 'LK17', 'LK23', 'LK25', 'SK08', 'SK09', 'SK10', 'SK16', 'SK17', 'SK31', 'SK38', 'B5', 'B6'],
     leitfrage: 'Wie verkaufen Sie zum Saisonstart, ohne später nicht mehr nachvollziehen zu können, was verkauft wurde?',
     zusatzfragen: { LK06: 'Was muss bis 08:00 Uhr in den Filialen ankommen?', LK09: 'Was brauchen die Partnermärkte, um morgen zu öffnen?', LK14: 'Was bedeutet die Datenlücke für Bestände im Lager und in den Filialen?', LK15: 'Wie lange kommt das Lager ohne Lagerverwaltung aus?', LK20: 'Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium?', LK22: 'Wie gehen Filialen mit Bons aus dem Offline-Zeitraum um?', LK27: 'Was ist im Filialbetrieb ab Montag wieder normal – und was nicht?' },
-    debriefing: ['Welche Behelfslösung im Filial- und Lagerbetrieb hat am meisten Nacharbeit erzeugt?', 'Wo hätte eine vorbereitete Papierlösung geholfen?'], pflicht: ['SK16'] }
+    debriefing: ['Welche Behelfslösung im Filial- und Lagerbetrieb hat am meisten Nacharbeit erzeugt?', 'Wo hätte eine vorbereitete Papierlösung geholfen?'], pflicht: ['SK08'] }
 ];
 
 // ---------------- Abschluss ----------------
