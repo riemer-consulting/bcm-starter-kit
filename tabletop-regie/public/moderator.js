@@ -237,11 +237,11 @@ function render(s) {
     const tonHtml = lk.sound
       ? `<p class="mini"><button class="secondary replay-sound" title="Spielt den Ton dieser Lagekarte auf der Bühne noch einmal von vorn ab.">Ton noch einmal abspielen</button> <span class="muted">${lk.eigenerTon ? 'eigene Aufnahme' : 'Ton aus dem Drehbuch'}</span></p>`
       : (lk.sprechertext ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen)</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>` : '');
-    const aktWeiche = (s.weichen || []).find(w => w.aktuell);
-    const weicheHtml = aktWeiche ? `<div style="border:2px solid var(--accent);border-radius:8px;padding:8px 12px;margin:8px 0;">
+    const weicheHtml = (s.weichen || []).filter(w => w.aktuell).map(aktWeiche => `<div style="border:2px solid var(--accent);border-radius:8px;padding:8px 12px;margin:8px 0;">
         <p class="mini" style="margin:0 0 4px;"><b>Entscheidung mit Folgen:</b> ${escapeHtml(aktWeiche.frage)}</p>
         ${weicheButtons(aktWeiche)}
-        <p class="mini muted" style="margin:6px 0 0;">Festhalten, was der Tisch entschieden hat – nicht vorab verraten, dass es Folgen hat.</p></div>` : '';
+        ${aktWeiche.hinweis ? `<p class="mini" style="color:var(--warn);margin:6px 0 0;">${escapeHtml(aktWeiche.hinweis)}</p>` : ''}
+        <p class="mini muted" style="margin:6px 0 0;">Festhalten, was der Tisch entschieden hat – nicht vorab verraten, dass es Folgen hat.</p></div>`).join('');
     const zusatzHtml = (lk.weichenZusatz || []).length ? `<p class="mini" style="color:var(--accent);">Wegen einer früheren Entscheidung ergänzt: ${escapeHtml(lk.weichenZusatz.join(' '))}</p>` : '';
     const bewertungHtml = (lk.moderatorGut || lk.moderatorSchlecht)
       ? `<p class="mini" style="margin:4px 0;">${lk.moderatorGut ? `<span style="color:var(--ok);">Gut: ${escapeHtml(lk.moderatorGut)}</span>` : ''}${lk.moderatorSchlecht ? `<br><span style="color:var(--bad);">Schwach: ${escapeHtml(lk.moderatorSchlecht)}</span>` : ''}</p>` : '';

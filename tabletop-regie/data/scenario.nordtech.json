@@ -346,6 +346,7 @@
       "Wo waren Single Points of Failure?",
       "Welche eurer Entscheidungen hat den weiteren Verlauf verändert – und wie würdet ihr mit dem heutigen Wissen entscheiden?",
       "„70 % technische Kapazität“ – wie viel davon war wirklich nutzbar, und was hat die reale Leistung begrenzt (Personal, Material, Freigaben)?",
+      "Welche Kosten wären möglicherweise nicht von der Versicherung gedeckt – und wie verändert das den Liquiditätsbedarf?",
       "Welche drei Verbesserungen setzen wir um – wer ist verantwortlich, mit welcher Priorität, bis wann?"
     ],
     "abschlussfragenVorDebrief": [
@@ -1450,7 +1451,7 @@
       "empfaenger": "geschaeftsfuehrer-ceo",
       "minuteOffset": 44,
       "vertraulich": true,
-      "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Der Beirat stellt die Frage: „Unter welchen Bedingungen würden Sie eine Lösegeldzahlung überhaupt in Betracht ziehen?“ Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position vor.",
+      "text": "Die Frist der Erpresser endet am Mittwoch um 07:00 Uhr. Ein Beiratsmitglied fragt dich vorab, welche Haltung die Geschäftsführung zur Lösegeldforderung einnimmt: „Unter welchen Bedingungen würden Sie eine Zahlung überhaupt in Betracht ziehen?“ Euer Anwalt rät: Eine etwaige Zahlung erfordert vorher eine fachliche Prüfung der rechtlichen, wirtschaftlichen und sicherheitsbezogenen Risiken – unter anderem, ob die Gruppierung hinter SHADOWVAULT Sanktionen unterliegt. Bereite deine Position für den Krisenstab vor.",
       "moderatorGut": "Eine begründete Position mit klaren Kriterien, fachlich geprüft, im Krisenstab abgestimmt und dokumentiert.",
       "moderatorSchlecht": "Eine unklare Haltung oder eine Entscheidung allein und unter Zeitdruck.",
       "moderatorHinweis": "Moderator fragt wörtlich: 'Sie müssen jetzt entscheiden. Würde NordTech zahlen?'",
@@ -1650,13 +1651,19 @@
       "empfaenger": "kommunikation-marketing",
       "minuteOffset": 85,
       "vertraulich": true,
-      "text": "In der Geschäftsführung gibt es den Wunsch, öffentlich zu verkünden: „Alles wieder im Griff.“ Kapazität und Freigaben sind aber noch nicht belastbar bestätigt, und offen ist, ob Kundendaten abgeflossen sind. Wie formulierst du die Botschaft?",
+      "text": "Die Geschäftsführung erwartet, dass am Sonntag bis zu 70 % der technischen Fertigungskapazität wieder verfügbar sein könnten; eine abschließende Bestätigung steht noch aus. Trotzdem möchte sie schon öffentlich erklären: „Alles wieder im Griff.“ Offen ist auch, ob Kundendaten abgeflossen sind. Wie formulierst du eine belastbare Botschaft?",
       "moderatorGut": "Ehrliche, vorsichtige Botschaft; Kunden werden vor der Presse informiert, offene Punkte werden benannt.",
       "moderatorSchlecht": "Vorschnelle Entwarnung – sie fällt dem Unternehmen auf die Füße, sobald neue Fakten auftauchen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "office-management",
         "geschaeftsfuehrer-ceo"
+      ],
+      "textVarianten": [
+        {
+          "nachLagekarte": "LK15",
+          "text": "70 % der technischen Fertigungskapazität sind inzwischen bestätigt. Materialengpässe, personelle Belastung und ausstehende Produktfreigaben begrenzen jedoch die tatsächliche Lieferfähigkeit, und offen ist weiterhin, ob Kundendaten abgeflossen sind. Die Geschäftsführung möchte öffentlich erklären: „Alles wieder im Griff.“ Wie formulierst du eine belastbare Botschaft?"
+        }
       ]
     },
     {
@@ -2222,7 +2229,7 @@
       "optionen": [
         {
           "id": "melden",
-          "label": "Vorsorglich fristgerecht melden, Informationen nachreichen",
+          "label": "Vorsorglich melden, Informationen nachreichen",
           "wirkung": "Der Beirat vermerkt das frühe, dokumentierte Vorgehen positiv.",
           "folgen": [
             {
@@ -2249,14 +2256,15 @@
             "datenschutz-verspaetet"
           ]
         }
-      ]
+      ],
+      "hinweis": "Nicht die rechtliche Richtigkeit einer Option bewerten, sondern: Werden die Risiken erkannt, wird fachlich geprüft, sind Entscheidungsgrundlagen dokumentiert und fachlich bestätigte Fristen eingehalten?"
     },
     {
       "id": "W4",
       "lagekarten": [
-        "LK09"
+        "LK07"
       ],
-      "frage": "Rückblick auf die Entscheidung vor Ablauf der Erpresserfrist am Mittwoch um 07:00 Uhr: Hat NordTech Lösegeld gezahlt oder die Zahlung abgelehnt?",
+      "frage": "Die Erpresserfrist endet morgen, Mittwoch 07:00 Uhr. Zahlt NordTech das Lösegeld – auf Grundlage dessen, was der Krisenstab heute weiß?",
       "optionen": [
         {
           "id": "nicht-gezahlt",
@@ -2267,7 +2275,7 @@
         {
           "id": "gezahlt",
           "label": "Lösegeld gezahlt",
-          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Zahlung wird öffentlich; in längeren Übungen fordern die Erpresser danach mehr (vertrauliche Karte an die IT). Lösegeld steht in der Rechnung.",
+          "wirkung": "Der gelieferte Schlüssel hilft nur teilweise, die Erpresser fordern danach mehr (vertrauliche Karte an die IT mit „Beirat fordert Lagebericht“), die Zahlung wird öffentlich. Lösegeld steht in der Rechnung.",
           "folgen": [
             {
               "lagekarte": "LK12",
@@ -2284,9 +2292,14 @@
           ],
           "posten": [
             "loesegeld"
-          ]
+          ],
+          "karte": {
+            "sonderlagekarte": "SK27",
+            "beiLagekarte": "LK17"
+          }
         }
-      ]
+      ],
+      "hinweis": "Am besten gegen Ende dieser Lage entscheiden lassen, nachdem die Krisenstabsleitung ihre vertrauliche Karte zur Lösegeldfrage hatte. Der Tisch weiß noch nicht, dass am Mittwoch Backups gefunden werden."
     }
   ],
   "schwerpunkte": [
@@ -2394,7 +2407,7 @@
         "LK09": "Welche Daten aus dem Backup braucht die Fertigung zuerst – und welche Lücken bleiben?",
         "LK17": "Welche Liefertermine kann die Produktion belastbar zusagen?",
         "LK12": "Was wird in Werk Süd zuerst gefertigt – und wie wird ohne ERP dokumentiert und freigegeben?",
-        "LK15": "Wie viel der 70 % technischen Kapazität ist mit Personal und Material wirklich nutzbar?"
+        "LK15": "Was davon ist Anlagenverfügbarkeit, was ist durch Personal gedeckt – und was ist als Ware tatsächlich freigegeben?"
       },
       "debriefing": [
         "Wurde Ware freigegeben, ohne dass die Nachweise vollständig waren?",
@@ -2434,7 +2447,7 @@
         "LK09": "Wann ist eine gute Nachricht kommunizierbar, ohne zu viel zu versprechen?",
         "LK17": "Welche Kernbotschaft trägt nach innen und außen gleichermaßen?",
         "LK12": "Welche Kunden bekommen die erste Ware – und was sagen Sie den anderen?",
-        "LK15": "Wie verhindern Sie, dass „wieder in Betrieb“ als „alles wieder gut“ verstanden wird?"
+        "LK15": "Welche Aussage ist nachweisbar, welche bleibt eine Prognose?"
       },
       "debriefing": [
         "Haben Kunden, Beschäftigte und Presse dieselbe Geschichte gehört?",

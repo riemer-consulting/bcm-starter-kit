@@ -25,6 +25,10 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
 
   const checkRole = (rid, where) => { if (!roleIds.has(rid)) errors.push(`${where} verweist auf unbekannte Rolle "${rid}".`); };
   scenario.roleGroups.forEach(g => g.members.forEach(rid => checkRole(rid, `Rollengruppe ${g.key}`)));
+  scenario.sonderlagekarten.forEach(k => (k.textVarianten || []).forEach(v => {
+    if (!scenario.lagekarten.some(l => l.id === v.nachLagekarte)) errors.push(`Karte ${k.id}: Textvariante nach unbekannter Lagekarte ${v.nachLagekarte}.`);
+    if (!v.text) errors.push(`Karte ${k.id}: Textvariante ohne Text.`);
+  }));
   (scenario.bonuskarten || []).forEach(b => (b.voraussetzung || []).forEach(id => {
     if (!scenario.lagekarten.some(l => l.id === id)) errors.push(`Bonuskarte ${b.id}: Voraussetzung ${id} ist keine Lagekarte.`);
   }));
@@ -91,7 +95,7 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
         const k = scenario.sonderlagekarten.find(x => x.id === o.karte.sonderlagekarte);
         const bei = lkById(o.karte.beiLagekarte);
         if (!k) errors.push(`Weiche ${w.id}/${o.id}: unbekannte Folgekarte ${o.karte.sonderlagekarte}.`);
-        else { genutzteFolgekarten.add(k.id); if (!k.nurNachWeiche) warnings.push(`Folgekarte ${k.id} sollte "nurNachWeiche": true haben.`); }
+        else { genutzteFolgekarten.add(k.id); if (!k.nurNachWeiche && k.minuteOffset == null) warnings.push(`Folgekarte ${k.id} sollte "nurNachWeiche": true haben.`); }
         if (!bei) errors.push(`Weiche ${w.id}/${o.id}: unbekannte Lagekarte ${o.karte.beiLagekarte} für die Folgekarte.`);
         else if (bei.minuteOffset <= frueheste) errors.push(`Weiche ${w.id}/${o.id}: Folgekarte käme vor der Entscheidung.`);
         else if (bei.prioritaet !== 1) warnings.push(`Weiche ${w.id}/${o.id}: ${o.karte.beiLagekarte} hat nicht Priorität 1 – die Folgekarte kann entfallen.`);

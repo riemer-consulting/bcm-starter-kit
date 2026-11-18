@@ -291,6 +291,8 @@ function lageMitWeichen(lkIn) {
 // gezahltem Loesegeld meldet sich der Erpresser anders).
 function skMitWeichen(sk) {
   let text = null;
+  // Zustandsfassung: ist eine bestimmte Lage schon gezeigt, gilt der andere Text
+  (sk.textVarianten || []).forEach(v => { if (v.nachLagekarte && state.firedLagekarten.includes(v.nachLagekarte)) text = v.text; });
   weichenListe().forEach(w => {
     const o = chosenOption(w);
     (o && o.folgen || []).filter(f => f.sonderlagekarte === sk.id && f.text).forEach(f => { text = f.text; });
@@ -314,7 +316,7 @@ function weichenView() {
   return weichenImPlan().map(({ w, lkId }) => {
     const lk = scenario.lagekarten.find(l => l.id === lkId) || {};
     return {
-      id: w.id, frage: w.frage, lagekarte: lkId, lageTitel: lk.titel, simZeit: lk.simZeit,
+      id: w.id, frage: w.frage, hinweis: w.hinweis || '', lagekarte: lkId, lageTitel: lk.titel, simZeit: lk.simZeit,
       aktuell: !!(currentLk && currentLk.id === lkId),
       erreicht: state.firedLagekarten.includes(lkId),
       gewaehlt: (state.weichen || {})[w.id] || null,
@@ -932,7 +934,13 @@ app.get('/api/run/protokoll', (req, res) => {
     .forEach(e => w(`- ${e.ref.simZeit}: ${e.ref.titel}`));
   if (!state.firedLagekarten.length) w('- (noch keine)');
   w('', '## Entscheidungen mit Folgen', '');
-  weichenImPlan().forEach(({ w: wc }) => { const o = chosenOption(wc); w(`- **${wc.frage}**  `, `  → ${o ? o.label + ` (Folge: ${o.wirkung})` : 'nicht festgehalten – Verlauf wie im Drehbuch'}`); });
+  weichenImPlan().forEach(({ w: wc }) => {
+    const o = chosenOption(wc);
+    w(`### ${wc.frage}`, '', `Entscheidung: ${o ? o.label + ` (Folge: ${o.wirkung})` : 'nicht festgehalten – Verlauf wie im Drehbuch'}`, '',
+      'Im Debriefing gemeinsam einschätzen – bewertet wird die Entscheidung des Teams, nicht einzelne Personen:', '',
+      '| Kriterium | erfüllt / teilweise / nicht | Notiz |', '|---|---|---|',
+      '| Rechtzeitig eskaliert | | |', '| Begründung nachvollziehbar | | |', '| Verantwortlichkeit klar | | |', '| Kommuniziert (wer erfährt es wie) | | |', '| Dokumentiert | | |', '');
+  });
   if (!weichenImPlan().length) w('- (keine im Plan)');
   w('', '## Verschickte vertrauliche Karten', '', '| Karte | an | Inhalt (gekürzt) | Gute Reaktion wäre |', '|---|---|---|---|');
   state.firedSonderlagekarten.forEach(f => {

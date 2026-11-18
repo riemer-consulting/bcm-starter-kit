@@ -354,7 +354,15 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   `nachspiel.optionalePosten`). Die Moderation hält die Entscheidung in der
   Karte „Entscheidungen mit Folgen“ fest; ohne Eintrag bleibt die Geschichte
   wie im Drehbuch. Folgen sollten auf Lagekarten mit Priorität 1 zielen,
-  damit sie auch in kurzen Übungen ankommen (prüft `npm run pruefen`).
+  damit sie auch in kurzen Übungen ankommen (prüft `npm run pruefen`). Eine Weiche kann einen
+  `hinweis` für die Moderation haben; mehrere Weichen an derselben Lage
+  werden untereinander angezeigt. Eine Option kann auch den Text einer
+  vertraulichen Karte ersetzen (`folgen`: `sonderlagekarte`, `text`) oder
+  eine geplante vertrauliche Karte vorziehen (`karte`).
+- Vertrauliche Karten können `textVarianten` haben
+  (`[{ "nachLagekarte": "LK15", "text": "…" }]`): Ist diese Lage beim
+  Verschicken schon gezeigt, gilt der andere Text – z. B. Prognose vor dem
+  Wiederanlauf, Bestätigung danach.
 - Rollen können `alteIds` haben: Wird eine Rolle umbenannt, übernehmen
   gespeicherte Teilnehmerlisten und Vorlagen mit der alten ID automatisch die
   neue Rolle.
