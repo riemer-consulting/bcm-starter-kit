@@ -39,7 +39,9 @@ Danach: Prüflauf 0 Fehler, 0 Hinweise; Modellcheck aller 16 Kombinationen und 2
 
 ## 1. Freigabeurteil
 
-**Freigabe nach Korrekturen – die Korrekturen sind mit diesem Stand umgesetzt; vor dem Pilot fehlt nur noch die Generalprobe im echten Raum.**
+**Technische und redaktionelle Vorabnahme bestanden. Die zwölf Red-Team-Befunde sind bearbeitet. Vor der endgültigen Pilotfreigabe sind die Raum- und Technik-Generalprobe, die erforderliche Medienrechteklärung sowie die Entscheidung über offene fachliche Annahmen abzuschließen. Der 180-Minuten-Stoppuhr-Test ist spätestens vor dem ersten Einsatz dieses Formats erforderlich.**
+
+Empfohlenes Pilotformat: 90 Minuten, Krisenführung und BCM, neun Rollen, B7 als optionaler Führungsstresstest. Die Pilotfreigabe erteilt die verantwortliche Spielleitung.
 
 1. Faktenkanon, Kartenlogik und Chronologie sind über alle Dauern, alle fünf Schwerpunkte und alle 16 Entscheidungskombinationen widerspruchsfrei (Abschnitte 3 und 4, automatische Regelprüfung ohne Befund).
 2. Alle 26 Lagekarten und das Ruhebild haben ein eigenes, eindeutig zugeordnetes Bild. Sechs Bilder widersprachen dem Text und sind korrigiert (LK08, LK09, LK12, LK15, LK17, LK18).
@@ -326,7 +328,10 @@ Alle Punkte sind mit diesem Stand umgesetzt und geprüft.
 - [x] B7-Beobachtungsbogen für die Stellvertretung in Moderation und Protokoll
 - [x] Medien-Generalprobe: alle 26 Lagekarten und B6–B8 auf der Bühne angezeigt, alle Bilder geladen, jeder Ton an der richtigen Karte; ein Fehler gefunden und behoben (Ton lief über die nächste Lage weiter)
 
-**Vor dem Pilot im echten Raum (No-Go, solange offen):**
+**Vor dem Pilot (No-Go, solange offen):**
+- [ ] Offene fachliche Annahmen entschieden: bestätigt, bewusst als Szenarioannahme akzeptiert oder angepasst (Wiederanlauftempo, OT-Isolierung, Backup, Deckungsbeitrag, Pharma-Qualitätsrahmen, Versicherung)
+- [ ] Medienrechte geklärt (Herkunft und Nutzung der Fotos für den vorgesehenen Teilnehmerkreis)
+- [ ] Nur vor einem 180-Minuten-Einsatz: Durchlauf mit Stoppuhr und echter Rollenbesetzung
 - [ ] Beamer: Ruhebild, LK01, eine Karte (z. B. LK15) und das Spielbrett aus der letzten Reihe lesbar
 - [ ] Ton: Halle und LK01 in Raumlautstärke; einmal „Ton aus“ während der Halle
 - [ ] E-Mail: Testmail aus dem Setup an zwei Testadressen; eine vertrauliche Karte kommt ca. 30 Sekunden nach der Lage an
