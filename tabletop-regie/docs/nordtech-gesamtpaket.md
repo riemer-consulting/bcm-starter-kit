@@ -1284,7 +1284,7 @@ Bevorzugt: LK24, LK05, LK22, SK47, SK45, SK15, SK21, SK23, B7, B6, LK17 · immer
 
 Sichere Wiederherstellung, Zugriffskontrolle, belastbare Daten. **Leitfrage:** Was ist technisch bereit, was ist sicher, was ist fachlich freigegeben?
 
-Bevorzugt: LK16, LK23, LK24, LK25, LK14, LK08, SK48, SK46, SK19, SK27, SK36, SK02, B8 · immer dabei (sofern besetzt): SK19
+Bevorzugt: LK16, LK23, LK24, LK25, LK14, LK08, SK48, SK46, SK19, SK27, SK36, SK02, B8, B6 · immer dabei (sofern besetzt): SK19
 
 - LK18 Anmeldung hakt: Welche technischen Sofortmaßnahmen sind jetzt richtig – und welche zerstören Spuren?
 - LK01 Cyberangriff: Was wird jetzt vom Netz genommen, was bleibt an – und wer entscheidet das?
@@ -1303,7 +1303,7 @@ Bevorzugt: LK16, LK23, LK24, LK25, LK14, LK08, SK48, SK46, SK19, SK27, SK36, SK0
 
 Notbetrieb, Freigaben, Rückverfolgbarkeit, Menschen in den Schichten. **Leitfrage:** Was können wir sicher fertigen und ausliefern – mit welchen Nachweisen?
 
-Bevorzugt: LK16, LK19, LK21, LK25, LK26, SK45, SK41, SK42, SK49, SK11, SK26, B8 · immer dabei (sofern besetzt): SK45
+Bevorzugt: LK16, LK19, LK21, LK25, LK26, SK45, SK41, SK42, SK49, SK11, SK26, B8, B6 · immer dabei (sofern besetzt): SK45
 
 - LK18 Anmeldung hakt: Was bedeutet ein ERP-Ausfall für die laufende Schicht?
 - LK01 Cyberangriff: Welche Linien laufen weiter, welche werden kontrolliert gestoppt?
@@ -1649,6 +1649,9 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 - Überraschungen B6–B8 sind öffentliche Ereignisse auf der Bühne mit eigenem Bild und Ton; B7 unterbricht die Krisenstabsleitung fünf Minuten (Countdown, „nicht erreichbar“ im Spielbrett) und setzt eine besetzte Krisenstabsleitung voraus. B1–B5 bleiben privat.
 - Anrufe LK04, LK06, LK23 als Gesprächssimulation: Signal, Einstieg, vorbereitete Nachfragen, definiertes Gesprächsende. LK10 als fertiger Nachrichteneinspieler.
 - Medien-Generalprobe: alle 26 Lagekarten und B6–B8 im laufenden Werkzeug abgespielt und abfotografiert (`docs/nordtech-generalprobe.md`).
+- B7: Beobachtungsbogen für die Stellvertretung (fünf Punkte) in Moderation und Protokoll, definierte Rückkehr mit Übergabe; B6 und B8 mit je drei Beobachtungspunkten.
+- Überraschungen je Fassung geprüft: B6 in jeder Dauer, B7 ab 90 Minuten, B8 nur mit LK14 (120 Min. IT/Produktion, 180 Min.). B6 zusätzlich den Schwerpunkten IT und Produktion zugeordnet; nicht erreichbare Karten zeigt die Moderation als „In diesem Ablauf nicht eingeplant“.
+- E-Mail Ende-zu-Ende über SMTP geprüft (9 Rollen, 14 vertrauliche Karten, alle bei der richtigen Person; kein vertraulicher Text auf der Bühne).
 - Aus dem Medienpaket: Telefonklingeln bei LK04 und LK06, Funksignal bei LK23; Sprechertexte für LK04, LK06, LK23, LK26 – die Moderation spricht die Anrufer live. Synthetische Sprachdemos, Audio zu vertraulichen Karten sowie Bilder für B1–B8 und W1–W4 bewusst nicht übernommen.
 
 ### Aus Runde 1 umgesetzt

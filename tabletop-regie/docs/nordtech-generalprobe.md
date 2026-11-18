@@ -43,9 +43,27 @@ Stand: 2026-11-18 · Durchgeführt im laufenden Werkzeug (Bühne 1600 × 900, To
 | 28 | LK15 | Sonntag 12:00 Uhr | Wiederanlauf | – | geladen | 70 % technische Kapazität, nicht Lieferfähigkeit |
 | 29 | LK26 | Sonntag 15:00 Uhr | Die Menschen sind am Limit | – | geladen | Personal am Limit, Schichtplan offen |
 
+## E-Mail-Zustellung (Ende-zu-Ende über SMTP)
+
+Durchgeführt mit einem lokalen SMTP-Testempfänger anstelle eines echten Mailservers: 90 Minuten, Schwerpunkt Krisenführung, alle neun vom Werkzeug empfohlenen Rollen mit je einer Testperson (`person1@example.com` … `person9@example.com`), Kundenentscheidung W2 auf „abwarten“, B2 (privat) und B6 (öffentlich) ausgelöst, Ablauf bis Sonntag.
+
+| Prüfung | Ergebnis |
+|---|---|
+| Begrüßung und Rollenbriefing | 9 von 9 Personen je einmal |
+| Vertrauliche Karten | 14 ausgelöst, 14 Mails, jede bei genau der Person mit der richtigen Rolle, 0 falsch zugestellt |
+| Folgekarte aus Entscheidung (SK43 nach W2 „abwarten“) | zugestellt an Geschäftsführung Vertrieb |
+| Private Überraschung B2 | per Mail an Unternehmenskommunikation & Marketing |
+| Öffentliche Überraschung B6 | keine Mail (nur Bühne) – wie vorgesehen |
+| Vertraulicher Text in den Bühnendaten | keiner |
+| Besetzte Rollen ohne eigene vertrauliche Karte | keine |
+| Fehler im Versand-Log | 0 |
+
+Damit ist der Weg Werkzeug → SMTP → richtige Person nachgewiesen. Offen bleibt nur euer echter Mailserver (Zugangsdaten, Spamfilter, Zustellzeit): im Setup „Test-E-Mail senden“ an zwei echte Adressen.
+
 ## Nicht durch die Generalprobe abgedeckt
 
 - Klang und Lautstärke im echten Raum, Lesbarkeit am Beamer aus der letzten Reihe.
 - Wirkung der Live-Gespräche (LK04, LK06, LK23) – das hängt von der Moderation ab; einmal mit einer zweiten Person üben.
-- E-Mail-Zustellung vertraulicher Karten über den echten Mailserver.
+- Zustellung über euren echten Mailserver (Spamfilter, Zustellzeit) – der SMTP-Weg selbst ist geprüft.
+- Das Zusammenspiel echter Menschen in allen Rollen unter Zeitdruck – das zeigt erst der Pilot.
 - Die Sprachaufnahmen (LK10, B6, B8) sind synthetisch erzeugt (Piper, CC0-Stimmen). Wer sie natürlicher möchte, spricht die Texte im Setup unter „Eigene Töne für Lagekarten“ selbst ein.

@@ -93,6 +93,7 @@ Im Ordner `docs/`:
 - `nordtech-medienmatrix.md` / `.csv` – jedes Bild und jeder Ton mit Datei, Prüfstand und Befund
 - `nordtech-gesamtpaket.md` – das komplette Szenario als Text (Faktenblatt, alle Karten, Zeitformate, Stand der Prüfrunden)
 - `nordtech-durchlaeufe.md` – sieben vollständig durchgespielte Geschichten, direkt aus dem Werkzeug erzeugt
+- `nordtech-redteam-auftrag.md` – Auftrag für einen inhaltlichen Red-Team-Test (Plausibilität des Angriffs, Geschäftsauswirkungen, echte Entscheidungen, Logik über sieben Tage)
 - `nordtech-generalprobe.md` – Medien-Generalprobe: jede Karte so, wie die Bühne sie zeigt, mit Ton und Sichtbefund
 - `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
 

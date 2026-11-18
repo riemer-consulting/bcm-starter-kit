@@ -176,7 +176,19 @@ Zum Schwerpunkt passende Karten stehen in der Moderation oben mit „passt zum S
 | B7 | Krisenstabsleitung nicht erreichbar – **Bühne:** Telefon klingelt, Moderation bittet die Krisenstabsleitung hinaus, Countdown 5:00 auf der Bühne, im Spielbrett „nicht erreichbar“ | **ab 90 Minuten und erst nach LK17**, Krisenstabsleitung tatsächlich besetzt (sonst gesperrt) | Vertretung und gemeinsames Lagebild |
 | B8 | Vermeintlicher Erfolg im ERP-Test – **Bühne:** Erfolgssignal und Ansage, dann Warnton und Meldung des Qualitätsmanagements | **erst nach LK14**, nur falls voreilige Freigabe diskutiert wird | Sicherheits- und Qualitäts-Gates |
 
-**B7 Schritt für Schritt:** Auslösen → Telefon klingelt → Moderation geht zur Krisenstabsleitung („Sie werden dringend zu einem vertraulichen Gespräch gebeten …“) und begleitet sie hinaus → „Zur Lage zurück (Countdown bleibt sichtbar)“: Die Bühne zeigt wieder LK17, darüber den Countdown → nach Ablauf zurückholen und fragen: Was hat die Stellvertretung entschieden, und weiß die Krisenstabsleitung es jetzt?
+**Welche öffentliche Überraschung in welcher Fassung:** B6 geht in jeder Dauer (nach LK22). B7 ab 90 Minuten (nach LK17, Krisenstabsleitung besetzt). B8 nur, wenn LK14 im Ablauf ist: bei 120 Minuten mit Schwerpunkt IT oder Produktion und bei 180 Minuten (außer Schwerpunkt Kunden). Das gilt bei den vorgeschlagenen Rollen; mit weniger Rollen passen mehr Lagen in die Zeit. In kürzeren Fassungen ist B6 die Überraschung für alle Schwerpunkte; nicht erreichbare Karten zeigt die Moderation mit „In diesem Ablauf nicht eingeplant“ am Ende der Liste. Vollständige Übersicht: Abnahmebericht, Abschnitt 4.
+
+**B7 Schritt für Schritt:** Auslösen → Telefon klingelt → Moderation geht zur Krisenstabsleitung („Sie werden dringend zu einem vertraulichen Gespräch gebeten …“) und begleitet sie hinaus → „Zur Lage zurück (Countdown bleibt sichtbar)“: Die Bühne zeigt wieder LK17, darüber den Countdown → nach Ablauf zurückholen: Erst übergibt die Stellvertretung in zwei Sätzen („Wir haben entschieden …, offen ist …“), dann darf die Krisenstabsleitung sagen, ob sie etwas ändert – und warum.
+
+**Worauf es bei B7 ankommt, ist nicht der Countdown, sondern die Stellvertretung.** Die Moderation beobachtet während der fünf Minuten (die Punkte stehen in der Moderation unter „Beobachten“ und im Protokoll als Bogen zum Ausfüllen):
+
+1. Übernimmt innerhalb von etwa einer Minute sichtbar jemand die Leitung – die vorgesehene Stellvertretung?
+2. Fasst die Stellvertretung das Lagebild zusammen (gesichert / offen) und verteilt Aufgaben mit Namen?
+3. Werden anstehende Entscheidungen getroffen statt auf die Rückkehr vertagt?
+4. Steht der Lagebericht für den Beirat trotzdem rechtzeitig?
+5. Bekommt die Krisenstabsleitung bei der Rückkehr eine kurze Übergabe?
+
+Im Debriefing: Was hat die Stellvertretung gebraucht, das sie nicht hatte (Informationen, Befugnisse, Unterlagen)? Daraus entsteht oft die wertvollste Maßnahme der Übung. Für B6 und B8 gibt es ebenfalls kurze Beobachtungspunkte.
 
 **Hinweis Zeitformate:** LK14 (ERP-Testbetrieb) ist automatisch nur bei 180 Minuten eingeplant. In kürzeren Fassungen ist B8 erst nutzbar, wenn LK14 unter „Nicht eingeplante Karten“ mit „Jetzt einsetzen“ gespielt wurde – das kostet ca. 5 Minuten an anderer Stelle. B7 ist unter 90 Minuten gesperrt.
 

@@ -152,7 +152,7 @@ function buehnenEreignis(fuerModeration) {
     kriseninfo: b.kriseninfo || null, media: b.media || null, sound: b.sound || null,
     unterbrechung: u ? { rolle: (roleById(u.rolle) || {}).funktion || u.rolle, text: u.text || '', restSekunden: Math.max(0, Math.round((e.endsAt - Date.now()) / 1000)) } : null
   };
-  if (fuerModeration) Object.assign(v, { sprechertext: b.sprechertext || null, moderatorHinweis: b.moderatorHinweis || null, regie: b.regie || null });
+  if (fuerModeration) Object.assign(v, { sprechertext: b.sprechertext || null, moderatorHinweis: b.moderatorHinweis || null, regie: b.regie || null, beobachtung: b.beobachtung || null, rueckkehr: b.unterbrechung ? (b.unterbrechung.rueckkehr || null) : null });
   return v;
 }
 function rolleBesetzt(roleId) { return participantsForRole(roleId).length > 0; }
@@ -904,7 +904,10 @@ app.get('/api/run/moderator-state', (req, res) => {
         ...(b.minDauer && uebungsDauer() < b.minDauer ? [`nur in Übungen ab ${b.minDauer} Minuten`] : []),
         ...(b.erfordertBesetzt && !rolleBesetzt(b.erfordertBesetzt) ? [`nur wenn ${(roleById(b.erfordertBesetzt) || {}).funktion || b.erfordertBesetzt} besetzt ist`] : []),
         ...(b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id)).map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
-      ]
+      ],
+      // Voraussetzung, die in diesem Ablauf gar nicht vorkommt (z. B. LK14 nur bei 180 Min.)
+      nichtImAblauf: (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id) && !engine.getActiveSchedule(scenario, state).some(e => e.type === 'lagekarte' && e.id === id))
+        .map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
     })),
     buehnenEreignis: buehnenEreignis(true),
     participants: state.participants,
@@ -993,6 +996,12 @@ app.get('/api/run/protokoll', (req, res) => {
       const b = scenario.bonuskarten.find(x => x.id === f.id) || {};
       const lk = scenario.lagekarten.find(x => x.id === f.beiLage);
       w(`| ${f.id}${b.titel ? ' ' + b.titel : ''} | ${f.oeffentlich ? 'auf der Bühne' : 'vertraulich an ' + (f.recipientRoleId ? kurzRolle((roleById(f.recipientRoleId) || {}).funktion) : 'niemand besetzt')} | ${lk ? lk.titel : '–'} | ${String(b.moderatorHinweis || '').replace(/\|/g, '/').slice(0, 200)} |`);
+    });
+    // Beobachtungsbogen je ausgeloester Ueberraschung (Team, nicht Personen)
+    state.firedBonusInfo.forEach(f => {
+      const b = scenario.bonuskarten.find(x => x.id === f.id) || {};
+      if (!(b.beobachtung || []).length) return;
+      w('', `### Beobachtung ${f.id}: ${b.titel || ''}`, '', '| Beobachtungspunkt | ja / teilweise / nein | Notiz |', '|---|---|---|', ...b.beobachtung.map(x => `| ${x.replace(/\|/g, '/')} | | |`));
     });
   }
   if (scenario.nachspiel) {

@@ -2057,7 +2057,12 @@
         "loop": false,
         "volume": 0.8
       },
-      "sprechertext": "Gong. „Achtung, eine Durchsage der Produktionsleitung Werk Süd. Alle Rechner bleiben ausgeschaltet, bis die IT etwas anderes sagt. Ich wiederhole: Alle Rechner bleiben aus.“ – Gong. „Durchsage an alle Bereiche in Werk Süd. Bitte starten Sie jetzt alle Rechner neu und prüfen Sie, ob sie funktionieren. Melden Sie Probleme an Ihre Schichtleitung.“"
+      "sprechertext": "Gong. „Achtung, eine Durchsage der Produktionsleitung Werk Süd. Alle Rechner bleiben ausgeschaltet, bis die IT etwas anderes sagt. Ich wiederhole: Alle Rechner bleiben aus.“ – Gong. „Durchsage an alle Bereiche in Werk Süd. Bitte starten Sie jetzt alle Rechner neu und prüfen Sie, ob sie funktionieren. Melden Sie Probleme an Ihre Schichtleitung.“",
+      "beobachtung": [
+        "Entscheidet eine benannte Stelle, welche Anweisung gilt?",
+        "Erreicht die Korrektur alle Schichten und Standorte über einen festgelegten Weg?",
+        "Wird festgelegt, wer künftig Anweisungen an die Beschäftigten freigibt?"
+      ]
     },
     {
       "id": "B7",
@@ -2087,10 +2092,18 @@
       "unterbrechung": {
         "rolle": "geschaeftsfuehrer-ceo",
         "minuten": 5,
-        "text": "Bitte den Tisch verlassen und in dieser Zeit nicht mit dem Krisenstab sprechen."
+        "text": "Bitte den Tisch verlassen und in dieser Zeit nicht mit dem Krisenstab sprechen.",
+        "rueckkehr": "Krisenstabsleitung an den Tisch bitten. Erst die Stellvertretung zwei Sätze übergeben lassen („Wir haben entschieden …, offen ist …“), dann fragen, ob die Krisenstabsleitung etwas davon ändern will – und warum."
       },
       "regie": "Nach dem Klingeln geht die Moderation zur Krisenstabsleitung und bittet sie hinaus (Flur oder Nebentisch). Die Bühne zählt fünf Minuten herunter. Danach zurückholen und als Erstes fragen: Was hat die Stellvertretung in dieser Zeit entschieden – und weiß die Krisenstabsleitung es jetzt?",
-      "sprechertext": "„Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“"
+      "sprechertext": "„Entschuldigung – Sie werden dringend zu einem vertraulichen Gespräch gebeten. Bitte kommen Sie sofort mit, Sie sind die nächsten fünf Minuten nicht erreichbar.“",
+      "beobachtung": [
+        "Übernimmt innerhalb von etwa einer Minute sichtbar jemand die Leitung – die vorgesehene Stellvertretung?",
+        "Fasst die Stellvertretung das Lagebild zusammen (gesichert / offen) und verteilt Aufgaben mit Namen?",
+        "Werden anstehende Entscheidungen getroffen statt auf die Rückkehr vertagt?",
+        "Steht der Lagebericht für den Beirat trotzdem rechtzeitig?",
+        "Bekommt die Krisenstabsleitung bei der Rückkehr eine kurze Übergabe (entschieden / offen / wer macht was)?"
+      ]
     },
     {
       "id": "B8",
@@ -2118,7 +2131,12 @@
         "loop": false,
         "volume": 0.8
       },
-      "sprechertext": "Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“"
+      "sprechertext": "Signal. „E-R-P-Test, Auftrag eins: Funktionstest erfolgreich abgeschlossen.“ – Warnton. „Qualitätsmanagement an den Krisenstab. Bei einem Testauftrag zeigt das System eine Chargennummer, die nicht zu unseren Unterlagen passt. Die Ursache ist ungeklärt. Wir brauchen eine Entscheidung, wie es weitergeht.“",
+      "beobachtung": [
+        "Wird die Produktivfreigabe zurückgestellt, bis Ursache und Umfang geklärt sind?",
+        "Ist klar, wer untersucht und wer fachlich freigibt (Qualität, nicht Vertrieb)?",
+        "Wird abgestimmt, was Produktion und Kunden jetzt gesagt wird?"
+      ]
     }
   ],
   "bewertungskriterien": [
@@ -2475,7 +2493,8 @@
         "SK27",
         "SK36",
         "SK02",
-        "B8"
+        "B8",
+        "B6"
       ],
       "leitfrage": "Was ist technisch bereit, was ist sicher, was ist fachlich freigegeben?",
       "zusatzfragen": {
@@ -2513,7 +2532,8 @@
         "SK49",
         "SK11",
         "SK26",
-        "B8"
+        "B8",
+        "B6"
       ],
       "leitfrage": "Was können wir sicher fertigen und ausliefern – mit welchen Nachweisen?",
       "zusatzfragen": {

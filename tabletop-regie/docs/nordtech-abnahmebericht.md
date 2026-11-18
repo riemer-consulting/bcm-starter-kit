@@ -25,7 +25,7 @@ Kennzeichnungen:
 5. Überraschungskarten: Nach Rückmeldung des Auftraggebers sind B6–B8 öffentliche Ereignisse auf der Bühne. Sie haben ein eigenes Bild und einen eigenen Ton, B7 ist eine echte Spielunterbrechung mit Countdown. B1–B5 bleiben private Nachrichten an eine Rolle. Die Anrufe LK04, LK06 und LK23 sind Gesprächssimulationen mit Nachfragen und Gesprächsende. LK10 ist ein fertiger Nachrichteneinspieler. Die Medien-Generalprobe hat alle 29 Bühnenbilder und alle Töne im laufenden Werkzeug bestätigt (`docs/nordtech-generalprobe.md`).
 6. **Nicht geprüft** sind:
    - die Darstellung am Beamer und die Lautstärke im Veranstaltungsraum,
-   - der E-Mail-Versand über den echten Mailserver,
+   - der E-Mail-Versand über euren echten Mailserver (der SMTP-Weg selbst ist Ende-zu-Ende geprüft, siehe `docs/nordtech-generalprobe.md`),
    - Herkunft und Nutzungsrechte der Fotos.
 
 ## 2. Widerspruchstabelle
@@ -171,6 +171,42 @@ Mit den vom Werkzeug vorgeschlagenen Rollen, Schwierigkeit „mittel“. „Max.
 
 **Ergebnis:** In allen 25 Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine vorgezogene vertrauliche Karte, Krisenzeit plus Abschluss innerhalb der Zieldauer.
 
+### Überraschungen je Dauer und Schwerpunkt
+
+Erreichbar = alle Voraussetzungs-Lagen sind im Ablauf und die Mindestdauer ist erfüllt (bei den vom Werkzeug vorgeschlagenen Rollen; mit weniger Rollen passen mehr Lagen in die Zeit, dann ist oft auch LK14 dabei). B1–B5 haben keine Voraussetzung und gehen privat an eine Rolle; B6–B8 sind öffentlich.
+
+| Dauer | Schwerpunkt | B6 Widersprüchliche Anweisungen | B7 Krisenstabsleitung weg | B8 Vermeintlicher Erfolg | zum Schwerpunkt passend, aber nicht erreichbar |
+|---:|---|---|---|---|---|
+| 45 | Ausgewogen | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | – |
+| 45 | Krisenführung und BCM | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B7 |
+| 45 | IT-Sicherheit und Wiederanlauf | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B8 |
+| 45 | Produktion und Qualitätsmanagement | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B8 |
+| 45 | Kunden und Krisenkommunikation | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | – |
+| 60 | Ausgewogen | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | – |
+| 60 | Krisenführung und BCM | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B7 |
+| 60 | IT-Sicherheit und Wiederanlauf | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B8 |
+| 60 | Produktion und Qualitätsmanagement | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | B8 |
+| 60 | Kunden und Krisenkommunikation | ja | – (ab 90 Min.) | – (LK14 nicht im Ablauf) | – |
+| 90 | Ausgewogen | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 90 | Krisenführung und BCM | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 90 | IT-Sicherheit und Wiederanlauf | ja | ja | – (LK14 nicht im Ablauf) | B8 |
+| 90 | Produktion und Qualitätsmanagement | ja | ja | – (LK14 nicht im Ablauf) | B8 |
+| 90 | Kunden und Krisenkommunikation | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 120 | Ausgewogen | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 120 | Krisenführung und BCM | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 120 | IT-Sicherheit und Wiederanlauf | ja | ja | ja | – |
+| 120 | Produktion und Qualitätsmanagement | ja | ja | ja | – |
+| 120 | Kunden und Krisenkommunikation | ja | ja | – (LK14 nicht im Ablauf) | – |
+| 180 | Ausgewogen | ja | ja | ja | – |
+| 180 | Krisenführung und BCM | ja | ja | ja | – |
+| 180 | IT-Sicherheit und Wiederanlauf | ja | ja | ja | – |
+| 180 | Produktion und Qualitätsmanagement | ja | ja | ja | – |
+| 180 | Kunden und Krisenkommunikation | ja | ja | – (LK14 nicht im Ablauf) | – |
+
+**Ergebnis:** B6 ist in jeder Fassung erreichbar, B7 ab 90 Minuten, B8 nur, wo die Wiederanlaufphase mit dem ERP-Testbetrieb (LK14) gespielt wird. Zum Schwerpunkt passend, aber im Ablauf nicht erreichbar: 45/Krisenführung und BCM: B7; 45/IT-Sicherheit und Wiederanlauf: B8; 45/Produktion und Qualitätsmanagement: B8; 60/Krisenführung und BCM: B7; 60/IT-Sicherheit und Wiederanlauf: B8; 60/Produktion und Qualitätsmanagement: B8; 90/IT-Sicherheit und Wiederanlauf: B8; 90/Produktion und Qualitätsmanagement: B8. Die Moderation zeigt diese Karten mit dem Hinweis „In diesem Ablauf nicht eingeplant“ am Ende der Liste.
+
+B6 ist zusätzlich den Schwerpunkten IT und Produktion zugeordnet. Damit hat jeder Schwerpunkt in jeder Dauer mindestens eine passende öffentliche Überraschung.
+
 ## 5. Medienabnahme
 
 Die vollständige Liste mit Dateinamen, Pixelmaßen und Bildinhalten steht in `docs/nordtech-medienmatrix.md` (`.csv` zum Abhaken).
@@ -263,6 +299,8 @@ Alle Punkte sind mit diesem Stand umgesetzt und geprüft.
 - [x] Sperren B6 / B7 / B8 greifen auch serverseitig
 - [x] „Ton aus / Ton an“ und „Ohne Ton anzeigen“ funktionieren im Browser
 - [x] Protokoll-Export mit Entscheidungen, Überraschungen, Rechnung, Raster, Maßnahmenplan, ohne Namen
+- [x] E-Mail Ende-zu-Ende über SMTP (lokaler Testempfänger): 9 von 9 Begrüßungen und Rollenbriefings, 14 von 14 vertraulichen Karten bei der richtigen Person, Folgekarte SK43 nach W2, B2 privat, B6 ohne Mail, kein vertraulicher Text auf der Bühne
+- [x] B7-Beobachtungsbogen für die Stellvertretung in Moderation und Protokoll
 - [x] Medien-Generalprobe: alle 26 Lagekarten und B6–B8 auf der Bühne angezeigt, alle Bilder geladen, jeder Ton an der richtigen Karte; ein Fehler gefunden und behoben (Ton lief über die nächste Lage weiter)
 
 **Vor dem Pilot im echten Raum (No-Go, solange offen):**
