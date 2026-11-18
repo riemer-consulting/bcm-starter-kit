@@ -515,7 +515,13 @@
         "kommunikation-marketing",
         "geschaeftsfuehrer-ceo"
       ],
-      "akt": "eskalation"
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6
+      },
+      "sprechertext": "Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme."
     },
     {
       "id": "LK05",
@@ -558,7 +564,7 @@
         "Welche Zusagen machen Sie darüber hinaus?",
         "Welche Risiken entstehen?"
       ],
-      "moderatorHinweis": null,
+      "moderatorHinweis": "Auf der Bühne klingelt das Telefon. Die Moderation spricht danach den Einkäufer des Automobilkunden (Sprechertext) und bleibt für Rückfragen in der Rolle: Wer ruft bis 16:00 Uhr zurück, wer schreibt den Bericht, was wird zugesagt – und was ausdrücklich nicht?",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk06-kunde-eskaliert-foto.webp",
@@ -574,7 +580,13 @@
         "debitorenmanagement",
         "kaufmaennische-leiterin-cfo"
       ],
-      "akt": "eskalation"
+      "akt": "eskalation",
+      "sound": {
+        "src": "/media/nordtech/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6
+      },
+      "sprechertext": "Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall."
     },
     {
       "id": "LK07",
@@ -1028,7 +1040,7 @@
         "Welche Arbeiten dürfen die Techniker vor einer IT-/OT-Sicherheitsfreigabe überhaupt durchführen?",
         "Wie wird die gleiche Regel an allen Standorten durchgesetzt?"
       ],
-      "moderatorHinweis": "Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.",
+      "moderatorHinweis": "Funkruf auf der Bühne: Die Moderation spricht den Werkschutz (Sprechertext). Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk23-zutritt.png",
@@ -1046,7 +1058,13 @@
         "LK01"
       ],
       "moderatorGut": "Ein dokumentierter, zeitlich begrenzter Ausweichprozess mit Identitätsprüfung, autorisiertem Auftrag, Begleitung und Zutrittsprotokoll; IT und Produktion klären getrennt, welche Arbeiten am System zulässig sind; die Regel gilt an allen Standorten.",
-      "moderatorSchlecht": "Pauschaler Zugang aus Zeitdruck – oder Abweisung ohne Entscheidung, obwohl es eine kontrollierbare Alternative gäbe; niemand dokumentiert Zuständigkeiten."
+      "moderatorSchlecht": "Pauschaler Zugang aus Zeitdruck – oder Abweisung ohne Entscheidung, obwohl es eine kontrollierbare Alternative gäbe; niemand dokumentiert Zuständigkeiten.",
+      "sound": {
+        "src": "/media/nordtech/funk-ruf.mp3",
+        "loop": false,
+        "volume": 0.6
+      },
+      "sprechertext": "Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?"
     },
     {
       "id": "LK24",
@@ -1139,7 +1157,7 @@
         "Welche Aufträge haben Vorrang?",
         "Wie verhindern Sie, dass Erschöpfung zu Sicherheits- oder Qualitätsproblemen führt?"
       ],
-      "moderatorHinweis": "Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
+      "moderatorHinweis": "Die Moderation spricht die Schichtleitung (Sprechertext). Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
       "media": {
         "type": "image",
         "src": "/media/nordtech/lk26-menschen-am-limit.png",
@@ -1156,7 +1174,8 @@
       "akt": "wiederanlauf",
       "voraussetzung": [
         "LK12"
-      ]
+      ],
+      "sprechertext": "Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?"
     }
   ],
   "sonderlagekarten": [

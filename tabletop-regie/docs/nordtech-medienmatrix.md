@@ -8,16 +8,16 @@ Stand: 2026-11-18 · erzeugt aus `data/scenario.nordtech.json` und `media/nordte
 
 | ID | Titel | Zeit | Bilddatei | da | Pixel | Art | Bildinhalt | Korrektur in dieser Abnahme | Ton |
 |---|---|---|---|---|---|---|---|---|---|
-| LK01 | Cyberangriff | Montag 07:00 Uhr | `lk01-loesegeld-kamera-foto.webp` | ja | 1673x940 | Foto | Standbild Überwachungskamera, Lösegeldforderung auf Hallenbildschirmen, Zeitstempel 07:02 | – | lk01-stille-gemurmel.mp3 (eigene Aufnahme, ca. 7 s, einmalig) |
+| LK01 | Cyberangriff | Montag 07:00 Uhr | `lk01-loesegeld-kamera-foto.webp` | ja | 1673x940 | Foto | Standbild Überwachungskamera, Lösegeldforderung auf Hallenbildschirmen, Zeitstempel 07:02 | – | lk01-stille-gemurmel.mp3 (eigene Aufnahme, 7 s, einmalig) |
 | LK02 | Produktion stoppt | Montag 09:00 Uhr | `lk02-produktion-gestoppt-foto.webp` | ja | 1536x1024 | Foto | stehende Fertigungslinie, keine Personen erkennbar im Fokus | – | – |
 | LK03 | LinkedIn-Beitrag | Montag 11:00 Uhr | `lk03-linkedin-post-foto.webp` | ja | 1149x1369 | Foto, Hochformat | Social-Media-Beitrag mit Foto der Lösegeldforderung; kein Plattformlogo | – | – |
-| LK04 | Nordkanal-Anfrage | Montag 14:00 Uhr | `lk04-nordkanal-anfrage.png` | ja | 1000x280 | Karte | Presseanfrage des fiktiven Senders Nordkanal | – | – |
+| LK04 | Nordkanal-Anfrage | Montag 14:00 Uhr | `lk04-nordkanal-anfrage.png` | ja | 1000x280 | Karte | Presseanfrage des fiktiven Senders Nordkanal | – | telefon-klingeln.mp3 (Telefonklingeln, 5 s, einmalig); danach Sprechertext live |
 | LK05 | Schlüsselperson fällt aus | Dienstag 08:00 Uhr | `lk05-leerer-arbeitsplatz-foto.webp` | ja | 1536x1024 | Foto | leerer Arbeitsplatz der Systemadministration | – | – |
-| LK06 | Kunde eskaliert | Dienstag 10:00 Uhr | `lk06-kunde-eskaliert-foto.webp` | ja | 1536x1024 | Foto | Telefonat mit dem Automobilkunden | – | – |
+| LK06 | Kunde eskaliert | Dienstag 10:00 Uhr | `lk06-kunde-eskaliert-foto.webp` | ja | 1536x1024 | Foto | Telefonat mit dem Automobilkunden | – | telefon-klingeln.mp3 (Telefonklingeln, 5 s, einmalig); danach Sprechertext live |
 | LK07 | Datenschutz | Dienstag 13:00 Uhr | `lk07-datenschutz.png` | ja | 1000x280 | Karte | Datenschutz: Meldefrage, keine Rechtsaussage im Bild | – | – |
 | LK08 | Positive Entwicklung | Mittwoch 08:00 Uhr | `lk08-positive-entwicklung.png` | ja | 1000x280 | Karte | Einbruchsweg identifiziert | korrigiert: Zusatz jetzt „Keine Hinweise auf aktive Angreifer“ (vorher missverständlich als Entwarnung lesbar) | – |
 | LK09 | Backups gefunden | Mittwoch 11:00 Uhr | `lk09-offline-backup-foto.webp` | ja | 1536x1024 | Foto | Offline-Backup lesbar, Prüfung offen | korrigiert: Bildschirm zeigte „Backup erfolgreich/freigegeben“ – widersprach Text; jetzt „BACKUP-PRÜFUNG LÄUFT / NOCH NICHT FREIGEGEBEN“, Stempel „PRÜFUNG OFFEN“ | – |
-| LK10 | Nordkanal-Sonderbericht | Donnerstag 08:00 Uhr | `lk10-nordkanal-studio-foto.webp` | ja | 1672x941 | Foto | Studio des fiktiven Senders Nordkanal, Bauchbinde zum Sonderbericht | – | Sprechertext zum Live-Vorlesen; optional eigene Aufnahme im Setup |
+| LK10 | Nordkanal-Sonderbericht | Donnerstag 08:00 Uhr | `lk10-nordkanal-studio-foto.webp` | ja | 1672x941 | Foto | Studio des fiktiven Senders Nordkanal, Bauchbinde zum Sonderbericht | – | Sprechertext live |
 | LK11 | Pharmakunde eskaliert | Donnerstag 13:00 Uhr | `lk11-pharmakunde-foto.webp` | ja | 1536x1024 | Foto | Krisengespräch mit dem Pharmakunden | – | – |
 | LK12 | Teilweiser Wiederanlauf | Freitag 08:00 Uhr | `lk12-werk-sued-online-foto.webp` | ja | 1536x1024 | Foto | Werk Süd im Notbetrieb | korrigiert: Leitstand zeigte Normalbetrieb; jetzt „WERK SÜD NOTBETRIEB“, Kapazität eingeschränkt, ERP offline/Papierlisten | – |
 | LK13 | Cyberversicherung | Freitag 11:00 Uhr | `lk13-cyberversicherung-foto.webp` | ja | 1536x1024 | Foto | Incident-Response-Team der Versicherung vor Ort | – | – |
@@ -30,10 +30,10 @@ Stand: 2026-11-18 · erzeugt aus `data/scenario.nordtech.json` und `media/nordte
 | LK20 | Keine Aufträge mehr | Montag 06:55 Uhr | `v3-keine-auftraege.png` | ja | 1000x280 | Karte | Vorbote 3: keine EDI-Aufträge | – | – |
 | LK21 | Chargenfreigabe | Freitag 16:00 Uhr | `lk21-chargenfreigabe.png` | ja | 1000x280 | Karte | Chargenfreigabe nur mit Nachweisen | – | – |
 | LK22 | Kommunikation ohne IT | Montag 10:00 Uhr | `lk22-kommunikation-ohne-it.png` | ja | 1000x280 | Karte | Kommunikation ohne IT | – | – |
-| LK23 | Wer darf ins Werk? | Montag 16:00 Uhr | `lk23-zutritt.png` | ja | 1000x280 | Karte | Zutrittssystem ausgefallen | – | – |
+| LK23 | Wer darf ins Werk? | Montag 16:00 Uhr | `lk23-zutritt.png` | ja | 1000x280 | Karte | Zutrittssystem ausgefallen | – | funk-ruf.mp3 (Funksignal, 1 s, einmalig); danach Sprechertext live |
 | LK24 | Wer bekommt das erste System? | Mittwoch 15:00 Uhr | `lk24-erstes-system.png` | ja | 1000x280 | Karte | eine Ressource, drei Prioritäten | – | – |
 | LK25 | Zwei Listen, zwei Wahrheiten | Samstag 11:00 Uhr | `lk25-zwei-listen.png` | ja | 1000x280 | Karte | zwei Bestandslisten, fachlich nicht verlässlich | – | – |
-| LK26 | Die Menschen sind am Limit | Sonntag 15:00 Uhr | `lk26-menschen-am-limit.png` | ja | 1000x280 | Karte | Personal am Limit | – | – |
+| LK26 | Die Menschen sind am Limit | Sonntag 15:00 Uhr | `lk26-menschen-am-limit.png` | ja | 1000x280 | Karte | Personal am Limit | – | Sprechertext live |
 | Ruhebild | Hauptsitz | vor der Krise | `idle-hauptsitz-foto.webp` | ja | 1672x941 | Foto | Hauptsitz NordTech | – | ambience-maschinenraum.mp3 (synthetisch erzeugt, 24 s Schleife, Lautstärke 0,5) |
 
 **Ergebnis:** 27 von 27 Bildern vorhanden und eindeutig zugeordnet (jede Lagekarte verweist auf genau eine eigene Datei). Sechs Bild-Text-Widersprüche wurden in dieser Abnahme behoben (LK08, LK09, LK12, LK15, LK17, LK18).
@@ -54,6 +54,9 @@ Hinweis Format: Karten (1000 × 280) sind Schlagzeilen-Banner, die die Bühne ü
 |---|---|---|---|---|
 | `ambience-maschinenraum.mp3` (24 s) | vor der Krise und während der Vorboten | Schleife, Lautstärke 0,5; endet mit LK01 | synthetisch erzeugt, keine Fremdrechte | „Ton aus“ (Moderation) oder „Ohne Ton anzeigen“ (Bühne) |
 | `lk01-stille-gemurmel.mp3` (7 s) | LK01 | einmalig, Lautstärke 0,8; „Ton noch einmal abspielen“ in der Moderation | eigene Aufnahme des Auftraggebers | wie oben |
+| `telefon-klingeln.mp3` (5 s) | LK04, LK06 | einmalig, Lautstärke 0,6; danach spricht die Moderation den Anrufer live | synthetisch erzeugt, aus dem Medienpaket des Auftraggebers, Pegel angehoben | wie oben |
+| `funk-ruf.mp3` (1 s) | LK23 | einmalig, Lautstärke 0,6; danach spricht die Moderation den Werkschutz live | synthetisch erzeugt, aus dem Medienpaket des Auftraggebers, Pegel angehoben | wie oben |
+| Sprechertexte LK04, LK06, LK23, LK26 | jeweils zur Lage | Moderation spricht live und bleibt für Rückfragen in der Rolle; eigene Aufnahme im Setup möglich | eigener Text | entfällt beim Live-Sprechen |
 | LK10 Sprechertext | LK10 | Moderation liest live vor oder spielt eigene Aufnahme ab | eigener Text | entfällt beim Vorlesen |
 | Eigene Töne je Lagekarte | frei wählbar im Setup | einmalig zur Lage | eigene Aufnahmen | wie oben |
 

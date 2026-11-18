@@ -405,6 +405,8 @@ Der Regionalsender Nordkanal kontaktiert das Unternehmen. Fragen: Wurden Kundend
 
 *Bild auf der Bühne:* Presseanfrage von Nordkanal.
 
+*Sprechertext:* Guten Tag, hier ist die Redaktion von Nordkanal. Uns erreichen Hinweise auf einen Cyberangriff bei NordTech. Ist Ihre Produktion betroffen? Wurden Kundendaten gestohlen? Und zahlen Sie Lösegeld? Wir bitten bis sechzehn Uhr um eine Stellungnahme.
+
 *Zuständig:* Unternehmenskommunikation & Marketing, Geschäftsführung (CEO), Krisenstabsleitung
 
 *Hinweis für die Moderation:* Die Moderation spielt die Redaktion von Nordkanal: Bei ausweichenden Antworten nachfragen. Darauf achten, wer spricht und ob die Antwort mit dem abgestimmt ist, was Kundenservice und Belegschaft gesagt wird.
@@ -426,9 +428,11 @@ Die Zutrittsverwaltung eines gesicherten Fertigungsbereichs in Werk Süd ist weg
 
 *Bild auf der Bühne:* Zutrittssystem nicht verfügbar – wer gibt frei?
 
+*Sprechertext:* Werkschutz Werk Süd an Krisenstab. Am Tor stehen zwei externe Techniker, sie sollen sich einen ausgefallenen Produktionsrechner ansehen. Ich kann ihre Berechtigung nicht elektronisch prüfen, die Zutrittsverwaltung ist nicht erreichbar. Die Instandhaltung drängt, sie sofort reinzulassen. Ohne Freigabe lasse ich niemanden in den gesicherten Bereich. Wer gibt frei?
+
 *Zuständig:* Standortleitung Werk Süd, Leitung Produktion (Werksleitung), IT-Leitung (CIO), Geschäftsführung (CEO), Krisenstabsleitung
 
-*Hinweis für die Moderation:* Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.
+*Hinweis für die Moderation:* Funkruf auf der Bühne: Die Moderation spricht den Werkschutz (Sprechertext). Prüfen, ob die Gruppe physische Zutrittskontrolle, den freigegebenen Arbeitsauftrag und technische Systemzugriffe auseinanderhält. Ein begleiteter Zutritt ist keine Berechtigung, Geräte ans Netz anzuschließen oder Anlagen zu verändern. Bei wenig Zeit: eine Entscheidung mit Verantwortlichem und Kontrollmechanismus verlangen. Die Standortleitung meldet und setzt um – sie ist nicht allein zuständig für Ausnahmen von der IT-Sicherheit.
 
 *Kommt nur mit/nach:* LK01 Cyberangriff
 
@@ -467,7 +471,11 @@ Ein Automobilkunde verlangt bis 16:00 Uhr einen Rückruf der Geschäftsführung 
 
 *Bild auf der Bühne:* Dienstag, 10:00 Uhr: Der Automobilkunde ist am Apparat.
 
+*Sprechertext:* Hier ist der Einkauf. Wir hören seit gestern von Störungen bei Ihnen und haben bis jetzt keine belastbare Auskunft. Ich erwarte bis sechzehn Uhr den Rückruf Ihrer Geschäftsführung und binnen vierundzwanzig Stunden einen schriftlichen Störungsbericht nach unserem Lieferantenhandbuch. Eine mündliche Zusage reicht mir nicht. Und ich erinnere an die Vertragsstrafe: fünfzigtausend Euro für jeden Tag Lieferausfall.
+
 *Zuständig:* Geschäftsführung Vertrieb, stellv. Krisenstabsleitung, Geschäftsführung (CEO), Krisenstabsleitung, Kundenservice / Callcenter (Vertriebsinnendienst), Leitung Qualitätsmanagement, Key Account Management Automotive, Debitorenmanagement, Kaufmännische Leitung (CFO)
+
+*Hinweis für die Moderation:* Auf der Bühne klingelt das Telefon. Die Moderation spricht danach den Einkäufer des Automobilkunden (Sprechertext) und bleibt für Rückfragen in der Rolle: Wer ruft bis 16:00 Uhr zurück, wer schreibt den Bericht, was wird zugesagt – und was ausdrücklich nicht?
 
 #### LK07 – Datenschutz
 
@@ -744,9 +752,11 @@ Die technischen Voraussetzungen für mehr Produktion verbessern sich. Gleichzeit
 
 *Bild auf der Bühne:* Die Technik ist bereit – die Schichten nicht.
 
+*Sprechertext:* Hier Schichtleitung Werk Süd. Technisch könnten wir ab morgen deutlich mehr fahren. Aber viele meiner Leute sind nach dieser Woche über der Belastungsgrenze, und für die Frühschicht morgen habe ich keinen belastbaren Plan. Ich brauche heute eine Entscheidung: Welche Aufträge haben Vorrang, und mit welcher Besetzung fahren wir sicher?
+
 *Zuständig:* Leitung Produktion (Werksleitung), Personalleitung, Leitung Qualitätsmanagement, Geschäftsführung (CEO), Krisenstabsleitung, Standortleitung Werk Süd
 
-*Hinweis für die Moderation:* Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.
+*Hinweis für die Moderation:* Die Moderation spricht die Schichtleitung (Sprechertext). Die 70 % aus der Wiederanlauf-Meldung sind technische Kapazität, nicht automatisch nutzbare Produktionsleistung. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.
 
 *Kommt nur mit/nach:* LK12 Teilweiser Wiederanlauf
 
@@ -1623,6 +1633,7 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 - Übungsprotokoll enthält das Bewertungsraster des Moderationshandbuchs (acht Kriterien, 0/1/2, Team statt Personen).
 - Zuständigkeiten ergänzt (LK02, LK06, LK11, LK12, LK14, LK17, LK24, LK25), damit Finanz- und Bestandsrollen bei 180 Minuten in gespielten Lagen auch gefordert werden.
 - Moderationshandbuch v1.1 und Medienmatrix mit Prüfstand liegen im Werkzeug unter `docs/`.
+- Aus dem Medienpaket: Telefonklingeln bei LK04 und LK06, Funksignal bei LK23; Sprechertexte für LK04, LK06, LK23, LK26 – die Moderation spricht die Anrufer live. Synthetische Sprachdemos, Audio zu vertraulichen Karten sowie Bilder für B1–B8 und W1–W4 bewusst nicht übernommen.
 
 ### Aus Runde 1 umgesetzt
 

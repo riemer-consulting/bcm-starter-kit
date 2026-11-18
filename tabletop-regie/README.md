@@ -259,7 +259,9 @@ Im Ordner `docs/`:
    vorher im Setup unter **„Eigene Töne für Lagekarten“** ein (oder wählen
    eine Audiodatei). Dann spielt die Bühne ihn automatisch ab, und in der
    Moderation gibt es „Ton noch einmal abspielen“. Das geht für jede
-   Lagekarte. Aufnahmen bleiben nur auf diesem Rechner (`media/custom/`) und
+   Lagekarte. **Anrufe** (Presse, Automobilkunde, Werkschutz, Schichtleitung):
+   Die Bühne klingelt bzw. funkt kurz, die Moderation spricht den Anrufer nach
+   dem Sprechertext und bleibt für Rückfragen in der Rolle. Aufnahmen bleiben nur auf diesem Rechner (`media/custom/`) und
    sind im Browser nur möglich, wenn die App unter `http://localhost:4173`
    geöffnet ist.
 11. **Urkunden:** Nach dem Debriefing in der Moderation auf "Alle Urkunden
@@ -403,7 +405,10 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
   `fallbackEmpfaenger`, optional `moderatorHinweis`)
 - Lagekarten können `sprechertext` haben: ein Text zum Vorlesen oder
   Einsprechen (z. B. ein Nachrichtenbericht), der in der Moderation und im
-  Setup unter „Eigene Töne“ erscheint.
+  Setup unter „Eigene Töne“ erscheint. Hat die Lagekarte zusätzlich einen
+  kurzen `sound` (z. B. Telefonklingeln), spielt die Bühne das Signal und die
+  Moderation spricht den Anrufer danach live – Rückfragen sind so möglich.
+  Eine eigene Aufnahme ersetzt beides.
 - `nachspiel` — der Abschluss: `titel`, `einleitung`, `nacharbeiten[]`
   (`zahl`, `text`), `rechnung[]` (`posten`, `betrag`, `bcmHebel` = was vorher
   geholfen hätte), `optionalePosten[]` (zusätzlich `id` und `frage`, in der

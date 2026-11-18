@@ -185,7 +185,10 @@ Die vollständige Liste mit Dateinamen, Pixelmaßen und Bildinhalten steht in `d
 | W1–W4 | bewusst kein Bühnenbild; nur in der Moderation | Werkzeug |
 | Ton: Halle | `ambience-maschinenraum.mp3`, 24 s Schleife, synthetisch erzeugt, endet mit LK01 | Datei, Browser-Test |
 | Ton: LK01 | `lk01-stille-gemurmel.mp3`, 7 s, einmalig, eigene Aufnahme | Datei |
-| Ton: LK10 | Sprechertext zum Vorlesen; eigene Aufnahme optional | Drehbuch |
+| Ton: LK04, LK06 | `telefon-klingeln.mp3`, 5 s, einmalig; danach spricht die Moderation den Anrufer live (Sprechertext) | Datei, Browser-Test |
+| Ton: LK23 | `funk-ruf.mp3`, 1 s, einmalig; danach Werkschutz live (Sprechertext) | Datei |
+| Ton: LK10, LK26 | Sprechertext zum Vorlesen; eigene Aufnahme optional | Drehbuch |
+| Medienpaket des Auftraggebers | Klingel- und Funksignal übernommen (Pegel auf ca. −4 dB angehoben); Sprechertexte an die Kartentexte angeglichen. Nicht übernommen: synthetische Sprachdemos (hörbar künstlich, beantworten keine Rückfragen), Audio zu SK17 und B6–B8 (vertraulich bzw. privat zugestellt), Bildbriefings für B1–B8 und W1–W4 (Designentscheidung), Briefings für LK01–LK26 (Bilder liegen geprüft vor) | Abgleich mit Drehbuch |
 | Stumm | „Ton aus“ stoppt die Halle sofort, „Ton an“ startet sie wieder; „Ohne Ton anzeigen“ spielt nie etwas ab | Browser-Test ohne Fehler |
 | Fallback ohne Ton | kein Ton trägt Information, die nicht auch auf der Bühne steht | Drehbuch |
 | **nicht geprüft** | Beamer-Darstellung und Lesbarkeit im Raum; Lautstärke im Raum; Herkunft und Nutzungsrechte der Fotos sowie Ähnlichkeit abgebildeter Personen mit realen Menschen | – |

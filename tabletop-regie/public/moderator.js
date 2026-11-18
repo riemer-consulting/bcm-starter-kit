@@ -237,9 +237,15 @@ function render(s) {
         : `<p class="mini" style="color:var(--warn);">Keine der hier geforderten Rollen ist besetzt (${zust.map(rid => escapeHtml(funktion(rid))).join(', ')}). Bring die Fachperspektive selbst ein oder gib die Frage an die Krisenstabsleitung.</p>`)
       : '';
     const aktHtml = lk.aktLabel ? `<span class="badge" style="margin-right:8px;" title="Station im Spannungsbogen: Vorboten – Ausbruch – Eskalation – Höhepunkt – Folgen – Wiederanlauf">${escapeHtml(lk.aktLabel)}</span>` : '';
-    const tonHtml = lk.sound
+    // Ton aus dem Drehbuch kann ein kurzes Signal sein (Telefon, Funk); dann
+    // spricht die Moderation den Anrufer danach live. Nur eine eigene Aufnahme
+    // ersetzt den Sprechertext.
+    const tonHtml = (lk.sound
       ? `<p class="mini"><button class="secondary replay-sound" title="Spielt den Ton dieser Lagekarte auf der Bühne noch einmal von vorn ab.">Ton noch einmal abspielen</button> <span class="muted">${lk.eigenerTon ? 'eigene Aufnahme' : 'Ton aus dem Drehbuch'}</span></p>`
-      : (lk.sprechertext ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen)</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>` : '');
+      : '') +
+      (lk.sprechertext && !lk.eigenerTon
+        ? `<details class="mini" open><summary><b>Sprechertext zum Vorlesen</b> (${lk.sound ? 'nach dem Signal live sprechen' : 'keine Aufnahme hinterlegt – im Setup unter „Eigene Töne“ einsprechen'})</summary><p style="white-space:pre-wrap;">${escapeHtml(lk.sprechertext)}</p></details>`
+        : '');
     const weicheHtml = (s.weichen || []).filter(w => w.aktuell).map(aktWeiche => `<div style="border:2px solid var(--accent);border-radius:8px;padding:8px 12px;margin:8px 0;">
         <p class="mini" style="margin:0 0 4px;"><b>Entscheidung mit Folgen:</b> ${escapeHtml(aktWeiche.frage)}</p>
         ${weicheButtons(aktWeiche)}
