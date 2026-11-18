@@ -132,6 +132,7 @@ function updateSkAlerts(s) {
         <button class="secondary sk-alert-ok" data-idx="${i}" style="flex-shrink:0;" title="Hinweis schließen. Die Karte bleibt unten unter „Verschickte vertrauliche Karten“ einsehbar.">Gesehen</button>
       </div>
       <div class="txt" title="Mit der Maus darüberfahren, um den ganzen Text zu sehen.">${escapeHtml(f.text || sk.text || '')}</div>
+      ${f.recipientRoleId && f.recipientRoleId !== sk.empfaenger ? '<div style="color:var(--warn);margin-top:4px;">Ersatzrolle: kurz prüfen, ob die Information für diese Rolle und den jetzigen Zeitpunkt so passt – sonst mündlich einordnen.</div>' : ''}
       ${sk.moderatorHinweis ? `<div style="color:var(--warn);margin-top:4px;">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
       ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
       ${sk.moderatorSchlecht ? `<div style="color:var(--bad);">Schlecht: ${escapeHtml(sk.moderatorSchlecht)}</div>` : ''}
@@ -438,6 +439,7 @@ async function refresh() {
 }
 
 document.getElementById('btn-open-stage').addEventListener('click', () => window.open('stage.html', '_blank'));
+document.getElementById('btn-protokoll').addEventListener('click', () => { window.location.href = '/api/run/protokoll'; });
 document.getElementById('btn-send-all-certs').addEventListener('click', async () => {
   const people = ((lastState && lastState.participants) || []).filter(p => p.name && p.email);
   const statusEl = document.getElementById('m-certs-status');

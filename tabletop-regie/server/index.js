@@ -329,6 +329,11 @@ function weichenView() {
 // etwas Neues gibt. Ebenen bilden den Meldeweg ab: Eingang (Anwender, Kunden,
 // Standorte) -> Krisenstab -> Weitergabe nach innen und außen.
 const EBENEN = ['eingang', 'krisenstab', 'verteilung'];
+// Geplante Dauer der Uebung (Krise + Abschluss) -- fuer Karten, die erst ab
+// einer Mindestdauer sinnvoll sind.
+function uebungsDauer() {
+  return Math.round(engine.totalPlannedMinutes(scenario, state) + (state.finaleMinutes || 0));
+}
 function kurzRolle(funktion) {
   let k = String(funktion || '').split(',')[0].trim();
   // Lange Klammerzusaetze weglassen ("IT-Leitung (Kassensysteme & ...)"),
@@ -858,7 +863,10 @@ app.get('/api/run/moderator-state', (req, res) => {
     bonuskarten: scenario.bonuskarten.map(b => Object.assign({}, b, {
       fired: state.firedLagekarten.includes('BONUS_' + b.id), recipientRoleId: recipientRoleFor(b), recipientLabel: recipientLabel(b),
       // Ueberraschungskarten mit Voraussetzung erst nach der genannten Lage
-      wartetAuf: (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id)).map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
+      wartetAuf: [
+        ...(b.minDauer && uebungsDauer() < b.minDauer ? [`nur in Übungen ab ${b.minDauer} Minuten`] : []),
+        ...(b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id)).map(id => (scenario.lagekarten.find(l => l.id === id) || {}).titel || id)
+      ]
     })),
     participants: state.participants,
     activeRoleIds: state.activeRoleIds,
@@ -903,6 +911,47 @@ app.get('/api/run/stage-state', (req, res) => {
 // Oeffentliche, spoilerfreie Ablauf-Ansicht fuer Teilnehmer: Begruessung,
 // Spielregeln und nur die BEREITS GEZEIGTEN Lagekarten zum Nachlesen — keine
 // Sonderlagekarten (vertraulich/rollenbezogen) und keine kuenftigen Karten.
+// Uebungsprotokoll fuer Debriefing und Nachbereitung (Erfolgsmessung):
+// Ablauf, Entscheidungen, verschickte Karten, Rechnung, Debriefing-Fragen und
+// ein leerer Massnahmenplan. Namen der Teilnehmenden stehen bewusst nicht drin.
+app.get('/api/run/protokoll', (req, res) => {
+  const L = [];
+  const w = (...x) => L.push(...x);
+  const eur = n => new Intl.NumberFormat('de-DE').format(Math.round(n)) + ' €';
+  const sp = aktiverSchwerpunkt();
+  const datum = new Date().toLocaleDateString('de-DE');
+  w(`# Übungsprotokoll – ${scenario.title}`, '',
+    `**Datum:** ${datum} · **Unternehmen (fiktiv):** ${scenario.company.name}  `,
+    `**Modus:** ${state.durationMode === 'target' ? `Zieldauer ${state.targetMinutes} Min.` : state.durationMode === 'computed' ? 'berechnet' : 'erprobte Zeiten'} · **Schwierigkeit:** ${state.difficulty}${sp ? ` · **Schwerpunkt:** ${sp.label}` : ''}`, '');
+  w('## Besetzung', '', '*Namen der Teilnehmenden sind bewusst nicht im Protokoll.*', '');
+  scenario.roles.filter(r => r.id !== 'teilnehmer').forEach(r => { const n = participantsForRole(r.id).length; if (n) w(`- ${r.funktion}${n > 1 ? ` (Team, ${n} Personen)` : ''}`); });
+  const beob = state.participants.filter(p => (p.roleIds || []).includes('teilnehmer') || !(p.roleIds || []).length).length;
+  if (beob) w(`- Beobachtende ohne feste Rolle: ${beob}`);
+  w('', '## Gespielte Lagen', '');
+  engine.getActiveSchedule(scenario, state).filter(e => e.type === 'lagekarte' && state.firedLagekarten.includes(e.id))
+    .forEach(e => w(`- ${e.ref.simZeit}: ${e.ref.titel}`));
+  if (!state.firedLagekarten.length) w('- (noch keine)');
+  w('', '## Entscheidungen mit Folgen', '');
+  weichenImPlan().forEach(({ w: wc }) => { const o = chosenOption(wc); w(`- **${wc.frage}**  `, `  → ${o ? o.label + ` (Folge: ${o.wirkung})` : 'nicht festgehalten – Verlauf wie im Drehbuch'}`); });
+  if (!weichenImPlan().length) w('- (keine im Plan)');
+  w('', '## Verschickte vertrauliche Karten', '', '| Karte | an | Inhalt (gekürzt) | Gute Reaktion wäre |', '|---|---|---|---|');
+  state.firedSonderlagekarten.forEach(f => {
+    const k = scenario.sonderlagekarten.find(x => x.id === f.id) || {};
+    const t = String(f.text || k.text || '').replace(/\|/g, '/');
+    w(`| ${f.id} | ${f.recipientRoleId ? kurzRolle((roleById(f.recipientRoleId) || {}).funktion) : 'niemand besetzt'} | ${t.length > 140 ? t.slice(0, 137) + '…' : t} | ${String(k.moderatorGut || '').replace(/\|/g, '/')} |`);
+  });
+  if (scenario.nachspiel) {
+    const r = finale.bill(scenario.nachspiel, ensureFinaleState().optionen);
+    w('', '## Rechnung (fiktive Modellrechnung)', '', `Gesamtschaden ${eur(r.summe)}, modellierte Erstattung ${eur(r.versicherung)}, beim Unternehmen bleiben **${eur(r.eigenanteil)}**${r.anteilJahresgewinn ? ` (${Math.round(r.anteilJahresgewinn * 100)} % des Jahresgewinns)` : ''}.`);
+  }
+  w('', '## Debriefing', '');
+  [...(scenario.moderationsleitfaden.debriefingFragen || []), ...((sp && sp.debriefing) || [])].forEach(q => w(`**${q}**`, '', '_Notizen:_', '', ''));
+  w('## Maßnahmenplan', '', '| Nr. | Maßnahme | Verantwortlich | Priorität | Bis wann |', '|---:|---|---|---|---|', '| 1 | | | | |', '| 2 | | | | |', '| 3 | | | | |', '');
+  res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="uebungsprotokoll-${new Date().toISOString().slice(0, 10)}.md"`);
+  res.send(L.join('\n'));
+});
+
 app.get('/api/run/ablauf-state', (req, res) => {
   const mf = scenario.moderationsleitfaden || {};
   const gezeigt = scenario.lagekarten
@@ -1118,6 +1167,7 @@ app.post('/api/run/fire-bonuskarte/:id', async (req, res) => {
   if (!b) return res.status(404).json({ ok: false, error: 'Unbekannte Bonuskarte.' });
   const offen = (b.voraussetzung || []).filter(id => !state.firedLagekarten.includes(id));
   if (offen.length) return res.status(400).json({ ok: false, error: `Diese Karte passt erst nach ${offen.join(', ')}.` });
+  if (b.minDauer && uebungsDauer() < b.minDauer) return res.status(400).json({ ok: false, error: `Diese Karte ist nur für Übungen ab ${b.minDauer} Minuten gedacht.` });
   const recipientRoleId = recipientRoleFor(b);
   const role = roleById(recipientRoleId || b.empfaenger);
   const recipients = recipientRoleId ? participantsForRole(recipientRoleId) : [];

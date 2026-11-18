@@ -208,6 +208,11 @@ ist der von dir eingetragene SMTP-Server für die Sonderlagekarten-Mails.
    lassen oder trennen, Lösegeld ja/nein). Spätere Lagekarten bekommen dann
    einen passenden Satz dazu, manchmal folgt eine vertrauliche Karte, und die
    Rechnung im Abschluss passt sich an. Die Geschichte bleibt im Kern gleich.
+   Unter **„Übungsprotokoll“** lädt die Moderation jederzeit ein Protokoll
+   als Markdown-Datei herunter: gespielte Lagen, Entscheidungen, verschickte
+   vertrauliche Karten, Rechnung, Debriefing-Fragen mit Platz für Notizen und
+   ein leerer Maßnahmenplan (drei Verbesserungen mit Verantwortlichen,
+   Priorität und Termin). Namen der Teilnehmenden stehen nicht darin.
    Das **Spielbrett** ("Wer ist am Zug?") steht auf der Bühne in der
    Seitenleiste und in der Moderation: alle besetzten Rollen mit Namen,
    sortiert nach dem Meldeweg — **Meldungen von draußen** (Service-Desk,
@@ -356,7 +361,8 @@ Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
 - Lagekarten können wie vertrauliche Karten `moderatorGut` und
   `moderatorSchlecht` haben (Bewertungshilfe in der Moderation).
   Bonuskarten können `voraussetzung` haben: Sie lassen sich erst auslösen,
-  wenn diese Lagekarten gezeigt wurden.
+  wenn diese Lagekarten gezeigt wurden. Mit `minDauer` (Minuten) sind sie nur in
+  Übungen ab dieser geplanten Dauer auslösbar.
 - `schwerpunkte[]` (optional): Übungsschwerpunkte (`key`, `label`,
   `beschreibung`, `karten`: Liste von Lage-, vertraulichen und Bonuskarten).
   Im Setup bei „Zieldauer“ wählbar. Pflichtkarten und Spannungsbogen bleiben
