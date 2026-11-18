@@ -1,23 +1,24 @@
 {
-  "id": "waterkant-72-stunden-in-flammen",
-  "title": "72 Stunden in Flammen",
-  "subtitle": "BCM-Krisensimulation für den Einzelhandel",
+  "id": "waterkant-rechenzentrum",
+  "title": "Wenn das Rechenzentrum brennt",
+  "subtitle": "Sieben Tage zwischen Feuer, Infrastrukturverlust und Verantwortung",
   "company": {
     "name": "Waterkant Baumärkte GmbH",
     "facts": "14 Filialen in Norddeutschland · ca. 850 Mitarbeitende · ca. 240 Mio. € Umsatz · Baustoffe, Garten & Heimwerkerbedarf",
     "logo": "/media/waterkant/waterkant-logo.png",
-    "stageLogo": "/media/waterkant/waterkant-logo-light.png"
+    "stageLogo": "/media/waterkant/waterkant-logo-light.png",
+    "produkte": "Baustoffe, Garten- und Heimwerkerbedarf in 14 eigenen Filialen, Online-Shop mit Abholung in der Filiale, Bestellportal für Gewerbekunden (Rahmenvereinbarungen). Eigenes Rechenzentrum in der Zentrale; Kassen- und Warenwirtschaftsdienste auch für 9 selbständige Partnermärkte im Einkaufsverbund (IT-Servicevertrag)."
   },
   "difficulty": "mittel",
   "recommendedParticipants": {
-    "min": 5,
-    "reference": 12,
-    "max": 16
+    "min": 6,
+    "reference": 18,
+    "max": 22
   },
   "timing": {
     "mode": "authored",
-    "referenceGroupSize": 12,
-    "note": "Die Minutenangaben sind auf eine Gruppe von ca. 10-12 Teilnehmenden zugeschnitten. In 'berechnet'-Modus leitet die App die Dauer stattdessen aus der Anzahl aktiver Rollen her (1 Min. Lesezeit + 30 Sek. je aktivem Funktionsbereich, max. 4 Min. Krisenstabsentscheidung je Lagekarte)."
+    "referenceGroupSize": 18,
+    "note": "Die Minutenangaben sind auf eine Gruppe von ca. 16-18 Teilnehmenden zugeschnitten. In 'berechnet'-Modus leitet die App die Dauer stattdessen aus der Anzahl aktiver Rollen her (1 Min. Lesezeit + 30 Sek. je aktivem Funktionsbereich, max. 4 Min. Krisenstabsentscheidung je Lagekarte)."
   },
   "standardablauf": {
     "readingMinutes": 1,
@@ -25,18 +26,42 @@
     "maxDecisionMinutes": 4,
     "speakingOrder": [
       "geschaeftsfuehrung",
-      "logistik",
       "it",
-      "einkauf",
+      "facility",
       "arbeitssicherheit",
-      "personal",
       "vertrieb",
-      "e-commerce",
       "finanzen",
       "kommunikation",
+      "logistik",
+      "e-commerce",
+      "einkauf",
+      "infosec",
+      "personal",
       "service"
     ],
-    "vorbotenMinuten": 3
+    "vorbotenMinuten": 3,
+    "rollenPrioritaet": [
+      "geschaeftsfuehrer-ceo",
+      "leiter-it",
+      "facility-management",
+      "partnerbetreuung",
+      "leiter-arbeitssicherheit",
+      "leiter-finanzen-cfo",
+      "leiterin-kommunikation-pr",
+      "rz-betrieb",
+      "regionalleiterin-filialen-nord",
+      "notfallmanagement-bcm",
+      "it-support-filialen",
+      "online-shop-leitung",
+      "leiterin-logistik-zentrallager",
+      "informationssicherheit",
+      "leiter-einkauf",
+      "kundenservice-hotline",
+      "leiterin-personal",
+      "regionalleiter-filialen-sued",
+      "schichtleiter-zentrallager",
+      "assistenz-gf-dokumentation"
+    ]
   },
   "roleGroups": [
     {
@@ -47,25 +72,77 @@
       ]
     },
     {
+      "key": "it",
+      "label": "IT und Rechenzentrum",
+      "members": [
+        "leiter-it",
+        "rz-betrieb"
+      ]
+    },
+    {
+      "key": "facility",
+      "label": "Gebäudetechnik",
+      "members": [
+        "facility-management"
+      ]
+    },
+    {
+      "key": "arbeitssicherheit",
+      "label": "Arbeitssicherheit",
+      "members": [
+        "leiter-arbeitssicherheit"
+      ]
+    },
+    {
+      "key": "infosec",
+      "label": "Informationssicherheit",
+      "members": [
+        "informationssicherheit"
+      ]
+    },
+    {
       "key": "logistik",
-      "label": "Logistik & Zentrallager",
+      "label": "Logistik",
       "members": [
         "leiterin-logistik-zentrallager",
         "schichtleiter-zentrallager"
       ]
     },
     {
-      "key": "it",
-      "label": "IT & Warenwirtschaft",
+      "key": "einkauf",
+      "label": "Einkauf und Dienstleister",
       "members": [
-        "leiter-it"
+        "leiter-einkauf"
       ]
     },
     {
-      "key": "einkauf",
-      "label": "Einkauf & Lieferanten",
+      "key": "finanzen",
+      "label": "Finanzen",
       "members": [
-        "leiter-einkauf"
+        "leiter-finanzen-cfo"
+      ]
+    },
+    {
+      "key": "vertrieb",
+      "label": "Filialen und Partner",
+      "members": [
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "partnerbetreuung"
+      ]
+    },
+    {
+      "key": "e-commerce",
+      "label": "Online und Gewerbekunden",
+      "members": [
+        "online-shop-leitung"
+      ]
+    },
+    {
+      "key": "kommunikation",
+      "label": "Kommunikation",
+      "members": [
+        "leiterin-kommunikation-pr"
       ]
     },
     {
@@ -76,44 +153,8 @@
       ]
     },
     {
-      "key": "arbeitssicherheit",
-      "label": "Arbeitssicherheit & Werkschutz",
-      "members": [
-        "leiter-arbeitssicherheit"
-      ]
-    },
-    {
-      "key": "vertrieb",
-      "label": "Filialen & Vertrieb",
-      "members": [
-        "regionalleiterin-filialen-nord",
-        "regionalleiter-filialen-sued"
-      ]
-    },
-    {
-      "key": "e-commerce",
-      "label": "Online-Shop",
-      "members": [
-        "online-shop-leitung"
-      ]
-    },
-    {
-      "key": "finanzen",
-      "label": "Finanzen & Versicherung",
-      "members": [
-        "leiter-finanzen-cfo"
-      ]
-    },
-    {
-      "key": "kommunikation",
-      "label": "Unternehmenskommunikation / Marketing",
-      "members": [
-        "leiterin-kommunikation-pr"
-      ]
-    },
-    {
       "key": "service",
-      "label": "Service & Kundenkontakt",
+      "label": "Support und Hotline",
       "members": [
         "it-support-filialen",
         "kundenservice-hotline"
@@ -121,7 +162,7 @@
     },
     {
       "key": "krisenstab-support",
-      "label": "Krisenstab-Unterstützung (ohne feste Sprechzeit)",
+      "label": "Krisenstab-Unterstützung",
       "members": [
         "notfallmanagement-bcm",
         "assistenz-gf-dokumentation"
@@ -133,118 +174,146 @@
       "id": "geschaeftsfuehrer-ceo",
       "funktion": "Geschäftsführung (CEO), Krisenstabsleitung",
       "group": "geschaeftsfuehrung",
-      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen und musst am Ende öffentlich vor die Presse treten.",
+      "beschreibung": "Du leitest das Unternehmen und den Krisenstab. Du triffst die letzten Entscheidungen, vertrittst Waterkant gegenüber Gesellschaftern, Partnermärkten und Öffentlichkeit und musst das Team durch die Woche führen.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leiter-it",
+      "funktion": "IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum)",
+      "group": "it",
+      "beschreibung": "Du verantwortest die gesamte IT einschließlich des eigenen Rechenzentrums. Du musst entscheiden, was wann und wo wieder anläuft – und dem Krisenstab ehrlich sagen, was technisch geht und was nicht.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "rz-betrieb",
+      "funktion": "IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft)",
+      "group": "it",
+      "beschreibung": "Du betreust Server, Speicher, Netzwerk und USV im Rechenzentrum und hast in der Brandnacht Rufbereitschaft. Du kennst die Technik im Detail und lieferst dem Krisenstab das technische Lagebild.",
+      "ebene": "eingang"
+    },
+    {
+      "id": "facility-management",
+      "funktion": "Gebäudetechnik und Facility Management",
+      "group": "facility",
+      "beschreibung": "Du verantwortest Gebäude, Klima, Strom und USV-Wartung am Hauptstandort. Du bist Ansprechpartner für Feuerwehr, Sachverständige und Sanierer und gibst Räume erst frei, wenn sie sicher sind.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "leiter-arbeitssicherheit",
+      "funktion": "Leitung Arbeitssicherheit und Werkschutz",
+      "group": "arbeitssicherheit",
+      "beschreibung": "Du verantwortest Evakuierung, Sammelplätze, Gefährdungsbeurteilungen und den Schutz der Beschäftigten. Wer wann welchen Raum betreten darf, ist auch deine Frage.",
+      "ebene": "krisenstab"
+    },
+    {
+      "id": "informationssicherheit",
+      "funktion": "Informationssicherheit und Datenschutzkoordination",
+      "group": "infosec",
+      "beschreibung": "Du achtest darauf, dass im Notbetrieb keine Sicherheitslücken und keine unkontrollierten Datenflüsse entstehen. Rechtliche Bewertungen gibst du nicht selbst ab, sondern stößt die fachliche Prüfung an.",
       "ebene": "krisenstab"
     },
     {
       "id": "leiterin-logistik-zentrallager",
-      "funktion": "Leitung Logistik & Zentrallager",
+      "funktion": "Leitung Logistik und Zentrallager",
       "group": "logistik",
-      "beschreibung": "Du verantwortest das Zentrallager und die Belieferung aller Filialen. Nach dem Brand musst du Alternativen organisieren, damit die Filialen weiter Ware bekommen.",
+      "beschreibung": "Du verantwortest das Zentrallager neben dem Verwaltungsgebäude und die Belieferung der Filialen. Ohne Lagerverwaltung weißt du nicht, wo welche Ware liegt – und der Saisonstart läuft.",
       "ebene": "krisenstab"
     },
     {
       "id": "schichtleiter-zentrallager",
       "funktion": "Schichtleitung Zentrallager (vor Ort in der Brandnacht)",
       "group": "logistik",
-      "beschreibung": "Du warst in der Brandnacht vor Ort und kennst die Lage im Lager aus erster Hand — Zustand des Gebäudes, Verletzte, was sich noch retten lässt.",
+      "beschreibung": "Du leitest die Nachtschicht im Zentrallager auf demselben Gelände. In der Brandnacht bist du vor Ort: Evakuierung, Sammelplatz, Zählung der Leute.",
       "ebene": "eingang"
     },
     {
-      "id": "leiter-it",
-      "funktion": "IT-Leitung (Kassensysteme & Warenwirtschaft)",
-      "group": "it",
-      "beschreibung": "Du verantwortest Kassensysteme und Warenwirtschaft. Nach dem Serverausfall musst du entscheiden, wie Filialen und Online-Shop übergangsweise arbeiten können.",
-      "ebene": "krisenstab"
-    },
-    {
       "id": "leiter-einkauf",
-      "funktion": "Leitung Einkauf & Lieferantenmanagement",
+      "funktion": "Leitung Einkauf und Dienstleistersteuerung",
       "group": "einkauf",
-      "beschreibung": "Du verantwortest Lieferanten und Beschaffung. Du musst kurzfristig Ersatzlieferungen organisieren und entscheiden, wo sich Mehrkosten lohnen.",
+      "beschreibung": "Du verantwortest Lieferanten und Dienstleister – in dieser Woche vor allem Ersatzhardware, Sanierer und den Anbieter des Ausweich-Racks. Du verhandelst Lieferzeiten, Preise und Verträge.",
       "ebene": "krisenstab"
     },
     {
-      "id": "leiterin-personal",
-      "funktion": "Personalleitung",
-      "group": "personal",
-      "beschreibung": "Du verantwortest alles rund um die Mitarbeitenden, insbesondere den verletzten Kollegen aus der Nachtschicht und seine Familie, sowie die Stimmung im Team.",
-      "ebene": "verteilung"
-    },
-    {
-      "id": "leiter-arbeitssicherheit",
-      "funktion": "Leitung Arbeitssicherheit & Werkschutz",
-      "group": "arbeitssicherheit",
-      "beschreibung": "Du verantwortest Arbeitssicherheit und Werkschutz. Die Brandursache und mögliche Versäumnisse bei der Wartung sind dein heikelstes Thema.",
+      "id": "leiter-finanzen-cfo",
+      "funktion": "Leitung Finanzen und Versicherung (CFO)",
+      "group": "finanzen",
+      "beschreibung": "Du verantwortest Finanzen, Versicherungen und die Verträge mit den Partnermärkten. Du musst früh einschätzen, was die Krise kostet, was die Versicherung wahrscheinlich trägt und was Waterkant selbst schultern muss.",
       "ebene": "krisenstab"
     },
     {
       "id": "regionalleiterin-filialen-nord",
       "funktion": "Regionalleitung Filialen Nord",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erste mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren.",
+      "beschreibung": "Du verantwortest sieben Filialen. Du erfährst als Erste, wie Kundschaft und Personal auf Kassen im Offline-Betrieb und fehlende Aktionspreise reagieren.",
       "ebene": "eingang"
     },
     {
       "id": "regionalleiter-filialen-sued",
       "funktion": "Regionalleitung Filialen Süd",
       "group": "vertrieb",
-      "beschreibung": "Du verantwortest die Filialen in deiner Region. Du bekommst als Erster mit, wie Kundschaft und Personal vor Ort auf die Ausfälle reagieren.",
+      "beschreibung": "Du verantwortest sieben Filialen. Du erfährst als Erster, wie Kundschaft und Personal auf Kassen im Offline-Betrieb und fehlende Aktionspreise reagieren.",
+      "ebene": "eingang"
+    },
+    {
+      "id": "partnerbetreuung",
+      "funktion": "Partnerbetreuung Verbund (Kundenmanagement IT-Service)",
+      "group": "vertrieb",
+      "beschreibung": "Du betreust die neun selbständigen Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Warenwirtschaft als Dienstleistung betreibt. Für sie bist du die erste Anlaufstelle – und du kennst den Servicevertrag.",
       "ebene": "eingang"
     },
     {
       "id": "online-shop-leitung",
-      "funktion": "Leitung Online-Shop & E-Commerce",
+      "funktion": "Leitung Online-Shop und Gewerbekundenportal",
       "group": "e-commerce",
-      "beschreibung": "Du verantwortest den Online-Shop. Falsche Lagerbestände und stornierte Bestellungen sind dein unmittelbares Problem.",
+      "beschreibung": "Du verantwortest den Online-Shop (Oberfläche beim externen Hoster, Bestände aus der Warenwirtschaft) und das Bestellportal für Gewerbekunden.",
       "ebene": "eingang"
-    },
-    {
-      "id": "leiter-finanzen-cfo",
-      "funktion": "Leitung Finanzen & Versicherung (CFO)",
-      "group": "finanzen",
-      "beschreibung": "Du verantwortest Finanzen und Versicherung. Du musst früh einschätzen, was die Versicherung deckt und wo das Unternehmen selbst einspringen muss.",
-      "ebene": "krisenstab"
     },
     {
       "id": "leiterin-kommunikation-pr",
-      "funktion": "Leitung Unternehmenskommunikation & Marketing",
+      "funktion": "Leitung Unternehmenskommunikation und Marketing",
       "group": "kommunikation",
-      "beschreibung": "Du verantwortest die externe Kommunikation. Presse, soziale Medien und am Ende die Pressekonferenz laufen über deinen Tisch.",
+      "beschreibung": "Du verantwortest Presse, soziale Medien und den Saisonprospekt. Was nach außen gesagt wird, läuft über deinen Tisch – auch wenn die Fakten noch unsicher sind.",
       "ebene": "verteilung"
     },
     {
-      "group": "service",
+      "id": "leiterin-personal",
+      "funktion": "Personalleitung",
+      "group": "personal",
+      "beschreibung": "Du verantwortest alles rund um die Beschäftigten: Angehörige in der Brandnacht, Arbeitszeiten im Dauereinsatz, Information der Belegschaft.",
+      "ebene": "verteilung"
+    },
+    {
       "id": "it-support-filialen",
-      "funktion": "IT-Support (Filialen & Kassen)",
-      "beschreibung": "Du bist die Hotline für 14 Filialen: Kassen im Offline-Modus, fehlende Preise, Scanner, Drucker. Du bündelst die Meldungen der Filialen, gibst dem Krisenstab ein klares Lagebild und verteilst dessen Anweisungen an alle Filialen gleichzeitig.",
+      "funktion": "IT-Support Filialen und Kassen",
+      "group": "service",
+      "beschreibung": "Du bist die Hotline für 14 Filialen und neun Partnermärkte: Kassen im Offline-Betrieb, Bondrucker, Kartenzahlung. Du bündelst die Meldungen und gibst Anweisungen des Krisenstabs zurück.",
       "ebene": "eingang"
     },
     {
-      "group": "service",
       "id": "kundenservice-hotline",
-      "funktion": "Kundenservice-Hotline / Callcenter",
-      "beschreibung": "Du nimmst Anrufe, Mails und Chatnachrichten von Kundinnen und Kunden entgegen: Lieferungen, Online-Bestellungen, Sorgen wegen Rauch und Löschwasser. Du brauchst eine Sprachregelung vom Krisenstab und meldest zurück, was draußen ankommt.",
+      "funktion": "Kundenservice-Hotline",
+      "group": "service",
+      "beschreibung": "Du nimmst Anrufe, Mails und Chats von Kundinnen und Kunden entgegen: Prospektpreise, Online-Bestellungen, Abholungen. Ohne Sprachregelung stehst du allein da.",
       "ebene": "eingang"
     },
     {
       "id": "notfallmanagement-bcm",
       "funktion": "Notfallmanagement / BCM-Koordination",
       "group": "krisenstab-support",
-      "beschreibung": "Du koordinierst den Krisenstab organisatorisch im Hintergrund: Fristen, Behördenanfragen, Eskalationswege. Ohne feste Sprechzeit, aber wichtig, damit nichts untergeht.",
+      "beschreibung": "Du koordinierst den Krisenstab organisatorisch: Notfallhandbuch, Fristen, Meldewege, Lagebesprechungen. Ohne feste Sprechzeit, aber wichtig für die Struktur.",
       "ebene": "krisenstab"
     },
     {
       "id": "assistenz-gf-dokumentation",
-      "funktion": "Assistenz der Geschäftsführung / Lage & Dokumentation",
+      "funktion": "Assistenz der Geschäftsführung / Lage und Dokumentation",
       "group": "krisenstab-support",
-      "beschreibung": "Du dokumentierst die Entscheidungen des Krisenstabs für die spätere Nachbereitung. Ohne feste Sprechzeit, aber wichtig fürs Debriefing.",
+      "beschreibung": "Du dokumentierst Entscheidungen, Zeitpunkte und Begründungen – für Versicherer, Sachverständige und die Nachbereitung. Ohne feste Sprechzeit.",
       "ebene": "krisenstab"
     }
   ],
   "moderationsleitfaden": {
-    "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und reparieren keine Brandschäden. Wir erleben gemeinsam die schwierigsten 72 Stunden in der Geschichte der Waterkant Baumärkte GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Die Übung umfasst 72 Stunden Unternehmenskrise, die wir heute in verdichteter Form durchlaufen. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen.",
-    "eroeffnungstext": "Montag, 18 Uhr. In den 14 Filialen der Waterkant Baumärkte GmbH laufen die letzten Vorbereitungen für den wichtigsten Tag des Jahres: Morgen startet die Frühjahrssaison. Die Gartencenter sind voll, die Werbung läuft, das Zentrallager ist bis unters Dach gefüllt. Waterkant ist ein gesunder Mittelständler: 850 Mitarbeitende, 240 Mio. Euro Umsatz, Baustoffe, Garten- und Heimwerkerbedarf. Heute erleben wir 72 Stunden Unternehmenskrise in verdichteter Form.",
+    "begruessung": "Guten Morgen zusammen. Heute löschen wir kein Feuer und schrauben an keinem Server. Wir erleben gemeinsam die schwierigste Woche in der Geschichte der Waterkant Baumärkte GmbH. Die meisten von Ihnen vertreten eine Funktion im Unternehmen, alle anderen beobachten mit kritischem Blick. Sie sind nicht Zuschauer. Sie sind verantwortlich. Wir durchlaufen sieben Tage Unternehmenskrise in verdichteter Form. Es gibt keine richtigen oder falschen Antworten. Es gibt nur Entscheidungen und deren Auswirkungen. Hinweis: Alle Alarm- und Durchsagetöne in dieser Übung sind Übungseinspielungen.",
+    "eroeffnungstext": "Montag, 18 Uhr. In den 14 Filialen der Waterkant Baumärkte GmbH laufen die letzten Vorbereitungen für den wichtigsten Tag des Jahres: Morgen startet die Frühjahrssaison, der Prospekt mit den Aktionspreisen ist verteilt. Im eigenen Rechenzentrum der Zentrale laufen Kassen, Preise und Warenwirtschaft – für die eigenen Filialen und für neun Partnermärkte im Einkaufsverbund. Waterkant ist ein gesunder Mittelständler: 850 Beschäftigte, 240 Mio. Euro Umsatz. Heute erleben wir sieben Tage Unternehmenskrise in verdichteter Form.",
     "spielregeln": [
       "Alle vertreten ausschließlich ihren eigenen Verantwortungsbereich.",
       "Jede Lagekarte enthält neue Informationen.",
@@ -256,13 +325,14 @@
     "moderationsregel": "Nicht diskutieren lassen. Nicht in technische oder bauliche Details abgleiten lassen. Bei zu tiefem Einstieg: 'Das ist wichtig. Für diese Übung reicht die Aussage: Was bedeutet das für das Unternehmen?' Danach nächste Person.",
     "debriefingFragen": [
       "Wann wart ihr am stärksten unter Druck?",
-      "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das entscheiden dürfen?",
-      "Wie kamen die Meldungen von IT-Support, Hotline und Filialen beim Krisenstab an – und wie kamen Anweisungen und Sprachregelung zu ihnen zurück?",
-      "Welche Information hat gefehlt?",
-      "Wer hätte früher eingebunden werden müssen?",
-      "Welche BCM-Maßnahme hätte geholfen?",
-      "Welche Person war kritisch?",
-      "Wo waren Single Points of Failure?"
+      "Ab welcher Meldung hättet ihr den Krisenstab einberufen – und wer hätte das in der Nacht entscheiden dürfen?",
+      "Wann stand der Schutz von Menschen gegen Daten, Umsatz oder Tempo – und wie habt ihr entschieden?",
+      "Wie kamen Meldungen aus Filialen, Partnermärkten und Hotline beim Krisenstab an – und wie kamen Anweisungen zurück?",
+      "Welche eurer Entscheidungen hat den weiteren Verlauf verändert – und wie würdet ihr mit dem heutigen Wissen entscheiden?",
+      "Welche Zusage an Partner oder Kunden war am riskantesten?",
+      "Wo waren Single Points of Failure – Technik, Wissen, Personen?",
+      "Welche Kosten trägt die Versicherung wahrscheinlich nicht – und was bedeutet das für die Liquidität?",
+      "Welche drei Verbesserungen setzen wir um – wer ist verantwortlich, mit welcher Priorität, bis wann?"
     ],
     "abschlussfragenVorDebrief": [
       "Worüber haben wir am meisten diskutiert?",
@@ -270,7 +340,7 @@
       "Welche Entscheidung fiel besonders schwer?",
       "Welche BCM-Maßnahme hätte uns geholfen?"
     ],
-    "highlightHinweis": "Die stärkste Szene der gesamten Übung ist vermutlich nicht der Brand selbst, sondern der Moment (Lagekarte „Pressekonferenz“), in dem die Geschäftsführung innerhalb einer Stunde live vor die Kamera muss, während im Hintergrund – je nach besetzten Rollen – vertrauliche Hinweise zu Brandschutzmängeln und zur Versicherungs-Deckungslücke kursieren.",
+    "highlightHinweis": "Die stärksten Szenen sind nicht der Brand, sondern die Entscheidungen danach: Darf jemand für eine kleinere Datenlücke in einen kontaminierten Raum („Den Backup-Server bergen?“) – und wer kassiert zuerst, die eigenen Filialen oder die Partner mit Vertrag („Wer kassiert zuerst?“).",
     "idleMedia": {
       "type": "image",
       "src": "/media/waterkant/idle-ruhe-vor-dem-sturm.png"
@@ -281,789 +351,1240 @@
     {
       "id": "LK01",
       "nr": 1,
-      "simZeit": "Dienstag 03:10 Uhr",
-      "titel": "Feueralarm",
-      "minuteOffset": 9,
-      "diskussionMinuten": 5,
-      "text": "Die Nachtschicht im Zentrallager meldet eine Rauchentwicklung im Bereich der Gefahrstoff- und Farbenlagerung. Die Feuerwehr ist alarmiert und auf dem Weg. Ein Mitarbeiter der Nachtschicht wird mit Verdacht auf Rauchgasvergiftung ins Krankenhaus gebracht.",
-      "kriseninfo": "1 Verletzter · Feuerwehr: Eintreffen in ca. 8 Minuten",
+      "simZeit": "Montag 22:40 Uhr",
+      "titel": "USV meldet Batteriewarnung",
+      "minuteOffset": 0,
+      "diskussionMinuten": 2,
+      "akt": "vorboten",
+      "prioritaet": 2,
+      "text": "Die Gebäudeleittechnik meldet für die USV-Anlage im Rechenzentrum: „Batterietemperatur Modul 3 erhöht“. Der Sensor gilt als launisch, die Meldung kam in den letzten Wochen schon dreimal. Die Rufbereitschaft der IT quittiert die Meldung per App.",
       "aufgabe": [
-        "Welche Auswirkungen hat dies auf Ihren Bereich?",
-        "Welche Sofortmaßnahmen leiten Sie ein?",
-        "Welche Entscheidungen benötigt der Krisenstab?"
+        "Was tun Sie mit einer Meldung, die schon oft falsch war?",
+        "Wer müsste davon wissen – IT, Gebäudetechnik oder beide?"
       ],
-      "moderatorHinweis": "Jetzt kommt der Knall: Die Vorboten (Störmeldung, Geruch, Lüftung) hingen zusammen. Kurz wirken lassen, dann Grundton der Übung setzen.",
+      "zustaendig": [
+        "rz-betrieb",
+        "facility-management",
+        "leiter-it"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk01-feueralarm.png",
-        "caption": "Feueralarm im Zentrallager."
-      },
-      "prioritaet": 1,
-      "zustaendig": [
-        "leiter-arbeitssicherheit",
-        "schichtleiter-zentrallager",
-        "geschaeftsfuehrer-ceo"
-      ],
-      "akt": "ausbruch"
+        "src": "/media/waterkant/lk01-usv-warnung.png",
+        "caption": "Gebäudeleittechnik, Montag 22:40 Uhr."
+      }
     },
     {
       "id": "LK02",
       "nr": 2,
-      "simZeit": "Dienstag 03:45 Uhr",
-      "titel": "Großbrand",
-      "minuteOffset": 14,
-      "diskussionMinuten": 4,
-      "text": "Die Feuerwehr meldet: Das Chemikalien- und Farbenlager ist explosionsartig in Brand geraten. Rund ein Drittel des Zentrallagers gilt als vollständig zerstört. Ein Sicherheitsradius von 300 Metern wurde eingerichtet.",
-      "kriseninfo": "Geschätzter Lagerverlust: ca. 30 % der Bestände",
+      "simZeit": "Dienstag 02:35 Uhr",
+      "titel": "Geruch im Technikflur",
+      "minuteOffset": 3,
+      "diskussionMinuten": 2,
+      "akt": "vorboten",
+      "prioritaet": 2,
+      "text": "Der Wachdienst meldet bei seinem Rundgang einen Geruch nach verschmortem Kunststoff im Technikflur des Verwaltungsgebäudes, nahe dem USV-Raum. Sichtbar ist nichts, die Brandmeldeanlage ist ruhig. Der Wachmann ruft die Gebäudetechnik-Bereitschaft an.",
       "aufgabe": [
-        "Welche Folgen erwarten Sie für Ihren Bereich?",
-        "Welche Kunden/Filialen sind betroffen?",
-        "Welche Prioritäten setzen Sie?"
+        "Wer entscheidet um 02:35 Uhr, ob das ein Notfall ist?",
+        "Würden Sie jemanden wecken – und wen?"
       ],
-      "moderatorHinweis": "Das Bild erscheint automatisch auf der Bühne – kurz darauf hinweisen.",
+      "zustaendig": [
+        "facility-management",
+        "leiter-arbeitssicherheit",
+        "rz-betrieb"
+      ],
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk02-lagerbrand.png",
-        "caption": "Überwachungskamera-Aufnahme aus dem Zentrallager."
-      },
-      "prioritaet": 1,
-      "zustaendig": [
-        "leiterin-logistik-zentrallager",
-        "leiter-arbeitssicherheit",
-        "geschaeftsfuehrer-ceo"
-      ],
-      "akt": "ausbruch"
+        "src": "/media/waterkant/lk02-geruch-technikflur.png",
+        "caption": "Rundgang des Wachdienstes, Dienstag 02:35 Uhr."
+      }
     },
     {
       "id": "LK03",
       "nr": 3,
-      "simZeit": "Dienstag 06:00 Uhr",
-      "titel": "Serverraum betroffen",
-      "minuteOffset": 20,
-      "diskussionMinuten": 4,
-      "text": "Die IT meldet: Der Serverraum im Zentrallager lag im betroffenen Gebäudeteil. Das Warenwirtschaftssystem und die zentrale Kassenanbindung sind vollständig ausgefallen. Keine Filiale kann aktuell Bestände oder Preise online abgleichen.",
-      "kriseninfo": "Betroffen: Warenwirtschaft, Kassenanbindung, Online-Shop-Lagerbestand",
+      "simZeit": "Dienstag 03:02 Uhr",
+      "titel": "Serverraum wird warm",
+      "minuteOffset": 6,
+      "diskussionMinuten": 2,
+      "akt": "vorboten",
+      "prioritaet": 1,
+      "text": "Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C und weiter steigend. Seit 03:00 Uhr läuft die nächtliche Übertragung der Aktionspreise für den Saisonstart an die Filialkassen; gleichzeitig laden die Partnermärkte ihre Tagesabschlüsse hoch. Die Rufbereitschaft ruft die IT-Leitung an.",
       "aufgabe": [
-        "Wie wirkt sich das auf den Tagesbetrieb aus?",
-        "Welche Übergangslösung ist möglich?",
-        "Was braucht die IT vom Krisenstab?"
+        "Herunterfahren oder weiterlaufen lassen – was riskieren Sie jeweils?",
+        "Wer darf nachts entscheiden, Systeme abzuschalten, die 23 Märkte betreffen?"
       ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk03-serverraum-betroffen.png",
-        "caption": "Warenwirtschaft und Kassenanbindung sind ausgefallen."
-      },
-      "prioritaet": 2,
       "zustaendig": [
         "leiter-it",
-        "online-shop-leitung",
-        "it-support-filialen"
+        "rz-betrieb",
+        "facility-management"
       ],
-      "akt": "ausbruch"
+      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen. Hier fällt die erste Entscheidung mit Folgen. Kurz halten: Die Frage ist echt, beide Antworten sind vertretbar.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk03-serverraum-warm.png",
+        "caption": "Klimaüberwachung Serverraum, Dienstag 03:02 Uhr."
+      },
+      "sound": {
+        "src": "/media/waterkant/lk03-klimaalarm.mp3",
+        "loop": false,
+        "volume": 0.6
+      }
     },
     {
       "id": "LK04",
       "nr": 4,
-      "simZeit": "Dienstag 07:00 Uhr",
-      "titel": "Filialen öffnen trotzdem",
-      "minuteOffset": 25,
+      "simZeit": "Dienstag 03:10 Uhr",
+      "titel": "Brandalarm im Rechenzentrum",
+      "minuteOffset": 9,
       "diskussionMinuten": 4,
-      "text": "Die ersten Filialen öffnen planmäßig. Mitarbeitende vor Ort sind verunsichert: Kassen laufen nur eingeschränkt im Offline-Modus, Preisauskünfte sind teils nicht möglich. Erste Kunden beschweren sich.",
-      "kriseninfo": "14 Filialen betroffen, davon 6 bereits geöffnet",
+      "akt": "ausbruch",
+      "prioritaet": 1,
+      "text": "Die Brandmeldeanlage löst aus: Rauch im USV-Raum neben dem Serverraum. Im Serverraum wird automatisch die Gaslöschanlage ausgelöst, der Raum wird mit Löschgas geflutet. Das Verwaltungsgebäude wird geräumt, die Nachtschicht im angrenzenden Zentrallager geht vorsorglich zum Sammelplatz. Die Feuerwehr ist alarmiert.",
+      "kriseninfo": "Brandort: USV-Raum · Gaslöschung im Serverraum ausgelöst · Gebäude geräumt",
       "aufgabe": [
-        "Was kommunizieren Sie an die Filialleitungen?",
-        "Wie sichern Sie den Kassenbetrieb ab?",
-        "Wer informiert die Mitarbeitenden vor Ort?",
-        "Welche einheitliche Anweisung bekommen alle 14 Filialen – und wer gibt sie raus?"
+        "Wer muss jetzt sofort informiert werden – in welcher Reihenfolge?",
+        "Wer übernimmt bis zum Eintreffen der Feuerwehr die Führung vor Ort?",
+        "Wann und wie wird der Krisenstab einberufen?"
       ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk04-filialen-oeffnen-trotzdem.png",
-        "caption": "Filialen öffnen trotz eingeschränktem Kassenbetrieb."
-      },
-      "prioritaet": 2,
-      "sound": {
-        "src": "/media/waterkant/lk04-unruhe-kasse.mp3",
-        "loop": false,
-        "volume": 0.8
-      },
-      "zustaendig": [
-        "regionalleiterin-filialen-nord",
-        "regionalleiter-filialen-sued",
-        "leiter-it",
-        "it-support-filialen",
-        "kundenservice-hotline"
-      ],
-      "akt": "eskalation"
-    },
-    {
-      "id": "LK13",
-      "nr": 5,
-      "simZeit": "Dienstag 07:45 Uhr",
-      "titel": "Störfall-Behörde",
-      "minuteOffset": 28,
-      "diskussionMinuten": 4,
-      "text": "Die Gewerbeaufsicht meldet sich als zuständige Störfall-Behörde: Binnen 48 Stunden müssen der aktuelle Sicherheitsbericht und der betriebliche Alarm- und Gefahrenabwehrplan nach der Störfall-Verordnung vorgelegt werden. Zusätzlich ist eine Information der Nachbarschaft vorgeschrieben – die bisher nicht erfolgt ist.",
-      "kriseninfo": "Frist: 48 Stunden · Nachbarschaftsinformation bislang nicht erfolgt",
-      "aufgabe": [
-        "Wer stellt die geforderten Unterlagen zusammen?",
-        "Wie informieren Sie jetzt noch die Nachbarschaft?",
-        "Welche Konsequenzen drohen bei Fristversäumnis?"
-      ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk13-stoerfall-behoerde.png",
-        "caption": "Die Gewerbeaufsicht fordert Sicherheitsbericht und Gefahrenabwehrplan."
-      },
-      "prioritaet": 2,
       "zustaendig": [
         "leiter-arbeitssicherheit",
-        "notfallmanagement-bcm",
-        "leiterin-kommunikation-pr"
+        "schichtleiter-zentrallager",
+        "facility-management",
+        "geschaeftsfuehrer-ceo"
       ],
-      "akt": "eskalation"
+      "moderatorHinweis": "Jetzt ist es ernst: Die Vorboten hingen zusammen. Die Einspielung ist ausdrücklich als Übung gekennzeichnet und kurz – danach Ruhe einkehren lassen. Personenschutz vor Technik: Wer fragt zuerst nach den Menschen?",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk04-brandalarm.png",
+        "caption": "Brandmeldezentrale, Dienstag 03:10 Uhr."
+      },
+      "sound": {
+        "src": "/media/waterkant/lk04-loeschanlage-durchsage.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "uebungshinweis": true
+      }
     },
     {
       "id": "LK05",
-      "nr": 6,
-      "simZeit": "Dienstag 08:30 Uhr",
-      "titel": "Rauch über der Stadt",
-      "minuteOffset": 31,
+      "nr": 5,
+      "simZeit": "Dienstag 03:40 Uhr",
+      "titel": "Feuerwehr im Einsatz",
+      "minuteOffset": 13,
       "diskussionMinuten": 4,
-      "text": "Die Rauchwolke über dem Zentrallager ist kilometerweit sichtbar. Anwohner posten Fotos und Videos in sozialen Netzwerken. Erste Spekulationen über austretende Gefahrstoffe verbreiten sich.",
-      "kriseninfo": "Mehrere tausend Social-Media-Interaktionen in 30 Minuten",
+      "akt": "ausbruch",
+      "prioritaet": 2,
+      "text": "Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege der IT-Rufbereitschaft war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.",
+      "kriseninfo": "Strom im Verwaltungsgebäude abgeschaltet · 1 Person am Sammelplatz nicht gemeldet",
       "aufgabe": [
-        "Wer beobachtet die Social-Media-Lage?",
-        "Reagieren Sie öffentlich oder beobachten Sie zunächst?",
-        "Welche Fakten können Sie bereits bestätigen?",
-        "Welche Auskunft gibt die Hotline Anwohnerinnen und Anwohnern?"
+        "Wer spricht mit der Einsatzleitung – und mit welchen Informationen?",
+        "Wie klären Sie, ob noch jemand im Gebäude ist?",
+        "Wer kümmert sich um Angehörige?"
       ],
-      "moderatorHinweis": "Der Social-Media-Beitrag erscheint automatisch auf der Bühne – kurz darauf hinweisen.",
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "facility-management",
+        "schichtleiter-zentrallager",
+        "leiterin-personal"
+      ],
+      "sprechertext": "Einsatzleitung Feuerwehr an Waterkant. Wer ist bei Ihnen verantwortlich? Ich brauche sofort drei Dinge: Ist noch jemand im Gebäude? Wo genau liegt der Batterieraum, und was für Batterien sind das? Und wer kann mir sagen, was hinter der Tür mit der Löschanlage ist?",
+      "gespraech": {
+        "nachfragen": [
+          "„Wie viele Personen waren heute Nacht im Gebäude – haben Sie eine Liste?“",
+          "„Lithium-Ionen oder Blei? Wie groß ist die Anlage?“ (Wer am Tisch weiß das?)",
+          "„Ihr Kollege mit dem Auto auf dem Hof – wo könnte er sein? Hat er ein Telefon dabei?“"
+        ],
+        "abschluss": "„Verstanden. Niemand betritt das Gebäude ohne meine Freigabe – auch nicht Ihre IT. Ich melde mich, wenn der Brand aus ist.“ Danach Funkruf beenden.",
+        "gut": "Ein benannter Ansprechpartner mit Gebäudekenntnis, eine Personenliste, klare Aussage zu Batterieart und Löschanlage; Angehörige werden erst informiert, wenn Fakten vorliegen.",
+        "schwach": "Mehrere Leute reden gleichzeitig mit der Feuerwehr, niemand weiß, wer im Gebäude war, oder die IT will „schnell die Server retten“."
+      },
+      "moderatorHinweis": "Die Moderation spricht nach dem Funksignal die Einsatzleitung der Feuerwehr (Sprechertext) und bleibt in der Rolle. Die vermisste Person ist wohlauf (vertrauliche Karte an die Personalleitung kurz danach) – bis dahin die Unsicherheit wirken lassen.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk05-social-post.png",
-        "caption": "Öffentlicher Beitrag einer Anwohnerin, 12 Minuten alt."
+        "src": "/media/waterkant/lk05-feuerwehr.png",
+        "caption": "Einsatzstelle Hauptstandort, Dienstag 03:40 Uhr."
       },
-      "prioritaet": 2,
-      "zustaendig": [
-        "leiterin-kommunikation-pr",
-        "geschaeftsfuehrer-ceo",
-        "kundenservice-hotline"
-      ],
-      "akt": "eskalation"
+      "sound": {
+        "src": "/media/waterkant/funk-ruf.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      }
     },
     {
       "id": "LK06",
-      "nr": 7,
-      "simZeit": "Dienstag 10:00 Uhr",
-      "titel": "Pressekontakt",
-      "minuteOffset": 38,
-      "diskussionMinuten": 5,
-      "text": "Die Lokalzeitung und der Regionalsender Nordkanal fragen bei der Unternehmenskommunikation an: Gab es Verletzte? Sind Gefahrstoffe ausgetreten? Wie sicher war das Lager?",
-      "kriseninfo": "Antwortfrist: 90 Minuten",
+      "nr": 6,
+      "simZeit": "Dienstag 05:30 Uhr",
+      "titel": "Lagebild nach dem Löschen",
+      "minuteOffset": 17,
+      "diskussionMinuten": 4,
+      "akt": "ausbruch",
+      "prioritaet": 1,
+      "text": "Der Brand im USV-Raum ist gelöscht, alle Personen sind wohlauf. Der Serverraum selbst hat nicht gebrannt, ist aber verraucht; Löschgas und Rauch sind abgezogen. Das Gebäude bleibt bis zur Prüfung durch Sachverständige gesperrt. Im Rechenzentrum ist alles aus: Warenwirtschaft, Kassenzentrale, Lagerverwaltung, Gewerbekundenportal, Telefonanlage der Zentrale.",
+      "kriseninfo": "Rechenzentrum vollständig außer Betrieb · Gebäude gesperrt · Filialkassen offline-fähig ca. 72 Stunden (bis Freitag ca. 03:00 Uhr)",
       "aufgabe": [
-        "Wer spricht mit der Presse?",
-        "Was wird kommuniziert, was bewusst nicht?",
-        "Wie gehen Sie mit Spekulationen zu Gefahrstoffen um?"
+        "Welche Geschäftsprozesse stehen jetzt – und welche laufen noch?",
+        "Was ist bis zur Filialöffnung um 08:00 Uhr zu entscheiden?",
+        "Wer übernimmt welche Aufgabe im Krisenstab?"
       ],
-      "moderatorHinweis": "Jetzt aktiv die Nordkanal-Berichterstattung spielen.",
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-it",
+        "facility-management",
+        "notfallmanagement-bcm"
+      ],
+      "moderatorHinweis": "Ab hier arbeitet der Krisenstab. Auf Rollenklarheit achten: Wer leitet, wer protokolliert, wann ist die nächste Lagebesprechung? Die 72-Stunden-Grenze der Kassen ist der rote Faden der nächsten Tage.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk06-pressekontakt.png",
-        "caption": "Presseanfrage von Lokalzeitung und Nordkanal."
-      },
-      "prioritaet": 2,
-      "zustaendig": [
-        "leiterin-kommunikation-pr",
-        "geschaeftsfuehrer-ceo"
-      ],
-      "akt": "eskalation"
+        "src": "/media/waterkant/lk06-lagebild.png",
+        "caption": "Gesperrtes Verwaltungsgebäude, Dienstag 05:30 Uhr."
+      }
     },
     {
       "id": "LK07",
-      "nr": 8,
-      "simZeit": "Dienstag 12:00 Uhr",
-      "titel": "Großkunde storniert",
-      "minuteOffset": 46,
+      "nr": 7,
+      "simZeit": "Dienstag 06:30 Uhr",
+      "titel": "Was noch läuft – und was nicht",
+      "minuteOffset": 21,
       "diskussionMinuten": 4,
-      "text": "Ein großer Bau-Kunde storniert einen Großauftrag über Dämmstoffe und Baustahl wegen befürchteter Lieferverzögerungen. Weitere Gewerbekunden fragen nach Alternativen.",
-      "kriseninfo": "Auftragswert: ca. 180.000 €",
-      "aufgabe": [
-        "Wie reagieren Sie auf die Stornierung?",
-        "Welche Kunden priorisieren Sie?",
-        "Welche Ausweichlieferungen sind möglich?"
-      ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk07-grosskunde-storniert.png",
-        "caption": "Großkunde storniert einen Großauftrag."
-      },
-      "prioritaet": 3,
-      "zustaendig": [
-        "leiter-einkauf",
-        "leiterin-logistik-zentrallager",
-        "leiter-finanzen-cfo"
-      ],
-      "akt": "eskalation"
-    },
-    {
-      "id": "LK14",
-      "nr": 9,
-      "simZeit": "Dienstag 20:00 Uhr",
-      "titel": "Kontaminiertes Löschwasser",
-      "minuteOffset": 50,
-      "diskussionMinuten": 4,
-      "text": "Die Untere Wasserbehörde meldet: Kontaminiertes Löschwasser ist über die Kanalisation in einen angrenzenden Bach gelangt. Erste tote Fische werden gemeldet, ein Umweltverband schaltet sich ein.",
-      "kriseninfo": "Umweltbehörde vor Ort · Umweltverband kündigt Stellungnahme an",
-      "aufgabe": [
-        "Wie reagieren Sie auf die Umweltbehörde?",
-        "Wer übernimmt die Kommunikation mit dem Umweltverband?",
-        "Welche zusätzlichen Risiken entstehen dadurch?"
-      ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk14-loeschwasser.png",
-        "caption": "Kontaminiertes Löschwasser gelangt in einen angrenzenden Bach."
-      },
+      "akt": "ausbruch",
       "prioritaet": 2,
-      "zustaendig": [
-        "leiter-arbeitssicherheit",
-        "leiterin-kommunikation-pr",
-        "geschaeftsfuehrer-ceo"
+      "text": "Die IT sortiert: E-Mail und Chat laufen in der Cloud weiter, die Anmeldung an Geräten der Zentrale funktioniert aber nicht, weil die Anmeldedienste im Serverraum standen. Die Filialkassen arbeiten offline mit dem Preisstand von Montag; Kartenzahlung läuft direkt über den Zahlungsdienstleister. Der Online-Shop ist erreichbar, zeigt aber Bestände von Montagnacht. Die Zentrale ist telefonisch nicht erreichbar.",
+      "kriseninfo": "Cloud-Mail läuft · Telefon Zentrale tot · Kassen offline · Online-Shop mit veralteten Beständen",
+      "aufgabe": [
+        "Über welche Kanäle erreicht der Krisenstab jetzt Filialen, Partner und Beschäftigte?",
+        "Wo liegt Ihr Notfallhandbuch – und kommen Sie heran?",
+        "Welche Behelfslösung ist sicher genug, welche nicht?"
       ],
-      "akt": "eskalation"
+      "zustaendig": [
+        "leiter-it",
+        "informationssicherheit",
+        "it-support-filialen",
+        "notfallmanagement-bcm"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk07-was-laeuft.png",
+        "caption": "Übersicht der IT, Dienstag 06:30 Uhr."
+      }
     },
     {
       "id": "LK08",
-      "nr": 10,
-      "simZeit": "Mittwoch 06:00 Uhr",
-      "titel": "Online-Shop bricht ein",
-      "minuteOffset": 54,
+      "nr": 8,
+      "simZeit": "Dienstag 07:00 Uhr",
+      "titel": "Saisonstart ohne Aktionspreise",
+      "minuteOffset": 25,
       "diskussionMinuten": 4,
-      "text": "Der Online-Shop zeigt weiterhin falsche Lagerbestände. Über 200 Bestellungen können nicht ausgeliefert werden. Erste negative Bewertungen häufen sich.",
-      "kriseninfo": "237 betroffene Bestellungen · Bewertungsschnitt sinkt auf 2,1 Sterne",
+      "akt": "eskalation",
+      "prioritaet": 2,
+      "text": "Die Filialen bereiten den Saisonstart vor; der Prospekt mit Aktionspreisen ist seit Sonntag verteilt. An den Kassen sind die Aktionspreise nicht hinterlegt, Bestandsauskünfte sind nicht möglich. Filialleitungen fragen, ob sie überhaupt öffnen sollen und ob sie Prospektpreise von Hand eingeben dürfen.",
+      "kriseninfo": "Öffnung 08:00 Uhr · Aktionspreise nicht an den Kassen · keine Bestandsauskunft",
       "aufgabe": [
-        "Wie informieren Sie betroffene Kunden?",
-        "Pausieren Sie den Online-Shop?",
-        "Wie wirkt sich das auf das Markenimage aus?"
+        "Öffnen die Filialen – und mit welcher Anweisung?",
+        "Wie gehen Kassen mit Prospektpreisen um, einheitlich in allen 14 Filialen?",
+        "Wer gibt die Anweisung raus, und wie kommt sie an?"
       ],
-      "moderatorHinweis": null,
+      "zustaendig": [
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "it-support-filialen",
+        "leiterin-kommunikation-pr"
+      ],
+      "moderatorHinweis": "Kein IT-Thema mehr, sondern Geschäft: Saisonstart, Kundschaft, Personal vor Ort. Gut ist eine einheitliche, schriftlich verteilte Anweisung mit Ansprechpartner.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk08-online-shop-bricht-ein.png",
-        "caption": "Der Online-Shop zeigt falsche Lagerbestände."
-      },
-      "prioritaet": 3,
-      "zustaendig": [
-        "online-shop-leitung",
-        "leiter-it",
-        "leiterin-kommunikation-pr",
-        "kundenservice-hotline"
-      ],
-      "akt": "eskalation"
+        "src": "/media/waterkant/lk08-saisonstart.png",
+        "caption": "Filiale kurz vor der Öffnung, Dienstag 07:00 Uhr."
+      }
     },
     {
       "id": "LK09",
-      "nr": 11,
-      "simZeit": "Mittwoch 14:00 Uhr",
-      "titel": "Ersatzlager gefunden",
-      "minuteOffset": 64,
-      "diskussionMinuten": 3,
-      "text": "Ein befreundetes Logistikunternehmen stellt kurzfristig Lagerflächen zur Verfügung. Zusätzlich vereinbart der Einkauf mit den fünf wichtigsten Lieferanten testweise Direktbelieferungen einzelner Filialen unter Umgehung des Zentrallagers – genau das Modell, das andere Handelsketten nach vergleichbaren Lagerverlusten nutzen.",
-      "kriseninfo": "Zusätzliche Lagerkapazität: ca. 40 % des Bedarfs",
+      "nr": 9,
+      "simZeit": "Dienstag 08:30 Uhr",
+      "titel": "Die Partnermärkte rufen an",
+      "minuteOffset": 29,
+      "diskussionMinuten": 4,
+      "akt": "eskalation",
+      "prioritaet": 1,
+      "text": "Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Warenwirtschaft als Dienstleistung betreibt, stehen vor demselben Problem. Der Servicevertrag sieht ein Wiederherstellungsziel von 24 Stunden für Kassen- und Preisdienste vor. Die ersten Partner wollen wissen, wann es weitergeht – eine belastbare Prognose hat die IT noch nicht.",
+      "kriseninfo": "9 Partnermärkte betroffen · Wiederherstellungsziel laut Vertrag: 24 Stunden · Prognose offen",
       "aufgabe": [
-        "Welche Filialen werden zuerst beliefert?",
-        "Was braucht die Logistik jetzt vom Krisenstab?",
-        "Wie kommunizieren Sie den Fortschritt intern?"
+        "Was sagen Sie den Partnern – und wer sagt es?",
+        "Was ist eine ehrliche Prognose, wenn Sie selbst keine haben?",
+        "Welche Folgen hat das Überschreiten der 24 Stunden?"
       ],
-      "moderatorHinweis": "Positive Lagekarte, Entlastung im Raum spürbar machen.",
+      "zustaendig": [
+        "partnerbetreuung",
+        "geschaeftsfuehrer-ceo",
+        "leiter-it",
+        "leiter-finanzen-cfo"
+      ],
+      "sprechertext": "Guten Morgen, hier spricht der Inhaber eines Partnermarkts. Meine Kassen laufen offline, die Aktionspreise fehlen, und von Ihnen höre ich nichts außer Gerüchten über einen Brand. Laut Vertrag haben Sie 24 Stunden. Ich will heute wissen, wann meine Kassen wieder laufen – und was ich meinen Leuten sagen soll.",
+      "gespraech": {
+        "nachfragen": [
+          "„Heißt ‚wir arbeiten dran‘ heute Abend, morgen oder nächste Woche?“",
+          "„Bekomme ich dieselbe Priorität wie Ihre eigenen Märkte?“",
+          "„Wer ist ab jetzt mein Ansprechpartner, und wann melden Sie sich wieder?“"
+        ],
+        "abschluss": "„Gut, ich notiere: nächste Information um … von … Wenn ich bis dahin nichts höre, rufe ich den Verbundvorstand an.“ Danach auflegen.",
+        "gut": "Ehrliche Spanne statt Zusage, fester Update-Termin, benannter Ansprechpartner, keine Aussage zur Reihenfolge, die nicht entschieden ist.",
+        "schwach": "Ein fester Termin, den niemand halten kann, oder Ausweichen ohne nächsten Kontakt."
+      },
+      "moderatorHinweis": "Auf der Bühne klingelt das Telefon. Die Moderation spricht danach einen Partner (Sprechertext) und bleibt für Rückfragen in der Rolle. Danach fällt die Entscheidung, wann und wie alle Partner informiert werden.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk09-ersatzlager-gefunden.png",
-        "caption": "Ein Logistikpartner stellt Ersatzlagerflächen bereit."
+        "src": "/media/waterkant/lk09-partnermaerkte.png",
+        "caption": "Neun Partnermärkte hängen am Waterkant-Rechenzentrum."
       },
-      "prioritaet": 3,
-      "zustaendig": [
-        "leiterin-logistik-zentrallager",
-        "leiter-einkauf"
-      ],
-      "akt": "eskalation"
+      "sound": {
+        "src": "/media/waterkant/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      }
     },
     {
       "id": "LK10",
-      "nr": 12,
-      "simZeit": "Mittwoch 18:00 Uhr",
-      "titel": "Pressekonferenz",
-      "minuteOffset": 72,
-      "diskussionMinuten": 6,
-      "text": "Der Druck steigt: Nordkanal kündigt eine Sonderberichterstattung an. Die Geschäftsführung muss innerhalb der nächsten Stunde live Stellung beziehen – zu Ursache, Verletzten, Gefahrstoffen und zur Zukunft der Filialen.",
-      "kriseninfo": "Ankündigung: Sonderbericht um 19 Uhr",
+      "nr": 10,
+      "simZeit": "Dienstag 10:00 Uhr",
+      "titel": "Serverraum gesperrt",
+      "minuteOffset": 33,
+      "diskussionMinuten": 4,
+      "akt": "eskalation",
+      "prioritaet": 2,
+      "text": "Die Feuerwehr übergibt das Gebäude. Ein Sachverständiger gibt Büros und Flure frei, nicht aber USV-Raum und Serverraum: Auf allen Racks liegt ein Rußfilm, bei brennenden Lithium-Ionen-Batterien können ätzende Gase entstehen. Eine Messung läuft, das Ergebnis kommt frühestens Mittwochmorgen. Die Klimaanlage darf bis dahin nicht laufen.",
+      "kriseninfo": "Büros freigegeben · Serverraum und USV-Raum gesperrt · Messergebnis frühestens Mittwochmorgen",
       "aufgabe": [
-        "Wer tritt vor die Kamera?",
-        "Welche Botschaft hat oberste Priorität?",
-        "Wie gehen Sie mit unbeantworteten Fragen um?",
-        "Bekommen Hotline und Filialen die Botschaften der Pressekonferenz vorab?"
+        "Wer entscheidet, wann der Serverraum wieder betreten wird – und auf welcher Grundlage?",
+        "Was bedeutet der Rußfilm für die Hardware?",
+        "Wer hält Kontakt zu Sachverständigen und Sanierern?"
       ],
-      "moderatorHinweis": "JETZT WIRD ES SPANNEND: Sprich die Person mit der Rolle Geschäftsführung/Krisenstabsleitung direkt an (ist sie nicht besetzt: die ranghöchste anwesende Führungskraft): „In einer Stunde stehen Sie vor laufenden Kameras.“ Der ganze Raum muss liefern. Dies ist die stärkste Szene der Übung.",
+      "zustaendig": [
+        "facility-management",
+        "leiter-arbeitssicherheit",
+        "leiter-it",
+        "rz-betrieb"
+      ],
+      "moderatorHinweis": "Sekundärschäden ernst nehmen: Ruß plus Feuchtigkeit greift Elektronik an. Beobachten, ob der Tisch Freigabe (Sicherheit) und Wiederinbetriebnahme (Technik) auseinanderhält.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk10-nordkanal-ankuendigung.png",
-        "caption": "Nordkanal kündigt den Sonderbericht an."
-      },
-      "prioritaet": 1,
-      "zustaendig": [
-        "geschaeftsfuehrer-ceo",
-        "leiterin-kommunikation-pr"
-      ],
-      "akt": "hoehepunkt"
+        "src": "/media/waterkant/lk10-serverraum-gesperrt.png",
+        "caption": "Serverraum nach dem Brand, Dienstag 10:00 Uhr."
+      }
     },
     {
       "id": "LK11",
-      "nr": 13,
-      "simZeit": "Donnerstag 09:00 Uhr",
-      "titel": "Gutachter vor Ort",
-      "minuteOffset": 80,
+      "nr": 11,
+      "simZeit": "Dienstag 11:30 Uhr",
+      "titel": "Nordkanal fragt nach",
+      "minuteOffset": 37,
       "diskussionMinuten": 4,
-      "text": "Der Gutachter der Versicherung schätzt den Schaden auf ca. 18 Mio. Euro. Die Police sieht eine Karenzzeit von 10 Tagen vor (die trägt Waterkant selbst) und eine Haftzeit von 12 Monaten – der Gutachter bezweifelt, ob der Wiederaufbau rechtzeitig abgeschlossen werden kann.",
-      "kriseninfo": "Geschätzter Schaden: 18 Mio. € · Zweifel, ob der Wiederaufbau innerhalb der 12-Monats-Haftzeit gelingt",
-      "aufgabe": [
-        "Welche finanziellen Risiken ergeben sich?",
-        "Wie kommunizieren Sie das intern?",
-        "Welche Entscheidungen muss der Krisenstab treffen?"
-      ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk11-gutachter-vor-ort.png",
-        "caption": "Der Versicherungsgutachter schätzt den Schaden."
-      },
+      "akt": "eskalation",
       "prioritaet": 2,
-      "zustaendig": [
-        "leiter-finanzen-cfo",
-        "geschaeftsfuehrer-ceo"
-      ],
-      "akt": "folgen"
-    },
-    {
-      "id": "LK15",
-      "nr": 14,
-      "simZeit": "Donnerstag 11:00 Uhr",
-      "titel": "Ermittlungsverfahren",
-      "minuteOffset": 83,
-      "diskussionMinuten": 3,
-      "text": "Die Staatsanwaltschaft leitet ein Ermittlungsverfahren wegen des Verdachts der fahrlässigen Körperverletzung ein – wegen des verletzten Nachtschicht-Mitarbeiters. Die Geschäftsführung wird als Zeugin/Zeuge geladen.",
-      "kriseninfo": "Ermittlungsverfahren eröffnet · Geschäftsführung als Zeuge geladen",
+      "text": "Der Regionalsender Nordkanal ruft an: Auf Fotos stehen Feuerwehrfahrzeuge vor dem Verwaltungsgebäude, in sozialen Netzwerken ist von einem „Akkubrand mit giftigen Gasen“ die Rede. Gleichzeitig berichten Kundinnen und Kunden, dass die Prospektpreise an der Kasse nicht gelten.",
+      "kriseninfo": "Antwortfrist: bis 13:00 Uhr",
       "aufgabe": [
-        "Wie wirkt sich das auf die öffentliche Kommunikation aus?",
-        "Wer begleitet die Geschäftsführung rechtlich?",
-        "Welche internen Unterlagen sind jetzt besonders sensibel?"
+        "Wer spricht – und was ist gesichert?",
+        "Wie trennen Sie Brand, Gesundheitsfrage und Preisärger in der Kommunikation?",
+        "Welche Sprachregelung bekommen Filialen und Hotline?"
       ],
-      "moderatorHinweis": null,
-      "media": {
-        "type": "image",
-        "src": "/media/waterkant/lk15-ermittlungsverfahren.png",
-        "caption": "Die Staatsanwaltschaft eröffnet ein Ermittlungsverfahren."
-      },
-      "prioritaet": 2,
       "zustaendig": [
+        "leiterin-kommunikation-pr",
         "geschaeftsfuehrer-ceo",
-        "leiterin-personal",
-        "leiter-arbeitssicherheit"
+        "kundenservice-hotline"
       ],
-      "akt": "folgen"
+      "sprechertext": "Guten Tag, Redaktion Nordkanal. Bei Ihnen hat es heute Nacht gebrannt, im Netz ist von giftigen Gasen die Rede. Waren Menschen in Gefahr? Was ist mit Ihrer IT – stimmt es, dass Ihre Kassen nicht funktionieren? Und warum gelten Ihre Prospektpreise nicht? Wir senden um 13 Uhr.",
+      "gespraech": {
+        "nachfragen": [
+          "„Können Sie ausschließen, dass Anwohner gefährdet waren?“",
+          "„Wie lange werden Ihre Kunden mit falschen Preisen leben müssen?“",
+          "„Betrifft das auch andere Baumärkte, für die Sie die IT machen?“"
+        ],
+        "abschluss": "„Ich halte fest: … (Kernsatz des Tisches). Wenn sich etwas ändert, melden Sie sich bei mir.“ Lehnt der Tisch ab: „Dann senden wir: Das Unternehmen äußerte sich bis Redaktionsschluss nicht.“",
+        "gut": "Gesicherte Fakten (Brand im Technikraum, alle Personen wohlauf), keine Spekulation zu Gasen – Verweis auf Feuerwehr –, klare Aussage zu Prospektpreisen und Kulanz, ein Ansprechpartner.",
+        "schwach": "Spekulation über Ursache oder Gesundheitsfolgen, Preisärger kleinreden oder Partnermärkte nennen, bevor sie informiert sind."
+      },
+      "moderatorHinweis": "Auf der Bühne klingelt das Telefon, die Moderation spricht die Redaktion (Sprechertext) und bleibt in der Rolle.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk11-nordkanal.png",
+        "caption": "Presseanfrage von Nordkanal."
+      },
+      "sound": {
+        "src": "/media/waterkant/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      }
     },
     {
       "id": "LK12",
-      "nr": 15,
-      "simZeit": "Donnerstag 16:00 Uhr",
-      "titel": "Wiederanlauf",
-      "minuteOffset": 87,
-      "diskussionMinuten": 5,
-      "text": "Das Interims-Zentrallager auf den Flächen eines Logistikpartners nimmt den Betrieb auf. Die wichtigsten Filialen können wieder mit dem Kernsortiment beliefert werden. Die Geschäftsführung bereitet ein Abschlussstatement für Mitarbeitende und Öffentlichkeit vor.",
-      "kriseninfo": "Reduzierter Betrieb: ca. 60 % der üblichen Lieferkapazität",
+      "nr": 12,
+      "simZeit": "Dienstag 14:00 Uhr",
+      "titel": "Das Zentrallager steht",
+      "minuteOffset": 41,
+      "diskussionMinuten": 4,
+      "akt": "eskalation",
+      "prioritaet": 2,
+      "text": "Ohne Lagerverwaltung weiß im Zentrallager niemand verlässlich, wo welche Ware liegt. Die ausgedruckten Lagerplatzlisten sind von Freitag. Die Filialen bestellen für den Saisonstart per Telefon und Mail nach, Speditionen warten auf Ladung. Das Lagerpersonal schlägt vor, nach Erfahrung und Papierliste zu kommissionieren.",
+      "kriseninfo": "Lagerverwaltung aus · Lagerplatzlisten von Freitag · Speditionen warten",
       "aufgabe": [
-        "Was nehmen Sie aus den letzten 72 Stunden mit?",
-        "Was muss sich strukturell ändern?",
-        "Wie schließen Sie die Krise nach außen ab?",
-        "Wer informiert Filialen, Hotline und Belegschaft über den Wiederanlauf?"
+        "Kommissionieren auf Papier – ja, nein, für welche Artikel?",
+        "Welche Filialen und Warengruppen haben Vorrang?",
+        "Wie verhindern Sie, dass Papierbetrieb später nicht mehr nachzubuchen ist?"
       ],
-      "moderatorHinweis": "Letzte Lagekarte. Nicht mit Erleichterung enden lassen: Danach folgt der Abschluss (Nacharbeiten und Rechnung) – startet automatisch nach Ablauf der Zeit oder per Klick in der Moderation. Erst dann Debriefing.",
+      "zustaendig": [
+        "leiterin-logistik-zentrallager",
+        "schichtleiter-zentrallager",
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued"
+      ],
       "media": {
         "type": "image",
-        "src": "/media/waterkant/lk12-wiederanlauf.png",
-        "caption": "Das Interims-Zentrallager nimmt den Betrieb auf."
-      },
-      "prioritaet": 1,
-      "zustaendig": [
-        "geschaeftsfuehrer-ceo",
-        "leiterin-logistik-zentrallager",
-        "it-support-filialen",
-        "kundenservice-hotline"
+        "src": "/media/waterkant/lk12-zentrallager.png",
+        "caption": "Zentrallager ohne Lagerverwaltung, Dienstag 14:00 Uhr."
+      }
+    },
+    {
+      "id": "LK13",
+      "nr": 13,
+      "simZeit": "Dienstag 17:00 Uhr",
+      "titel": "Ersatz: Hardware oder Ausweich-Rack?",
+      "minuteOffset": 45,
+      "diskussionMinuten": 4,
+      "akt": "eskalation",
+      "prioritaet": 2,
+      "text": "Der Einkauf hat Angebote: Neue Server und Speichersysteme sind in zehn bis zwölf Arbeitstagen lieferbar, zwei Rahmen gegen Aufpreis in drei Tagen. Beim Colocation-Anbieter, bei dem Waterkant seine Sicherungskopien lagert, steht ein vorbereitetes Ausweich-Rack mit etwa 40 % der bisherigen Rechenleistung. Es ist für einen solchen Fall vertraglich vereinbart – vollständig geübt wurde der Umzug nie.",
+      "kriseninfo": "Ersatzhardware: 10–12 Arbeitstage · Ausweich-Rack: ca. 40 % Leistung, sofort nutzbar",
+      "aufgabe": [
+        "Was muss zuerst wieder laufen – und wo?",
+        "Welche Risiken hat ein nie geübter Umzug?",
+        "Was braucht die IT jetzt vom Krisenstab: Geld, Personal, Entscheidungen?"
       ],
-      "akt": "wiederanlauf"
+      "zustaendig": [
+        "leiter-it",
+        "leiter-einkauf",
+        "leiter-finanzen-cfo",
+        "rz-betrieb"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk13-ersatz.png",
+        "caption": "Zwei Wege zurück, Dienstag 17:00 Uhr."
+      }
+    },
+    {
+      "id": "LK14",
+      "nr": 14,
+      "simZeit": "Mittwoch 07:30 Uhr",
+      "titel": "Den Backup-Server bergen?",
+      "minuteOffset": 49,
+      "diskussionMinuten": 4,
+      "akt": "hoehepunkt",
+      "prioritaet": 1,
+      "text": "Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.",
+      "kriseninfo": "Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten",
+      "aufgabe": [
+        "Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?",
+        "Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?",
+        "Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?"
+      ],
+      "zustaendig": [
+        "leiter-arbeitssicherheit",
+        "leiter-it",
+        "facility-management",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "moderatorHinweis": "Personenschutz gegen Datenschutz im wörtlichen Sinn. Beide Wege sind vertretbar – bewertet wird, wie entschieden wird: Gefährdungsbeurteilung, Messwerte, Fachfirma, Freiwilligkeit, Dokumentation. Die eigene IT geht in keinem Fall hinein.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk14-bergen.png",
+        "caption": "Backup-Server im gesperrten Serverraum."
+      }
+    },
+    {
+      "id": "LK15",
+      "nr": 15,
+      "simZeit": "Mittwoch 10:00 Uhr",
+      "titel": "Wie weit geht der Ausweichbetrieb?",
+      "minuteOffset": 53,
+      "diskussionMinuten": 4,
+      "akt": "hoehepunkt",
+      "prioritaet": 1,
+      "text": "Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft passen in das Ausweich-Rack und könnten am Donnerstag laufen. Lagerverwaltung, Gewerbekundenportal und Online-Bestände passen nur nach einer Erweiterung, die der Anbieter binnen 48 Stunden liefern kann – mit zwölf Monaten Mindestlaufzeit. Ohne Erweiterung warten diese Systeme auf das eigene Rechenzentrum, laut Sanierer frühestens in drei Wochen.",
+      "kriseninfo": "Kassen- und Preisdienste: Donnerstag möglich · Rest: Erweiterung (48 h, 12 Monate Vertrag) oder ca. 3 Wochen warten",
+      "aufgabe": [
+        "Was ist Ihnen schneller Online-Handel und Lagerbetrieb wert?",
+        "Welche Risiken hat ein schneller, großer Umzug für ein müdes Team?",
+        "Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?"
+      ],
+      "zustaendig": [
+        "leiter-it",
+        "leiter-finanzen-cfo",
+        "geschaeftsfuehrer-ceo",
+        "online-shop-leitung",
+        "leiterin-logistik-zentrallager"
+      ],
+      "moderatorHinweis": "Keine Option ist kostenlos: Klein heißt drei Wochen ohne Online-Bestände und Lagerverwaltung, groß heißt Vertrag, Kosten und Fehlerrisiko. Den Tisch zu einer Begründung zwingen, nicht zur „richtigen“ Antwort.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk15-ausweich.png",
+        "caption": "Ausweich-Rack beim Colocation-Anbieter."
+      }
     },
     {
       "id": "LK16",
       "nr": 16,
-      "simZeit": "Montag 22:40 Uhr",
-      "titel": "Störmeldung Brandmeldeanlage",
-      "minuteOffset": 0,
-      "diskussionMinuten": 3,
-      "text": "Die Brandmeldezentrale im Zentrallager meldet eine Störung des Rauchmelders in Halle 3, Gefahrstoff- und Farbenlager. Der Melder ist seit Wochen als fehleranfällig bekannt, die Wartung ist beauftragt, aber noch nicht erfolgt. Die Nachtschicht quittiert die Meldung.",
+      "simZeit": "Mittwoch 13:00 Uhr",
+      "titel": "Ein Bauunternehmen will Vorrang",
+      "minuteOffset": 57,
+      "diskussionMinuten": 4,
+      "akt": "hoehepunkt",
+      "prioritaet": 2,
+      "text": "Der größte Gewerbekunde, ein regionales Bauunternehmen, kann seit Dienstag nicht über das Portal bestellen. Für zwei Baustellen braucht es bis Freitag Dämmstoff und Trockenbaumaterial. Der Einkaufsleiter verlangt eine verbindliche Lieferzusage und droht, die Rahmenvereinbarung zu kündigen.",
+      "kriseninfo": "Liefertermin Freitag · Rahmenvereinbarung in Gefahr · Portal außer Betrieb",
       "aufgabe": [
-        "Was tun Sie mit einer Meldung, die schon oft falsch war?",
-        "Wer muss davon wissen?"
+        "Was können Sie zusagen, ohne Lagerverwaltung und Portal?",
+        "Bekommt ein Großkunde Vorrang vor den Filialen?",
+        "Wer führt das Gespräch?"
       ],
-      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "zustaendig": [
+        "online-shop-leitung",
+        "leiterin-logistik-zentrallager",
+        "regionalleiterin-filialen-nord",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "sprechertext": "Hier ist der Einkauf. Ich habe zwei Baustellen, die am Freitag Material brauchen – Dämmung und Trockenbau, die Liste liegt Ihnen seit Montag vor. Ihr Portal geht nicht, Ihre Zentrale geht nicht ans Telefon. Ich brauche heute eine verbindliche Zusage, sonst bestelle ich woanders – und dann dauerhaft.",
+      "gespraech": {
+        "nachfragen": [
+          "„Haben Sie die Ware überhaupt am Lager – ja oder nein?“",
+          "„Können Sie direkt aus einer Filiale liefern?“",
+          "„Wer haftet, wenn meine Baustelle steht?“"
+        ],
+        "abschluss": "„Ich halte fest: … bis Freitag, … Uhr. Wenn das nicht klappt, melde ich mich nicht mehr bei Ihnen.“ Danach auflegen.",
+        "gut": "Nur zusagen, was belegbar ist (Bestandsprüfung von Hand, Lieferung aus Filialbestand), Alternative anbieten, Rückruf mit Termin.",
+        "schwach": "Zusage ohne Bestandsprüfung oder Vorrang zulasten der Filialen, ohne dass der Krisenstab das entschieden hat."
+      },
+      "moderatorHinweis": "Auf der Bühne klingelt das Telefon, die Moderation spricht den Einkaufsleiter des Bauunternehmens und bleibt in der Rolle.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/v1-stoermeldung-brandmelder.png",
-        "caption": "Anzeige der Brandmeldezentrale."
+        "src": "/media/waterkant/lk16-bauunternehmen.png",
+        "caption": "Gewerbekunde am Telefon, Mittwoch 13:00 Uhr."
       },
-      "prioritaet": 1,
-      "zustaendig": [
-        "leiter-arbeitssicherheit",
-        "schichtleiter-zentrallager"
-      ],
-      "akt": "vorboten"
+      "sound": {
+        "src": "/media/waterkant/telefon-klingeln.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "signal": true
+      }
     },
     {
       "id": "LK17",
       "nr": 17,
-      "simZeit": "Dienstag 02:35 Uhr",
-      "titel": "Geruch in Halle 3",
-      "minuteOffset": 3,
-      "diskussionMinuten": 3,
-      "text": "Ein Staplerfahrer meldet stechenden Lösungsmittelgeruch im Gefahrstofflager, Gang C. Die Lüftung läuft, sichtbar ist nichts. Die Schichtleitung will nach der Pause selbst nachsehen. Außerhalb der Nachtschicht weiß niemand davon.",
+      "simZeit": "Mittwoch 16:00 Uhr",
+      "titel": "Prospektpreise vor der Kasse",
+      "minuteOffset": 61,
+      "diskussionMinuten": 4,
+      "akt": "hoehepunkt",
+      "prioritaet": 2,
+      "text": "In sozialen Netzwerken kursieren Videos von Kassen, an denen der Prospektpreis nicht gilt; Kommentare sprechen von „Lockvogelwerbung“. Filialen haben unterschiedlich reagiert: Manche geben den Aktionspreis per Handeingabe, andere verweisen auf „technische Probleme“. Die Hotline ist überlastet.",
+      "kriseninfo": "Mehrere tausend Interaktionen · uneinheitliche Praxis in den Filialen · Hotline überlastet",
       "aufgabe": [
-        "Reicht es, nach der Pause nachzusehen?",
-        "Wen würden Sie jetzt wecken?"
+        "Welche einheitliche Regel gilt ab sofort für Prospektpreise?",
+        "Was sagen Sie öffentlich – und was sagen Hotline und Filialen?",
+        "Wer trägt die Kosten der Kulanz, und ist das entschieden?"
       ],
-      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "zustaendig": [
+        "leiterin-kommunikation-pr",
+        "kundenservice-hotline",
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "leiter-finanzen-cfo"
+      ],
+      "moderatorHinweis": "Rechtliche Bewertung der Werbung nicht am Tisch klären („fachlich prüfen lassen“), sondern: Gibt es eine einheitliche Regel, und kommt sie überall an?",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/v2-geruch-halle3.png",
-        "caption": "Eintrag im Schichtbuch der Nachtschicht."
-      },
-      "prioritaet": 1,
-      "zustaendig": [
-        "schichtleiter-zentrallager",
-        "leiterin-logistik-zentrallager",
-        "leiter-arbeitssicherheit"
-      ],
-      "akt": "vorboten"
+        "src": "/media/waterkant/lk17-prospektpreise.png",
+        "caption": "Social-Media-Beitrag, Mittwoch 16:00 Uhr."
+      }
     },
     {
       "id": "LK18",
       "nr": 18,
-      "simZeit": "Dienstag 03:02 Uhr",
-      "titel": "Lüftung fällt aus",
-      "minuteOffset": 6,
-      "diskussionMinuten": 3,
-      "text": "Die Gebäudeleittechnik meldet: Die Abluft in Halle 3 ist ausgefallen, die Temperatur im Farbenlager steigt auf 41 °C. Parallel meldet die Klimatisierung des angrenzenden Serverraums Überhitzung. Die Rufbereitschaft der IT wird automatisch benachrichtigt.",
+      "simZeit": "Mittwoch 19:00 Uhr",
+      "titel": "Der Verbundbeirat verlangt Antworten",
+      "minuteOffset": 65,
+      "diskussionMinuten": 4,
+      "akt": "hoehepunkt",
+      "prioritaet": 1,
+      "text": "Der Beirat des Einkaufsverbunds hat kurzfristig eine Videokonferenz einberufen. Die Partnermärkte wollen wissen: Wann laufen ihre Kassen wieder voll, wer kommt zuerst dran, und warum gab es für ein Rechenzentrum, das 23 Märkte versorgt, keinen funktionierenden Ausweichplan? Die Geschäftsführung hat 15 Minuten Redezeit.",
+      "kriseninfo": "Videokonferenz in 30 Minuten · 15 Minuten Redezeit",
       "aufgabe": [
-        "Ist das noch Haustechnik oder schon ein Notfall?",
-        "Wer entscheidet jetzt – und mit welchen Informationen?"
+        "Welche drei Aussagen müssen in den 15 Minuten fallen?",
+        "Was sagen Sie zur Reihenfolge, wenn sie noch nicht entschieden ist?",
+        "Welche Zusage geben Sie bewusst nicht?"
       ],
-      "moderatorHinweis": "Vorbote: ruhig und beiläufig vorlesen, nicht dramatisieren. Kurz Reaktionen sammeln (1–2 Min.), keine lange Diskussion. Beobachten: Wer erkennt, dass die Meldungen zusammenhängen, und wer eskaliert früh? Im Debriefing aufgreifen.",
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "partnerbetreuung",
+        "leiter-it",
+        "leiter-finanzen-cfo"
+      ],
+      "moderatorHinweis": "Szenischer Höhepunkt: Die Krisenstabsleitung hat zwei Minuten Vorbereitung und trägt 60 Sekunden vor; die Moderation spielt den Beiratsvorsitz und stellt eine Nachfrage.",
       "media": {
         "type": "image",
-        "src": "/media/waterkant/v3-lueftung-faellt-aus.png",
-        "caption": "Alarme der Gebäudeleittechnik."
-      },
+        "src": "/media/waterkant/lk18-verbundbeirat.png",
+        "caption": "Videokonferenz des Verbundbeirats, Mittwoch 19:00 Uhr."
+      }
+    },
+    {
+      "id": "LK19",
+      "nr": 19,
+      "simZeit": "Donnerstag 08:00 Uhr",
+      "titel": "Rücksicherung im Ausweich-Rack",
+      "minuteOffset": 69,
+      "diskussionMinuten": 4,
+      "akt": "folgen",
       "prioritaet": 2,
+      "text": "Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten.",
+      "kriseninfo": "Rücksicherung läuft · Netzwerkumstellung Markt für Markt · Aktionspreise fehlen in der Kopie",
+      "aufgabe": [
+        "Wer prüft und gibt frei, bevor ein Markt umgestellt wird?",
+        "Wie bekommen Sie die Aktionspreise sicher in das System?",
+        "Welche Abkürzungen sind verlockend – und welche verboten?"
+      ],
       "zustaendig": [
         "leiter-it",
-        "leiter-arbeitssicherheit",
-        "schichtleiter-zentrallager"
+        "rz-betrieb",
+        "informationssicherheit",
+        "it-support-filialen"
       ],
-      "akt": "vorboten"
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk19-ruecksicherung.png",
+        "caption": "Rücksicherung im Ausweich-Rack, Donnerstag 08:00 Uhr."
+      }
+    },
+    {
+      "id": "LK20",
+      "nr": 20,
+      "simZeit": "Donnerstag 10:00 Uhr",
+      "titel": "Wer kassiert zuerst?",
+      "minuteOffset": 73,
+      "diskussionMinuten": 4,
+      "akt": "folgen",
+      "prioritaet": 1,
+      "text": "Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.",
+      "kriseninfo": "ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr",
+      "aufgabe": [
+        "Nach welchem Kriterium legen Sie die Reihenfolge fest?",
+        "Wer entscheidet – und wer sagt es den Partnern?",
+        "Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?"
+      ],
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-it",
+        "partnerbetreuung",
+        "regionalleiterin-filialen-nord",
+        "leiter-finanzen-cfo"
+      ],
+      "moderatorHinweis": "Gleichbehandlung gegen Eigeninteresse. Der Vertrag regelt keine Reihenfolge – das macht es schwer. Gut ist ein offengelegtes Kriterium, das allen mitgeteilt wird.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk20-reihenfolge.png",
+        "caption": "23 Märkte, eine Reihenfolge."
+      }
+    },
+    {
+      "id": "LK21",
+      "nr": 21,
+      "simZeit": "Donnerstag 13:00 Uhr",
+      "titel": "Nordkanal berichtet",
+      "minuteOffset": 77,
+      "diskussionMinuten": 4,
+      "akt": "folgen",
+      "prioritaet": 2,
+      "text": "Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Saisonstart bei Waterkant“. Ein Partnermarkt-Inhaber kommt zu Wort, die Feuerwehr bestätigt einen Batteriebrand im Technikraum.",
+      "aufgabe": [
+        "Reagieren Sie öffentlich auf den Beitrag?",
+        "Was erfahren die eigenen Beschäftigten – bevor sie es aus den Medien hören?"
+      ],
+      "zustaendig": [
+        "leiterin-kommunikation-pr",
+        "leiterin-personal",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "sprechertext": "Nordkanal Nachrichten, Donnerstag, dreizehn Uhr. Bei der Waterkant Baumärkte GmbH hat in der Nacht zum Dienstag ein Brand im Technikraum des Firmenrechenzentrums die IT lahmgelegt. Nach Angaben der Feuerwehr geriet eine Batterieanlage in Brand, verletzt wurde niemand. Seitdem kassieren die vierzehn Filialen im Notbetrieb, die Preise aus dem aktuellen Prospekt gelten an vielen Kassen nicht. Betroffen sind auch neun selbständige Partnermärkte, deren Kassensysteme Waterkant betreibt. Ein Inhaber sagt, er habe aus der Zeitung mehr erfahren als von seinem Dienstleister. Waterkant kündigte an, die Systeme in einem Ausweichrechenzentrum wieder in Betrieb zu nehmen. Wann der Normalbetrieb zurückkehrt, ist offen. Wir bleiben für Sie dran.",
+      "moderatorHinweis": "Der Nachrichtenbeitrag läuft als Einspielung auf der Bühne (Abschrift in der Moderation).",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk21-nordkanal-bericht.png",
+        "caption": "Nordkanal, Donnerstag 13:00 Uhr."
+      },
+      "sound": {
+        "src": "/media/waterkant/lk21-nordkanal-nachrichten.mp3",
+        "loop": false,
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "LK22",
+      "nr": 22,
+      "simZeit": "Donnerstag 18:00 Uhr",
+      "titel": "Die Kassen laufen wieder",
+      "minuteOffset": 81,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 1,
+      "text": "Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge.",
+      "kriseninfo": "Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht",
+      "aufgabe": [
+        "Woran merken Sie, dass ein Markt wirklich sauber läuft?",
+        "Wer informiert Filialen, Partner und Hotline – mit welcher Botschaft?"
+      ],
+      "zustaendig": [
+        "it-support-filialen",
+        "partnerbetreuung",
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "leiter-it"
+      ],
+      "moderatorHinweis": "Erste Entlastung – aber nicht als Ende der Krise spielen. Warenwirtschaft, Lager, Portal und Datenlücke sind noch offen.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk22-kassen-laufen.png",
+        "caption": "Erster Bon nach dem Wiederanlauf, Donnerstag 18:00 Uhr."
+      },
+      "sound": {
+        "src": "/media/waterkant/lk22-kasse-startet.mp3",
+        "loop": false,
+        "volume": 0.7
+      }
+    },
+    {
+      "id": "LK23",
+      "nr": 23,
+      "simZeit": "Freitag 09:00 Uhr",
+      "titel": "Die Datenlücke",
+      "minuteOffset": 85,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 2,
+      "voraussetzung": [
+        "LK19"
+      ],
+      "text": "Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten verfügbaren Sicherung. Der Abgleich zeigt: Wareneingänge, Bestellungen an Lieferanten und Retouren aus der Lücke fehlen. Im Lager steht Ware, die es laut System nicht gibt; Lieferanten fragen nach Bestellungen, die im System nicht existieren.",
+      "kriseninfo": "Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr)",
+      "aufgabe": [
+        "Wie schließen Sie die Lücke – und in welcher Reihenfolge?",
+        "Was darf bis dahin auf Basis unvollständiger Daten entschieden werden?",
+        "Wer gibt den Datenstand fachlich frei?"
+      ],
+      "zustaendig": [
+        "leiterin-logistik-zentrallager",
+        "leiter-einkauf",
+        "leiter-it",
+        "leiter-finanzen-cfo"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk23-datenluecke.png",
+        "caption": "Abgleich der Warenwirtschaft, Freitag 09:00 Uhr."
+      }
+    },
+    {
+      "id": "LK24",
+      "nr": 24,
+      "simZeit": "Freitag 14:00 Uhr",
+      "titel": "Der Versicherer ist da",
+      "minuteOffset": 88,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 2,
+      "text": "Der Gutachter der Elektronik- und Betriebsunterbrechungsversicherung besichtigt den Schaden. Er fragt nach Wartungsnachweisen der USV, nach der Dokumentation der Entscheidungen seit Dienstag und nach den Kosten des Ausweichbetriebs. Eine Zusage zur Kostenübernahme gibt er nicht – nur „unter Vorbehalt der Vertragsbedingungen“.",
+      "kriseninfo": "Kostenübernahme unter Vorbehalt · Wartungsnachweise angefordert",
+      "aufgabe": [
+        "Welche Unterlagen liegen vor – und welche fehlen?",
+        "Welche Kosten sind entschieden, welche nur geplant?",
+        "Wer ist Ansprechpartner für den Gutachter?"
+      ],
+      "zustaendig": [
+        "leiter-finanzen-cfo",
+        "facility-management",
+        "assistenz-gf-dokumentation"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk24-versicherer.png",
+        "caption": "Begehung mit dem Gutachter, Freitag 14:00 Uhr."
+      }
+    },
+    {
+      "id": "LK25",
+      "nr": 25,
+      "simZeit": "Samstag 08:00 Uhr",
+      "titel": "Der große Saisonsamstag",
+      "minuteOffset": 91,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 2,
+      "voraussetzung": [
+        "LK15"
+      ],
+      "text": "Der umsatzstärkste Tag der Saison beginnt. Die Kassen laufen, die Aktionspreise stimmen. Die Frage ist, was außerhalb der Kassen geht: Online-Bestellungen, Abholung in der Filiale, Gewerbekunden. Jeder Fehler in Bestand oder Preis wird heute von Tausenden gesehen.",
+      "kriseninfo": "umsatzstärkster Tag · Kassen laufen · Online und Gewerbe: siehe Entscheidung vom Mittwoch",
+      "aufgabe": [
+        "Was bieten Sie heute online und für Gewerbekunden an – und was bewusst nicht?",
+        "Wer gibt Daten und Preise frei, bevor sie öffentlich sichtbar sind?"
+      ],
+      "zustaendig": [
+        "online-shop-leitung",
+        "regionalleiterin-filialen-nord",
+        "regionalleiter-filialen-sued",
+        "kundenservice-hotline"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk25-saisonsamstag.png",
+        "caption": "Samstag, 08:00 Uhr: Die Filialen öffnen."
+      }
+    },
+    {
+      "id": "LK26",
+      "nr": 26,
+      "simZeit": "Samstag 15:00 Uhr",
+      "titel": "Die Brandursache",
+      "minuteOffset": 94,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 2,
+      "text": "Der Brandsachverständige legt sein vorläufiges Ergebnis vor: Ein Batteriemodul der USV ist thermisch durchgegangen. Der Hersteller hatte im Herbst ein Sicherheits-Update für die Batteriesteuerung angekündigt; eingespielt wurde es nicht. Der Wartungstermin war zweimal verschoben worden. Die Warnmeldung vom Montagabend steht im Protokoll.",
+      "kriseninfo": "Vorläufige Ursache: thermisches Durchgehen eines Batteriemoduls · Update nicht eingespielt",
+      "aufgabe": [
+        "Wie gehen Sie intern mit der Verantwortungsfrage um?",
+        "Was sagen Sie Versicherer, Partnern und Öffentlichkeit – und was nicht?",
+        "Welche Maßnahme verhindert das beim nächsten Mal?"
+      ],
+      "zustaendig": [
+        "facility-management",
+        "leiter-it",
+        "geschaeftsfuehrer-ceo",
+        "leiter-finanzen-cfo"
+      ],
+      "moderatorHinweis": "Keine Schuldsuche am Tisch. Gut: Ursache sachlich dokumentieren, Zuständigkeit für Wartung von IT-naher Gebäudetechnik klären, Lehren ableiten. Rechtliche Folgen fachlich prüfen lassen.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk26-brandursache.png",
+        "caption": "Vorläufiges Gutachten, Samstag 15:00 Uhr."
+      }
+    },
+    {
+      "id": "LK27",
+      "nr": 27,
+      "simZeit": "Sonntag 12:00 Uhr",
+      "titel": "Stabiler Notbetrieb",
+      "minuteOffset": 97,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 1,
+      "text": "Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet.",
+      "kriseninfo": "Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft",
+      "aufgabe": [
+        "Welche Botschaft senden Sie an Beschäftigte, Partner und Kundschaft – und wer sagt es?",
+        "Wie entlasten Sie die Menschen, die seit Dienstag durcharbeiten?",
+        "Was ist ab Montag „normal“ – und was noch nicht?"
+      ],
+      "zustaendig": [
+        "geschaeftsfuehrer-ceo",
+        "leiterin-personal",
+        "leiter-it",
+        "leiterin-kommunikation-pr"
+      ],
+      "moderatorHinweis": "Nicht mit Erleichterung enden lassen. Folgen im Ablauf noch weitere Lagen, erst danach in den Abschluss überleiten. Arbeitszeitfragen nicht im Detail klären, sondern festhalten, wer sie fachlich prüft.",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk27-notbetrieb.png",
+        "caption": "Sonntag, 12:00 Uhr: Notbetrieb stabil."
+      }
+    },
+    {
+      "id": "LK28",
+      "nr": 28,
+      "simZeit": "Montag 09:00 Uhr",
+      "titel": "Zurück ins eigene Rechenzentrum?",
+      "minuteOffset": 100,
+      "diskussionMinuten": 4,
+      "akt": "wiederanlauf",
+      "prioritaet": 3,
+      "text": "Der Sanierer meldet: Nach Reinigung, Prüfung und neuer USV ist das eigene Rechenzentrum in etwa drei Wochen wieder nutzbar. Der Colocation-Anbieter bietet an, den Betrieb dauerhaft zu übernehmen. Die Partnermärkte fragen, ob Waterkant künftig zwei Standorte betreibt. Die Geschäftsführung will bis Mittwoch eine Empfehlung.",
+      "kriseninfo": "Eigenes Rechenzentrum: ca. 3 Wochen · dauerhafte Auslagerung angeboten",
+      "aufgabe": [
+        "Zurück, auslagern oder zwei Standorte – nach welchen Kriterien entscheiden Sie?",
+        "Was muss vor der Rückkehr geprüft und freigegeben sein?"
+      ],
+      "zustaendig": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo",
+        "leiter-finanzen-cfo",
+        "facility-management"
+      ],
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/lk28-rueckkehr.png",
+        "caption": "Montag, 09:00 Uhr: Wie geht es weiter?"
+      }
     }
   ],
   "sonderlagekarten": [
     {
       "id": "SK01",
       "nr": 1,
-      "empfaenger": "leiter-arbeitssicherheit",
-      "minuteOffset": 16,
+      "empfaenger": "rz-betrieb",
+      "minuteOffset": 1,
       "vertraulich": true,
-      "text": "Ein Ersthelfer berichtet dir vertraulich: Der Brand könnte von einer defekten Ladestation für Gabelstapler-Akkus direkt neben dem Farben- und Gefahrstofflager ausgegangen sein. Noch ist nichts bestätigt. Du entscheidest selbst, wie du mit dieser Information umgehst.",
-      "moderatorGut": "Der Verdacht wird zeitnah und transparent in den Krisenstab getragen.",
-      "moderatorSchlecht": "Die Information wird zurückgehalten, bis Behörden oder Presse selbst darauf stoßen.",
-      "prioritaet": 1,
+      "text": "Die USV-Warnung kennst du: Der Temperatursensor meldet seit Wochen sporadisch. Das Sicherheits-Update des Herstellers für die Batteriesteuerung ist seit drei Monaten überfällig, der Wartungstermin wurde zweimal verschoben. Du hast Bereitschaft und entscheidest, ob du heute Nacht noch etwas unternimmst.",
+      "moderatorGut": "Gebäudetechnik informiert, Hersteller-Hotline angefragt, Meldung dokumentiert – auch wenn es ein Fehlalarm sein könnte.",
+      "moderatorSchlecht": "Quittiert und vergessen, weil der Sensor „sowieso spinnt“.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiterin-logistik-zentrallager",
-        "geschaeftsfuehrer-ceo"
+        "leiter-it",
+        "facility-management"
       ]
     },
     {
       "id": "SK02",
       "nr": 2,
-      "empfaenger": "leiterin-personal",
-      "minuteOffset": 24,
+      "empfaenger": "facility-management",
+      "minuteOffset": 3.5,
       "vertraulich": true,
-      "text": "Dir wird vertraulich zugetragen: Der verletzte Mitarbeiter hatte vor sechs Wochen schriftlich einen defekten Rauchmelder im Lagerbereich gemeldet. Die Meldung liegt dokumentiert in der internen Mängelliste vor.",
-      "moderatorGut": "Die Information wird sofort in den Krisenstab eskaliert.",
-      "moderatorSchlecht": "Die Information wird ignoriert oder zurückgehalten.",
-      "prioritaet": 1,
+      "text": "Der Wachdienst ruft dich an: Geruch im Technikflur. Deine Gebäudeleittechnik zeigt für den USV-Raum zusätzlich „Lüftung Störung“. Du bist 40 Minuten entfernt. Die Brandmeldeanlage ist ruhig.",
+      "moderatorGut": "Sofort losfahren, IT-Rufbereitschaft informieren, Wachdienst anweisen, nicht allein in den USV-Raum zu gehen.",
+      "moderatorSchlecht": "Bis zum Morgen abwarten oder den Wachmann allein nachsehen lassen.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
         "leiter-arbeitssicherheit",
-        "geschaeftsfuehrer-ceo"
-      ]
+        "rz-betrieb"
+      ],
+      "zuBeginnVon": "LK02"
     },
     {
       "id": "SK03",
       "nr": 3,
       "empfaenger": "leiter-it",
-      "minuteOffset": 28,
+      "minuteOffset": 6.5,
       "vertraulich": true,
-      "text": "Du erfährst: Das lokale Backup des Warenwirtschaftssystems lag im selben Serverraum und ist ebenfalls zerstört. Ein Cloud-Backup existiert, ist aber rund drei Wochen alt.",
-      "moderatorGut": "Der Datenverlust wird offen kommuniziert, eine Übergangslösung vorgeschlagen.",
-      "moderatorSchlecht": "Das Alter des Backups wird verschwiegen, der Krisenstab bleibt im Unklaren.",
-      "prioritaet": 2,
+      "text": "Die Rufbereitschaft meldet: Serverraum 31 °C, steigend. Die Übertragung der Aktionspreise an die Filialkassen läuft seit 03:00 Uhr und braucht noch etwa 40 Minuten; die Partnermärkte laden gerade ihre Tagesabschlüsse hoch. Herunterfahren heißt: Beides bricht ab – und das kurz vor dem Saisonstart.",
+      "moderatorGut": "Abwägung laut aussprechen, Entscheidung treffen und dokumentieren; Gebäudetechnik und Geschäftsführung informieren.",
+      "moderatorSchlecht": "Abwarten, ohne zu entscheiden, oder allein entscheiden, ohne dass es jemand erfährt.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "online-shop-leitung",
-        "notfallmanagement-bcm"
-      ]
+        "rz-betrieb",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK03"
     },
     {
       "id": "SK04",
       "nr": 4,
-      "empfaenger": "leiter-finanzen-cfo",
-      "minuteOffset": 36,
+      "empfaenger": "schichtleiter-zentrallager",
+      "minuteOffset": 13.5,
       "vertraulich": true,
-      "text": "Deine Prüfung der Versicherungspolice zeigt: Es gilt eine Karenzzeit von 10 Tagen – die ersten 10 Tage Ertragsausfall tragt ihr komplett selbst. Danach zahlt die Versicherung, aber nur für die vereinbarte Haftzeit von 12 Monaten.",
-      "moderatorGut": "Die Deckungslücke wird frühzeitig im Krisenstab offengelegt.",
-      "moderatorSchlecht": "Die Information wird zurückgehalten, bis es für Gegenmaßnahmen zu spät ist.",
-      "prioritaet": 2,
+      "text": "Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.",
+      "moderatorGut": "Sofort an die Einsatzleitung melden, Name und letzter bekannter Ort; niemand geht selbst suchen.",
+      "moderatorSchlecht": "Selbst ins Gebäude gehen oder die Information erst nach eigener Suche weitergeben.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "geschaeftsfuehrer-ceo"
-      ]
+        "leiter-arbeitssicherheit",
+        "leiterin-personal"
+      ],
+      "zuBeginnVon": "LK05"
     },
     {
       "id": "SK05",
       "nr": 5,
-      "empfaenger": "leiterin-logistik-zentrallager",
-      "minuteOffset": 34,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 15,
       "vertraulich": true,
-      "text": "Zwei Mitarbeitende berichten dir anonym: Die letzte Brandschutzwartung wurde vor vier Monaten von einer neuen, günstigeren Fremdfirma durchgeführt. Es gab danach mehrfach Beschwerden über offene Mängel.",
-      "moderatorGut": "Die Information geht offen an den Krisenstab, auch wenn sie unangenehm ist.",
-      "moderatorSchlecht": "Die Beschwerden werden heruntergespielt oder geleugnet.",
+      "text": "Entwarnung: Der Kollege der Rufbereitschaft ist wohlauf. Er hatte das Gebäude über den Hinterausgang verlassen und stand am falschen Sammelplatz an Tor 2. Seine Frau hat inzwischen dreimal in der Zentrale angerufen – die Telefonanlage ist tot, sie hat nur die Bandansage gehört.",
+      "moderatorGut": "Angehörige zurückrufen, Sammelplatzregelung festhalten, Nachbereitung des Vorfalls ansetzen.",
+      "moderatorSchlecht": "Angehörige vergessen, weil „ja alles gut ausgegangen ist“.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "schichtleiter-zentrallager",
+        "geschaeftsfuehrer-ceo",
         "leiter-arbeitssicherheit"
       ]
     },
     {
       "id": "SK06",
       "nr": 6,
-      "empfaenger": "leiterin-kommunikation-pr",
-      "minuteOffset": 35,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "minuteOffset": 17.5,
       "vertraulich": true,
-      "text": "Ein Journalist von Nordkanal deutet dir gegenüber an, von einer internen Mängelliste zu wissen, in der ein defekter Rauchmelder im Lagerbereich gemeldet wurde – offenbar durch einen internen Hinweisgeber. Eine Veröffentlichung sei in Vorbereitung.",
-      "moderatorGut": "Der Krisenstab wird proaktiv auf die mögliche Veröffentlichung vorbereitet.",
-      "moderatorSchlecht": "Man hofft, dass nichts veröffentlicht wird, und bereitet nichts vor.",
+      "text": "Der Einsatzleiter weist dich darauf hin: Bei brennenden Lithium-Ionen-Batterien können Fluorwasserstoff und andere ätzende Gase entstehen. Er empfiehlt, USV-Raum und Serverraum erst nach Messung und Freigabe durch Sachverständige zu betreten – ausdrücklich auch für IT-Personal.",
+      "moderatorGut": "Betretungsverbot klar festlegen und allen Bereichen mitteilen, Messung beauftragen.",
+      "moderatorSchlecht": "Die Empfehlung bleibt bei dir, die IT plant schon das Betreten.",
       "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "geschaeftsfuehrer-ceo",
-        "notfallmanagement-bcm"
-      ]
+        "facility-management",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK06"
     },
     {
       "id": "SK07",
       "nr": 7,
-      "empfaenger": "leiter-einkauf",
-      "minuteOffset": 48,
+      "empfaenger": "informationssicherheit",
+      "minuteOffset": 21.5,
       "vertraulich": true,
-      "text": "Der wichtigste Baustofflieferant kann wegen eigener Kapazitätsengpässe kurzfristig nicht aushelfen. Ein Ausweichlieferant wäre verfügbar, verlangt aber rund 30 % höhere Preise.",
-      "moderatorGut": "Die Mehrkosten werden transparent dem Krisenstab vorgelegt.",
-      "moderatorSchlecht": "Die teure Entscheidung fällt im Alleingang, ohne den Krisenstab.",
-      "prioritaet": 3,
+      "text": "Weil die Anmeldedienste der Zentrale ausgefallen sind, teilen Beschäftigte Zugangsdaten im Chat und nutzen private Hotspots. Ein Filialleiter fragt, ob er die Kundenliste der Gewerbekunden als Tabelle an seine private Mailadresse schicken darf, um telefonisch nachfassen zu können.",
+      "moderatorGut": "Klare Regel für Behelfslösungen ausgeben (was erlaubt ist, was nicht, wer genehmigt); Datenschutzfrage fachlich prüfen lassen statt Einzelfall durchwinken.",
+      "moderatorSchlecht": "Alles erlauben, „weil Notfall ist“, oder alles verbieten, ohne Alternative.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiterin-logistik-zentrallager",
-        "leiter-finanzen-cfo"
-      ]
+        "leiter-it",
+        "notfallmanagement-bcm"
+      ],
+      "zuBeginnVon": "LK07"
     },
     {
       "id": "SK08",
       "nr": 8,
-      "empfaenger": "regionalleiterin-filialen-nord",
-      "minuteOffset": 27,
+      "empfaenger": "it-support-filialen",
+      "minuteOffset": 21.5,
       "vertraulich": true,
-      "text": "Mehrere Filialleitungen melden dir vertraulich: Das Personal in den Filialen ist verunsichert, für die kommenden Tage gehen erste Krankmeldungen ein.",
-      "moderatorGut": "Das Thema wird aktiv in den Krisenstab eingebracht, Unterstützung wird angefordert.",
-      "moderatorSchlecht": "Es wird als Einzelproblem der Filialen behandelt.",
-      "prioritaet": 3,
+      "text": "Die Herstellerdokumentation der Kassen sagt: Im Offline-Betrieb speichern sie Abverkäufe etwa 72 Stunden, danach verweigern sie neue Buchungen, bis sie wieder mit der Zentrale synchronisiert sind. Das wäre Freitag gegen 03:00 Uhr. In den Filialen weiß das noch niemand.",
+      "moderatorGut": "Die Frist sofort an den Krisenstab geben – sie bestimmt die Wiederanlaufplanung.",
+      "moderatorSchlecht": "Die Frist für sich behalten, „bis dahin läuft es ja wieder“.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "regionalleiter-filialen-sued",
-        "leiterin-personal"
+        "leiter-it",
+        "regionalleiterin-filialen-nord"
       ]
     },
     {
       "id": "SK09",
       "nr": 9,
-      "empfaenger": "leiter-einkauf",
-      "minuteOffset": 66,
+      "empfaenger": "regionalleiterin-filialen-nord",
+      "minuteOffset": 25.5,
       "vertraulich": true,
-      "text": "Für Großformat-Baustoffe (Bauholz, Zement-Silos) gibt es in der Region weder Ersatzlagerflächen noch Ausweichlieferanten. Dieser Bereich bleibt bis zum Wiederaufbau blockiert.",
-      "moderatorGut": "Die Einschränkung wird offen kommuniziert, statt falsche Hoffnungen zu wecken.",
-      "moderatorSchlecht": "Es wird eine schnelle Lösung versprochen, die es für dieses Sortiment nicht geben kann.",
-      "prioritaet": 3,
+      "text": "Zwei Filialleitungen fragen, ob sie heute öffnen sollen. Eine Filiale hat schon handgeschriebene Schilder aufgehängt: „Aktionspreise gelten ab Donnerstag“ – niemand hat das entschieden.",
+      "moderatorGut": "Einheitliche Entscheidung einfordern und an alle Filialen geben; eigenmächtige Zusagen stoppen.",
+      "moderatorSchlecht": "Jede Filiale entscheiden lassen.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiterin-logistik-zentrallager",
-        "regionalleiter-filialen-sued"
-      ]
+        "regionalleiter-filialen-sued",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK08"
     },
     {
       "id": "SK10",
       "nr": 10,
-      "empfaenger": "schichtleiter-zentrallager",
-      "minuteOffset": 17,
+      "empfaenger": "regionalleiter-filialen-sued",
+      "minuteOffset": 27,
       "vertraulich": true,
-      "text": "Aus der Nachtschicht kommt eine beunruhigende Meldung: Zwei Leiharbeitskräfte hat seit der Evakuierung niemand mehr gesehen. Die Anwesenheitsliste lag im Schichtbüro im Lager – das ist nicht mehr zugänglich, die Handys der beiden sind aus.",
-      "moderatorGut": "Sofortige Meldung an Krisenstab und Einsatzleitung, Abgleich mit der Zeitarbeitsfirma.",
-      "moderatorSchlecht": "Information bleibt bei der Schichtleitung, Vollzähligkeit bleibt unklar.",
+      "text": "In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die Nachbarfiliale verweigert ihn. Kundinnen vergleichen die Bons in einer Facebook-Gruppe.",
+      "moderatorGut": "Den Widerspruch sofort in den Krisenstab tragen und eine einheitliche Regel verlangen.",
+      "moderatorSchlecht": "Die eigene Region regeln, ohne die andere Region und den Krisenstab einzubinden.",
       "prioritaet": 2,
-      "moderatorHinweis": "Nach wenigen Minuten durch die Moderation auflösen: Beide haben das Gelände unverletzt über den Notausgang verlassen und sind nach Hause gefahren.",
       "fallbackEmpfaenger": [
-        "leiterin-logistik-zentrallager",
-        "leiter-arbeitssicherheit"
+        "regionalleiterin-filialen-nord",
+        "geschaeftsfuehrer-ceo"
       ]
     },
     {
       "id": "SK11",
       "nr": 11,
-      "empfaenger": "geschaeftsfuehrer-ceo",
-      "minuteOffset": 60,
+      "empfaenger": "partnerbetreuung",
+      "minuteOffset": 29.5,
       "vertraulich": true,
-      "text": "Der Mehrheitsgesellschafter meldet sich direkt bei dir. Er beschwert sich, alles aus der Presse erfahren zu haben, und erwartet bis 18 Uhr eine schriftliche Einschätzung: Schadenshöhe, Lieferfähigkeit der Filialen, Kommunikationslinie. Er deutet an, notfalls selbst vor die Presse zu gehen.",
-      "moderatorGut": "Lagebild aus dem Krisenstab einholen, abgestimmte Einschätzung, Kommunikationsführung klar behalten.",
-      "moderatorSchlecht": "Antwort aus dem Bauch heraus, ohne Abstimmung im Krisenstab.",
-      "prioritaet": 2,
+      "text": "Drei Partner haben dich schon angerufen. Einer liest dir aus dem Servicevertrag vor: Wiederherstellungsziel 24 Stunden für Kassen- und Preisdienste. Er will bis 12 Uhr wissen, wann es weitergeht, sonst wendet er sich an den Verbundvorstand.",
+      "moderatorGut": "Die Frist und die Stimmung in den Krisenstab tragen und eine abgestimmte Botschaft mit Termin holen.",
+      "moderatorSchlecht": "Den Partnern auf eigene Faust einen Termin nennen.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
         "leiter-finanzen-cfo",
-        "leiterin-kommunikation-pr"
-      ]
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK09"
     },
     {
       "id": "SK12",
       "nr": 12,
-      "empfaenger": "regionalleiter-filialen-sued",
-      "minuteOffset": 42,
+      "empfaenger": "leiter-finanzen-cfo",
+      "minuteOffset": 30.5,
       "vertraulich": true,
-      "text": "In zwei Filialen sind die Artikel der aktuellen Prospektaktion ausverkauft – der Nachschub sollte aus dem abgebrannten Zentrallager kommen. Kundschaft beschwert sich, laut Prospekt läuft die Aktion noch zehn Tage.",
-      "moderatorGut": "Abstimmung im Krisenstab: Aktion anpassen oder Kundschaft aktiv informieren.",
-      "moderatorSchlecht": "Filialen improvisieren unterschiedlich, widersprüchliche Aussagen an der Kasse.",
+      "text": "Im Servicevertrag mit den Partnermärkten stehen Gutschriften bei Überschreiten des Wiederherstellungsziels (Szenarioannahme: 2.000 € je Markt und angefangenem Tag). Zwei Verträge enthalten zusätzlich ein Sonderkündigungsrecht bei „erheblicher Störung“. Ob dieser Fall eintritt, ist fachlich zu prüfen.",
+      "moderatorGut": "Vertragsrisiko beziffern, fachliche Prüfung anstoßen, Geschäftsführung informieren.",
+      "moderatorSchlecht": "Vertragsfolgen herunterspielen oder als sicher behaupten.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "regionalleiterin-filialen-nord",
-        "leiter-einkauf"
+        "geschaeftsfuehrer-ceo",
+        "partnerbetreuung"
       ]
     },
     {
       "id": "SK13",
       "nr": 13,
-      "empfaenger": "online-shop-leitung",
-      "minuteOffset": 44,
+      "empfaenger": "facility-management",
+      "minuteOffset": 33.5,
       "vertraulich": true,
-      "text": "Der Online-Shop zeigt weiterhin Bestände aus dem Zentrallager als „sofort lieferbar“. Seit dem Brand sind bereits über 80 Bestellungen eingegangen, die nicht ausgeliefert werden können. Der Shop ließe sich in den Wartungsmodus schalten – dann bricht der Online-Umsatz komplett weg.",
-      "moderatorGut": "Entscheidung mit dem Krisenstab: Bestände korrigieren, betroffene Kundschaft proaktiv informieren.",
-      "moderatorSchlecht": "Weiterverkaufen, als wäre nichts passiert.",
-      "prioritaet": 2,
+      "text": "Der Sachverständige: Reinigung des Serverraums durch eine Fachfirma dauert fünf bis acht Arbeitstage. Die Klimaanlage darf bis zur Prüfung nicht laufen – Feuchtigkeit plus Ruß beschleunigt die Korrosion. Ob die Hardware danach noch zuverlässig ist, kann er nicht sagen.",
+      "moderatorGut": "Zeitrahmen und Unsicherheit offen in den Krisenstab geben; Freigabeprozess festlegen.",
+      "moderatorSchlecht": "Einen Wiederinbetriebnahmetermin versprechen.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "leiter-it",
-        "leiterin-kommunikation-pr"
+        "leiter-arbeitssicherheit",
+        "leiter-it"
       ]
     },
     {
       "id": "SK14",
       "nr": 14,
-      "empfaenger": "notfallmanagement-bcm",
-      "minuteOffset": 22,
+      "empfaenger": "rz-betrieb",
+      "minuteOffset": 35,
       "vertraulich": true,
-      "text": "Du stellst fest: Der Notfallplan für das Zentrallager stammt von 2021. Die dort genannte Ausweichfläche wurde letztes Jahr gekündigt, zwei der genannten Ansprechpersonen sind nicht mehr im Unternehmen.",
-      "moderatorGut": "Lücke offen in den Krisenstab tragen, Plan pragmatisch aktualisieren, Ausweichoptionen aktiv suchen.",
-      "moderatorSchlecht": "Plan wird stillschweigend ignoriert.",
-      "prioritaet": 2,
+      "text": "Über die Kamera der Gebäudetechnik siehst du in den Serverraum: Die Racks stehen, überall Rußfilm. In Rack 7 steht der Backup-Server mit der Dienstagssicherung von 01:00 Uhr. Wird er bald geborgen und gereinigt, sind die Daten vermutlich lesbar – je länger er im Ruß steht, desto größer die Korrosionsgefahr.",
+      "moderatorGut": "Die Information mit Unsicherheit an die IT-Leitung und den Krisenstab geben; nicht selbst hineingehen.",
+      "moderatorSchlecht": "Eine eigene „schnelle Bergung“ planen.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "assistenz-gf-dokumentation",
-        "geschaeftsfuehrer-ceo"
+        "leiter-it"
       ]
     },
     {
       "id": "SK15",
       "nr": 15,
-      "empfaenger": "assistenz-gf-dokumentation",
-      "minuteOffset": 81,
+      "empfaenger": "leiterin-kommunikation-pr",
+      "minuteOffset": 37.5,
       "vertraulich": true,
-      "text": "Versicherung und Gutachter verlangen eine lückenlose Chronologie aller Entscheidungen seit dem Brandalarm – mit Uhrzeit und verantwortlicher Funktion. Prüfe, ob eure Dokumentation das hergibt, und melde Lücken an den Krisenstab.",
-      "moderatorGut": "Entscheidungsprotokoll liegt vor oder wird sofort rekonstruiert.",
-      "moderatorSchlecht": "Keine nachvollziehbare Dokumentation vorhanden.",
+      "text": "Ein Lokaljournalist hat ein Foto: Feuerwehr vor dem Verwaltungsgebäude, Rauch aus einem Lüftungsgitter. Auf Facebook schreibt jemand von „Akkubrand, giftige Gase, Anwohner sollen Fenster schließen“. Die Feuerwehr hat bisher nur „Brand in einem Technikraum“ bestätigt.",
+      "moderatorGut": "Nur Bestätigtes sagen, für Gesundheitsfragen auf Feuerwehr und Behörden verweisen, Hotline briefen.",
+      "moderatorSchlecht": "Gerüchte dementieren, ohne es zu wissen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "notfallmanagement-bcm",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "zuBeginnVon": "LK11"
     },
     {
       "id": "SK16",
       "nr": 16,
-      "empfaenger": "leiterin-kommunikation-pr",
-      "minuteOffset": 70,
+      "empfaenger": "leiterin-logistik-zentrallager",
+      "minuteOffset": 41.5,
       "vertraulich": true,
-      "text": "Kurz vor der Pressekonferenz erfährst du: Ein Video aus der Brandnacht kursiert. Es zeigt Mitarbeitende ohne Schutzausrüstung, die Ware aus der brennenden Halle tragen. Mehrere Redaktionen haben es bereits.",
-      "moderatorGut": "Das Video wird vorab im Krisenstab besprochen und in der Pressekonferenz offen angesprochen.",
-      "moderatorSchlecht": "Man hofft, dass niemand danach fragt – und wird in der Pressekonferenz kalt erwischt.",
-      "prioritaet": 2,
+      "text": "Ohne Lagerverwaltung kennt niemand die Lagerplätze von rund 40.000 Artikeln. Ein Spediteur wartet seit 06:00 Uhr auf Ladung und berechnet ab Mittag Standgeld. Die Filialen rufen einzeln an und bestellen „das Wichtigste“.",
+      "moderatorGut": "Bestellungen bündeln, Prioritäten mit dem Krisenstab festlegen, Papierbetrieb so organisieren, dass er nachgebucht werden kann.",
+      "moderatorSchlecht": "Wer zuerst anruft, bekommt zuerst.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "geschaeftsfuehrer-ceo",
-        "notfallmanagement-bcm"
-      ]
+        "schichtleiter-zentrallager",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK12"
     },
     {
       "id": "SK17",
       "nr": 17,
-      "empfaenger": "leiterin-personal",
-      "minuteOffset": 74,
+      "empfaenger": "schichtleiter-zentrallager",
+      "minuteOffset": 43,
       "vertraulich": true,
-      "text": "Mitarbeitende des Zentrallagers fragen, ob sie in Kurzarbeit gehen oder in die Filialen versetzt werden. Zwei erfahrene Lagerkräfte haben bereits gekündigt, ein Wettbewerber wirbt gezielt ab.",
-      "moderatorGut": "Schnelle, verbindliche Perspektive für die Lagerbelegschaft, Schlüsselkräfte werden persönlich angesprochen.",
-      "moderatorSchlecht": "Keine Aussage bis „alles geklärt ist“ – weitere Kündigungen folgen.",
+      "text": "Die Kommissionierer der Frühschicht sagen: „Wir kennen das Lager, wir machen das auf Zuruf.“ Fehllieferungen wären wahrscheinlich, aber die Filialen hätten Ware zum Saisonstart.",
+      "moderatorGut": "Vorschlag mit Risiko an die Lagerleitung geben; Papierbelege für jede Entnahme verlangen.",
+      "moderatorSchlecht": "Ohne Belege loslegen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiter-arbeitssicherheit",
-        "geschaeftsfuehrer-ceo"
+        "leiterin-logistik-zentrallager"
       ]
     },
     {
       "id": "SK18",
       "nr": 18,
-      "empfaenger": "leiter-finanzen-cfo",
-      "minuteOffset": 81,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 45.5,
       "vertraulich": true,
-      "text": "Der Gutachter der Versicherung deutet an: Sollte die Brandschutzwartung tatsächlich überfällig gewesen sein, könnte die Versicherung ihre Leistung wegen grober Fahrlässigkeit kürzen. Eine Entscheidung fällt in etwa zwei Wochen.",
-      "moderatorGut": "Das Risiko geht sofort in die Planung; Wartungsunterlagen werden gesichert, juristische Beratung eingebunden.",
-      "moderatorSchlecht": "Es wird mit der vollen Versicherungsleistung weitergeplant, als wäre nichts.",
-      "prioritaet": 2,
+      "text": "Der Serverhändler bietet zwei Rahmen in drei Tagen gegen 35 % Aufschlag. Der Colocation-Anbieter kann das Ausweich-Rack binnen 48 Stunden erweitern – Mindestlaufzeit zwölf Monate, Kosten für das erste Jahr rund 210.000 € einschließlich Dienstleistern (Szenarioannahme).",
+      "moderatorGut": "Angebote vergleichbar machen und dem Krisenstab zur Entscheidung vorlegen; Fristen der Angebote nennen.",
+      "moderatorSchlecht": "Allein bestellen oder Angebote verfallen lassen.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "geschaeftsfuehrer-ceo"
+        "leiter-finanzen-cfo",
+        "leiter-it"
       ]
     },
     {
       "id": "SK19",
       "nr": 19,
-      "empfaenger": "online-shop-leitung",
-      "minuteOffset": 84,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 47,
       "vertraulich": true,
-      "text": "Über 200 Online-Bestellungen sind seit dem Brand überfällig. Kunden posten Fotos der Brandruine unter eure Werbeanzeigen: „Hier kommt meine Bestellung wohl nicht mehr her.“ Die Kampagne zum Saisonstart läuft weiter.",
-      "moderatorGut": "Kampagne pausieren, betroffene Kunden aktiv anschreiben, realistische Lieferzusagen oder Erstattung anbieten.",
-      "moderatorSchlecht": "Werbung läuft weiter, Kommentare werden gelöscht – der Shitstorm wächst.",
+      "text": "Dein Team rechnet: Im Ausweich-Rack reicht die Leistung für Kassen- und Preisdienste und den Kern der Warenwirtschaft. Die Netzwerkanbindung der 23 Märkte muss neu eingerichtet werden – das wurde nie vollständig geübt. Zwei deiner fünf Leute sind seit Dienstag 03:00 Uhr wach.",
+      "moderatorGut": "Realistisches Lagebild mit Personalengpass an den Krisenstab; Ruhezeiten einplanen.",
+      "moderatorSchlecht": "Zu optimistische Zusagen, um Druck abzubauen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "rz-betrieb",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK20",
+      "nr": 20,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": 65.5,
+      "vertraulich": true,
+      "text": "Der Vorsitzende des Verbundbeirats ruft dich vor der Videokonferenz privat an: Zwei Partner wollen den IT-Servicevertrag kündigen. Er erwartet eine klare Aussage, wann ihre Kassen wieder voll laufen – und ob Waterkant die eigenen Märkte bevorzugt. „Ich will nicht hören, dass Sie es nicht wissen.“",
+      "moderatorGut": "Ruhig bleiben, ehrliche Spanne, keine Zusage zur Reihenfolge, die nicht entschieden ist; Druck in den Krisenstab tragen.",
+      "moderatorSchlecht": "Eine Zusage machen, die den Krisenstab bindet, ohne dass er es weiß.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "partnerbetreuung",
+        "leiter-finanzen-cfo"
+      ],
+      "zuBeginnVon": "LK18"
+    },
+    {
+      "id": "SK21",
+      "nr": 21,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "minuteOffset": 49.5,
+      "vertraulich": true,
+      "text": "Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: Gefährdungsbeurteilung, aktuelles Messergebnis, Fachfirma mit Schutzausrüstung, Freiwilligkeit, Dokumentation. Die Fachfirma könnte heute um 14 Uhr – mit eigenem Personal, nicht mit eurer IT.",
+      "moderatorGut": "Voraussetzungen klar benennen; entscheiden lässt du dir nicht abnehmen, aber auch nicht aufdrängen.",
+      "moderatorSchlecht": "Aus Zeitdruck zustimmen, ohne Voraussetzungen zu prüfen – oder pauschal ablehnen, ohne zu begründen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "facility-management",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK14"
+    },
+    {
+      "id": "SK22",
+      "nr": 22,
+      "empfaenger": "informationssicherheit",
+      "minuteOffset": 53.5,
+      "vertraulich": true,
+      "text": "Wenn die Warenwirtschaft ins Ausweich-Rack zieht, laufen dort auch Daten der Gewerbekunden und Partnermärkte. Der Vertrag mit dem Colocation-Anbieter beschreibt nur die Lagerung von Sicherungskopien, nicht den Produktivbetrieb. Was das bedeutet, ist fachlich zu prüfen.",
+      "moderatorGut": "Thema in den Krisenstab, fachliche Prüfung parallel anstoßen, ohne den Wiederanlauf zu blockieren.",
+      "moderatorSchlecht": "Schweigen oder den Wiederanlauf allein stoppen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "leiter-finanzen-cfo"
+      ],
+      "zuBeginnVon": "LK15"
+    },
+    {
+      "id": "SK23",
+      "nr": 23,
+      "empfaenger": "online-shop-leitung",
+      "minuteOffset": 55,
+      "vertraulich": true,
+      "text": "Der Shop zeigt seit Dienstag Bestände von Montagnacht. 312 Bestellungen „Abholung in der Filiale“ sind eingegangen, ein Teil für Artikel, die vermutlich nicht da sind. Der Hoster könnte den Shop auf „nur Information“ schalten.",
+      "moderatorGut": "Entscheidung über den Shop in den Krisenstab, Kundinnen und Kunden aktiv informieren.",
+      "moderatorSchlecht": "Den Shop laufen lassen und hoffen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
         "leiter-it",
@@ -1071,145 +1592,514 @@
       ]
     },
     {
-      "id": "SK20",
-      "nr": 20,
-      "empfaenger": "leiter-arbeitssicherheit",
-      "minuteOffset": 88,
-      "vertraulich": true,
-      "text": "Die Gewerbeaufsicht kündigt für Montag eine Prüfung aller übrigen Lagerstandorte und Filialen an – insbesondere Ladestationen und Gefahrstofflagerung. Bis dahin müssen Mängel dokumentiert und behoben sein.",
-      "moderatorGut": "Sofortige Begehung aller Standorte mit Mängelliste und klaren Verantwortlichen.",
-      "moderatorSchlecht": "Die Ankündigung wird als Formalie behandelt – am Montag drohen weitere Schließungen.",
-      "prioritaet": 2,
-      "fallbackEmpfaenger": [
-        "leiterin-logistik-zentrallager",
-        "geschaeftsfuehrer-ceo"
-      ]
-    },
-    {
-      "id": "SK21",
-      "nr": 21,
-      "empfaenger": "regionalleiterin-filialen-nord",
-      "minuteOffset": 89,
-      "vertraulich": true,
-      "text": "Der Wiederanlauf ist angekündigt, doch in drei Filialen fehlen weiterhin Gartenmöbel und Pflanzen aus der Saisonaktion. Kunden bestehen auf den beworbenen Preisen und drohen mit schlechten Bewertungen.",
-      "moderatorGut": "Klare Kulanzregel für alle Filialen, Personal vor Ort bekommt eine einheitliche Antwort.",
-      "moderatorSchlecht": "Jede Filiale entscheidet anders – Kunden vergleichen und beschweren sich öffentlich.",
-      "prioritaet": 3,
-      "fallbackEmpfaenger": [
-        "regionalleiter-filialen-sued",
-        "geschaeftsfuehrer-ceo"
-      ]
-    },
-    {
-      "id": "SK22",
-      "nr": 22,
-      "empfaenger": "it-support-filialen",
-      "minuteOffset": 26,
-      "vertraulich": true,
-      "text": "Alle 14 Filialen rufen gleichzeitig an: Die Kassen laufen nur im Offline-Modus, Preise fehlen, Kartenzahlung geht nur teilweise. Jede Filiale fragt: Öffnen wir oder nicht? Vom Krisenstab gibt es noch keine Anweisung.",
-      "moderatorGut": "Die Meldungen werden gebündelt (welche Filialen, welche Funktionen), der Krisenstab gibt eine klare Anweisung an alle Filialen gleichzeitig.",
-      "moderatorSchlecht": "Jede Filiale bekommt eine andere Auskunft – einige öffnen, andere nicht.",
-      "prioritaet": 2,
-      "fallbackEmpfaenger": [
-        "leiter-it",
-        "regionalleiterin-filialen-nord"
-      ]
-    },
-    {
-      "id": "SK23",
-      "nr": 23,
-      "empfaenger": "kundenservice-hotline",
-      "minuteOffset": 33,
-      "vertraulich": true,
-      "text": "Die Hotline ist überlastet: Anwohnerinnen und Anwohner fragen, ob der Rauch giftig ist und ob sie die Fenster schließen sollen; Kunden fragen nach Lieferterminen. Eine abgestimmte Auskunft gibt es nicht – und Gesundheitsfragen darfst du nicht selbst beantworten.",
-      "moderatorGut": "Verweis auf die offiziellen Warnungen der Behörden, Sprachregelung wird beim Krisenstab angefordert, die Lage wird zurückgemeldet.",
-      "moderatorSchlecht": "Am Telefon wird spekuliert („wird schon nicht so schlimm sein“).",
-      "prioritaet": 2,
-      "fallbackEmpfaenger": [
-        "leiterin-kommunikation-pr",
-        "online-shop-leitung"
-      ]
-    },
-    {
       "id": "SK24",
       "nr": 24,
-      "empfaenger": "it-support-filialen",
-      "minuteOffset": 56,
+      "empfaenger": "kundenservice-hotline",
+      "minuteOffset": 61.5,
       "vertraulich": true,
-      "text": "In zwei Filialen läuft der Speicher der Offline-Kassen voll. Ohne Verbindung zur Zentrale können sie ab morgen früh keine Verkäufe mehr speichern.",
-      "moderatorGut": "Der Krisenstab entscheidet über eine Notlösung (z. B. Handbelege) und informiert alle Filialen einheitlich.",
-      "moderatorSchlecht": "Das Problem bleibt in der IT liegen, bis die Kassen stehen.",
-      "prioritaet": 2,
+      "text": "Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.",
+      "moderatorGut": "Sprachregelung einfordern und die Lage mit Zahlen an den Krisenstab geben.",
+      "moderatorSchlecht": "Jede Kollegin antwortet nach eigenem Ermessen.",
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
-        "leiter-it",
-        "regionalleiter-filialen-sued"
+        "leiterin-kommunikation-pr",
+        "regionalleiterin-filialen-nord"
       ]
     },
     {
       "id": "SK25",
       "nr": 25,
-      "empfaenger": "kundenservice-hotline",
-      "minuteOffset": 74,
+      "empfaenger": "leiterin-kommunikation-pr",
+      "minuteOffset": 62.5,
       "vertraulich": true,
-      "text": "Nach der Pressekonferenz rufen Kunden an, die Online-Bestellungen stornieren wollen; andere fragen, ob Gutscheine noch gelten. Was in der Pressekonferenz gesagt wurde, kennst du nur aus dem Radio.",
-      "moderatorGut": "Die Botschaften der Pressekonferenz kommen schriftlich als Sprachregelung an die Hotline, offene Fragen gehen gesammelt an den Krisenstab.",
-      "moderatorSchlecht": "Die Hotline erfährt die Botschaften aus den Medien und widerspricht ihnen am Telefon.",
+      "text": "Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe seit dem Mittag.",
+      "moderatorGut": "Einheitliche Kulanzregel öffentlich machen, Fehler einräumen, ohne rechtlich zu bewerten.",
+      "moderatorSchlecht": "Löschen lassen wollen oder den Kanal angreifen.",
       "prioritaet": 2,
       "fallbackEmpfaenger": [
-        "leiterin-kommunikation-pr",
-        "online-shop-leitung"
+        "geschaeftsfuehrer-ceo",
+        "kundenservice-hotline"
       ]
     },
     {
       "id": "SK26",
       "nr": 26,
-      "empfaenger": "it-support-filialen",
-      "minuteOffset": 88,
+      "empfaenger": "partnerbetreuung",
+      "minuteOffset": 66,
       "vertraulich": true,
-      "text": "Die Kassen sind wieder online – aber die Offline-Bons und Handbelege der letzten Tage müssen nachgebucht werden. Jede Filiale will zuerst drankommen.",
-      "moderatorGut": "Der Krisenstab legt die Reihenfolge fest und teilt sie allen Filialen mit.",
-      "moderatorSchlecht": "Die Filialen drängeln, die Reihenfolge entscheidet der Zufall.",
-      "prioritaet": 3,
+      "text": "Ein Partnermarkt hat eigenständig einen anderen Kassenanbieter angefragt und will dir heute sagen, ob er „vorerst selbst etwas aufbaut“. Damit würde er aus dem gemeinsamen Preis- und Warenwirtschaftssystem ausscheren.",
+      "moderatorGut": "Verständnis zeigen, Lage ehrlich darstellen, Entscheidung der Geschäftsführung einholen.",
+      "moderatorSchlecht": "Den Partner unter Druck setzen oder ihn kommentarlos ziehen lassen.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK27",
+      "nr": 27,
+      "empfaenger": "leiter-finanzen-cfo",
+      "minuteOffset": 88.5,
+      "vertraulich": true,
+      "text": "Der Versicherungsmakler weist darauf hin: Die Elektronikversicherung leistet nach den Bedingungen nur, wenn Wartungsauflagen eingehalten wurden. Die USV-Wartung war überfällig. Ob und wie stark das die Leistung mindert, ist fachlich zu prüfen.",
+      "moderatorGut": "Risiko in die Liquiditätsplanung aufnehmen und offen in den Krisenstab geben.",
+      "moderatorSchlecht": "Mit der vollen Erstattung planen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "facility-management"
+      ],
+      "zuBeginnVon": "LK24"
+    },
+    {
+      "id": "SK28",
+      "nr": 28,
+      "empfaenger": "it-support-filialen",
+      "minuteOffset": 81.5,
+      "vertraulich": true,
+      "text": "Bei vier Filialen schlägt der Kassenabgleich fehl: Die Abverkäufe von Dienstag bis Donnerstag liegen nur auf den Kassen selbst. Wenn ihr die Kassen neu aufsetzt, sind die Daten weg.",
+      "moderatorGut": "Abgleich stoppen, Daten sichern lassen, Krisenstab informieren.",
+      "moderatorSchlecht": "Neu aufsetzen, damit es schnell geht.",
+      "prioritaet": 2,
       "fallbackEmpfaenger": [
         "leiter-it",
-        "regionalleiterin-filialen-nord"
+        "rz-betrieb"
+      ],
+      "zuBeginnVon": "LK22"
+    },
+    {
+      "id": "SK29",
+      "nr": 29,
+      "empfaenger": "rz-betrieb",
+      "minuteOffset": 69.5,
+      "vertraulich": true,
+      "text": "Die Rücksicherung läuft sauber. Die Aktionspreise fehlen in der Montagskopie; der Einkauf hat sie nur als PDF vom Druckdienstleister. Abtippen dauert, Einlesen per Skript aus dem PDF ist schnell, aber ungeprüft.",
+      "moderatorGut": "Vier-Augen-Prüfung für jeden Preisimport festlegen und Freigabe einholen.",
+      "moderatorSchlecht": "Ungeprüftes Einlesen, „weil Samstag ist“.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "informationssicherheit"
+      ],
+      "zuBeginnVon": "LK19"
+    },
+    {
+      "id": "SK30",
+      "nr": 30,
+      "empfaenger": "leiter-einkauf",
+      "minuteOffset": 85.5,
+      "vertraulich": true,
+      "text": "Lieferanten fragen nach Bestellungen von Montag, die im System fehlen. Zwei haben „vorsichtshalber“ doppelt geliefert, einer hat gar nicht geliefert, weil keine Bestätigung kam.",
+      "moderatorGut": "Bestellungen aus Lieferantenbestätigungen rekonstruieren, Abgleich organisieren, Krisenstab informieren.",
+      "moderatorSchlecht": "Alles annehmen, was kommt, und später sortieren.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-logistik-zentrallager",
+        "leiter-finanzen-cfo"
+      ],
+      "zuBeginnVon": "LK23"
+    },
+    {
+      "id": "SK31",
+      "nr": 31,
+      "empfaenger": "leiterin-logistik-zentrallager",
+      "minuteOffset": 86,
+      "vertraulich": true,
+      "text": "Die Wareneingänge vom Montag (38 Lkw) sind im System nicht gebucht. Die Ware steht im Lager, laut System gibt es sie nicht – die Filialen sehen „nicht verfügbar“.",
+      "moderatorGut": "Nachbuchung priorisieren (schnelldrehende Saisonware zuerst) und Datenstand erst danach freigeben.",
+      "moderatorSchlecht": "Bestände schätzen und freigeben.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "schichtleiter-zentrallager",
+        "leiter-einkauf"
       ]
+    },
+    {
+      "id": "SK32",
+      "nr": 32,
+      "empfaenger": "leiterin-personal",
+      "minuteOffset": 97.5,
+      "vertraulich": true,
+      "text": "Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.",
+      "moderatorGut": "Ruhezeiten organisieren, Vertretungen planen, Betriebsrat einbinden.",
+      "moderatorSchlecht": "Weitermachen wie bisher, „es ist ja bald vorbei“.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-it"
+      ],
+      "zuBeginnVon": "LK27"
+    },
+    {
+      "id": "SK33",
+      "nr": 33,
+      "empfaenger": "kundenservice-hotline",
+      "minuteOffset": 91.5,
+      "vertraulich": true,
+      "text": "Kundinnen und Kunden fragen, ob ihre Online-Abholungen vom Dienstag noch gelten und ob sie den Prospektpreis nachträglich erstattet bekommen.",
+      "moderatorGut": "Sprachregelung für Abholungen und Erstattungen einfordern.",
+      "moderatorSchlecht": "Einzelfallzusagen ohne Regel.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "online-shop-leitung"
+      ],
+      "zuBeginnVon": "LK25"
+    },
+    {
+      "id": "SK34",
+      "nr": 34,
+      "empfaenger": "assistenz-gf-dokumentation",
+      "minuteOffset": 17.5,
+      "vertraulich": true,
+      "text": "Die Entscheidungen der Brandnacht sind nirgends dokumentiert: wer wann was abgeschaltet, wen informiert, wem welche Anweisung gegeben hat. Versicherer und Sachverständige werden danach fragen.",
+      "moderatorGut": "Chronologie jetzt aus Telefonlisten, Chats und Erinnerungen rekonstruieren und ab sofort mitschreiben.",
+      "moderatorSchlecht": "Erst am Ende aufschreiben.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "notfallmanagement-bcm",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK06"
+    },
+    {
+      "id": "SK35",
+      "nr": 35,
+      "empfaenger": "notfallmanagement-bcm",
+      "minuteOffset": 21.5,
+      "vertraulich": true,
+      "text": "Das IT-Notfallhandbuch liegt als Datei auf dem Fileserver im gesperrten Serverraum. Eine Papierkopie gibt es im Tresor der Geschäftsführung – im Verwaltungsgebäude, das bis zur Freigabe gesperrt ist.",
+      "moderatorGut": "Lücke offen benennen, Kopie aus der Cloud oder von Einzelpersonen beschaffen, Krisenstab nach Erfahrung und Checkliste arbeiten lassen.",
+      "moderatorSchlecht": "So tun, als gäbe es einen Plan.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ]
+    },
+    {
+      "id": "SK36",
+      "nr": 36,
+      "empfaenger": "facility-management",
+      "minuteOffset": 94.5,
+      "vertraulich": true,
+      "text": "Der Sachverständige fragt dich, wer für die USV-Wartung zuständig war: Gebäudetechnik, weil es Haustechnik ist, oder IT, weil sie im Rechenzentrum steht. In den Unterlagen ist es nicht eindeutig geregelt.",
+      "moderatorGut": "Lücke ehrlich benennen und als Maßnahme festhalten.",
+      "moderatorSchlecht": "Die Verantwortung der jeweils anderen Abteilung zuschieben.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "geschaeftsfuehrer-ceo"
+      ],
+      "zuBeginnVon": "LK26"
+    },
+    {
+      "id": "SK37",
+      "nr": 37,
+      "empfaenger": "leiter-it",
+      "minuteOffset": 100.5,
+      "vertraulich": true,
+      "text": "Die Geschäftsführung will bis Mittwoch deine Empfehlung: zurück ins eigene Rechenzentrum, dauerhaft auslagern oder zwei Standorte. Dein Team ist erschöpft, die Partnermärkte wollen Gewissheit.",
+      "moderatorGut": "Kriterien statt Bauchgefühl: Risiko, Kosten, Zeit, Personal; Entscheidung erst nach Prüfung.",
+      "moderatorSchlecht": "Unter Druck aus dem Bauch entscheiden.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo",
+        "leiter-finanzen-cfo"
+      ],
+      "zuBeginnVon": "LK28"
+    },
+    {
+      "id": "SK38",
+      "nr": 38,
+      "empfaenger": "regionalleiterin-filialen-nord",
+      "minuteOffset": 83,
+      "vertraulich": true,
+      "text": "Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nicht stornieren. Kundinnen und Kunden stehen mit Ware und Bon an der Information.",
+      "moderatorGut": "Übergangsregel für Rückgaben einfordern und kommunizieren.",
+      "moderatorSchlecht": "Jede Filiale improvisiert.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "regionalleiter-filialen-sued"
+      ]
+    },
+    {
+      "id": "SK39",
+      "nr": 39,
+      "empfaenger": "online-shop-leitung",
+      "minuteOffset": 92,
+      "vertraulich": true,
+      "text": "Für Samstag erwartet der Shop-Hoster das Dreifache der üblichen Besucherzahl. Jeder Preis- oder Bestandsfehler wird heute tausendfach gesehen.",
+      "moderatorGut": "Nur freigegebene Daten zeigen, Aussagen zu Verfügbarkeit vorsichtig formulieren.",
+      "moderatorSchlecht": "Alles freischalten, was technisch geht.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiterin-kommunikation-pr"
+      ]
+    },
+    {
+      "id": "SK40",
+      "nr": 40,
+      "empfaenger": "informationssicherheit",
+      "minuteOffset": 70,
+      "vertraulich": true,
+      "text": "Das Team will für die Umstellung der 23 Märkte die Firewall des Ausweich-Racks „vorübergehend für alles öffnen“, damit es schneller geht. Später zu schließen ist geplant, aber nicht terminiert.",
+      "moderatorGut": "Keine pauschale Öffnung; Regeln je Markt mit Vier-Augen-Prüfung; Ausnahme nur mit Befristung und Freigabe.",
+      "moderatorSchlecht": "Zustimmen, weil der Druck groß ist.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it",
+        "rz-betrieb"
+      ]
+    },
+    {
+      "id": "SK41",
+      "nr": 41,
+      "empfaenger": "rz-betrieb",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.",
+      "moderatorGut": "Zeitverlust offen in den Krisenstab geben und Planung anpassen.",
+      "moderatorSchlecht": "Ohne Reparatur übertragen.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "leiter-it"
+      ],
+      "nurNachWeiche": true
+    },
+    {
+      "id": "SK42",
+      "nr": 42,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Der Verbundvorstand ruft an: Die Partner haben aus der Lokalzeitung mehr über den Brand erfahren als von Waterkant. Er verlangt bis heute Abend ein Gespräch mit dir.",
+      "moderatorGut": "Sofort Termin anbieten, Versäumnis einräumen, festen Informationstakt zusagen.",
+      "moderatorSchlecht": "Rechtfertigen statt informieren.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "partnerbetreuung"
+      ],
+      "nurNachWeiche": true
+    },
+    {
+      "id": "SK43",
+      "nr": 43,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.",
+      "moderatorGut": "Unterlagen liegen vor und werden geliefert.",
+      "moderatorSchlecht": "Es gibt keine schriftliche Grundlage.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "facility-management"
+      ],
+      "nurNachWeiche": true
+    },
+    {
+      "id": "SK44",
+      "nr": 44,
+      "empfaenger": "partnerbetreuung",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.",
+      "moderatorGut": "Reihenfolge und Kriterium offen erklären, Gespräch auf Leitungsebene anbieten.",
+      "moderatorSchlecht": "Abstreiten oder kleinreden.",
+      "prioritaet": 1,
+      "fallbackEmpfaenger": [
+        "geschaeftsfuehrer-ceo"
+      ],
+      "nurNachWeiche": true
+    },
+    {
+      "id": "SK45",
+      "nr": 45,
+      "empfaenger": "online-shop-leitung",
+      "minuteOffset": null,
+      "vertraulich": true,
+      "text": "Nach der schnellen Verlagerung zeigt der Online-Shop für 140 Artikel noch Preise von Montag – der Abgleich der Aktionspreise fehlt in der neuen Umgebung.",
+      "moderatorGut": "Betroffene Artikel sofort aus dem Verkauf nehmen und Abgleich nachholen.",
+      "moderatorSchlecht": "Weiterverkaufen und später korrigieren.",
+      "prioritaet": 2,
+      "fallbackEmpfaenger": [
+        "leiter-it"
+      ],
+      "nurNachWeiche": true
     }
   ],
   "bonuskarten": [
     {
       "id": "B1",
-      "empfaenger": "leiterin-personal",
-      "text": "Verlasse den Raum für 10 Minuten. Du führst ein dringendes Gespräch mit der Familie des verletzten Mitarbeiters.",
+      "titel": "Der Netzwerkschlüssel",
+      "empfaenger": "leiter-it",
       "fallbackEmpfaenger": [
-        "geschaeftsfuehrer-ceo",
-        "leiter-arbeitssicherheit"
-      ]
+        "rz-betrieb"
+      ],
+      "voraussetzung": [
+        "LK13"
+      ],
+      "text": "Der einzige Netzwerkadministrator mit Zugang zur Firewall des Ausweich-Racks ist im Urlaub; sein Flug geht in drei Stunden. Die Zugangsdaten liegen im Passwortsafe – auf einem Server im gesperrten Serverraum.",
+      "moderatorHinweis": "Testet Single Point of Failure und Notfallzugänge. Gut: sofort Kontakt aufnehmen, sichere Übergabe organisieren, Lücke als Maßnahme festhalten."
     },
     {
       "id": "B2",
-      "empfaenger": "leiter-it",
-      "text": "Ein Phishing-Versuch nutzt die Verwirrung aus: Eine E-Mail mit dem Betreff 'Aktuelle Informationen zum Brand' verlangt Zugangsdaten. Mehrere Mitarbeitende haben bereits geklickt.",
+      "titel": "Das Foto aus dem Serverraum",
+      "empfaenger": "leiterin-kommunikation-pr",
       "fallbackEmpfaenger": [
-        "notfallmanagement-bcm",
         "geschaeftsfuehrer-ceo"
-      ]
+      ],
+      "voraussetzung": [
+        "LK10"
+      ],
+      "text": "Ein Foto aus dem verrußten Serverraum kursiert im Netz – aufgenommen offenbar von einer beschäftigten Person durch die Glastür. Auf einem Rack ist ein Aufkleber mit dem Namen eines Partnermarkts zu erkennen.",
+      "moderatorHinweis": "Kommunikation und interne Regeln. Gut: Partner informieren, bevor sie es selbst sehen; interne Regel zu Fotos, keine Jagd auf die Person."
     },
     {
       "id": "B3",
-      "empfaenger": "leiterin-kommunikation-pr",
-      "text": "Ein Video vom Brand wird auf Social Media viral: über 500.000 Aufrufe in zwei Stunden.",
+      "titel": "Vorkasse",
+      "empfaenger": "leiter-finanzen-cfo",
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo",
-        "online-shop-leitung"
-      ]
+        "leiter-einkauf"
+      ],
+      "voraussetzung": [
+        "LK15"
+      ],
+      "text": "Der Colocation-Anbieter will vor der Aktivierung eine Vorauszahlung von 60.000 € und eine unterschriebene Vertragsergänzung bis 16 Uhr.",
+      "moderatorHinweis": "Prüft Entscheidungswege unter Zeitdruck. Gut: Freigabe nach Zeichnungsregel, Vertrag kurz fachlich prüfen lassen, Zahlung dokumentieren."
     },
     {
       "id": "B4",
-      "empfaenger": "leiter-finanzen-cfo",
-      "text": "Die Hausbank meldet sich und fragt nach einer aktuellen Liquiditätsplanung für die nächsten Wochen.",
+      "titel": "Wartungsnachweise",
+      "empfaenger": "facility-management",
+      "fallbackEmpfaenger": [
+        "leiter-arbeitssicherheit",
+        "leiter-finanzen-cfo"
+      ],
+      "voraussetzung": [
+        "LK24"
+      ],
+      "text": "Der Versicherer fordert bis Montag alle Wartungsnachweise der USV der letzten zwei Jahre an. Einer der beiden Wartungsberichte ist nicht auffindbar.",
+      "moderatorHinweis": "Ehrlichkeit unter Druck. Gut: Lücke offen benennen, Hersteller um Kopie bitten, nichts nachträglich erstellen."
+    },
+    {
+      "id": "B5",
+      "titel": "Zweiter Alarm",
+      "oeffentlich": true,
+      "empfaenger": "leiter-arbeitssicherheit",
+      "fallbackEmpfaenger": [
+        "facility-management"
+      ],
+      "voraussetzung": [
+        "LK10"
+      ],
+      "text": "Die Brandmeldeanlage im Zentrallager löst aus. Ursache ist wahrscheinlich Staub von den Reinigungsarbeiten nebenan – sicher ist das nicht.",
+      "buehnentext": "Die Brandmeldeanlage im Zentrallager löst aus. Wahrscheinlich hat Staub von den Reinigungsarbeiten im Verwaltungsgebäude den Melder ausgelöst – sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade.",
+      "kriseninfo": "Wahrscheinlich Fehlalarm – nicht bestätigt · 40 Beschäftigte im Lager",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/b5-zweiter-alarm.png",
+        "caption": "Zweiter Alarm, diesmal im Zentrallager."
+      },
+      "sound": {
+        "src": "/media/waterkant/b5-zweiter-alarm.mp3",
+        "loop": false,
+        "volume": 0.6,
+        "uebungshinweis": true
+      },
+      "sprechertext": "Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“",
+      "moderatorHinweis": "Alarmmüdigkeit: Nach dem echten Brand ist die Versuchung groß, „wahrscheinlich Staub“ abzuwarten. Gut: Räumung nach Plan, Feuerwehr entscheidet über Fehlalarm. 60 Sekunden für eine Entscheidung.",
+      "beobachtung": [
+        "Wird geräumt, obwohl ein Fehlalarm wahrscheinlich ist?",
+        "Wer entscheidet – und ist das vorher geregelt?",
+        "Wird die Unterbrechung im Lager (Spedition, Saisonware) danach sauber wieder aufgenommen?"
+      ]
+    },
+    {
+      "id": "B6",
+      "titel": "Wo hat es gebrannt?",
+      "oeffentlich": true,
+      "empfaenger": "leiterin-kommunikation-pr",
       "fallbackEmpfaenger": [
         "geschaeftsfuehrer-ceo"
+      ],
+      "voraussetzung": [
+        "LK11"
+      ],
+      "text": "Ein Online-Portal meldet „Großbrand im Zentrallager von Waterkant“ und zeigt ein altes Archivfoto eines Lagerbrands.",
+      "buehnentext": "Ein Nachrichtenportal meldet „Großbrand im Zentrallager von Waterkant – Lieferungen in Gefahr“ und bebildert es mit einem Archivfoto eines fremden Lagerbrands. Zwei Lieferanten und drei Partner rufen deshalb an.",
+      "kriseninfo": "Falschmeldung im Umlauf · Rückfragen von Lieferanten und Partnern",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/b6-falschmeldung.png",
+        "caption": "Eine Meldung, die nicht stimmt."
+      },
+      "moderatorHinweis": "Widersprüchliche Information korrigieren, ohne sie größer zu machen. Gut: Korrektur beim Portal anfragen, Lieferanten und Partner direkt informieren, Hotline briefen.",
+      "beobachtung": [
+        "Wird die Falschmeldung sachlich korrigiert, ohne sie weiterzuverbreiten?",
+        "Werden Lieferanten und Partner direkt informiert?",
+        "Bekommen Hotline und Filialen eine Sprachregelung?"
+      ]
+    },
+    {
+      "id": "B7",
+      "titel": "Die IT-Leitung muss raus",
+      "oeffentlich": true,
+      "empfaenger": "leiter-it",
+      "fallbackEmpfaenger": [],
+      "voraussetzung": [
+        "LK15"
+      ],
+      "minDauer": 90,
+      "erfordertBesetzt": "leiter-it",
+      "text": "Die IT-Leitung ist seit Dienstag 03:00 Uhr fast ohne Schlaf. Der Betriebsarzt schickt sie für fünf Minuten Übungszeit nach Hause.",
+      "buehnentext": "Die IT-Leitung ist seit Dienstagnacht fast ohne Schlaf. Der Betriebsarzt schickt sie nach Hause – sofort. Die Wiederherstellung im Ausweich-Rack läuft, Entscheidungen stehen an. Die Vertretung übernimmt.",
+      "unterbrechung": {
+        "rolle": "leiter-it",
+        "minuten": 5,
+        "text": "Bitte den Tisch verlassen und in dieser Zeit nicht mit dem Krisenstab sprechen.",
+        "rueckkehr": "IT-Leitung an den Tisch bitten. Erst übergibt die Vertretung in zwei Sätzen („Wir haben entschieden …, offen ist …“), dann darf die IT-Leitung sagen, ob sie etwas ändert – und warum."
+      },
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/b7-it-leitung-raus.png",
+        "caption": "Die Vertretung führt."
+      },
+      "regie": "Die Moderation bittet die IT-Leitung persönlich hinaus. Die Bühne zählt fünf Minuten herunter. B7 ersetzt Lagebearbeitung, der Übungstimer läuft weiter.",
+      "sprechertext": "„Der Betriebsarzt hat entschieden: Sie gehen jetzt nach Hause und schlafen. Bitte kommen Sie mit.“",
+      "moderatorHinweis": "Vertretungsstresstest, nur in Übungen ab 90 Minuten und nur mit besetzter IT-Leitung. Prüfziel: Gibt es eine handlungsfähige Vertretung mit Wissen und Befugnis?",
+      "beobachtung": [
+        "Übernimmt innerhalb von etwa einer Minute sichtbar jemand die technische Führung?",
+        "Kennt die Vertretung den Stand der Wiederherstellung und die nächsten Schritte?",
+        "Werden anstehende Entscheidungen getroffen statt vertagt?",
+        "Hat die Vertretung die nötigen Zugänge und Befugnisse – oder fehlen sie?",
+        "Bekommt die IT-Leitung bei der Rückkehr eine kurze Übergabe?"
+      ]
+    },
+    {
+      "id": "B8",
+      "titel": "Ein Angebot mit Haken",
+      "oeffentlich": true,
+      "empfaenger": "geschaeftsfuehrer-ceo",
+      "fallbackEmpfaenger": [
+        "leiter-it"
+      ],
+      "voraussetzung": [
+        "LK15"
+      ],
+      "text": "Ein Partnermarkt mit eigenem Serverraum bietet an, die Kassendienste für alle 23 Märkte sofort auf seinen Servern zu betreiben – kostenlos, „unter Partnern“.",
+      "buehnentext": "Ein großer Partnermarkt mit eigenem Serverraum bietet an, die Kassendienste für alle 23 Märkte ab sofort auf seinen Servern zu betreiben – kostenlos, „unter Partnern“. Er braucht nur heute Abend die Daten aller Märkte.",
+      "kriseninfo": "Angebot: sofort, kostenlos · Bedingung: Daten aller 23 Märkte heute Abend",
+      "media": {
+        "type": "image",
+        "src": "/media/waterkant/b8-angebot.png",
+        "caption": "Schnelle Hilfe – zu welchem Preis?"
+      },
+      "moderatorHinweis": "Gute Nachricht mit Haken: Sicherheit, Datenschutz, Wettbewerb unter Partnern, Verträge, Kapazität. Gut: dankend prüfen, nicht unter Zeitdruck Daten anderer Märkte weitergeben; fachlich prüfen lassen.",
+      "beobachtung": [
+        "Wird das Angebot geprüft statt reflexhaft angenommen oder abgelehnt?",
+        "Wird bedacht, dass Daten anderer Märkte betroffen sind?",
+        "Wer entscheidet – und wird es den anderen Partnern erklärt?"
       ]
     }
   ],
@@ -1223,118 +2113,567 @@
     "Dokumentation"
   ],
   "urkunde": {
-    "veranstaltung": "BCM-Krisensimulation „72 Stunden in Flammen“"
+    "veranstaltung": "BCM-Krisensimulation „Wenn das Rechenzentrum brennt“"
   },
   "sounds": {
     "idle": {
-      "src": "/media/waterkant/ambience-kundschaft.mp3",
+      "src": "/media/waterkant/ambience-rechenzentrum.mp3",
       "loop": true,
-      "volume": 0.5
+      "volume": 0.45
     }
   },
   "nachspiel": {
-    "titel": "Alles läuft wieder? Die Krise ist nicht vorbei.",
-    "einleitung": "Donnerstag, 16:00 Uhr. Das Interimslager läuft, die wichtigsten Filialen bekommen wieder Ware. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
+    "titel": "Läuft alles wieder? Die Krise ist nicht vorbei.",
+    "einleitung": "Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.",
     "nacharbeiten": [
       {
-        "zahl": "5.600",
-        "text": "handschriftliche Lieferscheine und Kassenbelege aus dem Notbetrieb müssen nachgebucht und mit den Beständen abgeglichen werden"
+        "zahl": "23",
+        "text": "Märkte (14 Filialen, 9 Partner) gleichen Offline-Abverkäufe mit der Warenwirtschaft ab"
       },
       {
-        "zahl": "12.000",
-        "text": "Artikel mit Preisen und Beständen werden aus dem drei Wochen alten Cloud-Backup korrigiert"
+        "zahl": "38",
+        "text": "Lkw-Ladungen vom Montag werden aus Lieferscheinen nachgebucht"
       },
       {
-        "zahl": "87",
-        "text": "Lkw-Ladungen Ware werden ins Interimslager umgelagert oder per Direktbelieferung umgeleitet"
+        "zahl": "312",
+        "text": "Online-Abholungen werden erfüllt, umgebucht oder erstattet"
       },
       {
-        "zahl": "237",
-        "text": "Online-Bestellungen werden nachgeliefert, storniert oder entschädigt – der Bewertungsschnitt liegt bei 2,1 Sternen"
-      },
-      {
-        "zahl": "14",
-        "text": "Filialen brauchen Inventur, Brandschutzprüfung und eine Schulung des Personals"
-      },
-      {
-        "zahl": "18 Monate",
-        "text": "dauert der Wiederaufbau des Zentrallagers – die Versicherung zahlt den Ertragsausfall nur 12 Monate"
+        "zahl": "16",
+        "text": "Racks werden gereinigt, geprüft oder ersetzt – ob die gereinigte Hardware dauerhaft zuverlässig ist, bleibt offen"
       },
       {
         "zahl": "1",
-        "text": "Ermittlungsverfahren läuft weiter, ebenso die Sanierung des Bachs und die Gespräche mit der Nachbarschaft"
+        "text": "neue USV-Anlage, mit geklärter Zuständigkeit für Wartung und Updates"
+      },
+      {
+        "zahl": "3 Wochen",
+        "text": "bis zur Entscheidung: zurück ins eigene Rechenzentrum, auslagern oder zwei Standorte"
+      },
+      {
+        "zahl": "9",
+        "text": "Partnergespräche über Vertrauen, Gutschriften und die Zukunft des gemeinsamen IT-Betriebs"
       }
     ],
     "rechnung": [
       {
-        "posten": "Sachschaden an Gebäude, Technik und Beständen (Gutachter)",
-        "betrag": 18000000,
-        "bcmHebel": "Brandschutzwartung und Mängelmeldungen ernst nehmen – der defekte Rauchmelder war gemeldet."
+        "posten": "Reinigung und Dekontamination des Serverraums, Sanierung des USV-Raums, Gutachten",
+        "betrag": 480000,
+        "bcmHebel": "Brandabschnitte, Rauchschutz und ein geübter Sanierungsvertrag begrenzen Sekundärschäden.",
+        "herleitung": "Szenarioannahme: Angebot einer Fachfirma für 120 m² Serverraum mit 16 Racks plus Sanierung des USV-Raums und Brandgutachten."
       },
       {
-        "posten": "Ertragsausfall in der Karenzzeit (10 Tage, selbst getragen)",
-        "betrag": 1300000,
-        "bcmHebel": "Ausweichlager und Direktbelieferung vorab vertraglich gesichert."
+        "posten": "Ersatz der USV-Anlage und korrosionsgefährdeter Hardware (Server, Speicher, Netzwerk)",
+        "betrag": 1250000,
+        "bcmHebel": "Gewartete USV mit aktueller Batteriesteuerung; räumliche Trennung von Batterie und Serverraum.",
+        "herleitung": "Szenarioannahme: Neuwert, rund 60 % der Komponenten werden wegen Korrosionsrisiko ersetzt; neue USV einschließlich Einbau."
       },
       {
-        "posten": "Ertragsausfall nach Ende der Haftzeit (Monate 13 bis 18)",
-        "betrag": 2100000,
-        "bcmHebel": "Haftzeit der Versicherung und realistische Wiederaufbaudauer abgeglichen."
+        "posten": "Ausweichbetrieb im Grundumfang (Aktivierung, Anbindung von 23 Märkten)",
+        "betrag": 90000,
+        "bcmHebel": "Ein geübter Ausweichplan macht die Aktivierung planbar.",
+        "herleitung": "Szenarioannahme: Aktivierungsgebühr laut Notfallvertrag plus Netzwerkanbindung."
       },
       {
-        "posten": "Mehrkosten Ausweichlieferant (+30 %) und Interimslager",
-        "betrag": 950000,
-        "bcmHebel": "Zweitlieferanten und Rahmenverträge vorab verhandelt."
+        "posten": "Externe Dienstleister für die Wiederherstellung (7 Tage)",
+        "betrag": 260000,
+        "bcmHebel": "Rahmenverträge mit Reaktionszeiten statt Notfallpreisen.",
+        "herleitung": "Szenarioannahme: drei Dienstleisterteams (Netzwerk, Datenbank, Kassensystem) über sieben Tage, teils rund um die Uhr."
       },
       {
-        "posten": "Umweltschaden durch Löschwasser: Sanierung, Gutachten, Bußgeld",
-        "betrag": 650000,
-        "bcmHebel": "Löschwasserrückhaltung und Gefahrstoffkonzept regelmäßig geprüft."
+        "posten": "Überstunden und Sonderschichten in IT, Filialen und Zentrallager",
+        "betrag": 180000,
+        "bcmHebel": "Vertretungsregeln und Schichtpläne für den Notbetrieb.",
+        "herleitung": "Szenarioannahme auf Basis der Einsatzzeiten der Woche."
       },
       {
-        "posten": "Stornierter Großauftrag und verlorene Gewerbekunden",
-        "betrag": 400000,
-        "bcmHebel": "Proaktive Kommunikation mit Gewerbekunden in den ersten Stunden."
+        "posten": "Entgangener Rohertrag in der Saisonstart-Woche (Filialen, Lager, Gewerbekunden)",
+        "betrag": 700000,
+        "bcmHebel": "Offline-Preisdienste und vorbereitete Notprozesse halten den Verkauf am Laufen.",
+        "herleitung": "Umsatz 240 Mio. € ÷ ca. 300 Verkaufstage ≈ 800.000 € je Tag; Saisonstart-Woche etwa das 1,5-Fache ≈ 1,2 Mio. € je Tag; Umsatzminderung Dienstag bis Samstag rund 20 % ≈ 1,2 Mio. € Umsatz, dazu rund 0,9 Mio. € Umsatz bei Gewerbekunden und durch Lieferstopp aus dem Zentrallager; Rohertragsquote ca. 33 % (fachliche Annahme) ≈ 0,7 Mio. €. Vom Controlling bestätigen lassen."
       },
       {
-        "posten": "Sonderschichten, Inventuren und Nacherfassung in 14 Filialen",
-        "betrag": 340000,
-        "bcmHebel": "Offline-Kassenbetrieb mit klarem Nacherfassungsprozess."
-      },
-      {
-        "posten": "Recht: Ermittlungsverfahren, Störfallverfahren, Krisenkommunikation",
-        "betrag": 280000,
-        "bcmHebel": "Störfallunterlagen aktuell und sofort greifbar."
-      },
-      {
-        "posten": "Online-Shop: Erstattungen, Gutscheine, Reputationsverlust",
+        "posten": "Kulanz bei Prospektpreisen, Gutscheine und Mehraufwand der Hotline",
         "betrag": 120000,
-        "bcmHebel": "Shop-Bestände automatisch sperren, wenn das Lager ausfällt."
+        "bcmHebel": "Eine einheitliche, früh entschiedene Kulanzregel ist billiger als Einzelfälle.",
+        "herleitung": "Szenarioannahme."
+      },
+      {
+        "posten": "Gutschriften an Partnermärkte laut Servicevertrag (Grundumfang)",
+        "betrag": 36000,
+        "bcmHebel": "Realistische Wiederherstellungsziele, die ein Ausweichplan auch einhält.",
+        "herleitung": "Szenarioannahme: 9 Märkte × 2 angefangene Tage über dem 24-Stunden-Ziel × 2.000 €."
+      },
+      {
+        "posten": "Nacherfassung, Kassenabgleich und Inventurstichproben (Grundumfang)",
+        "betrag": 60000,
+        "bcmHebel": "Kürzere Sicherungsintervalle und schnellere Übertragung der Kopien verkleinern die Lücke.",
+        "herleitung": "Szenarioannahme."
       }
     ],
     "optionalePosten": [
       {
-        "id": "nachbarschaft",
-        "frage": "Wurde die vorgeschriebene Information der Nachbarschaft versäumt?",
-        "posten": "Bußgeld nach Störfall-Verordnung und Anwaltskosten der Nachbarschaft",
-        "betrag": 180000,
-        "bcmHebel": "Alarm- und Gefahrenabwehrplan mit Nachbarschaftsinformation vorbereitet."
+        "id": "preisuebertragung",
+        "frage": "Hat die IT in der Brandnacht kontrolliert heruntergefahren?",
+        "posten": "Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten",
+        "betrag": 50000,
+        "bcmHebel": "Preisübertragungen rechtzeitig vor Saisonstart abschließen."
       },
       {
-        "id": "pressekonferenz",
-        "frage": "Ist die Pressekonferenz misslungen (keine klare Botschaft, Widersprüche)?",
-        "posten": "Zusätzlicher Umsatzverlust durch Vertrauensverlust in der Region (12 Monate)",
-        "betrag": 900000,
-        "bcmHebel": "Krisenkommunikation mit vorbereiteten Kernbotschaften geübt."
+        "id": "datenbankreparatur",
+        "frage": "Liefen die Systeme bis zum Stromausfall weiter?",
+        "posten": "Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug)",
+        "betrag": 95000,
+        "bcmHebel": "Klare Abschaltregel bei Klimaalarm im Rechenzentrum."
+      },
+      {
+        "id": "partnerkulanz",
+        "frage": "Wurden die Partnermärkte erst informiert, als ein Termin feststand?",
+        "posten": "Kulanz und Sonderkonditionen für Partnermärkte",
+        "betrag": 40000,
+        "bcmHebel": "Vorbereitete Partnerkommunikation mit festem Informationstakt."
+      },
+      {
+        "id": "bergung",
+        "frage": "Wurde der Backup-Server durch eine Fachfirma geborgen?",
+        "posten": "Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen",
+        "betrag": 45000,
+        "bcmHebel": "Sicherungskopien so übertragen, dass niemand in einen Brandraum muss."
+      },
+      {
+        "id": "nacherfassung",
+        "frage": "Wurde die Freigabe des Serverraums abgewartet?",
+        "posten": "Nacherfassung von rund 26 Stunden Bewegungsdaten",
+        "betrag": 140000,
+        "bcmHebel": "Sicherungskopien sofort nach Erstellung außer Haus übertragen."
+      },
+      {
+        "id": "ausweichminimal",
+        "frage": "Wurde nur das Nötigste ins Ausweich-Rack verlagert?",
+        "posten": "Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt)",
+        "betrag": 260000,
+        "bcmHebel": "Ausweichkapazität für alle kritischen Prozesse vorhalten."
+      },
+      {
+        "id": "ausweichausbau",
+        "frage": "Wurde der Ausweichbetrieb erweitert?",
+        "posten": "Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister",
+        "betrag": 210000,
+        "bcmHebel": "Vorab verhandelte Erweiterungsoptionen sind günstiger als Notfallpreise."
+      },
+      {
+        "id": "reihenfolgegleich",
+        "frage": "Wurden eigene Filialen und Partner nach einem gemeinsamen Kriterium umgestellt?",
+        "posten": "Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll",
+        "betrag": 60000,
+        "bcmHebel": "Vorab vereinbarte, für alle transparente Wiederanlaufreihenfolge."
+      },
+      {
+        "id": "partnerabwanderung",
+        "frage": "Kamen die eigenen Filialen zuerst?",
+        "posten": "Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate)",
+        "betrag": 90000,
+        "bcmHebel": "Vorab vereinbarte, für alle transparente Wiederanlaufreihenfolge."
       }
     ],
     "versicherung": {
-      "text": "Erstattung Sachversicherung (abzüglich 250.000 € Selbstbehalt)",
-      "betrag": 17750000
+      "text": "Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt)",
+      "betrag": 1600000,
+      "erlaeuterung": "Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,6 Mio. € ist eine unbestätigte Modellannahme; Wartungsauflagen (USV-Wartung überfällig), Selbstbehalte, Karenzzeit und die Anerkennung einzelner Kostenpositionen sind nicht bewertet."
     },
     "jahresumsatz": 240000000,
     "umsatzrendite": 0.05,
-    "fazit": "Das Lager läuft nach drei Tagen wieder an. Der Wiederaufbau dauert 18 Monate, das Vertrauen der Region womöglich länger. Eine Krise ist erst vorbei, wenn die Kunden uns wieder vertrauen.",
-    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt."
-  }
+    "fazit": "Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.",
+    "hinweis": "Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt; alle Beträge sind Szenarioannahmen. Die Erstattung ist eine hypothetische Modellannahme. Liquiditätswirkungen (z. B. Vorkasse, verschobene Lieferantenrechnungen) sind kein Schaden und deshalb nicht enthalten."
+  },
+  "weichen": [
+    {
+      "id": "W1",
+      "lagekarten": [
+        "LK03"
+      ],
+      "frage": "Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?",
+      "hinweis": "Um 03:02 Uhr weiß niemand, dass es brennt. Herunterfahren bricht die Preisübertragung zum Saisonstart und die Partner-Uploads ab und könnte ein Fehlalarm sein; Weiterlaufen riskiert einen harten Ausfall. Beide Antworten sind vertretbar – bewertet wird, ob jemand entscheidet und es dokumentiert.",
+      "optionen": [
+        {
+          "id": "herunterfahren",
+          "label": "Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)",
+          "wirkung": "Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.",
+          "folgen": [
+            {
+              "lagekarte": "LK19",
+              "zusatz": "Weil die Systeme in der Brandnacht kontrolliert heruntergefahren wurden, sind die Datenbanken konsistent – die Rücksicherung kommt ohne Reparatur aus."
+            },
+            {
+              "lagekarte": "LK22",
+              "zusatz": "Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden."
+            }
+          ],
+          "posten": [
+            "preisuebertragung"
+          ]
+        },
+        {
+          "id": "weiterlaufen",
+          "label": "Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat",
+          "wirkung": "Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.",
+          "folgen": [
+            {
+              "lagekarte": "LK08",
+              "zusatz": "Ausnahme: In 5 der 14 Filialen kam die Preisübertragung vor dem Stromausfall noch an – dort stimmen die Aktionspreise."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK41",
+            "beiLagekarte": "LK15"
+          },
+          "posten": [
+            "datenbankreparatur"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "lagekarten": [
+        "LK09"
+      ],
+      "frage": "Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?",
+      "hinweis": "Früh heißt: Partner können planen, aber eine unsichere Prognose kann sich als falsch erweisen. Spät heißt: gesicherte Aussage, aber die Partner hören bis dahin Gerüchte. Gut ist eine abgewogene Entscheidung, nicht automatisch „früh“.",
+      "optionen": [
+        {
+          "id": "frueh",
+          "label": "Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt",
+          "wirkung": "Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.",
+          "folgen": [
+            {
+              "lagekarte": "LK22",
+              "zusatz": "Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände."
+            }
+          ]
+        },
+        {
+          "id": "spaeter",
+          "label": "Erst informieren, wenn ein belastbarer Termin feststeht (voraussichtlich Mittwoch)",
+          "wirkung": "Die Partner erfahren die Lage aus der Zeitung; der Verbundvorstand verlangt ein Gespräch (vertrauliche Karte bei „Den Backup-Server bergen?“); Kulanzposten in der Rechnung.",
+          "folgen": [
+            {
+              "lagekarte": "LK18",
+              "zusatz": "Mehrere Partner beklagen, dass sie bis Mittwoch nur Gerüchte hatten."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK42",
+            "beiLagekarte": "LK14"
+          },
+          "posten": [
+            "partnerkulanz"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "lagekarten": [
+        "LK14"
+      ],
+      "frage": "Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?",
+      "hinweis": "Personenschutz gegen eine kleinere Datenlücke. Wird geborgen, dann nur durch die Fachfirma mit Gefährdungsbeurteilung, Messwerten, Schutzausrüstung und Dokumentation – nie durch die eigene IT. Beide Wege sind vertretbar.",
+      "optionen": [
+        {
+          "id": "bergen",
+          "label": "Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen",
+          "wirkung": "Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.",
+          "folgen": [
+            {
+              "lagekarte": "LK23",
+              "zusatz": "Die am Mittwoch geborgene Dienstagssicherung war nach Reinigung lesbar: Die Lücke schrumpft auf die zwei Stunden vor dem Brand.",
+              "kriseninfo": "Datenlücke: ca. 2 Stunden (Dienstagssicherung geborgen und geprüft)"
+            },
+            {
+              "lagekarte": "LK27",
+              "zusatz": "Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK43",
+            "beiLagekarte": "LK22"
+          },
+          "posten": [
+            "bergung"
+          ]
+        },
+        {
+          "id": "abwarten",
+          "label": "Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)",
+          "wirkung": "Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.",
+          "folgen": [
+            {
+              "lagekarte": "LK23",
+              "zusatz": "Der Backup-Server bleibt bis zur Freigabe im Raum; ob die Dienstagssicherung danach noch lesbar ist, ist offen."
+            },
+            {
+              "lagekarte": "LK27",
+              "zusatz": "Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche."
+            }
+          ],
+          "posten": [
+            "nacherfassung"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W4",
+      "lagekarten": [
+        "LK15"
+      ],
+      "frage": "Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?",
+      "hinweis": "Klein: günstiger, weniger Fehlerrisiko, aber drei Wochen ohne Lagerverwaltung, Gewerbeportal und Online-Bestände. Groß: zwölf Monate Vertrag, mehr Arbeit für ein erschöpftes Team, schneller zurück. Keine Option ist kostenlos.",
+      "optionen": [
+        {
+          "id": "minimal",
+          "label": "Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum",
+          "wirkung": "Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus.",
+          "folgen": [
+            {
+              "lagekarte": "LK25",
+              "zusatz": "Online-Shop und Gewerbeportal laufen weiter nur mit „Abholung nach telefonischer Bestätigung“ – Gewerbekunden weichen zu Wettbewerbern aus."
+            },
+            {
+              "lagekarte": "LK27",
+              "zusatz": "Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt."
+            }
+          ],
+          "posten": [
+            "ausweichminimal"
+          ]
+        },
+        {
+          "id": "ausbauen",
+          "label": "Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)",
+          "wirkung": "Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag).",
+          "folgen": [
+            {
+              "lagekarte": "LK25",
+              "zusatz": "Online-Shop und Gewerbeportal laufen seit Freitagabend wieder aus dem erweiterten Ausweich-Rack."
+            },
+            {
+              "lagekarte": "LK27",
+              "zusatz": "Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK45",
+            "beiLagekarte": "LK25"
+          },
+          "posten": [
+            "ausweichausbau"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W5",
+      "lagekarten": [
+        "LK20"
+      ],
+      "frage": "Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?",
+      "hinweis": "Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium.",
+      "optionen": [
+        {
+          "id": "gleichrangig",
+          "label": "Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)",
+          "wirkung": "Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.",
+          "folgen": [
+            {
+              "lagekarte": "LK22",
+              "zusatz": "Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht."
+            }
+          ],
+          "posten": [
+            "reihenfolgegleich"
+          ]
+        },
+        {
+          "id": "eigene",
+          "label": "Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später",
+          "wirkung": "Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).",
+          "folgen": [
+            {
+              "lagekarte": "LK22",
+              "zusatz": "Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze."
+            }
+          ],
+          "karte": {
+            "sonderlagekarte": "SK44",
+            "beiLagekarte": "LK22"
+          },
+          "posten": [
+            "partnerabwanderung"
+          ]
+        }
+      ]
+    }
+  ],
+  "schwerpunkte": [
+    {
+      "key": "fuehrung",
+      "label": "Krisenführung und Personenschutz",
+      "beschreibung": "Wer entscheidet in der Nacht, wer schützt die Menschen, wer vertritt wen?",
+      "karten": [
+        "LK04",
+        "LK05",
+        "LK14",
+        "LK18",
+        "LK27",
+        "SK04",
+        "SK05",
+        "SK06",
+        "SK21",
+        "SK20",
+        "SK34",
+        "SK32",
+        "B5",
+        "B7"
+      ],
+      "leitfrage": "Wer entscheidet – und gilt Personenschutz auch dann, wenn Daten und Umsatz auf dem Spiel stehen?",
+      "zusatzfragen": {
+        "LK03": "Wer darf um 03:02 Uhr entscheiden – und wie erfährt die Geschäftsführung davon?",
+        "LK04": "Wer übernimmt die Führung, bis der Krisenstab steht?",
+        "LK06": "Ist jetzt allen klar, wer den Krisenstab leitet und wer die Vertretung ist?",
+        "LK14": "Wer hat das letzte Wort beim Betreten – und ist das allen klar?",
+        "LK15": "Wer trägt diese Entscheidung, und wie wird sie dokumentiert?",
+        "LK20": "Wie wird die Entscheidung begründet und wem erklärt?",
+        "LK22": "Wer prüft, dass „läuft wieder“ wirklich stimmt?",
+        "LK27": "Wer achtet auf die Menschen, die seit Dienstag durcharbeiten?"
+      },
+      "debriefing": [
+        "War jederzeit klar, wer entscheidet – auch in der Nacht?",
+        "Wann stand Personenschutz gegen Daten oder Umsatz – und wie habt ihr entschieden?"
+      ],
+      "pflicht": [
+        "SK21"
+      ]
+    },
+    {
+      "key": "it",
+      "label": "IT-Wiederanlauf und Infrastruktur",
+      "beschreibung": "Abschalten, Freigabe, Ausweichbetrieb, Datenlücke und sichere Umstellung.",
+      "karten": [
+        "LK03",
+        "LK07",
+        "LK10",
+        "LK13",
+        "LK19",
+        "LK23",
+        "SK03",
+        "SK08",
+        "SK14",
+        "SK19",
+        "SK29",
+        "SK40",
+        "SK22",
+        "B1",
+        "B8"
+      ],
+      "leitfrage": "Was muss technisch geprüft, sicher und fachlich freigegeben sein, bevor etwas wieder läuft?",
+      "zusatzfragen": {
+        "LK03": "Gibt es eine Regel, ab welcher Temperatur abgeschaltet wird – und wer sie kennt?",
+        "LK06": "Welche Abhängigkeiten zwischen den Systemen kennen Sie – und welche nicht?",
+        "LK09": "Welches Wiederherstellungsziel ist realistisch, nicht vertraglich?",
+        "LK14": "Welche Daten fehlen ohne Bergung genau – und wie würden Sie sie rekonstruieren?",
+        "LK15": "Welche Abhängigkeiten zwischen Kassen, Warenwirtschaft und Netzwerk bestimmen die Reihenfolge?",
+        "LK20": "Wie stellen Sie sicher, dass jeder umgestellte Markt geprüft ist?",
+        "LK22": "Woran erkennen Sie technisch, dass ein Markt sauber läuft?",
+        "LK27": "Welche technischen Schulden aus dem Notbetrieb müssen Sie zurückzahlen?"
+      },
+      "debriefing": [
+        "Welche Abkürzung war im Notbetrieb verlockend – und welche habt ihr genommen?",
+        "Was hätte der Ausweichplan vorher geübt haben müssen?"
+      ],
+      "pflicht": [
+        "SK19"
+      ]
+    },
+    {
+      "key": "kunden",
+      "label": "Partner, Kunden und Kommunikation",
+      "beschreibung": "Partnermärkte mit Vertrag, Gewerbekunden, Kundschaft, Presse.",
+      "karten": [
+        "LK09",
+        "LK11",
+        "LK16",
+        "LK17",
+        "LK18",
+        "LK21",
+        "SK11",
+        "SK12",
+        "SK15",
+        "SK24",
+        "SK25",
+        "SK26",
+        "B2",
+        "B6",
+        "B8"
+      ],
+      "leitfrage": "Wer erfährt wann was von wem – und stimmt das mit dem überein, was wir wirklich wissen?",
+      "zusatzfragen": {
+        "LK06": "Wer muss es von Ihnen hören, bevor er es aus den Medien erfährt?",
+        "LK08": "Was sagt die Kassiererin, wenn jemand mit dem Prospekt kommt?",
+        "LK09": "Ist Ihre Aussage eine Prognose oder ein Versprechen – und weiß der Partner den Unterschied?",
+        "LK14": "Was sagen Sie Partnern und Kunden zur Datenlücke?",
+        "LK15": "Wie erklären Sie Gewerbekunden, dass ihr Portal (noch) nicht läuft?",
+        "LK20": "Wie erklären Sie die Reihenfolge – und wem zuerst?",
+        "LK22": "Welche Botschaft bekommen Filialen, Partner und Hotline zur gleichen Zeit?",
+        "LK27": "Wie schließen Sie die Woche nach außen ab, ohne zu viel zu versprechen?"
+      },
+      "debriefing": [
+        "Welche Zusage nach außen war am riskantesten?",
+        "Wo kamen Informationen bei Partnern oder Kundschaft zu spät oder widersprüchlich an?"
+      ],
+      "pflicht": [
+        "SK11"
+      ]
+    },
+    {
+      "key": "betrieb",
+      "label": "Filialen, Lager und Saisonstart",
+      "beschreibung": "Kassen, Preise, Lager und Gewerbekunden im Notbetrieb.",
+      "karten": [
+        "LK08",
+        "LK12",
+        "LK16",
+        "LK17",
+        "LK23",
+        "LK25",
+        "SK08",
+        "SK09",
+        "SK10",
+        "SK16",
+        "SK17",
+        "SK31",
+        "SK38",
+        "B5",
+        "B6"
+      ],
+      "leitfrage": "Wie verkaufen Sie zum Saisonstart, ohne später nicht mehr nachvollziehen zu können, was verkauft wurde?",
+      "zusatzfragen": {
+        "LK06": "Was muss bis 08:00 Uhr in den Filialen ankommen?",
+        "LK09": "Was brauchen die Partnermärkte, um morgen zu öffnen?",
+        "LK14": "Was bedeutet die Datenlücke für Bestände im Lager und in den Filialen?",
+        "LK15": "Wie lange kommt das Lager ohne Lagerverwaltung aus?",
+        "LK20": "Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium?",
+        "LK22": "Wie gehen Filialen mit Bons aus dem Offline-Zeitraum um?",
+        "LK27": "Was ist im Filialbetrieb ab Montag wieder normal – und was nicht?"
+      },
+      "debriefing": [
+        "Welche Behelfslösung im Filial- und Lagerbetrieb hat am meisten Nacharbeit erzeugt?",
+        "Wo hätte eine vorbereitete Papierlösung geholfen?"
+      ],
+      "pflicht": [
+        "SK16"
+      ]
+    }
+  ]
 }

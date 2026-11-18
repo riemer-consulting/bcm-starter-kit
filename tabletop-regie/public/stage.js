@@ -220,7 +220,7 @@ async function refresh() {
     const u = ev.unterbrechung;
     const mm = u ? Math.floor(u.restSekunden / 60) + ':' + String(u.restSekunden % 60).padStart(2, '0') : '';
     content.innerHTML = `
-      <div class="ueberraschung-kicker">Überraschung · ${escapeHtml(lk.simZeit)}</div>
+      <div class="ueberraschung-kicker">Überraschung · ${escapeHtml(lk.simZeit)}</div>${ev.sound && ev.sound.uebungshinweis ? '<div class="ueberraschung-kicker" style="background:#444;animation:none;">Übungseinspielung – kein echter Alarm</div>' : ''}
       <div class="titel">${escapeHtml(ev.titel || '')}</div>
       ${u ? `<div class="unterbrechung"><div style="font-weight:700;">${escapeHtml(u.rolle)}: ${u.restSekunden > 0 ? 'nicht erreichbar' : 'wieder erreichbar'}</div><div class="uhr">${u.restSekunden > 0 ? mm : 'zurück am Tisch'}</div>${u.text ? `<div style="color:var(--muted);">${escapeHtml(u.text)}</div>` : ''}</div>` : ''}
       <div class="text">${escapeHtml(ev.text)}</div>
@@ -233,7 +233,8 @@ async function refresh() {
   const krisenHtml = lk.kriseninfo ? `<div class="krisen">${escapeHtml(lk.kriseninfo)}</div>` : '';
   const aufgabeHtml = (lk.aufgabe || []).map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const mediaHtml = lk.media ? renderMedia(lk.media) : '';
-  content.innerHTML = bannerHtml + `
+  const uebung = lk.sound && lk.sound.uebungshinweis ? '<div class="ueberraschung-kicker" style="background:#444;animation:none;">Übungseinspielung – kein echter Alarm</div>' : '';
+  content.innerHTML = bannerHtml + uebung + `
     <div class="simzeit">${escapeHtml(lk.simZeit)} · ${vorbote ? 'Meldung' : 'Lagekarte'} ${lk.laufendeNr || lk.nr}${s.lagekartenTotal ? ' von ' + s.lagekartenTotal : ''}</div>
     <div class="titel">${escapeHtml(lk.titel)}</div>
     <div class="text">${escapeHtml(lk.text)}</div>
