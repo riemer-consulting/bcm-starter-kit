@@ -1951,7 +1951,7 @@
         "rz-betrieb"
       ],
       "voraussetzung": [
-        "LK13"
+        "LK15"
       ],
       "text": "Der einzige Netzwerkadministrator mit Zugang zur Firewall des Ausweich-Racks ist im Urlaub; sein Flug geht in drei Stunden. Die Zugangsdaten liegen im Passwortsafe – auf einem Server im gesperrten Serverraum.",
       "moderatorHinweis": "Testet Single Point of Failure und Notfallzugänge. Gut: sofort Kontakt aufnehmen, sichere Übergabe organisieren, Lücke als Maßnahme festhalten."
@@ -1964,7 +1964,7 @@
         "geschaeftsfuehrer-ceo"
       ],
       "voraussetzung": [
-        "LK10"
+        "LK14"
       ],
       "text": "Ein Foto aus dem verrußten Serverraum kursiert im Netz – aufgenommen offenbar von einer beschäftigten Person durch die Glastür. Auf einem Rack ist ein Aufkleber mit dem Namen eines Partnermarkts zu erkennen.",
       "moderatorHinweis": "Kommunikation und interne Regeln. Gut: Partner informieren, bevor sie es selbst sehen; interne Regel zu Fotos, keine Jagd auf die Person."
@@ -1992,7 +1992,7 @@
         "leiter-finanzen-cfo"
       ],
       "voraussetzung": [
-        "LK24"
+        "LK22"
       ],
       "text": "Der Versicherer fordert bis Montag alle Wartungsnachweise der USV der letzten zwei Jahre an. Einer der beiden Wartungsberichte ist nicht auffindbar.",
       "moderatorHinweis": "Ehrlichkeit unter Druck. Gut: Lücke offen benennen, Hersteller um Kopie bitten, nichts nachträglich erstellen."
@@ -2006,7 +2006,7 @@
         "facility-management"
       ],
       "voraussetzung": [
-        "LK10"
+        "LK14"
       ],
       "text": "Die Brandmeldeanlage im Zentrallager löst aus. Ursache ist wahrscheinlich Staub von den Reinigungsarbeiten nebenan – sicher ist das nicht.",
       "buehnentext": "Die Brandmeldeanlage im Zentrallager löst aus. Wahrscheinlich hat Staub von den Reinigungsarbeiten im Verwaltungsgebäude den Melder ausgelöst – sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade.",
@@ -2039,7 +2039,7 @@
         "geschaeftsfuehrer-ceo"
       ],
       "voraussetzung": [
-        "LK11"
+        "LK09"
       ],
       "text": "Ein Online-Portal meldet „Großbrand im Zentrallager von Waterkant“ und zeigt ein altes Archivfoto eines Lagerbrands.",
       "buehnentext": "Ein Nachrichtenportal meldet „Großbrand im Zentrallager von Waterkant – Lieferungen in Gefahr“ und bebildert es mit einem Archivfoto eines fremden Lagerbrands. Zwei Lieferanten und drei Partner rufen deshalb an.",
@@ -2232,6 +2232,7 @@
         "frage": "Hat die IT in der Brandnacht kontrolliert heruntergefahren?",
         "posten": "Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten",
         "betrag": 50000,
+        "herleitung": "Szenarioannahme: 5 Filialen × ca. 4 Verkaufstage bis zur Korrektur × ca. 2.500 € Preisdifferenz auf Aktionsware je Filiale und Tag.",
         "bcmHebel": "Preisübertragungen rechtzeitig vor Saisonstart abschließen."
       },
       {
@@ -2239,6 +2240,7 @@
         "frage": "Liefen die Systeme bis zum Stromausfall weiter?",
         "posten": "Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug)",
         "betrag": 95000,
+        "herleitung": "Szenarioannahme: Datenbank-Dienstleister einen Tag rund um die Uhr (ca. 35.000 €) plus ein zusätzlicher Tag eingeschränkter Warenwirtschaft (ca. 60.000 € Mehraufwand und Rohertrag).",
         "bcmHebel": "Klare Abschaltregel bei Klimaalarm im Rechenzentrum."
       },
       {
@@ -2246,6 +2248,7 @@
         "frage": "Wurden die Partnermärkte erst informiert, als ein Termin feststand?",
         "posten": "Kulanz und Sonderkonditionen für Partnermärkte",
         "betrag": 40000,
+        "herleitung": "Szenarioannahme: 9 Partnermärkte × ca. 4.450 € (eine rabattierte Monatsgebühr des IT-Servicevertrags).",
         "bcmHebel": "Vorbereitete Partnerkommunikation mit festem Informationstakt."
       },
       {
@@ -2253,6 +2256,7 @@
         "frage": "Wurde der Backup-Server durch eine Fachfirma geborgen?",
         "posten": "Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen",
         "betrag": 45000,
+        "herleitung": "Szenarioannahme: Fachfirma mit Schutzausrüstung und Messbegleitung (ca. 15.000 €), Reinigung und Datenrettung des Servers im Labor (ca. 30.000 €).",
         "bcmHebel": "Sicherungskopien so übertragen, dass niemand in einen Brandraum muss."
       },
       {
@@ -2260,6 +2264,7 @@
         "frage": "Wurde die Freigabe des Serverraums abgewartet?",
         "posten": "Nacherfassung von rund 26 Stunden Bewegungsdaten",
         "betrag": 140000,
+        "herleitung": "Szenarioannahme: ca. 2.000 Personenstunden Nacherfassung und Abgleich in 23 Märkten und Zentrallager × ca. 70 € (intern und extern gemischt).",
         "bcmHebel": "Sicherungskopien sofort nach Erstellung außer Haus übertragen."
       },
       {
@@ -2267,6 +2272,7 @@
         "frage": "Wurde nur das Nötigste ins Ausweich-Rack verlagert?",
         "posten": "Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt)",
         "betrag": 260000,
+        "herleitung": "Szenarioannahme: Online-Shop und Gewerbekundenportal ca. 21 Tage eingeschränkt × ca. 12.000 € entgangener Rohertrag je Tag ≈ 252.000 € plus manuelle Bearbeitung von Gewerbeaufträgen ≈ 8.000 €.",
         "bcmHebel": "Ausweichkapazität für alle kritischen Prozesse vorhalten."
       },
       {
@@ -2274,6 +2280,7 @@
         "frage": "Wurde der Ausweichbetrieb erweitert?",
         "posten": "Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister",
         "betrag": 210000,
+        "herleitung": "Szenarioannahme: Erweiterung 12 Monate Mindestlaufzeit × ca. 15.000 € = 180.000 € plus Einrichtung durch Dienstleister ca. 30.000 €. Die Vertragsbindung über zwölf Monate ist zugleich eine Liquiditätsbelastung, die über die Übungswoche hinausreicht.",
         "bcmHebel": "Vorab verhandelte Erweiterungsoptionen sind günstiger als Notfallpreise."
       },
       {
@@ -2281,6 +2288,7 @@
         "frage": "Wurden eigene Filialen und Partner nach einem gemeinsamen Kriterium umgestellt?",
         "posten": "Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll",
         "betrag": 60000,
+        "herleitung": "Szenarioannahme: ca. 5 eigene Filialen einen halben Saisontag mit eingeschränktem Kassenbetrieb × ca. 12.000 € entgangener Rohertrag je Filiale.",
         "bcmHebel": "Vorab vereinbarte, für alle transparente Wiederanlaufreihenfolge."
       },
       {
@@ -2288,6 +2296,7 @@
         "frage": "Kamen die eigenen Filialen zuerst?",
         "posten": "Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate)",
         "betrag": 90000,
+        "herleitung": "Szenarioannahme: zusätzliche Gutschriften an die Partner ca. 30.000 € plus gewichteter Deckungsbeitragsverlust von ca. 60.000 € im ersten Jahr, falls ein Partner den IT-Servicevertrag kündigt.",
         "bcmHebel": "Vorab vereinbarte, für alle transparente Wiederanlaufreihenfolge."
       }
     ],

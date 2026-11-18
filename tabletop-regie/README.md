@@ -287,14 +287,15 @@ Im Ordner `docs/`:
 Jede Lagekarte gehört zu einem Akt: **Vorboten → Ausbruch → Eskalation →
 Höhepunkt → Folgen → Wiederanlauf**. Egal ob 45 Minuten oder 3 Stunden: Die
 Bühne zeigt vorher das Unternehmen im Normalbetrieb (NordTech-Werk zum
-Schichtbeginn, Waterkant-Baumarkt vor dem Saisonstart) mit ruhigem
+Schichtbeginn, Waterkant-Zentrale in der Nacht vor dem Saisonstart) mit ruhigem
 Hintergrundgeräusch. Nach dem Krisenstart kommt nicht sofort der Knall,
 sondern erst zwei bis drei **Vorboten**, also kleine, harmlos wirkende
 Meldungen (NordTech: ERP-Anmeldung hakt, Maschine 4 zeigt Dateien mit der
-Endung .shadowvault, keine Aufträge mehr; Waterkant: Störmeldung des
-bekannten Rauchmelders, Geruch in Halle 3, Lüftung fällt aus). Das
-Hintergrundgeräusch läuft dabei weiter. Vorboten kosten nur 2 Minuten
-Lesezeit, ohne Sprechrunde. Erst dann folgt der Ausbruch. Die Übung
+Endung .shadowvault, keine Aufträge mehr; Waterkant: Batteriewarnung der
+USV, Geruch im Technikflur, Serverraum wird warm). Das
+Hintergrundgeräusch läuft dabei weiter. Vorboten kosten nur die im Drehbuch
+eingestellte Zeit (`standardablauf.vorbotenMinuten`, in beiden Drehbüchern
+3 Minuten; wird es knapp, mindestens 2 Minuten), ohne Sprechrunde. Erst dann folgt der Ausbruch. Die Übung
 durchläuft jeden Akt mindestens
 einmal und endet mit dem Wiederanlauf, gefolgt vom Abschluss (Nacharbeiten und
 Rechnung). Kürzere Übungen bekommen weniger Karten pro Akt, nicht weniger
@@ -323,10 +324,12 @@ unterschiedlichen Branchen:
 - `data/scenario.nordtech.json` — "7 Tage im Ausnahmezustand": Ransomware-Angriff
   bei einem fiktiven produzierenden Mittelständler (Automobil-/Pharmazulieferer).
   Wird ohne `SCENARIO_FILE` automatisch geladen (alphabetisch erste Datei).
-- `data/scenario.waterkant.json` — "72 Stunden in Flammen": Großbrand im
-  Zentrallager eines fiktiven Baumarkt-/Einzelhandelsunternehmens, mit ganz
-  anderen Rollen (Logistik, Filialen, Online-Shop, Arbeitssicherheit statt
-  IT-Wiederanlauf) und einer physischen statt einer Cyber-Krise.
+- `data/scenario.waterkant.json` — "Wenn das Rechenzentrum brennt": Brand im
+  eigenen Rechenzentrum eines fiktiven Baumarktunternehmens, das auch neun
+  Partnermärkte mit Kassen- und Warenwirtschaftsdiensten versorgt. Physische
+  statt Cyber-Krise: Personenschutz, gesperrter Serverraum, Ausweichbetrieb,
+  Datenlücke, Saisonstart. Die frühere Fassung (Lagerbrand) liegt unter
+  `data/archiv/` und wird nicht geladen.
 
 Beide dienen als Vorlage für eigene Branchen (z. B. Spedition, Handwerk,
 Dienstleistung) — Datei kopieren, Inhalte ersetzen. Struktur:
@@ -446,7 +449,7 @@ Reihenfolge enthalten und mit dem Wiederanlauf enden. Außerdem wird der Abschlu
 Versicherung nicht höher als der Schaden, Fazit vorhanden). Das Ergebnis
 steht außerdem im Setup unter dem Szenario.
 
-**Weitere Dateien (Bilder, Video, PDF) ablegen:** einfach in `media/` speichern
+**Weitere Dateien (Bilder oder Video) ablegen:** einfach in `media/` speichern
 — z. B. `media/lk10-ndr-ausschnitt.mp4`. Dann bei der betreffenden Lagekarte
 in der JSON-Datei ergänzen:
 
@@ -479,13 +482,16 @@ Die Bühne fragt beim ersten Laden einmal per Klick ("Ton aktivieren") die
 Erlaubnis zur Audiowiedergabe ab (Browser blockieren Ton sonst), danach läuft
 alles automatisch mit.
 
-Beide Szenarien in diesem Repo nutzen das **bewusst sparsam**: eine
-durchgehende Dauerschleife für die Vorlaufphase (Maschinenraum-Atmosphäre bei
-NordTech, Kundschaftsmurmeln bei Waterkant) und genau **ein** Kontrast-Moment
-beim Krisenausbruch (NordTech: Maschinen stoppen, bedrücktes Gemurmel seit
-"Cyberangriff"; Waterkant: Unruhe an der Kasse seit "Filialen öffnen
-trotzdem") — nicht mehr. Die Dateien sind synthetisch erzeugt (keine
-Field-Recordings, keine Sprachaufnahmen), funktionieren aber als Atmosphäre.
+Beide Szenarien nutzen eine Dauerschleife für die Vorlaufphase
+(Maschinenraum bei NordTech, Lüfter und Klima im Rechenzentrum bei Waterkant)
+und Töne nur an Karten, bei denen ein Signal oder eine Einspielung die Lage
+trägt (Alarm, Anruf, Funk, Nachrichten). Jeder Ton endet von selbst, ist in
+der Moderation stummschaltbar und führt keine Fakten ein, die nicht auch auf
+der Karte stehen; Alarmtöne zeigen auf der Bühne „Übungseinspielung – kein
+echter Alarm“. Welche Karte welchen Ton hat, steht in der Medienliste
+(`node tools/medienliste.js data/scenario.<name>.json liste.md`). Die Dateien
+sind synthetisch erzeugt (Klangsynthese, freie Sprachsynthese-Stimmen), keine
+Aufnahmen realer Personen oder Orte.
 Wer echte Aufnahmen hat, ersetzt einfach die Dateien unter `media/<firma>/`,
 ohne den JSON-Verweis zu ändern.
 

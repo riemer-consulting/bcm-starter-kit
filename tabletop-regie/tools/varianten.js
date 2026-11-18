@@ -28,7 +28,7 @@ function plan(m, sp, roleIds) {
 w(`# Variantenprüfung: ${s.title}`, '', `Stand: ${new Date().toISOString().slice(0, 10)} · erzeugt mit \`tools/varianten.js\` direkt aus \`${path.basename(file)}\` und der Ablauf-Engine des Werkzeugs. Rollen: die vom Werkzeug für die Dauer empfohlene Besetzung, Schwierigkeit „mittel“.`, '');
 
 // ---- 25 Kombinationen
-w('## Dauer × Schwerpunkt', '', '| Dauer | Schwerpunkt | Rollen | Lagen gespielt | ausgelassen | vertraulich | max. je Rolle | Krise + Abschluss | Entscheidung je Lage | Weichen im Ablauf | Pflichtkarte | Befund |', '|---:|---|---:|---:|---:|---:|---:|---|---:|---|---|---|');
+w('## Dauer × Schwerpunkt', '', '| Dauer | Schwerpunkt | Rollen | Lagen gespielt | ausgelassen | vertraulich | max. je Rolle | Krise + Abschluss | Entscheidung je Lage | Weichen im Ablauf | Überraschungen einsetzbar | Pflichtkarte | Befund |', '|---:|---|---:|---:|---:|---:|---:|---|---:|---|---|---|---|');
 const detail = [];
 DAUERN.forEach(m => SP.forEach(sp => {
   const { rec, ids, p } = plan(m, sp);
@@ -55,11 +55,14 @@ DAUERN.forEach(m => SP.forEach(sp => {
   const proRolle = {}; sks.forEach(x => { const r = e.resolveRecipient(s.sonderlagekarten.find(k => k.id === x.id), set); proRolle[r] = (proRolle[r] || 0) + 1; });
   const ohne = ids.filter(r => !proRolle[r]);
   const weichen = (s.weichen || []).filter(wc => wc.lagekarten.some(id => lks.includes(id))).map(wc => wc.id);
+  const lkSet = new Set(lks);
+  const bOk = s.bonuskarten.filter(b => (b.voraussetzung || []).every(v => lkSet.has(v)) && (!b.minDauer || b.minDauer <= m));
+  if (bOk.length < Math.ceil(s.bonuskarten.length / 2) && m >= 60) probleme.push(`nur ${bOk.length} von ${s.bonuskarten.length} Überraschungen einsetzbar`);
   if (probleme.length) fehler.push(`${m}/${spLabel(sp)}: ${probleme.join(', ')}`);
-  w(`| ${m} | ${spLabel(sp)} | ${ids.length} | ${lks.length} | ${s.lagekarten.length - lks.length} | ${sks.length} | ${Math.max(0, ...Object.values(proRolle))} | ${p.totalMinutes} + ${p.finaleMinutes} Min. | ${String(p.decisionMinutesUsed).replace('.', ',')} Min. | ${weichen.join(', ') || '–'} | ${pfl.join(', ') || '–'} | ${probleme.join('; ') || (ohne.length ? 'ohne eigene Karte: ' + ohne.length + ' Rolle(n)' : 'ok')} |`);
+  w(`| ${m} | ${spLabel(sp)} | ${ids.length} | ${lks.length} | ${s.lagekarten.length - lks.length} | ${sks.length} | ${Math.max(0, ...Object.values(proRolle))} | ${p.totalMinutes} + ${p.finaleMinutes} Min. | ${String(p.decisionMinutesUsed).replace('.', ',')} Min. | ${weichen.join(', ') || '–'} | ${bOk.length}/${s.bonuskarten.length} (${s.bonuskarten.filter(b => !bOk.includes(b)).map(b => b.id).join(' ') || 'alle'}${bOk.length < s.bonuskarten.length ? ' nicht' : ''}) | ${pfl.join(', ') || '–'} | ${probleme.join('; ') || (ohne.length ? 'ohne eigene Karte: ' + ohne.length + ' Rolle(n)' : 'ok')} |`);
   detail.push({ m, sp, lks, skipped: s.lagekarten.filter(l => !lks.includes(l.id)).map(l => l.id), ids, sks: sks.map(x => `${x.id}→${e.resolveRecipient(s.sonderlagekarten.find(k => k.id === x.id), set) || '–'}`), weichen });
 }));
-w('', `**Ergebnis:** ${fehler.length ? 'Befunde: ' + fehler.join(' · ') : 'In allen ' + DAUERN.length * SP.length + ' Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten.'}`, '');
+w('', `**Ergebnis:** ${fehler.length ? 'Befunde: ' + fehler.join(' · ') : 'In allen ' + DAUERN.length * SP.length + ' Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten; ab 60 Min. mindestens die Hälfte der Überraschungen einsetzbar (Voraussetzung gespielt, Mindestdauer erfüllt).'}`, '');
 
 w('### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)', '');
 detail.forEach(d => w(`- **${d.m} Min. · ${spLabel(d.sp)}** – gespielt: ${d.lks.join(' ')} · ausgelassen: ${d.skipped.join(' ') || '–'} · Rollen (${d.ids.length}): ${d.ids.join(', ')} · vertraulich: ${d.sks.join(', ')} · Weichen: ${d.weichen.join(', ') || '–'}`));
