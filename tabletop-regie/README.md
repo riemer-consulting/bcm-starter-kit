@@ -91,6 +91,8 @@ Im Ordner `docs/`:
 
 - `nordtech-moderationshandbuch.md` – Moderationshandbuch (Version 1.1, mit der Oberfläche abgeglichen)
 - `nordtech-medienmatrix.md` / `.csv` – jedes Bild und jeder Ton mit Datei, Prüfstand und Befund
+- `nordtech-gesamtpaket.md` – das komplette Szenario als Text (Faktenblatt, alle Karten, Zeitformate, Stand der Prüfrunden)
+- `nordtech-durchlaeufe.md` – sieben vollständig durchgespielte Geschichten, direkt aus dem Werkzeug erzeugt
 - `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
 
 ## Ablauf einer Übung
