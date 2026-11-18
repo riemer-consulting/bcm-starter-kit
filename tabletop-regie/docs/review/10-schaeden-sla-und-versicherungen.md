@@ -1,6 +1,6 @@
 # 10 – Schäden, SLA und Versicherungen
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## 1. Regeln für beide Rechnungen
 
@@ -26,13 +26,23 @@ Stand: 2026-11-18 · Codestand `07b0fb2`
 
 Beide Wiederanläufe sind **Szenarioannahmen**: Das Drehbuch unterstellt, dass die genannten Freigaben erteilt werden. Ob das in der Realität gelingt, ist Gegenstand der Diskussion, nicht Inhalt der Karten.
 
-## 3. Waterkant: Warum der minimale Ausweichbetrieb im Modell teurer ist als die Erweiterung
+## 3. Waterkant: Jede Entscheidung hat ihren Preis
 
-W4 „nur das Nötigste“ kostet im Modell 260.000 € (Online-Shop und Gewerbeportal drei Wochen eingeschränkt), W4 „erweitern“ 210.000 € (zwölf Monate Mindestlaufzeit plus Einrichtung). Das ist gewollt: Die Erweiterung ist im Schaden günstiger, bindet aber zwölf Monate Liquidität und braucht die Zustimmung der Gesellschafter (SK46). Das Dilemma liegt damit zwischen kurzfristigem Ertrag und langfristiger Bindung, nicht zwischen „billig“ und „teuer“.
+Nach der unabhängigen Prüfung (W-R03) hat jede Option einer Entscheidung einen eigenen, hergeleiteten Posten. Die Beträge je Entscheidung liegen nah beieinander und zeigen nicht mehr durchgehend zugunsten der „Lehrbuch-Antwort“:
+
+| Entscheidung | Option A | Option B |
+|---|---:|---:|
+| W1 herunterfahren / weiterlaufen | 100.000 € (Kulanz, abgebrochene Partner-Tagesabschlüsse, Preisnachtrag) | 95.000 € (Hardwareersatz nach Rußeintrag) |
+| W2 früh / später informieren | 25.000 € (Mehrkosten von Partnern, die auf die Prognose hin geplant hatten) | 40.000 € (Kulanz und Sonderkonditionen) |
+| W3 bergen / abwarten | 95.000 € (Bergung, Datenrettung, ein Tag spätere Reinigung) | 110.000 € (Nacherfassung bis zur Datenrettung) |
+| W4 minimal / ausbauen | 180.000 € (entgangener Rohertrag Wochen 2–3) | 210.000 € (Erweiterung zwölf Monate; zugleich Liquiditätsbindung) |
+| W5 gleichrangig / eigene zuerst | 75.000 € (drei eigene Filialen Freitagmorgen ohne Kassen) | 90.000 € (Gutschriften, Risiko Partnerverlust) |
+
+Damit unterscheiden sich die Verläufe in der Summe kaum (Spanne rund 80.000 €). Das ist gewollt: Bei Waterkant entscheidet der Tisch über Menschen, Daten, Vertrauen der Partner und Vertragsbindung – nicht über die günstigste Rechnung. Die Bühne sagt dazu: „Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten.“
 
 ## 4. Unterschied in der Spanne
 
-Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio. € allein). Bei Waterkant liegt die Spanne bei etwa 0,26 Mio. €: Die Entscheidungen verändern dort vor allem Personenschutz, Datenlücke, Partnerbeziehung und Vertragsbindung, weniger die Summe. Das ist für die Moderation wichtig: Bei Waterkant ist die Rechnung nicht das stärkste Argument im Debriefing, sondern die Frage, welche Risiken (Menschen, Daten, Vertrauen) der Tisch dafür eingegangen ist.
+Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio. € allein). Bei Waterkant liegt die Spanne bei etwa 0,08 Mio. €. Für die Moderation heißt das: Bei Waterkant ist die Rechnung nicht das stärkste Argument im Debriefing, sondern die Frage, welche Risiken der Tisch für welchen Nutzen eingegangen ist.
 
 
 # NordTech
@@ -97,22 +107,23 @@ Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio.
 
 | Posten | Betrag | ausgelöst durch | Rechenweg |
 |---|---:|---|---|
-| Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten | 50.000 € | W1 „Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)“ | Szenarioannahme: 5 Filialen × ca. 4 Verkaufstage bis zur Korrektur × ca. 2.500 € Preisdifferenz auf Aktionsware je Filiale und Tag. |
-| Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) | 95.000 € | W1 „Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat“ | Szenarioannahme: Datenbank-Dienstleister einen Tag rund um die Uhr (ca. 35.000 €) plus ein zusätzlicher Tag eingeschränkter Warenwirtschaft (ca. 60.000 € Mehraufwand und Rohertrag). |
+| Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse | 100.000 € | W1 „Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)“ | Szenarioannahme: Kulanz in 5 Filialen (5 × ca. 4 Verkaufstage × ca. 2.500 €) = 50.000 €, Nacharbeit abgebrochener Tagesabschlüsse von 9 Partnermärkten (je ca. 3.300 €) ≈ 30.000 €, Nachtrag der Aktionspreise in allen 14 Filialen von Hand ≈ 20.000 €. |
+| Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte | 95.000 € | W1 „Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat“ | Szenarioannahme: rund 10 % mehr Geräte nicht reinigungsfähig, Neuwert einschließlich Einbau ca. 95.000 €. |
+| Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten | 25.000 € | W2 „Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt“ | Szenarioannahme: 2 Partnermärkte × ca. 12.500 € (Personal und Werbung für Donnerstag). |
 | Kulanz und Sonderkonditionen für Partnermärkte | 40.000 € | W2 „Erst informieren, wenn ein belastbarer Termin feststeht (voraussichtlich Mittwoch)“ | Szenarioannahme: 9 Partnermärkte × ca. 4.450 € (eine rabattierte Monatsgebühr des IT-Servicevertrags). |
-| Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen | 45.000 € | W3 „Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen“ | Szenarioannahme: Fachfirma mit Schutzausrüstung und Messbegleitung (ca. 15.000 €), Reinigung und Datenrettung des Servers im Labor (ca. 30.000 €). |
-| Nacherfassung von rund 26 Stunden Bewegungsdaten | 140.000 € | W3 „Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)“ | Szenarioannahme: ca. 2.000 Personenstunden Nacherfassung und Abgleich in 23 Märkten und Zentrallager × ca. 70 € (intern und extern gemischt). |
-| Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) | 260.000 € | W4 „Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum“ | Szenarioannahme: Online-Shop und Gewerbekundenportal ca. 21 Tage eingeschränkt × ca. 12.000 € entgangener Rohertrag je Tag ≈ 252.000 € plus manuelle Bearbeitung von Gewerbeaufträgen ≈ 8.000 €. |
+| Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später | 95.000 € | W3 „Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen“ | Szenarioannahme: Fachfirma mit Schutzausrüstung und Messbegleitung ca. 15.000 €, Laborreinigung und Datenrettung ca. 30.000 €, ein Tag längerer Ausweichbetrieb und Bereitschaft ca. 50.000 €. |
+| Nacherfassung der Montagsdaten bis zur Datenrettung | 110.000 € | W3 „Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)“ | Szenarioannahme: ca. 1.600 Personenstunden Nacherfassung und Abgleich in 23 Märkten und Zentrallager × ca. 70 € (intern und extern gemischt); danach übernimmt die vom Datenretter gelesene Dienstagssicherung den Rest. |
+| Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) | 180.000 € | W4 „Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum“ | Szenarioannahme: ca. 15 Verkaufstage × ca. 12.000 € entgangener Rohertrag je Tag (Woche 1 ist im Grundschaden enthalten). |
 | Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister | 210.000 € | W4 „Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)“ | Szenarioannahme: Erweiterung 12 Monate Mindestlaufzeit × ca. 15.000 € = 180.000 € plus Einrichtung durch Dienstleister ca. 30.000 €. Die Vertragsbindung über zwölf Monate ist zugleich eine Liquiditätsbelastung, die über die Übungswoche hinausreicht. |
-| Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll | 60.000 € | W5 „Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)“ | Szenarioannahme: ca. 5 eigene Filialen einen halben Saisontag mit eingeschränktem Kassenbetrieb × ca. 12.000 € entgangener Rohertrag je Filiale. |
-| Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) | 90.000 € | W5 „Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später“ | Szenarioannahme: zusätzliche Gutschriften an die Partner ca. 30.000 € plus gewichteter Deckungsbeitragsverlust von ca. 60.000 € im ersten Jahr, falls ein Partner den IT-Servicevertrag kündigt. |
+| Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen | 75.000 € | W5 „Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)“ | Szenarioannahme: 3 Filialen × ca. halber Verkaufstag × ca. 25.000 € Rohertrag am Saisonfreitag. |
+| Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) | 90.000 € | W5 „Eigene 14 Filialen zuerst, danach die Partnermärkte“ | Szenarioannahme: zusätzliche Gutschriften an die Partner ca. 30.000 € plus gewichteter Deckungsbeitragsverlust von ca. 60.000 € im ersten Jahr, falls ein Partner den IT-Servicevertrag kündigt. |
 
 ## Spanne über alle Entscheidungskombinationen
 
 | | Brutto-Schaden | mögliche Erstattung (Modellannahme) | beim Unternehmen | Anteil am Jahresgewinn ohne Erstattung |
 |---|---:|---:|---:|---:|
-| günstigster Verlauf (W1 herunterfahren, W2 frueh, W3 bergen, W4 ausbauen, W5 gleichrangig) | 3.541.000 € | 1.600.000 € | 1.941.000 € | 30 % |
-| teuerster Verlauf (W1 weiterlaufen, W2 spaeter, W3 abwarten, W4 minimal, W5 eigene) | 3.801.000 € | 1.600.000 € | 2.201.000 € | 32 % |
+| günstigster Verlauf (W1 weiterlaufen, W2 frueh, W3 bergen, W4 minimal, W5 gleichrangig) | 3.646.000 € | 1.600.000 € | 2.046.000 € | 30 % |
+| teuerster Verlauf (W1 herunterfahren, W2 spaeter, W3 abwarten, W4 ausbauen, W5 eigene) | 3.726.000 € | 1.600.000 € | 2.126.000 € | 31 % |
 
 **Versicherung:** Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt) – bis zu 1.600.000 €. Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,6 Mio. € ist eine unbestätigte Modellannahme; Wartungsauflagen (USV-Wartung überfällig), Selbstbehalte, Karenzzeit und die Anerkennung einzelner Kostenpositionen sind nicht bewertet.
 

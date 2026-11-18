@@ -1,11 +1,12 @@
 # 08 – Medien und Audio
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## 1. Grundsätze (für beide Szenarien)
 
 - Jeder Ton gehört genau zu einer Karte, endet von selbst (außer der Hintergrund vor Krisenbeginn und in den Vorboten), ist in der Moderation jederzeit stummschaltbar und bringt keine Fakten, die nicht auch auf der Karte stehen.
-- Alarmtöne und Durchsagen tragen auf der Bühne das Schild **„Übungseinspielung – kein echter Alarm“** (Waterkant LK04, B5; NordTech wo vorgesehen). Durchsagen sagen hörbar „Übung“. Signaltöne sind kurz und synthetisch, keine Nachbildung realer Alarmanlagen.
+- Alarmtöne und Durchsagen tragen auf der Bühne das Schild **„Übungseinspielung – kein echter Alarm“** (Waterkant LK04, B5; NordTech wo vorgesehen). Durchsagen sagen hörbar „Übung“; bei Waterkant beginnen LK04 und B5 nach der unabhängigen Prüfung zusätzlich mit „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ und enden mit „Ende der Übungseinspielung.“ Signaltöne sind kurz und synthetisch, keine Nachbildung realer Alarmanlagen.
+- **Organisatorisch vor jeder Übung mit Alarmtönen:** Empfang, Sicherheitsdienst und Brandschutzbeauftragte am Übungsort informieren, Türschild „Übung läuft – Alarmtöne sind Einspielungen“, Lautstärke begrenzen, nie über Haus- oder Durchsageanlagen abspielen. Ohne Ton bleibt jede Karte spielbar; Einspielungen mit Sprache haben eine Abschrift in der Moderation.
 - Bei Karten mit **Signal** (z. B. Telefon, Funk) spielt der Ton nur das Signal; das Gespräch führt die Moderation live nach Sprechertext und Gesprächsleitfaden.
 - Bilder zeigen keine realen Marken, Personen oder Orte.
 
@@ -117,7 +118,7 @@ Stand: 2026-11-18 · erzeugt mit `tools/medienliste.js` aus `scenario.waterkant.
 | LK03 Serverraum wird warm | Bild | `waterkant/lk03-serverraum-warm.png` | ja | 1000×280 | – | 35b73ba3e865 |
 | LK03 Serverraum wird warm | Ton | `waterkant/lk03-klimaalarm.mp3` | ja | 6,0 s | endet selbst | 2428cb0ab314 |
 | LK04 Brandalarm im Rechenzentrum | Bild | `waterkant/lk04-brandalarm.png` | ja | 1000×280 | – | 00b3e22388f4 |
-| LK04 Brandalarm im Rechenzentrum | Ton | `waterkant/lk04-loeschanlage-durchsage.mp3` | ja | 18,9 s | endet selbst, Übungshinweis auf der Bühne | eca70a19bf9f |
+| LK04 Brandalarm im Rechenzentrum | Ton | `waterkant/lk04-loeschanlage-durchsage.mp3` | ja | 27,4 s | endet selbst, Übungshinweis auf der Bühne | e27c37c5446e |
 | LK05 Feuerwehr im Einsatz | Bild | `waterkant/lk05-feuerwehr.png` | ja | 1000×280 | – | 7b6d80827fa1 |
 | LK05 Feuerwehr im Einsatz | Ton | `waterkant/funk-ruf.mp3` | ja | 0,8 s | endet selbst, Signal, danach live | b55f7997b6f3 |
 | LK06 Lagebild nach dem Löschen | Bild | `waterkant/lk06-lagebild.png` | ja | 1000×280 | – | 3ceb6fc9c1b6 |
@@ -130,43 +131,44 @@ Stand: 2026-11-18 · erzeugt mit `tools/medienliste.js` aus `scenario.waterkant.
 | LK11 Nordkanal fragt nach | Ton | `waterkant/telefon-klingeln.mp3` | ja | 4,9 s | endet selbst, Signal, danach live | ff8d5274ddab |
 | LK12 Das Zentrallager steht | Bild | `waterkant/lk12-zentrallager.png` | ja | 1000×280 | – | ef11300c26d8 |
 | LK13 Ersatz: Hardware oder Ausweich-Rack? | Bild | `waterkant/lk13-ersatz.png` | ja | 1000×280 | – | 0aa8a089f94f |
-| LK14 Den Backup-Server bergen? | Bild | `waterkant/lk14-bergen.png` | ja | 1000×280 | – | 58dec856e214 |
+| LK14 Den Backup-Server bergen? | Bild | `waterkant/lk14-bergen.png` | ja | 1000×280 | – | 6afe2b9ff2a6 |
 | LK15 Wie weit geht der Ausweichbetrieb? | Bild | `waterkant/lk15-ausweich.png` | ja | 1000×280 | – | 6177d177160d |
 | LK16 Ein Bauunternehmen will Vorrang | Bild | `waterkant/lk16-bauunternehmen.png` | ja | 1000×280 | – | 206150129fcf |
 | LK16 Ein Bauunternehmen will Vorrang | Ton | `waterkant/telefon-klingeln.mp3` | ja | 4,9 s | endet selbst, Signal, danach live | ff8d5274ddab |
 | LK17 Prospektpreise vor der Kasse | Bild | `waterkant/lk17-prospektpreise.png` | ja | 1000×280 | – | 040ea3199def |
 | LK18 Der Verbundbeirat verlangt Antworten | Bild | `waterkant/lk18-verbundbeirat.png` | ja | 1000×280 | – | 9ca42cfc858b |
 | LK19 Rücksicherung im Ausweich-Rack | Bild | `waterkant/lk19-ruecksicherung.png` | ja | 1000×280 | – | 8ec3e84a499f |
-| LK20 Wer kassiert zuerst? | Bild | `waterkant/lk20-reihenfolge.png` | ja | 1000×280 | – | f742e3237150 |
-| LK21 Nordkanal berichtet | Bild | `waterkant/lk21-nordkanal-bericht.png` | ja | 1000×280 | – | 99851010880a |
-| LK21 Nordkanal berichtet | Ton | `waterkant/lk21-nordkanal-nachrichten.mp3` | ja | 51,0 s | endet selbst | 1d24789c7c21 |
+| LK20 Wer wird zuerst umgestellt? | Bild | `waterkant/lk20-reihenfolge.png` | ja | 1000×280 | – | 6b5c6506a0bd |
+| LK21 Nordkanal berichtet ausführlich | Bild | `waterkant/lk21-nordkanal-bericht.png` | ja | 1000×280 | – | b1ac0479dc96 |
+| LK21 Nordkanal berichtet ausführlich | Ton | `waterkant/lk21-nordkanal-nachrichten.mp3` | ja | 48,9 s | endet selbst | 1914f8095506 |
 | LK22 Die Kassen laufen wieder | Bild | `waterkant/lk22-kassen-laufen.png` | ja | 1000×280 | – | 82cb68cb0335 |
 | LK22 Die Kassen laufen wieder | Ton | `waterkant/lk22-kasse-startet.mp3` | ja | 5,0 s | endet selbst | faf8939801d2 |
-| LK23 Die Datenlücke | Bild | `waterkant/lk23-datenluecke.png` | ja | 1000×280 | – | 3070a73a94e9 |
+| LK23 Die Datenlücke | Bild | `waterkant/lk23-datenluecke.png` | ja | 1000×280 | – | 9029f9af8ac7 |
 | LK24 Der Versicherer ist da | Bild | `waterkant/lk24-versicherer.png` | ja | 1000×280 | – | f4891addcbc3 |
 | LK25 Der große Saisonsamstag | Bild | `waterkant/lk25-saisonsamstag.png` | ja | 1000×280 | – | 373ece102e9e |
 | LK26 Die Brandursache | Bild | `waterkant/lk26-brandursache.png` | ja | 1000×280 | – | 5b4865f84ce2 |
-| LK27 Stabiler Notbetrieb | Bild | `waterkant/lk27-notbetrieb.png` | ja | 1000×280 | – | fcaf17ce5548 |
+| LK27 Stabiler Notbetrieb | Bild | `waterkant/lk27-notbetrieb.png` | ja | 1000×280 | – | 23c8136c8087 |
 | LK28 Zurück ins eigene Rechenzentrum? | Bild | `waterkant/lk28-rueckkehr.png` | ja | 1000×280 | – | 563e36035e41 |
 | B5 Zweiter Alarm | Bild | `waterkant/b5-zweiter-alarm.png` | ja | 1000×280 | – | 1deb09ac878d |
-| B5 Zweiter Alarm | Ton | `waterkant/b5-zweiter-alarm.mp3` | ja | 11,0 s | endet selbst, Übungshinweis auf der Bühne | b790a4d338f6 |
+| B5 Zweiter Alarm | Ton | `waterkant/b5-zweiter-alarm.mp3` | ja | 19,5 s | endet selbst, Übungshinweis auf der Bühne | 1d029cf58813 |
 | B6 Wo hat es gebrannt? | Bild | `waterkant/b6-falschmeldung.png` | ja | 1000×280 | – | 0ca1053c6004 |
-| B7 Die IT-Leitung muss raus | Bild | `waterkant/b7-it-leitung-raus.png` | ja | 1000×280 | – | 46fdb20138bd |
+| B7 Die IT-Leitung muss raus | Bild | `waterkant/b7-it-leitung-raus.png` | ja | 1000×280 | – | e6d90dfe5b9b |
 | B8 Ein Angebot mit Haken | Bild | `waterkant/b8-angebot.png` | ja | 1000×280 | – | c3fd283a5262 |
 | Firmenzeichen | Bild | `waterkant/waterkant-logo.png` | ja | 524×152 | – | af770cdd78ce |
 | Firmenzeichen Bühne | Bild | `waterkant/waterkant-logo-light.png` | ja | 524×152 | – | d9c834ecbf03 |
 
 **Ergebnis:** 45 von 45 Verweisen zeigen auf vorhandene Dateien. Ungenutzte Dateien in `media/waterkant/`: `waterkant/ambience-kundschaft.mp3`, `waterkant/lk01-feueralarm.png`, `waterkant/lk02-lagerbrand.png`, `waterkant/lk03-serverraum-betroffen.png`, `waterkant/lk04-filialen-oeffnen-trotzdem.png`, `waterkant/lk04-unruhe-kasse.mp3`, `waterkant/lk05-social-post.png`, `waterkant/lk06-pressekontakt.png`, `waterkant/lk07-grosskunde-storniert.png`, `waterkant/lk08-online-shop-bricht-ein.png`, `waterkant/lk09-ersatzlager-gefunden.png`, `waterkant/lk10-nordkanal-ankuendigung.png`, `waterkant/lk11-gutachter-vor-ort.png`, `waterkant/lk12-wiederanlauf.png`, `waterkant/lk13-stoerfall-behoerde.png`, `waterkant/lk14-loeschwasser.png`, `waterkant/lk15-ermittlungsverfahren.png`, `waterkant/v1-stoermeldung-brandmelder.png`, `waterkant/v2-geruch-halle3.png`, `waterkant/v3-lueftung-faellt-aus.png`.
 
-### Sprechertexte und Einspielungen (7)
+### Sprechertexte und Einspielungen (8)
 
 Wortlaut, wie er vorgelesen oder eingespielt wird. „Einspielung“ = als Ton hinterlegt; „vorlesen“ = Moderation spricht live (ggf. nach einem Signalton).
 
+- **LK04 Brandalarm im Rechenzentrum** (Einspielung): Einspielung (Abschrift): „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ Gedämpfter Vorwarnton der Löschanlage, Geräusch der Gasflutung, Durchsage: „Übung. Achtung, Feueralarm im Verwaltungsgebäude. Bitte verlassen Sie das Gebäude über die gekennzeichneten Fluchtwege und gehen Sie zum Sammelplatz. Übung.“ Ende: „Ende der Übungseinspielung.“
 - **LK05 Feuerwehr im Einsatz** (vorlesen): Einsatzleitung Feuerwehr an Waterkant. Wer ist bei Ihnen verantwortlich? Ich brauche sofort drei Dinge: Ist noch jemand im Gebäude? Wo genau liegt der Batterieraum, und was für Batterien sind das? Und wer kann mir sagen, was hinter der Tür mit der Löschanlage ist?
 - **LK09 Die Partnermärkte rufen an** (vorlesen): Guten Morgen, hier spricht der Inhaber eines Partnermarkts. Meine Kassen laufen offline, die Aktionspreise fehlen, und von Ihnen höre ich nichts außer Gerüchten über einen Brand. Laut Vertrag haben Sie 24 Stunden. Ich will heute wissen, wann meine Kassen wieder laufen – und was ich meinen Leuten sagen soll.
-- **LK11 Nordkanal fragt nach** (vorlesen): Guten Tag, Redaktion Nordkanal. Bei Ihnen hat es heute Nacht gebrannt, im Netz ist von giftigen Gasen die Rede. Waren Menschen in Gefahr? Was ist mit Ihrer IT – stimmt es, dass Ihre Kassen nicht funktionieren? Und warum gelten Ihre Prospektpreise nicht? Wir senden um 13 Uhr.
+- **LK11 Nordkanal fragt nach** (vorlesen): Guten Tag, Redaktion Nordkanal. Bei Ihnen hat es heute Nacht gebrannt, im Netz ist von giftigen Gasen die Rede. Waren Menschen in Gefahr? Was ist mit Ihrer IT – stimmt es, dass Ihre Kassen nicht funktionieren? Und warum gelten Ihre Prospektpreise nicht? Wir bringen um 13 Uhr eine erste Meldung und arbeiten an einem längeren Beitrag.
 - **LK16 Ein Bauunternehmen will Vorrang** (vorlesen): Hier ist der Einkauf. Ich habe zwei Baustellen, die am Freitag Material brauchen – Dämmung und Trockenbau, die Liste liegt Ihnen seit Montag vor. Ihr Portal geht nicht, Ihre Zentrale geht nicht ans Telefon. Ich brauche heute eine verbindliche Zusage, sonst bestelle ich woanders – und dann dauerhaft.
-- **LK21 Nordkanal berichtet** (Einspielung): Nordkanal Nachrichten, Donnerstag, dreizehn Uhr. Bei der Waterkant Baumärkte GmbH hat in der Nacht zum Dienstag ein Brand im Technikraum des Firmenrechenzentrums die IT lahmgelegt. Nach Angaben der Feuerwehr geriet eine Batterieanlage in Brand, verletzt wurde niemand. Seitdem kassieren die vierzehn Filialen im Notbetrieb, die Preise aus dem aktuellen Prospekt gelten an vielen Kassen nicht. Betroffen sind auch neun selbständige Partnermärkte, deren Kassensysteme Waterkant betreibt. Ein Inhaber sagt, er habe aus der Zeitung mehr erfahren als von seinem Dienstleister. Waterkant kündigte an, die Systeme in einem Ausweichrechenzentrum wieder in Betrieb zu nehmen. Wann der Normalbetrieb zurückkehrt, ist offen. Wir bleiben für Sie dran.
-- **B5 Zweiter Alarm** (Einspielung): Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“
+- **LK21 Nordkanal berichtet ausführlich** (Einspielung): Nordkanal Nachrichten, Donnerstag, dreizehn Uhr. Bei der Waterkant Baumärkte GmbH hat in der Nacht zum Dienstag ein Brand im Technikraum des Firmenrechenzentrums die IT lahmgelegt. Nach Angaben der Feuerwehr geriet eine Batterieanlage in Brand, verletzt wurde niemand. Seitdem kassieren die vierzehn Filialen im Notbetrieb, die Preise aus dem aktuellen Prospekt gelten an vielen Kassen nicht. Betroffen sind auch neun selbständige Partnermärkte, deren Kassensysteme Waterkant betreibt. Ein Inhaber sagt, auf seine Bestellungen warte er bis heute. Waterkant kündigte an, die Systeme in einem Ausweichrechenzentrum wieder in Betrieb zu nehmen. Wann der Normalbetrieb zurückkehrt, ist offen. Wir bleiben für Sie dran.
+- **B5 Zweiter Alarm** (Einspielung): Einspielung beginnt mit „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ Dann Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“ Ende: „Ende der Übungseinspielung.“
 - **B7 Die IT-Leitung muss raus** (vorlesen): „Der Betriebsarzt hat entschieden: Sie gehen jetzt nach Hause und schlafen. Bitte kommen Sie mit.“
 

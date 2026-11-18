@@ -1,7 +1,7 @@
 {
   "szenario": "scenario.waterkant.json",
   "minuten": 90,
-  "zeitpunkt": "2026-11-18T16:37:08.730Z",
+  "zeitpunkt": "2026-11-18T17:16:42.924Z",
   "ergebnisse": [
     {
       "id": "M1",
@@ -36,7 +36,7 @@
       "name": "Entscheidung W1 geändert (herunterfahren → weiterlaufen)",
       "ok": true,
       "erwartet": "Posten der Rechnung folgen der neuen Entscheidung; Folgen der alten Option entfallen",
-      "beobachtet": "Posten vorher (Option 1): preisuebertragung; danach aktiv: datenbankreparatur; Bühne vorher Lage LK03"
+      "beobachtet": "Posten vorher (Option 1): preisuebertragung; danach aktiv: russeintrag; Bühne vorher Lage LK03"
     },
     {
       "id": "N9",
@@ -64,14 +64,14 @@
       "name": "Jede ausgelöste vertrauliche Karte genau einmal bei den richtigen Personen",
       "ok": true,
       "erwartet": "alle Empfänger der Rolle (inkl. Team), niemand sonst, keine Doppelung",
-      "beobachtet": "19 Karten, 22 Mails, Abweichungen: keine"
+      "beobachtet": "18 Karten, 21 Mails, Abweichungen: keine"
     },
     {
       "id": "M3",
       "name": "Folgekarten der gewählten Entscheidungen",
       "ok": true,
       "erwartet": "Folgekarte kommt, sobald ihre Lage gespielt ist",
-      "beobachtet": "SK41 bei LK15: Lage gespielt, zugestellt; SK42 bei LK14: Lage gespielt, zugestellt; SK45 bei LK25: Lage nicht gespielt, nicht zugestellt; SK44 bei LK22: Lage gespielt, zugestellt"
+      "beobachtet": "SK41 bei LK14: Lage gespielt, zugestellt; SK42 bei LK14: Lage gespielt, zugestellt; SK45 bei LK25: Lage nicht gespielt, nicht zugestellt; SK44 bei LK27: Lage nicht gespielt, nicht zugestellt"
     },
     {
       "id": "M4",
@@ -92,7 +92,7 @@
       "name": "Keine vertraulichen Inhalte in Bühnen- und Ablaufdaten",
       "ok": true,
       "erwartet": "kein Text vertraulicher Karten, Moderationshinweise, Gesprächsleitfäden, privater Überraschungen; keine Mailadressen",
-      "beobachtet": "150 Texte geprüft; Treffer: keine; Adressen: 0"
+      "beobachtet": "152 Texte geprüft; Treffer: keine; Adressen: 0"
     },
     {
       "id": "N1",
@@ -106,7 +106,7 @@
       "name": "Server-Neustart mitten im Lauf",
       "ok": true,
       "erwartet": "Lauf, Entscheidungen, ausgelöste Karten und aktuelle Lage bleiben erhalten; keine Karte wird doppelt verschickt",
-      "beobachtet": "Status running→running; Karten 20→20; Lage LK22→LK22; Zeit 72.1→72.1 Min. (die Ausfallzeit zählt als Übungszeit); Stummschaltung danach: aus"
+      "beobachtet": "Status running→running; Karten 19→19; Lage LK22→LK22; Zeit 72.1→72.1 Min. (die Ausfallzeit zählt als Übungszeit); Stummschaltung danach: aus"
     },
     {
       "id": "N2",
@@ -119,15 +119,15 @@
       "id": "R1",
       "name": "Rechnung im Abschluss",
       "ok": true,
-      "erwartet": "Brutto 3751000 € = Grundschaden 3176000 € + Posten der gewählten Optionen 575000 €; Erstattung 1600000 € (Modellannahme); beim Unternehmen 2151000 €",
-      "beobachtet": "Brutto 3751000 €, Erstattung 1600000 €, beim Unternehmen 2151000 €"
+      "erwartet": "Brutto 3721000 € = Grundschaden 3176000 € + Posten der gewählten Optionen 545000 €; Erstattung 1600000 € (Modellannahme); beim Unternehmen 2121000 €",
+      "beobachtet": "Brutto 3721000 €, Erstattung 1600000 €, beim Unternehmen 2121000 €"
     },
     {
       "id": "P1",
       "name": "Übungsprotokoll (Export)",
       "ok": true,
       "erwartet": "Entscheidungen mit Wortlaut, Abschnitt Überraschungen, keine Namen oder Adressen, kein Passwort",
-      "beobachtet": "14607 Zeichen; Entscheidungen enthalten: 5/5; Namen/Adressen: 0"
+      "beobachtet": "14606 Zeichen; Entscheidungen enthalten: 5/5; Namen/Adressen: 0"
     },
     {
       "id": "N10",

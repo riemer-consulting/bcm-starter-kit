@@ -1,6 +1,6 @@
 # 04 – NordTech: vollständiges Szenario
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## Status: eingefroren
 
@@ -1022,7 +1022,7 @@ Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nu
 
 *Drehbuch-Minute:* 55.5 · *fällt in die Lage:* LK17 Beirat fordert Lagebericht (Donnerstag 07:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Geschäftsführung Vertrieb, stellv. Krisenstabsleitung → Kaufmännische Leitung (CFO)
 
-*Kommt immer direkt mit:* LK17 Beirat fordert Lagebericht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK17 Beirat fordert Lagebericht
 
 Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitzung privat an: „Wenn wir heute keine belastbaren Zahlen und keinen Plan sehen, stelle ich die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.
 
@@ -1033,7 +1033,7 @@ Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitz
 
 *Drehbuch-Minute:* 55.6 · *fällt in die Lage:* LK17 Beirat fordert Lagebericht (Donnerstag 07:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Assistenz der Geschäftsführung / Lage & Dokumentation → Notfallmanagement / BCM → Geschäftsführung Vertrieb, stellv. Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK17 Beirat fordert Lagebericht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK17 Beirat fordert Lagebericht
 
 Aus dem Kreis der Unternehmensführung kommt die Forderung, im Beiratsbericht nur den voraussichtlich versicherten Schaden zu nennen. Die noch nicht belastbar bezifferten Produktions- und Kundenverluste sollen vorerst nicht auftauchen: „Wir brauchen jetzt Vertrauen, keine Panik.“
 
@@ -1144,6 +1144,8 @@ Das ERP läuft im Test. Im Rückstau liegen rund 1.900 Fertigungsrückmeldungen 
 ##### SK48 – an ERP / Stammdaten
 
 *Drehbuch-Minute:* 80 · *fällt in die Lage:* LK14 ERP-Testbetrieb (Samstag 09:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* ERP-Beratung → IT-Leitung (CIO) → Geschäftsführung (CEO), Krisenstabsleitung
+
+*Nur in ihrer eigenen Lage:* entfällt, wenn diese Lage nicht gespielt wird (statt mit einer späteren Lage zu kommen).
 
 *Kommt nur nach:* LK09 Backups gefunden, LK14 ERP-Testbetrieb
 
@@ -1711,6 +1713,29 @@ Stand: 2026-11-18 · erzeugt mit `tools/varianten.js` direkt aus `scenario.nordt
 | 180 | Kunden und Krisenkommunikation | 21 | 20 | 6 | 22 | 2 | 165 + 15 Min. | 2,68 Min. | W1, W2, W3, W4 | 7/8 (B8 nicht) | SK46 ✓ | ok |
 
 **Ergebnis:** In allen 25 Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten; ab 60 Min. mindestens die Hälfte der Überraschungen einsetzbar (Voraussetzung gespielt, Mindestdauer erfüllt).
+
+##### Abdeckung: in keiner der Kombinationen gespielt
+
+Hinweis, kein Fehler: Im Modus „Erprobte Zeiten aus dem Drehbuch“ werden alle Lagen gespielt. In der Zieldauer entfallen Karten mit niedriger Priorität; was hier steht, erreicht den Tisch nur in diesem Modus, über einen Schwerpunkt mit anderer Auswahl oder durch manuelle Auslösung.
+
+- Lagekarten: LK13 Cyberversicherung
+- vertrauliche Karten (ohne Folgekarten): SK07, SK16, SK24, SK26, SK30, SK31, SK36, SK39
+
+##### Vertrauliche Karten, die über eine Tagesgrenze verschoben werden
+
+Hinweis: Fehlt die Heimatlage einer vertraulichen Karte im Plan, kommt sie mit der nächsten gespielten Lage. Liegt diese an einem anderen Wochentag, müssen Zeitangaben im Kartentext dazu passen (zeitneutral formulieren oder die Karte an eine Kernlage binden).
+
+- **SK22** (6×): 45/Ausgewogen: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag); 45/Produktion und Qualitätsmanagement: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag); 60/Ausgewogen: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag) …
+- **SK42** (4×): 60/Ausgewogen: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 60/IT-Sicherheit und Wiederanlauf: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 60/Produktion und Qualitätsmanagement: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag) …
+- **SK15** (1×): 60/Krisenführung und BCM: Heimatlage LK21 (Freitag) → kommt nach LK15 (Sonntag)
+- **SK37** (6×): 60/Kunden und Krisenkommunikation: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag); 120/Ausgewogen: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag); 120/Krisenführung und BCM: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag) …
+- **SK33** (10×): 60/Kunden und Krisenkommunikation: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 90/Ausgewogen: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 90/Krisenführung und BCM: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag) …
+- **SK05** (2×): 90/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag); 120/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag)
+- **SK23** (1×): 90/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag)
+- **SK32** (1×): 120/Kunden und Krisenkommunikation: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag)
+- **SK25** (4×): 180/Ausgewogen: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag); 180/Krisenführung und BCM: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag); 180/Produktion und Qualitätsmanagement: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag) …
+- **SK13** (1×): 180/IT-Sicherheit und Wiederanlauf: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag)
+- **SK12** (1×): 180/Kunden und Krisenkommunikation: Heimatlage LK14 (Samstag) → kommt nach LK15 (Sonntag)
 
 ##### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)
 

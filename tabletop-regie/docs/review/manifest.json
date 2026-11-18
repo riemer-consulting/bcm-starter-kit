@@ -1,87 +1,105 @@
 {
  "paket": "BCM-FINAL-REVIEW-NORDTECH-WATERKANT",
- "erstellt": "2026-11-18T17:01:36.238Z",
- "commit": "07b0fb2186821bece4dda175917ea2b2a24cde5b",
+ "erstellt": "2026-11-18T17:20:25.265Z",
+ "commit": "0c8013e10df97d016a043515ed7a31f948b8cbd5",
  "codestandEingecheckt": true,
  "hinweis": "Alle Inhalte fiktiv. Keine Passwörter, Tokens oder realen Adressen; Testadressen enden auf @example.com.",
  "dateien": [
   {
+   "pfad": "01-management-summary.md",
+   "zweck": "Kurzfassung für Entscheider",
+   "sha256": "0912fce520203e25cad7ac0da268c88fb8f267cc887b940a4989cb15ea7cbe83",
+   "bytes": 3976
+  },
+  {
    "pfad": "02-vollstaendiger-leistungsumfang.md",
    "zweck": "Leistungsumfang und Nutzerabläufe je Rolle",
-   "sha256": "61d87b35a1555770837425bffb00a515cb41dd960d6605076cdb4173c6236eda",
+   "sha256": "92988b1fbc8f80aa78672839dec65973282e3c14457a7ea79d2a8f8035d7598a",
    "bytes": 6467
   },
   {
    "pfad": "03-architektur-und-datenfluesse.md",
    "zweck": "Architektur, Datenmodell, Datenflüsse, Sicherheit",
-   "sha256": "dfe8b7baa7cdf81883672b063bf7a9ba46e903f5e767cb6d57efab94c2d1d14b",
+   "sha256": "34e4c6f3fabc09af52b04b79b2937a40262d106ea2edb1ac3fd5527a80ee03ee",
    "bytes": 54818
   },
   {
    "pfad": "04-nordtech-vollstaendiges-szenario.md",
    "zweck": "NordTech vollständig (eingefroren)",
-   "sha256": "01331d267ec90e53607951972e7f2a0738aa8d8f8379ada40ba01af268277485",
-   "bytes": 182690
+   "sha256": "7213d6f0d2385b7bf0b4ec4eeca4c796f7ea65f759b56ef1e24c7a503603c583",
+   "bytes": 185937
   },
   {
    "pfad": "05-waterkant-vollstaendiges-szenario.md",
    "zweck": "Waterkant vollständig mit Bestandsanalyse",
-   "sha256": "207862be4d0a3747f38bfb1568512ea0a0b10fa5e2f422b99e4f61d780886bad",
-   "bytes": 193604
+   "sha256": "b5d2bd7581778fbe1ab1646b11b83a009d80c1a4bfb2688c4b92775fbaccc9fc",
+   "bytes": 206095
   },
   {
    "pfad": "06-szenariovergleich.md",
    "zweck": "Vergleich beider Szenarien",
-   "sha256": "4a52dc61faab6ca4b85c9b588f09a3af1723955b0280344b287c8bc13d67588b",
-   "bytes": 3293
+   "sha256": "e753f556cad3080064ba57d4fc9f1bc5c06a6958f2085ff538dd89e2f1a99026",
+   "bytes": 3521
   },
   {
    "pfad": "07-funktions-und-testmatrix.md",
    "zweck": "Funktionskatalog mit Umsetzungs- und Teststatus",
-   "sha256": "fb2f3095e721537a686280f3f92575ad9a552306b00f1ecdd7d7b848cad7487f",
+   "sha256": "922be63f09b39a9bac269a1baaf30a2d0deeb5ea1a9d09e2dcc0c5d516633be2",
    "bytes": 54449
   },
   {
    "pfad": "08-medien-und-audio.md",
    "zweck": "Medien, Töne, Sprechertexte, Rechte",
-   "sha256": "539a0f5e2d49630f94e2156ddff0c5d443d5ba20d42dccec32a350e6f64953f4",
-   "bytes": 22749
+   "sha256": "817f75989bafdff81dfda747422815e1ecda1c3ae0f8caed444f1c3b111d4d6a",
+   "bytes": 24064
   },
   {
    "pfad": "09-alle-spielverlaeufe.md",
    "zweck": "Durchgespielte Verläufe beider Szenarien",
-   "sha256": "925355ab71d75e389ef6bc4783063a5a5343e07528f3099b869bf750a19fc447",
-   "bytes": 318822
+   "sha256": "d2d09d5a85aabbc1028ac5d1580c8ac732f6cd18342c51cc5f04ad394f604235",
+   "bytes": 332969
   },
   {
    "pfad": "10-schaeden-sla-und-versicherungen.md",
    "zweck": "Rechnungen, Annahmen, SLA/RTO/RPO, Versicherung",
-   "sha256": "463a11f4056e128e50152037f99fafb68b05eb392b95acb4571c76f0ee04b52a",
-   "bytes": 16721
+   "sha256": "1cb1d10dddfaf17519802e509608d90f02d873fba039c2b26d33454930b2da4e",
+   "bytes": 17867
+  },
+  {
+   "pfad": "11-anlage-pruefbericht-waterkant.md",
+   "zweck": "Anlage",
+   "sha256": "420f30c110d6782078307bb5b76fc6d083e37f0c82b5c7cfd27cf07de04cfce8",
+   "bytes": 42848
+  },
+  {
+   "pfad": "11-finaler-unabhaengiger-review.md",
+   "zweck": "Unabhängige Prüfung und Umgang mit Befunden",
+   "sha256": "76e2b85aa4ee7f1bad70e78c490c0e3d14c84af7b05710f66cd3d52fffda4e84",
+   "bytes": 10124
   },
   {
    "pfad": "12-release-readiness.md",
    "zweck": "Abnahmekriterien und Freigabestand",
-   "sha256": "409a1ce0ea0004325bfc54f17477aeca4787644871184feabb440195cc1165c2",
-   "bytes": 4299
+   "sha256": "68bd462db974458aa829168d1561afa27924e7537a91fa83c9e58b41e07e8c65",
+   "bytes": 5006
   },
   {
    "pfad": "ablaufdiagramme/architektur-und-datenfluss.md",
    "zweck": "Ablaufdiagramm (Mermaid)",
-   "sha256": "b5e126428d267336779d16164c25964b91fb7c24b9a8ead6b279c1589b7cbd5c",
+   "sha256": "d599b9f2aef7c68786d80b5aca38cbe5cb826b6dffbec6ea84f0fe9ac30e1e6c",
    "bytes": 3074
   },
   {
    "pfad": "ablaufdiagramme/nordtech-ablauf.md",
    "zweck": "Ablaufdiagramm (Mermaid)",
-   "sha256": "e57289afc1e96abcb4eb1f559ea9357f177de4e07c4f85765585a1676a28351c",
-   "bytes": 2881
+   "sha256": "be0332138edb61cd79cd12d4a1ea95193c08152528850de59f712f25885b06da",
+   "bytes": 2884
   },
   {
    "pfad": "ablaufdiagramme/waterkant-ablauf.md",
    "zweck": "Ablaufdiagramm (Mermaid)",
-   "sha256": "465bb3483a359e69eaa76c426f3de6904bf27eaa091536b36babae875d5e66ae",
-   "bytes": 3717
+   "sha256": "33b1c8005438c5b6c9c31a69e8e352e651a53842d71ef29c126851389f4e35c2",
+   "bytes": 3771
   },
   {
    "pfad": "exportierte-szenariodaten/archiv-scenario.waterkant-lagerbrand-v1.json",
@@ -92,8 +110,8 @@
   {
    "pfad": "exportierte-szenariodaten/nordtech-drehbuch.md",
    "zweck": "Szenariodaten",
-   "sha256": "4eee1474f7a571a64b836fabc886b029c840790ac6015d87a914498058c4e716",
-   "bytes": 144717
+   "sha256": "6af598e2c74a574af31d1ea10ae20e01302f2daf0125698e45be43ef4a7897c8",
+   "bytes": 145062
   },
   {
    "pfad": "exportierte-szenariodaten/scenario.nordtech.json",
@@ -104,14 +122,14 @@
   {
    "pfad": "exportierte-szenariodaten/scenario.waterkant.json",
    "zweck": "Szenariodaten",
-   "sha256": "651b6617c3d44dd9c39c6ec4c4da3bc0a1b17784232881ef32b5046807fd49fe",
-   "bytes": 131219
+   "sha256": "f340b1c716ac829b29c9b7a345bf127fbdde891757d677aef84f5a9e55a03b60",
+   "bytes": 136671
   },
   {
    "pfad": "exportierte-szenariodaten/waterkant-drehbuch.md",
    "zweck": "Szenariodaten",
-   "sha256": "ad0392efc4094675e607bd3b448c2e049dbc8589cfbf237cefa05514ae1e2254",
-   "bytes": 146414
+   "sha256": "2994f0fabda90091ea7dd55244eb65be9b4d08c58149e498928546fe5fed1ef6",
+   "bytes": 154130
   },
   {
    "pfad": "testberichte/buehne-nordtech.json",
@@ -122,14 +140,14 @@
   {
    "pfad": "testberichte/buehne-waterkant.json",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "f5b95bce92b4a538cd936e66e99b9f4ff70b2fdfae95dd42647e26690050ae53",
-   "bytes": 9483
+   "sha256": "ee0f7bb833a39de088626b989bb280ab9cb0567d68e1c60a2db85dc0f3188e62",
+   "bytes": 9503
   },
   {
    "pfad": "testberichte/drehbuchpruefung.txt",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "d567d2c1375a475f147b3973772ef89ef8f99dd0b394a6c40a7afccdb2e337b5",
-   "bytes": 950
+   "sha256": "74c1f74efc411a3244777ba90473f37538c1ba573f2725a711b0b6b95572aad5",
+   "bytes": 1052
   },
   {
    "pfad": "testberichte/lauf-nordtech.json",
@@ -140,8 +158,8 @@
   {
    "pfad": "testberichte/lauf-waterkant.json",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "2a19b9bd8fc5b3c638884520a73471dc3a3e1f6f7f57eea6d79a52beecfb70a3",
-   "bytes": 6468
+   "sha256": "994445c8875336bd3ec809c8b05684dc394b5281760df3fd5c21e9d35f997bc5",
+   "bytes": 6473
   },
   {
    "pfad": "testberichte/sicherheit.json",
@@ -152,8 +170,8 @@
   {
    "pfad": "testberichte/testbericht.md",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "c99fd85750de79dbc7f36779b6df03f093ec608effbd04f7cac3adc225baef37",
-   "bytes": 23380
+   "sha256": "c58bdda2ade3926f761ab1d5fc1b5d72415d0148035bd7b5eb6a2020706789a0",
+   "bytes": 23507
   },
   {
    "pfad": "testberichte/uebungsprotokoll-beispiel-nordtech.md",
@@ -164,272 +182,272 @@
   {
    "pfad": "testberichte/uebungsprotokoll-beispiel-waterkant.md",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "9bf8a6c2eefb8304c4af8bd371322c8ec0653277bf9b65c1acdfa521fafea32e",
-   "bytes": 14872
+   "sha256": "e1a0e72cc2d5ba06909bba59b21e60fcf310c14183a5ba849b213fe9ac49c320",
+   "bytes": 14881
   },
   {
    "pfad": "testberichte/varianten-nordtech.md",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "734bd6328d555996e9e730db703688ad8102a827af353b474ca4b6558be28c06",
-   "bytes": 35238
+   "sha256": "4a71d9dda753bb2e4034998910e47420954c43aa07f692379ca4a664f247f00f",
+   "bytes": 38136
   },
   {
    "pfad": "testberichte/varianten-waterkant.md",
    "zweck": "Testbericht / Rohdaten",
-   "sha256": "e6cf0adc2934f0faf16f89145929a83996b1a4f84879e1dd165b5c4cddceaa27",
-   "bytes": 41630
+   "sha256": "66dd61f694bbad70cfd58eeffb3a5cb310efa9f49c3e46b0bb4a211df0385b8f",
+   "bytes": 46131
   },
   {
-   "pfad": "screenshots/nordtech/00-buehne-vor-start.png",
+   "pfad": "screenshots/nordtech/00-buehne-vor-start.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "4f66235115002ddee4ccb98efc7c1337365de0df2a89c4fa327f71f790811499",
-   "bytes": 635522
+   "sha256": "6f96defe69876fe36a3e4fb424b2000aeb27048aa6eabfe47546a230dd2ffc28",
+   "bytes": 237827
   },
   {
-   "pfad": "screenshots/nordtech/01-buehne-countdown.png",
+   "pfad": "screenshots/nordtech/01-buehne-countdown.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "585597169fd3c4967123eb205f15abd9768be64c63485a4e85f061e078c23aa5",
-   "bytes": 638247
+   "sha256": "773057835a6333bdf0d688d85a03ffac1c0fdddb00e4017b429c934b2d641908",
+   "bytes": 239754
   },
   {
-   "pfad": "screenshots/nordtech/02-LK18.png",
+   "pfad": "screenshots/nordtech/02-LK18.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "83559c475abc8a61befce7ca750de4dc28869ef013f31d267cc7951cbf6f1a45",
-   "bytes": 202648
+   "sha256": "c8019cccb0d0cda113efb2d6325f4f37c911d7a6d2ba5c96d88945feac607402",
+   "bytes": 171440
   },
   {
-   "pfad": "screenshots/nordtech/03-LK19.png",
+   "pfad": "screenshots/nordtech/03-LK19.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d3a8381322e95572078bcb07ee5e8323bd57b022efc985261f510847abdb1bba",
-   "bytes": 225981
+   "sha256": "db57c3d5ffb2bc781fda41f46230150bd0a09010b3d54f87c5224fa10a0ed4d1",
+   "bytes": 179376
   },
   {
-   "pfad": "screenshots/nordtech/04-LK20.png",
+   "pfad": "screenshots/nordtech/04-LK20.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d78b333775415d62c4663771be049e147f4dd2a083cb27d3eb159abb2a2e5898",
-   "bytes": 225092
+   "sha256": "138b85ceb6ad2aa8aac1d3a33b6b6dd515bc8526b5d798bbad0d115389c0fa87",
+   "bytes": 178014
   },
   {
-   "pfad": "screenshots/nordtech/05-LK01.png",
+   "pfad": "screenshots/nordtech/05-LK01.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "eeddc7733f377fb782c2ad9fe7c8f982d73a9012dd3d7f82d9094af9173abb98",
-   "bytes": 439836
+   "sha256": "e9466eaa1207ed597495cd800ab56be6bb6daeef5767f47fa8086599143fc1ab",
+   "bytes": 213749
   },
   {
-   "pfad": "screenshots/nordtech/06-LK16.png",
+   "pfad": "screenshots/nordtech/06-LK16.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "325b690d9a920dd185758ba0efd9fb422c2a91ed639383054e70a52eabee29d8",
-   "bytes": 396335
+   "sha256": "84128fd10784a7c3f98a4175c6395ff352805f81079c8b2bd6656a858131113a",
+   "bytes": 184301
   },
   {
-   "pfad": "screenshots/nordtech/07-LK02.png",
+   "pfad": "screenshots/nordtech/07-LK02.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "beb4615ade98cf0b93e2b32c502b85d5806f143206b3d6d1c3351b8e62426490",
-   "bytes": 518084
+   "sha256": "d80d18240d99ef328d85b81b43d35f0ea40ec1d7ca46eadece7f1cb073cdb56e",
+   "bytes": 218103
   },
   {
-   "pfad": "screenshots/nordtech/08-LK22.png",
+   "pfad": "screenshots/nordtech/08-LK22.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "4121694c8815188a531e772900800662c0ca580108764c8ec760187f5260409d",
-   "bytes": 211360
+   "sha256": "2d72dbae6a87c9cfb3675e07d06b057738f357ae47f2f174307ebdc8ae173c02",
+   "bytes": 185234
   },
   {
-   "pfad": "screenshots/nordtech/09-B6.png",
+   "pfad": "screenshots/nordtech/09-B6.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "cf63b52e87caf35711b28d02537c8ef94f942b6a520af32353442c848c876d0c",
-   "bytes": 202835
+   "sha256": "a5a021fecc7c50109849217d68aaa0cf1ea109ad47954f81e23186008af3c63e",
+   "bytes": 180776
   },
   {
-   "pfad": "screenshots/nordtech/10-LK03.png",
+   "pfad": "screenshots/nordtech/10-LK03.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d50539f21af7f6fb06917c08c33d1bf6cc4866a80429d6ac47d84da16f7978af",
-   "bytes": 354690
+   "sha256": "22d8212266afc4e3942b109314aee379737cc5278576fe8825eddc42982216ef",
+   "bytes": 182512
   },
   {
-   "pfad": "screenshots/nordtech/11-LK04.png",
+   "pfad": "screenshots/nordtech/11-LK04.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "0f299687f8e115bec023d7857f9d7e4c21cfd1e964a21b297834b99248e704fd",
-   "bytes": 191390
+   "sha256": "bcb3e8e6a90016e1b9518c8f7273dd59c64fc5923ed5b809016f2c2d6675b617",
+   "bytes": 147814
   },
   {
-   "pfad": "screenshots/nordtech/12-LK23.png",
+   "pfad": "screenshots/nordtech/12-LK23.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "0c9761f962d0a3611955f881a65197e8dc6ab8d622340abaaf49c37ae71f7c85",
-   "bytes": 247107
+   "sha256": "00cb22b75d3575ce6f8f3a3ddf6e0de6122cb604b774abcd4a73d0c43488ff91",
+   "bytes": 215687
   },
   {
-   "pfad": "screenshots/nordtech/13-LK05.png",
+   "pfad": "screenshots/nordtech/13-LK05.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "331f56c30781dce5db66398fc17252be156053cae005bb636c45a0d36bc8121a",
-   "bytes": 409613
+   "sha256": "6e61661c10e4a70df02239663656edac2dfb8abf47cafcef0df4aaf08dbe8a31",
+   "bytes": 175970
   },
   {
-   "pfad": "screenshots/nordtech/14-LK06.png",
+   "pfad": "screenshots/nordtech/14-LK06.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "751ad147aad7c6d588da0397778df41cc66ca524e7f8634c584069dc9f139f6e",
-   "bytes": 416664
+   "sha256": "ba8d60ac18175bf5e9f1964441a2dccb133d8874def8fba81f91d3098946196a",
+   "bytes": 194866
   },
   {
-   "pfad": "screenshots/nordtech/15-LK07.png",
+   "pfad": "screenshots/nordtech/15-LK07.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "cae3d7cb410aa0519ffb5c6c36521d30d444e2856d09914629ab369324467e8c",
-   "bytes": 204766
+   "sha256": "fe17051d8e64613ac17b8ea9d12036bf137a7f8789d68308e9b34afabf4aaf43",
+   "bytes": 173778
   },
   {
-   "pfad": "screenshots/nordtech/16-LK08.png",
+   "pfad": "screenshots/nordtech/16-LK08.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "65ec4af7deb3eaa82dc699202371fae65f1230e0e217f0f8c9d126e67d1853bc",
-   "bytes": 190656
+   "sha256": "3fb0bcd30878f8d519a12dd2731075a9512111225158c10982f5efcaf022d55b",
+   "bytes": 153947
   },
   {
-   "pfad": "screenshots/nordtech/17-LK09.png",
+   "pfad": "screenshots/nordtech/17-LK09.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "b142d94a40eaaaa560cc3de3ccc3859ee2dcb118dc77bf371de9d117153b1892",
-   "bytes": 431436
+   "sha256": "ff4b13bfc8d0ca18fd798b1db34a377c78f82c5b4f4eebe17f2a5186cc725344",
+   "bytes": 195656
   },
   {
-   "pfad": "screenshots/nordtech/18-LK24.png",
+   "pfad": "screenshots/nordtech/18-LK24.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "c7014313f011dac777666df7ff7f4603752165922cd4dab9475cca0fd4192763",
-   "bytes": 258222
+   "sha256": "bd97c7def434fb9f8665cb4f959664e83b1f581daf4b089a31406c9e9ad3d8e4",
+   "bytes": 226129
   },
   {
-   "pfad": "screenshots/nordtech/19-LK17.png",
+   "pfad": "screenshots/nordtech/19-LK17.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "69488386cde0c2785c57c6b273acf569e463982ee5f3e8e7713068ff23ad005d",
-   "bytes": 421613
+   "sha256": "551ac9988c47d53c0f0feddf796543cc65f545794b0784352ec8dbb3b074860c",
+   "bytes": 196120
   },
   {
-   "pfad": "screenshots/nordtech/20-B7.png",
+   "pfad": "screenshots/nordtech/20-B7.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "8bf40f0026b78a3d01c597a5f3bc3f7a913fb96660085d77204b177ba6661377",
-   "bytes": 202677
+   "sha256": "8afa6b43314b9ff790792ceb9e71c9b22e123f4ad73063bf08c751c0867e4333",
+   "bytes": 187045
   },
   {
-   "pfad": "screenshots/nordtech/21-LK10.png",
+   "pfad": "screenshots/nordtech/21-LK10.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "193cce6df64c6189fee9489cee975fbe26ff09b28ca98c71f0bd6fd7d85b9d23",
-   "bytes": 404169
+   "sha256": "670f19dcddef0ffc0a2f08165819be5740391a6427af67fd1bc217bbf2f96b0d",
+   "bytes": 180885
   },
   {
-   "pfad": "screenshots/nordtech/22-LK11.png",
+   "pfad": "screenshots/nordtech/22-LK11.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "28436c4832a0cda2c2bddf130f565184fa59b0ade3428015bad414b32822dbd2",
-   "bytes": 440302
+   "sha256": "54c3d148d9ec36fb57676d7448eb939635d23dd3431a56166d7adeb8526ee464",
+   "bytes": 191540
   },
   {
-   "pfad": "screenshots/nordtech/23-LK12.png",
+   "pfad": "screenshots/nordtech/23-LK12.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d41037a92161cc43cb456d544c2a87d263ed70b8b9cb8448b1e98ff926ca1168",
-   "bytes": 465697
+   "sha256": "d47d452d706d962b63bfeb25cecc2a136d0100fce5a2c2d4d4a112b2efda7e3b",
+   "bytes": 213300
   },
   {
-   "pfad": "screenshots/nordtech/24-LK13.png",
+   "pfad": "screenshots/nordtech/24-LK13.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "3677584b60d9694baf1604d81cc446c46a77d5f8be03f8c5bf0cab5f48e5d6cc",
-   "bytes": 426608
+   "sha256": "2491934a668cf3b0fc030f773fe3b289b76a32ec8f01e42bd35e5674a1c5f120",
+   "bytes": 192052
   },
   {
-   "pfad": "screenshots/nordtech/25-LK21.png",
+   "pfad": "screenshots/nordtech/25-LK21.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "608ab60cc93a69db828ab5e7ecaea21f3aaecf353917c682a0a5b8b307908fea",
-   "bytes": 215292
+   "sha256": "e68921d7017cb9c160371c70d7bca2bc2200f5a716071598c3a167f046447989",
+   "bytes": 187492
   },
   {
-   "pfad": "screenshots/nordtech/26-LK14.png",
+   "pfad": "screenshots/nordtech/26-LK14.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "476ce616527b55da3c8413b25f7bc6c66dc8fc42ecf53c5d2cd1bbb12a004328",
-   "bytes": 424339
+   "sha256": "8b46f4866874a9ff4dd7bd75f3c70a99c0e035df944e368245b36530893c6ea1",
+   "bytes": 200840
   },
   {
-   "pfad": "screenshots/nordtech/27-B8.png",
+   "pfad": "screenshots/nordtech/27-B8.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "e168b3463bb4f34b4b1d8d5c38448f4428ab6119b9376b4d0854bc81458323cf",
-   "bytes": 204293
+   "sha256": "6016e03531d2c4fd721beb8bf01ce9fc7e1f2a2d24260b063e999857fd19d523",
+   "bytes": 184267
   },
   {
-   "pfad": "screenshots/nordtech/28-LK25.png",
+   "pfad": "screenshots/nordtech/28-LK25.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "f6c12a82eb402b5dfd095e176930df9100f07ce573938eda00f392d00df18051",
-   "bytes": 244164
+   "sha256": "d51e56db976780e287a212f1f219a919b022ea2ea7f5789c075fa97f62c58fdc",
+   "bytes": 221419
   },
   {
-   "pfad": "screenshots/nordtech/29-LK15.png",
+   "pfad": "screenshots/nordtech/29-LK15.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "5b2afff0390aaf9e0af3789f56e701094102421827161c15906c9dba624a9c7d",
-   "bytes": 245244
+   "sha256": "a921144c4549f8f5931b9d15c5df7acc8b76ce00fafe14aee86004d8e09ae275",
+   "bytes": 211606
   },
   {
-   "pfad": "screenshots/nordtech/30-LK26.png",
+   "pfad": "screenshots/nordtech/30-LK26.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "0e328d6a62e2e708d08e15bbb49ca3cdc748d451f90bc4382c8631d85e3d12c1",
-   "bytes": 221162
+   "sha256": "8ac9dedd83acd95d8434f9809bf43647854ff9541b741923e4e90d2d4aa07387",
+   "bytes": 193900
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-01-intro.png",
+   "pfad": "screenshots/nordtech/abschluss-01-intro.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "976c6ed0a8ab43ce4be9277d12975c889bc6af0d5b82303bbe44ea5a3c22e2fb",
-   "bytes": 163069
+   "sha256": "7ad3b68c56fc98b3eb3e63a168520f5f451250a0f2e87f9db22472ad053deee3",
+   "bytes": 175384
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-02-nacharbeiten.png",
+   "pfad": "screenshots/nordtech/abschluss-02-nacharbeiten.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "02683b05da93160b9c7672ac7397b7078558b442125ad14d70c883770beb0e7d",
-   "bytes": 175458
+   "sha256": "7d0b0340c9c7fc6f0056f57318ccd706b2680ea5a5bbe8773ba75119792df5f0",
+   "bytes": 177099
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-03-rechnung.png",
+   "pfad": "screenshots/nordtech/abschluss-03-rechnung.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "da65e1da20d8b1be35292fa4c21f1a812e6e73496ea4bbcf8907b24eb92b790d",
-   "bytes": 193297
+   "sha256": "efe2f6fa3a65bcef46eada472fffb0c64203b46d38abcdb3699133c58acf7d5d",
+   "bytes": 206224
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-04-bilanz.png",
+   "pfad": "screenshots/nordtech/abschluss-04-bilanz.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "6aef103f572c80e61b228d1d3e0ccec25eceb4bc58a75fc5a65531f878df477b",
-   "bytes": 218861
+   "sha256": "5b406325fda4476019dcdb8a8a5bf717d912661e090c179e21205cd9c66570ce",
+   "bytes": 214418
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-05-aha.png",
+   "pfad": "screenshots/nordtech/abschluss-05-aha.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "c281adc606fa5b3dd07385c652edc930135d894b1406b47c854e3d66a8b74bfa",
-   "bytes": 147756
+   "sha256": "d9be6111aaf3b522ff3b3ae294526a78f320091a30e728ac3be9142d9df99075",
+   "bytes": 154868
   },
   {
-   "pfad": "screenshots/nordtech/abschluss-06-fazit.png",
+   "pfad": "screenshots/nordtech/abschluss-06-fazit.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "aee598e61a59ccd03979a8e3b981e270548b671d849d2e68465897dfc0e0cc6d",
-   "bytes": 123835
+   "sha256": "1871081c504d91fce191aeeb6700343f8376075b9e08ae649c6f6a387060b6af",
+   "bytes": 136958
   },
   {
-   "pfad": "screenshots/nordtech/moderation-01-vor-start.png",
+   "pfad": "screenshots/nordtech/moderation-01-vor-start.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "7e3264449e18196f05d4f21c6631c80decf46141538384f4a6ba832aa8a9ad2a",
-   "bytes": 1206274
+   "sha256": "fca88e00ef2b832487b0ccce1294f463b777125ca709ff503323d978f53c2baa",
+   "bytes": 1138591
   },
   {
-   "pfad": "screenshots/nordtech/moderation-02-im-lauf.png",
+   "pfad": "screenshots/nordtech/moderation-02-im-lauf.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "b54fd2120199d4c73865cb264ed2563082288dd975442cc38b1c84fd445ac24f",
-   "bytes": 3286528
+   "sha256": "7fdf762a93e8fdc937112cca3b0b9c55a2578b8c94ead692281aafc854caad97",
+   "bytes": 3240639
   },
   {
-   "pfad": "screenshots/nordtech/moderation-03-abschluss.png",
+   "pfad": "screenshots/nordtech/moderation-03-abschluss.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "266ef5b6266be73de9bfb140d9b382b8290c5fab41aa6d58fd14adef83474722",
-   "bytes": 3289797
+   "sha256": "0466d799befb917e48f88e2ef77c614d33138af517e43677951e2f51027cd6cb",
+   "bytes": 3241217
   },
   {
-   "pfad": "screenshots/nordtech/moderation-B7-unterbrechung.png",
+   "pfad": "screenshots/nordtech/moderation-B7-unterbrechung.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "2388b8e73a10d633877c9366f6ab1eae5a0f1300b3a076ec85501fccc4cb70f7",
-   "bytes": 255008
+   "sha256": "b1e6a012f59eb6949ef0df92a44b8c23216a63334c04b5349f28abfbc97cfdf7",
+   "bytes": 247426
   },
   {
-   "pfad": "screenshots/nordtech/n2-buehne-nach-neuladen.png",
+   "pfad": "screenshots/nordtech/n2-buehne-nach-neuladen.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "f23f87a6d3013bac97f1fbc917cc0d4a8994d754f560a2a279965a3261e721e2",
-   "bytes": 230920
+   "sha256": "f21fff2dfc7d9d66c53722524c41883bbf0bea479bf363d8ccaaee1e0275df57",
+   "bytes": 68615
   },
   {
    "pfad": "media-nordtech/nordtech/nordtech-logo.png",
@@ -702,304 +720,304 @@
    "bytes": 151109
   },
   {
-   "pfad": "screenshots/waterkant/00-buehne-vor-start.png",
+   "pfad": "screenshots/waterkant/00-buehne-vor-start.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "87b60ecb3747e415a8720432c8af35ba40d16453001d63e9a0a7c413932d1c09",
-   "bytes": 225607
+   "sha256": "446e86f7255a4b0aa127f05623689d1447f3f686b9a0206395c92654a05f9234",
+   "bytes": 207670
   },
   {
-   "pfad": "screenshots/waterkant/01-buehne-countdown.png",
+   "pfad": "screenshots/waterkant/01-buehne-countdown.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "8836188a401b843702defac9cfe1855b4dcd09c4c022381a1cb7a525bc5613c6",
-   "bytes": 228417
+   "sha256": "0759475e788e4c20e4dd1dc8688e5633075a5eaccbd914a4ba769b9c8b41f9bd",
+   "bytes": 209855
   },
   {
-   "pfad": "screenshots/waterkant/02-LK01.png",
+   "pfad": "screenshots/waterkant/02-LK01.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "8cf3b3da578cd9edfdaf5b7f13abc367c1bd51321bf84260e38abf3bb76af57f",
-   "bytes": 212888
+   "sha256": "0209d0fdd0153fa132986262ab77b742275f8954fc7c9840b43ac6964d729efa",
+   "bytes": 169019
   },
   {
-   "pfad": "screenshots/waterkant/03-LK02.png",
+   "pfad": "screenshots/waterkant/03-LK02.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d82475a8ede50a97a432f7f810536b154a54389be72278462378dab7e158fdee",
-   "bytes": 209916
+   "sha256": "9078c18df7da05a11965376551c801458897d33ffc81385bacd468a0d2ddb59b",
+   "bytes": 165824
   },
   {
-   "pfad": "screenshots/waterkant/04-LK03.png",
+   "pfad": "screenshots/waterkant/04-LK03.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "9878914d5fe2974a2784813d81477ac3818e1f70c1643d7c16edf67455790ace",
-   "bytes": 218075
+   "sha256": "c9f20e9e4ba2e9d7bf6d204c887689604797d8bbaf33e559a1ec42cda892800e",
+   "bytes": 175899
   },
   {
-   "pfad": "screenshots/waterkant/05-LK04.png",
+   "pfad": "screenshots/waterkant/05-LK04.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d98c803fa5ec5cbe3beef5484f23e018f8cca561bea6e5acd265ffbb5c70c132",
-   "bytes": 243715
+   "sha256": "fe127d235950d48acac25b68b740f2c70f0dedbe268b3844a7bab8f62454de9f",
+   "bytes": 202531
   },
   {
-   "pfad": "screenshots/waterkant/06-LK05.png",
+   "pfad": "screenshots/waterkant/06-LK05.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "6ec4a9d833358691ad6778d39a6a2f90dc9e6d565ad8a8907198a0485cc4cf09",
-   "bytes": 235752
+   "sha256": "aed0356cfd56b56eae3db9c39c78b118c797f7ec5de118579bd6ead16dd7eea8",
+   "bytes": 196773
   },
   {
-   "pfad": "screenshots/waterkant/07-LK06.png",
+   "pfad": "screenshots/waterkant/07-LK06.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "f225b16c3c57f222fd2a2cdb8f72ee25f77ed5b3c4024b063b27eb99fe882f1c",
-   "bytes": 254088
+   "sha256": "1ca0f1f6eb91b6452fb78897274a0b089589362f4abd159fa1506280874b2f91",
+   "bytes": 203462
   },
   {
-   "pfad": "screenshots/waterkant/08-LK07.png",
+   "pfad": "screenshots/waterkant/08-LK07.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "ffa686244aa1c130c728f89c3e0a648b69927e5b45ec1149de713ff48261bccc",
-   "bytes": 250923
+   "sha256": "42337bcb57e092941feaefc6573c419d5a3a723b6b2f70bffa1aede81ba1b269",
+   "bytes": 205114
   },
   {
-   "pfad": "screenshots/waterkant/09-LK08.png",
+   "pfad": "screenshots/waterkant/09-LK08.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "33d721f64dc3d42c5034c2ade4384a0e7e98ecb54e3a7f1bca0884b84613b21c",
-   "bytes": 243086
+   "sha256": "e5ed88ba5b75704d81c41929fd774f4a311daf8173cdb86f933a3fbf713d301d",
+   "bytes": 195756
   },
   {
-   "pfad": "screenshots/waterkant/10-LK09.png",
+   "pfad": "screenshots/waterkant/10-LK09.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "7a4f79a671d686bca8f640025775c0f47e6bac4aa27a27e6057f1d0bde908266",
-   "bytes": 241715
+   "sha256": "30c4227f1d9b62abd8e19dfddae1896e62e72d47dbdd17cae50696c898df612a",
+   "bytes": 195514
   },
   {
-   "pfad": "screenshots/waterkant/11-B6.png",
+   "pfad": "screenshots/waterkant/11-B6.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "3a2c6034430a5c1fcbeb2e5ddef5896f62d2fb23d055430bc4393b189554a689",
-   "bytes": 196161
+   "sha256": "75b8014eb4b41db097af8fb43d7b078ef24dbec92ca6b87a078e33f6025f8a0b",
+   "bytes": 160005
   },
   {
-   "pfad": "screenshots/waterkant/12-LK10.png",
+   "pfad": "screenshots/waterkant/12-LK10.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "be31f8600f4605407c804730cdb535273f9449f9ad021469652bc5678bd44fda",
-   "bytes": 244031
+   "sha256": "c4a368e02f7ccaab540d53d31d05010fa43c65871e8dae0a5c010aad0bef86b1",
+   "bytes": 198920
   },
   {
-   "pfad": "screenshots/waterkant/13-LK11.png",
+   "pfad": "screenshots/waterkant/13-LK11.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "e83bd2cf3db35dc0421a9e02be52ab9e207a015f8783f80d0bc97dc60dc68dbd",
-   "bytes": 219805
+   "sha256": "136debd3021b704069840db426f43ce9d4725aac86ef126723abec818b451581",
+   "bytes": 175023
   },
   {
-   "pfad": "screenshots/waterkant/14-LK12.png",
+   "pfad": "screenshots/waterkant/14-LK12.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "56cddb56177a46854502eb98a3287544751895af9d874450364245480d9ce721",
-   "bytes": 234936
+   "sha256": "3602a979bdd69f5cf42b44d6146cd65c1f742a5482b9fa6957b2e465bc6a1962",
+   "bytes": 191966
   },
   {
-   "pfad": "screenshots/waterkant/15-LK13.png",
+   "pfad": "screenshots/waterkant/15-LK13.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "cf0c5ed560c184bc29f077818576d771d177c89de241fb51538dd0c9ddcff7c2",
-   "bytes": 258096
+   "sha256": "984d311c54e4aa15cf50bd0c706524e8d81133e89ed9edf97d1246f35884fb05",
+   "bytes": 203866
   },
   {
-   "pfad": "screenshots/waterkant/16-LK14.png",
+   "pfad": "screenshots/waterkant/16-LK14.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "917904553fb21483844a5b742f70f951ac956eecdd72c38879a4dfc37300b4ac",
-   "bytes": 271359
+   "sha256": "9a9cde05691b24880ba4b0116542d5ee3f70cbcbdfe00472ad5b6c70d97d3b08",
+   "bytes": 234511
   },
   {
-   "pfad": "screenshots/waterkant/17-B5.png",
+   "pfad": "screenshots/waterkant/17-B5.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "ea059cd4a99ad99dc420c1246022568bf322275cd061519cb27ca6bcbaec15e9",
-   "bytes": 202504
+   "sha256": "cc4f040270821f48c0cb91fe129df5f84c81523848c3aa12edd867df9335fc17",
+   "bytes": 168568
   },
   {
-   "pfad": "screenshots/waterkant/18-LK15.png",
+   "pfad": "screenshots/waterkant/18-LK15.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "64ebf677c4544711680914a885fc73767b40c8b3b22cd7a32d779bab90038d04",
-   "bytes": 259844
+   "sha256": "a430902f5786f6597b6db6da217871fe7b858ba595d727360ee056a4ea1bedcb",
+   "bytes": 214801
   },
   {
-   "pfad": "screenshots/waterkant/19-B7.png",
+   "pfad": "screenshots/waterkant/19-B7.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "fc4af1562f4e451e1c1d3e9964fcea80582a202f93ff9b8ff32259b569b1b744",
-   "bytes": 199883
+   "sha256": "63be0a8cb41e162b8053ffaa2aa818fcb5bc30ba23e1bdeeeeb927499a1a38a5",
+   "bytes": 190705
   },
   {
-   "pfad": "screenshots/waterkant/20-B8.png",
+   "pfad": "screenshots/waterkant/20-B8.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "ba6dc8594fe9cec0c361282396f08c69b517283a895ea8d223e07b7f5df084e1",
-   "bytes": 197082
+   "sha256": "2a0fa8d5287468a6d4c9e95354b9054da21e9d8acefdf16b325d3ab43bd9e572",
+   "bytes": 164688
   },
   {
-   "pfad": "screenshots/waterkant/21-LK16.png",
+   "pfad": "screenshots/waterkant/21-LK16.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "b60a55af89e7b1b3b85c2ffb31277363fab3c582471847e3773794dd1c22d420",
-   "bytes": 234363
+   "sha256": "0361849cf0e5068ecbc2fab54187b10b7edbb99cbf1b80ba02e3db583a40d287",
+   "bytes": 193443
   },
   {
-   "pfad": "screenshots/waterkant/22-LK17.png",
+   "pfad": "screenshots/waterkant/22-LK17.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "81d8e6ded39d5807dc93d68590e2b8e8d3c3800577ece0b14a900a7fe613f8a5",
-   "bytes": 235421
+   "sha256": "6097cd3392b037c0e15068277f5d185ea8e40348e5f1e88d67c87a33899ee41a",
+   "bytes": 193341
   },
   {
-   "pfad": "screenshots/waterkant/23-LK18.png",
+   "pfad": "screenshots/waterkant/23-LK18.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "00a2996cb5f5d80db9ad1514a19dab4f7fc0c1adb7303449f8b88204a0427668",
-   "bytes": 244064
+   "sha256": "eb9c91f62f5792525944e0505afc6b35f1915170e176dbb27162d28058f63ed9",
+   "bytes": 196072
   },
   {
-   "pfad": "screenshots/waterkant/24-LK19.png",
+   "pfad": "screenshots/waterkant/24-LK19.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "c63a6dad2111adf3fb51ce084839901184e62882689569ab3d40094c68a4e350",
-   "bytes": 251594
+   "sha256": "99fbb96df7592bd8a5bcd429ded0c1636ac78db86bf16178c90cfb21355ee9c4",
+   "bytes": 206567
   },
   {
-   "pfad": "screenshots/waterkant/25-LK20.png",
+   "pfad": "screenshots/waterkant/25-LK20.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "68a42ed2ff32112edee930114d5ef06378d28b7f2723cb9ef834f3fb32483967",
-   "bytes": 243179
+   "sha256": "a424cd73f3d3db4af299c682306543c52264a053328025a4948a978d29492480",
+   "bytes": 221083
   },
   {
-   "pfad": "screenshots/waterkant/26-LK21.png",
+   "pfad": "screenshots/waterkant/26-LK21.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "6d178ad5526ca821df2e22241a85d35205e192925445e6485593b55a515f88fa",
-   "bytes": 196192
+   "sha256": "334dcf3263a5a1439a7b0cc12e661938bc8ae32d3fcc8619fb7758b60740731b",
+   "bytes": 160997
   },
   {
-   "pfad": "screenshots/waterkant/27-LK22.png",
+   "pfad": "screenshots/waterkant/27-LK22.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "d76d93edcc60d998cc5f6747e0689259b4cf245aab0ff32618b7022a01e4b0f4",
-   "bytes": 228460
+   "sha256": "2409e4f473a91d39f60925d8915254ea4244a47adbda9322b5c9b65b8338d309",
+   "bytes": 189171
   },
   {
-   "pfad": "screenshots/waterkant/28-LK23.png",
+   "pfad": "screenshots/waterkant/28-LK23.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "c30ef19d81a4438adf7854847612e48194f646b6413f6ab0b7418a34dcb116dd",
-   "bytes": 228582
+   "sha256": "dca8eea6c309768090f2109529cd66b1843b50ed02d56532cfeebfdebd44b03c",
+   "bytes": 168653
   },
   {
-   "pfad": "screenshots/waterkant/29-LK24.png",
+   "pfad": "screenshots/waterkant/29-LK24.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "f60b67c75f62233984a9fa040703742cc1dca4762794b87793f745aff1dc9e9b",
-   "bytes": 229555
+   "sha256": "bea9aa981cdebf01c04c0cd8695a3a33b0091ba4b51c3abe167054dc540f2d00",
+   "bytes": 185732
   },
   {
-   "pfad": "screenshots/waterkant/30-LK25.png",
+   "pfad": "screenshots/waterkant/30-LK25.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "15e7ff4ce19263c70f8a826219091acdc2758a7dc577e91853bd227ce02e3bcb",
-   "bytes": 237697
+   "sha256": "626ed353d65866c261824ad6cdf873656f6cb2ffc3b9b88b6962488224a3c4af",
+   "bytes": 188518
   },
   {
-   "pfad": "screenshots/waterkant/31-LK26.png",
+   "pfad": "screenshots/waterkant/31-LK26.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "6ddebac3cf9bde5640aa50222eec02b3fccc698095153c72b2881c93543e3cd1",
-   "bytes": 243923
+   "sha256": "d6e9a03791f7161a4dc6c46473b227c99954f13a4d5b2936ad3090049e72f8a3",
+   "bytes": 194961
   },
   {
-   "pfad": "screenshots/waterkant/32-LK27.png",
+   "pfad": "screenshots/waterkant/32-LK27.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "e3902193b8bd959eb172b9e97114bde5ca6e5c5276f16c7586b3dec31d29115e",
-   "bytes": 235024
+   "sha256": "11dcd6a54eddbc8694bca3dce3404fc1eab39ab49ef88aa1ca75ea9887d1a46e",
+   "bytes": 190596
   },
   {
-   "pfad": "screenshots/waterkant/33-LK28.png",
+   "pfad": "screenshots/waterkant/33-LK28.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "b52390ea0431788035a62160cb190b0b54fa7c822ad248c9c29ab42ee3e3ee54",
-   "bytes": 240985
+   "sha256": "9703a498695d711db5c09508eed3a718c05c734cfff25c289002ee673b430499",
+   "bytes": 199542
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-01-intro.png",
+   "pfad": "screenshots/waterkant/abschluss-01-intro.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "18d7f13b6192b21df7f65c00b5734f33bcd7d4997a96d93e919920e08a206d49",
-   "bytes": 126857
+   "sha256": "80b096b432f17e0295d36eeed7e56eb66deb397a8e198334e3bc060a7297ba97",
+   "bytes": 195787
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-02-nacharbeiten.png",
+   "pfad": "screenshots/waterkant/abschluss-02-nacharbeiten.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "deaa06b40327503e6399252c139dc533b768527350033dd93aaea6d0393dbb90",
-   "bytes": 154083
+   "sha256": "11fa4c4487cbd11c748e9dd1a36c2bfb6cf64d22fc4ad81d58422ac08cf4d660",
+   "bytes": 167274
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-03-rechnung.png",
+   "pfad": "screenshots/waterkant/abschluss-03-rechnung.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "0fe9f0b4777dbba3e0d7ec93a05068d2bd6b00775895c6a5b6a550a767a51942",
-   "bytes": 189906
+   "sha256": "786d5c08137bb5478a02dd348aa6b4fa657e1886044d05acbbc20f1a4c61911f",
+   "bytes": 189534
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-04-bilanz.png",
+   "pfad": "screenshots/waterkant/abschluss-04-bilanz.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "ca5a49090e229f27fb65ab37d22523009dc74f8255bc4995740331a69a500bf7",
-   "bytes": 222962
+   "sha256": "5d4417e93d4405d9903e552c2f8ba18fcf8a554bd7b0a6ea84daedc4e04949db",
+   "bytes": 206185
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-05-aha.png",
+   "pfad": "screenshots/waterkant/abschluss-05-aha.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "98b703aae320e7cfc716203b682966d6415e5f722477106e84d845405e21224b",
-   "bytes": 135793
+   "sha256": "50f2528b4bdaaf349aa545c9310259947ec1ae284239bdde71c2845b08f9f9fb",
+   "bytes": 141221
   },
   {
-   "pfad": "screenshots/waterkant/abschluss-06-fazit.png",
+   "pfad": "screenshots/waterkant/abschluss-06-fazit.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "9cb0c07fa33579f916028da1f58dabb3c32290a3fdb677b9439227343838150f",
-   "bytes": 144958
+   "sha256": "5c1310dd54d6a54f1bd82b3c5a889c1038c5b2caab3ba26ef2992c8178f5766f",
+   "bytes": 179576
   },
   {
-   "pfad": "screenshots/waterkant/moderation-01-vor-start.png",
+   "pfad": "screenshots/waterkant/moderation-01-vor-start.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "af0ab99636ba78dfa2f6d40609ab584d7f5a1cf1125a65429975752285d72860",
-   "bytes": 1244425
+   "sha256": "31654b7eec5a82cded8c5fdff401bee1c494623b9cd98673e67d615c5ddc5a57",
+   "bytes": 1158450
   },
   {
-   "pfad": "screenshots/waterkant/moderation-02-im-lauf.png",
+   "pfad": "screenshots/waterkant/moderation-02-im-lauf.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "bfd780aa1464992017bf68a9e4f3f8e23efae77f96cb09128c15cb75ce5c08b4",
-   "bytes": 2880549
+   "sha256": "eb2c16fbc4cbb08ef23f1ca6e95a7bcd214eab646a1d059deee279bd75b7b8ac",
+   "bytes": 2771365
   },
   {
-   "pfad": "screenshots/waterkant/moderation-03-abschluss.png",
+   "pfad": "screenshots/waterkant/moderation-03-abschluss.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "71155ddb71585091caad186e47dda2bc30d63d3465b945ad663409f94a694ea5",
-   "bytes": 2882915
+   "sha256": "b790157f62d58564b59bffc0d9a27b19347a75a6b7c48e15aa7edd216fa718ff",
+   "bytes": 2762573
   },
   {
-   "pfad": "screenshots/waterkant/moderation-B7-unterbrechung.png",
+   "pfad": "screenshots/waterkant/moderation-B7-unterbrechung.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "377a11d9cc1d71eccfe165d35a83387afbcc0f7353cc78dcb9fc341a5c9d4a72",
-   "bytes": 209458
+   "sha256": "7f97f99521511df1bdf167986b74303cc6d57a8f0959758f1bd435f0306ce732",
+   "bytes": 202828
   },
   {
-   "pfad": "screenshots/waterkant/n2-buehne-nach-neuladen.png",
+   "pfad": "screenshots/waterkant/n2-buehne-nach-neuladen.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "1133ed02cc343c6f16d0ce1d845b71ca04812cbdebc6de82cc737767b0b772b8",
-   "bytes": 159651
+   "sha256": "1fb74fc57ada94262984939e1abf90acc2193c4e845ea5a56bfda6ff0a32b4c1",
+   "bytes": 72268
   },
   {
-   "pfad": "screenshots/waterkant/persona-00-startseite.png",
+   "pfad": "screenshots/waterkant/persona-00-startseite.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "4d23a2ec067ea5f2b703479c1d910c69ff27743a5eec21b3da42752bd655933d",
-   "bytes": 55106
+   "sha256": "b236f9c7fa67e9afc08cb2f2de39ba9930355fabee60b540cebfc1131ee73075",
+   "bytes": 67288
   },
   {
-   "pfad": "screenshots/waterkant/persona-01-setup-oben.png",
+   "pfad": "screenshots/waterkant/persona-01-setup-oben.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "fdb6398bda4cf9b388e9215859e2027a4778b795641796693417f602d20bb983",
-   "bytes": 149245
+   "sha256": "c96225e5f25f2a8e63b4e7307b971f3de59681bc1fa631bb2d06069bf1c60bca",
+   "bytes": 150553
   },
   {
-   "pfad": "screenshots/waterkant/persona-02-setup-ganz.png",
+   "pfad": "screenshots/waterkant/persona-02-setup-ganz.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "0d1c24438eda993d51dda503df56595b9c75888198f355ea2cc094d5b4f6d58b",
-   "bytes": 1210796
+   "sha256": "00b0bda0cc7aef28e312b89f4dbaa8c3971b15d54ac745e535cf26015568b8d1",
+   "bytes": 1112604
   },
   {
-   "pfad": "screenshots/waterkant/persona-03-ablaufseite.png",
+   "pfad": "screenshots/waterkant/persona-03-ablaufseite.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "f259ee885424e4887e7379cd55ffae500dc002d3358cf19b89108d52f5081dd2",
-   "bytes": 655921
+   "sha256": "290b9de45fbd092a648697e2edbb7f04a65a30ddc5770c65a50725be3e02924e",
+   "bytes": 633726
   },
   {
-   "pfad": "screenshots/waterkant/persona-04-moderation-oben.png",
+   "pfad": "screenshots/waterkant/persona-04-moderation-oben.jpg",
    "zweck": "Bildschirmfoto aus dem Browsertest",
-   "sha256": "de1be883bd218d5825c4af9d32b6f545d554337b672a633b6d76d568038fddaa",
-   "bytes": 218310
+   "sha256": "643636b1c6a6b6a17cc7d177f000dcf59095fadbae29f42a2e9abb8b441eeada",
+   "bytes": 206390
   },
   {
    "pfad": "media-waterkant/waterkant/waterkant-logo.png",
@@ -1052,8 +1070,8 @@
   {
    "pfad": "media-waterkant/waterkant/lk04-loeschanlage-durchsage.mp3",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "eca70a19bf9f40e046ed3cea016f7c8b5b499f7954780cb0d37495763d7e2af6",
-   "bytes": 302228
+   "sha256": "e27c37c5446e219f98b88e9dd02c49273b80c1a35300c01e1474d35a5b1e0a2a",
+   "bytes": 438065
   },
   {
    "pfad": "media-waterkant/waterkant/lk05-feuerwehr.png",
@@ -1124,8 +1142,8 @@
   {
    "pfad": "media-waterkant/waterkant/lk14-bergen.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "58dec856e2148509bfa532405a34b7b715a8b46981f23c5031d27bba6cb0adc1",
-   "bytes": 87853
+   "sha256": "6afe2b9ff2a6a46c1d4c2edd87c7dcd4d3cbbbac1f4706d59f294e94e87bef64",
+   "bytes": 88050
   },
   {
    "pfad": "media-waterkant/waterkant/lk15-ausweich.png",
@@ -1160,20 +1178,20 @@
   {
    "pfad": "media-waterkant/waterkant/lk20-reihenfolge.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "f742e3237150b61d8a6030e85f1d2f3e735fbb95789c8c1f47aa574798b99f9d",
-   "bytes": 77745
+   "sha256": "6b5c6506a0bd67d8b9294e93dddb6ef4ab0ed324afaf693879b24125710a0974",
+   "bytes": 82676
   },
   {
    "pfad": "media-waterkant/waterkant/lk21-nordkanal-bericht.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "99851010880a07270bc4b534e44a9d97620a4006cfbc17745b7144e095dc3016",
-   "bytes": 81687
+   "sha256": "b1ac0479dc967496bcd2a0434b4db0048a75c030f01896a8a178324fcc1cd515",
+   "bytes": 84267
   },
   {
    "pfad": "media-waterkant/waterkant/lk21-nordkanal-nachrichten.mp3",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "1d24789c7c21644af1caf92465973f386c4553bb9b81bae3e1df65d3cdee11a3",
-   "bytes": 817154
+   "sha256": "1914f809550634918e48ee514937ea14767f48e5ce316dc0d3ead7fab2e04ca7",
+   "bytes": 782463
   },
   {
    "pfad": "media-waterkant/waterkant/lk22-kassen-laufen.png",
@@ -1190,8 +1208,8 @@
   {
    "pfad": "media-waterkant/waterkant/lk23-datenluecke.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "3070a73a94e917a55a2c4ccf17ad4a005f93a3ca9148cc213740e153998db35f",
-   "bytes": 74921
+   "sha256": "9029f9af8ac7c96aed94d877b4c5a5b06754786ed998911fa578f3cd1284e66d",
+   "bytes": 74248
   },
   {
    "pfad": "media-waterkant/waterkant/lk24-versicherer.png",
@@ -1214,8 +1232,8 @@
   {
    "pfad": "media-waterkant/waterkant/lk27-notbetrieb.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "fcaf17ce5548312ceeec75b85127879248ba97b57330d6df93e651e8c3157b80",
-   "bytes": 63101
+   "sha256": "23c8136c8087c4242a2e758bf8b65d5dd61bdd66037badad7c27e2e7abd2eb3f",
+   "bytes": 65005
   },
   {
    "pfad": "media-waterkant/waterkant/lk28-rueckkehr.png",
@@ -1232,8 +1250,8 @@
   {
    "pfad": "media-waterkant/waterkant/b5-zweiter-alarm.mp3",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "b790a4d338f66e24fa7f1f860df2586bed345033538ca55c68bbb4d65b4ebfaa",
-   "bytes": 176422
+   "sha256": "1d029cf588132059ffb39bfce78185b575a4c1dd8495c0dd5a5b63bb8848580f",
+   "bytes": 312677
   },
   {
    "pfad": "media-waterkant/waterkant/b6-falschmeldung.png",
@@ -1244,8 +1262,8 @@
   {
    "pfad": "media-waterkant/waterkant/b7-it-leitung-raus.png",
    "zweck": "Medium, im Drehbuch verwendet",
-   "sha256": "46fdb20138bde4290fe504d85c25e7562fbbcd2acc01433a4391f63c6fbb2f85",
-   "bytes": 77981
+   "sha256": "e6d90dfe5b9b838ad80c9fa498a47ab4bee299e1386b91e7eb52384c7ab88775",
+   "bytes": 79237
   },
   {
    "pfad": "media-waterkant/waterkant/b8-angebot.png",

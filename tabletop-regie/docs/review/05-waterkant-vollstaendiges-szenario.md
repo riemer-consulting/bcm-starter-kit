@@ -1,6 +1,6 @@
 # 05 – Waterkant: vollständiges Szenario mit Bestandsanalyse
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## 1. Ausgangslage und Entscheidung
 
@@ -28,8 +28,8 @@ Vorgefunden wurde die Fassung „72 Stunden in Flammen“ (Großbrand im Zentral
 - **Vorboten (Mo 22:40 – Di 03:02):** USV-Batteriewarnung, Geruch im Technikflur, Serverraum wird warm – W1: herunterfahren oder weiterlaufen.
 - **Ausbruch (Di 03:10 – 06:30):** Brandalarm und Gaslöschung, vermisste Person, Lagebild nach dem Löschen, was noch läuft.
 - **Eskalation (Di 07:00 – 17:00):** Filialöffnung ohne Aktionspreise, Partnermärkte (W2), Sperrung des Serverraums, Medienanfrage, Lager ohne Lagerverwaltung, Ersatz-Optionen.
-- **Höhepunkt (Mi 07:30 – 19:00):** Backup-Server bergen? (W3, Personenschutz gegen Datenlücke), Umfang des Ausweichbetriebs (W4, 12 Monate Bindung), Gewerbekunde, Kundschaft, Verbundbeirat.
-- **Folgen (Do 08:00 – 13:00):** Rücksicherung, Reihenfolge der Märkte (W5, eigene Filialen zuerst?), Medienbericht.
+- **Höhepunkt (Mi 07:30 – 19:00):** Backup-Server bergen? (W3: kleinere Datenlücke gegen Einsatz im kontaminierten Raum, spätere Reinigung und Abstimmung mit dem Versicherer), Umfang des Ausweichbetriebs (W4, 12 Monate Bindung), Gewerbekunde, Kundschaft, Verbundbeirat.
+- **Folgen (Do 08:00 – 13:00):** Rücksicherung, Reihenfolge der Umstellung (W5: drei Märkte schaffen die 72-Stunden-Grenze nicht – welche?), ausführlicher Medienbericht.
 - **Wiederanlauf (Do 18:00 – Mo 09:00):** Kassen laufen, Datenlücke nachbuchen, Versicherer, Samstag, vorläufige Ursache, stabiler Notbetrieb mit erschöpftem Team, Rückkehr-Entscheidung.
 
 ## 4. Lernziele
@@ -51,7 +51,7 @@ Vorgefunden wurde die Fassung „72 Stunden in Flammen“ (Großbrand im Zentral
 | Danach bekam die Krisenstabsleitung bei 60 Min. keine eigene Karte | neue Karte SK46 (Zustimmungsvorbehalt der Gesellschafter zur 12-Monats-Bindung bei LK15) |
 | Überraschungen hingen an Lagen mit Priorität 2/3 – bei 45–120 Min. waren nur 1–3 von 8 einsetzbar | Voraussetzungen auf passende Kernlagen gelegt: B1/B3/B7/B8 → LK15, B2/B5 → LK14, B4 → LK22, B6 → LK09; jetzt ab 90 Min. alle 8, bei 45/60 Min. 7 von 8 (B7 bewusst erst ab 90 Min.) |
 
-Befunde aus der unabhängigen Prüfung und ihr Umgang stehen in `11-finaler-unabhaengiger-review.md`.
+Danach hat eine unabhängige Prüfung 39 Befunde gemeldet (11 hoch). Alle hohen und zehn weitere sind umgesetzt; die offenen stehen mit Begründung in `11-finaler-unabhaengiger-review.md`. Dieses Dokument zeigt die korrigierte Fassung.
 
 
 ---
@@ -74,16 +74,16 @@ Diese Eckdaten gelten für alle Karten. Alles, was davon abweicht, ist ein Wider
 | Produkte und Leistungen | Baustoffe, Garten- und Heimwerkerbedarf in 14 eigenen Filialen, Online-Shop mit Abholung in der Filiale, Bestellportal für Gewerbekunden (Rahmenvereinbarungen). Eigenes Rechenzentrum in der Zentrale; Kassen- und Warenwirtschaftsdienste auch für 9 selbständige Partnermärkte im Einkaufsverbund (IT-Servicevertrag). |
 | Standorte | Zentrale mit Verwaltungsgebäude, eigenem Rechenzentrum und angrenzendem Zentrallager; 14 eigene Filialen (7 Nord, 7 Süd) |
 | IT-Dienstleistung für Dritte | 9 selbständige Partnermärkte im Einkaufsverbund beziehen Kassen- und Warenwirtschaftsdienste aus dem Waterkant-Rechenzentrum (IT-Servicevertrag); vertragliches Wiederherstellungsziel 24 Stunden; zusammen 23 Märkte |
-| Ereignis | Montag 22:40 Uhr Warnung der USV; Dienstag 03:10 Uhr Brand im USV-Raum neben dem Serverraum, Gaslöschung im Serverraum; alle Personen wohlauf (eine Person zunächst vermisst, später wohlauf); vorläufige Ursache (Samstag): thermisches Durchgehen eines Batteriemoduls, ein Update war nicht eingespielt |
+| Ereignis | Montag 22:40 Uhr Warnung der USV; Dienstag 03:10 Uhr Brand im USV-Raum neben dem Serverraum, Gaslöschung im Serverraum; alle Personen wohlauf (ein Kollege aus dem Rechenzentrumsteam zunächst vermisst, später wohlauf); vorläufige Ursache (Samstag): thermisches Durchgehen eines Batteriemoduls, ein angekündigtes Update war nicht eingespielt, die Wartung zweimal verschoben, Zuständigkeit zwischen IT und Gebäudetechnik ungeklärt |
 | Gebäude | Verwaltungsgebäude bis zur Prüfung gesperrt; Büros ab Dienstag 10:00 Uhr freigegeben; Server- und USV-Raum gesperrt (Rußfilm, mögliche ätzende Gase), Messergebnis Mittwochmorgen: Grenzwerte noch überschritten; Freigabe nach Reinigung in ca. einer Woche; eigenes Rechenzentrum frühestens in ca. drei Wochen |
 | Ausfall | Warenwirtschaft, Kassenzentrale, Lagerverwaltung, Gewerbekundenportal, Telefonanlage der Zentrale; Cloud-Mail läuft; Online-Shop zeigt veraltete Bestände |
-| Kassen | Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr |
+| Kassen | Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr; eine bis dahin nicht umgestellte Kasse sperrt sich und muss am Morgen vor Ort freigeschaltet werden |
 | Datensicherung | Letzte vollständige Sicherung beim Colocation-Anbieter: Montag 01:00 Uhr; Dienstagssicherung nur auf dem Backup-Server im gesperrten Serverraum; ohne Bergung Datenlücke ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr) |
 | Ausweichbetrieb | Vertraglich vereinbartes Ausweich-Rack beim Colocation-Anbieter, ca. 40 % der bisherigen Rechenleistung, nie vollständig geübt; Kassen- und Preisdienste ab Donnerstag möglich; Erweiterung für die übrigen Systeme binnen 48 Stunden mit zwölf Monaten Mindestlaufzeit (Zustimmungsvorbehalt der Gesellschafter ab zwölf Monaten Bindung) |
 | Ersatzhardware | 10–12 Arbeitstage, zwei Rahmen gegen Aufpreis in drei Tagen |
-| Wiederanlauf | Donnerstag 18:00 Uhr Kassen- und Preisdienste wieder verfügbar, Umstellung Markt für Markt (ca. 2 Märkte pro Stunde) bis in die Nacht; Sonntag 12:00 Uhr stabiler Notbetrieb aus dem Ausweich-Rack; eigenes Rechenzentrum weiter gesperrt (Szenarioannahme: der Notbetrieb gelingt, wenn die Freigaben wie beschrieben erteilt werden) |
+| Wiederanlauf | Donnerstag 18:00 Uhr Kassen- und Preisdienste wieder verfügbar, Umstellung ab ca. 17:00 Uhr Markt für Markt (ca. 2 Märkte pro Stunde); bis 03:00 Uhr ca. 20 von 23 Märkten, drei werden am Freitagmorgen vor Ort freigeschaltet; Sonntag 12:00 Uhr stabiler Notbetrieb aus dem Ausweich-Rack; eigenes Rechenzentrum weiter gesperrt (Szenarioannahme: der Notbetrieb gelingt, wenn die Freigaben wie beschrieben erteilt werden) |
 | Saison | Saisonstart mit Prospekt-Aktionspreisen; Samstag ist der umsatzstärkste Tag |
-| Medien | Regionalsender „Nordkanal“: Anfrage Dienstag 11:30 Uhr (Frist 13:00 Uhr), Bericht Donnerstag 13:00 Uhr; Falschmeldung „Großbrand im Zentrallager“ eines Nachrichtenportals (Überraschung B6) |
+| Medien | Regionalsender „Nordkanal“: Anfrage Dienstag 11:30 Uhr, Kurzmeldung Dienstag 13:00 Uhr, ausführlicher Beitrag Donnerstag 13:00 Uhr; Falschmeldung „Großbrand im Zentrallager“ eines Nachrichtenportals (Überraschung B6) |
 | Geld | Elektronik- und Betriebsunterbrechungsversicherung: Erstattung bis zu 1,6 Mio. € als optimistische, unbestätigte Modellannahme (Kostenübernahme nur „unter Vorbehalt“); Jahresumsatz 240 Mio. €, Umsatzrendite 5 % (Jahresgewinn 12 Mio. €) |
 | Zeitmodell | ca. 30 Sekunden Sprechzeit je Funktionsbereich und Lage, dazu Lese- und Entscheidungszeit; nicht jede Rolle spricht bei jeder Lage |
 | Gremien und Externe | Gesellschafterversammlung, Verbundbeirat der Partnermärkte, Feuerwehr, Sachverständige, Sanierungsfachfirma, Berufsgenossenschaft, Versicherer mit Gutachter, Colocation-Anbieter |
@@ -111,8 +111,8 @@ Diese Eckdaten gelten für alle Karten. Alles, was davon abweicht, ist ein Wider
 | 61 | LK17 | Mittwoch 16:00 Uhr | Prospektpreise vor der Kasse | Höhepunkt | 2 |
 | 65 | LK18 | Mittwoch 19:00 Uhr | Der Verbundbeirat verlangt Antworten | Höhepunkt | 2 |
 | 69 | LK19 | Donnerstag 08:00 Uhr | Rücksicherung im Ausweich-Rack | Folgen | 2 |
-| 73 | LK20 | Donnerstag 10:00 Uhr | Wer kassiert zuerst? | Folgen | 1 |
-| 77 | LK21 | Donnerstag 13:00 Uhr | Nordkanal berichtet | Folgen | 2 |
+| 73 | LK20 | Donnerstag 10:00 Uhr | Wer wird zuerst umgestellt? | Folgen | 1 |
+| 77 | LK21 | Donnerstag 13:00 Uhr | Nordkanal berichtet ausführlich | Folgen | 2 |
 | 81 | LK22 | Donnerstag 18:00 Uhr | Die Kassen laufen wieder | Wiederanlauf | 1 |
 | 85 | LK23 | Freitag 09:00 Uhr | Die Datenlücke | Wiederanlauf | 2 |
 | 88 | LK24 | Freitag 14:00 Uhr | Der Versicherer ist da | Wiederanlauf | 2 |
@@ -155,7 +155,7 @@ Nicht diskutieren lassen. Nicht in technische oder bauliche Details abgleiten la
 
 #### Hinweis zur stärksten Szene
 
-Die stärksten Szenen sind nicht der Brand, sondern die Entscheidungen danach: Darf jemand für eine kleinere Datenlücke in einen kontaminierten Raum („Den Backup-Server bergen?“) – und wer kassiert zuerst, die eigenen Filialen oder die Partner mit Vertrag („Wer kassiert zuerst?“).
+Die stärksten Szenen sind nicht der Brand, sondern die Entscheidungen danach: Wie viel Aufwand, Abstimmung und Einsatz im kontaminierten Raum ist eine kleinere Datenlücke wert („Den Backup-Server bergen?“) – und wer wird zuerst umgestellt, wenn nicht alle die Grenze schaffen: die eigenen Filialen oder die Partner mit Vertrag („Wer wird zuerst umgestellt?“).
 
 #### Rollen
 
@@ -316,17 +316,19 @@ Die Brandmeldeanlage löst aus: Rauch im USV-Raum neben dem Serverraum. Im Serve
 
 *Bild auf der Bühne:* Brandmeldezentrale, Dienstag 03:10 Uhr.
 
+*Einspielung (Ton):* Einspielung (Abschrift): „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ Gedämpfter Vorwarnton der Löschanlage, Geräusch der Gasflutung, Durchsage: „Übung. Achtung, Feueralarm im Verwaltungsgebäude. Bitte verlassen Sie das Gebäude über die gekennzeichneten Fluchtwege und gehen Sie zum Sammelplatz. Übung.“ Ende: „Ende der Übungseinspielung.“
+
 *Ton:* `lk04-loeschanlage-durchsage.mp3` · Bühne zeigt „Übungseinspielung – kein echter Alarm“
 
 *Zuständig:* Leitung Arbeitssicherheit und Werkschutz, Schichtleitung Zentrallager (vor Ort in der Brandnacht), Gebäudetechnik und Facility Management, Geschäftsführung (CEO), Krisenstabsleitung
 
-*Hinweis für die Moderation:* Jetzt ist es ernst: Die Vorboten hingen zusammen. Die Einspielung ist ausdrücklich als Übung gekennzeichnet und kurz – danach Ruhe einkehren lassen. Personenschutz vor Technik: Wer fragt zuerst nach den Menschen?
+*Hinweis für die Moderation:* Jetzt ist es ernst: Die Vorboten hingen zusammen. Die Einspielung ist ausdrücklich als Übung gekennzeichnet und kurz – danach Ruhe einkehren lassen. Personenschutz vor Technik: Wer fragt zuerst nach den Menschen? Vor der Übung: Empfang, Sicherheitsdienst und Brandschutzbeauftragte informieren, Türschild „Übung läuft – Alarmtöne sind Einspielungen“, Lautstärke begrenzen, nie über Haus- oder Durchsageanlagen abspielen.
 
 ##### LK05 – Feuerwehr im Einsatz
 
 *Simulationszeit:* Dienstag 03:40 Uhr · *Station:* Ausbruch · *Priorität:* 2 · *Drehbuch-Minute:* 13 · *Diskussion:* 4 Min.
 
-Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege der IT-Rufbereitschaft war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
+Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte, war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
 
 *Krisen-Info (rot hervorgehoben):* Strom im Verwaltungsgebäude abgeschaltet · 1 Person am Sammelplatz nicht gemeldet
 
@@ -349,7 +351,7 @@ Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Ve
 
 *Zuständig:* Leitung Arbeitssicherheit und Werkschutz, Gebäudetechnik und Facility Management, Schichtleitung Zentrallager (vor Ort in der Brandnacht), Personalleitung
 
-*Hinweis für die Moderation:* Die Moderation spricht nach dem Funksignal die Einsatzleitung der Feuerwehr (Sprechertext) und bleibt in der Rolle. Die vermisste Person ist wohlauf (vertrauliche Karte an die Personalleitung kurz danach) – bis dahin die Unsicherheit wirken lassen.
+*Hinweis für die Moderation:* Die Moderation spricht nach dem Funksignal die Einsatzleitung der Feuerwehr (Sprechertext) und bleibt in der Rolle. Die vermisste Person ist wohlauf (vertrauliche Karte an die Personalleitung, falls besetzt; sonst spätestens mit dem Lagebild nach dem Löschen) – bis dahin die Unsicherheit wirken lassen.
 
 ##### LK06 – Lagebild nach dem Löschen
 
@@ -474,7 +476,7 @@ Der Regionalsender Nordkanal ruft an: Auf Fotos stehen Feuerwehrfahrzeuge vor de
 
 *Bild auf der Bühne:* Presseanfrage von Nordkanal.
 
-*Sprechertext:* Guten Tag, Redaktion Nordkanal. Bei Ihnen hat es heute Nacht gebrannt, im Netz ist von giftigen Gasen die Rede. Waren Menschen in Gefahr? Was ist mit Ihrer IT – stimmt es, dass Ihre Kassen nicht funktionieren? Und warum gelten Ihre Prospektpreise nicht? Wir senden um 13 Uhr.
+*Sprechertext:* Guten Tag, Redaktion Nordkanal. Bei Ihnen hat es heute Nacht gebrannt, im Netz ist von giftigen Gasen die Rede. Waren Menschen in Gefahr? Was ist mit Ihrer IT – stimmt es, dass Ihre Kassen nicht funktionieren? Und warum gelten Ihre Prospektpreise nicht? Wir bringen um 13 Uhr eine erste Meldung und arbeiten an einem längeren Beitrag.
 
 *Gespräch führen – Nachfragen:* „Können Sie ausschließen, dass Anwohner gefährdet waren?“ · „Wie lange werden Ihre Kunden mit falschen Preisen leben müssen?“ · „Betrifft das auch andere Baumärkte, für die Sie die IT machen?“  
 *Gesprächsende:* „Ich halte fest: … (Kernsatz des Tisches). Wenn sich etwas ändert, melden Sie sich bei mir.“ Lehnt der Tisch ab: „Dann senden wir: Das Unternehmen äußerte sich bis Redaktionsschluss nicht.“  
@@ -527,13 +529,13 @@ Der Einkauf hat Angebote: Neue Server und Speichersysteme sind in zehn bis zwöl
 
 *Simulationszeit:* Mittwoch 07:30 Uhr · *Station:* Höhepunkt · *Priorität:* 1 · *Drehbuch-Minute:* 49 · *Diskussion:* 4 Min.
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info (rot hervorgehoben):* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
 *Fragen an die Gruppe:*
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 
@@ -541,7 +543,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 *Zuständig:* Leitung Arbeitssicherheit und Werkschutz, IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum), Gebäudetechnik und Facility Management, Geschäftsführung (CEO), Krisenstabsleitung
 
-*Hinweis für die Moderation:* Personenschutz gegen Datenschutz im wörtlichen Sinn. Beide Wege sind vertretbar – bewertet wird, wie entschieden wird: Gefährdungsbeurteilung, Messwerte, Fachfirma, Freiwilligkeit, Dokumentation. Die eigene IT geht in keinem Fall hinein.
+*Hinweis für die Moderation:* Arbeitsschutz und Schadenregulierung gegen Datenverlust. Ein Einsatz einer Fachfirma mit Schutzausrüstung ist fachlich vertretbar – aber nur mit Gefährdungsbeurteilung, Messwerten, Freiwilligkeit, Dokumentation und Abstimmung mit dem Versicherer; Abwarten ist ebenso vertretbar. Bewertet wird der Weg zur Entscheidung. Die eigene IT geht in keinem Fall hinein.
 
 ##### LK15 – Wie weit geht der Ausweichbetrieb?
 
@@ -650,19 +652,19 @@ Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen
 
 *Zuständig:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum), IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft), Informationssicherheit und Datenschutzkoordination, IT-Support Filialen und Kassen
 
-##### LK20 – Wer kassiert zuerst?
+##### LK20 – Wer wird zuerst umgestellt?
 
 *Simulationszeit:* Donnerstag 10:00 Uhr · *Station:* Folgen · *Priorität:* 1 · *Drehbuch-Minute:* 73 · *Diskussion:* 4 Min.
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info (rot hervorgehoben):* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info (rot hervorgehoben):* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 *Fragen an die Gruppe:*
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 
 *Bild auf der Bühne:* 23 Märkte, eine Reihenfolge.
 
@@ -670,7 +672,7 @@ Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber 
 
 *Hinweis für die Moderation:* Gleichbehandlung gegen Eigeninteresse. Der Vertrag regelt keine Reihenfolge – das macht es schwer. Gut ist ein offengelegtes Kriterium, das allen mitgeteilt wird.
 
-##### LK21 – Nordkanal berichtet
+##### LK21 – Nordkanal berichtet ausführlich
 
 *Simulationszeit:* Donnerstag 13:00 Uhr · *Station:* Folgen · *Priorität:* 2 · *Drehbuch-Minute:* 77 · *Diskussion:* 4 Min.
 
@@ -683,7 +685,7 @@ Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Sa
 
 *Bild auf der Bühne:* Nordkanal, Donnerstag 13:00 Uhr.
 
-*Einspielung (Ton):* Nordkanal Nachrichten, Donnerstag, dreizehn Uhr. Bei der Waterkant Baumärkte GmbH hat in der Nacht zum Dienstag ein Brand im Technikraum des Firmenrechenzentrums die IT lahmgelegt. Nach Angaben der Feuerwehr geriet eine Batterieanlage in Brand, verletzt wurde niemand. Seitdem kassieren die vierzehn Filialen im Notbetrieb, die Preise aus dem aktuellen Prospekt gelten an vielen Kassen nicht. Betroffen sind auch neun selbständige Partnermärkte, deren Kassensysteme Waterkant betreibt. Ein Inhaber sagt, er habe aus der Zeitung mehr erfahren als von seinem Dienstleister. Waterkant kündigte an, die Systeme in einem Ausweichrechenzentrum wieder in Betrieb zu nehmen. Wann der Normalbetrieb zurückkehrt, ist offen. Wir bleiben für Sie dran.
+*Einspielung (Ton):* Nordkanal Nachrichten, Donnerstag, dreizehn Uhr. Bei der Waterkant Baumärkte GmbH hat in der Nacht zum Dienstag ein Brand im Technikraum des Firmenrechenzentrums die IT lahmgelegt. Nach Angaben der Feuerwehr geriet eine Batterieanlage in Brand, verletzt wurde niemand. Seitdem kassieren die vierzehn Filialen im Notbetrieb, die Preise aus dem aktuellen Prospekt gelten an vielen Kassen nicht. Betroffen sind auch neun selbständige Partnermärkte, deren Kassensysteme Waterkant betreibt. Ein Inhaber sagt, auf seine Bestellungen warte er bis heute. Waterkant kündigte an, die Systeme in einem Ausweichrechenzentrum wieder in Betrieb zu nehmen. Wann der Normalbetrieb zurückkehrt, ist offen. Wir bleiben für Sie dran.
 
 *Ton:* `lk21-nordkanal-nachrichten.mp3`
 
@@ -716,9 +718,9 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 *Simulationszeit:* Freitag 09:00 Uhr · *Station:* Wiederanlauf · *Priorität:* 2 · *Drehbuch-Minute:* 85 · *Diskussion:* 4 Min.
 
-Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten verfügbaren Sicherung. Der Abgleich zeigt: Wareneingänge, Bestellungen an Lieferanten und Retouren aus der Lücke fehlen. Im Lager steht Ware, die es laut System nicht gibt; Lieferanten fragen nach Bestellungen, die im System nicht existieren.
+Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten eingespielten Sicherung. Der Abgleich mit Lieferscheinen, Lieferantenbestätigungen und Kassendaten läuft.
 
-*Krisen-Info (rot hervorgehoben):* Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr)
+*Krisen-Info (rot hervorgehoben):* Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr), sofern die Dienstagssicherung nicht geborgen wurde
 
 *Fragen an die Gruppe:*
 
@@ -756,7 +758,7 @@ Der Gutachter der Elektronik- und Betriebsunterbrechungsversicherung besichtigt 
 
 Der umsatzstärkste Tag der Saison beginnt. Die Kassen laufen, die Aktionspreise stimmen. Die Frage ist, was außerhalb der Kassen geht: Online-Bestellungen, Abholung in der Filiale, Gewerbekunden. Jeder Fehler in Bestand oder Preis wird heute von Tausenden gesehen.
 
-*Krisen-Info (rot hervorgehoben):* umsatzstärkster Tag · Kassen laufen · Online und Gewerbe: siehe Entscheidung vom Mittwoch
+*Krisen-Info (rot hervorgehoben):* umsatzstärkster Tag der Woche · Kassen laufen
 
 *Fragen an die Gruppe:*
 
@@ -793,7 +795,7 @@ Der Brandsachverständige legt sein vorläufiges Ergebnis vor: Ein Batteriemodul
 
 *Simulationszeit:* Sonntag 12:00 Uhr · *Station:* Wiederanlauf · *Priorität:* 1 · *Drehbuch-Minute:* 97 · *Diskussion:* 4 Min.
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet.
 
 *Krisen-Info (rot hervorgehoben):* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -841,7 +843,7 @@ Die USV-Warnung kennst du: Der Temperatursensor meldet seit Wochen sporadisch. D
 
 *Drehbuch-Minute:* 3.5 · *fällt in die Lage:* LK02 Geruch im Technikflur (Dienstag 02:35 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Leitung Arbeitssicherheit und Werkschutz → IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft)
 
-*Kommt immer direkt mit:* LK02 Geruch im Technikflur
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK02 Geruch im Technikflur
 
 Der Wachdienst ruft dich an: Geruch im Technikflur. Deine Gebäudeleittechnik zeigt für den USV-Raum zusätzlich „Lüftung Störung“. Du bist 40 Minuten entfernt. Die Brandmeldeanlage ist ruhig.
 
@@ -852,7 +854,7 @@ Der Wachdienst ruft dich an: Geruch im Technikflur. Deine Gebäudeleittechnik ze
 
 *Drehbuch-Minute:* 6.5 · *fällt in die Lage:* LK03 Serverraum wird warm (Dienstag 03:02 Uhr) · *Priorität:* 1 · *Ersatzrollen:* IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft) → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK03 Serverraum wird warm
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK03 Serverraum wird warm
 
 Die Rufbereitschaft meldet: Serverraum 31 °C, steigend. Die Übertragung der Aktionspreise an die Filialkassen läuft seit 03:00 Uhr und braucht noch etwa 40 Minuten; die Partnermärkte laden gerade ihre Tagesabschlüsse hoch. Herunterfahren heißt: Beides bricht ab – und das kurz vor dem Saisonstart.
 
@@ -863,9 +865,9 @@ Die Rufbereitschaft meldet: Serverraum 31 °C, steigend. Die Übertragung der Ak
 
 *Drehbuch-Minute:* 13.5 · *fällt in die Lage:* LK05 Feuerwehr im Einsatz (Dienstag 03:40 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Leitung Arbeitssicherheit und Werkschutz → Personalleitung
 
-*Kommt immer direkt mit:* LK05 Feuerwehr im Einsatz
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK05 Feuerwehr im Einsatz
 
-Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
+Am Sammelplatz fehlt der Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
 
 *Gute Reaktion:* Sofort an die Einsatzleitung melden, Name und letzter bekannter Ort; niemand geht selbst suchen.  
 *Schwache Reaktion:* Selbst ins Gebäude gehen oder die Information erst nach eigener Suche weitergeben.
@@ -874,7 +876,7 @@ Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem
 
 *Drehbuch-Minute:* 15 · *fällt in die Lage:* LK05 Feuerwehr im Einsatz (Dienstag 03:40 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung → Leitung Arbeitssicherheit und Werkschutz
 
-Entwarnung: Der Kollege der Rufbereitschaft ist wohlauf. Er hatte das Gebäude über den Hinterausgang verlassen und stand am falschen Sammelplatz an Tor 2. Seine Frau hat inzwischen dreimal in der Zentrale angerufen – die Telefonanlage ist tot, sie hat nur die Bandansage gehört.
+Entwarnung: Der Kollege aus dem Rechenzentrumsteam ist wohlauf. Er hatte das Gebäude über den Hinterausgang verlassen und stand am falschen Sammelplatz an Tor 2. Seine Frau hat inzwischen dreimal in der Zentrale angerufen – die Telefonanlage ist tot, sie hat nur die Bandansage gehört.
 
 *Gute Reaktion:* Angehörige zurückrufen, Sammelplatzregelung festhalten, Nachbereitung des Vorfalls ansetzen.  
 *Schwache Reaktion:* Angehörige vergessen, weil „ja alles gut ausgegangen ist“.
@@ -883,7 +885,7 @@ Entwarnung: Der Kollege der Rufbereitschaft ist wohlauf. Er hatte das Gebäude �
 
 *Drehbuch-Minute:* 17.5 · *fällt in die Lage:* LK06 Lagebild nach dem Löschen (Dienstag 05:30 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Gebäudetechnik und Facility Management → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK06 Lagebild nach dem Löschen
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK06 Lagebild nach dem Löschen
 
 Der Einsatzleiter weist dich darauf hin: Bei brennenden Lithium-Ionen-Batterien können Fluorwasserstoff und andere ätzende Gase entstehen. Er empfiehlt, USV-Raum und Serverraum erst nach Messung und Freigabe durch Sachverständige zu betreten – ausdrücklich auch für IT-Personal.
 
@@ -894,7 +896,7 @@ Der Einsatzleiter weist dich darauf hin: Bei brennenden Lithium-Ionen-Batterien 
 
 *Drehbuch-Minute:* 17.5 · *fällt in die Lage:* LK06 Lagebild nach dem Löschen (Dienstag 05:30 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Notfallmanagement / BCM-Koordination → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK06 Lagebild nach dem Löschen
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK06 Lagebild nach dem Löschen
 
 Die Entscheidungen der Brandnacht sind nirgends dokumentiert: wer wann was abgeschaltet, wen informiert, wem welche Anweisung gegeben hat. Versicherer und Sachverständige werden danach fragen.
 
@@ -905,7 +907,7 @@ Die Entscheidungen der Brandnacht sind nirgends dokumentiert: wer wann was abges
 
 *Drehbuch-Minute:* 21.5 · *fällt in die Lage:* LK07 Was noch läuft – und was nicht (Dienstag 06:30 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) → Notfallmanagement / BCM-Koordination
 
-*Kommt immer direkt mit:* LK07 Was noch läuft – und was nicht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK07 Was noch läuft – und was nicht
 
 Weil die Anmeldedienste der Zentrale ausgefallen sind, teilen Beschäftigte Zugangsdaten im Chat und nutzen private Hotspots. Ein Filialleiter fragt, ob er die Kundenliste der Gewerbekunden als Tabelle an seine private Mailadresse schicken darf, um telefonisch nachfassen zu können.
 
@@ -934,7 +936,7 @@ Das IT-Notfallhandbuch liegt als Datei auf dem Fileserver im gesperrten Serverra
 
 *Drehbuch-Minute:* 25.5 · *fällt in die Lage:* LK08 Saisonstart ohne Aktionspreise (Dienstag 07:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Regionalleitung Filialen Süd → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK08 Saisonstart ohne Aktionspreise
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK08 Saisonstart ohne Aktionspreise
 
 Zwei Filialleitungen fragen, ob sie heute öffnen sollen. Eine Filiale hat schon handgeschriebene Schilder aufgehängt: „Aktionspreise gelten ab Donnerstag“ – niemand hat das entschieden.
 
@@ -945,7 +947,7 @@ Zwei Filialleitungen fragen, ob sie heute öffnen sollen. Eine Filiale hat schon
 
 *Drehbuch-Minute:* 27 · *fällt in die Lage:* LK08 Saisonstart ohne Aktionspreise (Dienstag 07:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Regionalleitung Filialen Nord → Geschäftsführung (CEO), Krisenstabsleitung
 
-In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die Nachbarfiliale verweigert ihn. Kundinnen vergleichen die Bons in einer Facebook-Gruppe.
+Zwei Filialleitungen deiner Region wollen es unterschiedlich machen: Eine will den Prospektpreis per Handeingabe geben, die Nachbarfiliale will ihn verweigern. In einer Facebook-Gruppe fragen Kundinnen schon, welche Filiale den Preis gewährt.
 
 *Gute Reaktion:* Den Widerspruch sofort in den Krisenstab tragen und eine einheitliche Regel verlangen.  
 *Schwache Reaktion:* Die eigene Region regeln, ohne die andere Region und den Krisenstab einzubinden.
@@ -954,7 +956,7 @@ In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die N
 
 *Drehbuch-Minute:* 29.5 · *fällt in die Lage:* LK09 Die Partnermärkte rufen an (Dienstag 08:30 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Leitung Finanzen und Versicherung (CFO) → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK09 Die Partnermärkte rufen an
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK09 Die Partnermärkte rufen an
 
 Drei Partner haben dich schon angerufen. Einer liest dir aus dem Servicevertrag vor: Wiederherstellungsziel 24 Stunden für Kassen- und Preisdienste. Er will bis 12 Uhr wissen, wann es weitergeht, sonst wendet er sich an den Verbundvorstand.
 
@@ -992,7 +994,7 @@ Der Sachverständige: Reinigung des Serverraums durch eine Fachfirma dauert fün
 
 *Drehbuch-Minute:* 37.5 · *fällt in die Lage:* LK11 Nordkanal fragt nach (Dienstag 11:30 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK11 Nordkanal fragt nach
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK11 Nordkanal fragt nach
 
 Ein Lokaljournalist hat ein Foto: Feuerwehr vor dem Verwaltungsgebäude, Rauch aus einem Lüftungsgitter. Auf Facebook schreibt jemand von „Akkubrand, giftige Gase, Anwohner sollen Fenster schließen“. Die Feuerwehr hat bisher nur „Brand in einem Technikraum“ bestätigt.
 
@@ -1003,7 +1005,7 @@ Ein Lokaljournalist hat ein Foto: Feuerwehr vor dem Verwaltungsgebäude, Rauch a
 
 *Drehbuch-Minute:* 41.5 · *fällt in die Lage:* LK12 Das Zentrallager steht (Dienstag 14:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Schichtleitung Zentrallager (vor Ort in der Brandnacht) → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK12 Das Zentrallager steht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK12 Das Zentrallager steht
 
 Ohne Lagerverwaltung kennt niemand die Lagerplätze von rund 40.000 Artikeln. Ein Spediteur wartet seit 06:00 Uhr auf Ladung und berechnet ab Mittag Standgeld. Die Filialen rufen einzeln an und bestellen „das Wichtigste“.
 
@@ -1041,7 +1043,7 @@ Dein Team rechnet: Im Ausweich-Rack reicht die Leistung für Kassen- und Preisdi
 
 *Drehbuch-Minute:* 49.5 · *fällt in die Lage:* LK14 Den Backup-Server bergen? (Mittwoch 07:30 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Gebäudetechnik und Facility Management → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK14 Den Backup-Server bergen?
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK14 Den Backup-Server bergen?
 
 Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: Gefährdungsbeurteilung, aktuelles Messergebnis, Fachfirma mit Schutzausrüstung, Freiwilligkeit, Dokumentation. Die Fachfirma könnte heute um 14 Uhr – mit eigenem Personal, nicht mit eurer IT.
 
@@ -1052,7 +1054,7 @@ Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: Gefährdungsb
 
 *Drehbuch-Minute:* 53.5 · *fällt in die Lage:* LK15 Wie weit geht der Ausweichbetrieb? (Mittwoch 10:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) → Leitung Finanzen und Versicherung (CFO)
 
-*Kommt immer direkt mit:* LK15 Wie weit geht der Ausweichbetrieb?
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK15 Wie weit geht der Ausweichbetrieb?
 
 Wenn die Warenwirtschaft ins Ausweich-Rack zieht, laufen dort auch Daten der Gewerbekunden und Partnermärkte. Der Vertrag mit dem Colocation-Anbieter beschreibt nur die Lagerung von Sicherungskopien, nicht den Produktivbetrieb. Was das bedeutet, ist fachlich zu prüfen.
 
@@ -1063,9 +1065,9 @@ Wenn die Warenwirtschaft ins Ausweich-Rack zieht, laufen dort auch Daten der Gew
 
 *Drehbuch-Minute:* 53.5 · *fällt in die Lage:* LK15 Wie weit geht der Ausweichbetrieb? (Mittwoch 10:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Leitung Finanzen und Versicherung (CFO)
 
-*Kommt immer direkt mit:* LK15 Wie weit geht der Ausweichbetrieb?
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK15 Wie weit geht der Ausweichbetrieb?
 
-Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 *Gute Reaktion:* Beide Wege mit Kosten und Folgen kurz darstellen, Zustimmung einholen und dokumentieren, bevor unterschrieben wird.  
 *Schwache Reaktion:* Ohne Zustimmung unterschreiben – oder die Entscheidung bis Freitag liegen lassen.
@@ -1083,7 +1085,7 @@ Der Shop zeigt seit Dienstag Bestände von Montagnacht. 312 Bestellungen „Abho
 
 *Drehbuch-Minute:* 61.5 · *fällt in die Lage:* LK17 Prospektpreise vor der Kasse (Mittwoch 16:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Leitung Unternehmenskommunikation und Marketing → Regionalleitung Filialen Nord
 
-Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
 *Gute Reaktion:* Sprachregelung einfordern und die Lage mit Zahlen an den Krisenstab geben.  
 *Schwache Reaktion:* Jede Kollegin antwortet nach eigenem Ermessen.
@@ -1092,7 +1094,7 @@ Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektprei
 
 *Drehbuch-Minute:* 62.5 · *fällt in die Lage:* LK17 Prospektpreise vor der Kasse (Mittwoch 16:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung → Kundenservice-Hotline
 
-Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe seit dem Mittag.
+Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe innerhalb weniger Stunden.
 
 *Gute Reaktion:* Einheitliche Kulanzregel öffentlich machen, Fehler einräumen, ohne rechtlich zu bewerten.  
 *Schwache Reaktion:* Löschen lassen wollen oder den Kanal angreifen.
@@ -1101,7 +1103,7 @@ Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon
 
 *Drehbuch-Minute:* 65.5 · *fällt in die Lage:* LK18 Der Verbundbeirat verlangt Antworten (Mittwoch 19:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Partnerbetreuung Verbund (Kundenmanagement IT-Service) → Leitung Finanzen und Versicherung (CFO)
 
-*Kommt immer direkt mit:* LK18 Der Verbundbeirat verlangt Antworten
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK18 Der Verbundbeirat verlangt Antworten
 
 Der Vorsitzende des Verbundbeirats ruft dich vor der Videokonferenz privat an: Zwei Partner wollen den IT-Servicevertrag kündigen. Er erwartet eine klare Aussage, wann ihre Kassen wieder voll laufen – und ob Waterkant die eigenen Märkte bevorzugt. „Ich will nicht hören, dass Sie es nicht wissen.“
 
@@ -1121,12 +1123,12 @@ Ein Partnermarkt hat eigenständig einen anderen Kassenanbieter angefragt und wi
 
 *Drehbuch-Minute:* 69.5 · *fällt in die Lage:* LK19 Rücksicherung im Ausweich-Rack (Donnerstag 08:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) → Informationssicherheit und Datenschutzkoordination
 
-*Kommt immer direkt mit:* LK19 Rücksicherung im Ausweich-Rack
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK19 Rücksicherung im Ausweich-Rack
 
 Die Rücksicherung läuft sauber. Die Aktionspreise fehlen in der Montagskopie; der Einkauf hat sie nur als PDF vom Druckdienstleister. Abtippen dauert, Einlesen per Skript aus dem PDF ist schnell, aber ungeprüft.
 
 *Gute Reaktion:* Vier-Augen-Prüfung für jeden Preisimport festlegen und Freigabe einholen.  
-*Schwache Reaktion:* Ungeprüftes Einlesen, „weil Samstag ist“.
+*Schwache Reaktion:* Ungeprüftes Einlesen, „weil die Kassen heute Abend laufen müssen“.
 
 ##### SK40 – an Informationssicherheit und Datenschutzkoordination
 
@@ -1141,7 +1143,7 @@ Das Team will für die Umstellung der 23 Märkte die Firewall des Ausweich-Racks
 
 *Drehbuch-Minute:* 81.5 · *fällt in die Lage:* LK22 Die Kassen laufen wieder (Donnerstag 18:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) → IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft)
 
-*Kommt immer direkt mit:* LK22 Die Kassen laufen wieder
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK22 Die Kassen laufen wieder
 
 Bei vier Filialen schlägt der Kassenabgleich fehl: Die Abverkäufe von Dienstag bis Donnerstag liegen nur auf den Kassen selbst. Wenn ihr die Kassen neu aufsetzt, sind die Daten weg.
 
@@ -1161,7 +1163,7 @@ Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lass
 
 *Drehbuch-Minute:* 85.5 · *fällt in die Lage:* LK23 Die Datenlücke (Freitag 09:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Leitung Logistik und Zentrallager → Leitung Finanzen und Versicherung (CFO)
 
-*Kommt immer direkt mit:* LK23 Die Datenlücke
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK23 Die Datenlücke
 
 Lieferanten fragen nach Bestellungen von Montag, die im System fehlen. Zwei haben „vorsichtshalber“ doppelt geliefert, einer hat gar nicht geliefert, weil keine Bestätigung kam.
 
@@ -1181,9 +1183,9 @@ Die Wareneingänge vom Montag (38 Lkw) sind im System nicht gebucht. Die Ware st
 
 *Drehbuch-Minute:* 88.5 · *fällt in die Lage:* LK24 Der Versicherer ist da (Freitag 14:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung → Gebäudetechnik und Facility Management
 
-*Kommt immer direkt mit:* LK24 Der Versicherer ist da
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK24 Der Versicherer ist da
 
-Der Versicherungsmakler weist darauf hin: Die Elektronikversicherung leistet nach den Bedingungen nur, wenn Wartungsauflagen eingehalten wurden. Die USV-Wartung war überfällig. Ob und wie stark das die Leistung mindert, ist fachlich zu prüfen.
+Der Versicherungsmakler weist darauf hin: In den Bedingungen der Elektronikversicherung gibt es Regelungen zu Wartungsauflagen. Die USV-Wartung war überfällig. Ob und wie stark das die Erstattung beeinflusst, kann nur die fachliche Prüfung des Vertrags klären.
 
 *Gute Reaktion:* Risiko in die Liquiditätsplanung aufnehmen und offen in den Krisenstab geben.  
 *Schwache Reaktion:* Mit der vollen Erstattung planen.
@@ -1192,7 +1194,7 @@ Der Versicherungsmakler weist darauf hin: Die Elektronikversicherung leistet nac
 
 *Drehbuch-Minute:* 91.5 · *fällt in die Lage:* LK25 Der große Saisonsamstag (Samstag 08:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Leitung Online-Shop und Gewerbekundenportal
 
-*Kommt immer direkt mit:* LK25 Der große Saisonsamstag
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK25 Der große Saisonsamstag
 
 Kundinnen und Kunden fragen, ob ihre Online-Abholungen vom Dienstag noch gelten und ob sie den Prospektpreis nachträglich erstattet bekommen.
 
@@ -1212,7 +1214,7 @@ Für Samstag erwartet der Shop-Hoster das Dreifache der üblichen Besucherzahl. 
 
 *Drehbuch-Minute:* 94.5 · *fällt in die Lage:* LK26 Die Brandursache (Samstag 15:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) → Geschäftsführung (CEO), Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK26 Die Brandursache
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK26 Die Brandursache
 
 Der Sachverständige fragt dich, wer für die USV-Wartung zuständig war: Gebäudetechnik, weil es Haustechnik ist, oder IT, weil sie im Rechenzentrum steht. In den Unterlagen ist es nicht eindeutig geregelt.
 
@@ -1223,9 +1225,9 @@ Der Sachverständige fragt dich, wer für die USV-Wartung zuständig war: Gebäu
 
 *Drehbuch-Minute:* 97.5 · *fällt in die Lage:* LK27 Stabiler Notbetrieb (Sonntag 12:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung → IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum)
 
-*Kommt immer direkt mit:* LK27 Stabiler Notbetrieb
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK27 Stabiler Notbetrieb
 
-Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 *Gute Reaktion:* Ruhezeiten organisieren, Vertretungen planen, Betriebsrat einbinden.  
 *Schwache Reaktion:* Weitermachen wie bisher, „es ist ja bald vorbei“.
@@ -1234,7 +1236,7 @@ Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbe
 
 *Drehbuch-Minute:* 100.5 · *fällt in die Lage:* LK28 Zurück ins eigene Rechenzentrum? (Montag 09:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Geschäftsführung (CEO), Krisenstabsleitung → Leitung Finanzen und Versicherung (CFO)
 
-*Kommt immer direkt mit:* LK28 Zurück ins eigene Rechenzentrum?
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK28 Zurück ins eigene Rechenzentrum?
 
 Die Geschäftsführung will bis Mittwoch deine Empfehlung: zurück ins eigene Rechenzentrum, dauerhaft auslagern oder zwei Standorte. Dein Team ist erschöpft, die Partnermärkte wollen Gewissheit.
 
@@ -1249,21 +1251,22 @@ Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt di
 
 **Frage:** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?
 
-- **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)** – Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.
-  - LK19 bekommt dazu: „Weil die Systeme in der Brandnacht kontrolliert heruntergefahren wurden, sind die Datenbanken konsistent – die Rücksicherung kommt ohne Reparatur aus.“
-  - LK22 bekommt dazu: „Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden.“
-  - Abschluss: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €)
-- **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat** – Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.
+- **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)** – Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
+  - LK19 bekommt dazu: „Weil die Server in der Brandnacht kontrolliert heruntergefahren wurden, standen ihre Lüfter still, als der Rauch kam – der Sanierer hält mehr Geräte für reinigungsfähig.“
+  - LK22 bekommt dazu: „Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt.“
+  - Abschluss: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €)
+- **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat** – Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
   - LK08 bekommt dazu: „Ausnahme: In 5 der 14 Filialen kam die Preisübertragung vor dem Stromausfall noch an – dort stimmen die Aktionspreise.“
-  - Folgekarte SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft) bei LK15: „Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.“
-  - Abschluss: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €)
+  - Folgekarte SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft) bei LK14: „Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.“
+  - Abschluss: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €)
 
 ##### W2 – bei LK09 Die Partnermärkte rufen an
 
 **Frage:** Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?
 
-- **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt** – Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+- **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt** – Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.
   - LK22 bekommt dazu: „Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände.“
+  - Abschluss: Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €)
 - **Erst informieren, wenn ein belastbarer Termin feststeht (voraussichtlich Mittwoch)** – Die Partner erfahren die Lage aus der Zeitung; der Verbundvorstand verlangt ein Gespräch (vertrauliche Karte bei „Den Backup-Server bergen?“); Kulanzposten in der Rechnung.
   - LK18 bekommt dazu: „Mehrere Partner beklagen, dass sie bis Mittwoch nur Gerüchte hatten.“
   - Folgekarte SK42 an Geschäftsführung (CEO), Krisenstabsleitung bei LK14: „Der Verbundvorstand ruft an: Die Partner haben aus der Lokalzeitung mehr über den Brand erfahren als von Waterkant. Er verlangt bis heute Abend ein Gespräch mit dir.“
@@ -1273,15 +1276,18 @@ Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt di
 
 **Frage:** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?
 
-- **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen** – Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.
-  - LK23 bekommt dazu: „Die am Mittwoch geborgene Dienstagssicherung war nach Reinigung lesbar: Die Lücke schrumpft auf die zwei Stunden vor dem Brand.“ · Krisen-Info: Datenlücke: ca. 2 Stunden (Dienstagssicherung geborgen und geprüft)
+- **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen** – Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.
+  - LK19 bekommt dazu: „Die geborgene Dienstagssicherung wird noch gereinigt und geprüft; eingespielt werden kann sie frühestens in der Nacht zu Freitag – für den Start der Kassen kommt sie zu spät.“
+  - LK23 bekommt dazu: „Die geborgene Dienstagssicherung ist seit heute Nacht eingespielt; es fehlen nur die zwei Stunden vor dem Brand – vor allem die Tagesabschlüsse der Partnermärkte.“ · Krisen-Info: Datenlücke: ca. 2 Stunden (Dienstagssicherung geborgen und geprüft)
+  - vertrauliche Karte SK30 kommt mit geändertem Text: „Fast alle Bestellungen sind wieder im System. Zwei Lieferanten haben in der Nacht zum Dienstag Bestätigungen geschickt, die fehlen; einer hat deshalb nicht geliefert.“
+  - vertrauliche Karte SK31 kommt mit geändertem Text: „Die Wareneingänge vom Montag sind mit der geborgenen Dienstagssicherung wieder im System. Offen sind einzelne Nachtbuchungen im Lager kurz vor dem Brand – prüfe sie, bevor die Bestände für die Filialen freigegeben werden.“
   - LK27 bekommt dazu: „Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten.“
   - Folgekarte SK43 an Leitung Arbeitssicherheit und Werkschutz bei LK22: „Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.“
-  - Abschluss: Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €)
-- **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)** – Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.
-  - LK23 bekommt dazu: „Der Backup-Server bleibt bis zur Freigabe im Raum; ob die Dienstagssicherung danach noch lesbar ist, ist offen.“
+  - Abschluss: Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €)
+- **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)** – Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.
+  - LK23 bekommt dazu: „Es fehlen die Wareneingänge vom Montag (38 Lkw), Bestellungen an Lieferanten und Retouren; im Lager steht Ware, die es laut System nicht gibt. Der Backup-Server bleibt bis zur Freigabe im Raum.“
   - LK27 bekommt dazu: „Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche.“
-  - Abschluss: Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €)
+  - Abschluss: Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €)
 
 ##### W4 – bei LK15 Wie weit geht der Ausweichbetrieb?
 
@@ -1289,24 +1295,24 @@ Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt di
 
 - **Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum** – Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus.
   - LK25 bekommt dazu: „Online-Shop und Gewerbeportal laufen weiter nur mit „Abholung nach telefonischer Bestätigung“ – Gewerbekunden weichen zu Wettbewerbern aus.“
-  - LK27 bekommt dazu: „Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt.“
-  - Abschluss: Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €)
+  - LK27 bekommt dazu: „Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt; das Zentrallager liefert mit Papierlisten.“
+  - Abschluss: Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €)
 - **Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)** – Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag).
   - LK25 bekommt dazu: „Online-Shop und Gewerbeportal laufen seit Freitagabend wieder aus dem erweiterten Ausweich-Rack.“
   - LK27 bekommt dazu: „Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.“
   - Folgekarte SK45 an Leitung Online-Shop und Gewerbekundenportal bei LK25: „Nach der schnellen Verlagerung zeigt der Online-Shop für 140 Artikel noch Preise von Montag – der Abgleich der Aktionspreise fehlt in der neuen Umgebung.“
   - Abschluss: Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €)
 
-##### W5 – bei LK20 Wer kassiert zuerst?
+##### W5 – bei LK20 Wer wird zuerst umgestellt?
 
 **Frage:** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?
 
-- **Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)** – Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.
-  - LK22 bekommt dazu: „Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht.“
-  - Abschluss: Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €)
-- **Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später** – Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).
-  - LK22 bekommt dazu: „Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze.“
-  - Folgekarte SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service) bei LK22: „Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.“
+- **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)** – Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
+  - LK22 bekommt dazu: „Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt. Drei kleinere eigene Filialen werden es bis 03:00 Uhr nicht schaffen.“
+  - Abschluss: Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €)
+- **Eigene 14 Filialen zuerst, danach die Partnermärkte** – Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
+  - LK22 bekommt dazu: „Die eigenen Filialen sind bis Mitternacht umgestellt, danach folgen die Partnermärkte – drei von ihnen werden es bis 03:00 Uhr nicht schaffen.“
+  - Folgekarte SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service) bei LK27: „Drei Partnermärkte konnten am Freitagmorgen stundenlang nicht kassieren, während alle Waterkant-Filialen liefen. Einer hat inzwischen Kontakt zu einem anderen IT-Dienstleister aufgenommen und will am Montag ein Gespräch.“
   - Abschluss: Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €)
 
 #### Übungsschwerpunkte (Auswahl im Setup)
@@ -1324,7 +1330,7 @@ Bevorzugt: LK04, LK05, LK14, LK18, LK27, SK04, SK05, SK06, SK21, SK20, SK46, SK3
 - LK06 Lagebild nach dem Löschen: Ist jetzt allen klar, wer den Krisenstab leitet und wer die Vertretung ist?
 - LK14 Den Backup-Server bergen?: Wer hat das letzte Wort beim Betreten – und ist das allen klar?
 - LK15 Wie weit geht der Ausweichbetrieb?: Wer trägt diese Entscheidung, und wie wird sie dokumentiert?
-- LK20 Wer kassiert zuerst?: Wie wird die Entscheidung begründet und wem erklärt?
+- LK20 Wer wird zuerst umgestellt?: Wie wird die Entscheidung begründet und wem erklärt?
 - LK22 Die Kassen laufen wieder: Wer prüft, dass „läuft wieder“ wirklich stimmt?
 - LK27 Stabiler Notbetrieb: Wer achtet auf die Menschen, die seit Dienstag durcharbeiten?
 
@@ -1342,7 +1348,7 @@ Bevorzugt: LK03, LK07, LK10, LK13, LK19, LK23, SK03, SK08, SK14, SK19, SK29, SK4
 - LK09 Die Partnermärkte rufen an: Welches Wiederherstellungsziel ist realistisch, nicht vertraglich?
 - LK14 Den Backup-Server bergen?: Welche Daten fehlen ohne Bergung genau – und wie würden Sie sie rekonstruieren?
 - LK15 Wie weit geht der Ausweichbetrieb?: Welche Abhängigkeiten zwischen Kassen, Warenwirtschaft und Netzwerk bestimmen die Reihenfolge?
-- LK20 Wer kassiert zuerst?: Wie stellen Sie sicher, dass jeder umgestellte Markt geprüft ist?
+- LK20 Wer wird zuerst umgestellt?: Wie stellen Sie sicher, dass jeder umgestellte Markt geprüft ist?
 - LK22 Die Kassen laufen wieder: Woran erkennen Sie technisch, dass ein Markt sauber läuft?
 - LK27 Stabiler Notbetrieb: Welche technischen Schulden aus dem Notbetrieb müssen Sie zurückzahlen?
 
@@ -1360,7 +1366,7 @@ Bevorzugt: LK09, LK11, LK16, LK17, LK18, LK21, SK11, SK12, SK15, SK24, SK25, SK2
 - LK09 Die Partnermärkte rufen an: Ist Ihre Aussage eine Prognose oder ein Versprechen – und weiß der Partner den Unterschied?
 - LK14 Den Backup-Server bergen?: Was sagen Sie Partnern und Kunden zur Datenlücke?
 - LK15 Wie weit geht der Ausweichbetrieb?: Wie erklären Sie Gewerbekunden, dass ihr Portal (noch) nicht läuft?
-- LK20 Wer kassiert zuerst?: Wie erklären Sie die Reihenfolge – und wem zuerst?
+- LK20 Wer wird zuerst umgestellt?: Wie erklären Sie die Reihenfolge – und wem zuerst?
 - LK22 Die Kassen laufen wieder: Welche Botschaft bekommen Filialen, Partner und Hotline zur gleichen Zeit?
 - LK27 Stabiler Notbetrieb: Wie schließen Sie die Woche nach außen ab, ohne zu viel zu versprechen?
 
@@ -1377,7 +1383,7 @@ Bevorzugt: LK08, LK12, LK16, LK17, LK23, LK25, SK08, SK09, SK10, SK16, SK17, SK3
 - LK09 Die Partnermärkte rufen an: Was brauchen die Partnermärkte, um morgen zu öffnen?
 - LK14 Den Backup-Server bergen?: Was bedeutet die Datenlücke für Bestände im Lager und in den Filialen?
 - LK15 Wie weit geht der Ausweichbetrieb?: Wie lange kommt das Lager ohne Lagerverwaltung aus?
-- LK20 Wer kassiert zuerst?: Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium?
+- LK20 Wer wird zuerst umgestellt?: Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium?
 - LK22 Die Kassen laufen wieder: Wie gehen Filialen mit Bons aus dem Offline-Zeitraum um?
 - LK27 Stabiler Notbetrieb: Was ist im Filialbetrieb ab Montag wieder normal – und was nicht?
 
@@ -1395,12 +1401,12 @@ Bevorzugt: LK08, LK12, LK16, LK17, LK23, LK25, SK08, SK09, SK10, SK16, SK17, SK3
   *Moderation:* Prüft Entscheidungswege unter Zeitdruck. Gut: Freigabe nach Zeichnungsregel, Vertrag kurz fachlich prüfen lassen, Zahlung dokumentieren.
 - **B4 – Wartungsnachweise** (erst nach LK22) an Gebäudetechnik und Facility Management (Ersatz: Leitung Arbeitssicherheit und Werkschutz → Leitung Finanzen und Versicherung (CFO)): Der Versicherer fordert bis Montag alle Wartungsnachweise der USV der letzten zwei Jahre an. Einer der beiden Wartungsberichte ist nicht auffindbar.  
   *Moderation:* Ehrlichkeit unter Druck. Gut: Lücke offen benennen, Hersteller um Kopie bitten, nichts nachträglich erstellen.
-- **B5 – Zweiter Alarm** (erst nach LK14), **öffentlich auf der Bühne**: Die Brandmeldeanlage im Zentrallager löst aus. Wahrscheinlich hat Staub von den Reinigungsarbeiten im Verwaltungsgebäude den Melder ausgelöst – sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade. *Krisen-Info:* Wahrscheinlich Fehlalarm – nicht bestätigt · 40 Beschäftigte im Lager  
-  *Ton/Sprechertext:* Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“  
-  *Moderation:* Alarmmüdigkeit: Nach dem echten Brand ist die Versuchung groß, „wahrscheinlich Staub“ abzuwarten. Gut: Räumung nach Plan, Feuerwehr entscheidet über Fehlalarm. 60 Sekunden für eine Entscheidung.
+- **B5 – Zweiter Alarm** (erst nach LK14), **öffentlich auf der Bühne**: Die Brandmeldeanlage im Zentrallager löst aus. Vermutlich haben Rauchreste aus dem Verwaltungsgebäude, über die gemeinsame Lüftung ins Lager gezogen, den Melder ausgelöst – sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade. *Krisen-Info:* Wahrscheinlich Fehlalarm – nicht bestätigt · 40 Beschäftigte im Lager  
+  *Ton/Sprechertext:* Einspielung beginnt mit „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ Dann Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“ Ende: „Ende der Übungseinspielung.“  
+  *Moderation:* Alarmmüdigkeit: Nach dem echten Brand ist die Versuchung groß, „wahrscheinlich nur Rauchreste“ abzuwarten. Gut: Räumung nach Plan, Feuerwehr entscheidet über Fehlalarm. 60 Sekunden für eine Entscheidung.
 - **B6 – Wo hat es gebrannt?** (erst nach LK09), **öffentlich auf der Bühne**: Ein Nachrichtenportal meldet „Großbrand im Zentrallager von Waterkant – Lieferungen in Gefahr“ und bebildert es mit einem Archivfoto eines fremden Lagerbrands. Zwei Lieferanten und drei Partner rufen deshalb an. *Krisen-Info:* Falschmeldung im Umlauf · Rückfragen von Lieferanten und Partnern  
   *Moderation:* Widersprüchliche Information korrigieren, ohne sie größer zu machen. Gut: Korrektur beim Portal anfragen, Lieferanten und Partner direkt informieren, Hotline briefen.
-- **B7 – Die IT-Leitung muss raus** (erst nach LK15), **öffentlich auf der Bühne** (IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) 5 Minuten nicht erreichbar, Countdown): Die IT-Leitung ist seit Dienstagnacht fast ohne Schlaf. Der Betriebsarzt schickt sie nach Hause – sofort. Die Wiederherstellung im Ausweich-Rack läuft, Entscheidungen stehen an. Die Vertretung übernimmt.  
+- **B7 – Die IT-Leitung muss raus** (erst nach LK15), **öffentlich auf der Bühne** (IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) 5 Minuten nicht erreichbar, Countdown): Die IT-Leitung ist seit Dienstagnacht fast ohne Schlaf und macht erste Fehler. Der Betriebsarzt rät dringend zu sofortiger Ruhe; die IT-Leitung sieht es ein und fährt nach Hause. Im Ausweich-Rack läuft die Wiederherstellung. Der Colocation-Anbieter braucht in zehn Minuten eine Entscheidung zur Reihenfolge der Netzwerkumstellung. Wer übernimmt?  
   *Ton/Sprechertext:* „Der Betriebsarzt hat entschieden: Sie gehen jetzt nach Hause und schlafen. Bitte kommen Sie mit.“  
   *Regie:* Die Moderation bittet die IT-Leitung persönlich hinaus. Die Bühne zählt fünf Minuten herunter. B7 ersetzt Lagebearbeitung, der Übungstimer läuft weiter.  
   *Moderation:* Vertretungsstresstest, nur in Übungen ab 90 Minuten und nur mit besetzter IT-Leitung. Prüfziel: Gibt es eine handlungsfähige Vertretung mit Wissen und Befugnis?
@@ -1439,12 +1445,12 @@ Die Moderation bittet die IT-Leitung persönlich hinaus. Die Bühne zählt fünf
 
 #### Abschluss: „Läuft alles wieder? Die Krise ist nicht vorbei.“
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
 **Nacharbeiten:**
 
 - **23** Märkte (14 Filialen, 9 Partner) gleichen Offline-Abverkäufe mit der Warenwirtschaft ab
-- **38** Lkw-Ladungen vom Montag werden aus Lieferscheinen nachgebucht
+- **1** Datenlücke wird geschlossen: Wareneingänge, Bestellungen und Retouren mit Lieferscheinen und Lieferanten abgeglichen
 - **312** Online-Abholungen werden erfüllt, umgebucht oder erstattet
 - **16** Racks werden gereinigt, geprüft oder ersetzt – ob die gereinigte Hardware dauerhaft zuverlässig ist, bleibt offen
 - **1** neue USV-Anlage, mit geklärter Zuständigkeit für Wartung und Updates
@@ -1469,21 +1475,22 @@ Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirt
 
 | Frage an die Moderation | Posten | Betrag |
 |---|---|---:|
-| Hat die IT in der Brandnacht kontrolliert heruntergefahren? | Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten | 50.000 € |
-| Liefen die Systeme bis zum Stromausfall weiter? | Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) | 95.000 € |
+| Hat die IT in der Brandnacht kontrolliert heruntergefahren? | Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse | 100.000 € |
+| Liefen die Server bis zum Stromausfall weiter? | Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte | 95.000 € |
+| Wurden die Partner früh mit einer unsicheren Prognose informiert? | Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten | 25.000 € |
 | Wurden die Partnermärkte erst informiert, als ein Termin feststand? | Kulanz und Sonderkonditionen für Partnermärkte | 40.000 € |
-| Wurde der Backup-Server durch eine Fachfirma geborgen? | Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen | 45.000 € |
-| Wurde die Freigabe des Serverraums abgewartet? | Nacherfassung von rund 26 Stunden Bewegungsdaten | 140.000 € |
-| Wurde nur das Nötigste ins Ausweich-Rack verlagert? | Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) | 260.000 € |
+| Wurde der Backup-Server durch eine Fachfirma geborgen? | Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später | 95.000 € |
+| Wurde die Freigabe des Serverraums abgewartet? | Nacherfassung der Montagsdaten bis zur Datenrettung | 110.000 € |
+| Wurde nur das Nötigste ins Ausweich-Rack verlagert? | Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) | 180.000 € |
 | Wurde der Ausweichbetrieb erweitert? | Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister | 210.000 € |
-| Wurden eigene Filialen und Partner nach einem gemeinsamen Kriterium umgestellt? | Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll | 60.000 € |
+| Wurden eigene Filialen und Partner nach einem gemeinsamen Kriterium umgestellt? | Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen | 75.000 € |
 | Kamen die eigenen Filialen zuerst? | Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) | 90.000 € |
 
 **Versicherung:** Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 €  
 *Der Gesamtschaden steht brutto. Die Erstattung von bis zu 1,6 Mio. € ist eine unbestätigte Modellannahme; Wartungsauflagen (USV-Wartung überfällig), Selbstbehalte, Karenzzeit und die Anerkennung einzelner Kostenpositionen sind nicht bewertet.*  
 **Jahresumsatz:** 240.000.000 € · **Umsatzrendite:** 5 %
 
-**Fazit:** Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+**Fazit:** Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 *Fiktive Beispielrechnung für dieses Szenario. Die Größenordnungen sind bewusst realistisch gewählt; alle Beträge sind Szenarioannahmen. Die Erstattung ist eine hypothetische Modellannahme. Liquiditätswirkungen (z. B. Vorkasse, verschobene Lieferantenrechnungen) sind kein Schaden und deshalb nicht enthalten.*
 
@@ -1539,12 +1546,12 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 19.4 | vertraulich | SK19 | an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum): Dein Team rechnet: Im Ausweich-Rack reicht die Leistung für Kassen- und Preisdienste und d… |
 | 21.0 | Lagekarte (Höhepunkt) | LK15 | Mittwoch 10:00 Uhr: Wie weit geht der Ausweichbetrieb? · **Weiche W4** |
 | 21.5 | vertraulich | SK46 | an Geschäftsführung (CEO), Krisenstabsleitung: Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Auswei… |
-| 25.8 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer kassiert zuerst? · **Weiche W5** |
+| 25.8 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer wird zuerst umgestellt? · **Weiche W5** |
 | 30.5 | Lagekarte (Wiederanlauf) | LK22 | Donnerstag 18:00 Uhr: Die Kassen laufen wieder |
 | 35.3 | Lagekarte (Wiederanlauf) | LK27 | Sonntag 12:00 Uhr: Stabiler Notbetrieb |
-| 35.7 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei … |
+| 35.7 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils… |
 
-**Entfallene Lagekarten (19):** LK01 USV meldet Batteriewarnung · LK02 Geruch im Technikflur · LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK18 Der Verbundbeirat verlangt Antworten · LK19 Rücksicherung im Ausweich-Rack · LK21 Nordkanal berichtet · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum? · LK08 Saisonstart ohne Aktionspreise · LK12 Das Zentrallager steht · LK17 Prospektpreise vor der Kasse · LK25 Der große Saisonsamstag
+**Entfallene Lagekarten (19):** LK01 USV meldet Batteriewarnung · LK02 Geruch im Technikflur · LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK18 Der Verbundbeirat verlangt Antworten · LK19 Rücksicherung im Ausweich-Rack · LK21 Nordkanal berichtet ausführlich · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum? · LK08 Saisonstart ohne Aktionspreise · LK12 Das Zentrallager steht · LK17 Prospektpreise vor der Kasse · LK25 Der große Saisonsamstag
 
 **Entfallene vertrauliche Karten (22):** SK27, SK20, SK16, SK04, SK01, SK02, SK05, SK34, SK07, SK09, SK10, SK12, SK15, SK22, SK23, SK25, SK26, SK29, SK40, SK28, SK36, SK37
 
@@ -1575,12 +1582,12 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 25.8 | vertraulich | SK19 | an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum): Dein Team rechnet: Im Ausweich-Rack reicht die Leistung für Kassen- und Preisdienste und d… |
 | 28.0 | Lagekarte (Höhepunkt) | LK15 | Mittwoch 10:00 Uhr: Wie weit geht der Ausweichbetrieb? · **Weiche W4** |
 | 28.5 | vertraulich | SK46 | an Geschäftsführung (CEO), Krisenstabsleitung: Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Auswei… |
-| 34.5 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer kassiert zuerst? · **Weiche W5** |
+| 34.5 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer wird zuerst umgestellt? · **Weiche W5** |
 | 41.0 | Lagekarte (Wiederanlauf) | LK22 | Donnerstag 18:00 Uhr: Die Kassen laufen wieder |
 | 47.5 | Lagekarte (Wiederanlauf) | LK27 | Sonntag 12:00 Uhr: Stabiler Notbetrieb |
-| 48.0 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei … |
+| 48.0 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils… |
 
-**Entfallene Lagekarten (19):** LK01 USV meldet Batteriewarnung · LK02 Geruch im Technikflur · LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK19 Rücksicherung im Ausweich-Rack · LK21 Nordkanal berichtet · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum? · LK08 Saisonstart ohne Aktionspreise · LK12 Das Zentrallager steht · LK25 Der große Saisonsamstag
+**Entfallene Lagekarten (19):** LK01 USV meldet Batteriewarnung · LK02 Geruch im Technikflur · LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK19 Rücksicherung im Ausweich-Rack · LK21 Nordkanal berichtet ausführlich · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum? · LK08 Saisonstart ohne Aktionspreise · LK12 Das Zentrallager steht · LK25 Der große Saisonsamstag
 
 **Entfallene vertrauliche Karten (23):** SK27, SK20, SK16, SK04, SK01, SK02, SK05, SK34, SK07, SK09, SK10, SK12, SK15, SK22, SK23, SK25, SK26, SK29, SK40, SK28, SK30, SK36, SK37
 
@@ -1615,14 +1622,14 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 45.0 | Lagekarte (Höhepunkt) | LK15 | Mittwoch 10:00 Uhr: Wie weit geht der Ausweichbetrieb? · **Weiche W4** |
 | 45.5 | vertraulich | SK46 | an Geschäftsführung (CEO), Krisenstabsleitung: Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Auswei… |
 | 52.2 | Lagekarte (Folgen) | LK19 | Donnerstag 08:00 Uhr: Rücksicherung im Ausweich-Rack |
-| 56.3 | vertraulich | SK24 | an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt k… |
-| 59.4 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer kassiert zuerst? · **Weiche W5** |
+| 56.3 | vertraulich | SK24 | an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme i… |
+| 59.4 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer wird zuerst umgestellt? · **Weiche W5** |
 | 66.6 | Lagekarte (Wiederanlauf) | LK22 | Donnerstag 18:00 Uhr: Die Kassen laufen wieder |
 | 70.7 | vertraulich | SK38 | an Regionalleitung Filialen Nord: Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nic… |
 | 73.8 | Lagekarte (Wiederanlauf) | LK27 | Sonntag 12:00 Uhr: Stabiler Notbetrieb |
-| 74.3 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei … |
+| 74.3 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils… |
 
-**Entfallene Lagekarten (15):** LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK12 Das Zentrallager steht · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK21 Nordkanal berichtet · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK25 Der große Saisonsamstag · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum?
+**Entfallene Lagekarten (15):** LK05 Feuerwehr im Einsatz · LK07 Was noch läuft – und was nicht · LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK12 Das Zentrallager steht · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK21 Nordkanal berichtet ausführlich · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK25 Der große Saisonsamstag · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum?
 
 **Entfallene vertrauliche Karten (24):** SK27, SK20, SK16, SK04, SK01, SK02, SK05, SK34, SK07, SK09, SK10, SK12, SK15, SK22, SK23, SK25, SK26, SK29, SK40, SK28, SK30, SK39, SK36, SK37
 
@@ -1642,7 +1649,7 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 6.3 | vertraulich | SK03 | an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum): Die Rufbereitschaft meldet: Serverraum 31 °C, steigend. Die Übertragung der Aktionspreise … |
 | 9.0 | Lagekarte (Ausbruch) | LK04 | Dienstag 03:10 Uhr: Brandalarm im Rechenzentrum |
 | 18.0 | Lagekarte (Ausbruch) | LK05 | Dienstag 03:40 Uhr: Feuerwehr im Einsatz |
-| 18.5 | vertraulich | SK04 | an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht)): Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans … |
+| 18.5 | vertraulich | SK04 | an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht)): Am Sammelplatz fehlt der Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur U… |
 | 27.0 | Lagekarte (Ausbruch) | LK06 | Dienstag 05:30 Uhr: Lagebild nach dem Löschen |
 | 27.5 | vertraulich | SK06 | an Leitung Arbeitssicherheit und Werkschutz: Der Einsatzleiter weist dich darauf hin: Bei brennenden Lithium-Ionen-Batterien können Flu… |
 | 36.0 | Lagekarte (Eskalation) | LK08 | Dienstag 07:00 Uhr: Saisonstart ohne Aktionspreise |
@@ -1660,14 +1667,14 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 63.5 | vertraulich | SK46 | an Geschäftsführung (CEO), Krisenstabsleitung: Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Auswei… |
 | 67.3 | vertraulich | SK23 | an Leitung Online-Shop und Gewerbekundenportal: Der Shop zeigt seit Dienstag Bestände von Montagnacht. 312 Bestellungen „Abholung in der F… |
 | 72.0 | Lagekarte (Folgen) | LK19 | Donnerstag 08:00 Uhr: Rücksicherung im Ausweich-Rack |
-| 77.2 | vertraulich | SK24 | an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt k… |
-| 81.0 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer kassiert zuerst? · **Weiche W5** |
+| 77.2 | vertraulich | SK24 | an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme i… |
+| 81.0 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer wird zuerst umgestellt? · **Weiche W5** |
 | 90.0 | Lagekarte (Wiederanlauf) | LK22 | Donnerstag 18:00 Uhr: Die Kassen laufen wieder |
 | 95.2 | vertraulich | SK38 | an Regionalleitung Filialen Nord: Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nic… |
 | 99.0 | Lagekarte (Wiederanlauf) | LK27 | Sonntag 12:00 Uhr: Stabiler Notbetrieb |
-| 99.5 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei … |
+| 99.5 | vertraulich | SK32 | an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils… |
 
-**Entfallene Lagekarten (14):** LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK12 Das Zentrallager steht · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK21 Nordkanal berichtet · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK25 Der große Saisonsamstag · LK26 Die Brandursache · LK07 Was noch läuft – und was nicht · LK28 Zurück ins eigene Rechenzentrum?
+**Entfallene Lagekarten (14):** LK10 Serverraum gesperrt · LK11 Nordkanal fragt nach · LK12 Das Zentrallager steht · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK16 Ein Bauunternehmen will Vorrang · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK21 Nordkanal berichtet ausführlich · LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK25 Der große Saisonsamstag · LK26 Die Brandursache · LK07 Was noch läuft – und was nicht · LK28 Zurück ins eigene Rechenzentrum?
 
 **Entfallene vertrauliche Karten (23):** SK27, SK20, SK16, SK01, SK02, SK05, SK34, SK07, SK09, SK10, SK12, SK15, SK22, SK25, SK26, SK29, SK40, SK28, SK30, SK33, SK39, SK36, SK37
 
@@ -1687,13 +1694,13 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 6.3 | vertraulich | SK03 | an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum): Die Rufbereitschaft meldet: Serverraum 31 °C, steigend. Die Übertragung der Aktionspreise … |
 | 9.0 | Lagekarte (Ausbruch) | LK04 | Dienstag 03:10 Uhr: Brandalarm im Rechenzentrum |
 | 20.1 | Lagekarte (Ausbruch) | LK05 | Dienstag 03:40 Uhr: Feuerwehr im Einsatz |
-| 20.6 | vertraulich | SK04 | an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht)): Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans … |
+| 20.6 | vertraulich | SK04 | an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht)): Am Sammelplatz fehlt der Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur U… |
 | 31.3 | Lagekarte (Ausbruch) | LK06 | Dienstag 05:30 Uhr: Lagebild nach dem Löschen |
 | 31.8 | vertraulich | SK06 | an Leitung Arbeitssicherheit und Werkschutz: Der Einsatzleiter weist dich darauf hin: Bei brennenden Lithium-Ionen-Batterien können Flu… |
 | 42.4 | Lagekarte (Eskalation) | LK08 | Dienstag 07:00 Uhr: Saisonstart ohne Aktionspreise |
 | 47.3 | vertraulich | SK08 | an IT-Support Filialen und Kassen: Die Herstellerdokumentation der Kassen sagt: Im Offline-Betrieb speichern sie Abverkäufe e… |
 | 48.8 | vertraulich | SK35 | an Notfallmanagement / BCM-Koordination: Das IT-Notfallhandbuch liegt als Datei auf dem Fileserver im gesperrten Serverraum. Eine P… |
-| 50.4 | vertraulich | SK10 | an Regionalleitung Filialen Süd: In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die Nachbarfili… |
+| 50.4 | vertraulich | SK10 | an Regionalleitung Filialen Süd: Zwei Filialleitungen deiner Region wollen es unterschiedlich machen: Eine will den Prospek… |
 | 53.6 | Lagekarte (Eskalation) | LK09 | Dienstag 08:30 Uhr: Die Partnermärkte rufen an · **Weiche W2** |
 | 54.1 | vertraulich | SK11 | an Partnerbetreuung Verbund (Kundenmanagement IT-Service): Drei Partner haben dich schon angerufen. Einer liest dir aus dem Servicevertrag vor: Wiede… |
 | 59.0 | vertraulich | SK12 | an Leitung Finanzen und Versicherung (CFO): Im Servicevertrag mit den Partnermärkten stehen Gutschriften bei Überschreiten des Wiederh… |
@@ -1710,14 +1717,14 @@ Automatisch erzeugt vom Werkzeug, Schwierigkeit „mittel“, mit den vom Werkze
 | 91.9 | vertraulich | SK23 | an Leitung Online-Shop und Gewerbekundenportal: Der Shop zeigt seit Dienstag Bestände von Montagnacht. 312 Bestellungen „Abholung in der F… |
 | 98.1 | Lagekarte (Höhepunkt) | LK16 | Mittwoch 13:00 Uhr: Ein Bauunternehmen will Vorrang |
 | 109.3 | Lagekarte (Folgen) | LK19 | Donnerstag 08:00 Uhr: Rücksicherung im Ausweich-Rack |
-| 114.7 | vertraulich | SK24 | an Kundenservice-Hotline: Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt k… |
+| 114.7 | vertraulich | SK24 | an Kundenservice-Hotline: Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme i… |
 | 116.7 | vertraulich | SK25 | an Leitung Unternehmenskommunikation und Marketing: Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den… |
-| 120.4 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer kassiert zuerst? · **Weiche W5** |
-| 131.6 | Lagekarte (Folgen) | LK21 | Donnerstag 13:00 Uhr: Nordkanal berichtet |
+| 120.4 | Lagekarte (Folgen) | LK20 | Donnerstag 10:00 Uhr: Wer wird zuerst umgestellt? · **Weiche W5** |
+| 131.6 | Lagekarte (Folgen) | LK21 | Donnerstag 13:00 Uhr: Nordkanal berichtet ausführlich |
 | 142.7 | Lagekarte (Wiederanlauf) | LK22 | Donnerstag 18:00 Uhr: Die Kassen laufen wieder |
 | 149.1 | vertraulich | SK38 | an Regionalleitung Filialen Nord: Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nic… |
 | 153.9 | Lagekarte (Wiederanlauf) | LK27 | Sonntag 12:00 Uhr: Stabiler Notbetrieb |
-| 154.4 | vertraulich | SK32 | an Personalleitung: Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei … |
+| 154.4 | vertraulich | SK32 | an Personalleitung: Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils… |
 | 159.2 | vertraulich | SK31 | an Leitung Logistik und Zentrallager: Die Wareneingänge vom Montag (38 Lkw) sind im System nicht gebucht. Die Ware steht im Lage… |
 
 **Entfallene Lagekarten (11):** LK23 Die Datenlücke · LK24 Der Versicherer ist da · LK25 Der große Saisonsamstag · LK26 Die Brandursache · LK07 Was noch läuft – und was nicht · LK11 Nordkanal fragt nach · LK12 Das Zentrallager steht · LK13 Ersatz: Hardware oder Ausweich-Rack? · LK17 Prospektpreise vor der Kasse · LK18 Der Verbundbeirat verlangt Antworten · LK28 Zurück ins eigene Rechenzentrum?
@@ -1767,6 +1774,26 @@ Stand: 2026-11-18 · erzeugt mit `tools/varianten.js` direkt aus `scenario.water
 
 **Ergebnis:** In allen 25 Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten; ab 60 Min. mindestens die Hälfte der Überraschungen einsetzbar (Voraussetzung gespielt, Mindestdauer erfüllt).
 
+##### Abdeckung: in keiner der Kombinationen gespielt
+
+Hinweis, kein Fehler: Im Modus „Erprobte Zeiten aus dem Drehbuch“ werden alle Lagen gespielt. In der Zieldauer entfallen Karten mit niedriger Priorität; was hier steht, erreicht den Tisch nur in diesem Modus, über einen Schwerpunkt mit anderer Auswahl oder durch manuelle Auslösung.
+
+- Lagekarten: LK24 Der Versicherer ist da · LK26 Die Brandursache · LK28 Zurück ins eigene Rechenzentrum?
+- vertrauliche Karten (ohne Folgekarten): SK01, SK02, SK05, SK07, SK09, SK15, SK17, SK27, SK28, SK30, SK33, SK34, SK36, SK37
+
+##### Vertrauliche Karten, die über eine Tagesgrenze verschoben werden
+
+Hinweis: Fehlt die Heimatlage einer vertraulichen Karte im Plan, kommt sie mit der nächsten gespielten Lage. Liegt diese an einem anderen Wochentag, müssen Zeitangaben im Kartentext dazu passen (zeitneutral formulieren oder die Karte an eine Kernlage binden).
+
+- **SK13** (14×): 45/Ausgewogen: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch); 45/Krisenführung und Personenschutz: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch); 45/IT-Wiederanlauf und Infrastruktur: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch) …
+- **SK14** (14×): 45/Ausgewogen: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch); 45/Krisenführung und Personenschutz: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch); 45/IT-Wiederanlauf und Infrastruktur: Heimatlage LK10 (Dienstag) → kommt nach LK14 (Mittwoch) …
+- **SK18** (23×): 45/Ausgewogen: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch); 45/Krisenführung und Personenschutz: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch); 45/IT-Wiederanlauf und Infrastruktur: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch) …
+- **SK19** (23×): 45/Ausgewogen: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch); 45/Krisenführung und Personenschutz: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch); 45/IT-Wiederanlauf und Infrastruktur: Heimatlage LK13 (Dienstag) → kommt nach LK14 (Mittwoch) …
+- **SK24** (9×): 90/Ausgewogen: Heimatlage LK17 (Mittwoch) → kommt nach LK19 (Donnerstag); 90/IT-Wiederanlauf und Infrastruktur: Heimatlage LK17 (Mittwoch) → kommt nach LK19 (Donnerstag); 90/Partner, Kunden und Kommunikation: Heimatlage LK17 (Mittwoch) → kommt nach LK20 (Donnerstag) …
+- **SK26** (1×): 120/Partner, Kunden und Kommunikation: Heimatlage LK18 (Mittwoch) → kommt nach LK20 (Donnerstag)
+- **SK25** (2×): 180/Ausgewogen: Heimatlage LK17 (Mittwoch) → kommt nach LK19 (Donnerstag); 180/IT-Wiederanlauf und Infrastruktur: Heimatlage LK17 (Mittwoch) → kommt nach LK19 (Donnerstag)
+- **SK31** (3×): 180/Ausgewogen: Heimatlage LK23 (Freitag) → kommt nach LK27 (Sonntag); 180/Krisenführung und Personenschutz: Heimatlage LK23 (Freitag) → kommt nach LK27 (Sonntag); 180/Partner, Kunden und Kommunikation: Heimatlage LK23 (Freitag) → kommt nach LK27 (Sonntag)
+
 ##### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)
 
 - **45 Min. · Ausgewogen** – gespielt: LK03 LK04 LK06 LK09 LK14 LK15 LK20 LK22 LK27 · ausgelassen: LK01 LK02 LK05 LK07 LK08 LK10 LK11 LK12 LK13 LK16 LK17 LK18 LK19 LK21 LK23 LK24 LK25 LK26 LK28 · Rollen (5): geschaeftsfuehrer-ceo, leiter-it, facility-management, partnerbetreuung, leiter-arbeitssicherheit · vertraulich: SK03→leiter-it, SK06→leiter-arbeitssicherheit, SK11→partnerbetreuung, SK08→leiter-it, SK35→leiter-it, SK21→leiter-arbeitssicherheit, SK13→facility-management, SK14→leiter-it, SK18→leiter-it, SK19→leiter-it, SK46→geschaeftsfuehrer-ceo, SK32→geschaeftsfuehrer-ceo · Weichen: W1, W2, W3, W4, W5
@@ -1801,67 +1828,67 @@ Für jede Kombination: welche Lagen einen Zusatzsatz oder eine andere Krisen-Inf
 
 | Nr. | W1 | W2 | W3 | W4 | W5 | Zusatzsätze / Krisen-Infos | Folgekarten | Zusatzposten | Brutto | beim Unternehmen (mit angenommener Erstattung) | ohne Erstattung (% Jahresgewinn) | Regelprüfung |
 |---:|---|---|---|---|---|---|---|---|---:|---:|---:|---|
-| 1 | herunterfahren | frueh | bergen | minimal | gleichrangig | LK19, LK22, LK22, LK23*, LK27, LK25, LK27, LK22 | SK43 bei LK22 | 50.000 € + 45.000 € + 260.000 € + 60.000 € | 3.591.000 € | 1.991.000 € | 30 % | ok |
-| 2 | herunterfahren | frueh | bergen | minimal | eigene | LK19, LK22, LK22, LK23*, LK27, LK25, LK27, LK22 | SK43 bei LK22, SK44 bei LK22 | 50.000 € + 45.000 € + 260.000 € + 90.000 € | 3.621.000 € | 2.021.000 € | 30 % | ok |
-| 3 | herunterfahren | frueh | bergen | ausbauen | gleichrangig | LK19, LK22, LK22, LK23*, LK27, LK25, LK27, LK22 | SK43 bei LK22, SK45 bei LK25 | 50.000 € + 45.000 € + 210.000 € + 60.000 € | 3.541.000 € | 1.941.000 € | 30 % | ok |
-| 4 | herunterfahren | frueh | bergen | ausbauen | eigene | LK19, LK22, LK22, LK23*, LK27, LK25, LK27, LK22 | SK43 bei LK22, SK45 bei LK25, SK44 bei LK22 | 50.000 € + 45.000 € + 210.000 € + 90.000 € | 3.571.000 € | 1.971.000 € | 30 % | ok |
-| 5 | herunterfahren | frueh | abwarten | minimal | gleichrangig | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | – | 50.000 € + 140.000 € + 260.000 € + 60.000 € | 3.686.000 € | 2.086.000 € | 31 % | ok |
-| 6 | herunterfahren | frueh | abwarten | minimal | eigene | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK44 bei LK22 | 50.000 € + 140.000 € + 260.000 € + 90.000 € | 3.716.000 € | 2.116.000 € | 31 % | ok |
-| 7 | herunterfahren | frueh | abwarten | ausbauen | gleichrangig | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK45 bei LK25 | 50.000 € + 140.000 € + 210.000 € + 60.000 € | 3.636.000 € | 2.036.000 € | 30 % | ok |
-| 8 | herunterfahren | frueh | abwarten | ausbauen | eigene | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK45 bei LK25, SK44 bei LK22 | 50.000 € + 140.000 € + 210.000 € + 90.000 € | 3.666.000 € | 2.066.000 € | 31 % | ok |
-| 9 | herunterfahren | spaeter | bergen | minimal | gleichrangig | LK19, LK22, LK18, LK23*, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22 | 50.000 € + 40.000 € + 45.000 € + 260.000 € + 60.000 € | 3.631.000 € | 2.031.000 € | 30 % | ok |
-| 10 | herunterfahren | spaeter | bergen | minimal | eigene | LK19, LK22, LK18, LK23*, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK44 bei LK22 | 50.000 € + 40.000 € + 45.000 € + 260.000 € + 90.000 € | 3.661.000 € | 2.061.000 € | 31 % | ok |
-| 11 | herunterfahren | spaeter | bergen | ausbauen | gleichrangig | LK19, LK22, LK18, LK23*, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK45 bei LK25 | 50.000 € + 40.000 € + 45.000 € + 210.000 € + 60.000 € | 3.581.000 € | 1.981.000 € | 30 % | ok |
-| 12 | herunterfahren | spaeter | bergen | ausbauen | eigene | LK19, LK22, LK18, LK23*, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK45 bei LK25, SK44 bei LK22 | 50.000 € + 40.000 € + 45.000 € + 210.000 € + 90.000 € | 3.611.000 € | 2.011.000 € | 30 % | ok |
-| 13 | herunterfahren | spaeter | abwarten | minimal | gleichrangig | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14 | 50.000 € + 40.000 € + 140.000 € + 260.000 € + 60.000 € | 3.726.000 € | 2.126.000 € | 31 % | ok |
-| 14 | herunterfahren | spaeter | abwarten | minimal | eigene | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK44 bei LK22 | 50.000 € + 40.000 € + 140.000 € + 260.000 € + 90.000 € | 3.756.000 € | 2.156.000 € | 31 % | ok |
-| 15 | herunterfahren | spaeter | abwarten | ausbauen | gleichrangig | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK45 bei LK25 | 50.000 € + 40.000 € + 140.000 € + 210.000 € + 60.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
-| 16 | herunterfahren | spaeter | abwarten | ausbauen | eigene | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK45 bei LK25, SK44 bei LK22 | 50.000 € + 40.000 € + 140.000 € + 210.000 € + 90.000 € | 3.706.000 € | 2.106.000 € | 31 % | ok |
-| 17 | weiterlaufen | frueh | bergen | minimal | gleichrangig | LK08, LK22, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK43 bei LK22 | 95.000 € + 45.000 € + 260.000 € + 60.000 € | 3.636.000 € | 2.036.000 € | 30 % | ok |
-| 18 | weiterlaufen | frueh | bergen | minimal | eigene | LK08, LK22, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK43 bei LK22, SK44 bei LK22 | 95.000 € + 45.000 € + 260.000 € + 90.000 € | 3.666.000 € | 2.066.000 € | 31 % | ok |
-| 19 | weiterlaufen | frueh | bergen | ausbauen | gleichrangig | LK08, LK22, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK43 bei LK22, SK45 bei LK25 | 95.000 € + 45.000 € + 210.000 € + 60.000 € | 3.586.000 € | 1.986.000 € | 30 % | ok |
-| 20 | weiterlaufen | frueh | bergen | ausbauen | eigene | LK08, LK22, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK43 bei LK22, SK45 bei LK25, SK44 bei LK22 | 95.000 € + 45.000 € + 210.000 € + 90.000 € | 3.616.000 € | 2.016.000 € | 30 % | ok |
-| 21 | weiterlaufen | frueh | abwarten | minimal | gleichrangig | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15 | 95.000 € + 140.000 € + 260.000 € + 60.000 € | 3.731.000 € | 2.131.000 € | 31 % | ok |
-| 22 | weiterlaufen | frueh | abwarten | minimal | eigene | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK44 bei LK22 | 95.000 € + 140.000 € + 260.000 € + 90.000 € | 3.761.000 € | 2.161.000 € | 31 % | ok |
-| 23 | weiterlaufen | frueh | abwarten | ausbauen | gleichrangig | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK45 bei LK25 | 95.000 € + 140.000 € + 210.000 € + 60.000 € | 3.681.000 € | 2.081.000 € | 31 % | ok |
-| 24 | weiterlaufen | frueh | abwarten | ausbauen | eigene | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK45 bei LK25, SK44 bei LK22 | 95.000 € + 140.000 € + 210.000 € + 90.000 € | 3.711.000 € | 2.111.000 € | 31 % | ok |
-| 25 | weiterlaufen | spaeter | bergen | minimal | gleichrangig | LK08, LK18, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK43 bei LK22 | 95.000 € + 40.000 € + 45.000 € + 260.000 € + 60.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
-| 26 | weiterlaufen | spaeter | bergen | minimal | eigene | LK08, LK18, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK43 bei LK22, SK44 bei LK22 | 95.000 € + 40.000 € + 45.000 € + 260.000 € + 90.000 € | 3.706.000 € | 2.106.000 € | 31 % | ok |
-| 27 | weiterlaufen | spaeter | bergen | ausbauen | gleichrangig | LK08, LK18, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK43 bei LK22, SK45 bei LK25 | 95.000 € + 40.000 € + 45.000 € + 210.000 € + 60.000 € | 3.626.000 € | 2.026.000 € | 30 % | ok |
-| 28 | weiterlaufen | spaeter | bergen | ausbauen | eigene | LK08, LK18, LK23*, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK43 bei LK22, SK45 bei LK25, SK44 bei LK22 | 95.000 € + 40.000 € + 45.000 € + 210.000 € + 90.000 € | 3.656.000 € | 2.056.000 € | 30 % | ok |
-| 29 | weiterlaufen | spaeter | abwarten | minimal | gleichrangig | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14 | 95.000 € + 40.000 € + 140.000 € + 260.000 € + 60.000 € | 3.771.000 € | 2.171.000 € | 31 % | ok |
-| 30 | weiterlaufen | spaeter | abwarten | minimal | eigene | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK44 bei LK22 | 95.000 € + 40.000 € + 140.000 € + 260.000 € + 90.000 € | 3.801.000 € | 2.201.000 € | 32 % | ok |
-| 31 | weiterlaufen | spaeter | abwarten | ausbauen | gleichrangig | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK45 bei LK25 | 95.000 € + 40.000 € + 140.000 € + 210.000 € + 60.000 € | 3.721.000 € | 2.121.000 € | 31 % | ok |
-| 32 | weiterlaufen | spaeter | abwarten | ausbauen | eigene | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK15, SK42 bei LK14, SK45 bei LK25, SK44 bei LK22 | 95.000 € + 40.000 € + 140.000 € + 210.000 € + 90.000 € | 3.751.000 € | 2.151.000 € | 31 % | ok |
+| 1 | herunterfahren | frueh | bergen | minimal | gleichrangig | LK19, LK22, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK43 bei LK22 | 100.000 € + 25.000 € + 95.000 € + 180.000 € + 75.000 € | 3.651.000 € | 2.051.000 € | 30 % | ok |
+| 2 | herunterfahren | frueh | bergen | minimal | eigene | LK19, LK22, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK43 bei LK22, SK44 bei LK27 | 100.000 € + 25.000 € + 95.000 € + 180.000 € + 90.000 € | 3.666.000 € | 2.066.000 € | 31 % | ok |
+| 3 | herunterfahren | frueh | bergen | ausbauen | gleichrangig | LK19, LK22, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK43 bei LK22, SK45 bei LK25 | 100.000 € + 25.000 € + 95.000 € + 210.000 € + 75.000 € | 3.681.000 € | 2.081.000 € | 31 % | ok |
+| 4 | herunterfahren | frueh | bergen | ausbauen | eigene | LK19, LK22, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK43 bei LK22, SK45 bei LK25, SK44 bei LK27 | 100.000 € + 25.000 € + 95.000 € + 210.000 € + 90.000 € | 3.696.000 € | 2.096.000 € | 31 % | ok |
+| 5 | herunterfahren | frueh | abwarten | minimal | gleichrangig | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | – | 100.000 € + 25.000 € + 110.000 € + 180.000 € + 75.000 € | 3.666.000 € | 2.066.000 € | 31 % | ok |
+| 6 | herunterfahren | frueh | abwarten | minimal | eigene | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK44 bei LK27 | 100.000 € + 25.000 € + 110.000 € + 180.000 € + 90.000 € | 3.681.000 € | 2.081.000 € | 31 % | ok |
+| 7 | herunterfahren | frueh | abwarten | ausbauen | gleichrangig | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK45 bei LK25 | 100.000 € + 25.000 € + 110.000 € + 210.000 € + 75.000 € | 3.696.000 € | 2.096.000 € | 31 % | ok |
+| 8 | herunterfahren | frueh | abwarten | ausbauen | eigene | LK19, LK22, LK22, LK23, LK27, LK25, LK27, LK22 | SK45 bei LK25, SK44 bei LK27 | 100.000 € + 25.000 € + 110.000 € + 210.000 € + 90.000 € | 3.711.000 € | 2.111.000 € | 31 % | ok |
+| 9 | herunterfahren | spaeter | bergen | minimal | gleichrangig | LK19, LK22, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22 | 100.000 € + 40.000 € + 95.000 € + 180.000 € + 75.000 € | 3.666.000 € | 2.066.000 € | 31 % | ok |
+| 10 | herunterfahren | spaeter | bergen | minimal | eigene | LK19, LK22, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK44 bei LK27 | 100.000 € + 40.000 € + 95.000 € + 180.000 € + 90.000 € | 3.681.000 € | 2.081.000 € | 31 % | ok |
+| 11 | herunterfahren | spaeter | bergen | ausbauen | gleichrangig | LK19, LK22, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK45 bei LK25 | 100.000 € + 40.000 € + 95.000 € + 210.000 € + 75.000 € | 3.696.000 € | 2.096.000 € | 31 % | ok |
+| 12 | herunterfahren | spaeter | bergen | ausbauen | eigene | LK19, LK22, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK42 bei LK14, SK43 bei LK22, SK45 bei LK25, SK44 bei LK27 | 100.000 € + 40.000 € + 95.000 € + 210.000 € + 90.000 € | 3.711.000 € | 2.111.000 € | 31 % | ok |
+| 13 | herunterfahren | spaeter | abwarten | minimal | gleichrangig | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14 | 100.000 € + 40.000 € + 110.000 € + 180.000 € + 75.000 € | 3.681.000 € | 2.081.000 € | 31 % | ok |
+| 14 | herunterfahren | spaeter | abwarten | minimal | eigene | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK44 bei LK27 | 100.000 € + 40.000 € + 110.000 € + 180.000 € + 90.000 € | 3.696.000 € | 2.096.000 € | 31 % | ok |
+| 15 | herunterfahren | spaeter | abwarten | ausbauen | gleichrangig | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK45 bei LK25 | 100.000 € + 40.000 € + 110.000 € + 210.000 € + 75.000 € | 3.711.000 € | 2.111.000 € | 31 % | ok |
+| 16 | herunterfahren | spaeter | abwarten | ausbauen | eigene | LK19, LK22, LK18, LK23, LK27, LK25, LK27, LK22 | SK42 bei LK14, SK45 bei LK25, SK44 bei LK27 | 100.000 € + 40.000 € + 110.000 € + 210.000 € + 90.000 € | 3.726.000 € | 2.126.000 € | 31 % | ok |
+| 17 | weiterlaufen | frueh | bergen | minimal | gleichrangig | LK08, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK43 bei LK22 | 95.000 € + 25.000 € + 95.000 € + 180.000 € + 75.000 € | 3.646.000 € | 2.046.000 € | 30 % | ok |
+| 18 | weiterlaufen | frueh | bergen | minimal | eigene | LK08, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK43 bei LK22, SK44 bei LK27 | 95.000 € + 25.000 € + 95.000 € + 180.000 € + 90.000 € | 3.661.000 € | 2.061.000 € | 31 % | ok |
+| 19 | weiterlaufen | frueh | bergen | ausbauen | gleichrangig | LK08, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK43 bei LK22, SK45 bei LK25 | 95.000 € + 25.000 € + 95.000 € + 210.000 € + 75.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
+| 20 | weiterlaufen | frueh | bergen | ausbauen | eigene | LK08, LK22, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK43 bei LK22, SK45 bei LK25, SK44 bei LK27 | 95.000 € + 25.000 € + 95.000 € + 210.000 € + 90.000 € | 3.691.000 € | 2.091.000 € | 31 % | ok |
+| 21 | weiterlaufen | frueh | abwarten | minimal | gleichrangig | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14 | 95.000 € + 25.000 € + 110.000 € + 180.000 € + 75.000 € | 3.661.000 € | 2.061.000 € | 31 % | ok |
+| 22 | weiterlaufen | frueh | abwarten | minimal | eigene | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK44 bei LK27 | 95.000 € + 25.000 € + 110.000 € + 180.000 € + 90.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
+| 23 | weiterlaufen | frueh | abwarten | ausbauen | gleichrangig | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK45 bei LK25 | 95.000 € + 25.000 € + 110.000 € + 210.000 € + 75.000 € | 3.691.000 € | 2.091.000 € | 31 % | ok |
+| 24 | weiterlaufen | frueh | abwarten | ausbauen | eigene | LK08, LK22, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK45 bei LK25, SK44 bei LK27 | 95.000 € + 25.000 € + 110.000 € + 210.000 € + 90.000 € | 3.706.000 € | 2.106.000 € | 31 % | ok |
+| 25 | weiterlaufen | spaeter | bergen | minimal | gleichrangig | LK08, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK43 bei LK22 | 95.000 € + 40.000 € + 95.000 € + 180.000 € + 75.000 € | 3.661.000 € | 2.061.000 € | 31 % | ok |
+| 26 | weiterlaufen | spaeter | bergen | minimal | eigene | LK08, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK43 bei LK22, SK44 bei LK27 | 95.000 € + 40.000 € + 95.000 € + 180.000 € + 90.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
+| 27 | weiterlaufen | spaeter | bergen | ausbauen | gleichrangig | LK08, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK43 bei LK22, SK45 bei LK25 | 95.000 € + 40.000 € + 95.000 € + 210.000 € + 75.000 € | 3.691.000 € | 2.091.000 € | 31 % | ok |
+| 28 | weiterlaufen | spaeter | bergen | ausbauen | eigene | LK08, LK18, LK19, LK23*, SK30 (Text), SK31 (Text), LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK43 bei LK22, SK45 bei LK25, SK44 bei LK27 | 95.000 € + 40.000 € + 95.000 € + 210.000 € + 90.000 € | 3.706.000 € | 2.106.000 € | 31 % | ok |
+| 29 | weiterlaufen | spaeter | abwarten | minimal | gleichrangig | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14 | 95.000 € + 40.000 € + 110.000 € + 180.000 € + 75.000 € | 3.676.000 € | 2.076.000 € | 31 % | ok |
+| 30 | weiterlaufen | spaeter | abwarten | minimal | eigene | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK44 bei LK27 | 95.000 € + 40.000 € + 110.000 € + 180.000 € + 90.000 € | 3.691.000 € | 2.091.000 € | 31 % | ok |
+| 31 | weiterlaufen | spaeter | abwarten | ausbauen | gleichrangig | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK45 bei LK25 | 95.000 € + 40.000 € + 110.000 € + 210.000 € + 75.000 € | 3.706.000 € | 2.106.000 € | 31 % | ok |
+| 32 | weiterlaufen | spaeter | abwarten | ausbauen | eigene | LK08, LK18, LK23, LK27, LK25, LK27, LK22 | SK41 bei LK14, SK42 bei LK14, SK45 bei LK25, SK44 bei LK27 | 95.000 € + 40.000 € + 110.000 € + 210.000 € + 90.000 € | 3.721.000 € | 2.121.000 € | 31 % | ok |
 
-* = ersetzt die Krisen-Info dieser Lage. Grundschaden 3.176.000 €; modellierte Erstattung 1.600.000 € (Modellannahme); Jahresgewinn 12.000.000 €. Spanne beim Unternehmen: 1.941.000 € bis 2.201.000 €.
+* = ersetzt die Krisen-Info dieser Lage. Grundschaden 3.176.000 €; modellierte Erstattung 1.600.000 € (Modellannahme); Jahresgewinn 12.000.000 €. Spanne beim Unternehmen: 2.046.000 € bis 2.126.000 €.
 
 ##### Entscheidungen im Überblick
 
 **W1 – Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?** (bei LK03, Dienstag 03:02 Uhr)  
 *Moderation:* Um 03:02 Uhr weiß niemand, dass es brennt. Herunterfahren bricht die Preisübertragung zum Saisonstart und die Partner-Uploads ab und könnte ein Fehlalarm sein; Weiterlaufen riskiert einen harten Ausfall. Beide Antworten sind vertretbar – bewertet wird, ob jemand entscheidet und es dokumentiert.  
-- *Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)* → Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen. · Posten: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €)
-- *Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat* → Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur. · Posten: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €)
+- *Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)* → Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab. · Posten: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €)
+- *Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat* → Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“). · Posten: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €)
 
 **W2 – Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?** (bei LK09, Dienstag 08:30 Uhr)  
 *Moderation:* Früh heißt: Partner können planen, aber eine unsichere Prognose kann sich als falsch erweisen. Spät heißt: gesicherte Aussage, aber die Partner hören bis dahin Gerüchte. Gut ist eine abgewogene Entscheidung, nicht automatisch „früh“.  
-- *Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt* → Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+- *Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt* → Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet. · Posten: Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €)
 - *Erst informieren, wenn ein belastbarer Termin feststeht (voraussichtlich Mittwoch)* → Die Partner erfahren die Lage aus der Zeitung; der Verbundvorstand verlangt ein Gespräch (vertrauliche Karte bei „Den Backup-Server bergen?“); Kulanzposten in der Rechnung. · Posten: Kulanz und Sonderkonditionen für Partnermärkte (40.000 €)
 
 **W3 – Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?** (bei LK14, Mittwoch 07:30 Uhr)  
-*Moderation:* Personenschutz gegen eine kleinere Datenlücke. Wird geborgen, dann nur durch die Fachfirma mit Gefährdungsbeurteilung, Messwerten, Schutzausrüstung und Dokumentation – nie durch die eigene IT. Beide Wege sind vertretbar.  
-- *Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen* → Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen. · Posten: Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €)
-- *Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)* → Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen. · Posten: Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €)
+*Moderation:* Kleinere Datenlücke gegen einen Einsatz im kontaminierten Raum, einen Tag spätere Reinigung und die Abstimmung mit dem Versicherer. Wird geborgen, dann nur durch die Fachfirma mit Gefährdungsbeurteilung, Messwerten, Schutzausrüstung und Dokumentation – nie durch die eigene IT. Beide Wege sind vertretbar.  
+- *Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen* → Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen. · Posten: Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €)
+- *Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)* → Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar. · Posten: Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €)
 
 **W4 – Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?** (bei LK15, Mittwoch 10:00 Uhr)  
 *Moderation:* Klein: günstiger, weniger Fehlerrisiko, aber drei Wochen ohne Lagerverwaltung, Gewerbeportal und Online-Bestände. Groß: zwölf Monate Vertrag, mehr Arbeit für ein erschöpftes Team, schneller zurück. Keine Option ist kostenlos.  
-- *Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum* → Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus. · Posten: Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €)
+- *Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum* → Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus. · Posten: Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €)
 - *Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)* → Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag). · Posten: Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €)
 
 **W5 – Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?** (bei LK20, Donnerstag 10:00 Uhr)  
 *Moderation:* Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium.  
-- *Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)* → Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht. · Posten: Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €)
-- *Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später* → Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte). · Posten: Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €)
+- *Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)* → Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war. · Posten: Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €)
+- *Eigene 14 Filialen zuerst, danach die Partnermärkte* → Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag). · Posten: Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €)
 
 #### Gesamtergebnis
 

@@ -1,6 +1,6 @@
 # 09 – Alle Spielverläufe
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 Die Verläufe sind direkt aus dem Werkzeug erzeugt (`tools/geschichten.js`): genau diese Karten, Texte, Reihenfolgen, Empfänger und Rechnungen sieht der Tisch bei der angegebenen Dauer, dem Schwerpunkt und den Entscheidungen. NordTech: 7 Verläufe (identisch mit der Fassung aus der Vorabnahme). Waterkant: 8 Verläufe über alle fünf Dauern, alle vier Schwerpunkte und beide Optionen jeder Entscheidung.
 
@@ -1522,7 +1522,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)**  
-*Folge laut Drehbuch:* Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.
+*Folge laut Drehbuch:* Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
 
 #### Min. 2,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -1564,15 +1564,15 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 **Entscheidung W2 (am Ende dieser Lage):** Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?  
 → Der Tisch entscheidet: **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt**  
-*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.
 
 #### Min. 16,3 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 
@@ -1588,7 +1588,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)**  
-*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.
+*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.
 
 #### Min. 21,0 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -1600,29 +1600,29 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Welche Risiken hat ein schneller, großer Umzug für ein müdes Team?
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 21,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 21,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum**  
 *Folge laut Drehbuch:* Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus.
 
-#### Min. 25,8 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 25,8 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)**  
-*Folge laut Drehbuch:* Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.
+→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)**  
+*Folge laut Drehbuch:* Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
 
 #### Min. 30,5 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt. Drei kleinere eigene Filialen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -1631,7 +1631,7 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 #### Min. 35,3 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt; das Zentrallager liefert mit Papierlisten.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -1639,15 +1639,15 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Wie entlasten Sie die Menschen, die seit Dienstag durcharbeiten?
 - Was ist ab Montag „normal“ – und was noch nicht?
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 35,7): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 35,7): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €); Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €); Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €) = **3.686.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.086.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €); Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €); Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €); Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €) = **3.666.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.066.000 €** (17 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -1681,7 +1681,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat**  
-*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.
+*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
 
 #### Min. 2,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -1729,14 +1729,16 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 #### Min. 21,5 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 - Was bedeutet die Datenlücke für Bestände im Lager und in den Filialen? *(Schwerpunkt)*
+
+> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) (statt IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft)):** Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.
 
 > **Vertraulich (Folge einer Entscheidung) SK42 an Geschäftsführung (CEO), Krisenstabsleitung:** Der Verbundvorstand ruft an: Die Partner haben aus der Lokalzeitung mehr über den Brand erfahren als von Waterkant. Er verlangt bis heute Abend ein Gespräch mit dir.
 
@@ -1752,7 +1754,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen**  
-*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.
+*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.
 
 #### Min. 28,0 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -1765,32 +1767,30 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 - Wie lange kommt das Lager ohne Lagerverwaltung aus? *(Schwerpunkt)*
 
-> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum) (statt IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft)):** Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.
-
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 28,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 28,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)**  
 *Folge laut Drehbuch:* Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag).
 
-#### Min. 34,5 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 34,5 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 - Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium? *(Schwerpunkt)*
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später**  
-*Folge laut Drehbuch:* Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).
+→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, danach die Partnermärkte**  
+*Folge laut Drehbuch:* Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
 
 #### Min. 41,0 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen sind bis Mitternacht umgestellt, danach folgen die Partnermärkte – drei von ihnen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -1800,11 +1800,9 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 > **Vertraulich (Folge einer Entscheidung) SK43 an Leitung Arbeitssicherheit und Werkschutz:** Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.
 
-> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.
-
 #### Min. 47,5 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -1813,15 +1811,17 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Was ist ab Montag „normal“ – und was noch nicht?
 - Was ist im Filialbetrieb ab Montag wieder normal – und was nicht? *(Schwerpunkt)*
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 48,0): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Drei Partnermärkte konnten am Freitagmorgen stundenlang nicht kassieren, während alle Waterkant-Filialen liefen. Einer hat inzwischen Kontakt zu einem anderen IT-Dienstleister aufgenommen und will am Montag ein Gespräch.
+
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 48,0): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.656.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.056.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.706.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.106.000 €** (18 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -1869,7 +1869,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)**  
-*Folge laut Drehbuch:* Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.
+*Folge laut Drehbuch:* Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
 
 #### Min. 9,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -1921,15 +1921,15 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 **Entscheidung W2 (am Ende dieser Lage):** Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?  
 → Der Tisch entscheidet: **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt**  
-*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.
 
 #### Min. 37,8 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 
@@ -1945,7 +1945,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen**  
-*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.
+*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.
 
 #### Min. 45,0 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -1957,7 +1957,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Welche Risiken hat ein schneller, großer Umzug für ein müdes Team?
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 45,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 45,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum**  
@@ -1965,7 +1965,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 
 #### Min. 52,2 · LK19 Rücksicherung im Ausweich-Rack · Donnerstag 08:00 Uhr · Folgen
 
-Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten. Weil die Systeme in der Brandnacht kontrolliert heruntergefahren wurden, sind die Datenbanken konsistent – die Rücksicherung kommt ohne Reparatur aus.
+Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten. Weil die Server in der Brandnacht kontrolliert heruntergefahren wurden, standen ihre Lüfter still, als der Rauch kam – der Sanierer hält mehr Geräte für reinigungsfähig. Die geborgene Dienstagssicherung wird noch gereinigt und geprüft; eingespielt werden kann sie frühestens in der Nacht zu Freitag – für den Start der Kassen kommt sie zu spät.
 
 *Krisen-Info:* Rücksicherung läuft · Netzwerkumstellung Markt für Markt · Aktionspreise fehlen in der Kopie
 
@@ -1973,25 +1973,25 @@ Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen
 - Wie bekommen Sie die Aktionspreise sicher in das System?
 - Welche Abkürzungen sind verlockend – und welche verboten?
 
-> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 56,3): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 56,3): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-#### Min. 59,4 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 59,4 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)**  
-*Folge laut Drehbuch:* Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.
+→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)**  
+*Folge laut Drehbuch:* Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
 
 #### Min. 66,6 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt. Drei kleinere eigene Filialen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -2004,7 +2004,7 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 #### Min. 73,8 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt; das Zentrallager liefert mit Papierlisten.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -2012,15 +2012,15 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Wie entlasten Sie die Menschen, die seit Dienstag durcharbeiten?
 - Was ist ab Montag „normal“ – und was noch nicht?
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,3): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,3): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €); Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €) = **3.591.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 1.991.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €); Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €); Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €) = **3.651.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.051.000 €** (17 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -2069,7 +2069,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat**  
-*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.
+*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
 
 #### Min. 9,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -2084,7 +2084,7 @@ Die Brandmeldeanlage löst aus: Rauch im USV-Raum neben dem Serverraum. Im Serve
 
 #### Min. 16,2 · LK05 Feuerwehr im Einsatz · Dienstag 03:40 Uhr · Ausbruch
 
-Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege der IT-Rufbereitschaft war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
+Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte, war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
 
 *Krisen-Info:* Strom im Verwaltungsgebäude abgeschaltet · 1 Person am Sammelplatz nicht gemeldet
 
@@ -2092,7 +2092,7 @@ Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Ve
 - Wie klären Sie, ob noch jemand im Gebäude ist?
 - Wer kümmert sich um Angehörige?
 
-> **Vertraulich SK04 an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht))** (Min. 16,7): Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
+> **Vertraulich SK04 an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht))** (Min. 16,7): Am Sammelplatz fehlt der Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
 
 #### Min. 23,4 · LK06 Lagebild nach dem Löschen · Dienstag 05:30 Uhr · Ausbruch
 
@@ -2129,14 +2129,16 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 #### Min. 37,8 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 - Wer hat das letzte Wort beim Betreten – und ist das allen klar? *(Schwerpunkt)*
+
+> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.
 
 > **Vertraulich (Folge einer Entscheidung) SK42 an Geschäftsführung (CEO), Krisenstabsleitung:** Der Verbundvorstand ruft an: Die Partner haben aus der Lokalzeitung mehr über den Brand erfahren als von Waterkant. Er verlangt bis heute Abend ein Gespräch mit dir.
 
@@ -2152,7 +2154,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen**  
-*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.
+*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.
 
 #### Min. 45,0 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -2165,9 +2167,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 - Wer trägt diese Entscheidung, und wie wird sie dokumentiert? *(Schwerpunkt)*
 
-> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.
-
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 45,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 45,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)**  
@@ -2185,26 +2185,26 @@ Der Beirat des Einkaufsverbunds hat kurzfristig eine Videokonferenz einberufen. 
 
 > **Vertraulich SK20 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 52,7): Der Vorsitzende des Verbundbeirats ruft dich vor der Videokonferenz privat an: Zwei Partner wollen den IT-Servicevertrag kündigen. Er erwartet eine klare Aussage, wann ihre Kassen wieder voll laufen – und ob Waterkant die eigenen Märkte bevorzugt. „Ich will nicht hören, dass Sie es nicht wissen.“
 
-> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 55,7): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 55,7): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-#### Min. 59,4 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 59,4 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 - Wie wird die Entscheidung begründet und wem erklärt? *(Schwerpunkt)*
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später**  
-*Folge laut Drehbuch:* Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).
+→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, danach die Partnermärkte**  
+*Folge laut Drehbuch:* Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
 
 #### Min. 66,6 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen sind bis Mitternacht umgestellt, danach folgen die Partnermärkte – drei von ihnen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -2214,13 +2214,11 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 > **Vertraulich (Folge einer Entscheidung) SK43 an Leitung Arbeitssicherheit und Werkschutz:** Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.
 
-> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.
-
 > **Vertraulich SK38 an Regionalleitung Filialen Nord** (Min. 70,7): Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nicht stornieren. Kundinnen und Kunden stehen mit Ware und Bon an der Information.
 
 #### Min. 73,8 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -2229,15 +2227,17 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Was ist ab Montag „normal“ – und was noch nicht?
 - Wer achtet auf die Menschen, die seit Dienstag durcharbeiten? *(Schwerpunkt)*
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,3): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Drei Partnermärkte konnten am Freitagmorgen stundenlang nicht kassieren, während alle Waterkant-Filialen liefen. Einer hat inzwischen Kontakt zu einem anderen IT-Dienstleister aufgenommen und will am Montag ein Gespräch.
+
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,3): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.656.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.056.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.706.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.106.000 €** (18 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -2274,7 +2274,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat**  
-*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.
+*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
 
 #### Min. 3,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -2328,7 +2328,7 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 **Entscheidung W2 (am Ende dieser Lage):** Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?  
 → Der Tisch entscheidet: **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt**  
-*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.
 
 #### Min. 31,4 · LK10 Serverraum gesperrt · Dienstag 10:00 Uhr · Eskalation
 
@@ -2346,14 +2346,16 @@ Die Feuerwehr übergibt das Gebäude. Ein Sachverständiger gibt Büros und Flur
 
 #### Min. 38,5 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 - Welche Daten fehlen ohne Bergung genau – und wie würden Sie sie rekonstruieren? *(Schwerpunkt)*
+
+> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.
 
 > **Vertraulich SK21 an Leitung Arbeitssicherheit und Werkschutz** (Min. 39,0): Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: Gefährdungsbeurteilung, aktuelles Messergebnis, Fachfirma mit Schutzausrüstung, Freiwilligkeit, Dokumentation. Die Fachfirma könnte heute um 14 Uhr – mit eigenem Personal, nicht mit eurer IT.
 
@@ -2363,7 +2365,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)**  
-*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.
+*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.
 
 #### Min. 45,5 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -2376,9 +2378,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 - Welche Abhängigkeiten zwischen Kassen, Warenwirtschaft und Netzwerk bestimmen die Reihenfolge? *(Schwerpunkt)*
 
-> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.
-
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 46,0): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 46,0): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)**  
@@ -2394,26 +2394,26 @@ Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen
 - Wie bekommen Sie die Aktionspreise sicher in das System?
 - Welche Abkürzungen sind verlockend – und welche verboten?
 
-> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 56,7): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 56,7): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-#### Min. 59,7 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 59,7 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 - Wie stellen Sie sicher, dass jeder umgestellte Markt geprüft ist? *(Schwerpunkt)*
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)**  
-*Folge laut Drehbuch:* Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.
+→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)**  
+*Folge laut Drehbuch:* Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
 
 #### Min. 66,8 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt. Drei kleinere eigene Filialen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -2425,7 +2425,7 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 #### Min. 73,9 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -2434,15 +2434,15 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Was ist ab Montag „normal“ – und was noch nicht?
 - Welche technischen Schulden aus dem Notbetrieb müssen Sie zurückzahlen? *(Schwerpunkt)*
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,4): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 74,4): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €); Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €) = **3.681.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.081.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €); Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €); Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €) = **3.691.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.091.000 €** (17 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -2485,7 +2485,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)**  
-*Folge laut Drehbuch:* Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.
+*Folge laut Drehbuch:* Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
 
 #### Min. 6,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -2547,11 +2547,11 @@ Der Regionalsender Nordkanal ruft an: Auf Fotos stehen Feuerwehrfahrzeuge vor de
 
 #### Min. 40,0 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 - Was sagen Sie Partnern und Kunden zur Datenlücke? *(Schwerpunkt)*
@@ -2566,7 +2566,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)**  
-*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.
+*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.
 
 #### Min. 48,5 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -2579,7 +2579,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 - Wie erklären Sie Gewerbekunden, dass ihr Portal (noch) nicht läuft? *(Schwerpunkt)*
 
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 49,0): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 49,0): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 > **Vertraulich SK23 an Leitung Online-Shop und Gewerbekundenportal** (Min. 52,6): Der Shop zeigt seit Dienstag Bestände von Montagnacht. 312 Bestellungen „Abholung in der Filiale“ sind eingegangen, ein Teil für Artikel, die vermutlich nicht da sind. Der Hoster könnte den Shop auf „nur Information“ schalten.
 
@@ -2607,26 +2607,26 @@ In sozialen Netzwerken kursieren Videos von Kassen, an denen der Prospektpreis n
 - Was sagen Sie öffentlich – und was sagen Hotline und Filialen?
 - Wer trägt die Kosten der Kulanz, und ist das entschieden?
 
-> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 70,4): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Leitung Unternehmenskommunikation und Marketing (statt Kundenservice-Hotline)** (Min. 70,4): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-#### Min. 74,0 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 74,0 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 - Wie erklären Sie die Reihenfolge – und wem zuerst? *(Schwerpunkt)*
 
 > **Vertraulich SK26 an Partnerbetreuung Verbund (Kundenmanagement IT-Service)** (Min. 78,9): Ein Partnermarkt hat eigenständig einen anderen Kassenanbieter angefragt und will dir heute sagen, ob er „vorerst selbst etwas aufbaut“. Damit würde er aus dem gemeinsamen Preis- und Warenwirtschaftssystem ausscheren.
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später**  
-*Folge laut Drehbuch:* Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).
+→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, danach die Partnermärkte**  
+*Folge laut Drehbuch:* Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
 
-#### Min. 82,5 · LK21 Nordkanal berichtet · Donnerstag 13:00 Uhr · Folgen
+#### Min. 82,5 · LK21 Nordkanal berichtet ausführlich · Donnerstag 13:00 Uhr · Folgen
 
 Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Saisonstart bei Waterkant“. Ein Partnermarkt-Inhaber kommt zu Wort, die Feuerwehr bestätigt einen Batteriebrand im Technikraum.
 
@@ -2635,7 +2635,7 @@ Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Sa
 
 #### Min. 91,0 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden. Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt. Die eigenen Filialen sind bis Mitternacht umgestellt, danach folgen die Partnermärkte – drei von ihnen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -2643,13 +2643,11 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 - Wer informiert Filialen, Partner und Hotline – mit welcher Botschaft?
 - Welche Botschaft bekommen Filialen, Partner und Hotline zur gleichen Zeit? *(Schwerpunkt)*
 
-> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.
-
 > **Vertraulich SK38 an Regionalleitung Filialen Nord** (Min. 95,9): Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nicht stornieren. Kundinnen und Kunden stehen mit Ware und Bon an der Information.
 
 #### Min. 99,5 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt; das Zentrallager liefert mit Papierlisten.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -2658,15 +2656,17 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Was ist ab Montag „normal“ – und was noch nicht?
 - Wie schließen Sie die Woche nach außen ab, ohne zu viel zu versprechen? *(Schwerpunkt)*
 
-> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 100,0): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Drei Partnermärkte konnten am Freitagmorgen stundenlang nicht kassieren, während alle Waterkant-Filialen liefen. Einer hat inzwischen Kontakt zu einem anderen IT-Dienstleister aufgenommen und will am Montag ein Gespräch.
+
+> **Vertraulich SK32 an Geschäftsführung (CEO), Krisenstabsleitung (statt Personalleitung)** (Min. 100,0): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.756.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.156.000 €** (18 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.696.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.096.000 €** (17 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -2714,7 +2714,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat**  
-*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Der harte Ausfall hinterlässt eine inkonsistente Datenbank: einen Tag Reparatur.
+*Folge laut Drehbuch:* Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
 
 #### Min. 9,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -2728,7 +2728,7 @@ Die Brandmeldeanlage löst aus: Rauch im USV-Raum neben dem Serverraum. Im Serve
 
 #### Min. 20,1 · LK05 Feuerwehr im Einsatz · Dienstag 03:40 Uhr · Ausbruch
 
-Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege der IT-Rufbereitschaft war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
+Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte, war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.
 
 *Krisen-Info:* Strom im Verwaltungsgebäude abgeschaltet · 1 Person am Sammelplatz nicht gemeldet
 
@@ -2736,7 +2736,7 @@ Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Ve
 - Wie klären Sie, ob noch jemand im Gebäude ist?
 - Wer kümmert sich um Angehörige?
 
-> **Vertraulich SK04 an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht))** (Min. 20,6): Am Sammelplatz fehlt der Kollege der IT-Rufbereitschaft. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
+> **Vertraulich SK04 an Leitung Arbeitssicherheit und Werkschutz (statt Schichtleitung Zentrallager (vor Ort in der Brandnacht))** (Min. 20,6): Am Sammelplatz fehlt der Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte. Sein Auto steht auf dem Hof, ans Telefon geht er nicht. Die Feuerwehr fragt dich, ob noch jemand im Gebäude ist.
 
 #### Min. 31,3 · LK06 Lagebild nach dem Löschen · Dienstag 05:30 Uhr · Ausbruch
 
@@ -2764,7 +2764,7 @@ Die Filialen bereiten den Saisonstart vor; der Prospekt mit Aktionspreisen ist s
 
 > **Vertraulich SK35 an Notfallmanagement / BCM-Koordination** (Min. 48,8): Das IT-Notfallhandbuch liegt als Datei auf dem Fileserver im gesperrten Serverraum. Eine Papierkopie gibt es im Tresor der Geschäftsführung – im Verwaltungsgebäude, das bis zur Freigabe gesperrt ist.
 
-> **Vertraulich SK10 an Regionalleitung Filialen Süd** (Min. 50,4): In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die Nachbarfiliale verweigert ihn. Kundinnen vergleichen die Bons in einer Facebook-Gruppe.
+> **Vertraulich SK10 an Regionalleitung Filialen Süd** (Min. 50,4): Zwei Filialleitungen deiner Region wollen es unterschiedlich machen: Eine will den Prospektpreis per Handeingabe geben, die Nachbarfiliale will ihn verweigern. In einer Facebook-Gruppe fragen Kundinnen schon, welche Filiale den Preis gewährt.
 
 #### Min. 53,6 · LK09 Die Partnermärkte rufen an · Dienstag 08:30 Uhr · Eskalation
 
@@ -2800,13 +2800,15 @@ Die Feuerwehr übergibt das Gebäude. Ein Sachverständiger gibt Büros und Flur
 
 #### Min. 75,9 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
+
+> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.
 
 > **Vertraulich (Folge einer Entscheidung) SK42 an Geschäftsführung (CEO), Krisenstabsleitung:** Der Verbundvorstand ruft an: Die Partner haben aus der Lokalzeitung mehr über den Brand erfahren als von Waterkant. Er verlangt bis heute Abend ein Gespräch mit dir.
 
@@ -2818,7 +2820,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen**  
-*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Berufsgenossenschaft fragt nach den Unterlagen.
+*Folge laut Drehbuch:* Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.
 
 #### Min. 87,0 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -2830,9 +2832,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Welche Risiken hat ein schneller, großer Umzug für ein müdes Team?
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 
-> **Vertraulich (Folge einer Entscheidung) SK41 an IT-Infrastruktur und Rechenzentrumsbetrieb (Rufbereitschaft):** Die Datenbank der Warenwirtschaft ist nach dem harten Stromausfall in der Brandnacht inkonsistent. Bevor ihr irgendetwas ins Ausweich-Rack übertragt, muss sie repariert werden – etwa ein Tag zusätzlich.
-
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 87,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 87,5): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 > **Vertraulich SK22 an Informationssicherheit und Datenschutzkoordination** (Min. 87,5): Wenn die Warenwirtschaft ins Ausweich-Rack zieht, laufen dort auch Daten der Gewerbekunden und Partnermärkte. Der Vertrag mit dem Colocation-Anbieter beschreibt nur die Lagerung von Sicherungskopien, nicht den Produktivbetrieb. Was das bedeutet, ist fachlich zu prüfen.
 
@@ -2854,7 +2854,7 @@ Der größte Gewerbekunde, ein regionales Bauunternehmen, kann seit Dienstag nic
 
 #### Min. 109,3 · LK19 Rücksicherung im Ausweich-Rack · Donnerstag 08:00 Uhr · Folgen
 
-Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten.
+Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten. Die geborgene Dienstagssicherung wird noch gereinigt und geprüft; eingespielt werden kann sie frühestens in der Nacht zu Freitag – für den Start der Kassen kommt sie zu spät.
 
 *Krisen-Info:* Rücksicherung läuft · Netzwerkumstellung Markt für Markt · Aktionspreise fehlen in der Kopie
 
@@ -2862,25 +2862,25 @@ Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen
 - Wie bekommen Sie die Aktionspreise sicher in das System?
 - Welche Abkürzungen sind verlockend – und welche verboten?
 
-> **Vertraulich SK24 an Kundenservice-Hotline** (Min. 114,7): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Kundenservice-Hotline** (Min. 114,7): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-> **Vertraulich SK25 an Leitung Unternehmenskommunikation und Marketing** (Min. 116,7): Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe seit dem Mittag.
+> **Vertraulich SK25 an Leitung Unternehmenskommunikation und Marketing** (Min. 116,7): Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe innerhalb weniger Stunden.
 
-#### Min. 120,4 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 120,4 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden später**  
-*Folge laut Drehbuch:* Die eigenen Filialen kassieren ab Donnerstagabend, die Partner erst kurz vor der 72-Stunden-Grenze; zwei Partner prüfen einen Wechsel (vertrauliche Karte).
+→ Der Tisch entscheidet: **Eigene 14 Filialen zuerst, danach die Partnermärkte**  
+*Folge laut Drehbuch:* Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
 
-#### Min. 131,6 · LK21 Nordkanal berichtet · Donnerstag 13:00 Uhr · Folgen
+#### Min. 131,6 · LK21 Nordkanal berichtet ausführlich · Donnerstag 13:00 Uhr · Folgen
 
 Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Saisonstart bei Waterkant“. Ein Partnermarkt-Inhaber kommt zu Wort, die Feuerwehr bestätigt einen Batteriebrand im Technikraum.
 
@@ -2889,7 +2889,7 @@ Nordkanal sendet einen Beitrag: „Brand im Rechenzentrum – Kassenchaos zum Sa
 
 #### Min. 142,7 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen kassieren seit Donnerstagabend, die Partnermärkte folgen in der Nacht – knapp vor der 72-Stunden-Grenze.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die eigenen Filialen sind bis Mitternacht umgestellt, danach folgen die Partnermärkte – drei von ihnen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -2898,13 +2898,11 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 > **Vertraulich (Folge einer Entscheidung) SK43 an Leitung Arbeitssicherheit und Werkschutz:** Die Berufsgenossenschaft fragt nach der Gefährdungsbeurteilung für den Einsatz der Fachfirma im kontaminierten Serverraum und nach dem Messprotokoll.
 
-> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Zwei Partnermärkte haben bemerkt, dass die Waterkant-Filialen zwölf Stunden früher wieder kassieren konnten. Einer hat Kontakt zu einem anderen IT-Dienstleister aufgenommen.
-
 > **Vertraulich SK38 an Regionalleitung Filialen Nord** (Min. 149,1): Die Kassen laufen wieder, aber Rückgaben von Bons aus dem Offline-Zeitraum lassen sich nicht stornieren. Kundinnen und Kunden stehen mit Ware und Bon an der Information.
 
 #### Min. 153,9 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Dank der am Mittwoch geborgenen Dienstagssicherung fehlten nur rund zwei Stunden Daten. Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -2912,17 +2910,19 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Wie entlasten Sie die Menschen, die seit Dienstag durcharbeiten?
 - Was ist ab Montag „normal“ – und was noch nicht?
 
-> **Vertraulich SK32 an Personalleitung** (Min. 154,4): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich (Folge einer Entscheidung) SK44 an Partnerbetreuung Verbund (Kundenmanagement IT-Service):** Drei Partnermärkte konnten am Freitagmorgen stundenlang nicht kassieren, während alle Waterkant-Filialen liefen. Einer hat inzwischen Kontakt zu einem anderen IT-Dienstleister aufgenommen und will am Montag ein Gespräch.
 
-> **Vertraulich SK31 an Leitung Logistik und Zentrallager** (Min. 159,2): Die Wareneingänge vom Montag (38 Lkw) sind im System nicht gebucht. Die Ware steht im Lager, laut System gibt es sie nicht – die Filialen sehen „nicht verfügbar“.
+> **Vertraulich SK32 an Personalleitung** (Min. 154,4): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+
+> **Vertraulich SK31 an Leitung Logistik und Zentrallager** (Min. 159,2): Die Wareneingänge vom Montag sind mit der geborgenen Dienstagssicherung wieder im System. Offen sind einzelne Nachtbuchungen im Lager kurz vor dem Brand – prüfe sie, bevor die Bestände für die Filialen freigegeben werden.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Reparatur der Warenwirtschafts-Datenbank nach hartem Ausfall (ein Tag Verzug) (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers durch Fachfirmen (45.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.656.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.056.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Zusätzlicher Hardwareersatz nach Rußeintrag in laufende Geräte (95.000 €); Kulanz und Sonderkonditionen für Partnermärkte (40.000 €); Bergung, Reinigung und Datenrettung des Backup-Servers; Reinigung des Serverraums einen Tag später (95.000 €); Erweiterung des Ausweichbetriebs (12 Monate) und zusätzliche Dienstleister (210.000 €); Zusätzliche Gutschriften und Risiko des Partnerverlusts im IT-Service (12 Monate) (90.000 €) = **3.706.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.106.000 €** (18 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 
@@ -2963,7 +2963,7 @@ Die Klimaanlage des Serverraums meldet Störung, die Temperatur steigt: 31 °C u
 
 **Entscheidung W1 (am Ende dieser Lage):** Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?  
 → Der Tisch entscheidet: **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)**  
-*Folge laut Drehbuch:* Die Datenbanken sind sauber beendet; die Rücksicherung braucht keine Reparatur. Die Aktionspreise fehlen dafür in allen 14 Filialen.
+*Folge laut Drehbuch:* Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
 
 #### Min. 6,0 · LK04 Brandalarm im Rechenzentrum · Dienstag 03:10 Uhr · Ausbruch
 
@@ -3002,7 +3002,7 @@ Die Filialen bereiten den Saisonstart vor; der Prospekt mit Aktionspreisen ist s
 
 > **Vertraulich SK35 an Notfallmanagement / BCM-Koordination** (Min. 33,3): Das IT-Notfallhandbuch liegt als Datei auf dem Fileserver im gesperrten Serverraum. Eine Papierkopie gibt es im Tresor der Geschäftsführung – im Verwaltungsgebäude, das bis zur Freigabe gesperrt ist.
 
-> **Vertraulich SK10 an Regionalleitung Filialen Süd** (Min. 34,8): In einer Filiale gibt die Filialleitung den Prospektpreis per Handeingabe, die Nachbarfiliale verweigert ihn. Kundinnen vergleichen die Bons in einer Facebook-Gruppe.
+> **Vertraulich SK10 an Regionalleitung Filialen Süd** (Min. 34,8): Zwei Filialleitungen deiner Region wollen es unterschiedlich machen: Eine will den Prospektpreis per Handeingabe geben, die Nachbarfiliale will ihn verweigern. In einer Facebook-Gruppe fragen Kundinnen schon, welche Filiale den Preis gewährt.
 
 #### Min. 37,8 · LK09 Die Partnermärkte rufen an · Dienstag 08:30 Uhr · Eskalation
 
@@ -3021,7 +3021,7 @@ Die neun Partnermärkte im Einkaufsverbund, für die Waterkant Kassen- und Waren
 
 **Entscheidung W2 (am Ende dieser Lage):** Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?  
 → Der Tisch entscheidet: **Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt**  
-*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt.
+*Folge laut Drehbuch:* Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.
 
 #### Min. 48,4 · LK12 Das Zentrallager steht · Dienstag 14:00 Uhr · Eskalation
 
@@ -3041,11 +3041,11 @@ Ohne Lagerverwaltung weiß im Zentrallager niemand verlässlich, wo welche Ware 
 
 #### Min. 59,0 · LK14 Den Backup-Server bergen? · Mittwoch 07:30 Uhr · Höhepunkt
 
-Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche.
+Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.
 
 *Krisen-Info:* Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten
 
-- Wie viel ist Ihnen die fehlende Datenlücke wert – und welches Risiko für Menschen ist dafür vertretbar?
+- Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?
 - Wer entscheidet über das Betreten: IT, Arbeitssicherheit, Geschäftsführung?
 - Welche Voraussetzungen müssen erfüllt sein, bevor jemand den Raum betritt?
 - Was bedeutet die Datenlücke für Bestände im Lager und in den Filialen? *(Schwerpunkt)*
@@ -3058,7 +3058,7 @@ Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Mon
 
 **Entscheidung W3 (am Ende dieser Lage):** Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?  
 → Der Tisch entscheidet: **Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)**  
-*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Die Lücke von etwa 26 Stunden muss von Hand nachgebucht werden; ob die Dienstagssicherung später noch lesbar ist, ist offen.
+*Folge laut Drehbuch:* Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.
 
 #### Min. 69,6 · LK15 Wie weit geht der Ausweichbetrieb? · Mittwoch 10:00 Uhr · Höhepunkt
 
@@ -3071,7 +3071,7 @@ Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft
 - Wer trägt diese Entscheidung – IT, Finanzen oder Geschäftsführung?
 - Wie lange kommt das Lager ohne Lagerverwaltung aus? *(Schwerpunkt)*
 
-> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 70,1): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit mehr als zwölf Monaten Bindung die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
+> **Vertraulich SK46 an Geschäftsführung (CEO), Krisenstabsleitung** (Min. 70,1): Der Vorsitzende der Gesellschafterversammlung hat von der möglichen Erweiterung des Ausweich-Racks gehört und ruft dich an. Nach eurer Geschäftsordnung brauchen Verträge mit einer Bindung von zwölf Monaten oder länger die Zustimmung der Gesellschafter. Er ist bis Freitag im Ausland, aber telefonisch erreichbar: „Entscheiden Sie, was nötig ist – aber ich will es vorher wissen und nicht aus der Rechnung erfahren.“
 
 **Entscheidung W4 (am Ende dieser Lage):** Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?  
 → Der Tisch entscheidet: **Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum**  
@@ -3097,13 +3097,13 @@ In sozialen Netzwerken kursieren Videos von Kassen, an denen der Prospektpreis n
 - Was sagen Sie öffentlich – und was sagen Hotline und Filialen?
 - Wer trägt die Kosten der Kulanz, und ist das entschieden?
 
-> **Vertraulich SK24 an Kundenservice-Hotline** (Min. 95,9): Seit dem Morgen über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis?“ Ihr habt keine Sprachregelung. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
+> **Vertraulich SK24 an Kundenservice-Hotline** (Min. 95,9): Seit gestern über 600 Anrufe. Die häufigste Frage: „Gilt der Prospektpreis – und bekomme ich die Differenz zurück?“ Die bisherige Sprachregelung beantwortet das nicht. Mehrere Anrufer drohen mit einer Beschwerde wegen irreführender Werbung.
 
-> **Vertraulich SK25 an Leitung Unternehmenskommunikation und Marketing** (Min. 97,9): Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe seit dem Mittag.
+> **Vertraulich SK25 an Leitung Unternehmenskommunikation und Marketing** (Min. 97,9): Ein bekannter Heimwerker-Kanal hat ein Video aus einer Filiale gepostet: Der Bon zeigt den alten Preis, daneben der Prospekt. 80.000 Aufrufe innerhalb weniger Stunden.
 
 #### Min. 101,4 · LK19 Rücksicherung im Ausweich-Rack · Donnerstag 08:00 Uhr · Folgen
 
-Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten. Weil die Systeme in der Brandnacht kontrolliert heruntergefahren wurden, sind die Datenbanken konsistent – die Rücksicherung kommt ohne Reparatur aus.
+Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten. Weil die Server in der Brandnacht kontrolliert heruntergefahren wurden, standen ihre Lüfter still, als der Rauch kam – der Sanierer hält mehr Geräte für reinigungsfähig.
 
 *Krisen-Info:* Rücksicherung läuft · Netzwerkumstellung Markt für Markt · Aktionspreise fehlen in der Kopie
 
@@ -3113,24 +3113,24 @@ Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen
 
 > **Vertraulich SK40 an Informationssicherheit und Datenschutzkoordination** (Min. 107,5): Das Team will für die Umstellung der 23 Märkte die Firewall des Ausweich-Racks „vorübergehend für alles öffnen“, damit es schneller geht. Später zu schließen ist geplant, aber nicht terminiert.
 
-#### Min. 112,0 · LK20 Wer kassiert zuerst? · Donnerstag 10:00 Uhr · Folgen
+#### Min. 112,0 · LK20 Wer wird zuerst umgestellt? · Donnerstag 10:00 Uhr · Folgen
 
-Die Ausweichumgebung kann am Donnerstagabend die ersten Märkte versorgen, aber nicht alle gleichzeitig: Pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Die eigenen Filialen haben den größten Umsatz in der Saisonwoche; die Partnermärkte haben einen Vertrag. Um Freitag 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze.
+Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.
 
-*Krisen-Info:* ca. 2 Märkte pro Stunde · 23 Märkte · Kassen-Grenze Freitag ca. 03:00 Uhr
+*Krisen-Info:* ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze
 
 - Nach welchem Kriterium legen Sie die Reihenfolge fest?
 - Wer entscheidet – und wer sagt es den Partnern?
-- Was passiert mit Märkten, die die 72-Stunden-Grenze reißen?
+- Welche drei Märkte reißen die Grenze – und wie werden sie am Freitagmorgen versorgt?
 - Welche Märkte brauchen zuerst wieder Kassen – nach welchem Kriterium? *(Schwerpunkt)*
 
 **Entscheidung W5 (am Ende dieser Lage):** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?  
-→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium (größte Märkte zuerst, unabhängig vom Eigentümer)**  
-*Folge laut Drehbuch:* Alle Märkte laufen bis Freitagfrüh; einige eigene Filialen erst in der Nacht.
+→ Der Tisch entscheidet: **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)**  
+*Folge laut Drehbuch:* Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
 
 #### Min. 122,6 · LK22 Die Kassen laufen wieder · Donnerstag 18:00 Uhr · Wiederanlauf
 
-Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht hat sich bezahlt gemacht: Die Datenbanken mussten nicht repariert werden. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt – einige eigene Filialen erst in der Nacht.
+Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte sind umgestellt, die Kassen gleichen ihre Offline-Abverkäufe ab, die Aktionspreise sind hinterlegt. Die übrigen Märkte folgen in der Nacht – nach der festgelegten Reihenfolge. Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt. Die Partnermärkte hatten seit Dienstag mit Donnerstag geplant. Ein Partner kritisiert, dass „Donnerstag“ nur für die Kassen galt, nicht für Bestellungen und Bestände. Eigene Filialen und Partnermärkte werden nach derselben Reihenfolge umgestellt. Drei kleinere eigene Filialen werden es bis 03:00 Uhr nicht schaffen.
 
 *Krisen-Info:* Kassen- und Preisdienste wieder verfügbar · Umstellung läuft bis in die Nacht
 
@@ -3142,9 +3142,9 @@ Die Kassen- und Preisdienste laufen aus dem Ausweich-Rack. Die ersten Märkte si
 
 #### Min. 133,2 · LK23 Die Datenlücke · Freitag 09:00 Uhr · Wiederanlauf
 
-Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten verfügbaren Sicherung. Der Abgleich zeigt: Wareneingänge, Bestellungen an Lieferanten und Retouren aus der Lücke fehlen. Im Lager steht Ware, die es laut System nicht gibt; Lieferanten fragen nach Bestellungen, die im System nicht existieren. Der Backup-Server bleibt bis zur Freigabe im Raum; ob die Dienstagssicherung danach noch lesbar ist, ist offen.
+Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten eingespielten Sicherung. Der Abgleich mit Lieferscheinen, Lieferantenbestätigungen und Kassendaten läuft. Es fehlen die Wareneingänge vom Montag (38 Lkw), Bestellungen an Lieferanten und Retouren; im Lager steht Ware, die es laut System nicht gibt. Der Backup-Server bleibt bis zur Freigabe im Raum.
 
-*Krisen-Info:* Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr)
+*Krisen-Info:* Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr), sofern die Dienstagssicherung nicht geborgen wurde
 
 - Wie schließen Sie die Lücke – und in welcher Reihenfolge?
 - Was darf bis dahin auf Basis unvollständiger Daten entschieden werden?
@@ -3154,7 +3154,7 @@ Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten verfügbar
 
 Der umsatzstärkste Tag der Saison beginnt. Die Kassen laufen, die Aktionspreise stimmen. Die Frage ist, was außerhalb der Kassen geht: Online-Bestellungen, Abholung in der Filiale, Gewerbekunden. Jeder Fehler in Bestand oder Preis wird heute von Tausenden gesehen. Online-Shop und Gewerbeportal laufen weiter nur mit „Abholung nach telefonischer Bestätigung“ – Gewerbekunden weichen zu Wettbewerbern aus.
 
-*Krisen-Info:* umsatzstärkster Tag · Kassen laufen · Online und Gewerbe: siehe Entscheidung vom Mittwoch
+*Krisen-Info:* umsatzstärkster Tag der Woche · Kassen laufen
 
 - Was bieten Sie heute online und für Gewerbekunden an – und was bewusst nicht?
 - Wer gibt Daten und Preise frei, bevor sie öffentlich sichtbar sind?
@@ -3163,7 +3163,7 @@ Der umsatzstärkste Tag der Saison beginnt. Die Kassen laufen, die Aktionspreise
 
 #### Min. 154,4 · LK27 Stabiler Notbetrieb · Sonntag 12:00 Uhr · Wiederanlauf
 
-Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft mit nachgebuchten Daten, das Zentrallager liefert wieder. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt.
+Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung hat begonnen. Das IT-Team arbeitet seit Dienstag in Doppelschichten, zwei Filialleitungen haben sich krankgemeldet. Die Nachbuchung der rund 26 Stunden Datenlücke läuft noch bis in die nächste Woche. Lagerverwaltung, Gewerbeportal und Online-Bestände bleiben bis zur Rückkehr ins eigene Rechenzentrum eingeschränkt; das Zentrallager liefert mit Papierlisten.
 
 *Krisen-Info:* Notbetrieb stabil · eigenes Rechenzentrum gesperrt · Team erschöpft
 
@@ -3172,15 +3172,15 @@ Nach fünf Tagen läuft Waterkant im stabilen Notbetrieb: Kassen und Preise aus 
 - Was ist ab Montag „normal“ – und was noch nicht?
 - Was ist im Filialbetrieb ab Montag wieder normal – und was nicht? *(Schwerpunkt)*
 
-> **Vertraulich SK32 an Personalleitung** (Min. 154,9): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 60 Stunden gearbeitet, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
+> **Vertraulich SK32 an Personalleitung** (Min. 154,9): Drei Kolleginnen und Kollegen der IT haben seit Dienstag über 70 Stunden gearbeitet, teils in Doppelschichten, zwei Filialleitungen sind krank. Der Betriebsrat fragt, wer die Einsätze am Wochenende angeordnet hat. Arbeitszeitfragen sind fachlich zu prüfen.
 
 #### Abschluss
 
-Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft ist nachgebucht, das Zentrallager liefert. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
+Nach sieben Tagen. Kassen und Preise laufen aus dem Ausweich-Rack, die Warenwirtschaft läuft wieder, das Zentrallager liefert. Vorläufige Brandursache laut Sachverständigem: thermisches Durchgehen eines Batteriemoduls der USV; ein angekündigtes Sicherheits-Update war nicht eingespielt, die Wartung zweimal verschoben – wer dafür zuständig war, IT oder Gebäudetechnik, war nicht geregelt. Der Versicherer prüft unter Vorbehalt. Die Rechnung bewertet nicht, ob richtig entschieden wurde – sie zeigt, was jede Entscheidung kostet, auch die guten. Das eigene Rechenzentrum ist gesperrt, die Reinigung läuft. Von außen sieht es aus, als wäre es überstanden. Drinnen beginnt jetzt die eigentliche Arbeit.
 
-Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Aktionspreise auch in den 5 Filialen per Kulanz, die sie sonst erhalten hätten (50.000 €); Nacherfassung von rund 26 Stunden Bewegungsdaten (140.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (ca. 3 Wochen eingeschränkt) (260.000 €); Saisonumsatz: einige eigene Filialen erst in der Nacht wieder voll (60.000 €) = **3.686.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.086.000 €** (17 % des Jahresgewinns).
+Rechnung: Grundschaden 3.176.000 € + aus Entscheidungen: Abgebrochene Preisübertragung: Kulanz für Aktionspreise und Nacharbeit der Partner-Tagesabschlüsse (100.000 €); Erstattete Mehrkosten von Partnern, die auf die frühe Prognose hin geplant hatten (25.000 €); Nacherfassung der Montagsdaten bis zur Datenrettung (110.000 €); Entgangener Rohertrag Online-Shop und Gewerbekunden (Wochen 2 und 3 eingeschränkt) (180.000 €); Saisonfreitag: drei eigene Filialen bis zur Freischaltung ohne Kassen (75.000 €) = **3.666.000 €**; Mögliche Erstattung durch Elektronik- und Betriebsunterbrechungsversicherung (optimistische Modellannahme, nicht bestätigt): − 1.600.000 € → **beim Unternehmen bleiben 2.066.000 €** (17 % des Jahresgewinns).
 
-*Fazit auf der Bühne:* Nach fünf Tagen kassieren alle Märkte wieder. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
+*Fazit auf der Bühne:* Seit Freitag sind alle Märkte wieder an die Zentrale angebunden, seit Sonntag läuft der Notbetrieb stabil. Ob das eigene Rechenzentrum zurückkommt, ist offen – das Vertrauen der Partner hängt an dieser Woche. Eine Krise ist erst vorbei, wenn Partner, Kundschaft und Beschäftigte wieder vertrauen.
 
 #### Debriefing in dieser Geschichte
 

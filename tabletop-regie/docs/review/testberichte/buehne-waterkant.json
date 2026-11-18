@@ -1,6 +1,6 @@
 {
   "szenario": "scenario.waterkant.json",
-  "zeitpunkt": "2026-11-18T16:57:50.291Z",
+  "zeitpunkt": "2026-11-18T17:19:54.281Z",
   "ergebnisse": [
     {
       "id": "B",
@@ -28,7 +28,7 @@
       "name": "Ton erneut abspielen nach Stummschaltung",
       "ok": true,
       "erwartet": "Kartenton startet von vorn",
-      "beobachtet": "Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 2.5 s)"
+      "beobachtet": "Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 2.1 s)"
     },
     {
       "id": "N4",
@@ -273,7 +273,7 @@
     },
     {
       "id": "LK20",
-      "titel": "Wer kassiert zuerst?",
+      "titel": "Wer wird zuerst umgestellt?",
       "bild": "25-LK20.png",
       "bildGeladen": true,
       "sollTon": null,
@@ -282,7 +282,7 @@
     },
     {
       "id": "LK21",
-      "titel": "Nordkanal berichtet",
+      "titel": "Nordkanal berichtet ausführlich",
       "bild": "26-LK21.png",
       "bildGeladen": true,
       "sollTon": "lk21-nordkanal-nachrichten.mp3",

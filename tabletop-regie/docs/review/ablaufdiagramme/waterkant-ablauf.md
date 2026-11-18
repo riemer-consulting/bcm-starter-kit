@@ -1,8 +1,8 @@
 # Waterkant: Ablauf und Entscheidungen
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
-Lagen in Drehbuch-Reihenfolge, gruppiert nach Station. Fett umrandet = Priorität 1 (in jeder Dauer enthalten). Rauten = Entscheidungen mit ihren Folgen.
+Lagen in Drehbuch-Reihenfolge, gruppiert nach Station. Doppelt umrandet = Priorität 1 (in jeder Dauer enthalten). Rauten = Entscheidungen mit ihren Folgen.
 
 ```mermaid
 flowchart TD
@@ -34,8 +34,8 @@ flowchart TD
   end
   subgraph folgen["Folgen"]
     LK19["LK19 Rücksicherung im Ausweich-Rack"]
-    LK20[["LK20 Wer kassiert zuerst?"]]
-    LK21["LK21 Nordkanal berichtet"]
+    LK20[["LK20 Wer wird zuerst umgestellt?"]]
+    LK21["LK21 Nordkanal berichtet ausführlich"]
   end
   subgraph wiederanlauf["Wiederanlauf"]
     LK22[["LK22 Die Kassen laufen wieder"]]
@@ -79,15 +79,16 @@ flowchart TD
   W1o0 -.-> LK22
   W1 -- "weiterlaufen" --> W1o1("Weiterlaufen lassen, bis die Gebäudetechnik die Ursache gekl… · Folgekarte SK41 · Posten")
   W1o1 -.-> LK08
-  W1o1 -.-> LK15
+  W1o1 -.-> LK14
   LK09 -.-> W2{"W2"}
-  W2 -- "frueh" --> W2o0("Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne…")
+  W2 -- "frueh" --> W2o0("Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne… · Posten")
   W2o0 -.-> LK22
   W2 -- "spaeter" --> W2o1("Erst informieren, wenn ein belastbarer Termin feststeht (vor… · Folgekarte SK42 · Posten")
   W2o1 -.-> LK18
   W2o1 -.-> LK14
   LK14 -.-> W3{"W3"}
   W3 -- "bergen" --> W3o0("Heute durch die Fachfirma unter Schutzausrüstung bergen lass… · Folgekarte SK43 · Posten")
+  W3o0 -.-> LK19
   W3o0 -.-> LK23
   W3o0 -.-> LK27
   W3o0 -.-> LK22
@@ -102,8 +103,9 @@ flowchart TD
   W4o1 -.-> LK25
   W4o1 -.-> LK27
   LK20 -.-> W5{"W5"}
-  W5 -- "gleichrangig" --> W5o0("Eigene Filialen und Partnermärkte nach einem gemeinsamen Kri… · Posten")
+  W5 -- "gleichrangig" --> W5o0("Eigene Filialen und Partnermärkte nach einem gemeinsamen, of… · Posten")
   W5o0 -.-> LK22
-  W5 -- "eigene" --> W5o1("Eigene 14 Filialen zuerst, Partnermärkte etwa zwölf Stunden … · Folgekarte SK44 · Posten")
+  W5 -- "eigene" --> W5o1("Eigene 14 Filialen zuerst, danach die Partnermärkte · Folgekarte SK44 · Posten")
   W5o1 -.-> LK22
+  W5o1 -.-> LK27
 ```

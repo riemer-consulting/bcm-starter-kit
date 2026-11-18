@@ -1,6 +1,6 @@
 # 07 – Funktions- und Testmatrix
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## 1. Wie diese Matrix entstanden ist
 

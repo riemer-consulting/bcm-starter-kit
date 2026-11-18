@@ -1,6 +1,6 @@
 # 03 – Architektur und Datenflüsse
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 Die Tabletop-Regie ist eine lokale Node.js-Anwendung (Express) mit drei Browser-Ansichten: **Setup** (Vorbereitung), **Moderation** (nicht teilen, enthält alle vertraulichen Inhalte) und **Bühne** (für alle sichtbar, nur öffentliche Inhalte), dazu eine Ablaufseite für Teilnehmende. Drehbücher sind JSON-Dateien unter `data/`; Lauf- und Einstellungsdaten liegen lokal in `data/run-state.json` und `data/settings.json` und werden nicht eingecheckt. Vertrauliche Karten gehen per SMTP an einzelne Personen.
 

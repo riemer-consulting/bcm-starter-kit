@@ -34,6 +34,29 @@ Stand: 2026-11-18 · erzeugt mit `tools/varianten.js` direkt aus `scenario.nordt
 
 **Ergebnis:** In allen 25 Kombinationen: keine doppelte Karte, keine verletzte Abhängigkeit, keine zu früh einsortierte vertrauliche Karte, Zieldauer eingehalten, Pflichtkarten enthalten; ab 60 Min. mindestens die Hälfte der Überraschungen einsetzbar (Voraussetzung gespielt, Mindestdauer erfüllt).
 
+### Abdeckung: in keiner der Kombinationen gespielt
+
+Hinweis, kein Fehler: Im Modus „Erprobte Zeiten aus dem Drehbuch“ werden alle Lagen gespielt. In der Zieldauer entfallen Karten mit niedriger Priorität; was hier steht, erreicht den Tisch nur in diesem Modus, über einen Schwerpunkt mit anderer Auswahl oder durch manuelle Auslösung.
+
+- Lagekarten: LK13 Cyberversicherung
+- vertrauliche Karten (ohne Folgekarten): SK07, SK16, SK24, SK26, SK30, SK31, SK36, SK39
+
+### Vertrauliche Karten, die über eine Tagesgrenze verschoben werden
+
+Hinweis: Fehlt die Heimatlage einer vertraulichen Karte im Plan, kommt sie mit der nächsten gespielten Lage. Liegt diese an einem anderen Wochentag, müssen Zeitangaben im Kartentext dazu passen (zeitneutral formulieren oder die Karte an eine Kernlage binden).
+
+- **SK22** (6×): 45/Ausgewogen: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag); 45/Produktion und Qualitätsmanagement: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag); 60/Ausgewogen: Heimatlage LK03 (Montag) → kommt nach LK07 (Dienstag) …
+- **SK42** (4×): 60/Ausgewogen: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 60/IT-Sicherheit und Wiederanlauf: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 60/Produktion und Qualitätsmanagement: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag) …
+- **SK15** (1×): 60/Krisenführung und BCM: Heimatlage LK21 (Freitag) → kommt nach LK15 (Sonntag)
+- **SK37** (6×): 60/Kunden und Krisenkommunikation: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag); 120/Ausgewogen: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag); 120/Krisenführung und BCM: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag) …
+- **SK33** (10×): 60/Kunden und Krisenkommunikation: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 90/Ausgewogen: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag); 90/Krisenführung und BCM: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag) …
+- **SK05** (2×): 90/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag); 120/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag)
+- **SK23** (1×): 90/Krisenführung und BCM: Heimatlage LK03 (Montag) → kommt nach LK05 (Dienstag)
+- **SK32** (1×): 120/Kunden und Krisenkommunikation: Heimatlage LK25 (Samstag) → kommt nach LK15 (Sonntag)
+- **SK25** (4×): 180/Ausgewogen: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag); 180/Krisenführung und BCM: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag); 180/Produktion und Qualitätsmanagement: Heimatlage LK23 (Montag) → kommt nach LK05 (Dienstag) …
+- **SK13** (1×): 180/IT-Sicherheit und Wiederanlauf: Heimatlage LK10 (Donnerstag) → kommt nach LK12 (Freitag)
+- **SK12** (1×): 180/Kunden und Krisenkommunikation: Heimatlage LK14 (Samstag) → kommt nach LK15 (Sonntag)
+
 ### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)
 
 - **45 Min. · Ausgewogen** – gespielt: LK18 LK01 LK02 LK22 LK07 LK09 LK17 LK12 LK15 · ausgelassen: LK16 LK03 LK04 LK05 LK06 LK08 LK10 LK11 LK13 LK14 LK19 LK20 LK21 LK23 LK24 LK25 LK26 · Rollen (5): geschaeftsfuehrer-ceo, leiter-it, leitung-produktion, geschaeftsfuehrerin-vertrieb, kaufmaennische-leiterin-cfo · vertraulich: SK40→leitung-produktion, SK01→leiter-it, SK22→kaufmaennische-leiterin-cfo, SK20→geschaeftsfuehrer-ceo, SK17→geschaeftsfuehrer-ceo, SK18→geschaeftsfuehrerin-vertrieb · Weichen: W1, W2, W3, W4

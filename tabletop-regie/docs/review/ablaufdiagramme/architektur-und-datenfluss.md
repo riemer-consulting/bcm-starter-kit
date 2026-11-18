@@ -1,6 +1,6 @@
 # Architektur und Datenfluss
 
-Stand: 2026-11-18 · Codestand `07b0fb2`
+Stand: 2026-11-18 · Codestand `0c8013e`
 
 ## Diagramm 1
 

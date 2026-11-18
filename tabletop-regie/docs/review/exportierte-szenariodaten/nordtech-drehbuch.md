@@ -991,7 +991,7 @@ Du bist für das gefundene Offline-Backup zuständig. Einspielen darfst du es nu
 
 *Drehbuch-Minute:* 55.5 · *fällt in die Lage:* LK17 Beirat fordert Lagebericht (Donnerstag 07:00 Uhr) · *Priorität:* 1 · *Ersatzrollen:* Geschäftsführung Vertrieb, stellv. Krisenstabsleitung → Kaufmännische Leitung (CFO)
 
-*Kommt immer direkt mit:* LK17 Beirat fordert Lagebericht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK17 Beirat fordert Lagebericht
 
 Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitzung privat an: „Wenn wir heute keine belastbaren Zahlen und keinen Plan sehen, stelle ich die Führungsfrage.“ Niemand sonst weiß von diesem Anruf.
 
@@ -1002,7 +1002,7 @@ Ein Beiratsmitglied ruft dich am Donnerstagmorgen unmittelbar vor der Sondersitz
 
 *Drehbuch-Minute:* 55.6 · *fällt in die Lage:* LK17 Beirat fordert Lagebericht (Donnerstag 07:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* Assistenz der Geschäftsführung / Lage & Dokumentation → Notfallmanagement / BCM → Geschäftsführung Vertrieb, stellv. Krisenstabsleitung
 
-*Kommt immer direkt mit:* LK17 Beirat fordert Lagebericht
+*Kommt zusammen mit (zu Beginn dieser Lage; entfällt, wenn sie nicht eingeplant ist oder das Kartenbudget der Dauer ausgeschöpft ist):* LK17 Beirat fordert Lagebericht
 
 Aus dem Kreis der Unternehmensführung kommt die Forderung, im Beiratsbericht nur den voraussichtlich versicherten Schaden zu nennen. Die noch nicht belastbar bezifferten Produktions- und Kundenverluste sollen vorerst nicht auftauchen: „Wir brauchen jetzt Vertrauen, keine Panik.“
 
@@ -1113,6 +1113,8 @@ Das ERP läuft im Test. Im Rückstau liegen rund 1.900 Fertigungsrückmeldungen 
 #### SK48 – an ERP / Stammdaten
 
 *Drehbuch-Minute:* 80 · *fällt in die Lage:* LK14 ERP-Testbetrieb (Samstag 09:00 Uhr) · *Priorität:* 2 · *Ersatzrollen:* ERP-Beratung → IT-Leitung (CIO) → Geschäftsführung (CEO), Krisenstabsleitung
+
+*Nur in ihrer eigenen Lage:* entfällt, wenn diese Lage nicht gespielt wird (statt mit einer späteren Lage zu kommen).
 
 *Kommt nur nach:* LK09 Backups gefunden, LK14 ERP-Testbetrieb
 
