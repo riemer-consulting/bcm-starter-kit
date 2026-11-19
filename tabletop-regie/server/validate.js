@@ -25,6 +25,7 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
 
   const checkRole = (rid, where) => { if (!roleIds.has(rid)) errors.push(`${where} verweist auf unbekannte Rolle "${rid}".`); };
   scenario.roleGroups.forEach(g => g.members.forEach(rid => checkRole(rid, `Rollengruppe ${g.key}`)));
+  if (scenario.protokollKriterien !== undefined && !(Array.isArray(scenario.protokollKriterien) && scenario.protokollKriterien.length && scenario.protokollKriterien.every(x => typeof x === 'string' && x.trim()))) errors.push('"protokollKriterien" muss eine Liste von Texten sein.');
   scenario.sonderlagekarten.forEach(k => (k.textVarianten || []).forEach(v => {
     if (!scenario.lagekarten.some(l => l.id === v.nachLagekarte)) errors.push(`Karte ${k.id}: Textvariante nach unbekannter Lagekarte ${v.nachLagekarte}.`);
     if (!v.text) errors.push(`Karte ${k.id}: Textvariante ohne Text.`);

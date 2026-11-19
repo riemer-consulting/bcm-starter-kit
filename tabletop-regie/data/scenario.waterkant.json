@@ -1,4 +1,15 @@
 {
+  "protokollKriterien": [
+    "Aktivierung und Lagebild in der Nacht",
+    "Personenschutz und sichere Freigaben",
+    "Entscheidung und Verantwortung (auch in Vertretung)",
+    "Kommunikation mit Beschäftigten, Kundschaft und Öffentlichkeit",
+    "Partner und vertragliche Zusagen (Wiederherstellungsziel)",
+    "Ausweichbetrieb und technische Freigaben",
+    "Datenlücke, Nachbuchung und Datenintegrität",
+    "Fachliche Prüfaufträge (Versicherung, Arbeitsschutz, Datenschutz, Verträge)",
+    "Wiederanlauf, Nachsorge und Rückkehrentscheidung"
+  ],
   "id": "waterkant-rechenzentrum",
   "title": "Wenn das Rechenzentrum brennt",
   "subtitle": "Sieben Tage zwischen Feuer, Infrastrukturverlust und Verantwortung",
@@ -522,8 +533,8 @@
       "diskussionMinuten": 4,
       "akt": "ausbruch",
       "prioritaet": 1,
-      "text": "Der Brand im USV-Raum ist gelöscht, alle Personen sind wohlauf. Der Serverraum selbst hat nicht gebrannt, ist aber verraucht; Löschgas und Rauch sind abgezogen. Das Gebäude bleibt bis zur Prüfung durch Sachverständige gesperrt. Im Rechenzentrum ist alles aus: Warenwirtschaft, Kassenzentrale, Lagerverwaltung, Gewerbekundenportal, Telefonanlage der Zentrale.",
-      "kriseninfo": "Rechenzentrum vollständig außer Betrieb · Gebäude gesperrt · Filialkassen offline-fähig ca. 72 Stunden (bis Freitag ca. 03:00 Uhr)",
+      "text": "Der Brand im USV-Raum ist gelöscht, alle Personen sind wohlauf. Der Serverraum selbst hat nicht gebrannt, ist aber verraucht; Löschgas und Rauch sind abgezogen. Die Feuerwehr lässt eine Brandwache vor Ort: Beschädigte Lithium-Ionen-Module können sich auch nach Stunden wieder entzünden und stehen trotz Stromabschaltung unter Restspannung. Ausbauen und sicher abtransportieren darf sie nur eine Fachfirma. Das Gebäude bleibt bis zur Prüfung durch Sachverständige gesperrt. Im Rechenzentrum ist alles aus: Warenwirtschaft, Kassenzentrale, Lagerverwaltung, Gewerbekundenportal, Telefonanlage der Zentrale.",
+      "kriseninfo": "Rechenzentrum vollständig außer Betrieb · Gebäude gesperrt, Brandwache vor Ort · Filialkassen offline-fähig ca. 72 Stunden (bis Freitag ca. 03:00 Uhr)",
       "aufgabe": [
         "Welche Geschäftsprozesse stehen jetzt – und welche laufen noch?",
         "Was ist bis zur Filialöffnung um 08:00 Uhr zu entscheiden?",
@@ -654,7 +665,7 @@
       "diskussionMinuten": 4,
       "akt": "eskalation",
       "prioritaet": 2,
-      "text": "Die Feuerwehr übergibt das Gebäude. Ein Sachverständiger gibt Büros und Flure frei, nicht aber USV-Raum und Serverraum: Auf allen Racks liegt ein Rußfilm, bei brennenden Lithium-Ionen-Batterien können ätzende Gase entstehen. Eine Messung läuft, das Ergebnis kommt frühestens Mittwochmorgen. Die Klimaanlage darf bis dahin nicht laufen.",
+      "text": "Eine Fachfirma hat die beschädigten Batteriemodule ausgebaut und in Spezialbehältern abtransportiert; danach beendet die Feuerwehr die Brandwache und übergibt das Gebäude. Ein Sachverständiger gibt Büros und Flure frei, nicht aber USV-Raum und Serverraum: Auf allen Racks liegt ein Rußfilm, bei brennenden Lithium-Ionen-Batterien können ätzende Gase entstehen. Eine Messung läuft, das Ergebnis kommt frühestens Mittwochmorgen. Die Klimaanlage darf bis dahin nicht laufen.",
       "kriseninfo": "Büros freigegeben · Serverraum und USV-Raum gesperrt · Messergebnis frühestens Mittwochmorgen",
       "aufgabe": [
         "Wer entscheidet, wann der Serverraum wieder betreten wird – und auf welcher Grundlage?",
@@ -667,7 +678,7 @@
         "leiter-it",
         "rz-betrieb"
       ],
-      "moderatorHinweis": "Sekundärschäden ernst nehmen: Ruß plus Feuchtigkeit greift Elektronik an. Beobachten, ob der Tisch Freigabe (Sicherheit) und Wiederinbetriebnahme (Technik) auseinanderhält.",
+      "moderatorHinweis": "Sekundärschäden ernst nehmen: Ruß plus Feuchtigkeit greift Elektronik an. Freigabekette im Szenario: Brandbereich (Feuerwehr, erst nach Ausbau der Module) → Büros (Sachverständiger) → Serverraum (Messung, Reinigung, Freimessung) → Wiederinbetriebnahme (Technik). „Gelöscht“ ist keine Freigabe. Beobachten, ob der Tisch Sicherheitsfreigabe und technische Wiederinbetriebnahme auseinanderhält; Fachfragen zum Brandschutz festhalten, nicht am Tisch entscheiden.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk10-serverraum-gesperrt.png",
@@ -756,8 +767,8 @@
       "diskussionMinuten": 4,
       "akt": "eskalation",
       "prioritaet": 2,
-      "text": "Der Einkauf hat Angebote: Neue Server und Speichersysteme sind in zehn bis zwölf Arbeitstagen lieferbar, zwei Rahmen gegen Aufpreis in drei Tagen. Beim Colocation-Anbieter, bei dem Waterkant seine Sicherungskopien lagert, steht ein vorbereitetes Ausweich-Rack mit etwa 40 % der bisherigen Rechenleistung. Es ist für einen solchen Fall vertraglich vereinbart – vollständig geübt wurde der Umzug nie.",
-      "kriseninfo": "Ersatzhardware: 10–12 Arbeitstage · Ausweich-Rack: ca. 40 % Leistung, sofort nutzbar",
+      "text": "Der Einkauf hat Angebote: Neue Server und Speichersysteme sind in zehn bis zwölf Arbeitstagen lieferbar, zwei Rahmen gegen Aufpreis in drei Tagen. Beim Colocation-Anbieter, bei dem Waterkant seine Sicherungskopien lagert, steht ein vorbereitetes Ausweich-Rack mit etwa 40 % der bisherigen Rechenleistung. Es ist für einen solchen Fall vertraglich vereinbart, für den Produktivbetrieb der eigenen Systeme – vollständig geübt wurde der Umzug nie. Physisch steht es sofort bereit; bevor dort etwas läuft, müssen Netzanbindung, Anmeldedienste, Namensauflösung, Firewall und der Katalog der Sicherungssoftware eingerichtet sein.",
+      "kriseninfo": "Ersatzhardware: 10–12 Arbeitstage · Ausweich-Rack: ca. 40 % Leistung, physisch sofort verfügbar – Betrieb erst nach Einrichtung der Basisdienste",
       "aufgabe": [
         "Was muss zuerst wieder laufen – und wo?",
         "Welche Risiken hat ein nie geübter Umzug?",
@@ -784,7 +795,7 @@
       "diskussionMinuten": 4,
       "akt": "hoehepunkt",
       "prioritaet": 1,
-      "text": "Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; die Freigabe des Raums für alle anderen kommt erst nach der Reinigung in etwa einer Woche. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.",
+      "text": "Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; betreten dürfen den Raum alle anderen erst nach Reinigung und Freimessung, frühestens in etwa zehn Tagen. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.",
       "kriseninfo": "Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten",
       "aufgabe": [
         "Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?",
@@ -813,7 +824,7 @@
       "diskussionMinuten": 4,
       "akt": "hoehepunkt",
       "prioritaet": 1,
-      "text": "Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft passen in das Ausweich-Rack und könnten am Donnerstag laufen. Lagerverwaltung, Gewerbekundenportal und Online-Bestände passen nur nach einer Erweiterung, die der Anbieter binnen 48 Stunden liefern kann – mit zwölf Monaten Mindestlaufzeit. Ohne Erweiterung warten diese Systeme auf das eigene Rechenzentrum, laut Sanierer frühestens in drei Wochen.",
+      "text": "Die IT hat einen Plan: Kassen- und Preisdienste und der Kern der Warenwirtschaft passen in das Ausweich-Rack und könnten am Donnerstag laufen. Lagerverwaltung, Gewerbekundenportal und Online-Bestände passen nur nach einer Erweiterung, die der Anbieter binnen 48 Stunden liefern kann – mit zwölf Monaten Mindestlaufzeit. Ohne Erweiterung warten diese Systeme auf das eigene Rechenzentrum: produktiv frühestens rund drei Wochen nach dem Brand (Reinigung, Freimessung, neue USV, Prüfung der Hardware).",
       "kriseninfo": "Kassen- und Preisdienste: Donnerstag möglich · Rest: Erweiterung (48 h, 12 Monate Vertrag) oder ca. 3 Wochen warten",
       "aufgabe": [
         "Was ist Ihnen schneller Online-Handel und Lagerbetrieb wert?",
@@ -948,7 +959,7 @@
       "diskussionMinuten": 4,
       "akt": "folgen",
       "prioritaet": 2,
-      "text": "Im Ausweich-Rack läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten.",
+      "text": "Seit Mittwoch hat das Team im Ausweich-Rack die Basisdienste aufgebaut: Netzanbindung, Anmeldedienste, Namensauflösung, Firewall, einen gesicherten Administrationszugang und den Katalog der Sicherungssoftware. Jetzt läuft die Rücksicherung aus der Montagskopie. Die Prüfsummen stimmen. Damit 14 Filialen und neun Partnermärkte die Ausweichumgebung erreichen, müssen Netzwerkverbindungen und Firewall-Regeln neu eingerichtet werden – Stück für Stück, Markt für Markt. Die Aktionspreise sind in der Montagskopie noch nicht enthalten.",
       "kriseninfo": "Rücksicherung läuft · Netzwerkumstellung Markt für Markt · Aktionspreise fehlen in der Kopie",
       "aufgabe": [
         "Wer prüft und gibt frei, bevor ein Markt umgestellt wird?",
@@ -961,6 +972,7 @@
         "informationssicherheit",
         "it-support-filialen"
       ],
+      "moderatorHinweis": "Freigaben auseinanderhalten: Basisdienste (IT-Leitung mit RZ-Betrieb), Firewall-Regeln je Markt (Informationssicherheit, Vier-Augen-Prinzip), fachliche Prüfung der Daten und Preise (Fachbereiche) – erst dann wird ein Markt umgestellt. Beobachten, ob der Tisch fragt, wer welche Freigabe gibt.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk19-ruecksicherung.png",
@@ -1217,9 +1229,9 @@
       "minuteOffset": 100,
       "diskussionMinuten": 4,
       "akt": "wiederanlauf",
-      "prioritaet": 3,
-      "text": "Der Sanierer meldet: Nach Reinigung, Prüfung und neuer USV ist das eigene Rechenzentrum in etwa drei Wochen wieder nutzbar. Der Colocation-Anbieter bietet an, den Betrieb dauerhaft zu übernehmen. Die Partnermärkte fragen, ob Waterkant künftig zwei Standorte betreibt. Die Geschäftsführung will bis Mittwoch eine Empfehlung.",
-      "kriseninfo": "Eigenes Rechenzentrum: ca. 3 Wochen · dauerhafte Auslagerung angeboten",
+      "prioritaet": 2,
+      "text": "Der Sanierer meldet: Die Reinigung läuft; nach Freimessung, Einbau der neuen USV, Brandschutzabnahme und Prüfung der Hardware ist das eigene Rechenzentrum in etwa zwei Wochen wieder produktiv nutzbar – rund drei Wochen nach dem Brand. Der Colocation-Anbieter bietet an, den Betrieb dauerhaft zu übernehmen. Die Partnermärkte fragen, ob Waterkant künftig zwei Standorte betreibt. Die Geschäftsführung will bis Mittwoch eine Empfehlung.",
+      "kriseninfo": "Eigenes Rechenzentrum: produktiv in ca. 2 Wochen · dauerhafte Auslagerung angeboten",
       "aufgabe": [
         "Zurück, auslagern oder zwei Standorte – nach welchen Kriterien entscheiden Sie?",
         "Was muss vor der Rückkehr geprüft und freigegeben sein?"
@@ -1431,7 +1443,7 @@
       "empfaenger": "facility-management",
       "minuteOffset": 33.5,
       "vertraulich": true,
-      "text": "Der Sachverständige: Reinigung des Serverraums durch eine Fachfirma dauert fünf bis acht Arbeitstage. Die Klimaanlage darf bis zur Prüfung nicht laufen – Feuchtigkeit plus Ruß beschleunigt die Korrosion. Ob die Hardware danach noch zuverlässig ist, kann er nicht sagen.",
+      "text": "Der Sachverständige: Die Reinigung des Serverraums durch eine Fachfirma kann beginnen, wenn der Gutachter des Versicherers den Schaden gesehen hat (geplant Freitag), und dauert fünf bis acht Arbeitstage; danach wird freigemessen. Die Klimaanlage darf bis zur Prüfung nicht laufen – Feuchtigkeit plus Ruß beschleunigt die Korrosion. Ob die Hardware danach noch zuverlässig ist, kann er nicht sagen.",
       "moderatorGut": "Zeitrahmen und Unsicherheit offen in den Krisenstab geben; Freigabeprozess festlegen.",
       "moderatorSchlecht": "Einen Wiederinbetriebnahmetermin versprechen.",
       "prioritaet": 1,
@@ -1567,7 +1579,7 @@
       "empfaenger": "informationssicherheit",
       "minuteOffset": 53.5,
       "vertraulich": true,
-      "text": "Wenn die Warenwirtschaft ins Ausweich-Rack zieht, laufen dort auch Daten der Gewerbekunden und Partnermärkte. Der Vertrag mit dem Colocation-Anbieter beschreibt nur die Lagerung von Sicherungskopien, nicht den Produktivbetrieb. Was das bedeutet, ist fachlich zu prüfen.",
+      "text": "Der Notfallvertrag mit dem Colocation-Anbieter regelt den Produktivbetrieb der Waterkant-Systeme im Ausweich-Rack. Wenn die Warenwirtschaft dorthin zieht, laufen dort aber auch Daten der Gewerbekunden und der Partnermärkte, die Waterkant in deren Auftrag verarbeitet. Ob der Vertrag das abdeckt, regelt er nicht ausdrücklich. Was das bedeutet, ist fachlich zu prüfen.",
       "moderatorGut": "Thema in den Krisenstab, fachliche Prüfung parallel anstoßen, ohne den Wiederanlauf zu blockieren.",
       "moderatorSchlecht": "Schweigen oder den Wiederanlauf allein stoppen.",
       "prioritaet": 2,
@@ -2453,7 +2465,7 @@
         },
         {
           "id": "abwarten",
-          "label": "Freigabe des Raums abwarten (nach Reinigung, ca. eine Woche)",
+          "label": "Freigabe des Raums abwarten (nach Reinigung und Freimessung, frühestens in ca. zehn Tagen)",
           "wirkung": "Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.",
           "folgen": [
             {
@@ -2477,7 +2489,7 @@
         "LK15"
       ],
       "frage": "Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?",
-      "hinweis": "Klein: günstiger, weniger Fehlerrisiko, aber drei Wochen ohne Lagerverwaltung, Gewerbeportal und Online-Bestände. Groß: zwölf Monate Vertrag, mehr Arbeit für ein erschöpftes Team, schneller zurück. Keine Option ist kostenlos.",
+      "hinweis": "Klein: günstiger, weniger Fehlerrisiko, aber drei Wochen ohne Lagerverwaltung, Gewerbeportal und Online-Bestände. Groß: zwölf Monate Vertrag, mehr Arbeit für ein erschöpftes Team, schneller zurück. Keine Option ist kostenlos. „Erweitern“ erst festhalten, wenn der Tisch den Zustimmungsweg geklärt hat (der Vorsitzende der Gesellschafterversammlung ist telefonisch erreichbar). Will der Tisch ohne Zustimmung unterschreiben, wird nicht „erweitern“ festgehalten: Der Vertrag bleibt bis zur Zustimmung ungezeichnet, es gilt „nur das Nötigste“, und der offene Zustimmungsweg kommt ins Debriefing. Die fachliche Prüfung der Datenverarbeitung im Ausweich-Rack gehört zur Entscheidung.",
       "optionen": [
         {
           "id": "minimal",
@@ -2499,12 +2511,12 @@
         },
         {
           "id": "ausbauen",
-          "label": "Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern (zwölf Monate Mindestlaufzeit)",
+          "label": "Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern – nach eingeholter Zustimmung der Gesellschafter (zwölf Monate Mindestlaufzeit)",
           "wirkung": "Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag).",
           "folgen": [
             {
               "lagekarte": "LK25",
-              "zusatz": "Online-Shop und Gewerbeportal laufen seit Freitagabend wieder aus dem erweiterten Ausweich-Rack."
+              "zusatz": "Online-Shop und Gewerbeportal laufen seit Freitagabend wieder aus dem erweiterten Ausweich-Rack. Die Zustimmung der Gesellschafter liegt schriftlich vor; die Prüfung, ob dort auch Partner- und Gewerbekundendaten verarbeitet werden dürfen, läuft."
             },
             {
               "lagekarte": "LK27",
@@ -2574,7 +2586,10 @@
         "LK05",
         "LK14",
         "LK18",
+        "LK24",
+        "LK26",
         "LK27",
+        "LK28",
         "SK04",
         "SK05",
         "SK06",
@@ -2616,6 +2631,8 @@
         "LK13",
         "LK19",
         "LK23",
+        "LK26",
+        "LK28",
         "SK03",
         "SK08",
         "SK14",

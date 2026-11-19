@@ -127,7 +127,19 @@ fs.writeFileSync(path.join(D, '07-funktions-und-testmatrix.md'), [lies(path.join
 fs.copyFileSync(path.join(D, 'testberichte', 'testbericht.md'), path.join(D, 'testberichte', 'testbericht.md'));
 
 // ---- 03 Architektur
-fs.writeFileSync(path.join(D, '03-architektur-und-datenfluesse.md'), [lies(path.join(T, '03-kopf.md')).replace('{{STAND}}', stand), '', '---', '', tiefer(lies(path.join(T, 'architektur-entwurf.md')).replace(/^# .*\n/, ''))].join('\n'));
+const feldnutzung = (() => {
+  const sz = SZ.map(z => JSON.parse(lies(path.join(ROOT, z.datei))));
+  const L = ['## Aktuelle Feldnutzung der Drehbücher (automatisch erzeugt)', '', 'Anzahl der Einträge, in denen das Feld befüllt ist – aus den aktuellen Drehbüchern berechnet. Die Spalte „Vorkommen“ in der Inventur weiter unten beschreibt für Waterkant noch die archivierte Fassung v1.', '',
+    '| Bereich | Feld | ' + SZ.map(z => z.name).join(' | ') + ' |', '|---|---|' + SZ.map(() => '---:|').join('')];
+  L.push('| Wurzel | (Felder) | ' + sz.map(s => Object.keys(s).sort().join(', ')).join(' | ') + ' |');
+  for (const [bereich, get] of [['Lagekarten', s => s.lagekarten], ['Vertrauliche Karten', s => s.sonderlagekarten], ['Überraschungen', s => s.bonuskarten], ['Entscheidungen', s => s.weichen || []], ['Rollen', s => s.roles]]) {
+    const felder = [...new Set(sz.flatMap(s => get(s).flatMap(x => Object.keys(x))))].sort();
+    L.push(`| ${bereich} | (Anzahl) | ${sz.map(s => get(s).length).join(' | ')} |`);
+    felder.forEach(f => L.push(`| ${bereich} | \`${f}\` | ${sz.map(s => get(s).filter(x => x[f] !== undefined && x[f] !== null && !(Array.isArray(x[f]) && !x[f].length)).length).join(' | ')} |`));
+  }
+  return L.join('\n');
+})();
+fs.writeFileSync(path.join(D, '03-architektur-und-datenfluesse.md'), [lies(path.join(T, '03-kopf.md')).replace('{{STAND}}', stand), '', '---', '', feldnutzung, '', '---', '', tiefer(lies(path.join(T, 'architektur-entwurf.md')).replace(/^# .*\n/, ''))].join('\n'));
 
 // ---- 08 Medien
 fs.writeFileSync(path.join(D, '08-medien-und-audio.md'), [lies(path.join(T, '08-kopf.md')).replace('{{STAND}}', stand), '', '# Teil 1 – NordTech', '', tiefer(ohneTitel(gen.nordtech.medien)), '', '# Teil 2 – Waterkant', '', tiefer(ohneTitel(gen.waterkant.medien))].join('\n'));
@@ -181,6 +193,11 @@ for (const z of SZ) {
   const benutzt = [...new Set((JSON.stringify(s).match(/\/media\/[^"]+/g) || []))];
   benutzt.forEach(u => { const q = path.join(ROOT, u); if (!fs.existsSync(q)) return; const r = `media-${z.key}/${u.split('/').slice(2).join('/')}`; mk(path.dirname(path.join(Z, r))); fs.copyFileSync(q, path.join(Z, r)); add(r, q, 'Medium, im Drehbuch verwendet'); });
 }
+// Quellcode (ohne node_modules und lokale Lauf-/Einstellungsdaten), damit das Paket ohne Repository nachvollziehbar ist
+const QUELL = ['server', 'public', 'tools', 'package.json', 'package-lock.json', 'README.md'];
+const kopiereQuelle = (rel) => { const q = path.join(ROOT, rel); if (!fs.existsSync(q)) return; if (fs.statSync(q).isDirectory()) return fs.readdirSync(q).forEach(f => kopiereQuelle(path.join(rel, f)));
+  const ziel = path.join(Z, 'quellcode', rel); mk(path.dirname(ziel)); fs.copyFileSync(q, ziel); add('quellcode/' + rel.split(path.sep).join('/'), q, 'Quellcode zum Nachvollziehen'); };
+QUELL.forEach(kopiereQuelle);
 fs.writeFileSync(path.join(D, 'manifest.json'), JSON.stringify(manifest, null, 1) + '\n');
 fs.copyFileSync(path.join(D, 'manifest.json'), path.join(Z, 'manifest.json'));
 // Prüfung: keine Geheimnisse im Paket

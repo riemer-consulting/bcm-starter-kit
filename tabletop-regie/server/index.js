@@ -968,6 +968,13 @@ app.get('/api/run/stage-state', (req, res) => {
 // Uebungsprotokoll fuer Debriefing und Nachbereitung (Erfolgsmessung):
 // Ablauf, Entscheidungen, verschickte Karten, Rechnung, Debriefing-Fragen und
 // ein leerer Massnahmenplan. Namen der Teilnehmenden stehen bewusst nicht drin.
+// Raster der Gesamteinschätzung im Protokoll: aus dem Drehbuch ("protokollKriterien"),
+// sonst das allgemeine Raster (passt zu NordTech).
+const PROTOKOLL_KRITERIEN_STANDARD = ['Aktivierung / Lagebild', 'Entscheidung / Verantwortung', 'Kommunikation', 'IT-/OT-Sicherheit', 'Geschäftsfortführung', 'Qualität / Datenintegrität', 'Fachliche Prüfpflichten', 'Wiederanlauf / Nachsorge'];
+function protokollKriterien() {
+  const k = scenario.protokollKriterien;
+  return Array.isArray(k) && k.length && k.every(x => typeof x === 'string' && x.trim()) ? k : PROTOKOLL_KRITERIEN_STANDARD;
+}
 app.get('/api/run/protokoll', (req, res) => {
   const L = [];
   const w = (...x) => L.push(...x);
@@ -1022,8 +1029,8 @@ app.get('/api/run/protokoll', (req, res) => {
   [...(scenario.moderationsleitfaden.debriefingFragen || []), ...((sp && sp.debriefing) || [])].forEach(q => w(`**${q}**`, '', '_Notizen:_', '', ''));
   w('## Gesamteinschätzung der Übung (Team)', '', 'Nach dem Moderationshandbuch: 0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig. Bewertet wird die Arbeit des Krisenstabs, nicht einzelne Personen. Beobachtungen mit Karten-ID belegen.', '',
     '| Kriterium | 0 / 1 / 2 | Beobachtung (Karte) |', '|---|---|---|',
-    ...['Aktivierung / Lagebild', 'Entscheidung / Verantwortung', 'Kommunikation', 'IT-/OT-Sicherheit', 'Geschäftsfortführung', 'Qualität / Datenintegrität', 'Fachliche Prüfpflichten', 'Wiederanlauf / Nachsorge'].map(k => `| ${k} | | |`),
-    '| **Summe (max. 16, kein Grenzwert)** | | |', '');
+    ...protokollKriterien().map(k => `| ${k} | | |`),
+    `| **Summe (max. ${protokollKriterien().length * 2}, kein Grenzwert)** | | |`, '');
   w('## Maßnahmenplan', '', '| Nr. | Maßnahme | Verantwortlich | Priorität | Bis wann |', '|---:|---|---|---|---|', '| 1 | | | | |', '| 2 | | | | |', '| 3 | | | | |', '');
   res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="uebungsprotokoll-${new Date().toISOString().slice(0, 10)}.md"`);

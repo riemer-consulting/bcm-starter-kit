@@ -127,7 +127,7 @@ flowchart LR
   subgraph Disk["Dateisystem"]
     SCN["data/scenario.*.json"]
     RS["data/run-state.json"]
-    SET["data/settings.json<br/>(SMTP-Passwort im Klartext)"]
+    SET["data/settings.json<br/>(SMTP-Passwort im Klartext, nur lokal)"]
     MED["media/ inkl. media/custom, media/branding"]
   end
 
@@ -198,7 +198,7 @@ sequenceDiagram
 
 ## 6. Datenmodell der Drehbücher
 
-Nur Felder, die der Code tatsächlich auswertet. Spalte "Vorkommen" zeigt, in welchem Drehbuch das Feld befüllt ist (ermittelt per Skript über beide JSON-Dateien). NT = NordTech (26 Lagekarten, 49 Sonderlagekarten, 8 Bonuskarten, 24 Rollen), WK = Waterkant (18 / 26 / 4 / 16).
+Nur Felder, die der Code tatsächlich auswertet. Spalte "Vorkommen" zeigt, in welchem Drehbuch das Feld befüllt ist (ermittelt per Skript über beide JSON-Dateien). NT = NordTech (26 Lagekarten, 49 Sonderlagekarten, 8 Bonuskarten, 24 Rollen), WK = **archivierte Waterkant-Fassung v1** (18 / 26 / 4 / 16), Stand der Inventur. Die aktuelle Feldnutzung beider Drehbücher (Waterkant neu: 28 / 46 / 8 / 20) steht automatisch erzeugt in Abschnitt 6.0.
 
 ### 6.1 Wurzel
 
@@ -350,7 +350,7 @@ Nicht vorhanden. Es gibt genau ein globales Drehbuch und einen globalen Lauf pro
 ## 9. E-Mail, SMTP und Testmodus
 
 - SMTP-Felder: Host, Port, secure, Benutzer, Passwort, Absenderadresse/-name, `allowInsecureTLS` (`server/store.js:38`; `public/setup.html:153-162`).
-- Passwort im Klartext in `data/settings.json`; `GET /api/settings` maskiert es (`server/index.js:625-628`), Platzhalter wird beim Speichern erkannt (`:633`). `GET /api/template/export` liefert es unmaskiert (`:771-788`).
+- Passwort im Klartext in `data/settings.json`; `GET /api/settings` maskiert es (`server/index.js:625-628`), Platzhalter wird beim Speichern erkannt (`:633`). `GET /api/template/export` lieferte es bis zu dieser Runde unmaskiert; jetzt nur den Platzhalter (`:779-797`).
 - Versandarten: Begrüßung (`:589-610`), Rollenbriefing (`:566-584`), Sonderlagekarte (`:190-221`), private Bonuskarte (`:1252-1271`), Urkunde mit Inline-Bildern (`:1366-1412`), Test-E-Mail (`:752-761`).
 - Versand sequenziell je Empfänger, ohne Warteschlange, ohne Wiederholung. Ergebnis je Empfänger im Log und bei Sonderlagekarten in `emailResults` (`:212-216`).
 - Testmodus (`settings.testMode`): alle Mails an eine Dummy-Adresse mit Betreff `[TESTLAUF → ...]` und Banner (`server/mailer.js:22-31`). Bei Sonder- und Bonuskarten genau eine Mail je Karte statt je Teammitglied (`server/index.js:173-188,199-203,1260-1261`). Ausnahme: Die Test-E-Mail im Setup wird nicht umgeleitet (`server/index.js:756-759`, kein `testMode`-Argument). Warnbanner in Setup und Moderation (`public/setup.js:554-562`, `public/moderator.js:161-167`).
@@ -405,7 +405,7 @@ Drei Modi (`server/runEngine.js:12`):
 
 ## 14. Protokoll-Export
 
-`GET /api/run/protokoll` (`server/index.js:961-1021`) erzeugt eine Markdown-Datei zum Download mit: Kopf (Datum, Modus, Schwierigkeit, Schwerpunkt), Besetzung nur als Funktionen und Anzahl (keine Namen, `:970-973`), gespielte Lagen, je Weiche Entscheidung und leere Bewertungstabelle (5 Kriterien), verschickte vertrauliche Karten (Text auf 140 Zeichen gekürzt, gute Reaktion), Überraschungen und Beobachtungsbögen, Rechnung, Debriefing-Fragen mit Notizfeld, Gesamteinschätzung (8 fest kodierte Kriterien, 0/1/2, `:1013-1016`), leerer Maßnahmenplan (3 Zeilen, `:1017`). Die 8 Kriterien sind für beide Drehbücher identisch und enthalten u. a. "IT-/OT-Sicherheit", was zu Waterkant (Brandszenario) nur bedingt passt. Gespeichert wird das Protokoll nicht serverseitig.
+`GET /api/run/protokoll` (`server/index.js:961-1021`) erzeugt eine Markdown-Datei zum Download mit: Kopf (Datum, Modus, Schwierigkeit, Schwerpunkt), Besetzung nur als Funktionen und Anzahl (keine Namen, `:970-973`), gespielte Lagen, je Weiche Entscheidung und leere Bewertungstabelle (5 Kriterien), verschickte vertrauliche Karten (Text auf 140 Zeichen gekürzt, gute Reaktion), Überraschungen und Beobachtungsbögen, Rechnung, Debriefing-Fragen mit Notizfeld, Gesamteinschätzung (0/1/2; seit dieser Runde Kriterien aus dem Drehbuchfeld `protokollKriterien`, sonst 8 allgemeine Kriterien), leerer Maßnahmenplan (3 Zeilen, `:1017`). Die 8 Kriterien sind für beide Drehbücher identisch und enthalten u. a. "IT-/OT-Sicherheit", was zu Waterkant (Brandszenario) nur bedingt passt. Gespeichert wird das Protokoll nicht serverseitig.
 
 ## 15. Urkunden
 
@@ -515,7 +515,7 @@ Alle Endpunkte ohne Authentifizierung. "Aufrufer" nennt die Oberfläche, die den
 | POST | `/api/run/ton` | Bühnenton stumm/an | Moderation | `server/index.js:741` |
 | POST | `/api/run/replay-sound` | Ton der Lagekarte erneut abspielen | Moderation | `server/index.js:746` |
 | POST | `/api/settings/test-email` | Test-E-Mail senden (ohne Testmodus-Umleitung) | Setup | `server/index.js:752` |
-| GET | `/api/template/export` | Vorlage inkl. Klartext-Passwort und Logo | Setup | `server/index.js:771` |
+| GET | `/api/template/export` | Vorlage mit Logo; SMTP-Passwort nur als Platzhalter (seit dieser Runde) | Setup | `server/index.js:779` |
 | POST | `/api/template/import` | Vorlage einspielen | Setup | `server/index.js:791` |
 | GET | `/api/run/moderator-state` | Gesamtzustand für die Moderation | Moderation | `server/index.js:827` |
 | GET | `/api/run/stage-state` | öffentlicher Zustand für die Bühne | Bühne, Setup (Statusprüfung vor Start) | `server/index.js:921` |
