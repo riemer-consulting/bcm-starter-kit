@@ -1,0 +1,496 @@
+{
+  "zeitpunkt": "2026-11-19T16:22:04.621Z",
+  "szenario": "scenario.waterkant.json",
+  "faelle": [
+    {
+      "id": "N-01",
+      "zweck": "Empfänger nicht erreichbar (SMTP 550 bei RCPT)",
+      "erwartet": "Versand schlägt fehl, Übung läuft weiter; Moderation zeigt „E-Mail fehlgeschlagen … mündlich oder auf Papier übergeben“; Journal: „zustellung fehlgeschlagen“; kein erneuter Versand ohne Aktion.",
+      "bedingungen": [
+        {
+          "name": "Server antwortet",
+          "ok": true,
+          "beobachtet": "HTTP 200 nach 25 ms"
+        },
+        {
+          "name": "Ergebnis je Person als fehlgeschlagen vermerkt",
+          "ok": true,
+          "beobachtet": "[{\"ok\":false,\"fehler\":\"Can't send mail - all recipients were rejected: 550 Empfänge\"}]"
+        },
+        {
+          "name": "Übung läuft weiter",
+          "ok": true,
+          "beobachtet": "running"
+        },
+        {
+          "name": "Journal vermerkt den Fehlschlag",
+          "ok": true,
+          "beobachtet": "zustellung fehlgeschlagen"
+        },
+        {
+          "name": "geöffnete Moderation zeigt den Fehlschlag mit Handlungsanweisung",
+          "ok": true,
+          "beobachtet": "Hinweis sichtbar"
+        },
+        {
+          "name": "nach Neuladen bleibt der Fehlschlag bei der Karte sichtbar",
+          "ok": true,
+          "beobachtet": "in „Verschickte vertrauliche Karten“ sichtbar"
+        },
+        {
+          "name": "kein automatischer zweiter Versuch",
+          "ok": true,
+          "beobachtet": "0 Mails angekommen"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-02",
+      "zweck": "SMTP-Verbindung bricht während der Übertragung ab",
+      "erwartet": "Versand schlägt nach kurzer Zeit fehl (kein Hängenbleiben über 60 s), Übung läuft weiter, Fehlschlag sichtbar und im Journal; nachfolgende Karten werden wieder normal zugestellt, sobald der Server erreichbar ist.",
+      "bedingungen": [
+        {
+          "name": "Antwort innerhalb 60 s",
+          "ok": true,
+          "beobachtet": "HTTP 200 nach 12 ms"
+        },
+        {
+          "name": "Fehlschlag vermerkt",
+          "ok": true,
+          "beobachtet": "write EPIPE"
+        },
+        {
+          "name": "nächste Karte nach Wiederherstellung zugestellt",
+          "ok": true,
+          "beobachtet": "1 Mail(s) für SK44"
+        },
+        {
+          "name": "Übung läuft weiter",
+          "ok": true,
+          "beobachtet": "running"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-03",
+      "zweck": "Bühne wird während eines Einspielers neu geladen",
+      "erwartet": "Nach dem Neuladen zeigt die Bühne dieselbe Lage; der Browser verlangt erneut die Tonfreigabe; nach „Ton aktivieren“ läuft genau ein Einspieler (der der aktuellen Lage) von vorn, kein zweiter Ton parallel, keine vertraulichen Texte.",
+      "bedingungen": [
+        {
+          "name": "vor dem Neuladen lief der Einspieler der Lage",
+          "ok": true,
+          "beobachtet": "[{\"src\":\"\",\"laeuft\":false},{\"src\":\"lk04-loeschanlage-durchsage.mp3\",\"laeuft\":true}]"
+        },
+        {
+          "name": "dieselbe Lage nach dem Neuladen",
+          "ok": true,
+          "beobachtet": "Brandalarm im Rechenzentrum"
+        },
+        {
+          "name": "Tonfreigabe wird erneut verlangt",
+          "ok": true,
+          "beobachtet": "Freigabe sichtbar"
+        },
+        {
+          "name": "genau ein Ton läuft, der der aktuellen Lage",
+          "ok": true,
+          "beobachtet": "[{\"src\":\"\",\"laeuft\":false,\"zeit\":0},{\"src\":\"lk04-loeschanlage-durchsage.mp3\",\"laeuft\":true,\"zeit\":2.448743}]"
+        },
+        {
+          "name": "keine vertraulichen Texte auf der Bühne",
+          "ok": true,
+          "beobachtet": "geprüft gegen alle Kartentexte"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-04",
+      "zweck": "Bühnenfenster wird geschlossen und später neu geöffnet",
+      "erwartet": "Die Übung läuft ohne Bühne weiter (Zeit, Lagen, Zustellungen); die neu geöffnete Bühne zeigt sofort die aktuelle Lage.",
+      "bedingungen": [
+        {
+          "name": "Übung läuft ohne Bühne weiter",
+          "ok": true,
+          "beobachtet": "running, Minute 0.1 → 22.1"
+        },
+        {
+          "name": "neu geöffnete Bühne zeigt die aktuelle Lage",
+          "ok": true,
+          "beobachtet": "LK06 Lagebild nach dem Löschen"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-05",
+      "zweck": "Server-Neustart während laufender Übung",
+      "erwartet": "Zustand bleibt erhalten (Status, Übungsminute ± 1, gezeigte Lagen, Entscheidungen); bereits verschickte Karten werden nicht erneut verschickt; das Journal setzt die Folgenummern fort.",
+      "bedingungen": [
+        {
+          "name": "Status erhalten",
+          "ok": true,
+          "beobachtet": "running → running"
+        },
+        {
+          "name": "Übungsminute fortgesetzt",
+          "ok": true,
+          "beobachtet": "22.10 → 22.20"
+        },
+        {
+          "name": "gezeigte Lagen erhalten",
+          "ok": true,
+          "beobachtet": "LK01 LK02 LK03 LK04 LK05 LK06"
+        },
+        {
+          "name": "Entscheidung erhalten",
+          "ok": true,
+          "beobachtet": "[{\"id\":\"W1\",\"frage\":\"Fährt die IT die Systeme im Serverraum jetzt kontrolliert herunter – oder laufen sie weiter, bis die Gebäudetechnik die Ursache kennt?\",\"hinweis\":\"Um 03:02 Uhr weiß niemand, dass es brennt. Herunterfahren bricht die Preisübertragung zum Saisonstart und die Partner-Uploads ab und könnte ein Fehlalarm sein; Weiterlaufen riskiert einen harten Ausfall. Beide Antworten sind vertretbar – bewertet wird, ob jemand entscheidet und es dokumentiert.\",\"lagekarte\":\"LK03\",\"lageTitel\":\"Serverraum wird warm\",\"simZeit\":\"Dienstag 03:02 Uhr\",\"aktuell\":false,\"erreicht\":true,\"gewaehlt\":\"herunterfahren\",\"optionen\":[{\"id\":\"herunterfahren\",\"label\":\"Die Server im Serverraum jetzt kontrolliert herunterfahren (die laufende Preisübertragung und die Partner-Uploads brechen ab)\",\"wirkung\":\"Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.\"},{\"id\":\"weiterlaufen\",\"label\":\"Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat\",\"wirkung\":\"Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).\"}]},{\"id\":\"W2\",\"frage\":\"Informiert Waterkant heute alle Partnermärkte mit einer ehrlichen, aber unsicheren Prognose – oder erst, wenn ein belastbarer Wiederanlauftermin feststeht?\",\"hinweis\":\"Früh heißt: Partner können planen, aber eine unsichere Prognose kann sich als falsch erweisen. Spät heißt: gesicherte Aussage, aber die Partner hören bis dahin Gerüchte. Gut ist eine abgewogene Entscheidung, nicht automatisch „früh“.\",\"lagekarte\":\"LK09\",\"lageTitel\":\"Die Partnermärkte rufen an\",\"simZeit\":\"Dienstag 08:30 Uhr\",\"aktuell\":false,\"erreicht\":false,\"gewaehlt\":null,\"optionen\":[{\"id\":\"frueh\",\"label\":\"Heute 11 Uhr alle Partner informieren: Lage, ehrliche Spanne („Kassen frühestens Donnerstag“), fester Update-Takt\",\"wirkung\":\"Die Partner planen mit Donnerstag; einer kritisiert später, dass „Donnerstag“ nur für Kassen, nicht für Bestellungen galt. Zwei Partner hatten Personal und Werbung auf Donnerstag geplant – Mehrkosten werden kulanzhalber erstattet.\"},{\"id\":\"spaeter\",\"label\":\"Erst informieren, wenn ein belastbarer Termin feststeht (voraussichtlich Mittwoch)\",\"wirkung\":\"Die Partner erfahren die Lage aus der Zeitung; der Verbundvorstand verlangt ein Gespräch (vertrauliche Karte bei „Den Backup-Server bergen?“); Kulanzposten in der Rechnung.\"}]},{\"id\":\"W3\",\"frage\":\"Lässt Waterkant den Backup-Server mit der Dienstagssicherung heute von einer Fachfirma aus dem gesperrten Serverraum bergen – oder wartet es die Freigabe des Raums ab?\",\"hinweis\":\"Kleinere Datenlücke gegen einen Einsatz im kontaminierten Raum, einen Tag spätere Reinigung und die Abstimmung mit dem Versicherer. Wird geborgen, dann nur durch die Fachfirma mit Gefährdungsbeurteilung, Messwerten, Schutzausrüstung und Dokumentation – nie durch die eigene IT. Beide Wege sind vertretbar.\",\"lagekarte\":\"LK14\",\"lageTitel\":\"Den Backup-Server bergen?\",\"simZeit\":\"Mittwoch 07:30 Uhr\",\"aktuell\":false,\"erreicht\":false,\"gewaehlt\":null,\"optionen\":[{\"id\":\"bergen\",\"label\":\"Heute durch die Fachfirma unter Schutzausrüstung bergen lassen (nach Gefährdungsbeurteilung), dann reinigen und prüfen\",\"wirkung\":\"Die Dienstagssicherung ist nach Reinigung lesbar; die Datenlücke schrumpft auf etwa zwei Stunden. Die Reinigung und damit die Rückkehr ins eigene Rechenzentrum verschieben sich um einen Tag; der Gutachter muss vorab zustimmen. Die Berufsgenossenschaft fragt nach den Unterlagen.\"},{\"id\":\"abwarten\",\"label\":\"Freigabe des Raums abwarten (nach Reinigung und Freimessung, frühestens in ca. zehn Tagen)\",\"wirkung\":\"Niemand betritt den Raum vorzeitig. Bis zur Freigabe arbeitet Waterkant ohne die Montagsdaten und bucht von Hand nach; ein Datenretter hält die Dienstagssicherung danach für wahrscheinlich, aber nicht sicher lesbar.\"}]},{\"id\":\"W4\",\"frage\":\"Bringt Waterkant nur das Nötigste ins Ausweich-Rack – oder erweitert es den Ausweichbetrieb, damit auch Lager, Gewerbeportal und Online-Bestände schnell zurückkommen?\",\"hinweis\":\"Klein: günstiger, weniger Fehlerrisiko, aber drei Wochen ohne Lagerverwaltung, Gewerbeportal und Online-Bestände. Groß: zwölf Monate Vertrag, mehr Arbeit für ein erschöpftes Team, schneller zurück. Keine Option ist kostenlos. „Erweitern“ erst festhalten, wenn der Tisch den Zustimmungsweg geklärt hat (der Vorsitzende der Gesellschafterversammlung ist telefonisch erreichbar). Will der Tisch ohne Zustimmung unterschreiben, wird nicht „erweitern“ festgehalten: Der Vertrag bleibt bis zur Zustimmung ungezeichnet, es gilt „nur das Nötigste“, und der offene Zustimmungsweg kommt ins Debriefing. Die fachliche Prüfung der Datenverarbeitung im Ausweich-Rack gehört zur Entscheidung.\",\"lagekarte\":\"LK15\",\"lageTitel\":\"Wie weit geht der Ausweichbetrieb?\",\"simZeit\":\"Mittwoch 10:00 Uhr\",\"aktuell\":false,\"erreicht\":false,\"gewaehlt\":null,\"optionen\":[{\"id\":\"minimal\",\"label\":\"Nur Kassen- und Preisdienste und den Kern der Warenwirtschaft verlagern; der Rest wartet auf das eigene Rechenzentrum\",\"wirkung\":\"Lager, Gewerbeportal und Online-Bestände bleiben etwa drei Wochen eingeschränkt; Gewerbekunden weichen aus.\"},{\"id\":\"ausbauen\",\"label\":\"Ausweich-Rack binnen 48 Stunden erweitern und auch Lager, Gewerbeportal und Online-Bestände verlagern – nach eingeholter Zustimmung der Gesellschafter (zwölf Monate Mindestlaufzeit)\",\"wirkung\":\"Online-Shop und Portal laufen ab Freitagabend wieder; beim schnellen Umzug geht ein Preisabgleich verloren (vertrauliche Karte am Saisonsamstag).\"}]},{\"id\":\"W5\",\"frage\":\"Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?\",\"hinweis\":\"Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium. Die Folgen unterstellen Umsatz als gemeinsames Kriterium; wählt der Tisch ein anderes, nennt die Moderation die betroffenen Märkte entsprechend.\",\"lagekarte\":\"LK20\",\"lageTitel\":\"Wer wird zuerst umgestellt?\",\"simZeit\":\"Donnerstag 10:00 Uhr\",\"aktuell\":false,\"erreicht\":false,\"gewaehlt\":null,\"optionen\":[{\"id\":\"gleichrangig\",\"label\":\"Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)\",\"wirkung\":\"Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.\"},{\"id\":\"eigene\",\"label\":\"Eigene 14 Filialen zuerst, danach die Partnermärkte\",\"wirkung\":\"Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).\"}]}]"
+        },
+        {
+          "name": "keine Doppelzustellung durch den Neustart",
+          "ok": true,
+          "beobachtet": "6 → 6 Mails"
+        },
+        {
+          "name": "Journal: Folgenummern lückenlos fortgesetzt",
+          "ok": true,
+          "beobachtet": "14 → 14 Einträge, letzte seq 14"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-06",
+      "zweck": "Zwei schnelle gleichzeitige Aktionen",
+      "erwartet": "Gleiche Karte zweimal gleichzeitig ausgelöst → genau eine Zustellung je Person. Zwei verschiedene Optionen derselben Entscheidung gleichzeitig → Endzustand ist genau eine Option, Abschlussposten passen zu ihr.",
+      "bedingungen": [
+        {
+          "name": "dreifach gleichzeitig ausgelöst → eine Mail",
+          "ok": true,
+          "beobachtet": "1 Mail(s)"
+        },
+        {
+          "name": "genau eine Option festgehalten",
+          "ok": true,
+          "beobachtet": "ausbauen"
+        },
+        {
+          "name": "Abschlussposten passen zur festgehaltenen Option",
+          "ok": true,
+          "beobachtet": "aktiv: ausweichausbau"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-07",
+      "zweck": "Entscheidung wird nachträglich geändert",
+      "erwartet": "Die Bühne zeigt danach nur die Folge der neuen Option; die Rechnung enthält nur deren Posten; eine Folgekarte der alten Option, die schon zugestellt war, bleibt zugestellt (wird nicht zurückgeholt) und wird nicht erneut verschickt.",
+      "bedingungen": [
+        {
+          "name": "Bühne zeigt die Folge der neuen Option",
+          "ok": true,
+          "beobachtet": "LK08"
+        },
+        {
+          "name": "Bühne zeigt keine Folge der alten Option",
+          "ok": true,
+          "beobachtet": "alte Option ohne Zusatz an dieser Lage"
+        },
+        {
+          "name": "Endzustand = neue Option",
+          "ok": true,
+          "beobachtet": "weiterlaufen"
+        },
+        {
+          "name": "Wechsel löst keinen erneuten Versand aus",
+          "ok": true,
+          "beobachtet": "jede Karte höchstens einmal im Journal"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-08",
+      "zweck": "Bereits zugestellte Karte wird erneut ausgelöst",
+      "erwartet": "Keine zweite Mail; Übung unverändert.",
+      "bedingungen": [
+        {
+          "name": "genau eine Zustellung",
+          "ok": true,
+          "beobachtet": "1 → 1"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-09",
+      "zweck": "Nicht berechtigte Rolle erhält keine Nachricht",
+      "erwartet": "Eine Karte an Rolle X erreicht nur Personen mit Rolle X (oder der dokumentierten Ersatzrolle, wenn X unbesetzt ist), niemanden sonst.",
+      "bedingungen": [
+        {
+          "name": "nur berechtigte Empfänger",
+          "ok": true,
+          "beobachtet": "person6@example.com (berechtigt: person6@example.com)"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-10",
+      "zweck": "Überraschung vor ihrer Voraussetzung",
+      "erwartet": "Ablehnung mit Begründung (HTTP 400, Text nennt die fehlende Lage), keine Mail, keine Bühnenanzeige, Journal vermerkt „abgelehnt“; die Moderation zeigt die Schaltfläche gesperrt.",
+      "bedingungen": [
+        {
+          "name": "vertrauliche Überraschung abgelehnt",
+          "ok": true,
+          "beobachtet": "HTTP 400: Diese Karte passt erst nach LK15."
+        },
+        {
+          "name": "öffentliche Überraschung abgelehnt",
+          "ok": true,
+          "beobachtet": "HTTP 400: Diese Karte passt erst nach LK14."
+        },
+        {
+          "name": "keine Mail, keine Bühnenanzeige",
+          "ok": true,
+          "beobachtet": "0 Mails"
+        },
+        {
+          "name": "Journal vermerkt die Ablehnung",
+          "ok": true,
+          "beobachtet": "B1:abgelehnt (HTTP 400), B5:abgelehnt (HTTP 400)"
+        },
+        {
+          "name": "Moderation zeigt B1 und B5 gesperrt",
+          "ok": true,
+          "beobachtet": "gesperrt: B1 B2 B3 B4 B5 B6 B7 B8"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-11",
+      "zweck": "Pause hält Zeit und Versand an",
+      "erwartet": "Während der Pause steht die Übungsminute, es wird keine Lage gezeigt und keine Karte verschickt; nach dem Fortsetzen läuft die Zeit ab dem Pausenstand weiter.",
+      "bedingungen": [
+        {
+          "name": "Zeit steht",
+          "ok": true,
+          "beobachtet": "0.000 → 0.000"
+        },
+        {
+          "name": "keine neue Lage, keine Mail",
+          "ok": true,
+          "beobachtet": "0 Lagen, 0 Mails"
+        },
+        {
+          "name": "Zeit läuft nach dem Fortsetzen ab Pausenstand weiter",
+          "ok": true,
+          "beobachtet": "0.000 → 0.100"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-12",
+      "zweck": "Mediendatei fehlt bzw. ist keine Audiodatei",
+      "erwartet": "Fehlende Datei: die Drehbuchprüfung meldet sie als Fehler (sichtbar in der Einrichtung). Beschädigte Datei: die Bühne zeigt die Lage weiter, ohne Skriptabbruch; die Übung läuft weiter.",
+      "bedingungen": [
+        {
+          "name": "fehlende Datei in der Drehbuchprüfung gemeldet",
+          "ok": true,
+          "beobachtet": "Karte LK04 (Ton): Datei /media/waterkant/gibt-es-nicht.mp3 fehlt."
+        },
+        {
+          "name": "Bühne zeigt LK04 trotz Medienfehler",
+          "ok": true,
+          "beobachtet": "Brandalarm im Rechenzentrum"
+        },
+        {
+          "name": "Bühne zeigt LK05 trotz Medienfehler",
+          "ok": true,
+          "beobachtet": "Feuerwehr im Einsatz"
+        },
+        {
+          "name": "kein Skriptabbruch auf der Bühne",
+          "ok": true,
+          "beobachtet": "keine Fehler"
+        },
+        {
+          "name": "Übung läuft weiter",
+          "ok": true,
+          "beobachtet": "running"
+        }
+      ],
+      "befunde": [
+        {
+          "schwere": "niedrig",
+          "text": "Moderation zeigt einen Hinweis auf den Medienfehler."
+        }
+      ],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-13",
+      "zweck": "Zwei Moderationsfenster und zwei Bühnen gleichzeitig",
+      "erwartet": "Beide Moderationsfenster zeigen nach spätestens 3 s denselben Zustand (Pause, Entscheidung); von zwei Bühnen mit Ton spielt nur die zuletzt freigegebene, die andere zeigt „Ton läuft auf einer anderen Bühne“.",
+      "bedingungen": [
+        {
+          "name": "Pause aus Fenster 1 in Fenster 2 sichtbar",
+          "ok": true,
+          "beobachtet": "pausiert angezeigt"
+        },
+        {
+          "name": "Fortsetzen aus Fenster 2 wirksam",
+          "ok": true,
+          "beobachtet": "running"
+        },
+        {
+          "name": "nur die zuletzt freigegebene Bühne spielt Ton",
+          "ok": true,
+          "beobachtet": "Bühne 1 still, Bühne 2 spielt"
+        },
+        {
+          "name": "Bühne 1 zeigt den Hinweis „Ton auf anderer Bühne“",
+          "ok": true,
+          "beobachtet": "sichtbar"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-14",
+      "zweck": "Bühnenseite ruft Moderationsdaten ab",
+      "erwartet": "Erwartung nach heutiger Architektur (Einzelplatz, nur 127.0.0.1, keine Anmeldung): der Abruf GELINGT – es gibt keine Zugriffstrennung zwischen Bühne und Moderation. Geschützt ist nur, dass die Bühne von sich aus keine vertraulichen Inhalte lädt oder zeigt: die Bühnen-Schnittstelle enthält keinen Text einer vertraulichen Karte.",
+      "bedingungen": [
+        {
+          "name": "Abruf der Moderationsdaten aus der Bühnenseite gelingt (bekannte Einschränkung)",
+          "ok": true,
+          "beobachtet": "HTTP 200, 184981 Zeichen"
+        },
+        {
+          "name": "Bühnen-Schnittstelle enthält keine vertraulichen Kartentexte",
+          "ok": true,
+          "beobachtet": "0 Treffer"
+        }
+      ],
+      "befunde": [
+        {
+          "schwere": "mittel",
+          "text": "Keine Zugriffstrennung: Wer den Rechner der Moderation im Netz erreicht oder an der Bühne die Adresse ändert, kann die Moderationsansicht mit allen vertraulichen Texten öffnen. Gemindert durch Bindung an 127.0.0.1 (Standard). Eigenes Projekt „Zugriffsschutz“ (siehe offene Risiken)."
+        }
+      ],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-15",
+      "zweck": "Unzulässige Medien- und Pfadangaben",
+      "erwartet": "Kein Abruf von Dateien außerhalb von media/ (Projektquellen, Daten, Einstellungen), weder direkt noch kodiert; Logo-Pfad mit „../“ wird ignoriert.",
+      "bedingungen": [
+        {
+          "name": "keine Datei außerhalb media/ ausgeliefert",
+          "ok": true,
+          "beobachtet": "/media/../server/index.js → 404; /media/%2e%2e/server/index.js → 404; /media/..%2fserver/index.js → 404; /media/%2e%2e%2fdata%2fsettings.json → 404; /../data/settings.json → 404; /media/waterkant/../../package.json → 404"
+        },
+        {
+          "name": "Logo-Pfad mit „../“ wird nicht in den Export eingebettet",
+          "ok": true,
+          "beobachtet": "HTTP 200; eingebettet: nichts"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-16",
+      "zweck": "Browser der Moderation stürzt während der Übung ab (Prozess beendet)",
+      "erwartet": "Die Übung läuft serverseitig weiter (Zeit, Lagen, Zustellungen); ein neu gestarteter Browser zeigt in der Moderation den aktuellen Stand einschließlich festgehaltener Entscheidung; keine Doppelzustellung durch den Abbruch.",
+      "bedingungen": [
+        {
+          "name": "Entscheidung vor dem Absturz über die Oberfläche festgehalten",
+          "ok": true,
+          "beobachtet": "W1 = herunterfahren"
+        },
+        {
+          "name": "Browser tatsächlich abgestürzt (Verbindung getrennt, Prozess beendet)",
+          "ok": true,
+          "beobachtet": "getrennt: true, Hauptprozess beendet: ja (SIGKILL)"
+        },
+        {
+          "name": "Übung läuft serverseitig weiter",
+          "ok": true,
+          "beobachtet": "running"
+        },
+        {
+          "name": "Entscheidung aus dem abgestürzten Fenster erhalten",
+          "ok": true,
+          "beobachtet": "W1 = herunterfahren"
+        },
+        {
+          "name": "neuer Browser zeigt die aktuelle Lage",
+          "ok": true,
+          "beobachtet": "Lagebild nach dem Löschen"
+        },
+        {
+          "name": "keine Doppelzustellung",
+          "ok": true,
+          "beobachtet": "2 Zustellungen, 2 verschiedene Karten"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    },
+    {
+      "id": "N-17",
+      "zweck": "Zeitsprung zurück auf eine frühere Übungsminute",
+      "erwartet": "Die Bühne zeigt die zur neuen Minute gehörende frühere Lage; bereits gezeigte Lagen und verschickte Karten werden weder erneut ausgelöst noch erneut verschickt – auch nicht, wenn die Zeit danach wieder über ihre Minuten läuft; festgehaltene Entscheidungen bleiben.",
+      "bedingungen": [
+        {
+          "name": "Bühne zeigt die frühere Lage",
+          "ok": true,
+          "beobachtet": "LK04 (erwartet LK04 Brandalarm im Rechenzentrum)"
+        },
+        {
+          "name": "kein erneuter Versand beim Rücksprung",
+          "ok": true,
+          "beobachtet": "0 neue Mails"
+        },
+        {
+          "name": "beim erneuten Vorlauf keine Lage doppelt gezeigt",
+          "ok": true,
+          "beobachtet": "8 → 8 Einträge „lage gezeigt“"
+        },
+        {
+          "name": "beim erneuten Vorlauf keine Karte doppelt zugestellt",
+          "ok": true,
+          "beobachtet": "6 → 6 Zustellungen"
+        },
+        {
+          "name": "Entscheidung bleibt festgehalten",
+          "ok": true,
+          "beobachtet": "herunterfahren"
+        }
+      ],
+      "befunde": [],
+      "ergebnis": "bestanden"
+    }
+  ],
+  "bestanden": 17,
+  "gesamt": 17
+}

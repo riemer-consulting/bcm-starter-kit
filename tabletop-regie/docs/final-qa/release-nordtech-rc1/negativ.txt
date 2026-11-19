@@ -1,0 +1,18 @@
+N-01 bestanden: Empfänger nicht erreichbar (SMTP 550 bei RCPT)
+N-02 bestanden: SMTP-Verbindung bricht während der Übertragung ab
+N-03 bestanden: Bühne wird während eines Einspielers neu geladen
+N-04 bestanden: Bühnenfenster wird geschlossen und später neu geöffnet
+N-05 bestanden: Server-Neustart während laufender Übung
+N-06 bestanden: Zwei schnelle gleichzeitige Aktionen
+N-07 bestanden: Entscheidung wird nachträglich geändert
+N-08 bestanden: Bereits zugestellte Karte wird erneut ausgelöst
+N-09 bestanden: Nicht berechtigte Rolle erhält keine Nachricht
+N-10 bestanden: Überraschung vor ihrer Voraussetzung
+N-11 bestanden: Pause hält Zeit und Versand an
+N-12 bestanden: Mediendatei fehlt bzw. ist keine Audiodatei
+N-13 bestanden: Zwei Moderationsfenster und zwei Bühnen gleichzeitig
+N-14 bestanden: Bühnenseite ruft Moderationsdaten ab
+N-15 bestanden: Unzulässige Medien- und Pfadangaben
+N-16 bestanden: Browser der Moderation stürzt während der Übung ab (Prozess beendet)
+N-17 bestanden: Zeitsprung zurück auf eine frühere Übungsminute
+Negativtests: 17/17 bestanden

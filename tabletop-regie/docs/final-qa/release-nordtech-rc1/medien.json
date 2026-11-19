@@ -1,0 +1,3783 @@
+{
+  "zeitpunkt": "2026-11-19T16:19:34.253Z",
+  "grenzen": {
+    "lufsMin": -30,
+    "lufsMax": -14,
+    "truePeakMax": -0.5,
+    "ereignisMaxSek": 120
+  },
+  "szenarien": [
+    {
+      "datei": "scenario.nordtech.json",
+      "dateien": [
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK01",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk01-loesegeld-kamera-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk01-loesegeld-kamera-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "175416 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1673×940"
+            }
+          ],
+          "sha256": "f60caa6d64c2c8b47a5e609e638033e120a3cc87ca68e7d58097d44fad93ed92",
+          "breite": 1673,
+          "hoehe": 940,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK01",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk01-stille-gemurmel.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk01-stille-gemurmel.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "72143 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-20.3 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-1.7 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "7.2 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "7.2 s bei 5 Min."
+            }
+          ],
+          "sha256": "d606acfd7e1e991f7f20d3d85c68390112370e49489960279b38b5a37be54791",
+          "dauer": 7.2,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -20.3,
+          "truePeak": -1.7,
+          "anfangDb": -23.3,
+          "wirksameLautheit": -22.2,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK16",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk16-incident-overview-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk16-incident-overview-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "166444 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "7a07ed38e3c5f06c659219777353bb6b7ae327ca5231f01ed2e8944b4b422068",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK02",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk02-produktion-gestoppt-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk02-produktion-gestoppt-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "318320 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "50a3ad3e64809697708a89d4bae4654fe007b4da8ce3fcb9d639f2c3e3eeca17",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK02",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk02-produktion-faehrt-herunter.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk02-produktion-faehrt-herunter.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "224906 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-20.7 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-5.4 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "14 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "14 s bei 4 Min."
+            }
+          ],
+          "sha256": "c422c94440eebfbad708877faf04daef5976f0f8156009fd49d8b176e01376b8",
+          "dauer": 14,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -20.7,
+          "truePeak": -5.4,
+          "anfangDb": -17,
+          "wirksameLautheit": -22.6,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK03",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk03-linkedin-post-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk03-linkedin-post-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "170912 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1149×1369"
+            }
+          ],
+          "sha256": "7ced6d242f7a7320187d8864ebd29f967f0a636da276428916ea5dfe5cd0376a",
+          "breite": 1149,
+          "hoehe": 1369,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK04",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk04-nordkanal-anfrage.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk04-nordkanal-anfrage.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "93972 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "f2bff4d75f8b8f4d964cde4ae99a41999fbc87c6a5b9a22dd86d70c757d7c45c",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK04",
+          "art": "Ton",
+          "datei": "/media/nordtech/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "4.9 s bei 5 Min."
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK05",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk05-leerer-arbeitsplatz-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk05-leerer-arbeitsplatz-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "182066 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "917114425f42140d836755df70d46fbe273b6e5c4975ef9793c79e1cae566ec0",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK05",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk05-it-bereitschaft.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk05-it-bereitschaft.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "260850 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-20.4 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-7.2 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "16.3 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "16.3 s bei 3 Min."
+            }
+          ],
+          "sha256": "b9d0c0467c9f4925515648f28656402c67653c12113ce2fd7e7c341f8f769c24",
+          "dauer": 16.3,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -20.4,
+          "truePeak": -7.2,
+          "anfangDb": -17.9,
+          "wirksameLautheit": -22.3,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK06",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk06-kunde-eskaliert-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk06-kunde-eskaliert-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "139264 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "ea837e273580c586f2511c539f63898a20ffc0d7299fbc2eda3e7d1805c11b2c",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK06",
+          "art": "Ton",
+          "datei": "/media/nordtech/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "4.9 s bei 4 Min."
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK07",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk07-datenschutz.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk07-datenschutz.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "97786 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "3caf8c2ab76abf5c726086dc8b83ce8b34c1783c64368d44e4644eea4e828934",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK08",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk08-positive-entwicklung.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk08-positive-entwicklung.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "97194 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "8d418259476fcd14545b77d36cb2141baf7f07229eb7dd2d3183873ff24016aa",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK09",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk09-offline-backup-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk09-offline-backup-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "171834 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "11616b82d15145c091ff1583dc484296524c792dc10775f0485bb2411c7f0faa",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK10",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk10-nordkanal-studio-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk10-nordkanal-studio-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "94466 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1672×941"
+            }
+          ],
+          "sha256": "98e7121cfc86c63076250c73d71beb1ddbc4187d7831d78b5794c14e54861aa3",
+          "breite": 1672,
+          "hoehe": 941,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK10",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk10-nordkanal-nachrichten.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk10-nordkanal-nachrichten.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "678079 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-16.9 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-1.9 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "56.5 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "56.5 s bei 4 Min."
+            }
+          ],
+          "sha256": "74b652a65f23635cbd5d53dabcfde97bff91bd9493505163739cf561b84401f2",
+          "dauer": 56.5,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -16.9,
+          "truePeak": -1.9,
+          "anfangDb": -16.4,
+          "wirksameLautheit": -18.8,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK11",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk11-pharmakunde-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk11-pharmakunde-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "209990 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "251522e54a7aabd2a632557a4055e635237329f0adebee32a545fe182eb2ba1a",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK12",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk12-werk-sued-online-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk12-werk-sued-online-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "180770 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "0436186b71003611a9d67e4ce4367b62184789c050787f3a45c9ca0e7b2c4dc1",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK12",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk12-anlage-faehrt-hoch.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk12-anlage-faehrt-hoch.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "177258 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-17.7 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-5.4 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "11 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "11 s bei 3 Min."
+            }
+          ],
+          "sha256": "cfb699b76ea7cc47b3b8ab9aafb64a690cea46e3418dc652fec1668344523be3",
+          "dauer": 11,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -17.7,
+          "truePeak": -5.4,
+          "anfangDb": -15.3,
+          "wirksameLautheit": -19.6,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK13",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk13-cyberversicherung-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk13-cyberversicherung-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "187270 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "80a3a8bd341cc502e63465e75a9fdc9ae9e1ed1a4f7324f2c4c472b43eae9986",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK14",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk14-erp-testbetrieb-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk14-erp-testbetrieb-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "167802 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "41353da9167424b359cbf9f130c7bc7e6006743178d58eace66ddacda0389bfc",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK15",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk15-wiederanlauf.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk15-wiederanlauf.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "93554 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "dd7de0a1bbf221028f72756b414ee29a0c7dadda0d6c1b3fc44a5dd13a43af03",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK17",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk17-zwischenfazit-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk17-zwischenfazit-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "153148 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1536×1024"
+            }
+          ],
+          "sha256": "3d44c806c2125924bc3f2df2b4bc3b8f130814907ef15f020c1d774fee1694e6",
+          "breite": 1536,
+          "hoehe": 1024,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK18",
+          "art": "Bild",
+          "datei": "/media/nordtech/v1-anmeldung-hakt.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/v1-anmeldung-hakt.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "139139 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "29cf95429d6bd0d4aa870e210257763eece0e29976d8a0f2ab3ce180cee816df",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK19",
+          "art": "Bild",
+          "datei": "/media/nordtech/v2-maschine-seltsam.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/v2-maschine-seltsam.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "90655 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "fd5d5d7e3f23586bf0a08d763269e173ffd832932befe29f68d6295a2db26e92",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK19",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk19-fraeslinie-stoerung.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk19-fraeslinie-stoerung.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "177258 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-19.2 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-5.1 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "11 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "11 s bei 3 Min."
+            }
+          ],
+          "sha256": "b55eafbe63af44e6d23000d4c2ef06cd0b23a800e29511e36e271fff1486c443",
+          "dauer": 11,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -19.2,
+          "truePeak": -5.1,
+          "anfangDb": -18.3,
+          "wirksameLautheit": -22.3,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK20",
+          "art": "Bild",
+          "datei": "/media/nordtech/v3-keine-auftraege.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/v3-keine-auftraege.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "84461 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e408edb3cade12926f5c551909ab24ccec5edf2cafc9fd0eb84bd9b238747bc2",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK22",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk22-kommunikation-ohne-it.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk22-kommunikation-ohne-it.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "100027 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "41edb7380a49e6dde141463791da4b7979ff63c979b6752545736ac1cb2a98f5",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK22",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk22-funk-abgebrochen.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk22-funk-abgebrochen.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "186871 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-18.4 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-1.9 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "11.7 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "11.7 s bei 4 Min."
+            }
+          ],
+          "sha256": "f7a903511e0e93273b2f8948755322ecb201535ea2170b8a2c755590e37917e5",
+          "dauer": 11.7,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -18.4,
+          "truePeak": -1.9,
+          "anfangDb": -19.1,
+          "wirksameLautheit": -20.3,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK21",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk21-chargenfreigabe.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk21-chargenfreigabe.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "84428 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "452c5b561a57286ee402a3734b19fd6916d9bc74163e449a1d0cadc06e05c2a9",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK23",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk23-zutritt.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk23-zutritt.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "99875 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "c35d06f5ec2cc11edf19ed5d6387b1a4c4bdde7d879b3a1a1fc37e67e4afb769",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK23",
+          "art": "Ton",
+          "datei": "/media/nordtech/funk-ruf.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/funk-ruf.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "6522 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-14.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-3.9 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "0.8 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "0.8 s bei 4 Min."
+            }
+          ],
+          "sha256": "b55f7997b6f3b993114d9bec07f9e8675a04de475a2a58daa7a4012c1f2c6e4a",
+          "dauer": 0.8,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -14.5,
+          "truePeak": -3.9,
+          "anfangDb": -15,
+          "wirksameLautheit": -18.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK24",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk24-erstes-system.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk24-erstes-system.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "104614 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "4c0533eabab871c30f0924d0c2cbb126232c68ca855df6a30a76ee153b51ab5e",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK25",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk25-zwei-listen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk25-zwei-listen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "99773 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e06c313bad1248875f194de2390d81f233adbe54e26f69a6822f3a0bbe5ad78c",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK26",
+          "art": "Bild",
+          "datei": "/media/nordtech/lk26-menschen-am-limit.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk26-menschen-am-limit.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "98902 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e6a4f0a1c176f379cf2bbe761d1699ded04e962a1a500352903d508dd3cf04da",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "LK26",
+          "art": "Ton",
+          "datei": "/media/nordtech/lk26-schichtleitung-nachricht.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/lk26-schichtleitung-nachricht.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "339844 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-18.4 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-3 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "21.2 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "21.2 s bei 4 Min."
+            }
+          ],
+          "sha256": "30a03895910c08221c6e39dc6da2d9f63997412c39745f765caaf107394d0ef6",
+          "dauer": 21.2,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -18.4,
+          "truePeak": -3,
+          "anfangDb": -18.8,
+          "wirksameLautheit": -20.3,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B6",
+          "art": "Bild",
+          "datei": "/media/nordtech/b6-widerspruechliche-anweisungen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/b6-widerspruechliche-anweisungen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "94837 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "eb6dbf9ccc64c077c212a2359a66c3a912c0384cfd5aa8f652e916af45063f97",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B6",
+          "art": "Ton",
+          "datei": "/media/nordtech/b6-zwei-durchsagen.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/b6-zwei-durchsagen.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "331382 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-17.2 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-1.9 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "27.6 s"
+            }
+          ],
+          "sha256": "6e84ceb9300c50279ad8b52e328cfc741e85018016fe09d775662a51dee6f05d",
+          "dauer": 27.6,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -17.2,
+          "truePeak": -1.9,
+          "anfangDb": -17.8,
+          "wirksameLautheit": -19.1,
+          "hinweis": "Durchsage außerhalb des Waterkant-Prüfumfangs: Übungskennzeichnung fachlich bewerten",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B7",
+          "art": "Bild",
+          "datei": "/media/nordtech/b7-krisenstabsleitung-abgerufen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/b7-krisenstabsleitung-abgerufen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "81082 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e505f1de4319e2b43dbc842c5c78e5e4396b8fc31dc2b6c2943dff504cb4902d",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B7",
+          "art": "Ton",
+          "datei": "/media/nordtech/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B8",
+          "art": "Bild",
+          "datei": "/media/nordtech/b8-vermeintlicher-erfolg.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/b8-vermeintlicher-erfolg.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "103256 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "7537bb65407189077b718cb900f3bb4a6c9500efd7bcec1b82c7d205ad158f9d",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "B8",
+          "art": "Ton",
+          "datei": "/media/nordtech/b8-erp-test-meldung.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/b8-erp-test-meldung.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "247999 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-18 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-1.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "20.6 s"
+            }
+          ],
+          "sha256": "919f5885f627be9890bc9a7ef4e06693abe2d8c221d1ac7a1cded220341c74cb",
+          "dauer": 20.6,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -18,
+          "truePeak": -1.8,
+          "anfangDb": -17.8,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "Hintergrund",
+          "art": "Ton",
+          "datei": "/media/nordtech/ambience-maschinenraum.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/ambience-maschinenraum.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "151109 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-25.9 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-9.9 dBTP"
+            },
+            {
+              "name": "Hintergrund läuft in Schleife",
+              "ok": true,
+              "beob": "loop"
+            }
+          ],
+          "sha256": "de94b5404c03fcfab347eb238bcb8a3a9019a7e85adbdf8f377c713a61067661",
+          "dauer": 24,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -25.9,
+          "truePeak": -9.9,
+          "anfangDb": -23.2,
+          "wirksameLautheit": -31.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "Wartebild",
+          "art": "Bild",
+          "datei": "/media/nordtech/idle-hauptsitz-foto.webp",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/idle-hauptsitz-foto.webp"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "380746 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1672×941"
+            }
+          ],
+          "sha256": "ba0721925ca75ba9433b7d2be5a768948e723d368af384612d5f73433ab89c74",
+          "breite": 1672,
+          "hoehe": 941,
+          "codec": "webp",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "Logo",
+          "art": "Bild",
+          "datei": "/media/nordtech/nordtech-logo.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/nordtech-logo.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "118382 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            }
+          ],
+          "sha256": "089446a34d8c91fc67a034093aee6a0e99b0d12a2444bf96fea57780a3c6a647",
+          "breite": 900,
+          "hoehe": 265,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "nordtech-7-tage-ausnahmezustand",
+          "karte": "Logo Bühne",
+          "art": "Bild",
+          "datei": "/media/nordtech/nordtech-logo-light.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/nordtech/nordtech-logo-light.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "64360 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            }
+          ],
+          "sha256": "d21fc6492dc472c24ac785b05a44b24a1120e8fc3ddc995ef57f1bd33638d3aa",
+          "breite": 900,
+          "hoehe": 265,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        }
+      ],
+      "mehrfachVerwendet": {
+        "/media/nordtech/telefon-klingeln.mp3": [
+          "LK04",
+          "LK06",
+          "B7"
+        ]
+      },
+      "unbenutzteDateien": [
+        "lk01-loesegeldforderung.png",
+        "lk02-produktion-stoppt.png",
+        "lk03-linkedin-post.png",
+        "lk05-schluesselperson-faellt-aus.png",
+        "lk06-kunde-eskaliert.png",
+        "lk09-backups-gefunden.png",
+        "lk10-nordkanal-bericht.png",
+        "lk11-pharmakunde-eskaliert.png",
+        "lk12-teilweiser-wiederanlauf.png",
+        "lk13-cyberversicherung.png",
+        "lk14-erp-testbetrieb.png",
+        "lk16-ot-trennung.png",
+        "lk17-beirat-sondersitzung.png"
+      ],
+      "bestanden": 47,
+      "gesamt": 47,
+      "akustischAbgenommen": 0,
+      "toene": 15
+    },
+    {
+      "datei": "scenario.waterkant.json",
+      "dateien": [
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK01",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk01-usv-warnung.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk01-usv-warnung.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "76012 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e20d0ad2c0b4d96279bd9a305c642d0eda8010a942ad39d6e0d48095bcae1bdd",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK02",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk02-geruch-technikflur.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk02-geruch-technikflur.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "75513 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "658361a455cf98da146222b12a2a20bfcf1404ec68ca8a8995d34bdb0618ac2b",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK03",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk03-serverraum-warm.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk03-serverraum-warm.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "73767 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "35b73ba3e8656b55e673c11a6fb497c729506c3077522dd6eeb94d2208743543",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK03",
+          "art": "Ton",
+          "datei": "/media/waterkant/lk03-klimaalarm.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk03-klimaalarm.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "97010 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-20.1 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-15.4 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "6 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "6 s bei 2 Min."
+            }
+          ],
+          "sha256": "2428cb0ab314f5f1aa750b2e1a50cc78c01c33bdc99774b23acdbef2e59ecbde",
+          "dauer": 6,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -20.1,
+          "truePeak": -15.4,
+          "anfangDb": -23.1,
+          "wirksameLautheit": -24.5,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK04",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk04-brandalarm.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk04-brandalarm.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "87031 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "00b3e22388f4892a9593c0720e8e0a83b03e5128f094a66e14f85720af07cfc7",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK04",
+          "art": "Ton",
+          "datei": "/media/waterkant/lk04-loeschanlage-durchsage.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk04-loeschanlage-durchsage.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "438065 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-20.2 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-3.7 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "27.4 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "27.4 s bei 4 Min."
+            },
+            {
+              "name": "Bühne zeigt „Übungseinspielung – kein echter Alarm“ (Drehbuchfeld)",
+              "ok": true,
+              "beob": "uebungshinweis gesetzt"
+            },
+            {
+              "name": "Abschrift beginnt mit „Übung“",
+              "ok": true,
+              "beob": "Einspielung (Abschrift): „Übung, Übung, Übung. Dies ist eine Einspielung für den"
+            },
+            {
+              "name": "Beginn hörbar (Kennzeichnung nicht stumm)",
+              "ok": true,
+              "beob": "mittlerer Pegel erste 3 s: -19.8 dB"
+            }
+          ],
+          "sha256": "e27c37c5446e219f98b88e9dd02c49273b80c1a35300c01e1474d35a5b1e0a2a",
+          "dauer": 27.4,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -20.2,
+          "truePeak": -3.7,
+          "anfangDb": -19.8,
+          "wirksameLautheit": -24.6,
+          "alarm": true,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK05",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk05-feuerwehr.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk05-feuerwehr.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "83614 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "7b6d80827fa17dc3a15775c7b830ef49dbb35d72a435ee33204a73dbdad46071",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK05",
+          "art": "Ton",
+          "datei": "/media/waterkant/funk-ruf.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/funk-ruf.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "6522 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-14.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-3.9 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "0.8 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "0.8 s bei 4 Min."
+            }
+          ],
+          "sha256": "b55f7997b6f3b993114d9bec07f9e8675a04de475a2a58daa7a4012c1f2c6e4a",
+          "dauer": 0.8,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -14.5,
+          "truePeak": -3.9,
+          "anfangDb": -15,
+          "wirksameLautheit": -18.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK06",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk06-lagebild.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk06-lagebild.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "84965 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "3ceb6fc9c1b65a5d3edda941471799aa66e4944eac23d038a10e47f25d92c70a",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK07",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk07-was-laeuft.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk07-was-laeuft.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "77351 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "1d03995b24e182afb85b4e727e11e2afa6113f840b8aca3b4193817464e8e35e",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK08",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk08-saisonstart.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk08-saisonstart.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "79641 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "2fa224a509ab05ccc3384116b3f927138df26f7f4ac7a447a819176435052ca5",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK09",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk09-partnermaerkte.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk09-partnermaerkte.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "75491 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "ee9747a10bd5af63be4dbdacd51ba7e97a39a489a86902bce7291c729b6dc5b6",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK09",
+          "art": "Ton",
+          "datei": "/media/waterkant/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "4.9 s bei 4 Min."
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK10",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk10-serverraum-gesperrt.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk10-serverraum-gesperrt.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "85225 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "028f37ea1f59014f22cb2b55c801354909e82366f86a1ad12d40f7c395972b68",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK11",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk11-nordkanal.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk11-nordkanal.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "74821 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "568b76d6512bace5c052d72ec089aecfce4c6b70258e56bfca18f8053c7e4cd7",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK11",
+          "art": "Ton",
+          "datei": "/media/waterkant/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "4.9 s bei 4 Min."
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK12",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk12-zentrallager.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk12-zentrallager.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "76171 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "ef11300c26d8563c53b40de591adcd93b5bf4e57196d818b0e43c49996b75910",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK13",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk13-ersatz.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk13-ersatz.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "79001 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "0aa8a089f94fb711618c8b2b86499defee2c911cf2b78a72998df7ec92db0049",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK14",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk14-bergen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk14-bergen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "88050 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "6afe2b9ff2a6a46c1d4c2edd87c7dcd4d3cbbbac1f4706d59f294e94e87bef64",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK15",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk15-ausweich.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk15-ausweich.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "77262 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "6177d177160d6796af1852d61a503a2eb8f0c4c4e7cfeeb43236aa1e1ae025d0",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK16",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk16-bauunternehmen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk16-bauunternehmen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "77480 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "206150129fcf6a2acec24ea35f8db4369d76b4fb7c9101d4e3913f086d90f125",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK16",
+          "art": "Ton",
+          "datei": "/media/waterkant/telefon-klingeln.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/telefon-klingeln.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "39123 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-15.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-6.8 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "4.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "4.9 s bei 4 Min."
+            }
+          ],
+          "sha256": "7e2cafa54049a7debfb56416607ae968913182dd0f9ea321ca60426544060e06",
+          "dauer": 4.9,
+          "codec": "mp3",
+          "abtastrate": 22050,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -15.5,
+          "truePeak": -6.8,
+          "anfangDb": -15.4,
+          "wirksameLautheit": -19.9,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK17",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk17-prospektpreise.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk17-prospektpreise.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "83113 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "040ea3199def489b10d189fe952d9da32f3c8d43145327186b8ca18ea088e68f",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK18",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk18-verbundbeirat.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk18-verbundbeirat.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "85613 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "9ca42cfc858b40b9c6c882d556b9c84e57aaf0e1c94c46bb058fdecfe1c5d830",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK19",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk19-ruecksicherung.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk19-ruecksicherung.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "77872 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "8ec3e84a499f546b1904c58a9d1b3e20dab362610c13eafe7e1222cab6916450",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK20",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk20-reihenfolge.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk20-reihenfolge.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "82676 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "6b5c6506a0bd67d8b9294e93dddb6ef4ab0ed324afaf693879b24125710a0974",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK21",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk21-nordkanal-bericht.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk21-nordkanal-bericht.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "84267 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "b1ac0479dc967496bcd2a0434b4db0048a75c030f01896a8a178324fcc1cd515",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK21",
+          "art": "Ton",
+          "datei": "/media/waterkant/lk21-nordkanal-nachrichten.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk21-nordkanal-nachrichten.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "782463 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-16.5 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-2.2 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "48.9 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "48.9 s bei 4 Min."
+            }
+          ],
+          "sha256": "1914f809550634918e48ee514937ea14767f48e5ce316dc0d3ead7fab2e04ca7",
+          "dauer": 48.9,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -16.5,
+          "truePeak": -2.2,
+          "anfangDb": -16.1,
+          "wirksameLautheit": -18.4,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK22",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk22-kassen-laufen.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk22-kassen-laufen.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "64657 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "82cb68cb0335f3c7272b515e0a7dadc5ab4c7381fbfd4f9772ddc2bb7e1cf0ee",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK22",
+          "art": "Ton",
+          "datei": "/media/waterkant/lk22-kasse-startet.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk22-kasse-startet.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "81128 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-19.9 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-5.1 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "5 s"
+            },
+            {
+              "name": "kürzer als die Diskussionszeit der Lage",
+              "ok": true,
+              "beob": "5 s bei 4 Min."
+            }
+          ],
+          "sha256": "faf8939801d2a5ea69612bb293adb81161666b1c454ad3a76b231599ff52671d",
+          "dauer": 5,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -19.9,
+          "truePeak": -5.1,
+          "anfangDb": -23.2,
+          "wirksameLautheit": -23,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK23",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk23-datenluecke.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk23-datenluecke.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "74248 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "9029f9af8ac7c96aed94d877b4c5a5b06754786ed998911fa578f3cd1284e66d",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK24",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk24-versicherer.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk24-versicherer.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "72556 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "f4891addcbc3bd6e51c95f29c30a19a2b4b3ff434c93cdcdfeed0d6244b04f48",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK25",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk25-saisonsamstag.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk25-saisonsamstag.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "79028 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "373ece102e9e8bd84388e70b0998c5250b76e218b76fc94de6f888d6fd6bb4e6",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK26",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk26-brandursache.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk26-brandursache.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "86551 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "5b4865f84ce206ce11d011cd5d11ebbf15af30027b13341adab55f9455dc2d52",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK27",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk27-notbetrieb.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk27-notbetrieb.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "65005 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "23c8136c8087c4242a2e758bf8b65d5dd61bdd66037badad7c27e2e7abd2eb3f",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "LK28",
+          "art": "Bild",
+          "datei": "/media/waterkant/lk28-rueckkehr.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/lk28-rueckkehr.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "80938 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "563e36035e41fd8434f26b83e1730a4ec32b024f2b0ead038eb768d6c2783c68",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "B5",
+          "art": "Bild",
+          "datei": "/media/waterkant/b5-zweiter-alarm.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/b5-zweiter-alarm.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "82320 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "1deb09ac878d2994ac9cc9ea302ee605af1d2d7de65eadab135cac8ccceb4de9",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "B5",
+          "art": "Ton",
+          "datei": "/media/waterkant/b5-zweiter-alarm.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/b5-zweiter-alarm.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "312677 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-21.2 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-3.1 dBTP"
+            },
+            {
+              "name": "Ereignis höchstens 120 s",
+              "ok": true,
+              "beob": "19.5 s"
+            },
+            {
+              "name": "Bühne zeigt „Übungseinspielung – kein echter Alarm“ (Drehbuchfeld)",
+              "ok": true,
+              "beob": "uebungshinweis gesetzt"
+            },
+            {
+              "name": "Abschrift beginnt mit „Übung“",
+              "ok": true,
+              "beob": "Einspielung beginnt mit „Übung, Übung, Übung. Dies ist eine Einspielung für den "
+            },
+            {
+              "name": "Beginn hörbar (Kennzeichnung nicht stumm)",
+              "ok": true,
+              "beob": "mittlerer Pegel erste 3 s: -19.8 dB"
+            }
+          ],
+          "sha256": "1d029cf588132059ffb39bfce78185b575a4c1dd8495c0dd5a5b63bb8848580f",
+          "dauer": 19.5,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -21.2,
+          "truePeak": -3.1,
+          "anfangDb": -19.8,
+          "wirksameLautheit": -25.6,
+          "alarm": true,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "B6",
+          "art": "Bild",
+          "datei": "/media/waterkant/b6-falschmeldung.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/b6-falschmeldung.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "72533 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "0ca1053c6004b3f97ee0f6e971e0bbc7ddb3ff3a2fd9d0dd52ef889bdb0dbdb9",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "B7",
+          "art": "Bild",
+          "datei": "/media/waterkant/b7-it-leitung-raus.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/b7-it-leitung-raus.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "79237 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "e6d90dfe5b9b838ad80c9fa498a47ab4bee299e1386b91e7eb52384c7ab88775",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "B8",
+          "art": "Bild",
+          "datei": "/media/waterkant/b8-angebot.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/b8-angebot.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "74919 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1000×280"
+            }
+          ],
+          "sha256": "c3fd283a526293aa6311a6e98e50034ccb4c5ad441eb1e58db2b96af526d84e1",
+          "breite": 1000,
+          "hoehe": 280,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "Hintergrund",
+          "art": "Ton",
+          "datei": "/media/waterkant/ambience-rechenzentrum.mp3",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/ambience-rechenzentrum.mp3"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "369102 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Lautheit -30 … -14 LUFS",
+              "ok": true,
+              "beob": "-22.3 LUFS"
+            },
+            {
+              "name": "True Peak ≤ -0.5 dBTP",
+              "ok": true,
+              "beob": "-10.1 dBTP"
+            },
+            {
+              "name": "Hintergrund läuft in Schleife",
+              "ok": true,
+              "beob": "loop"
+            }
+          ],
+          "sha256": "0144239d99213dae1ef2d117961f8124dd7dd55a1ac3ae828a480b1f60707540",
+          "dauer": 23,
+          "codec": "mp3",
+          "abtastrate": 44100,
+          "kanaele": 1,
+          "dekodierung": "ohne Fehler",
+          "lufs": -22.3,
+          "truePeak": -10.1,
+          "anfangDb": -24.6,
+          "wirksameLautheit": -29.2,
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "Wartebild",
+          "art": "Bild",
+          "datei": "/media/waterkant/idle-ruhe-vor-dem-sturm.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/idle-ruhe-vor-dem-sturm.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "72189 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            },
+            {
+              "name": "Mindestgröße 800 px Breite",
+              "ok": true,
+              "beob": "1280×600"
+            }
+          ],
+          "sha256": "24c52e4c4eb6449320eae51e17feb9b028457980eabe1f68be9fbf970846884d",
+          "breite": 1280,
+          "hoehe": 600,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "Logo",
+          "art": "Bild",
+          "datei": "/media/waterkant/waterkant-logo.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/waterkant-logo.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "18852 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            }
+          ],
+          "sha256": "af770cdd78ceb0bcba9524fb1c66f8331e4cbde56e959bc6033093238f79053b",
+          "breite": 524,
+          "hoehe": 152,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        },
+        {
+          "szenario": "waterkant-rechenzentrum",
+          "karte": "Logo Bühne",
+          "art": "Bild",
+          "datei": "/media/waterkant/waterkant-logo-light.png",
+          "pruefungen": [
+            {
+              "name": "liegt unter media/",
+              "ok": true,
+              "beob": "/media/waterkant/waterkant-logo-light.png"
+            },
+            {
+              "name": "Datei vorhanden",
+              "ok": true,
+              "beob": "19409 Byte"
+            },
+            {
+              "name": "vollständig dekodierbar",
+              "ok": true,
+              "beob": "ohne Fehler"
+            }
+          ],
+          "sha256": "d9c834ecbf033c31d369e8aa9929e67861d85c1186be32d5fcceaa2346d09052",
+          "breite": 524,
+          "hoehe": 152,
+          "codec": "png",
+          "dekodierung": "ohne Fehler",
+          "akustisch": "akustisch nicht abgenommen",
+          "ok": true
+        }
+      ],
+      "mehrfachVerwendet": {
+        "/media/waterkant/telefon-klingeln.mp3": [
+          "LK09",
+          "LK11",
+          "LK16"
+        ]
+      },
+      "unbenutzteDateien": [
+        "ambience-kundschaft.mp3",
+        "lk01-feueralarm.png",
+        "lk02-lagerbrand.png",
+        "lk03-serverraum-betroffen.png",
+        "lk04-filialen-oeffnen-trotzdem.png",
+        "lk04-unruhe-kasse.mp3",
+        "lk05-social-post.png",
+        "lk06-pressekontakt.png",
+        "lk07-grosskunde-storniert.png",
+        "lk08-online-shop-bricht-ein.png",
+        "lk09-ersatzlager-gefunden.png",
+        "lk10-nordkanal-ankuendigung.png",
+        "lk11-gutachter-vor-ort.png",
+        "lk12-wiederanlauf.png",
+        "lk13-stoerfall-behoerde.png",
+        "lk14-loeschwasser.png",
+        "lk15-ermittlungsverfahren.png",
+        "v1-stoermeldung-brandmelder.png",
+        "v2-geruch-halle3.png",
+        "v3-lueftung-faellt-aus.png"
+      ],
+      "bestanden": 45,
+      "gesamt": 45,
+      "akustischAbgenommen": 0,
+      "toene": 10
+    }
+  ]
+}

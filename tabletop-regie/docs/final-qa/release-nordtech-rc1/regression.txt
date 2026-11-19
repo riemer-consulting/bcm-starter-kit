@@ -1,0 +1,10 @@
+.........................................
+NordTech-Regression: 41/41 Kombinationen identisch (468 s)
+  besetzung: 41/41
+  ablaufplan: 41/41
+  buehne: 41/41
+  zustellungen: 41/41
+  kartentexte: 41/41
+  rechnung: 41/41
+  kriterien: 41/41
+  summenzeile: 41/41

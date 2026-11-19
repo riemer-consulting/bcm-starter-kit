@@ -1,0 +1,873 @@
+{
+  "zeitpunkt": "2026-11-19T16:29:53.013Z",
+  "dauerSekunden": 468,
+  "szenario": "scenario.nordtech.json",
+  "kombinationen": 41,
+  "identisch": 41,
+  "aspekte": [
+    {
+      "aspekt": "besetzung",
+      "gleich": 41
+    },
+    {
+      "aspekt": "ablaufplan",
+      "gleich": 41
+    },
+    {
+      "aspekt": "buehne",
+      "gleich": 41
+    },
+    {
+      "aspekt": "zustellungen",
+      "gleich": 41
+    },
+    {
+      "aspekt": "kartentexte",
+      "gleich": 41
+    },
+    {
+      "aspekt": "rechnung",
+      "gleich": 41
+    },
+    {
+      "aspekt": "kriterien",
+      "gleich": 41
+    },
+    {
+      "aspekt": "summenzeile",
+      "gleich": 41
+    }
+  ],
+  "kriterienBasis": [
+    "Aktivierung / Lagebild",
+    "Entscheidung / Verantwortung",
+    "Kommunikation",
+    "IT-/OT-Sicherheit",
+    "Geschäftsfortführung",
+    "Qualität / Datenintegrität",
+    "Fachliche Prüfpflichten",
+    "Wiederanlauf / Nachsorge"
+  ],
+  "vergleiche": [
+    {
+      "id": "45-ausgewogen",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 6,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "45-fuehrung",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 6,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "45-it",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 7,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "45-produktion",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 7,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "45-kunden",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 6,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "60-ausgewogen",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 10,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "60-fuehrung",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 10,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "60-it",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 10,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "60-produktion",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 10,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "60-kunden",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 9,
+        "zustellungen": 10,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-ausgewogen",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-fuehrung",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-it",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-produktion",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-kunden",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "120-ausgewogen",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 15,
+        "zustellungen": 16,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "120-fuehrung",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 15,
+        "zustellungen": 16,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "120-it",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 15,
+        "zustellungen": 16,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "120-produktion",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 15,
+        "zustellungen": 16,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "120-kunden",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 15,
+        "zustellungen": 16,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "180-ausgewogen",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 21,
+        "zustellungen": 23,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "180-fuehrung",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 21,
+        "zustellungen": 23,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "180-it",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 21,
+        "zustellungen": 23,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "180-produktion",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 21,
+        "zustellungen": 23,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "180-kunden",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 21,
+        "zustellungen": 23,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-am-netz-proaktiv-melden-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4610000
+      }
+    },
+    {
+      "id": "90-trennen-proaktiv-melden-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 13,
+        "brutto": 4260000
+      }
+    },
+    {
+      "id": "90-am-netz-abwarten-melden-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 5210000
+      }
+    },
+    {
+      "id": "90-trennen-abwarten-melden-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 4860000
+      }
+    },
+    {
+      "id": "90-am-netz-proaktiv-abwarten-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 4760000
+      }
+    },
+    {
+      "id": "90-trennen-proaktiv-abwarten-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 4410000
+      }
+    },
+    {
+      "id": "90-am-netz-abwarten-abwarten-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 5360000
+      }
+    },
+    {
+      "id": "90-trennen-abwarten-abwarten-nicht-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 5010000
+      }
+    },
+    {
+      "id": "90-am-netz-proaktiv-melden-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 6610000
+      }
+    },
+    {
+      "id": "90-trennen-proaktiv-melden-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 14,
+        "brutto": 6260000
+      }
+    },
+    {
+      "id": "90-am-netz-abwarten-melden-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 7210000
+      }
+    },
+    {
+      "id": "90-trennen-abwarten-melden-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 6860000
+      }
+    },
+    {
+      "id": "90-am-netz-proaktiv-abwarten-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 6760000
+      }
+    },
+    {
+      "id": "90-trennen-proaktiv-abwarten-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 15,
+        "brutto": 6410000
+      }
+    },
+    {
+      "id": "90-am-netz-abwarten-abwarten-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 16,
+        "brutto": 7360000
+      }
+    },
+    {
+      "id": "90-trennen-abwarten-abwarten-gezahlt",
+      "aspekte": {
+        "besetzung": true,
+        "ablaufplan": true,
+        "buehne": true,
+        "zustellungen": true,
+        "kartentexte": true,
+        "rechnung": true,
+        "kriterien": true,
+        "summenzeile": true
+      },
+      "identisch": true,
+      "details": {},
+      "umfang": {
+        "lagen": 13,
+        "zustellungen": 16,
+        "brutto": 7010000
+      }
+    }
+  ]
+}
