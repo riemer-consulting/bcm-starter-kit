@@ -2,7 +2,7 @@
 
 **Zweck:** verbindliche Baseline für die finale NordTech-Abnahme; anschließend Ausgangspunkt für Waterkant.
 **Getesteter Commit:** `aeffbce6b1c5dc84494b55a5969b419601ef53af` (Kopf von `main` vor diesem Release-Commit).
-**Release-Commit und Tag:** der Commit, der diese Datei hinzufügt, trägt das annotierte Tag `nordtech-rc1`. Er unterscheidet sich vom getesteten Commit ausschließlich durch diese Datei und den Ordner `release-nordtech-rc1/` (Testergebnisse).
+**Release-Commit und Tag:** Der Commit, der diese Datei zuletzt ändert, ist der Release-Commit und erhält das Tag `nordtech-rc1`. Er unterscheidet sich vom getesteten Commit ausschließlich durch diese Datei und den Ordner `release-nordtech-rc1/` (Testergebnisse). Hinweis: Die Ausführungsumgebung, in der dieser Stand erstellt wurde, darf keine Tags auf das Remote schieben (HTTP 403 des Git-Proxys). Das Tag wird deshalb auf GitHub als Release `nordtech-rc1` (Vorabversion) auf diesem Commit angelegt.
 **Branches:** `main` und `claude/wonderful-bell-6q4aan` auf dem Remote `origin` zeigen auf denselben Release-Commit; weitere Branches gibt es auf dem Remote nicht.
 
 ## Inhalt des Stands
