@@ -488,7 +488,7 @@
       "diskussionMinuten": 4,
       "akt": "ausbruch",
       "prioritaet": 2,
-      "text": "Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte, war gegen 03:05 Uhr ins Gebäude gefahren, um nach der Klimaanlage zu sehen.",
+      "text": "Die Feuerwehr bekämpft den Brand im USV-Raum und schaltet den Strom für das Verwaltungsgebäude ab. Der Einsatzleiter verlangt einen Ansprechpartner, der das Gebäude kennt. Am Sammelplatz fehlt eine Person: Ein Kollege aus dem Rechenzentrumsteam, den die Rufbereitschaft zur Unterstützung gerufen hatte, war nach der Geruchsmeldung kurz vor 03:00 Uhr ins Gebäude gefahren, um nach Technikflur und Klimaanlage zu sehen.",
       "kriseninfo": "Strom im Verwaltungsgebäude abgeschaltet · 1 Person am Sammelplatz nicht gemeldet",
       "aufgabe": [
         "Wer spricht mit der Einsatzleitung – und mit welchen Informationen?",
@@ -796,7 +796,7 @@
       "diskussionMinuten": 4,
       "akt": "hoehepunkt",
       "prioritaet": 1,
-      "text": "Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; betreten dürfen den Raum alle anderen erst nach Reinigung und Freimessung, frühestens in etwa zehn Tagen. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team: Birgt sie heute, beginnt die Reinigung des Serverraums einen Tag später.",
+      "text": "Die beschädigten Batteriemodule hat eine Fachfirma am Dienstagvormittag ausgebaut und abtransportiert; die Feuerwehr hat danach die Brandwache beendet und das Gebäude übergeben. Büros sind freigegeben, USV-Raum und Serverraum bleiben gesperrt. Die letzte vollständige Sicherungskopie beim Colocation-Anbieter stammt von Montag 01:00 Uhr – die Übertragung der Dienstagssicherung war beim Brand noch nicht fertig. Die Dienstagssicherung liegt auf dem Backup-Server im verrußten Serverraum. Eine Sanierungsfachfirma könnte ihn heute mit Schutzausrüstung bergen; betreten dürfen den Raum alle anderen erst nach Reinigung und Freimessung, frühestens in etwa zehn Tagen. Der Gutachter des Versicherers kommt am Freitag und bittet, im Schadenbereich bis dahin nichts ohne Abstimmung mit ihm zu verändern. Die Fachfirma hat diese Woche nur ein Team und könnte heute um 14 Uhr. Wird vor seiner Besichtigung etwas aus dem Raum entfernt, will der Gutachter den Raum vor der Reinigung zusätzlich durch einen eigenen Sachverständigen dokumentieren lassen – die Reinigung des Serverraums beginnt dann einen Tag später.",
       "kriseninfo": "Datenlücke ohne Bergung: ca. 26 Stunden · Bergung nur durch Fachfirma mit Schutzausrüstung · Messergebnis: Grenzwerte im Raum noch überschritten",
       "aufgabe": [
         "Was ist Ihnen die kleinere Datenlücke wert – gegenüber einem Einsatz im kontaminierten Raum, einer späteren Reinigung und der Abstimmung mit dem Versicherer?",
@@ -809,7 +809,7 @@
         "facility-management",
         "geschaeftsfuehrer-ceo"
       ],
-      "moderatorHinweis": "Arbeitsschutz und Schadenregulierung gegen Datenverlust. Ein Einsatz einer Fachfirma mit Schutzausrüstung ist fachlich vertretbar – aber nur mit Gefährdungsbeurteilung, Messwerten, Freiwilligkeit, Dokumentation und Abstimmung mit dem Versicherer; Abwarten ist ebenso vertretbar. Bewertet wird der Weg zur Entscheidung. Die eigene IT geht in keinem Fall hinein.",
+      "moderatorHinweis": "Arbeitsschutz und Schadenregulierung gegen Datenverlust. Ein Einsatz einer Fachfirma mit Schutzausrüstung ist fachlich vertretbar – aber nur mit Messwerten, Gefährdungsbeurteilung und Schutzmaßnahmen der Fachfirma, einer Arbeitsfreigabe durch Waterkant, Dokumentation und Abstimmung mit dem Versicherer; Abwarten ist ebenso vertretbar. Freigabekette im Szenario: Brandbereich (Feuerwehr, nach Ausbau der Module) → Büros (Sachverständiger) → Serverraum (Messung, Reinigung, Freimessung) → Wiederinbetriebnahme (Technik). Eine Bergung vor der Freigabe ist eine Ausnahme mit eigener Arbeitsfreigabe, keine Freigabe des Raums. Bewertet wird der Weg zur Entscheidung. Die eigene IT geht in keinem Fall hinein.",
       "media": {
         "type": "image",
         "src": "/media/waterkant/lk14-bergen.png",
@@ -989,7 +989,7 @@
       "diskussionMinuten": 4,
       "akt": "folgen",
       "prioritaet": 1,
-      "text": "Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und muss am Morgen vor Ort freigeschaltet werden – bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.",
+      "text": "Die Ausweichumgebung kann ab Donnerstag ca. 17:00 Uhr die ersten Märkte versorgen, pro Stunde lassen sich etwa zwei Märkte sicher umstellen. Es sind 23. Um Freitag ca. 03:00 Uhr erreichen die Kassen die 72-Stunden-Grenze: Eine Kasse, die bis dahin nicht umgestellt ist, sperrt sich und kann nur vor Ort durch den Servicetechniker des Kassenherstellers freigeschaltet werden. Der Hersteller sagt für Freitag zwei Techniker zu, frühestens ab 07:00 Uhr; mit Anfahrt schaffen sie etwa einen Markt pro Stunde. Bis der Techniker da war, kann der Markt nicht kassieren. Bis 03:00 Uhr schafft das Team etwa 20 Märkte; drei schaffen es nicht. Einige Partnermärkte sind umsatzstärker als die kleineren eigenen Filialen; der Vertrag regelt keine Reihenfolge.",
       "kriseninfo": "ab ca. 17:00 Uhr 2 Märkte pro Stunde · 23 Märkte · bis 03:00 Uhr ca. 20 – drei reißen die Grenze",
       "aufgabe": [
         "Nach welchem Kriterium legen Sie die Reihenfolge fest?",
@@ -1089,7 +1089,7 @@
         "LK19"
       ],
       "text": "Die Warenwirtschaft läuft im Ausweich-Rack auf dem Stand der letzten eingespielten Sicherung. Der Abgleich mit Lieferscheinen, Lieferantenbestätigungen und Kassendaten läuft.",
-      "kriseninfo": "Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr), sofern die Dienstagssicherung nicht geborgen wurde",
+      "kriseninfo": "Datenlücke: ca. 26 Stunden (Montag 01:00 bis Dienstag 03:10 Uhr)",
       "aufgabe": [
         "Wie schließen Sie die Lücke – und in welcher Reihenfolge?",
         "Was darf bis dahin auf Basis unvollständiger Daten entschieden werden?",
@@ -1231,7 +1231,7 @@
       "diskussionMinuten": 4,
       "akt": "wiederanlauf",
       "prioritaet": 2,
-      "text": "Der Sanierer meldet: Die Reinigung läuft; nach Freimessung, Einbau der neuen USV, Brandschutzabnahme und Prüfung der Hardware ist das eigene Rechenzentrum in etwa zwei Wochen wieder produktiv nutzbar – rund drei Wochen nach dem Brand. Der Colocation-Anbieter bietet an, den Betrieb dauerhaft zu übernehmen. Die Partnermärkte fragen, ob Waterkant künftig zwei Standorte betreibt. Die Geschäftsführung will bis Mittwoch eine Empfehlung.",
+      "text": "IT-Leitung und Gebäudetechnik melden: Die Reinigung läuft; nach Freimessung, Einbau der neuen USV, Brandschutzabnahme und Prüfung der Hardware ist das eigene Rechenzentrum in etwa zwei Wochen wieder produktiv nutzbar – rund drei Wochen nach dem Brand. Der Colocation-Anbieter bietet an, den Betrieb dauerhaft zu übernehmen. Die Partnermärkte fragen, ob Waterkant künftig zwei Standorte betreibt. Die Geschäftsführung will bis Mittwoch eine Empfehlung.",
       "kriseninfo": "Eigenes Rechenzentrum: produktiv in ca. 2 Wochen · dauerhafte Auslagerung angeboten",
       "aufgabe": [
         "Zurück, auslagern oder zwei Standorte – nach welchen Kriterien entscheiden Sie?",
@@ -1367,7 +1367,7 @@
       "empfaenger": "it-support-filialen",
       "minuteOffset": 21.5,
       "vertraulich": true,
-      "text": "Die Herstellerdokumentation der Kassen sagt: Im Offline-Betrieb speichern sie Abverkäufe etwa 72 Stunden, danach verweigern sie neue Buchungen, bis sie wieder mit der Zentrale synchronisiert sind. Das wäre Freitag gegen 03:00 Uhr. In den Filialen weiß das noch niemand.",
+      "text": "Die Herstellerdokumentation der Kassen sagt: Im Offline-Betrieb speichern sie Abverkäufe etwa 72 Stunden, danach sperren sie sich und müssen vor Ort freigeschaltet werden, sofern sie nicht vorher wieder mit der Zentrale synchronisiert sind. Das wäre Freitag gegen 03:00 Uhr. In den Filialen weiß das noch niemand.",
       "moderatorGut": "Die Frist sofort an den Krisenstab geben – sie bestimmt die Wiederanlaufplanung.",
       "moderatorSchlecht": "Die Frist für sich behalten, „bis dahin läuft es ja wieder“.",
       "prioritaet": 1,
@@ -1564,7 +1564,7 @@
       "empfaenger": "leiter-arbeitssicherheit",
       "minuteOffset": 49.5,
       "vertraulich": true,
-      "text": "Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: Gefährdungsbeurteilung, aktuelles Messergebnis, Fachfirma mit Schutzausrüstung, Freiwilligkeit, Dokumentation. Die Fachfirma könnte heute um 14 Uhr – mit eigenem Personal, nicht mit eurer IT.",
+      "text": "Für eine Bergung aus dem Serverraum vor der Freigabe brauchst du: aktuelles Messergebnis, Fachfirma mit eigener Gefährdungsbeurteilung und Schutzausrüstung, eine schriftliche Arbeitsfreigabe durch Waterkant, Abstimmung mit dem Gutachter des Versicherers, Dokumentation. Die Fachfirma könnte heute um 14 Uhr – mit eigenem Personal, nicht mit eurer IT.",
       "moderatorGut": "Voraussetzungen klar benennen; entscheiden lässt du dir nicht abnehmen, aber auch nicht aufdrängen.",
       "moderatorSchlecht": "Aus Zeitdruck zustimmen, ohne Voraussetzungen zu prüfen – oder pauschal ablehnen, ohne zu begründen.",
       "prioritaet": 1,
@@ -1768,7 +1768,7 @@
       "text": "Die Entscheidungen der Brandnacht sind nirgends dokumentiert: wer wann was abgeschaltet, wen informiert, wem welche Anweisung gegeben hat. Versicherer und Sachverständige werden danach fragen.",
       "moderatorGut": "Chronologie jetzt aus Telefonlisten, Chats und Erinnerungen rekonstruieren und ab sofort mitschreiben.",
       "moderatorSchlecht": "Erst am Ende aufschreiben.",
-      "prioritaet": 2,
+      "prioritaet": 1,
       "fallbackEmpfaenger": [
         "notfallmanagement-bcm",
         "geschaeftsfuehrer-ceo"
@@ -1871,7 +1871,7 @@
       "empfaenger": "rz-betrieb",
       "minuteOffset": null,
       "vertraulich": true,
-      "text": "Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger, die Daten darauf schwerer zu retten.",
+      "text": "Der Sanierer hat die Kamerabilder ausgewertet: Die Geräte, die bis zum Stromausfall liefen, haben Ruß in die Gehäuse gezogen. Mehr Hardware muss ersetzt werden, und der Backup-Server ist innen stärker verschmutzt als gedacht – eine Bergung wäre aufwendiger.",
       "moderatorGut": "Mehrbedarf an Ersatzhardware offen in den Krisenstab geben und in die Entscheidung über die Bergung einbeziehen.",
       "moderatorSchlecht": "Für sich behalten, weil die Entscheidung in der Brandnacht schon gefallen ist.",
       "prioritaet": 1,
@@ -1967,7 +1967,7 @@
       "voraussetzung": [
         "LK15"
       ],
-      "text": "Der einzige Netzwerkadministrator mit Zugang zur Firewall des Ausweich-Racks ist im Urlaub; sein Flug geht in drei Stunden. Die Zugangsdaten liegen im Passwortsafe – auf einem Server im gesperrten Serverraum.",
+      "text": "Der einzige Netzwerkadministrator, der die Firewall-Regeln für die Anbindung der Märkte kennt, ist im Urlaub; sein Flug geht in drei Stunden. Die Dokumentation der Regeln und die Zugangsdaten liegen im Passwortsafe – auf einem Server im gesperrten Serverraum.",
       "moderatorHinweis": "Testet Single Point of Failure und Notfallzugänge. Gut: sofort Kontakt aufnehmen, sichere Übergabe organisieren, Lücke als Maßnahme festhalten."
     },
     {
@@ -1994,7 +1994,7 @@
       "voraussetzung": [
         "LK15"
       ],
-      "text": "Der Colocation-Anbieter will vor der Aktivierung eine Vorauszahlung von 60.000 € und eine unterschriebene Vertragsergänzung bis 16 Uhr.",
+      "text": "Für die Erweiterung des Ausweich-Racks will der Colocation-Anbieter eine Vorauszahlung von 60.000 € und eine unterschriebene Vertragsergänzung bis 16 Uhr – auch für den Fall, dass nur das Nötigste verlagert wird, verlangt er für die zusätzliche Netzanbindung der Partnermärkte eine Unterschrift.",
       "moderatorHinweis": "Prüft Entscheidungswege unter Zeitdruck. Gut: Freigabe nach Zeichnungsregel, Vertrag kurz fachlich prüfen lassen, Zahlung dokumentieren."
     },
     {
@@ -2022,8 +2022,8 @@
       "voraussetzung": [
         "LK14"
       ],
-      "text": "Die Brandmeldeanlage im Zentrallager löst aus. Vermutlich ein Folgealarm durch Rauchreste, die über die gemeinsame Lüftung ins Lager gezogen sind – sicher ist das nicht.",
-      "buehnentext": "Die Brandmeldeanlage im Zentrallager löst aus. Vermutlich haben Rauchreste aus dem Verwaltungsgebäude, über die gemeinsame Lüftung ins Lager gezogen, den Melder ausgelöst – sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade.",
+      "text": "Die Brandmeldeanlage im Zentrallager löst aus. Ursache unklar – vermutlich ein Fehlalarm, sicher ist das nicht.",
+      "buehnentext": "Die Brandmeldeanlage im Zentrallager löst aus. Die Ursache ist unklar – vermutlich ein Fehlalarm, sicher ist das nicht. Im Lager arbeiten 40 Menschen, die Spedition lädt gerade.",
       "kriseninfo": "Wahrscheinlich Fehlalarm – nicht bestätigt · 40 Beschäftigte im Lager",
       "media": {
         "type": "image",
@@ -2037,7 +2037,7 @@
         "uebungshinweis": true
       },
       "sprechertext": "Einspielung beginnt mit „Übung, Übung, Übung. Dies ist eine Einspielung für den Krisenstab, kein echter Alarm.“ Dann Signal der Brandmeldeanlage, gedämpft. Durchsage: „Übung. Achtung, Feueralarm im Zentrallager. Bitte verlassen Sie das Lager über die gekennzeichneten Wege.“ Ende: „Ende der Übungseinspielung.“",
-      "moderatorHinweis": "Alarmmüdigkeit: Nach dem echten Brand ist die Versuchung groß, „wahrscheinlich nur Rauchreste“ abzuwarten. Gut: Räumung nach Plan, Feuerwehr entscheidet über Fehlalarm. 60 Sekunden für eine Entscheidung.",
+      "moderatorHinweis": "Alarmmüdigkeit: Nach dem echten Brand ist die Versuchung groß, „wahrscheinlich ein Fehlalarm“ abzuwarten. Gut: Räumung nach Plan, Feuerwehr entscheidet über Fehlalarm. 60 Sekunden für eine Entscheidung.",
       "beobachtung": [
         "Wird geräumt, obwohl ein Fehlalarm wahrscheinlich ist?",
         "Wer entscheidet – und ist das vorher geregelt?",
@@ -2094,15 +2094,16 @@
         "src": "/media/waterkant/b7-it-leitung-raus.png",
         "caption": "Die Vertretung führt."
       },
-      "regie": "Die Moderation bittet die IT-Leitung persönlich hinaus. Die Bühne zählt fünf Minuten herunter. B7 ersetzt Lagebearbeitung, der Übungstimer läuft weiter.",
-      "sprechertext": "„Der Betriebsarzt hat entschieden: Sie gehen jetzt nach Hause und schlafen. Bitte kommen Sie mit.“",
+      "regie": "Am besten unmittelbar vor „Rücksicherung im Ausweich-Rack“ oder „Wer wird zuerst umgestellt?“ einsetzen. Die Moderation bittet die IT-Leitung persönlich hinaus. Die Bühne zählt fünf Minuten herunter. B7 ersetzt Lagebearbeitung, der Übungstimer läuft weiter. Vertrauliche Karten an die IT-Leitung gibt die Moderation in dieser Zeit mündlich an die Vertretung. Fällig ist die Antwort an den Colocation-Anbieter, in welcher Reihenfolge die Netzwerkanbindungen der Märkte eingerichtet werden – das berührt die spätere Reihenfolgeentscheidung, ersetzt sie aber nicht.",
+      "sprechertext": "„Der Betriebsarzt rät Ihnen dringend, jetzt nach Hause zu gehen und zu schlafen. Bitte kommen Sie mit.“",
       "moderatorHinweis": "Vertretungsstresstest, nur in Übungen ab 90 Minuten und nur mit besetzter IT-Leitung. Prüfziel: Gibt es eine handlungsfähige Vertretung mit Wissen und Befugnis?",
       "beobachtung": [
         "Übernimmt innerhalb von etwa einer Minute sichtbar jemand die technische Führung?",
         "Kennt die Vertretung den Stand der Wiederherstellung und die nächsten Schritte?",
         "Werden anstehende Entscheidungen getroffen statt vertagt?",
         "Hat die Vertretung die nötigen Zugänge und Befugnisse – oder fehlen sie?",
-        "Bekommt die IT-Leitung bei der Rückkehr eine kurze Übergabe?"
+        "Bekommt die IT-Leitung bei der Rückkehr eine kurze Übergabe?",
+        "Welche Informationen hatte nur die IT-Leitung – und haben sie gefehlt?"
       ]
     },
     {
@@ -2176,8 +2177,8 @@
         "text": "neue USV-Anlage, mit geklärter Zuständigkeit für Wartung und Updates"
       },
       {
-        "zahl": "3 Wochen",
-        "text": "bis zur Entscheidung: zurück ins eigene Rechenzentrum, auslagern oder zwei Standorte"
+        "zahl": "2 Wochen",
+        "text": "bis das eigene Rechenzentrum frühestens wieder produktiv wäre – bis dahin muss entschieden sein: zurück, auslagern oder zwei Standorte (Empfehlung der IT bis Mittwoch)"
       },
       {
         "zahl": "9",
@@ -2343,7 +2344,7 @@
       "optionen": [
         {
           "id": "herunterfahren",
-          "label": "Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)",
+          "label": "Die Server im Serverraum jetzt kontrolliert herunterfahren (die laufende Preisübertragung und die Partner-Uploads brechen ab)",
           "wirkung": "Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.",
           "folgen": [
             {
@@ -2352,7 +2353,7 @@
             },
             {
               "lagekarte": "LK22",
-              "zusatz": "Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die abgebrochenen Tagesabschlüsse der Partner sind inzwischen nachgeholt."
+              "zusatz": "Die kontrollierte Abschaltung in der Brandnacht zahlt sich bei der Hardware aus: Weniger Geräte müssen ersetzt werden. Die in der Brandnacht abgebrochenen Tagesabschlüsse der Partnermärkte werden nach der Umstellung des jeweiligen Markts aus dessen Kassen neu eingelesen."
             }
           ],
           "posten": [
@@ -2436,11 +2437,11 @@
           "folgen": [
             {
               "lagekarte": "LK19",
-              "zusatz": "Die geborgene Dienstagssicherung wird noch gereinigt und geprüft; eingespielt werden kann sie frühestens in der Nacht zu Freitag – für den Start der Kassen kommt sie zu spät."
+              "zusatz": "Die geborgene Dienstagssicherung wird noch gereinigt und geprüft; ihre Montagsbuchungen können frühestens in der Nacht zu Freitag kontrolliert nachgeladen werden – für den Start der Kassen kommt sie zu spät."
             },
             {
               "lagekarte": "LK23",
-              "zusatz": "Die geborgene Dienstagssicherung ist seit heute Nacht eingespielt; es fehlen nur die zwei Stunden vor dem Brand – vor allem die Tagesabschlüsse der Partnermärkte.",
+              "zusatz": "Die Montagsbuchungen aus der geborgenen Dienstagssicherung sind seit heute Nacht kontrolliert nachgeladen und mit den Kassendaten seit Donnerstag abgeglichen. Es fehlen nur die rund zwei Stunden vor dem Brand; die Tagesabschlüsse der Partnermärkte aus dieser Nacht werden aus deren Kassen neu eingelesen.",
               "kriseninfo": "Datenlücke: ca. 2 Stunden (Dienstagssicherung geborgen und geprüft)"
             },
             {
@@ -2521,7 +2522,7 @@
             },
             {
               "lagekarte": "LK27",
-              "zusatz": "Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack."
+              "zusatz": "Auch Lagerverwaltung, Gewerbeportal und Online-Bestände laufen aus dem erweiterten Ausweich-Rack. Beim schnellen Umzug ging der Abgleich der Aktionspreise im Online-Shop verloren: Am Samstag zeigte der Shop für 140 Artikel noch Preise von Montag. Die Zustimmung der Gesellschafter liegt schriftlich vor; ob im Ausweich-Rack auch Partner- und Gewerbekundendaten verarbeitet werden dürfen, wird noch fachlich geprüft."
             }
           ],
           "karte": {
@@ -2540,7 +2541,7 @@
         "LK20"
       ],
       "frage": "Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?",
-      "hinweis": "Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium.",
+      "hinweis": "Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium. Die Folgen unterstellen Umsatz als gemeinsames Kriterium; wählt der Tisch ein anderes, nennt die Moderation die betroffenen Märkte entsprechend.",
       "optionen": [
         {
           "id": "gleichrangig",

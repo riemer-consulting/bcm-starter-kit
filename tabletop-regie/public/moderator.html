@@ -162,6 +162,13 @@
           <button class="secondary" id="btn-protokoll" title="Lädt ein Protokoll als Markdown-Datei herunter: gespielte Lagen, Entscheidungen, verschickte vertrauliche Karten, Rechnung, Debriefing-Fragen mit Platz für Notizen und ein leerer Maßnahmenplan. Ohne Namen der Teilnehmenden.">Protokoll herunterladen</button>
         </div>
         <p class="muted mini">Für Debriefing und Nachbereitung: Was wurde gespielt, wie wurde entschieden – und welche drei Verbesserungen folgen daraus? Enthält keine Namen.</p>
+        <div class="row" style="gap:8px;margin-top:6px;"><button class="secondary" id="btn-journal" title="Lädt das Ereignisjournal dieser Sitzung herunter: jede Aktion und jedes Ereignis mit laufender Nummer und Zeitpunkt, Personen nur als Rollen.">Ereignisjournal herunterladen</button></div>
+      </div>
+
+      <div class="card" id="m-einschaetzung-card">
+        <h2>Gesamteinschätzung (Team)</h2>
+        <p class="muted mini">0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig. Bewertet wird die Arbeit des Krisenstabs, nicht einzelne Personen. Beobachtung möglichst mit Karten-ID. Wird gespeichert und steht im Protokoll.</p>
+        <div id="m-einschaetzung"></div>
       </div>
 
       <div class="card">
@@ -180,6 +187,7 @@
     </div>
   </div>
 </div>
+<script src="regie-fetch.js"></script>
 <script src="moderator.js"></script>
 </body>
 </html>

@@ -72,7 +72,7 @@ s.sonderlagekarten.filter(k => !k.nurNachWeiche).sort((a, b) => (a.minuteOffset 
 
 w('### Entscheidungen mit Folgen (Weichen)', '', 'Die Moderation hält fest, wie der Tisch entschieden hat. Ohne Eintrag bleibt die Geschichte wie im Drehbuch.', '');
 (s.weichen || []).forEach(wc => {
-  w(`#### ${wc.id} – bei ${wc.lagekarten.map(id => id + ' ' + lkTitel(id)).join(' oder ')}`, '', `**Frage:** ${wc.frage}`, '');
+  w(`#### ${wc.id} – bei ${wc.lagekarten.map(id => id + ' ' + lkTitel(id)).join(' oder ')}`, '', `**Frage:** ${wc.frage}`, '', ...(wc.hinweis ? [`*Hinweis für die Moderation:* ${wc.hinweis}`, ''] : []));
   wc.optionen.forEach(o => {
     w(`- **${o.label}** – ${o.wirkung || ''}`);
     (o.folgen || []).forEach(f => f.sonderlagekarte
@@ -101,8 +101,8 @@ const n = s.nachspiel;
 w('### Abschluss: „' + n.titel + '“', '', n.einleitung, '', '**Nacharbeiten:**', '', ...n.nacharbeiten.map(x => `- **${x.zahl}** ${x.text}`), '',
   '**Rechnung (fiktiv):**', '', '| Posten | Betrag | Was vorher geholfen hätte |', '|---|---:|---|',
   ...n.rechnung.map(p => `| ${p.posten}${p.herleitung ? '<br>*Rechenweg:* ' + p.herleitung : ''} | ${eur(p.betrag)} | ${p.bcmHebel || ''} |`), '',
-  '**Zusätzliche Posten, je nach Entscheidung in der Übung:**', '', '| Frage an die Moderation | Posten | Betrag |', '|---|---|---:|',
-  ...(n.optionalePosten || []).map(o => `| ${o.frage} | ${o.posten} | ${eur(o.betrag)} |`), '',
+  '**Zusätzliche Posten, je nach Entscheidung in der Übung:**', '', '| Frage an die Moderation | Posten | Betrag | Rechenweg |', '|---|---|---:|---|',
+  ...(n.optionalePosten || []).map(o => `| ${o.frage} | ${o.posten} | ${eur(o.betrag)} | ${(o.herleitung || '–').replace(/\|/g, '/')} |`), '',
   `**Versicherung:** ${n.versicherung.text}: − ${eur(n.versicherung.betrag)}  `, n.versicherung.erlaeuterung ? `*${n.versicherung.erlaeuterung}*  ` : '',
   `**Jahresumsatz:** ${eur(n.jahresumsatz)} · **Umsatzrendite:** ${Math.round(n.umsatzrendite * 100)} %`, '',
   `**Fazit:** ${n.fazit}`, '', n.hinweis ? `*${n.hinweis}*` : '', '');

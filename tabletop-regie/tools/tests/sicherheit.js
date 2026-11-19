@@ -9,7 +9,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:4173';
 const ergebnisse = [];
 const pruef = (name, ok, beob) => { ergebnisse.push({ name, ok, beob }); console.log((ok ? 'BESTANDEN ' : 'FEHLER    ') + name + ' – ' + beob); };
 const j = async (p, opt = {}) => { const r = await fetch(BASE + p, opt); let b = null; try { b = await r.json(); } catch (e) {} return { status: r.status, body: b }; };
-const post = (p, body) => j(p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const post = (p, body) => j(p, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Regie': '1' }, body: JSON.stringify(body) });
 
 (async () => {
   // 0 Server muss lokal erreichbar sein, sonst ist jede weitere Prüfung wertlos
@@ -41,7 +41,7 @@ const post = (p, body) => j(p, { method: 'POST', headers: { 'Content-Type': 'app
   await post('/api/settings', { branding: { logo: '/media/branding/excon-logo.png' } });
 
   // 4 Logo-Upload: SVG/HTML abgelehnt, PNG angenommen
-  const up = async (name, type, data) => { const fd = new FormData(); fd.append('logo', new Blob([data], { type }), name); const r = await fetch(BASE + '/api/settings/upload-logo', { method: 'POST', body: fd }); return { status: r.status, body: await r.json().catch(() => null) }; };
+  const up = async (name, type, data) => { const fd = new FormData(); fd.append('logo', new Blob([data], { type }), name); const r = await fetch(BASE + '/api/settings/upload-logo', { method: 'POST', body: fd, headers: { 'X-Regie': '1' } }); return { status: r.status, body: await r.json().catch(() => null) }; };
   const svg = await up('x.svg', 'image/svg+xml', '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>');
   const html = await up('x.png', 'text/html', '<script>alert(1)</script>');
   const png = await up('x.html', 'image/png', Buffer.from('89504e470d0a1a0a', 'hex'));
@@ -51,6 +51,15 @@ const post = (p, body) => j(p, { method: 'POST', headers: { 'Content-Type': 'app
   await post('/api/settings', { branding: { logo: '/media/branding/excon-logo.png' } });
   if (png.body && png.body.url) { try { require('fs').unlinkSync(require('path').join(__dirname, '..', '..', png.body.url.slice(1))); } catch (e) {} }
 
+  // 4b Fremdauslösung (CSRF): schreibender Aufruf ohne X-Regie-Header wird abgelehnt
+  const ohneHeader = await fetch(BASE + '/api/run/reset', { method: 'POST' });
+  const formular = await fetch(BASE + '/api/run/pause', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'a=1' });
+  pruef('Schreibender Aufruf ohne X-Regie-Header abgelehnt (Schutz vor Fremdauslösung)', ohneHeader.status === 403 && formular.status === 403, `POST ohne Header: HTTP ${ohneHeader.status}; als Formular: HTTP ${formular.status}`);
+  // 4c Medienpfade außerhalb von media/ über die statische Auslieferung
+  const pfade = ['/media/../server/index.js', '/media/%2e%2e/server/index.js', '/media/..%2fdata%2fsettings.json', '/../data/settings.json'];
+  const antworten = [];
+  for (const p of pfade) { const r = await fetch(BASE + p); const t = await r.text(); antworten.push(`${p} → HTTP ${r.status}${/require\(|"smtp"/.test(t) ? ' MIT INHALT' : ''}`); }
+  pruef('Unzulässige Medienpfade liefern keine Dateien außerhalb von media/', !antworten.some(a => a.includes('MIT INHALT')), antworten.join('; '));
   // 5 Bewertung: nur gültige Rolle und Kriterium, kein Prototyp-Eingriff
   const st = (await j('/api/scenario-meta')).body || {};
   const proto = await post('/api/bewertung', { roleId: '__proto__', kriterium: 'polluted', value: 5 });

@@ -6,6 +6,7 @@ Version 1.0 · Stand 2026-11-19 · erzeugt mit `tools/handbuch-waterkant.js` aus
 
 ## 1. Format und Dauer
 
+- **Pilotfestlegung:** Konfiguration 90 Minuten in einem Termin von mindestens 120 Minuten. Abschluss und Rechnung ca. 10 Minuten, danach Debriefing separat mindestens 20 Minuten. Schwerpunkt „Ausgewogen“ (enthält die Rücksicherung mit den Basisdiensten) oder „Krisenführung und Personenschutz“ (enthält Feuerwehr-Gespräch, Verbundbeirat und Versicherer).
 - **Pilotstandard: 90 Minuten oder länger.** Nur dann sind alle fünf Entscheidungen mit ausreichender Diskussionszeit spielbar, die Überraschung B7 (Stellvertretung) ist einsetzbar, und für Abschluss und Debriefing bleiben mindestens 9 Minuten.
 - **45 und 60 Minuten nur als Executive-Kurzformat:** fünf Entscheidungen bei rund 1–2 Minuten Entscheidungszeit je Lage. Erwartung an die Tiefe ausdrücklich senken („Wir prüfen Prioritäten, nicht Details“), Debriefing gesondert ansetzen (mindestens 20 Minuten im Anschluss).
 - 120 und 180 Minuten: mehr Lagen; mit Schwerpunkt „Krisenführung und Personenschutz“ kommen auch Versicherer (LK24, ab 90 Min.), Brandursache (LK26, ab 120 Min.) und die Rückkehrentscheidung (LK28, 180 Min.) ins Spiel.
@@ -48,7 +49,7 @@ Krisenzeit 81 Min. + Abschluss ca. 9 Min. Die Minuten sind Richtwerte; das Werkz
 | 16 | LK06 Lagebild nach dem Löschen (Dienstag 05:30 Uhr) | Ausbruch | – | – | Ab hier arbeitet der Krisenstab. Auf Rollenklarheit achten: Wer leitet, wer protokolliert, wann ist die nächste Lagebesprechung? Die 72-Stunden-Grenze der Kassen ist der rote Faden der nächsten Tage. |
 | 23 | LK08 Saisonstart ohne Aktionspreise (Dienstag 07:00 Uhr) | Eskalation | – | – | Kein IT-Thema mehr, sondern Geschäft: Saisonstart, Kundschaft, Personal vor Ort. Gut ist eine einheitliche, schriftlich verteilte Anweisung mit Ansprechpartner. |
 | 31 | LK09 Die Partnermärkte rufen an (Dienstag 08:30 Uhr) | Eskalation | Signal, dann live | W2 | Auf der Bühne klingelt das Telefon. Die Moderation spricht danach einen Partner (Sprechertext) und bleibt für Rückfragen in der Rolle. Danach fällt die Entscheidung, wann und wie alle Partner informiert werden. |
-| 38 | LK14 Den Backup-Server bergen? (Mittwoch 07:30 Uhr) | Höhepunkt | – | W3 | Arbeitsschutz und Schadenregulierung gegen Datenverlust. Ein Einsatz einer Fachfirma mit Schutzausrüstung ist fachlich vertretbar – aber nur mit Gefährdungsbeurteilung, Messwerten, Freiwilligkeit, Dokumentation und Absti … |
+| 38 | LK14 Den Backup-Server bergen? (Mittwoch 07:30 Uhr) | Höhepunkt | – | W3 | Arbeitsschutz und Schadenregulierung gegen Datenverlust. Ein Einsatz einer Fachfirma mit Schutzausrüstung ist fachlich vertretbar – aber nur mit Messwerten, Gefährdungsbeurteilung und Schutzmaßnahmen der Fachfirma, einer … |
 | 45 | LK15 Wie weit geht der Ausweichbetrieb? (Mittwoch 10:00 Uhr) | Höhepunkt | – | W4 | Keine Option ist kostenlos: Klein heißt drei Wochen ohne Online-Bestände und Lagerverwaltung, groß heißt Vertrag, Kosten und Fehlerrisiko. Den Tisch zu einer Begründung zwingen, nicht zur „richtigen“ Antwort. |
 | 52 | LK19 Rücksicherung im Ausweich-Rack (Donnerstag 08:00 Uhr) | Folgen | – | – | Freigaben auseinanderhalten: Basisdienste (IT-Leitung mit RZ-Betrieb), Firewall-Regeln je Markt (Informationssicherheit, Vier-Augen-Prinzip), fachliche Prüfung der Daten und Preise (Fachbereiche) – erst dann wird ein Mar … |
 | 59 | LK20 Wer wird zuerst umgestellt? (Donnerstag 10:00 Uhr) | Folgen | – | W5 | Gleichbehandlung gegen Eigeninteresse. Der Vertrag regelt keine Reihenfolge – das macht es schwer. Gut ist ein offengelegtes Kriterium, das allen mitgeteilt wird. |
@@ -86,7 +87,7 @@ Die Entscheidung des Tisches wird in der Moderation unter „Entscheidungen mit 
 
 **Moderation:** Um 03:02 Uhr weiß niemand, dass es brennt. Herunterfahren bricht die Preisübertragung zum Saisonstart und die Partner-Uploads ab und könnte ein Fehlalarm sein; Weiterlaufen riskiert einen harten Ausfall. Beide Antworten sind vertretbar – bewertet wird, ob jemand entscheidet und es dokumentiert.
 
-- **Nicht zwingend benötigte Systeme sofort kontrolliert herunterfahren (Preisübertragung und Partner-Uploads brechen ab)** – Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
+- **Die Server im Serverraum jetzt kontrolliert herunterfahren (die laufende Preisübertragung und die Partner-Uploads brechen ab)** – Die Server standen still, als der Rauch kam: Ihre Lüfter haben keinen Ruß angesaugt, der Sanierer hält mehr Geräte für reinigungsfähig. Dafür fehlen die Aktionspreise in allen 14 Filialen, und die Tagesabschlüsse der Partnermärkte brechen ab.
 - **Weiterlaufen lassen, bis die Gebäudetechnik die Ursache geklärt hat** – Die Preisübertragung erreicht vor dem Stromausfall noch 5 der 14 Filialen. Bis zum Stromausfall haben die laufenden Server mit ihren Lüftern Rauch und Ruß angesaugt – der Sanierer stuft mehr Geräte als nicht reinigungsfähig ein (vertrauliche Karte bei „Den Backup-Server bergen?“).
 
 ### W2 – bei LK09 Die Partnermärkte rufen an
@@ -120,7 +121,7 @@ Die Entscheidung des Tisches wird in der Moderation unter „Entscheidungen mit 
 
 **Frage:** Stellt Waterkant eigene Filialen und Partnermärkte nach einem gemeinsamen Kriterium um – oder kommen die eigenen 14 Filialen zuerst?
 
-**Moderation:** Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium.
+**Moderation:** Der Vertrag regelt keine Reihenfolge. Eigene zuerst sichert Saisonumsatz, kostet aber Vertrauen im Verbund; gleichrangig ist fair, kostet aber eigenen Umsatz. Bewertet wird ein offengelegtes Kriterium. Die Folgen unterstellen Umsatz als gemeinsames Kriterium; wählt der Tisch ein anderes, nennt die Moderation die betroffenen Märkte entsprechend.
 
 - **Eigene Filialen und Partnermärkte nach einem gemeinsamen, offengelegten Kriterium (z. B. Umsatz, unabhängig vom Eigentümer)** – Drei kleinere eigene Filialen reißen die Grenze und öffnen Freitag ohne funktionierende Kassen, bis der Techniker da war.
 - **Eigene 14 Filialen zuerst, danach die Partnermärkte** – Die eigenen Filialen sind bis Mitternacht umgestellt; drei Partnermärkte reißen die Grenze und öffnen Freitag ohne funktionierende Kassen (vertrauliche Karte am Sonntag).
@@ -154,6 +155,7 @@ Nur auslösen, wenn der Tisch Luft hat oder zu bequem wird. Die Moderation zeigt
 - [ ] Werden anstehende Entscheidungen getroffen statt vertagt?
 - [ ] Hat die Vertretung die nötigen Zugänge und Befugnisse – oder fehlen sie?
 - [ ] Bekommt die IT-Leitung bei der Rückkehr eine kurze Übergabe?
+- [ ] Welche Informationen hatte nur die IT-Leitung – und haben sie gefehlt?
 - [ ] Welche Informationen hatte nur die IT-Leitung – und haben sie gefehlt?
 
 ## 7. Live-Gespräche (Telefon, Funk)

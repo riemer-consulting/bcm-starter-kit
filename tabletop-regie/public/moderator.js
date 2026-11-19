@@ -153,6 +153,7 @@ function updateSkAlerts(s) {
 }
 
 function render(s) {
+  try { renderEinschaetzung(s); } catch (e) { /* Anzeige der Einschätzung darf die Moderation nicht stören */ }
   lastState = s;
   const scenario = s.scenario;
   updateSkAlerts(s);
@@ -473,6 +474,44 @@ document.getElementById('btn-ton').addEventListener('click', () => {
   api('/api/run/ton', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stumm }) }).then(refresh);
 });
 document.getElementById('btn-protokoll').addEventListener('click', () => { window.location.href = '/api/run/protokoll'; });
+document.getElementById('btn-journal').addEventListener('click', () => { window.location.href = '/api/run/journal'; });
+
+// Gesamteinschätzung: Zeilen nur neu aufbauen, wenn sich das Raster ändert; Werte nur
+// aktualisieren, solange niemand gerade tippt.
+let einschaetzungRaster = null;
+function renderEinschaetzung(s) {
+  const box = document.getElementById('m-einschaetzung');
+  const e = s.einschaetzung || { kriterien: [], werte: {} };
+  const key = JSON.stringify(e.kriterien);
+  if (key !== einschaetzungRaster) {
+    einschaetzungRaster = key;
+    box.innerHTML = e.kriterien.map((k, i) => `<div class="einsch-zeile" data-i="${i}" style="border-top:1px solid var(--line, #333);padding:6px 0;">
+      <div style="font-weight:600;">${escapeHtml(k)}</div>
+      <div class="row" style="gap:6px;align-items:center;margin-top:4px;">
+        <select class="einsch-wert" data-i="${i}" title="0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig"><option value="">–</option><option value="0">0</option><option value="1">1</option><option value="2">2</option></select>
+        <input class="einsch-notiz" data-i="${i}" placeholder="Beobachtung (Karte)" style="flex:1;min-width:160px;" maxlength="1000">
+      </div></div>`).join('') + '<p class="muted mini" id="m-einsch-summe"></p>';
+    box.querySelectorAll('.einsch-wert').forEach(el => el.addEventListener('change', () => speichereEinschaetzung(e.kriterien[Number(el.dataset.i)], { wert: el.value })));
+    box.querySelectorAll('.einsch-notiz').forEach(el => el.addEventListener('change', () => speichereEinschaetzung(e.kriterien[Number(el.dataset.i)], { notiz: el.value })));
+  }
+  if (box.contains(document.activeElement)) return;
+  let summe = 0, n = 0;
+  e.kriterien.forEach((k, i) => {
+    const v = e.werte[k] || {};
+    const sel = box.querySelector(`.einsch-wert[data-i="${i}"]`); const inp = box.querySelector(`.einsch-notiz[data-i="${i}"]`);
+    if (sel) sel.value = v.wert === null || v.wert === undefined ? '' : String(v.wert);
+    if (inp) inp.value = v.notiz || '';
+    if (typeof v.wert === 'number') { summe += v.wert; n++; }
+  });
+  const se = document.getElementById('m-einsch-summe');
+  if (se) se.textContent = n ? `Summe ${summe} von ${e.kriterien.length * 2} (${n} von ${e.kriterien.length} Kriterien bewertet; kein Grenzwert).` : 'Noch nichts bewertet.';
+}
+async function speichereEinschaetzung(kriterium, daten) {
+  const body = Object.assign({ kriterium }, daten);
+  if (body.wert !== undefined) body.wert = body.wert === '' ? null : Number(body.wert);
+  await api('/api/run/einschaetzung', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  refresh();
+}
 document.getElementById('btn-send-all-certs').addEventListener('click', async () => {
   const people = ((lastState && lastState.participants) || []).filter(p => p.name && p.email);
   const statusEl = document.getElementById('m-certs-status');

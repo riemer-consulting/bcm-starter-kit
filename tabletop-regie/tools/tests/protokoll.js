@@ -6,7 +6,7 @@ const fs = require('fs'); const path = require('path'); const { spawn } = requir
 const ROOT = path.join(__dirname, '..', '..'); const FILE = process.argv[2]; const OUT = process.argv[3] || '/dev/null';
 const s = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', FILE), 'utf8'));
 const B = 'http://127.0.0.1:4183'; const sleep = ms => new Promise(r => setTimeout(r, ms));
-const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b || {}) }).then(r => r.status);
+const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Regie': '1' }, body: JSON.stringify(b || {}) }).then(r => r.status);
 const STANDARD = ['Aktivierung / Lagebild', 'Entscheidung / Verantwortung', 'Kommunikation', 'IT-/OT-Sicherheit', 'Geschäftsfortführung', 'Qualität / Datenintegrität', 'Fachliche Prüfpflichten', 'Wiederanlauf / Nachsorge'];
 const soll = s.protokollKriterien || STANDARD;
 const sicher = {}; ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; });

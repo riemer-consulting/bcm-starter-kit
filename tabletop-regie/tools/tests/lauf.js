@@ -31,7 +31,7 @@ const PORT = 4180; const B = `http://127.0.0.1:${PORT}`; const SMTP = 2525;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const ergebnisse = [];
 const pruef = (id, name, ok, erwartet, beobachtet) => { ergebnisse.push({ id, name, ok: !!ok, erwartet, beobachtet }); console.log(`${ok ? 'BESTANDEN' : 'FEHLER   '} ${id} ${name} – ${beobachtet}`); };
-const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b || {}) }).then(async r => ({ status: r.status, body: await r.json().catch(() => null) }));
+const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Regie': '1' }, body: JSON.stringify(b || {}) }).then(async r => ({ status: r.status, body: await r.json().catch(() => null) }));
 const get = p => fetch(B + p).then(r => r.json());
 
 // ---- SMTP-Testempfänger

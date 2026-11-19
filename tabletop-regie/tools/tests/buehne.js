@@ -18,7 +18,7 @@ fs.mkdirSync(OUT, { recursive: true });
 const s = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', FILE), 'utf8'));
 const PORT = 4181; const B = `http://127.0.0.1:${PORT}`;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b || {}) }).then(async r => ({ status: r.status, body: await r.json().catch(() => null) }));
+const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Regie': '1' }, body: JSON.stringify(b || {}) }).then(async r => ({ status: r.status, body: await r.json().catch(() => null) }));
 const get = p => fetch(B + p).then(r => r.json());
 const ergebnisse = []; const generalprobe = [];
 const pruef = (id, name, ok, erwartet, beobachtet) => { ergebnisse.push({ id, name, ok: !!ok, erwartet, beobachtet }); console.log(`${ok ? 'BESTANDEN' : 'FEHLER   '} ${id} ${name} – ${beobachtet}`); };

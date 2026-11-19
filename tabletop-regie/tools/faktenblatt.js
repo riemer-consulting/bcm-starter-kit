@@ -61,7 +61,11 @@ module.exports = {
   ],
   [
    "Gebäude",
-   "Verwaltungsgebäude bis zur Prüfung gesperrt; Büros ab Dienstag 10:00 Uhr freigegeben; Server- und USV-Raum gesperrt (Rußfilm, mögliche ätzende Gase), Messergebnis Mittwochmorgen: Grenzwerte noch überschritten; Freigabe nach Reinigung in ca. einer Woche; eigenes Rechenzentrum frühestens in ca. drei Wochen"
+   "Verwaltungsgebäude bis zur Prüfung gesperrt; beschädigte Batteriemodule bis Dienstag 10:00 Uhr durch eine Fachfirma ausgebaut, danach Brandwache beendet und Gebäude übergeben; Büros ab Dienstag 10:00 Uhr freigegeben; Server- und USV-Raum gesperrt (Rußfilm, mögliche ätzende Gase), Messergebnis Mittwochmorgen: Grenzwerte noch überschritten"
+  ],
+  [
+   "Meilensteine Serverraum",
+   "Besichtigung durch den Gutachter Freitag → Reinigung ab dem Wochenende (nach Bergung einen Tag später), 5–8 Arbeitstage → Freimessung und Raumfreigabe frühestens ca. zehn Tage nach Mittwoch → neue USV, Brandschutzabnahme, Prüfung und Ersatz der Hardware → eigenes Rechenzentrum produktiv frühestens rund drei Wochen nach dem Brand"
   ],
   [
    "Ausfall",
@@ -69,7 +73,7 @@ module.exports = {
   ],
   [
    "Kassen",
-   "Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr; eine bis dahin nicht umgestellte Kasse sperrt sich und muss am Morgen vor Ort freigeschaltet werden"
+   "Offline-Betrieb ca. 72 Stunden laut Herstellerdokumentation, danach keine Buchungen bis zur Synchronisation: Grenze Freitag ca. 03:00 Uhr; eine bis dahin nicht umgestellte Kasse sperrt sich und kann nur vor Ort durch den Servicetechniker des Herstellers freigeschaltet werden (Freitag zwei Techniker ab 07:00 Uhr, etwa ein Markt pro Stunde)"
   ],
   [
    "Datensicherung",
@@ -77,7 +81,7 @@ module.exports = {
   ],
   [
    "Ausweichbetrieb",
-   "Vertraglich vereinbartes Ausweich-Rack beim Colocation-Anbieter, ca. 40 % der bisherigen Rechenleistung, nie vollständig geübt; Kassen- und Preisdienste ab Donnerstag möglich; Erweiterung für die übrigen Systeme binnen 48 Stunden mit zwölf Monaten Mindestlaufzeit (Zustimmungsvorbehalt der Gesellschafter ab zwölf Monaten Bindung)"
+   "Vertraglich vereinbartes Ausweich-Rack beim Colocation-Anbieter für den Produktivbetrieb der eigenen Systeme, ca. 40 % der bisherigen Rechenleistung, physisch sofort verfügbar, nie vollständig geübt; vor Betrieb müssen Netzanbindung, Anmeldedienste, Namensauflösung, Firewall, gesicherter Administrationszugang und Katalog der Sicherungssoftware eingerichtet werden (ab Mittwoch); ob dort auch Partner- und Gewerbekundendaten verarbeitet werden dürfen, regelt der Vertrag nicht ausdrücklich (fachlich zu prüfen); Kassen- und Preisdienste ab Donnerstag; Erweiterung für die übrigen Systeme binnen 48 Stunden mit zwölf Monaten Mindestlaufzeit, Zustimmung der Gesellschafter nötig (Bindung von zwölf Monaten oder länger)"
   ],
   [
    "Ersatzhardware",

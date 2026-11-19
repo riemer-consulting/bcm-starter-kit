@@ -17,6 +17,7 @@ w(`# Moderationshandbuch Waterkant – „${s.title}“`, '', `Version 1.0 · St
   '**Status:** Arbeitsfassung für den moderierten Probelauf. Nicht freigegeben für einen externen Pilot (siehe Review-Paket, Dokument 12).', '');
 
 w('## 1. Format und Dauer', '',
+  '- **Pilotfestlegung:** Konfiguration 90 Minuten in einem Termin von mindestens 120 Minuten. Abschluss und Rechnung ca. 10 Minuten, danach Debriefing separat mindestens 20 Minuten. Schwerpunkt „Ausgewogen“ (enthält die Rücksicherung mit den Basisdiensten) oder „Krisenführung und Personenschutz“ (enthält Feuerwehr-Gespräch, Verbundbeirat und Versicherer).',
   '- **Pilotstandard: 90 Minuten oder länger.** Nur dann sind alle fünf Entscheidungen mit ausreichender Diskussionszeit spielbar, die Überraschung B7 (Stellvertretung) ist einsetzbar, und für Abschluss und Debriefing bleiben mindestens 9 Minuten.',
   '- **45 und 60 Minuten nur als Executive-Kurzformat:** fünf Entscheidungen bei rund 1–2 Minuten Entscheidungszeit je Lage. Erwartung an die Tiefe ausdrücklich senken („Wir prüfen Prioritäten, nicht Details“), Debriefing gesondert ansetzen (mindestens 20 Minuten im Anschluss).',
   '- 120 und 180 Minuten: mehr Lagen; mit Schwerpunkt „Krisenführung und Personenschutz“ kommen auch Versicherer (LK24, ab 90 Min.), Brandursache (LK26, ab 120 Min.) und die Rückkehrentscheidung (LK28, 180 Min.) ins Spiel.', '');

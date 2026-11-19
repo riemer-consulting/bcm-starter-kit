@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, '..', 'data');
+// TABLETOP_DATA_DIR: eigener Datenordner (z. B. für Tests), damit die Projektkonfiguration unberührt bleibt.
+const DATA_DIR = process.env.TABLETOP_DATA_DIR ? path.resolve(process.env.TABLETOP_DATA_DIR) : path.join(__dirname, '..', 'data');
 const SETTINGS_PATH = path.join(DATA_DIR, 'settings.json');
 const RUN_STATE_PATH = path.join(DATA_DIR, 'run-state.json');
 
@@ -17,7 +18,10 @@ function readJson(filePath, fallback) {
 
 function writeJson(filePath, data) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+  // Atomar schreiben: erst Hilfsdatei, dann umbenennen – ein Absturz hinterlässt keine halbe Datei.
+  const tmp = filePath + '.tmp-' + process.pid;
+  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+  fs.renameSync(tmp, filePath);
 }
 
 function listScenarioFiles() {

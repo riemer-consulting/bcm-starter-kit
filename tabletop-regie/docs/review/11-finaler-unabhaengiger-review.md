@@ -59,3 +59,42 @@ Zusätzlich umgesetzt aus den mittleren und niedrigen Befunden: **W-R22** B7 (Ka
 ## 5. Nach den Korrekturen erneut geprüft
 
 Drehbuchprüfung, Variantenprüfung (25 Dauer-/Schwerpunkt-Kombinationen, 32 Entscheidungskombinationen), Lauftest und Browsertest wurden mit der korrigierten Fassung wiederholt; Ergebnisse in `testberichte/`. Eine **zweite unabhängige Prüfung** der korrigierten Fassung hat in dieser Runde nicht stattgefunden; sie ist Teil der offenen Schritte vor dem Pilot.
+
+## 6. Zweite unabhängige Prüfrunde (korrigierte Fassung)
+
+Nach den Korrekturen der ersten Runde und des Zweitreviews (F01–F05, F07) hat eine erneut gesondert beauftragte KI-Prüfinstanz die korrigierte Fassung gegen die Originalbefunde geprüft und ausdrücklich nach **neuen Widersprüchen durch die Korrekturen** gesucht. Bericht: `11-anlage-pruefbericht-waterkant-runde2.md`.
+
+**Nachprüfung:** 27 Befunde geprüft – 20 erledigt, 7 teilweise (W-R10, W-R12, W-R22, W-R29, F03, F04, F05), 0 nicht erledigt. Alle Zahlen auf den Karten stimmen; Grundschaden und alle 32 Summen nachgerechnet.
+
+**Neue Befunde: 26** (7 hoch, 8 mittel, 11 niedrig) – überwiegend Widersprüche, die durch die Korrekturen selbst entstanden sind. Umgang:
+
+| Nr. | Befund (kurz) | Dringlichkeit | Umsetzung |
+|---|---|---|---|
+| W2-R01 | LK22 meldet Partner-Tagesabschlüsse schon um 18 Uhr als nachgeholt; Widerspruch zu LK23 | hoch | umgesetzt: werden je Markt nach der Umstellung aus den Kassen neu eingelesen (LK22, LK23) |
+| W2-R02 | Faktenblatt „ca. eine Woche“; Abschluss „3 Wochen bis zur Entscheidung“ | hoch | umgesetzt: Faktenblatt mit Meilensteinzeile Serverraum; Abschluss „2 Wochen … Empfehlung bis Mittwoch“ |
+| W2-R03 | Ausbau der Module und Ende der Brandwache nur in selten gespielter LK10 | hoch | umgesetzt: in LK14 (Priorität 1) aufgenommen, Freigabekette in der Moderation von LK14 |
+| W2-R04 | Drehbuch-Export ohne Moderationshinweise der Entscheidungen (Zustimmungspfad W4) | hoch | umgesetzt: Export gibt den Hinweis jeder Entscheidung aus |
+| W2-R05 | Folgen von W4 „erweitern“ kommen fast nie an | hoch | umgesetzt: LK27-Zusatz (in allen Kombinationen) mit Preisabgleich, Zustimmung und Prüfauftrag |
+| W2-R06 | 9 Minuten für Abschluss und Debriefing bei 90 Min. | hoch | umgesetzt: Pilotfestlegung im Handbuch (90-Min.-Konfiguration in mindestens 120 Min. Termin, Debriefing separat ≥ 20 Min.) |
+| W2-R07 | Gegenpreis „Reinigung einen Tag später“ trägt nicht (Reinigung erst nach Gutachter) | hoch | umgesetzt: zusätzliche Dokumentation durch den Sachverständigen des Gutachters verschiebt die Reinigung |
+| W2-R08 | Dienstagssicherung kann nicht über laufende Warenwirtschaft „eingespielt“ werden | mittel | umgesetzt: Montagsbuchungen werden kontrolliert nachgeladen |
+| W2-R09 | W1-Option „nicht zwingend benötigte Systeme“ passt nicht zur Folge | mittel | umgesetzt |
+| W2-R10 | W5-Folge am Tisch aushebelbar (Techniker) | mittel | umgesetzt: Herstellertechniker ab 07:00 Uhr, ca. ein Markt pro Stunde |
+| W2-R11 | SK31 kommt bei 180 Min. erst nach LK27 | mittel | offen: Bindung an die Heimatlage nimmt der Logistik in kurzen Formaten die einzige Karte (Rollenabdeckung); vor dem Pilot entscheiden |
+| W2-R12 | B7: Sprechertext, Einsatzzeitpunkt, Umleitung vertraulicher Karten, Checkpunkt | mittel | umgesetzt |
+| W2-R13 | „Freiwilligkeit“ als Kriterium schief | mittel | umgesetzt: Gefährdungsbeurteilung der Fachfirma, Arbeitsfreigabe durch Waterkant (fachlich bestätigen lassen) |
+| W2-R14 | SK34 (Dokumentation) erreicht den Tisch nie | mittel | umgesetzt: Priorität 1; SK28/SK36 offen |
+| W2-R15 | Variantenprüfung meldet „keine Befunde“, prüft aber keine Textwidersprüche und keine Reichweite | mittel | umgesetzt: Reichweite der Entscheidungsfolgen ergänzt; Ergebniszeile nennt, was nicht automatisch geprüft wird |
+| W2-R16 | SK41 „Daten schwerer zu retten“ ohne Wirkung | niedrig | umgesetzt (Satz gestrichen) |
+| W2-R17 | SK08 vs. Freischaltung vor Ort | niedrig | umgesetzt |
+| W2-R18 | Regiehinweis in Krisen-Info LK23 | niedrig | umgesetzt |
+| W2-R19 | B1 widerspricht LK19 | niedrig | umgesetzt (Firewall-Regeln der Märkte statt Zugang) |
+| W2-R20 | B3 „vor der Aktivierung“ passt nicht | niedrig | umgesetzt |
+| W2-R21 | LK05 Zeitangabe 03:05 Uhr | niedrig | umgesetzt (nach der Geruchsmeldung) |
+| W2-R22 | B5 „Rauchreste über die Lüftung“ als eigener Brandschutzbefund | niedrig | umgesetzt (Ursache unklar, vermutlich Fehlalarm) |
+| W2-R23 | LK28 Sanierer meldet Dinge außerhalb seines Auftrags | niedrig | umgesetzt (IT-Leitung und Gebäudetechnik melden) |
+| W2-R24 | Faktenblatt spiegelt F01/F02 nicht | niedrig | umgesetzt |
+| W2-R25 | W5-Folge setzt Umsatzkriterium voraus | niedrig | umgesetzt (Moderationshinweis) |
+| W2-R26 | Export ohne Rechenweg der Zusatzposten | niedrig | umgesetzt |
+
+**Stand nach der zweiten Runde:** keine offenen hohen Befunde; offen sind W2-R11 und SK28/SK36 (mittel) sowie die fachlichen Annahmen des Berichts (Abschnitt 4), die nur Fachabteilungen bestätigen können. Eine dritte Prüfrunde der jetzt korrigierten Fassung hat nicht stattgefunden; die Korrekturen der zweiten Runde sind durch die Tests der finalen QA (`docs/final-qa/`) technisch, aber nicht erneut unabhängig fachlich geprüft.

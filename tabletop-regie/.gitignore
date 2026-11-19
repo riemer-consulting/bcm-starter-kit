@@ -4,3 +4,5 @@ data/run-state.json
 media/branding/custom-logo-*
 # Eigene Aufnahmen/Toene (z. B. eingesprochener Nachrichtenbericht) bleiben lokal
 media/custom/
+data/journal/
+data/*.tmp-*

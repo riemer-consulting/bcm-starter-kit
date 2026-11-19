@@ -14,6 +14,20 @@ const finale = require('./finale');
 
 const app = express();
 app.use(express.json({ limit: '20mb' }));
+// Schutz vor Fremdauslösung (CSRF): schreibende API-Aufrufe nur mit Header "X-Regie"
+// (setzt public/regie-fetch.js). Fremde Seiten lösen dafür eine Vorabfrage aus, die der
+// Server nicht beantwortet – der Aufruf kommt nie an.
+app.use('/api', (req, res, next) => {
+  if (req.method === 'GET' || req.method === 'HEAD') return next();
+  if (req.get('X-Regie') === '1') return next();
+  res.status(403).json({ ok: false, error: 'Schreibender Aufruf ohne X-Regie-Header abgelehnt (Schutz vor Fremdauslösung).' });
+});
+app.use('/api', (req, res, next) => {
+  if (req.method === 'GET' || req.method === 'HEAD') return next();
+  const details = aktionsDetails(req);
+  res.on('finish', () => journal('aktion ' + req.method + ' ' + req.path, (req.path.match(/(LK|SK|B|W)\d+$/) || [])[0] || details.id || null, res.statusCode < 400 ? 'ok' : 'abgelehnt (HTTP ' + res.statusCode + ')', details));
+  next();
+});
 // Endet der 30-Sekunden-Countdown zwischen zwei Ticks, sollen Zeitsprung,
 // Pause usw. trotzdem sofort den laufenden Zustand sehen.
 app.use('/api/run', (req, res, next) => { maybeStartCrisisFromCountdown(); next(); });
@@ -131,6 +145,31 @@ function log(type, message) {
   state.log = state.log.slice(0, 200);
 }
 
+// ---- Ereignisjournal: eine Datei je Sitzung unter data/journal/, es wird nur angehängt.
+// Jede Zeile: laufende Nummer, Zeitpunkt, Sitzung, Szenario, Übungsminute, Typ, Karte,
+// Ergebnis, Details. Personen nur als Rollen und Anzahlen – keine Namen, keine Adressen.
+const JOURNAL_DIR = path.join(store.DATA_DIR, 'journal');
+const journalZaehler = {};
+function sitzungId() { return state.sitzungId || 'vorbereitung'; }
+function journalDatei(id) { return path.join(JOURNAL_DIR, String(id).replace(/[^a-zA-Z0-9_-]/g, '') + '.jsonl'); }
+function journal(typ, karte, ergebnis, details) {
+  try {
+    fs.mkdirSync(JOURNAL_DIR, { recursive: true });
+    const datei = journalDatei(sitzungId());
+    if (journalZaehler[datei] === undefined) journalZaehler[datei] = fs.existsSync(datei) ? fs.readFileSync(datei, 'utf8').split('\n').filter(Boolean).length : 0;
+    const eintrag = { seq: ++journalZaehler[datei], zeit: new Date().toISOString(), sitzung: sitzungId(), szenario: scenario.id, uebungsminute: ['running', 'paused', 'ended'].includes(state.status) ? Math.round(engine.elapsedMinutes(state) * 100) / 100 : null, status: state.status, typ, karte: karte || null, ergebnis: ergebnis || 'ok', details: details || {} };
+    fs.appendFileSync(datei, JSON.stringify(eintrag) + '\n');
+  } catch (e) { /* Journal darf den Lauf nie stören */ }
+}
+// Kurzfassung einer Bedienaktion ohne Personendaten
+function aktionsDetails(req) {
+  const b = req.body || {};
+  if (req.path.startsWith('/api/participants')) return Array.isArray(b) ? { personen: b.length, rollen: [...new Set(b.flatMap(p => p.roleIds || []))] } : {};
+  if (req.path.startsWith('/api/settings')) return { felder: Object.keys(b) };
+  const erlaubt = ['id', 'option', 'minute', 'durationMode', 'targetMinutes', 'schwerpunkt', 'difficulty', 'stumm', 'file', 'kriterium', 'wert'];
+  return Object.fromEntries(Object.entries(b).filter(([k]) => erlaubt.includes(k)));
+}
+
 // Tatsaechlicher Empfaenger einer vertraulichen Karte bei der aktuellen
 // Besetzung: eigentliche Rolle oder erste besetzte Ersatzrolle.
 function recipientRoleFor(card) {
@@ -225,6 +264,7 @@ async function fireSonderlagekarteIntern(skOriginal, { manual } = {}) {
     }
   }
   state.firedSonderlagekarten.push(entry);
+  journal('vertrauliche karte', sk.id, recipients.length === 0 ? 'nicht zugestellt (keine Rolle besetzt)' : entry.emailResults.every(x => x.ok) ? 'zugestellt' : entry.emailResults.some(x => x.ok) ? 'teilweise zugestellt' : 'zustellung fehlgeschlagen', { empfaengerRolle: recipientRoleId, eigentlicheRolle: skOriginal.empfaenger, personen: recipients.length, erfolgreich: entry.emailResults.filter(x => x.ok).length, manuell: !!manual, testmodus: testModeActive() });
   persist();
 }
 
@@ -242,6 +282,7 @@ function maybeStartCrisisFromCountdown() {
     state.totalPausedMs = 0;
     state.crisisStartsAt = null;
     log('info', 'Krisentimer gestartet.');
+    journal('krisentimer gestartet', null, 'ok', {});
     persist();
   }
 }
@@ -420,7 +461,7 @@ function tick() {
   if (state.status !== 'running') return;
   const due = engine.dueEvents(scenario, state);
   const lk = due.filter(e => e.type === 'lagekarte');
-  lk.forEach(ev => { if (!state.firedLagekarten.includes(ev.id)) { state.firedLagekarten.push(ev.id); log('lagekarte', `Lagekarte ${ev.id} (${ev.ref.titel}) ist jetzt aktiv.`); } });
+  lk.forEach(ev => { if (!state.firedLagekarten.includes(ev.id)) { state.firedLagekarten.push(ev.id); log('lagekarte', `Lagekarte ${ev.id} (${ev.ref.titel}) ist jetzt aktiv.`); journal('lage gezeigt', ev.id, 'ok', { titel: ev.ref.titel, simZeit: ev.ref.simZeit, ton: ev.ref.sound ? ev.ref.sound.src.split('/').pop() : null }); } });
   const dueSk = due.filter(e => e.type === 'sonderlagekarte');
   dueSk.forEach(ev => { fireSonderlagekarte(ev.ref, { manual: false }); });
   fireWeichenKarten();
@@ -429,6 +470,7 @@ function tick() {
     state.status = 'ended';
     state.endedAt = Date.now();
     log('info', 'Geplante Übungszeit erreicht – Übung automatisch beendet.');
+    journal('uebung automatisch beendet', null, 'ok', {});
     enterFinale();
   }
   persist();
@@ -923,6 +965,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     participants: state.participants,
     activeRoleIds: state.activeRoleIds,
     bewertung: state.bewertung,
+    einschaetzung: { kriterien: protokollKriterien(), werte: state.einschaetzung || {} },
     log: state.log.slice(0, 40),
     scenario: scenario
   });
@@ -975,6 +1018,18 @@ function protokollKriterien() {
   const k = scenario.protokollKriterien;
   return Array.isArray(k) && k.length && k.every(x => typeof x === 'string' && x.trim()) ? k : PROTOKOLL_KRITERIEN_STANDARD;
 }
+// Gesamteinschätzung des Teams (0/1/2 je Kriterium des Drehbuchs, mit Beobachtung)
+app.post('/api/run/einschaetzung', (req, res) => {
+  const { kriterium, wert, notiz } = req.body || {};
+  if (!protokollKriterien().includes(kriterium)) return res.status(400).json({ ok: false, error: 'Unbekanntes Kriterium.' });
+  if (!(wert === null || wert === '' || wert === undefined || [0, 1, 2].includes(Number(wert)))) return res.status(400).json({ ok: false, error: 'Wert muss 0, 1 oder 2 sein.' });
+  if (notiz !== undefined && (typeof notiz !== 'string' || notiz.length > 1000)) return res.status(400).json({ ok: false, error: 'Beobachtung zu lang (max. 1000 Zeichen).' });
+  state.einschaetzung = state.einschaetzung || {};
+  const alt = state.einschaetzung[kriterium] || {};
+  state.einschaetzung[kriterium] = { wert: wert === null || wert === '' || wert === undefined ? (notiz !== undefined ? (alt.wert ?? null) : null) : Number(wert), notiz: notiz !== undefined ? notiz : (alt.notiz || '') };
+  persist();
+  res.json({ ok: true, einschaetzung: state.einschaetzung });
+});
 app.get('/api/run/protokoll', (req, res) => {
   const L = [];
   const w = (...x) => L.push(...x);
@@ -1029,14 +1084,25 @@ app.get('/api/run/protokoll', (req, res) => {
   [...(scenario.moderationsleitfaden.debriefingFragen || []), ...((sp && sp.debriefing) || [])].forEach(q => w(`**${q}**`, '', '_Notizen:_', '', ''));
   w('## Gesamteinschätzung der Übung (Team)', '', 'Nach dem Moderationshandbuch: 0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig. Bewertet wird die Arbeit des Krisenstabs, nicht einzelne Personen. Beobachtungen mit Karten-ID belegen.', '',
     '| Kriterium | 0 / 1 / 2 | Beobachtung (Karte) |', '|---|---|---|',
-    ...protokollKriterien().map(k => `| ${k} | | |`),
-    `| **Summe (max. ${protokollKriterien().length * 2}, kein Grenzwert)** | | |`, '');
+    ...protokollKriterien().map(k => { const e = (state.einschaetzung || {})[k]; return `| ${k} | ${e && e.wert !== null && e.wert !== undefined ? e.wert : ''} | ${e && e.notiz ? String(e.notiz).replace(/\|/g, '/').replace(/\n/g, ' ') : ''} |`; }),
+    `| **Summe (max. ${protokollKriterien().length * 2}, kein Grenzwert)** | ${(() => { const w = protokollKriterien().map(k => ((state.einschaetzung || {})[k] || {}).wert).filter(v => typeof v === 'number'); return w.length ? w.reduce((a, b) => a + b, 0) + (w.length < protokollKriterien().length ? ` (${w.length} von ${protokollKriterien().length} bewertet)` : '') : ''; })()} | |`, '');
   w('## Maßnahmenplan', '', '| Nr. | Maßnahme | Verantwortlich | Priorität | Bis wann |', '|---:|---|---|---|---|', '| 1 | | | | |', '| 2 | | | | |', '| 3 | | | | |', '');
   res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="uebungsprotokoll-${new Date().toISOString().slice(0, 10)}.md"`);
   res.send(L.join('\n'));
 });
 
+// Ereignisjournal der aktuellen (oder angegebenen) Sitzung als JSON Lines
+app.get('/api/run/journal', (req, res) => {
+  const id = req.query.sitzung || sitzungId();
+  const datei = journalDatei(id);
+  res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="journal-${String(id).replace(/[^a-zA-Z0-9_-]/g, '')}.jsonl"`);
+  res.send(fs.existsSync(datei) ? fs.readFileSync(datei, 'utf8') : '');
+});
+app.get('/api/run/journal/sitzungen', (req, res) => {
+  res.json(fs.existsSync(JOURNAL_DIR) ? fs.readdirSync(JOURNAL_DIR).filter(f => f.endsWith('.jsonl')).map(f => f.replace(/\.jsonl$/, '')).sort() : []);
+});
 app.get('/api/run/ablauf-state', (req, res) => {
   const mf = scenario.moderationsleitfaden || {};
   const gezeigt = scenario.lagekarten
@@ -1070,6 +1136,7 @@ app.post('/api/run/start', (req, res) => {
     state.participants = participants;
     state.activeRoleIds = activeRoleIds;
   }
+  state.sitzungId = new Date().toISOString().replace(/[-:T.Z]/g, '').slice(0, 14) + '-' + Math.random().toString(36).slice(2, 6);
   state.durationMode = ['computed', 'target'].includes(durationMode) ? durationMode : 'authored';
   state.difficulty = ['leicht', 'mittel', 'hoch'].includes(difficulty) ? difficulty : 'mittel';
   state.schwerpunkt = (scenario.schwerpunkte || []).some(x => x.key === schwerpunkt) ? schwerpunkt : null;
@@ -1102,6 +1169,8 @@ app.post('/api/run/start', (req, res) => {
   state.pausedAt = null;
   state.totalPausedMs = 0;
   log('info', `Übung vorbereitet (Modus: ${state.durationMode}, Schwierigkeit: ${state.difficulty}). Krisentimer noch nicht gestartet.`);
+  const besetzt = engine.assignedRoleIds(state);
+  journal('plan', null, 'ok', { modus: state.durationMode, zieldauer: state.targetMinutes, schwierigkeit: state.difficulty, schwerpunkt: state.schwerpunkt || null, besetzteRollen: besetzt, personenJeRolle: Object.fromEntries(besetzt.map(r => [r, participantsForRole(r).length])), ablauf: engine.getActiveSchedule(scenario, state).map(ev => ({ typ: ev.type === 'lagekarte' ? 'LK' : 'SK', id: ev.id, minute: Math.round(ev.minute * 10) / 10 })), szenarioDatei: scenarioFile, szenarioSha256: require('crypto').createHash('sha256').update(fs.readFileSync(path.join(store.DATA_DIR, scenarioFile))).digest('hex') });
   persist();
   res.json({ ok: true });
 });
