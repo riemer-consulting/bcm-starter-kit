@@ -27,7 +27,9 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp
 fetch('/api/qa-status').then(r => r.json()).then(q => {
   const el = document.getElementById('inhalt');
   if (!q.vorhanden) { el.innerHTML = '<div class="card">Noch keine QA-Abnahme vorhanden (docs/final-qa/qa-status.json fehlt).</div>'; return; }
-  el.innerHTML = `<div class="card"><b>Prüfstand:</b> Commit <code>${esc(q.commit)}</code> · Abnahme vom ${esc(q.zeitpunkt)} · Basis sauber eingecheckt: ${q.sauber ? 'ja' : 'nein'}</div>` +
+  const v = q.version || {};
+  el.innerHTML = `<div class="card"><b>Prüfstand:</b> Commit <code>${esc(q.commit)}</code> · Abnahme vom ${esc(q.zeitpunkt)} · Basis sauber eingecheckt: ${q.sauber ? 'ja' : 'nein'}<br><span class="hinweis" style="border:0;padding:0;">Werkzeuge: Node ${esc(v.node)} · Chromium ${esc(v.chromium)} · Playwright ${esc(v.playwright)} · ${esc(v.ffmpeg)}</span></div>` +
+    ((q.schritte || []).length ? `<div class="card"><h2>Letzter Lauf: Prüfschritte</h2><table><tr><th>Schritt</th><th>Ergebnis</th><th>Dauer</th></tr>${q.schritte.map(s => `<tr><td>${esc(s.name)}</td><td>${esc(s.ergebnis)}</td><td>${esc(s.sekunden)} s</td></tr>`).join('')}</table></div>` : '') +
     (q.szenarien || []).map(s => `<div class="card"><h2>${esc(s.name)}</h2>
       <table><tr><th>Drehbuch (SHA-256)</th><td><code>${esc((s.sha256 || '').slice(0, 16))}…</code></td></tr>
       <tr><th>Tests</th><td>${esc(s.bestanden)} bestanden · ${esc(s.fehlgeschlagen)} fehlgeschlagen · ${esc(s.nichtAusgefuehrt || 0)} nicht ausgeführt</td></tr>

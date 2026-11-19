@@ -1,5 +1,5 @@
 // Prüft ein Drehbuch über alle Varianten und schreibt einen Markdown-Bericht.
-// Aufruf: node tools/varianten.js data/scenario.<name>.json <bericht.md>
+// Aufruf: node tools/varianten.js data/scenario.<name>.json <bericht.md> [befunde.json]
 // - 25 Kombinationen aus Dauer (45/60/90/120/180) und Schwerpunkt (Ausgewogen + alle Schwerpunkte)
 // - alle 2^n Kombinationen der Entscheidungen (Weichen)
 // Prüfregeln: keine doppelte Karte, keine verletzte Abhängigkeit, keine vertrauliche
@@ -125,5 +125,7 @@ if (W.length) {
 }
 w('## Gesamtergebnis', '', fehler.length ? '**Befunde:**\n\n' + fehler.map(f => '- ' + f).join('\n') : '**Keine Befunde in den automatisch geprüften Regeln** (Reihenfolge, Abhängigkeiten, Zeitbindung, Dauer, Pflichtkarten, Einsetzbarkeit der Überraschungen, Folgen nach ihrer Entscheidung, Folgekarten, Posten, Rechnung). **Nicht automatisch geprüft:** inhaltliche Widersprüche zwischen Texten (z. B. Zusätze verschiedener Entscheidungen in derselben Lage) – dafür die fachliche Prüfung und die Hinweisabschnitte oben.', '');
 fs.writeFileSync(outFile, out.join('\n'));
+// maschinenlesbare Fassung (optional, 3. Argument): Befunde mit Kennung
+if (process.argv[4]) fs.writeFileSync(process.argv[4], JSON.stringify({ datei: path.basename(file), werkzeug: 'tools/varianten.js', befunde: fehler.map((f, i) => ({ id: `V${String(i + 1).padStart(3, '0')}`, text: f })), ergebnis: fehler.length ? 'Befunde' : 'keine Befunde in den automatisch geprüften Regeln' }, null, 2));
 console.log(path.basename(file), fehler.length ? 'BEFUNDE: ' + fehler.length : 'ok');
 process.exitCode = fehler.length ? 1 : 0;

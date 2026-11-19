@@ -1186,7 +1186,8 @@ app.post('/api/run/begin-crisis', (req, res) => {
     return res.status(400).json({ ok: false, error: 'Übung ist nicht in der Vorbereitungsphase.' });
   }
   state.status = 'countdown';
-  state.crisisStartsAt = Date.now() + 30000;
+  // Countdown 30 s; nur für automatisierte Tests per TABLETOP_COUNTDOWN_SEKUNDEN verkürzbar (dokumentierte Beschleunigung).
+  state.crisisStartsAt = Date.now() + 1000 * (Number(process.env.TABLETOP_COUNTDOWN_SEKUNDEN) >= 0 && process.env.TABLETOP_COUNTDOWN_SEKUNDEN !== undefined && process.env.TABLETOP_COUNTDOWN_SEKUNDEN !== '' ? Number(process.env.TABLETOP_COUNTDOWN_SEKUNDEN) : 30);
   log('info', 'Krise wird in 30 Sekunden eingeläutet.');
   persist();
   res.json({ ok: true });

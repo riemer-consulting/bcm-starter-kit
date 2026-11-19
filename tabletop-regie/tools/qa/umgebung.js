@@ -49,7 +49,7 @@ function mailListe(mails) {
     return { to: m.to, subject: dekodiere(((head.match(/^Subject: (.*)$/mi) || [])[1] || '').trim()), text, zeit: m.zeit }; });
 }
 
-async function umgebung({ port, smtpPort, name, logDir }) {
+async function umgebung({ port, smtpPort, name, logDir, countdown }) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), `qa-${name || 'lauf'}-`));
   fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^scenario\..*\.json$/.test(f)).forEach(f => fs.copyFileSync(path.join(ROOT, 'data', f), path.join(dataDir, f)));
   const smtp = smtpEmpfaenger(smtpPort); await smtp.start();
@@ -58,7 +58,7 @@ async function umgebung({ port, smtpPort, name, logDir }) {
   let srv = null;
   const startServer = async () => {
     const log = fs.openSync(logDatei, 'a');
-    srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(port), HOST: '127.0.0.1', TABLETOP_DATA_DIR: dataDir }), stdio: ['ignore', log, log] });
+    srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(port), HOST: '127.0.0.1', TABLETOP_DATA_DIR: dataDir }, countdown !== undefined ? { TABLETOP_COUNTDOWN_SEKUNDEN: String(countdown) } : {}), stdio: ['ignore', log, log] });
     for (let i = 0; i < 80; i++) { try { await fetch(B + '/api/scenario-meta'); return; } catch (e) { await sleep(250); } }
     throw new Error('Server startet nicht');
   };

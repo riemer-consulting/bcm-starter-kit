@@ -1,0 +1,35 @@
+{
+  "zweck": "Von Hand nachgerechnete Referenzfälle. Die Sollwerte sind als feste Zahlen eingetragen, nicht aus dem Programm berechnet. Grundlage: Rechnungsposten, Zusatzposten und Versicherungsannahme im jeweiligen Drehbuch (nachspiel), Empfänger- und Ersatzrollen der vertraulichen Karten. Geprüft durch: tools/qa/referenz.js.",
+  "rechnungen": [
+    { "id": "NT-R1", "szenario": "scenario.nordtech.json", "entscheidungen": { "W1": "trennen", "W2": "proaktiv", "W3": "melden", "W4": "nicht-gezahlt" },
+      "rechenweg": "Grundposten 1.550.000 + 420.000 + 380.000 + 310.000 + 200.000 + 250.000 + 160.000 + 90.000 + 900.000 = 4.260.000; keine Zusatzposten; Erstattung min(4.260.000; 1.400.000) = 1.400.000",
+      "brutto": 4260000, "erstattung": 1400000, "beimUnternehmen": 2860000 },
+    { "id": "NT-R2", "szenario": "scenario.nordtech.json", "entscheidungen": { "W1": "am-netz", "W2": "abwarten", "W3": "abwarten", "W4": "gezahlt" },
+      "rechenweg": "4.260.000 + ot-ausbreitung 350.000 + kundenkommunikation 600.000 + datenschutz-verspaetet 150.000 + loesegeld 2.000.000 = 7.360.000; Erstattung 1.400.000",
+      "brutto": 7360000, "erstattung": 1400000, "beimUnternehmen": 5960000 },
+    { "id": "NT-R3", "szenario": "scenario.nordtech.json", "entscheidungen": { "W1": "am-netz", "W2": "proaktiv", "W3": "abwarten", "W4": "nicht-gezahlt" },
+      "rechenweg": "4.260.000 + 350.000 + 150.000 = 4.760.000; Erstattung 1.400.000",
+      "brutto": 4760000, "erstattung": 1400000, "beimUnternehmen": 3360000 },
+    { "id": "WK-R1", "szenario": "scenario.waterkant.json", "entscheidungen": { "W1": "herunterfahren", "W2": "frueh", "W3": "bergen", "W4": "minimal", "W5": "gleichrangig" },
+      "rechenweg": "Grundposten 480.000 + 1.250.000 + 90.000 + 260.000 + 180.000 + 700.000 + 120.000 + 36.000 + 60.000 = 3.176.000; Zusatz 100.000 + 25.000 + 95.000 + 180.000 + 75.000 = 475.000; brutto 3.651.000; Erstattung 1.600.000",
+      "brutto": 3651000, "erstattung": 1600000, "beimUnternehmen": 2051000 },
+    { "id": "WK-R2", "szenario": "scenario.waterkant.json", "entscheidungen": { "W1": "weiterlaufen", "W2": "spaeter", "W3": "abwarten", "W4": "ausbauen", "W5": "eigene" },
+      "rechenweg": "3.176.000 + 95.000 + 40.000 + 110.000 + 210.000 + 90.000 = 3.721.000; Erstattung 1.600.000",
+      "brutto": 3721000, "erstattung": 1600000, "beimUnternehmen": 2121000 },
+    { "id": "WK-R3", "szenario": "scenario.waterkant.json", "entscheidungen": { "W1": "herunterfahren", "W2": "spaeter", "W3": "abwarten", "W4": "ausbauen", "W5": "gleichrangig" },
+      "rechenweg": "3.176.000 + 100.000 + 40.000 + 110.000 + 210.000 + 75.000 = 3.711.000; Erstattung 1.600.000",
+      "brutto": 3711000, "erstattung": 1600000, "beimUnternehmen": 2111000 }
+  ],
+  "empfaenger": [
+    { "id": "NT-E1", "szenario": "scenario.nordtech.json", "karte": "SK01", "besetzt": ["geschaeftsfuehrer-ceo", "it-mitarbeiter"], "soll": "it-mitarbeiter", "begruendung": "leiter-it unbesetzt, erste Ersatzrolle it-mitarbeiter" },
+    { "id": "NT-E2", "szenario": "scenario.nordtech.json", "karte": "SK01", "besetzt": ["geschaeftsfuehrer-ceo"], "soll": "geschaeftsfuehrer-ceo", "begruendung": "leiter-it und it-mitarbeiter unbesetzt, zweite Ersatzrolle" },
+    { "id": "NT-E3", "szenario": "scenario.nordtech.json", "karte": "SK04", "besetzt": ["leiter-it", "office-management"], "soll": "leiter-it", "begruendung": "leiterin-personal und geschaeftsfuehrer-ceo unbesetzt, zweite Ersatzrolle leiter-it" },
+    { "id": "WK-E1", "szenario": "scenario.waterkant.json", "karte": "SK01", "besetzt": ["facility-management", "geschaeftsfuehrer-ceo"], "soll": "facility-management", "begruendung": "rz-betrieb und leiter-it unbesetzt, zweite Ersatzrolle" },
+    { "id": "WK-E2", "szenario": "scenario.waterkant.json", "karte": "SK05", "besetzt": ["leiter-arbeitssicherheit", "leiter-it"], "soll": "leiter-arbeitssicherheit", "begruendung": "leiterin-personal und geschaeftsfuehrer-ceo unbesetzt" },
+    { "id": "WK-E3", "szenario": "scenario.waterkant.json", "karte": "SK08", "besetzt": ["geschaeftsfuehrer-ceo"], "soll": null, "begruendung": "weder it-support-filialen noch leiter-it noch regionalleiterin-filialen-nord besetzt: keine Zustellung, Warnung im Log" }
+  ],
+  "bewertungsraster": [
+    { "id": "NT-K", "szenario": "scenario.nordtech.json", "anzahl": 8, "quelle": "Standardraster (NordTech ohne eigenes Raster)" },
+    { "id": "WK-K", "szenario": "scenario.waterkant.json", "anzahl": 10, "pflichtThemen": ["Personenschutz", "Brand- und Raumfreigabe", "Kunden- und Partnerpriorisierung", "Wiederanlaufabhängigkeiten", "Krisenkommunikation"], "quelle": "Auftrag F12: diese fünf Themen müssen erkennbar bewertet werden" }
+  ]
+}

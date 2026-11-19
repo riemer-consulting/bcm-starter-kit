@@ -338,8 +338,13 @@ function render(s) {
     const empf = f.recipientRoleId
       ? `${p && p.name ? escapeHtml(p.name) + ', ' : ''}${escapeHtml(funktion(f.recipientRoleId))}${f.recipientRoleId !== sk.empfaenger ? ` (statt ${escapeHtml(funktion(sk.empfaenger))})` : ''}`
       : '<span style="color:var(--warn);">niemand besetzt</span>';
+    // Zustellstatus bleibt sichtbar, auch nachdem der Hinweis oben quittiert oder die Seite neu geladen wurde
+    const ergebnisse = f.emailResults || []; const fehlg = ergebnisse.filter(r => !r.ok).length;
+    const zustellung = !f.recipientRoleId ? '' : fehlg
+      ? ` · <span style="color:var(--bad);font-weight:700;">E-Mail fehlgeschlagen (${fehlg}/${ergebnisse.length}) – mündlich oder auf Papier übergeben</span>`
+      : ` · <span style="color:var(--ok);">zugestellt (${ergebnisse.length})</span>`;
     return `<div class="log-entry" style="padding:8px 0;">
-      <div><b>${sk.id}</b> · ${new Date(f.at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · an ${empf}</div>
+      <div><b>${sk.id}</b> · ${new Date(f.at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · an ${empf}${zustellung}</div>
       <div class="muted">${escapeHtml(f.text || sk.text)}</div>
       ${sk.moderatorHinweis ? `<div style="color:var(--warn);">Hinweis: ${escapeHtml(sk.moderatorHinweis)}</div>` : ''}
       ${sk.moderatorGut ? `<div style="color:var(--ok);">Gut: ${escapeHtml(sk.moderatorGut)}</div>` : ''}
