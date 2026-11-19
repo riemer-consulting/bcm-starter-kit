@@ -12,6 +12,9 @@ const path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
 const ROOT = path.join(__dirname, '..', '..');
+// Isolierter Datenordner: Kopie der Drehbücher; die Projektkonfiguration in data/ bleibt unberührt.
+const DATADIR = fs.mkdtempSync(path.join(require('os').tmpdir(), 'qa-test-'));
+fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^scenario\..*\.json$/.test(f)).forEach(f => fs.copyFileSync(path.join(ROOT, 'data', f), path.join(DATADIR, f)));
 const FILE = process.argv[2] || 'scenario.nordtech.json';
 const OUT = process.argv[3] || path.join(ROOT, 'tmp-buehne');
 fs.mkdirSync(OUT, { recursive: true });
@@ -23,12 +26,12 @@ const get = p => fetch(B + p).then(r => r.json());
 const ergebnisse = []; const generalprobe = [];
 const pruef = (id, name, ok, erwartet, beobachtet) => { ergebnisse.push({ id, name, ok: !!ok, erwartet, beobachtet }); console.log(`${ok ? 'BESTANDEN' : 'FEHLER   '} ${id} ${name} – ${beobachtet}`); };
 const sicher = {};
-['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; });
-const zuruecklegen = () => ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); });
+['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; });
+const zuruecklegen = () => ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); });
 
 let srv;
 (async () => {
-  srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(PORT), HOST: '127.0.0.1' }), stdio: 'ignore' });
+  srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(PORT), HOST: '127.0.0.1', TABLETOP_DATA_DIR: DATADIR }), stdio: 'ignore' });
   for (let i = 0; i < 60; i++) { try { await fetch(B + '/api/scenario-meta'); break; } catch (e) { await sleep(250); } }
   const browser = await chromium.launch(Object.assign({ args: ['--autoplay-policy=no-user-gesture-required'] }, process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}));
   const fehlerSeite = [];

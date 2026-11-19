@@ -22,6 +22,9 @@ const path = require('path');
 const net = require('net');
 const { spawn } = require('child_process');
 const ROOT = path.join(__dirname, '..', '..');
+// Isolierter Datenordner: Kopie der Drehbücher; die Projektkonfiguration in data/ bleibt unberührt.
+const DATADIR = fs.mkdtempSync(path.join(require('os').tmpdir(), 'qa-test-'));
+fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^scenario\..*\.json$/.test(f)).forEach(f => fs.copyFileSync(path.join(ROOT, 'data', f), path.join(DATADIR, f)));
 const FILE = process.argv[2] || 'scenario.nordtech.json';
 const OUT = process.argv[3] || '/dev/null';
 const MIN = Number(process.argv[4] || 90);
@@ -62,7 +65,7 @@ const mailListe = () => mails.map(m => { const head = m.raw.split('\n\n')[0].rep
 // ---- Server starten/stoppen
 let srv = null;
 async function starteServer() {
-  srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(PORT), HOST: '127.0.0.1' }), stdio: ['ignore', 'pipe', 'pipe'] });
+  srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: String(PORT), HOST: '127.0.0.1', TABLETOP_DATA_DIR: DATADIR }), stdio: ['ignore', 'pipe', 'pipe'] });
   srv.stdout.on('data', () => {}); srv.stderr.on('data', d => process.stderr.write(d));
   for (let i = 0; i < 60; i++) { try { await fetch(B + '/api/scenario-meta'); return; } catch (er) { await sleep(250); } }
   throw new Error('Server startet nicht');
@@ -70,8 +73,8 @@ async function starteServer() {
 async function stoppeServer() { if (!srv) return; const p = new Promise(r => srv.once('exit', r)); srv.kill('SIGTERM'); await p; srv = null; }
 
 const sicher = {};
-function sichern() { ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; }); }
-function zuruecklegen() { ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); }); }
+function sichern() { ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; }); }
+function zuruecklegen() { ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); }); }
 
 (async () => {
   sichern();
@@ -265,11 +268,11 @@ function zuruecklegen() { ['settings.json', 'run-state.json'].forEach(f => { con
 
     // N10 fehlende Mediendatei
     const lkMitBild = s.lagekarten.find(l => l.media && l.media.src);
-    const tmp = path.join(ROOT, 'data', 'scenario.zz-test-fehlende-medien.json');
+    const tmp = path.join(DATADIR, 'scenario.zz-test-fehlende-medien.json');
     const kopie = JSON.parse(JSON.stringify(s)); kopie.id += '-test'; kopie.lagekarten.find(l => l.id === lkMitBild.id).media.src = '/media/gibt-es-nicht.png';
     fs.writeFileSync(tmp, JSON.stringify(kopie));
     const { execFileSync } = require('child_process');
-    let val = ''; try { val = execFileSync(process.execPath, ['server/validate.js'], { cwd: ROOT, encoding: 'utf8' }); } catch (er) { val = (er.stdout || '') + (er.stderr || ''); }
+    let val = ''; try { val = execFileSync(process.execPath, ['server/validate.js'], { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TABLETOP_DATA_DIR: DATADIR }) }); } catch (er) { val = (er.stdout || '') + (er.stderr || ''); }
     fs.unlinkSync(tmp);
     const http404 = (await fetch(B + '/media/gibt-es-nicht.png')).status;
     pruef('N10', 'Fehlende Mediendatei', /gibt-es-nicht\.png/.test(val) && /FEHLER|Fehler/.test(val) && http404 === 404, 'Prüfung meldet die fehlende Datei als Fehler, bevor geübt wird; Server liefert 404 statt Absturz', `Prüfung: „${(val.split('\n').find(l => /gibt-es-nicht/.test(l)) || '').trim()}“; HTTP ${http404}`);

@@ -966,6 +966,7 @@ app.get('/api/run/moderator-state', (req, res) => {
     activeRoleIds: state.activeRoleIds,
     bewertung: state.bewertung,
     einschaetzung: { kriterien: protokollKriterien(), werte: state.einschaetzung || {} },
+    sitzungId: state.sitzungId || null,
     log: state.log.slice(0, 40),
     scenario: scenario
   });
@@ -1092,6 +1093,12 @@ app.get('/api/run/protokoll', (req, res) => {
   res.send(L.join('\n'));
 });
 
+// Prüfstand für das Test-Dashboard (qa.html): Ergebnis der letzten QA-Abnahme aus docs/final-qa/qa-status.json
+app.get('/api/qa-status', (req, res) => {
+  const datei = path.join(__dirname, '..', 'docs', 'final-qa', 'qa-status.json');
+  if (!fs.existsSync(datei)) return res.json({ vorhanden: false });
+  try { res.json(Object.assign({ vorhanden: true }, JSON.parse(fs.readFileSync(datei, 'utf8')))); } catch (e) { res.json({ vorhanden: false, fehler: 'qa-status.json nicht lesbar' }); }
+});
 // Ereignisjournal der aktuellen (oder angegebenen) Sitzung als JSON Lines
 app.get('/api/run/journal', (req, res) => {
   const id = req.query.sitzung || sitzungId();

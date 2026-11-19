@@ -3,15 +3,18 @@
 // Raster), richtige Maximalpunktzahl, keine Namen/Adressen. Startet den Server selbst (Port 4183).
 // Aufruf: node tools/tests/protokoll.js scenario.<name>.json <ergebnis.json>
 const fs = require('fs'); const path = require('path'); const { spawn } = require('child_process');
-const ROOT = path.join(__dirname, '..', '..'); const FILE = process.argv[2]; const OUT = process.argv[3] || '/dev/null';
+const ROOT = path.join(__dirname, '..', '..');
+// Isolierter Datenordner: Kopie der Drehbücher; die Projektkonfiguration in data/ bleibt unberührt.
+const DATADIR = fs.mkdtempSync(path.join(require('os').tmpdir(), 'qa-test-'));
+fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^scenario\..*\.json$/.test(f)).forEach(f => fs.copyFileSync(path.join(ROOT, 'data', f), path.join(DATADIR, f))); const FILE = process.argv[2]; const OUT = process.argv[3] || '/dev/null';
 const s = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', FILE), 'utf8'));
 const B = 'http://127.0.0.1:4183'; const sleep = ms => new Promise(r => setTimeout(r, ms));
 const post = (p, b) => fetch(B + p, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Regie': '1' }, body: JSON.stringify(b || {}) }).then(r => r.status);
 const STANDARD = ['Aktivierung / Lagebild', 'Entscheidung / Verantwortung', 'Kommunikation', 'IT-/OT-Sicherheit', 'Geschäftsfortführung', 'Qualität / Datenintegrität', 'Fachliche Prüfpflichten', 'Wiederanlauf / Nachsorge'];
 const soll = s.protokollKriterien || STANDARD;
-const sicher = {}; ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; });
+const sicher = {}; ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); sicher[f] = fs.existsSync(p) ? fs.readFileSync(p) : null; });
 (async () => {
-  const srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: '4183', HOST: '127.0.0.1' }), stdio: 'ignore' });
+  const srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: Object.assign({}, process.env, { PORT: '4183', HOST: '127.0.0.1', TABLETOP_DATA_DIR: DATADIR }), stdio: 'ignore' });
   for (let i = 0; i < 60; i++) { try { await fetch(B + '/api/scenario-meta'); break; } catch (e) { await sleep(250); } }
   const ergebnisse = [];
   try {
@@ -23,8 +26,8 @@ const sicher = {}; ['settings.json', 'run-state.json'].forEach(f => { const p = 
       await post('/api/participants', rec.roleIds.map((r, i) => ({ name: 'Person ' + (i + 1), email: `person${i + 1}@example.com`, roleIds: [r] })));
       await post('/api/run/start', { durationMode: 'target', targetMinutes: m, schwerpunkt: sp });
       const t = await fetch(B + '/api/run/protokoll').then(r => r.text());
-      const fehlend = soll.filter(k => !t.includes(`| ${k} | | |`));
-      const fremd = s.protokollKriterien ? STANDARD.filter(k => t.includes(`| ${k} | | |`)) : [];
+      const fehlend = soll.filter(k => !new RegExp(`\\| ${k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\|`).test(t));
+      const fremd = s.protokollKriterien ? STANDARD.filter(k => t.includes(`| ${k} |`)) : [];
       const max = t.includes(`max. ${soll.length * 2},`);
       const namen = /person\d+@example\.com|Person \d+/.test(t);
       const ok = !fehlend.length && !fremd.length && max && !namen;
@@ -33,7 +36,7 @@ const sicher = {}; ['settings.json', 'run-state.json'].forEach(f => { const p = 
     await post('/api/run/reset');
   } finally {
     srv.kill(); await sleep(500);
-    ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(ROOT, 'data', f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); });
+    ['settings.json', 'run-state.json'].forEach(f => { const p = path.join(DATADIR, f); if (sicher[f]) fs.writeFileSync(p, sicher[f]); else if (fs.existsSync(p)) fs.unlinkSync(p); });
     fs.writeFileSync(OUT, JSON.stringify({ szenario: FILE, zeitpunkt: new Date().toISOString(), kriterien: soll, ergebnisse }, null, 2));
     const f = ergebnisse.filter(x => !x.ok).length;
     console.log(`${FILE}: Protokoll in ${ergebnisse.length - f} von ${ergebnisse.length} Kombinationen korrekt (${soll.length} Kriterien)`);
