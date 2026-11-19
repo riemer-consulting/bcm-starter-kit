@@ -112,11 +112,11 @@
   {
     "id": "O-11",
     "bereich": "Szenario",
-    "text": "W2-R11: SK31 kommt bei 180 Min. erst nach LK27; SK28/SK36 erreichen den Tisch selten (aus der zweiten unabhängigen Prüfrunde).",
+    "text": "SK31 kommt in 22 von 50 Kombinationen (5 Dauern × 5 Schwerpunkte, empfohlene und volle Besetzung) nach LK25–LK28, meist nach LK27 (Sonntag), obwohl seine Heimatlage LK23 (Freitag) ist; SK28 und SK36 werden in keiner Kombination gespielt.",
     "nachweis": "Dokument 11 des Review-Pakets, Variantenbericht",
     "schwere": "mittel",
     "gate": "B",
-    "naechsterSchritt": "vor dem Pilot entscheiden",
+    "naechsterSchritt": "Entscheidung der Spielleitung anhand Dokument 13 (Empfehlung: A für SK31, E für SK28, G für SK36)",
     "szenario": "waterkant",
     "status": "offen"
   },
@@ -127,9 +127,9 @@
     "nachweis": "06",
     "schwere": "niedrig",
     "gate": "C",
-    "naechsterSchritt": "im Hörtest bewerten",
+    "naechsterSchritt": "Zyklus 3: lineare Pegelabsenkung, Medienprüfung 47/47 und 45/45; Hörtest bleibt unter O-03",
     "szenario": "beide",
-    "status": "offen"
+    "status": "geschlossen"
   },
   {
     "id": "O-13",
@@ -193,8 +193,8 @@
     "nachweis": "10",
     "schwere": "niedrig",
     "gate": "–",
-    "naechsterSchritt": "Browserverbindung in N-16 sauber schließen",
+    "naechsterSchritt": "Zyklus 3: Absturz per launchServer/SIGKILL, Prozessende als Bedingung; 17/17 mit Exit-Code 0",
     "szenario": "beide",
-    "status": "offen"
+    "status": "geschlossen"
   }
 ]

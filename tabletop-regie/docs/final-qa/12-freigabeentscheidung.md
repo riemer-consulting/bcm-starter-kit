@@ -1,6 +1,6 @@
 # 12 – Freigabeentscheidung
 
-**Geprüfter Stand:** Commit `33154fd` (Zyklus 2, vollständiger Lauf). Vorheriger Zyklus 1: `5a61845`.
+**Geprüfter Stand:** Commit `6809dee` (Zyklus 3, vollständiger Lauf: 33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen). Vorherige Zyklen: 2 `33154fd`, 1 `5a61845`.
 **Ergebnis in einem Satz:** Die Software ist für beide Szenarien technisch belastbar geprüft. Eine **Pilotfreigabe wird mit diesem Paket nicht erteilt**: Medien und Betrieb im Raum (Gate C) sowie die fachlich-didaktische Abnahme (Gate D) sind offen. Die endgültige Bewertung erfolgt im unabhängigen Review anhand dieses Pakets.
 
 ## Die vier Gates
@@ -18,8 +18,8 @@ Jedes Gate ist für sich bewertet. Keines ist bestanden, weil ein anderes bestan
 
 | Szenario | Empfehlung | Voraussetzungen |
 |---|---|---|
-| NordTech | **bereit für eine moderierte Generalprobe** mit einer Testgruppe | Hörtest und Technikprobe im Raum (Gate C); Testpostfächer der Organisation; danach Entscheidung der Spielleitung über den Pilot |
-| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, Entscheidung zu O-11; Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
+| NordTech | **bereit für eine moderierte Generalprobe** mit einer Testgruppe; technische Medienbefunde in Zyklus 3 behoben | Hörtest und Technikprobe im Raum (Gate C); Testpostfächer der Organisation; danach Entscheidung der Spielleitung über den Pilot |
+| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, Entscheidung zu O-11 (Vorlage: Dokument 13); Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
 
 ## Selbstprüfung (Abschnitt 16 des Auftrags)
 
@@ -28,11 +28,11 @@ Jedes Gate ist für sich bewertet. Keines ist bestanden, weil ein anderes bestan
 | Könnte ein fremder Entwickler die Tests reproduzieren? | Ja. Ein Befehl startet den Gesamtlauf am Commit; Voraussetzungen, Ports, Testdaten und der feste Startwert der Drehbuchsimulation sind dokumentiert. Abweichungen sind nur bei Zeitstempeln, Sitzungs-IDs, Laufzeiten und Bildschirmfotos zu erwarten. | `README.md`, `nachweis/umgebung.json` |
 | Könnte ein unabhängiger Reviewer jede Behauptung prüfen? | Ja für alle technischen Behauptungen: Jede Zeile der Dokumente 03–08 ist aus einer Ergebnisdatei erzeugt; Traces, Bildschirmfotos, Journale, Protokoll-Exporte und Quellen liegen bei, mit Prüfsummen. Fachliche Behauptungen sind ausdrücklich als ungeprüft gekennzeichnet. | `manifest.json`, `quellen/` |
 | Gibt es Tests, deren Soll und Ist aus derselben fehlerhaften Funktion stammen? | Weitgehend nein: Orakel ohne Engine/Server mit Selbsttest, handgerechnete Sollwerte, Regression gegen den eingefrorenen Stand. **Schwach** bleibt die genaue Auswahl optionaler Karten je Dauer (nur Regeln geprüft, O-09). Die Delta-Regeln prüfen den Drehbuchtext, nicht seine fachliche Richtigkeit. | 01 Abschnitt 5, 02 |
-| Wurden tatsächlich Browseraktionen durchgeführt? | Ja: 14 Übungen über Schaltflächen und Eingabefelder in Chromium, mit Trace jedes Klicks; die Schnittstelle nur lesend. Ersatzklicks (Klick ohne Ruheprüfung) sind gezählt: 0 in Zyklus 2. | 05, `nachweis/e2e/*/trace.zip` |
-| Sind Fehler und gescheiterte Tests erhalten geblieben? | Ja: früherer Waterkant-Fehllauf (F-00), Vorlaufbefunde V-01…V-09, abgebrochener Start 1a, Replay-Abweichung aus Zyklus 1 mit vollständigem Nachweis (`nachweis-zyklus1/`). | 10 |
+| Wurden tatsächlich Browseraktionen durchgeführt? | Ja: 14 Übungen über Schaltflächen und Eingabefelder in Chromium, mit Trace jedes Klicks; die Schnittstelle nur lesend. Ersatzklicks (Klick ohne Ruheprüfung) sind gezählt: 0 in Zyklus 2 und 3. | 05, `nachweis/e2e/*/trace.zip` |
+| Sind Fehler und gescheiterte Tests erhalten geblieben? | Ja: früherer Waterkant-Fehllauf (F-00), Vorlaufbefunde V-01…V-09, abgebrochener Start 1a, Replay-Abweichung aus Zyklus 1, Testfehler Z2-01 (N-16 hatte in Zyklus 2 „bestanden“, ohne dass der Absturz stattfand) und die Retests in Zyklus 3. Nachweise von Zyklus 1 und 2 im Paket BCM-FINAL-QA-EVIDENCE.zip (SHA-256 in Dokument 14). | 10 |
 | Stimmen Commit-ID, Quellcode, Szenarien und Screenshots überein? | Ja: `umgebung.json` enthält Commit und SHA-256 aller Quellen und Drehbücher dieses Laufs; `quellen/` stammt per `git archive` aus demselben Commit; der Ergebnis-Commit unterscheidet sich nur unter `docs/final-qa/` (beim Paketbau geprüft). | `manifest.json` |
-| Sind die Testnachweise vollständig? | Für die in 02 genannten Anforderungen ja. Bewusst nicht im Paket: Traces und Fotos von Zyklus 1 (Größe; deren Ergebnisse, Journale und Protokolle sind enthalten). | 02, `manifest.json` |
-| Ist jeder offene Punkt eindeutig dokumentiert? | Ja: 18 offene Risiken mit Schwere, Gate und nächstem Schritt; maschinenlesbar in `befunde.json`. | 11 |
+| Sind die Testnachweise vollständig? | Für die in 02 genannten Anforderungen ja. Dieses Paket enthält Zyklus 3 vollständig; Zyklus 1 und 2 liegen im vorherigen Paket (BCM-FINAL-QA-EVIDENCE.zip, Prüfsumme in Dokument 14). | 02, `manifest.json` |
+| Ist jeder offene Punkt eindeutig dokumentiert? | Ja: alle Risiken mit Schwere, Gate und nächstem Schritt; maschinenlesbar in `befunde.json`. | 11 |
 | Gibt es einen nachweisbaren Unterschied zwischen technisch bestanden und fachlich abgenommen? | Ja: Gate A/B (technisch, regelbasiert) und C/D (Raum, Fachleute, Menschen) sind getrennt bewertet; C und D sind offen; der Prüfstand zeigt ausdrücklich, dass ein bestandener Test keine Freigabe ist. | dieses Dokument, `pruefstand.jpg` |
 
 Diese Unterlage ersetzt keine rechtliche, versicherungs-, datenschutz- oder arbeitsschutzrechtliche Beratung; die zuständigen Fachabteilungen sind einzubeziehen.

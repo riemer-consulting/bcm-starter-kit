@@ -1,6 +1,6 @@
 # 04 – Varianten und Entscheidungsmatrix
 
-**Geprüfter Commit:** `33154fdfaa660fb48cedf3d5823a795ce3200d56` · **Lauf:** 2026-11-19T12:07:29.913Z bis 2026-11-19T13:02:40.338Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Alle Kombinationen aus Dauer (45, 60, 90, 120, 180 Min.) und Schwerpunkt (Ausgewogen und vier fachliche Schwerpunkte = 5; 25 Kombinationen je Szenario) sowie alle Entscheidungskombinationen (NordTech W1–W4: 16; Waterkant W1–W5: 32) – einmal als Regelprüfung des Drehbuchs (`tools/varianten.js`) und einmal über den echten Server gegen das unabhängige Orakel (`tools/qa/integration.js`).
 

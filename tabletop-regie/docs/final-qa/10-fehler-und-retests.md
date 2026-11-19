@@ -11,6 +11,7 @@ Alle beobachteten Fehler und gescheiterten Tests bleiben hier stehen, auch wenn 
 | 1a | `5a61845` | erster Start des Gesamtlaufs, nach drei Schritten vom Prüfer abgebrochen (siehe Z1-01) | keine Ergebnisse verwertet |
 | 1 | `5a61845` | vollständiger Gesamtlauf | 31 Prüfschritte, davon 30 inhaltlich ohne Befund; Medien mit bekannten Grenzwertbefunden; Replay NT und WK abweichend (Z1-03) → Produktkorrektur |
 | 2 | `33154fd` | Ergänzungstests N-16 (Browserabbruch) und N-17 (Rücksprung), Korrektur der Seed-Angabe; Produktquellen gegenüber Zyklus 1 byteweise gleich | vollständige Regression: alle Einzelprüfungen bis auf 7 bekannte Medien-Grenzwerte bestanden (828/835); Replay identisch; Negativtest-Prozess hing nach Abschluss (Z2-01) |
+| 3 | `6809dee` | Pegelkorrektur von drei Tondateien (freigegeben), Korrektur des Negativtests N-16; vollständige Regression | **33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen** |
 
 ## F-00 – Waterkant-Fehllauf (Testumgebungsfehler, frühere Runde)
 
@@ -53,7 +54,21 @@ Commit `33154fd`: Produktkorrektur Z1-03, Ergänzungstests N-16 (Browserabbruch)
 
 | Nr | Bereich | Beobachtung | Klasse | Ursache | Maßnahme |
 |---|---|---|---|---|---|
-| Z2-01 | Negativtest | Prüfschritt `negativ` mit SIGKILL nach 900 s beendet, obwohl alle 17 Fälle bestanden und die Ergebnisse um 12:20:04 vollständig geschrieben waren | Testfehler (Werkzeug) | Prozess beendet sich nach Abschluss nicht; vermutet: offene Verbindung zum in N-16 absichtlich hart beendeten Browser (nicht nachgewiesen) | nicht korrigiert, als O-18 geführt; Ergebnis der Fälle gilt, der Exit-Status des Schritts bleibt „mit Fehlern“ |
+| Z2-01 | Negativtest | Prüfschritt `negativ` mit SIGKILL nach 900 s beendet, obwohl alle 17 Fälle als bestanden geschrieben waren (12:20:04) | **Testfehler mit falsch positivem Ergebnis** | In Zyklus 2 vermutet: offene Verbindung zum abgestürzten Browser. **In Zyklus 3 festgestellt:** `b1.process()` gibt es an einem Playwright-Browser nicht; der Fehler wurde von einem leeren `catch` verschluckt. Der Absturz fand nie statt, der Browser blieb offen und hielt den Testprozess am Leben. **N-16 hat in Zyklus 2 „bestanden“, ohne seinen Zweck zu prüfen.** Minimalbeispiel: alter Weg endet erst durch Zeitlimit (Exit 124), neuer Weg Exit 0 nach 6 s | Korrektur in Zyklus 3, siehe Z3-01 |
 | Z2-02 | Medien | wie Z1-04 | Produktbefund (Medien), niedrig | – | O-12 |
 
 Ergebnis Zyklus 2: 828 von 835 Einzelprüfungen bestanden; die 7 nicht bestandenen sind Z2-02. Replay NT-90 und WK-90 identisch. Produktquellen außer `server/index.js` gegenüber Zyklus 1 unverändert (Prüfsummen in `nachweis/umgebung.json` und `nachweis-zyklus1/umgebung.json`).
+
+## Zyklus 3
+
+Commit `6809dee`. Freigegeben durch die Spielleitung: Pegelkorrektur der drei Tondateien (einschließlich der beiden NordTech-Dateien) und Korrektur von N-16. O-11 ist ausdrücklich nicht umgesetzt (Vorlage: Dokument 13). Einzelheiten und Prüfsummen: Dokument 14.
+
+| Nr | Bereich | Beobachtung | Klasse | Ursache | Maßnahme / Retest |
+|---|---|---|---|---|---|
+| Z3-01 | Negativtest N-16 | Korrektur von Z2-01: Browser jetzt per `launchServer` gestartet und seine Prozessgruppe per SIGKILL beendet; „tatsächlich abgestürzt“ und „Entscheidung vor dem Absturz festgehalten“ sind eigene Bedingungen; keine verschluckten Fehler | Korrektur | – | gezielter Retest 1: Prozess endet von selbst nach 133 s, aber Exit 1 (siehe Z3-02) |
+| Z3-02 | Negativtest N-16 | Retest 1: Bedingung „Hauptprozess beendet: false“, obwohl getrennt | Testfehler | Der abgestürzte Browser ist Kindprozess des Testprozesses; bis zum Abholen existiert er als Zombie, eine Signal-0-Probe meldet ihn als lebend | Prozessende über das `exit`-Ereignis festgestellt. Retest 2: 17/17, Exit-Code 0 nach 132 s, „Hauptprozess beendet: ja (SIGKILL)“ |
+| Z3-03 | Medien | Pegelkorrektur: lineare Absenkung um 2,6 dB (Klingeln) bzw. 1,5 dB (NordTech LK01), sonst unverändert (Abtastrate, Kanäle, Länge) | Produktkorrektur (freigegeben) | Grenzwertverstöße Z1-04/Z2-02 | Medienprüfung 47/47, 45/45; Signalvergleich alt × Faktor gegen neu: Länge gleich, Versatz 0, Korrelation 1,000 bzw. 0,999 |
+| Z3-04 | Waterkant O-11 | Bei der Ausarbeitung der Vorlage festgestellt: SK31 kommt in 22 von 50 Kombinationen verspätet, nicht nur bei 180 Min.; Orakel und Variantenprüfung erkennen „zu spät“ nicht | Szenariobefund und Lücke in der Prüfung | Rollenabdeckung wählt SK31 als einzige Logistikkarte; fehlt LK23, rutscht SK31 hinter LK27 | nicht umgesetzt (Entscheidung der Spielleitung, Dokument 13); O-11 aktualisiert |
+
+**Vollständige Regression Zyklus 3:** 33/33 Prüfschritte mit Exit-Code 0; 835/835 Einzelprüfungen. Darunter Negativtests 17/17, Medien 47/47 und 45/45, NordTech-Regression 41/41 in allen Aspekten, Browser 441/441 in 14 Übungen, Replay NT-90 und WK-90 identisch, Delta Waterkant 9/9.
+

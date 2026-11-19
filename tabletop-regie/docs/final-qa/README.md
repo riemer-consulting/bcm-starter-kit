@@ -10,8 +10,10 @@ Dieses Paket belegt die QA-Abnahme der BCM Tabletop-Regie mit den Drehbüchern N
 | `docs/final-qa/09-anhang-delta-regeln.md` | Regeln je Befund F01–F15 mit Beleg |
 | `docs/final-qa/referenz-sollwerte.json` | von Hand nachgerechnete Sollwerte (Eingabe der Tests) |
 | `docs/final-qa/gates.json`, `befunde.json`, `qa-status.json` | Gate-Bewertung, Befundliste, Stand für den Prüfstand `qa.html` |
-| `nachweis/` | Ergebnisse von Zyklus 2 (Commit `33154fd`, vollständiger Lauf, maßgeblich) |
-| `nachweis-zyklus1/` | Ergebnisse von Zyklus 1 (Commit `5a61845`) einschließlich der abweichenden Replays; ohne Traces und Bildschirmfotos |
+| `nachweis/` | Ergebnisse von Zyklus 3 (Commit `6809dee`, vollständiger Lauf, maßgeblich) |
+| `docs/final-qa/14-nachtrag-zyklus3.md` | Nachtrag: Pegelkorrektur, N-16, alte und neue Prüfsummen, NordTech-Basis |
+| `docs/final-qa/13-o11-entscheidungsvorlage.md` | Alternativen zu O-11 (nicht umgesetzt) |
+| frühere Zyklen | im Paket `BCM-FINAL-QA-EVIDENCE.zip` (Zyklus 1 und 2; Prüfsumme in Dokument 14) |
 | `nachweis/umgebung.json` | Commit, Werkzeugversionen, SHA-256 aller Drehbücher und Quellen |
 | `nachweis/gesamtlauf.json`, `nachweis/zaehlung.json` | Prüfschritte mit Exit-Code und Dauer; jede Einzelprüfung mit Ergebnis |
 | `nachweis/e2e/<fall>/` | je Browser-Durchlauf: `ergebnis.json`, `bilder/` (Bühne und Moderation je Lage), `trace.zip` (Playwright-Trace), `server.log` (bereinigt), `protokoll.md` (Export), `journal.jsonl` (Ereignisjournal) |

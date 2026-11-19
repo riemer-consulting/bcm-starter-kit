@@ -1,7 +1,7 @@
 # 01 – Teststrategie
 
 **Gegenstand:** Tabletop-Regie mit den Drehbüchern NordTech (Ransomware, eingefroren) und Waterkant („Wenn das Rechenzentrum brennt“).
-**Geprüfter Stand:** Commit `33154fd (Zyklus 2; Zyklus 1: 5a61845)` (siehe `umgebung.json` im Nachweispaket). Die Ergebnisdokumente in `docs/final-qa/` wurden danach in einem eigenen Commit ergänzt; dieser enthält ausschließlich Dateien unter `docs/final-qa/` (geprüft beim Paketbau).
+**Geprüfter Stand:** Commit `6809dee` (Zyklus 3; vorher Zyklus 2 `33154fd`, Zyklus 1 `5a61845`) (siehe `umgebung.json` im Nachweispaket). Die Ergebnisdokumente in `docs/final-qa/` wurden danach in einem eigenen Commit ergänzt; dieser enthält ausschließlich Dateien unter `docs/final-qa/` (geprüft beim Paketbau).
 **Ziel:** reproduzierbare, belastbare Nachweise – nicht möglichst viele grüne Tests. Ein bestandener Test ist keine fachliche Freigabe.
 
 ## 1. Nachweisstufen

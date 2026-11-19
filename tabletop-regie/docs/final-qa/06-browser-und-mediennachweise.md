@@ -1,19 +1,19 @@
 # 06 – Browser- und Mediennachweise
 
-**Geprüfter Commit:** `33154fdfaa660fb48cedf3d5823a795ce3200d56` · **Lauf:** 2026-11-19T12:07:29.913Z bis 2026-11-19T13:02:40.338Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Bühnentest im Browser (Generalprobe aller Lagen, Stummschalten, Wiederholen, Zeitsprung im Ton, Neuladen, Unterbrechung, Abschluss) und technische Medienmessung. Ob ein Ton im Raum verständlich, passend und angemessen laut ist, kann keine Messung feststellen: jeder Ton trägt „akustisch nicht abgenommen“, bis ein Mensch ihn gehört und in `docs/final-qa/hoerprotokoll.json` eingetragen hat.
 
 ## Bühne – NordTech
 
-Prüfschritt `buehne-nordtech`: Exit-Code 0, 191 s, Konsole `konsole/buehne-nordtech.txt`
+Prüfschritt `buehne-nordtech`: Exit-Code 0, 199 s, Konsole `konsole/buehne-nordtech.txt`
 
 | ID | Prüfung | Ergebnis | beobachtet |
 |---|---|---|---|
 | B | Unterbrechung B7 (Geschäftsführung (CEO), Krisenstabsleitung, 5 Min.) | bestanden | Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja |
 | G | Generalprobe: 26 Lagen und 3 öffentliche Überraschungen | bestanden | 29 Bühnenzustände; Abweichungen: keine |
 | N3 | Stummschalten mitten im Ton (LK10) | bestanden | vorher: läuft lk10-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus |
-| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk10-nordkanal-nachrichten.mp3, 2.3 s) |
+| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk10-nordkanal-nachrichten.mp3, 1.6 s) |
 | N4 | Zeitsprung mitten im Ton (LK10 → LK11) | bestanden | danach: Kartenton aus; Hintergrund aus |
 | N2 | Bühne neu laden mitten im Lauf | bestanden | Ton-Freigabe angezeigt: ja; aktuelle Lage „Pharmakunde eskaliert“ sichtbar: ja; nach Klick Hintergrund aus |
 | F | Abschluss auf der Bühne bis zum Fazit | bestanden | 6 Bildschirmfotos, letzte Phase: fazit |
@@ -55,14 +55,14 @@ Prüfschritt `buehne-nordtech`: Exit-Code 0, 191 s, Konsole `konsole/buehne-nord
 
 ## Bühne – Waterkant
 
-Prüfschritt `buehne-waterkant`: Exit-Code 0, 191 s, Konsole `konsole/buehne-waterkant.txt`
+Prüfschritt `buehne-waterkant`: Exit-Code 0, 196 s, Konsole `konsole/buehne-waterkant.txt`
 
 | ID | Prüfung | Ergebnis | beobachtet |
 |---|---|---|---|
 | B | Unterbrechung B7 (IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum), 5 Min.) | bestanden | Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja |
 | G | Generalprobe: 28 Lagen und 4 öffentliche Überraschungen | bestanden | 32 Bühnenzustände; Abweichungen: keine |
 | N3 | Stummschalten mitten im Ton (LK21) | bestanden | vorher: läuft lk21-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus |
-| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 1.5 s) |
+| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 1.8 s) |
 | N4 | Zeitsprung mitten im Ton (LK21 → LK22) | bestanden | danach: läuft lk22-kasse-startet.mp3; Hintergrund aus |
 | N2 | Bühne neu laden mitten im Lauf | bestanden | Ton-Freigabe angezeigt: ja; aktuelle Lage „Die Kassen laufen wieder“ sichtbar: ja; nach Klick Hintergrund aus |
 | F | Abschluss auf der Bühne bis zum Fazit | bestanden | 6 Bildschirmfotos, letzte Phase: fazit |
@@ -111,22 +111,22 @@ Grenzwerte (vor der Messung festgelegt): Lautheit -30 … -14 LUFS, True Peak �
 
 ### scenario.nordtech.json
 
-43/47 Verweise technisch in Ordnung; Töne akustisch abgenommen: 0/15.
+47/47 Verweise technisch in Ordnung; Töne akustisch abgenommen: 0/15.
 
 | Karte | Art | Datei | Messwerte | Prüfungen | akustisch |
 |---|---|---|---|---|---|
 | LK01 | Bild | `lk01-loesegeld-kamera-foto.webp` | 1673×940 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK01 | Ton | `lk01-stille-gemurmel.mp3` | 7.2 s, -18.4 LUFS (wirksam -20.3), TP 0.2 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✗ True Peak ≤ -0.5 dBTP (0.2 dBTP); ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK01 | Ton | `lk01-stille-gemurmel.mp3` | 7.2 s, -20.3 LUFS (wirksam -22.2), TP -1.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK16 | Bild | `lk16-incident-overview-foto.webp` | 1536×1024 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK02 | Bild | `lk02-produktion-gestoppt-foto.webp` | 1536×1024 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK02 | Ton | `lk02-produktion-faehrt-herunter.mp3` | 14 s, -20.7 LUFS (wirksam -22.6), TP -5.4 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK03 | Bild | `lk03-linkedin-post-foto.webp` | 1149×1369 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK04 | Bild | `lk04-nordkanal-anfrage.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK04 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK04 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK05 | Bild | `lk05-leerer-arbeitsplatz-foto.webp` | 1536×1024 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK05 | Ton | `lk05-it-bereitschaft.mp3` | 16.3 s, -20.4 LUFS (wirksam -22.3), TP -7.2 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK06 | Bild | `lk06-kunde-eskaliert-foto.webp` | 1536×1024 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK06 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK06 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK07 | Bild | `lk07-datenschutz.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK08 | Bild | `lk08-positive-entwicklung.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK09 | Bild | `lk09-offline-backup-foto.webp` | 1536×1024 webp | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
@@ -155,7 +155,7 @@ Grenzwerte (vor der Messung festgelegt): Lautheit -30 … -14 LUFS, True Peak �
 | B6 | Bild | `b6-widerspruechliche-anweisungen.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | B6 | Ton | `b6-zwei-durchsagen.mp3` | 27.6 s, -17.2 LUFS (wirksam -19.1), TP -1.9 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s · Hinweis: Durchsage außerhalb des Waterkant-Prüfumfangs: Übungskennzeichnung fachlich bewerten | akustisch nicht abgenommen |
 | B7 | Bild | `b7-krisenstabsleitung-abgerufen.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| B7 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s | akustisch nicht abgenommen |
+| B7 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s | akustisch nicht abgenommen |
 | B8 | Bild | `b8-vermeintlicher-erfolg.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | B8 | Ton | `b8-erp-test-meldung.mp3` | 20.6 s, -18 LUFS (wirksam -19.9), TP -1.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s | akustisch nicht abgenommen |
 | Hintergrund | Ton | `ambience-maschinenraum.mp3` | 24 s, -25.9 LUFS (wirksam -31.9), TP -9.9 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Hintergrund läuft in Schleife | akustisch nicht abgenommen |
@@ -169,7 +169,7 @@ Im Medienordner, aber von keinem Drehbuchfeld verwendet (frühere Fassungen, Var
 
 ### scenario.waterkant.json
 
-42/45 Verweise technisch in Ordnung; Töne akustisch abgenommen: 0/10.
+45/45 Verweise technisch in Ordnung; Töne akustisch abgenommen: 0/10.
 
 | Karte | Art | Datei | Messwerte | Prüfungen | akustisch |
 |---|---|---|---|---|---|
@@ -185,16 +185,16 @@ Im Medienordner, aber von keinem Drehbuchfeld verwendet (frühere Fassungen, Var
 | LK07 | Bild | `lk07-was-laeuft.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK08 | Bild | `lk08-saisonstart.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK09 | Bild | `lk09-partnermaerkte.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK09 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK09 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK10 | Bild | `lk10-serverraum-gesperrt.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK11 | Bild | `lk11-nordkanal.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK11 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK11 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK12 | Bild | `lk12-zentrallager.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK13 | Bild | `lk13-ersatz.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK14 | Bild | `lk14-bergen.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK15 | Bild | `lk15-ausweich.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK16 | Bild | `lk16-bauunternehmen.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
-| LK16 | Ton | `telefon-klingeln.mp3` | 4.9 s, -12.4 LUFS (wirksam -16.8), TP -3.7 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✗ Lautheit -30 … -14 LUFS (-12.4 LUFS); ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
+| LK16 | Ton | `telefon-klingeln.mp3` | 4.9 s, -15.5 LUFS (wirksam -19.9), TP -6.8 dBTP | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Lautheit -30 … -14 LUFS; ✓ True Peak ≤ -0.5 dBTP; ✓ Ereignis höchstens 120 s; ✓ kürzer als die Diskussionszeit der Lage | akustisch nicht abgenommen |
 | LK17 | Bild | `lk17-prospektpreise.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK18 | Bild | `lk18-verbundbeirat.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |
 | LK19 | Bild | `lk19-ruecksicherung.png` | 1000×280 png | ✓ liegt unter media/; ✓ Datei vorhanden; ✓ vollständig dekodierbar; ✓ Mindestgröße 800 px Breite | akustisch nicht abgenommen |

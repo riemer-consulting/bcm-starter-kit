@@ -1,6 +1,6 @@
 # Anhang zu 09 – Delta-Regeln Waterkant
 
-**Geprüfter Commit:** `33154fdfaa660fb48cedf3d5823a795ce3200d56` · **Lauf:** 2026-11-19T12:07:29.913Z bis 2026-11-19T13:02:40.338Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Je Befund der Fremdprüfung die Text- und Strukturregeln, die die beschlossene Korrektur im Drehbuch bzw. in den Begleitdateien belegen (`tools/qa/delta-waterkant.js`). Stufe: Regelprüfung am Drehbuch; F07 zusätzlich über die Integrationsläufe. Fachliche Richtigkeit: Gate D.
 

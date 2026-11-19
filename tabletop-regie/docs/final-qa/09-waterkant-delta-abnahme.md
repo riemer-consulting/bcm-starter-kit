@@ -1,6 +1,6 @@
 # 09 – Waterkant-Delta-Abnahme
 
-**Geprüfter Stand:** Commit `5a61845`. Grundlage: Befunde der Fremdprüfung „Finales Review – NordTech & Waterkant“ vom 19.11.2026 (F01–F15). Hier die neun Punkte, deren Abnahme verlangt war. Die Regeln je Punkt mit Beleg stehen im **Anhang zu 09** (`09-anhang-delta-regeln.md`, erzeugt aus `nachweis/delta/waterkant.json`).
+**Geprüfter Stand:** Zyklen 1–3, zuletzt Commit `6809dee` (Ergebnis in allen drei Zyklen gleich). Grundlage: Befunde der Fremdprüfung „Finales Review – NordTech & Waterkant“ vom 19.11.2026 (F01–F15). Hier die neun Punkte, deren Abnahme verlangt war. Die Regeln je Punkt mit Beleg stehen im **Anhang zu 09** (`09-anhang-delta-regeln.md`, erzeugt aus `nachweis/delta/waterkant.json`).
 
 **Was dieser Nachweis leistet und was nicht:** Die Delta-Prüfung belegt, dass die beschlossene Korrektur im Drehbuch steht, dass die beanstandete Formulierung nicht mehr vorkommt und dass Reihenfolge und Zustellung über den echten Server stimmen. Sie belegt **nicht**, dass die Korrektur fachlich richtig ist. Brandverhalten, Elektroversorgung, Vertragspflichten, Datenschutz, Evakuierung und Kostenbewertung bleiben Gegenstand der fachlichen Prüfung (Gate D). Ergebnis der automatischen Prüfung in Zyklus 1: **9/9 Befunde mit erfüllten Regeln**.
 
@@ -105,7 +105,7 @@
 
 ## Neue Widersprüche durch die Korrekturen
 
-Die zweite unabhängige Prüfrunde (Review-Paket, Dokument 11, Abschnitt 6 und Anlage Runde 2) hat F01–F05 und F07 ausdrücklich gegen die Originalbefunde geprüft: 20 von 27 Befunden erledigt, 7 teilweise (darunter F03, F04, F05), keiner unerledigt; sieben neue hohe Befunde (W2-R01…R07), alle umgesetzt; offen geblieben W2-R11 (SK31 bei 180 Min. nach LK27) und SK28/SK36 (O-11). In diesem Zyklus zusätzlich geprüft und ohne neuen Widerspruch:
+Die zweite unabhängige Prüfrunde (Review-Paket, Dokument 11, Abschnitt 6 und Anlage Runde 2) hat F01–F05 und F07 ausdrücklich gegen die Originalbefunde geprüft: 20 von 27 Befunden erledigt, 7 teilweise (darunter F03, F04, F05), keiner unerledigt; sieben neue hohe Befunde (W2-R01…R07), alle umgesetzt; offen geblieben W2-R11 und SK28/SK36 (O-11). **Korrektur in Zyklus 3:** W2-R11 betrifft nicht nur 180 Minuten; SK31 kommt in 22 von 50 Kombinationen verspätet (Dokument 13). Die Regelprüfungen dieses Pakets haben das nicht erkannt, weil sie nur „zu früh“ prüfen. In diesem Zyklus zusätzlich geprüft und ohne neuen Widerspruch:
 
 - Textregeln: Die beanstandeten Formulierungen („nur die Lagerung von Sicherungskopien“, „sofort nutzbar“, Bergung durch Freiwillige) kommen in **keiner** Karte mehr vor (DELTA-F01, F02, F04).
 - Chronologie und Zustellung: in allen 57 Waterkant-Integrationsläufen und 8 Browser-Durchläufen keine Karte vor ihrer Voraussetzung, keine Folgekarte einer nicht gewählten Option, kein Zusatz einer nicht gewählten Option auf der Bühne (Dokumente 04, 05).

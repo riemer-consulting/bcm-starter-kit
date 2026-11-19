@@ -1,6 +1,6 @@
 # 08 – Szenario-Regression
 
-**Geprüfter Commit:** `33154fdfaa660fb48cedf3d5823a795ce3200d56` · **Lauf:** 2026-11-19T12:07:29.913Z bis 2026-11-19T13:02:40.338Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 NordTech ist eingefroren. Verglichen wird das beobachtbare Verhalten über die Server-Schnittstelle: Ausgangsstand (Commit der NordTech-Freigabe) gegen geprüften Stand, je Kombination mit derselben Besetzung, denselben Startwerten und denselben Entscheidungen.
 
@@ -75,7 +75,7 @@ Nicht Gegenstand dieses Vergleichs (und bewusst geändert): Plattformfunktionen 
 
 ### NT-90-ausgewogen
 
-Quelle: Journal des Browser-Durchlaufs (Sitzung `20261119124333-x6b7`), gleiches Drehbuch: ja, 59 Bedienaktionen wiederholt. Ergebnis: **identischer Verlauf**.
+Quelle: Journal des Browser-Durchlaufs (Sitzung `20261119155636-3aw6`), gleiches Drehbuch: ja, 59 Bedienaktionen wiederholt. Ergebnis: **identischer Verlauf**.
 
 | Vergleich | gleich | Original | Replay |
 |---|---|---|---|
@@ -86,7 +86,7 @@ Quelle: Journal des Browser-Durchlaufs (Sitzung `20261119124333-x6b7`), gleiches
 
 ### WK-90-ausgewogen
 
-Quelle: Journal des Browser-Durchlaufs (Sitzung `20261119125124-6k37`), gleiches Drehbuch: ja, 71 Bedienaktionen wiederholt. Ergebnis: **identischer Verlauf**.
+Quelle: Journal des Browser-Durchlaufs (Sitzung `20261119160425-bra1`), gleiches Drehbuch: ja, 71 Bedienaktionen wiederholt. Ergebnis: **identischer Verlauf**.
 
 | Vergleich | gleich | Original | Replay |
 |---|---|---|---|

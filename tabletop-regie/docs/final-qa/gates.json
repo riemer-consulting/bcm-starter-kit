@@ -2,17 +2,17 @@
   {
     "name": "A – Softwarefunktion",
     "status": "technisch bestanden, mit Auflagen",
-    "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft, keine offenen technischen Blocker. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08), Werkzeugbefund Z2-01."
+    "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft; Zyklus 3: 33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler zur Laufzeit ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08)."
   },
   {
     "name": "B – Szenariokonsistenz",
     "status": "regelbasiert bestanden; fachliche Bestätigung offen",
-    "begruendung": "Alle Varianten und Entscheidungskombinationen beider Szenarien ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert; Waterkant-Delta F01–F15 regelgeprüft. Offen: fachliche Bestätigung (Gate D) und W2-R11/SK28/SK36 (O-11)."
+    "begruendung": "Alle Varianten und Entscheidungskombinationen ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert (41/41); Waterkant-Delta F01–F15 regelgeprüft. Offen: O-11 (SK31 in 22 von 50 Kombinationen zeitlich unplausibel, vom Orakel nicht erfasst; Vorlage Dokument 13) und die fachliche Bestätigung (Gate D)."
   },
   {
     "name": "C – Medien und Betrieb",
     "status": "offen",
-    "begruendung": "Kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
+    "begruendung": "Technische Medienprüfung ohne Grenzwertverstoß (Zyklus 3). Offen: kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
   },
   {
     "name": "D – Fachlich-didaktische Abnahme",

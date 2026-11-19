@@ -1,6 +1,6 @@
 {
-  "commit": "33154fdfaa660fb48cedf3d5823a795ce3200d56",
-  "zeitpunkt": "2026-11-19T13:02:40.338Z",
+  "commit": "6809dee1a7f2daac4685ace87b31a31d6e587ede",
+  "zeitpunkt": "2026-11-19T16:15:36.947Z",
   "sauber": true,
   "version": {
     "node": "v22.22.0",
@@ -17,7 +17,7 @@
     {
       "name": "varianten-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 0
+      "sekunden": 1
     },
     {
       "name": "varianten-waterkant",
@@ -27,7 +27,7 @@
     {
       "name": "integration-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 21
+      "sekunden": 22
     },
     {
       "name": "integration-waterkant",
@@ -42,7 +42,7 @@
     {
       "name": "lauf-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 91
+      "sekunden": 92
     },
     {
       "name": "lauf-waterkant",
@@ -52,12 +52,12 @@
     {
       "name": "buehne-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 191
+      "sekunden": 199
     },
     {
       "name": "buehne-waterkant",
       "ergebnis": "ohne Fehler",
-      "sekunden": 191
+      "sekunden": 196
     },
     {
       "name": "protokoll-nordtech",
@@ -76,8 +76,8 @@
     },
     {
       "name": "negativ",
-      "ergebnis": "mit Fehlern",
-      "sekunden": 900
+      "ergebnis": "ohne Fehler",
+      "sekunden": 132
     },
     {
       "name": "referenz",
@@ -86,8 +86,8 @@
     },
     {
       "name": "medien",
-      "ergebnis": "mit Fehlern",
-      "sekunden": 19
+      "ergebnis": "ohne Fehler",
+      "sekunden": 18
     },
     {
       "name": "regression-nordtech",
@@ -97,72 +97,72 @@
     {
       "name": "e2e-NT-45-unguenstig",
       "ergebnis": "ohne Fehler",
-      "sekunden": 116
+      "sekunden": 115
     },
     {
       "name": "e2e-NT-60-gemischt",
       "ergebnis": "ohne Fehler",
-      "sekunden": 132
+      "sekunden": 134
     },
     {
       "name": "e2e-NT-90-krisenfuehrung",
       "ergebnis": "ohne Fehler",
-      "sekunden": 117
+      "sekunden": 121
     },
     {
       "name": "e2e-NT-90-ausgewogen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 164
+      "sekunden": 162
     },
     {
       "name": "e2e-NT-120-it",
       "ergebnis": "ohne Fehler",
-      "sekunden": 152
+      "sekunden": 155
     },
     {
       "name": "e2e-NT-180-alle-rollen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 210
+      "sekunden": 201
     },
     {
       "name": "e2e-WK-45-unguenstig",
       "ergebnis": "ohne Fehler",
-      "sekunden": 153
+      "sekunden": 151
     },
     {
       "name": "e2e-WK-60-gemischt",
       "ergebnis": "ohne Fehler",
-      "sekunden": 136
+      "sekunden": 134
     },
     {
       "name": "e2e-WK-90-krisenfuehrung",
       "ergebnis": "ohne Fehler",
-      "sekunden": 144
+      "sekunden": 150
     },
     {
       "name": "e2e-WK-90-ausgewogen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 199
+      "sekunden": 194
     },
     {
       "name": "e2e-WK-120-it",
       "ergebnis": "ohne Fehler",
-      "sekunden": 157
+      "sekunden": 156
     },
     {
       "name": "e2e-WK-180-alle-rollen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 209
+      "sekunden": 206
     },
     {
       "name": "e2e-WK-120-kunden-zusatz",
       "ergebnis": "ohne Fehler",
-      "sekunden": 152
+      "sekunden": 155
     },
     {
       "name": "e2e-WK-180-betrieb-zusatz",
       "ergebnis": "ohne Fehler",
-      "sekunden": 200
+      "sekunden": 195
     },
     {
       "name": "replay-NT-90-ausgewogen",
@@ -179,18 +179,18 @@
     {
       "name": "NordTech – Ransomware",
       "sha256": "7b5c26437379aab9132d930ec9ab982f4b5508a3c6ed003c25cd52ca9eff9d72",
-      "bestanden": 361,
-      "fehlgeschlagen": 4,
+      "bestanden": 365,
+      "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 14
+      "offeneBefunde": 13
     },
     {
       "name": "Waterkant – Brand im Rechenzentrum",
       "sha256": "d09cb9edd7e445cdf31960500e51157bd1def148b84b804358e95d002192a72b",
-      "bestanden": 424,
-      "fehlgeschlagen": 3,
+      "bestanden": 427,
+      "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 17
+      "offeneBefunde": 16
     },
     {
       "name": "Plattform (Negativ-, Sicherheits-, Referenztests)",
@@ -198,24 +198,24 @@
       "bestanden": 43,
       "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 14
+      "offeneBefunde": 13
     }
   ],
   "gates": [
     {
       "name": "A – Softwarefunktion",
       "status": "technisch bestanden, mit Auflagen",
-      "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft, keine offenen technischen Blocker. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08), Werkzeugbefund Z2-01."
+      "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft; Zyklus 3: 33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler zur Laufzeit ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08)."
     },
     {
       "name": "B – Szenariokonsistenz",
       "status": "regelbasiert bestanden; fachliche Bestätigung offen",
-      "begruendung": "Alle Varianten und Entscheidungskombinationen beider Szenarien ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert; Waterkant-Delta F01–F15 regelgeprüft. Offen: fachliche Bestätigung (Gate D) und W2-R11/SK28/SK36 (O-11)."
+      "begruendung": "Alle Varianten und Entscheidungskombinationen ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert (41/41); Waterkant-Delta F01–F15 regelgeprüft. Offen: O-11 (SK31 in 22 von 50 Kombinationen zeitlich unplausibel, vom Orakel nicht erfasst; Vorlage Dokument 13) und die fachliche Bestätigung (Gate D)."
     },
     {
       "name": "C – Medien und Betrieb",
       "status": "offen",
-      "begruendung": "Kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
+      "begruendung": "Technische Medienprüfung ohne Grenzwertverstoß (Zyklus 3). Offen: kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
     },
     {
       "name": "D – Fachlich-didaktische Abnahme",
