@@ -105,6 +105,12 @@ Im Ordner `docs/`:
 - `nordtech-generalprobe.md` – Medien-Generalprobe: jede Karte so, wie die Bühne sie zeigt, mit Ton und Sichtbefund
 - `nordtech-abnahmebericht.md` – Abnahme vor dem Pilot: Widersprüche, Spielbarkeit, alle 16 Entscheidungskombinationen, Rechnung, Go/No-Go-Checkliste
 
+## Unterlagen zum Szenario Waterkant
+
+- `docs/waterkant-moderationshandbuch.md` – Moderationshandbuch (Arbeitsfassung, aus dem Drehbuch erzeugt mit `node tools/handbuch-waterkant.js`): Format und Dauer (Pilotstandard ab 90 Minuten), Vorbereitung mit Abstimmung der Alarmtöne, Ablauf, Entscheidungen, Überraschungen, Live-Gespräche, Störungen und Abbruch, Debriefing
+- `docs/review/05-waterkant-vollstaendiges-szenario.md` – das komplette Drehbuch mit Bestandsanalyse und Variantenprüfung
+- `docs/review/11-finaler-unabhaengiger-review.md` – unabhängige Prüfungen und Umgang mit den Befunden
+
 ## Prüfwerkzeuge und Review-Paket
 
 Für beide Drehbücher (Aufruf jeweils mit `data/scenario.<name>.json`):

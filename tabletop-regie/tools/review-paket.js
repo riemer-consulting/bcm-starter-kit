@@ -44,6 +44,9 @@ for (const z of SZ) {
   fs.writeFileSync(path.join(D, 'exportierte-szenariodaten', z.key + '-drehbuch.md'), gen[z.key].export);
   fs.writeFileSync(path.join(D, 'testberichte', 'varianten-' + z.key + '.md'), gen[z.key].varianten);
 }
+node('tools/handbuch-waterkant.js');
+fs.copyFileSync(path.join(ROOT, 'docs', 'waterkant-moderationshandbuch.md'), path.join(D, 'anlage-waterkant-moderationshandbuch.md'));
+fs.copyFileSync(path.join(ROOT, 'docs', 'nordtech-moderationshandbuch.md'), path.join(D, 'anlage-nordtech-moderationshandbuch.md'));
 fs.copyFileSync(path.join(ROOT, 'data', 'archiv', 'scenario.waterkant-lagerbrand-v1.json'), path.join(D, 'exportierte-szenariodaten', 'archiv-scenario.waterkant-lagerbrand-v1.json'));
 const ohneTitel = md => md.replace(/^# .*\n/, '');
 const tiefer = md => md.replace(/^(#{1,5}) /gm, '#$1 ');
@@ -59,15 +62,16 @@ fs.writeFileSync(path.join(D, '05-waterkant-vollstaendiges-szenario.md'), [lies(
   for (const z of SZ) {
     const s = JSON.parse(lies(path.join(ROOT, z.datei))); const n = s.nachspiel;
     const basis = n.rechnung.reduce((a, p) => a + p.betrag, 0); const jg = n.jahresumsatz * n.umsatzrendite;
+    const KK = JSON.parse(lies(path.join(T, 'kostenklassen.json')))[z.key] || {}; const kk = id => (KK[id] ? `${KK[id][0]}${KK[id][1] ? ' – ' + KK[id][1] : ''}` : '–');
     const quelle = pid => (s.weichen || []).flatMap(w => w.optionen.filter(o => (o.posten || []).includes(pid)).map(o => `${w.id} „${o.label}“`)).join('; ') || 'Moderation (Frage im Abschluss)';
     const W = s.weichen || []; let min = Infinity, max = 0, minW = '', maxW = '';
     for (let m = 0; m < 2 ** W.length; m++) { const wahl = W.map((w, i) => w.optionen[(m >> (W.length - 1 - i)) & 1]); const pz = [...new Set(wahl.flatMap(o => o.posten || []))]; const b = basis + pz.reduce((a, id) => a + n.optionalePosten.find(x => x.id === id).betrag, 0); if (b < min) { min = b; minW = wahl.map((o, i) => W[i].id + ' ' + o.id).join(', '); } if (b > max) { max = b; maxW = wahl.map((o, i) => W[i].id + ' ' + o.id).join(', '); } }
     const erst = n.versicherung ? n.versicherung.betrag : 0;
     T10.push(`# ${z.name}`, '', `**Jahresumsatz** ${eur(n.jahresumsatz)} · **Umsatzrendite** ${Math.round(n.umsatzrendite * 100)} % · **Jahresgewinn (Modell)** ${eur(jg)}`, '',
-      '## Grundschaden (fällt in jedem Verlauf an)', '', '| Posten | Betrag | Rechenweg (Szenarioannahme) | Was vorher geholfen hätte |', '|---|---:|---|---|',
-      ...n.rechnung.map(p => `| ${p.posten} | ${eur(p.betrag)} | ${(p.herleitung || '–').replace(/\|/g, '/')} | ${(p.bcmHebel || '–').replace(/\|/g, '/')} |`), `| **Summe** | **${eur(basis)}** | | |`, '',
-      '## Posten, die von Entscheidungen abhängen', '', '| Posten | Betrag | ausgelöst durch | Rechenweg |', '|---|---:|---|---|',
-      ...n.optionalePosten.map(p => `| ${p.posten} | ${eur(p.betrag)} | ${quelle(p.id)} | ${(p.herleitung || '–').replace(/\|/g, '/')} |`), '',
+      '## Grundschaden (fällt in jedem Verlauf an)', '', '| Posten | Betrag | Einordnung (Vorschlag) | Rechenweg (Szenarioannahme) | Was vorher geholfen hätte |', '|---|---:|---|---|---|',
+      ...n.rechnung.map((p, i) => `| ${p.posten} | ${eur(p.betrag)} | ${kk('R' + i)} | ${(p.herleitung || '–').replace(/\|/g, '/')} | ${(p.bcmHebel || '–').replace(/\|/g, '/')} |`), `| **Summe** | **${eur(basis)}** | | | |`, '',
+      '## Posten, die von Entscheidungen abhängen', '', '| Posten | Betrag | ausgelöst durch | Einordnung (Vorschlag) | Rechenweg |', '|---|---:|---|---|---|',
+      ...n.optionalePosten.map(p => `| ${p.posten} | ${eur(p.betrag)} | ${quelle(p.id)} | ${kk(p.id)} | ${(p.herleitung || '–').replace(/\|/g, '/')} |`), '',
       '## Spanne über alle Entscheidungskombinationen', '', '| | Brutto-Schaden | mögliche Erstattung (Modellannahme) | beim Unternehmen | Anteil am Jahresgewinn ohne Erstattung |', '|---|---:|---:|---:|---:|',
       `| günstigster Verlauf (${minW}) | ${eur(min)} | ${eur(Math.min(min, erst))} | ${eur(min - Math.min(min, erst))} | ${Math.round(min / jg * 100)} % |`,
       `| teuerster Verlauf (${maxW}) | ${eur(max)} | ${eur(Math.min(max, erst))} | ${eur(max - Math.min(max, erst))} | ${Math.round(max / jg * 100)} % |`, '',

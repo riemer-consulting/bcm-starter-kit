@@ -34,7 +34,7 @@ Stand: siehe `manifest.json`.
 5. Annahmen der Rechnungen und Fristen von Fachabteilungen bestätigen lassen (kein Rechts- oder Versicherungsrat in den Karten; Hinweise „fachlich prüfen lassen“ bleiben).
 6. Urkunden, Testmodus und Teilnehmer-Import einmal durchklicken (in dieser Runde nicht getestet).
 7. Offene mittlere Befunde der unabhängigen Prüfung bearbeiten (vor allem W-R14 bis W-R18: Vertragslage Ausweich-Rack, Zeitleiste Wiederanlauf und Sanierung, Basisdienste, Lithium-Ionen-Spezifika) und die korrigierte Fassung erneut unabhängig prüfen lassen.
-8. Für Waterkant gibt es noch **kein eigenes Moderationshandbuch** wie für NordTech (`docs/nordtech-moderationshandbuch.md`). Die Moderationsinhalte (Hinweise, Bewertung, Gesprächsleitfäden, Regie, Beobachtungsbögen) stehen im Werkzeug und vollständig in Dokument 05; ein Handbuch sollte vor dem Pilot erstellt werden.
+8. Waterkant-Moderationshandbuch (`docs/waterkant-moderationshandbuch.md`, im Paket als Anlage) im Probelauf erproben und danach als Version 1.1 abnehmen.
 
 ## 4. Restrisiken
 

@@ -43,3 +43,18 @@ Damit unterscheiden sich die Verläufe in der Summe kaum (Spanne rund 80.000 €
 ## 4. Unterschied in der Spanne
 
 Bei NordTech entscheiden die Weichen über bis zu 3,1 Mio. € (Lösegeld 2 Mio. € allein). Bei Waterkant liegt die Spanne bei etwa 0,08 Mio. €. Für die Moderation heißt das: Bei Waterkant ist die Rechnung nicht das stärkste Argument im Debriefing, sondern die Frage, welche Risiken der Tisch für welchen Nutzen eingegangen ist.
+
+## 5. Einordnung jeder Position (Vorschlag für das Controlling-Review)
+
+Die Rechnung auf der Bühne ist ein didaktisches Modell und zeigt alle Positionen als „Schaden“. Für eine fachliche Bewertung ist jede Position in den Tabellen unten eingeordnet – als Vorschlag, der von Finanzen und Controlling zu bestätigen ist (keine Bilanzierungs- oder Steuerauskunft):
+
+| Klasse | Bedeutung | Folge für die Bewertung |
+|---|---|---|
+| A | Aufwand in der Krise | Schaden im engeren Sinn |
+| E | Ertrags- bzw. Deckungsbeitragsausfall | Schaden; Rohertrag bzw. Deckungsbeitrag, nicht Umsatz |
+| I | Investition / Ersatz zum Neuwert | als Schaden nur der Zeitwert; der Rest ist Investition |
+| V | künftige Verpflichtung (Vertragsbindung) | nur der Anteil der Übungswoche ist Schaden; der Rest ist Bindung mit Gegenleistung und Liquiditätsthema |
+| R | Risiko- bzw. Erwartungswert | unsicher; nicht wie ein realisierter Schaden behandeln |
+| L | reine Liquidität (z. B. Vorkasse) | nicht in der Rechnung |
+
+Ergebnis der Einordnung: Bei Waterkant sind die Hardware-Positionen (USV und Server zum Neuwert, Rußeintrag) und die Zwölfmonatserweiterung die größten Unschärfen; bei NordTech die Erwartungswerte künftiger Kundenverluste. Möglicher Doppelzähler bei Waterkant: Grundposten „Kulanz bei Prospektpreisen“ und W1 „herunterfahren“ (Kulanz in 5 Filialen) – Abgrenzung im Controlling-Review klären.

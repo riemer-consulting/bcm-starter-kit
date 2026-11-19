@@ -1,0 +1,39 @@
+{
+  "_hinweis": "Einordnung je Posten für das Controlling-Review (F13). Vorschlag des Autors, keine Bilanzierungs- oder Steuerauskunft; von Finanzen/Controlling zu bestätigen. Klassen: A = Aufwand (Schaden), E = Ertrags-/Deckungsbeitragsausfall, I = Investition bzw. Ersatz zum Neuwert (Schaden nur in Höhe des Zeitwerts), V = künftige Verpflichtung / Vertragsbindung (über die Übungswoche hinaus), R = Risiko-/Erwartungswert (unsicher), L = reine Liquidität (nicht in der Rechnung).",
+  "nordtech": {
+    "R0": ["E", "Deckungsbeitrag, nicht Umsatz – keine Doppelzählung mit Vertragsstrafen (R4), die gesondert stehen"],
+    "R1": ["A", ""],
+    "R2": ["A/I", "Ersatzhardware teils Investition (Zeitwert prüfen); Überstunden Aufwand"],
+    "R3": ["A", ""],
+    "R4": ["A", "vertragliche Zahlung"],
+    "R5": ["A", ""],
+    "R6": ["A", ""],
+    "R7": ["A", ""],
+    "R8": ["R/E", "Erwartungswert künftigen Deckungsbeitrags über 12 Monate – Risiko, kein realisierter Schaden der Woche"],
+    "loesegeld": ["A", "Zahlungsabfluss; rechtliche und versicherungsseitige Fragen fachlich prüfen"],
+    "kundenkommunikation": ["R/E", "Erwartungswert künftiger Abwanderung"],
+    "ot-ausbreitung": ["A/E", "Neuaufsetzen Aufwand, Stillstand Deckungsbeitrag"],
+    "datenschutz-verspaetet": ["A", "ohne Bußgeld"]
+  },
+  "waterkant": {
+    "R0": ["A", ""],
+    "R1": ["I", "Neuwert; als Schaden nur Zeitwert der zerstörten bzw. nicht reinigungsfähigen Anlagen ansetzen, Rest ist Investition"],
+    "R2": ["A", ""],
+    "R3": ["A", ""],
+    "R4": ["A", ""],
+    "R5": ["E", "Rohertrag, nicht Umsatz"],
+    "R6": ["A", "Bezugsbasis: Filialen ohne Aktionspreise – Abgrenzung zu W1 „herunterfahren“ prüfen (möglicher Doppelzähler)"],
+    "R7": ["A", "vertragliche Gutschrift"],
+    "R8": ["A", ""],
+    "preisuebertragung": ["A", "enthält Kulanz in 5 Filialen – Abgrenzung zum Grundposten Kulanz prüfen"],
+    "russeintrag": ["I", "Neuwert; Schaden nur in Höhe des Zeitwerts"],
+    "partnerplanung": ["A", "freiwillige Erstattung"],
+    "partnerkulanz": ["A", ""],
+    "bergung": ["A", ""],
+    "nacherfassung": ["A", ""],
+    "ausweichminimal": ["E", "Rohertrag Wochen 2–3"],
+    "ausweichausbau": ["V", "zwölf Monate Mindestlaufzeit: nur der Anteil der Übungswoche ist Schaden, der Rest künftige Verpflichtung mit Gegenleistung (Ausweichkapazität)"],
+    "reihenfolgegleich": ["E", ""],
+    "partnerabwanderung": ["A/R", "Gutschriften Aufwand, Partnerverlust Erwartungswert"]
+  }
+}
