@@ -257,15 +257,16 @@ Bei diesen Lagen spielt die Bühne nur ein Signal; die Moderation spricht die Ro
 
 **Gesamteinschätzung im Protokoll** (0 = fehlt/riskant, 1 = teilweise, 2 = tragfähig; bewertet wird der Krisenstab, nicht Personen):
 
-- Aktivierung und Lagebild in der Nacht
-- Personenschutz und sichere Freigaben
-- Entscheidung und Verantwortung (auch in Vertretung)
-- Kommunikation mit Beschäftigten, Kundschaft und Öffentlichkeit
-- Partner und vertragliche Zusagen (Wiederherstellungsziel)
-- Ausweichbetrieb und technische Freigaben
-- Datenlücke, Nachbuchung und Datenintegrität
-- Fachliche Prüfaufträge (Versicherung, Arbeitsschutz, Datenschutz, Verträge)
-- Wiederanlauf, Nachsorge und Rückkehrentscheidung
+- Aktivierung und Lagebild in der Nacht: Wer entscheidet um 03:02 Uhr, wird der Krisenstab früh einberufen? (LK01–LK06, W1)
+- Personenschutz: Räumung, Sammelplatz, vermisste Person, Angehörige, zweiter Alarm (LK04, LK05, B5)
+- Sichere Brand- und Raumfreigabe: Brandwache, Freigabekette, Betreten nur nach Messung und durch Fachfirma, keine Freigabe aus „gelöscht“ (LK06, LK10, LK14/W3)
+- Entscheidung und Verantwortung, auch in Vertretung und mit Zustimmungsvorbehalt (W1, B7, LK15/W4, SK46)
+- Kunden- und Partnerpriorisierung: Wiederherstellungsziel, ehrliche Prognose, offengelegtes Kriterium für die Reihenfolge der Märkte (LK09/W2, LK18, LK20/W5)
+- Wiederanlaufabhängigkeiten und technische Freigaben: Basisdienste, Firewall-Regeln, Vier-Augen-Prüfung, fachliche Datenprüfung (LK13, LK15, LK19, SK40)
+- Datenlücke und Datenintegrität: Nachbuchung, Preisstände, Bestände erst nach Prüfung freigeben (LK14, LK19, LK23)
+- Krisenkommunikation: Beschäftigte, Kundschaft, Medien und Partner – einheitliche Sprachregelung, Korrektur von Falschmeldungen (LK08, LK11, LK17, LK21, B6)
+- Fachliche Prüfaufträge und Dokumentation: Versicherer, Arbeitsschutz, Datenschutz, Verträge werden festgehalten statt am Tisch entschieden (LK24, SK22, SK27, SK34)
+- Nachsorge und Rückkehrentscheidung: Belastung des Teams, Ursache, Kriterien für Rückkehr, Auslagerung oder zwei Standorte (LK26, LK27, LK28)
 
 Danach „Protokoll herunterladen“ (ohne Namen), Maßnahmenplan mit Verantwortlichen und Terminen füllen, im Setup Lauf zurücksetzen und die eingetragenen Personen entfernen.
 

@@ -25,7 +25,11 @@ const SZ = [
   { key: 'waterkant', datei: 'data/scenario.waterkant.json', name: 'Waterkant' }
 ];
 const commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: REPO, encoding: 'utf8' }).trim();
-const sauber = execFileSync('git', ['status', '--porcelain', '--', 'tabletop-regie/server', 'tabletop-regie/public', 'tabletop-regie/data', 'tabletop-regie/tools', 'tabletop-regie/media'], { cwd: REPO, encoding: 'utf8' }).trim() === '';
+// Alle Quellen müssen eingecheckt sein – nur die vom Paketbau erzeugten Dateien in docs/review/ (außer teile/) dürfen abweichen.
+const offen = execFileSync('git', ['status', '--porcelain', '--', 'tabletop-regie'], { cwd: REPO, encoding: 'utf8' }).split('\n').filter(Boolean)
+  .filter(z => !/tabletop-regie\/docs\/review\/(?!teile\/)/.test(z) && !/tabletop-regie\/data\/(settings|run-state)\.json/.test(z));
+if (offen.length && !process.env.ERLAUBE_UNSAUBER) { console.error('Abbruch: nicht eingecheckte Quellen – erst committen:\n' + offen.join('\n')); process.exit(2); }
+const sauber = offen.length === 0;
 const heute = new Date().toISOString().slice(0, 10);
 const stand = `Stand: ${heute} · Codestand \`${commit.slice(0, 7)}\`${sauber ? '' : ' (mit nicht eingecheckten Änderungen)'}`;
 
@@ -44,7 +48,10 @@ for (const z of SZ) {
   fs.writeFileSync(path.join(D, 'exportierte-szenariodaten', z.key + '-drehbuch.md'), gen[z.key].export);
   fs.writeFileSync(path.join(D, 'testberichte', 'varianten-' + z.key + '.md'), gen[z.key].varianten);
 }
-node('tools/handbuch-waterkant.js');
+// Handbuch frisch erzeugen und mit der eingecheckten Fassung vergleichen (ohne Datumszeile)
+node('tools/handbuch-waterkant.js', path.join(tmp, 'hb.md'));
+const ohneStand = t => t.replace(/^Version .*$/m, '');
+if (ohneStand(lies(path.join(tmp, 'hb.md'))) !== ohneStand(lies(path.join(ROOT, 'docs', 'waterkant-moderationshandbuch.md')))) { console.error('Abbruch: docs/waterkant-moderationshandbuch.md passt nicht zum Drehbuch – node tools/handbuch-waterkant.js ausführen und committen.'); process.exit(2); }
 fs.copyFileSync(path.join(ROOT, 'docs', 'waterkant-moderationshandbuch.md'), path.join(D, 'anlage-waterkant-moderationshandbuch.md'));
 fs.copyFileSync(path.join(ROOT, 'docs', 'nordtech-moderationshandbuch.md'), path.join(D, 'anlage-nordtech-moderationshandbuch.md'));
 fs.copyFileSync(path.join(ROOT, 'data', 'archiv', 'scenario.waterkant-lagerbrand-v1.json'), path.join(D, 'exportierte-szenariodaten', 'archiv-scenario.waterkant-lagerbrand-v1.json'));
@@ -103,6 +110,14 @@ for (const z of SZ) {
       ...b.generalprobe.map(g => `| ${g.id} | ${g.titel} | \`screenshots/${z.key}/${g.bild.replace(/\.png$/, '.jpg')}\` | ${g.bildGeladen ? 'ja' : '**nein**'} | ${g.sollTon || '–'} | ${g.ton} | ${g.uebungshinweis === null ? '–' : g.uebungshinweis ? 'sichtbar' : '**fehlt**'} |`), '');
     fs.copyFileSync(path.join(TEST, `buehne-${z.key}`, 'ergebnis.json'), path.join(D, 'testberichte', `buehne-${z.key}.json`));
   }
+}
+for (const z of SZ) {
+  const pr = ladeJson(path.join(TEST, `protokoll-${z.key}.json`));
+  if (pr) { bericht.push(`## Übungsprotokoll in allen Kombinationen – ${z.name} (${pr.zeitpunkt.slice(0, 16).replace('T', ' ')} UTC)`, '', `Raster der Gesamteinschätzung (${pr.kriterien.length} Kriterien): ${pr.kriterien.map(k => '„' + k + '“').join(' · ')}`, '', ...tabelle('Ergebnisse', sammeln(pr.ergebnisse))); fs.copyFileSync(path.join(TEST, `protokoll-${z.key}.json`), path.join(D, 'testberichte', `protokoll-${z.key}.json`)); }
+}
+if (fs.existsSync(path.join(TEST, 'fehllauf-waterkant.md'))) {
+  fs.copyFileSync(path.join(TEST, 'fehllauf-waterkant.md'), path.join(D, 'testberichte', 'fehllauf-waterkant.md'));
+  bericht.push('## Fehlgeschlagene Läufe (dokumentiert, nicht gelöscht)', '', '- Waterkant-Lauftest vom 19.11.2026: 10 von 15 bestanden, dann Abbruch. Ursache: Lauf- und Einstellungsdateien wurden während des Tests gelöscht (Fehler in der Testdurchführung). Wiederholungslauf bestanden. Einzelheiten und Rohausgabe: `testberichte/fehllauf-waterkant.md`.', '');
 }
 const sec = ladeJson(path.join(TEST, 'sicherheit.json')); const secAlt = ladeJson(path.join(TEST, 'sicherheit-alt.json'));
 if (sec) {
@@ -177,7 +192,7 @@ const zweck = {
 const dateien = [];
 const lauf = (dir, rel) => fs.readdirSync(dir).forEach(f => { const p = path.join(dir, f); const r = rel ? rel + '/' + f : f; if (fs.statSync(p).isDirectory()) { if (f !== 'teile') lauf(p, r); } else if (f !== 'manifest.json') dateien.push({ p, r }); });
 lauf(D, '');
-const manifest = { paket: 'BCM-FINAL-REVIEW-NORDTECH-WATERKANT', erstellt: new Date().toISOString(), commit, codestandEingecheckt: sauber, hinweis: 'Alle Inhalte fiktiv. Keine Passwörter, Tokens oder realen Adressen; Testadressen enden auf @example.com.', dateien: [] };
+const manifest = { paket: 'BCM-FINAL-REVIEW-NORDTECH-WATERKANT', erstellt: new Date().toISOString(), commit, codestandEingecheckt: sauber, commitRegel: 'Alle Quellen, Drehbücher, Medien, Werkzeuge und Textteile entsprechen genau diesem Commit (Paketbau bricht sonst ab). Die erzeugten Dokumente unter docs/review/ werden im unmittelbar folgenden Commit eingecheckt; dieser ändert ausschließlich docs/review/ (prüfbar mit git diff <commit> <folgecommit> --stat).', hinweis: 'Alle Inhalte fiktiv. Keine Passwörter, Tokens oder realen Adressen; Testadressen enden auf @example.com.', dateien: [] };
 const add = (r, p, z) => manifest.dateien.push({ pfad: r, zweck: z, sha256: crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'), bytes: fs.statSync(p).size });
 dateien.forEach(({ p, r }) => add(r, p, zweck[r] || (r.startsWith('testberichte/') ? 'Testbericht / Rohdaten' : r.startsWith('ablaufdiagramme/') ? 'Ablaufdiagramm (Mermaid)' : r.startsWith('exportierte-szenariodaten/') ? 'Szenariodaten' : 'Anlage')));
 
