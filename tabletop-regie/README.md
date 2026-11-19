@@ -122,7 +122,14 @@ Für beide Drehbücher (Aufruf jeweils mit `data/scenario.<name>.json`):
 - `node tools/medienliste.js <drehbuch> medien.md` – alle Bilder und Töne mit Datei, Maßen, Dauer und Prüfsumme
 - `node tools/tests/lauf.js scenario.<name>.json ergebnis.json` – Lauftest mit echtem Server und lokalem Test-Mailempfänger (keine echten Mails)
 - `node tools/tests/buehne.js scenario.<name>.json ordner` – Browsertest der Bühne mit Bildschirmfotos (braucht Playwright)
-- `node tools/tests/sicherheit.js` – Sicherheitsprüfung gegen den laufenden Server
+- `node tools/tests/sicherheit.js` – Sicherheitsprüfung gegen den laufenden Server (für eine isolierte Umgebung: `node tools/qa/mit-server.js 4270 2670 sicherheit <ordner> -- node tools/tests/sicherheit.js {BASE}`)
+
+QA-Abnahme (`tools/qa/`, alle Tests mit eigenem Datenordner und lokalem Test-Mailempfänger, die Projektdaten in `data/` bleiben unberührt):
+
+- `node tools/qa/abnahme.js <nachweisordner>` – Gesamtlauf am eingecheckten Commit (bricht bei nicht eingecheckten Änderungen ab), danach `node tools/qa/status.js <nachweisordner>` für den Prüfstand
+- `node tools/qa/e2e-browser.js <fall> <ordner>` – Übung im echten Browser über die Oberfläche (Fälle in `tools/qa/e2e-faelle.json`)
+- `node tools/qa/integration.js`, `negativ.js`, `referenz.js`, `medien.js`, `regression.js`, `replay.js` – Orakelprüfung aller Varianten, Negativ- und Lasttests, handgerechnete Sollwerte, Medienmessung, NordTech-Regression, Wiederholung aus dem Ereignisjournal
+- Prüfstand im Browser: `http://localhost:4173/qa.html` (Stand der letzten Abnahme; ein bestandener Test ist keine fachliche Freigabe)
 
 Das Review-Paket aus dem Abschluss der Prüfung liegt unter `docs/review/` (zwölf Dokumente, Testberichte, Ablaufdiagramme, Szenariodaten, `manifest.json` mit Prüfsummen).
 

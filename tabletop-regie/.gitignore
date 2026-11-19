@@ -6,3 +6,7 @@ media/branding/custom-logo-*
 media/custom/
 data/journal/
 data/*.tmp-*
+# Arbeitsdateien und Stimmmodelle der Ton-Erzeugung
+tools/medien/out*/
+tools/medien/v/
+tools/medien/venv/

@@ -1,6 +1,7 @@
 # Technische Inventur Tabletop-Regie: Funktionskatalog
 
 Stand der Inventur: 18.11.2026, Codestand `79c9b89`. Zeilenangaben beziehen sich auf diesen Stand; durch die Korrekturen dieser Runde können sie sich in `server/index.js` um wenige Zeilen verschoben haben. Behobene Befunde sind als „Behoben in dieser Runde“ gekennzeichnet.
+**Aktueller Stand:** Abschnitt 7 „Nachtrag zum Abnahmestand (19.11.2026)“ führt alle Funktionen auf, die seitdem neu hinzugekommen sind oder deren Status sich geändert hat. Wo Abschnitt 7 und die Tabellen 1–4 abweichen, gilt Abschnitt 7. Belege dort mit Funktions- bzw. Routennamen statt Zeilennummern.
 Begleitdokument mit Architektur, Datenmodell, Sicherheit und Endpunktliste: `inventur-architektur.md` (gleiches Verzeichnis).
 
 Hinweise zur Tabelle:
@@ -154,3 +155,25 @@ Abweichungen zwischen README und Code bzw. Daten:
 20. Excel-CSV-Import mit automatischem Windows-1252-Fallback für Umlaute (`public/setup.js:407-412`).
 21. Private Bonuskarten zählen auf dem Spielbrett als "neue Info" (`server/index.js:387-389`).
 22. Der Ablaufplan zählt "Lagekarte x von y" gegen den tatsächlichen Plan, nicht gegen das ganze Drehbuch (`server/index.js:258-266`).
+
+## 7. Nachtrag zum Abnahmestand (19.11.2026)
+
+Gilt für den in `docs/final-qa/` genannten geprüften Commit. Spalte „Test“ nennt die Testfälle der QA-Abnahme (Katalog: `docs/final-qa/03-testfallkatalog.md`).
+
+| ID | Funktion | Änderung gegenüber Tabellen 1–4 | Beleg (Datei: Funktion/Route) | Status | Test |
+|---|---|---|---|---|---|
+| A-06 | Gesamteinschätzung | In der Moderation bewertbar (0/1/2 je Kriterium, Notiz bis 1000 Zeichen), gespeichert im Laufzustand, nach Neuladen wieder angezeigt, im Protokoll mit Werten und Summe. Raster aus dem Drehbuch (`protokollKriterien`): Waterkant 10 Kriterien mit Kartenbezug, NordTech 8 allgemeine Kriterien | `server/index.js`: `POST /api/run/einschaetzung`, `protokollKriterien()`; `public/moderator.js`: `renderEinschaetzung`, `speichereEinschaetzung` | implementiert | E2E E1/E2/P6, protokoll.js (25 Varianten je Szenario), referenz NT-K/WK-K |
+| A-09 | Bewertungsmatrix | Eingaben werden geprüft (nur bekannte Rolle und Kriterium, kein `__proto__`) | `server/index.js`: `POST /api/bewertung` | implementiert (weiterhin ohne Oberfläche) | sicherheit.js |
+| B-04 | Server-Neustart | Zustand wird atomar geschrieben (temporäre Datei, dann Umbenennen); Laufzustand, Entscheidungen und Journal bleiben erhalten, kein erneuter Versand | `server/store.js`: `writeJson` | implementiert | N-05 |
+| B-05 | Fehlgeschlagene E-Mails | Zusätzlich dauerhaft bei der Karte unter „Verschickte vertrauliche Karten“ (auch nach „Gesehen“ und Neuladen); Journal „zustellung fehlgeschlagen“ | `public/moderator.js` (Liste `m-sent-sk`); `server/index.js`: `fireSonderlagekarteIntern` | implementiert | N-01, N-02 |
+| B-06 | Schutz vor doppelter Auslösung | Sperre während des Versands je Karte (`skImVersand`); gleichzeitige Auslösungen führen zu genau einer Zustellung | `server/index.js`: `fireSonderlagekarte` | implementiert | N-06, N-08, E2E O2 |
+| B-07 | Medienfehler | Unverändert: fehlende Datei meldet die Drehbuchprüfung; eine beschädigte Datei bleibt auf der Bühne still, die Moderation erhält keinen Hinweis | `server/validate.js`; `public/stage.js` | teilweise implementiert | N-12 (Befund) |
+| B-10 | Zugriffsschutz | Schreibende Aufrufe verlangen den Kopf `X-Regie: 1` (Schutz gegen Auslösung aus fremden Webseiten); weiterhin keine Anmeldung und keine Trennung Bühne/Moderation | `server/index.js` (Middleware vor `/api`); `public/regie-fetch.js` | teilweise implementiert | sicherheit.js, N-14 |
+| B-11 | Betrieb nur lokal | Standardbindung an 127.0.0.1 (`HOST` überschreibbar) | `server/index.js`: `app.listen(PORT, HOST)` | implementiert | sicherheit.js |
+| B-12 | Wiederholbarkeit | Replay: eine aufgezeichnete Übung wird aus dem Ereignisjournal mit gleicher Besetzung (pseudonym), gleichen Startwerten und gleichen Bedienaktionen zur gleichen Übungsminute erneut abgespielt und verglichen | `tools/qa/replay.js` | implementiert (Werkzeug) | Replay NT-90/WK-90 |
+| B-13 | Getrennte Datenordner | `TABLETOP_DATA_DIR` setzt einen eigenen Datenordner (für Tests und parallele Testumgebungen); weiterhin ein Lauf je Prozess | `server/store.js` | implementiert | alle QA-Tests |
+| B-17 | Ereignisjournal | Unveränderliches Journal je Sitzung (`data/journal/<sitzung>.jsonl`, nur Anhängen): Folgenummer, Zeitstempel, Sitzung, Szenario, Übungsminute, Typ, Karte, Ergebnis; pseudonymisiert (Rollen und Anzahlen, keine Namen/Adressen); Download in der Moderation | `server/index.js`: `journal()`, `GET /api/run/journal`, `GET /api/run/journal/sitzungen`; „Ereignisjournal herunterladen“ | implementiert | E2E P1–P5, N-05, Replay |
+| B-18 | Prüfstand | Seite `qa.html`: Commit, Werkzeugversionen, letzter Lauf mit Prüfschritten, Ergebnisse je Szenario, offene Befunde, vier Gates mit Begründung; ausdrücklicher Hinweis, dass ein bestandener Test keine fachliche Freigabe ist | `public/qa.html`; `GET /api/qa-status` (liest `docs/final-qa/qa-status.json`) | implementiert | Sichtprüfung im Browser |
+| B-19 | Countdown für Tests | `TABLETOP_COUNTDOWN_SEKUNDEN` verkürzt den 30-Sekunden-Countdown nur in Testumgebungen; Standard unverändert 30 s | `server/index.js`: `POST /api/run/begin-crisis` | implementiert | E2E T1 (echte 30 s), Integration (0 s) |
+| B-20 | Abnahme-Gesamtlauf | Alle Prüfungen am eingecheckten Commit in isolierten Umgebungen, mit Commit, Werkzeugversionen und Prüfsummen | `tools/qa/abnahme.js`, `tools/qa/status.js` | implementiert (Werkzeug) | – |
+

@@ -59,6 +59,7 @@ function dateienUnter(dir, filter) {
   await lauf('drehbuchpruefung', [N, 'server/validate.js']);
   for (const [k, f] of SZ) await lauf('varianten-' + k, [N, 'tools/varianten.js', 'data/' + f, E(`varianten/${k}.md`), E(`varianten/${k}.json`)], { ordner: E('varianten') });
   for (const [k, f] of SZ) await lauf('integration-' + k, [N, 'tools/qa/integration.js', f, E(`integration/${k}.json`)], { ordner: E('integration'), timeout: 1800000 });
+  await lauf('delta-waterkant', [N, 'tools/qa/delta-waterkant.js', E('delta/waterkant.json'), OUT], { ordner: E('delta') });
   for (const [k, f] of SZ) await lauf('lauf-' + k, [N, 'tools/tests/lauf.js', f, E(`lauf/${k}.json`)], { ordner: E('lauf') });
   for (const [k, f] of SZ) await lauf('buehne-' + k, [N, 'tools/tests/buehne.js', f, E(`buehne/${k}`)], { ordner: E('buehne'), timeout: 1800000 });
   for (const [k, f] of SZ) await lauf('protokoll-' + k, [N, 'tools/tests/protokoll.js', f, E(`protokoll/${k}.json`)], { ordner: E('protokoll'), timeout: 1800000 });
