@@ -1,0 +1,200 @@
+[
+  {
+    "id": "O-01",
+    "bereich": "Fachlich",
+    "text": "Die fachlichen Annahmen zu Brandverhalten von Lithium-Ionen-Modulen, Brandwache und Freigabekette (F04), zu Basisdiensten und Netztrennung im Ausweich-Rack (F02), zu Notfallvertrag und Auftragsverarbeitung (F01, F05), zur Kostenklassifizierung und Versicherung (F13) sowie zu Räumung und Arbeitsschutz sind nur redaktionell umgesetzt und regelgeprüft, nicht von Fachleuten bestätigt.",
+    "nachweis": "09, Anhang zu 09 (Stufe: Regelprüfung)",
+    "schwere": "hoch",
+    "gate": "D",
+    "naechsterSchritt": "Brandschutz/Facility, IT-Architektur, Recht/Datenschutz, Controlling/Versicherung, Arbeitsschutz einbinden",
+    "szenario": "waterkant",
+    "status": "offen"
+  },
+  {
+    "id": "O-02",
+    "bereich": "Didaktik",
+    "text": "Kein moderierter Probelauf mit echten Menschen. Lernziele, Zeitbedarf je Lage, Verständlichkeit der Karten und Tauglichkeit der Bewertungsraster (NordTech 8, Waterkant 10 Kriterien) sind nicht praktisch validiert.",
+    "nachweis": "Stufe „mit echten Menschen“: nicht erreicht",
+    "schwere": "hoch",
+    "gate": "D",
+    "naechsterSchritt": "Generalprobe mit Testgruppe, Beobachtungsbögen auswerten",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-03",
+    "bereich": "Medien",
+    "text": "Kein Ton ist akustisch abgenommen. Verständlichkeit der Übungskennzeichnung der Waterkant-Alarme (LK04, B5) im Raum, Verwechslungsgefahr mit einem echten Alarm und Lautstärke im Veranstaltungsraum sind nicht geprüft. Die Kennzeichnung ist im Erzeugungsskript belegt (`tools/medien/waterkant-toene.py`), der Bühnenhinweis im Browser.",
+    "nachweis": "06 (Spalte „akustisch“)",
+    "schwere": "hoch",
+    "gate": "C",
+    "naechsterSchritt": "Hörtest im Raum, Eintrag in `hoerprotokoll.json`; Empfang/Sicherheitsdienst vorab informieren",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-04",
+    "bereich": "Betrieb",
+    "text": "Nur der lokale SMTP-Testempfänger wurde verwendet. Echter Mailserver (TLS, Anmeldung, Spamfilter, Laufzeiten, Zustellung auf Mobilgeräte) ist nicht geprüft.",
+    "nachweis": "07",
+    "schwere": "mittel",
+    "gate": "C",
+    "naechsterSchritt": "Probeversand an Testpostfächer der Organisation vor dem Pilot",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-05",
+    "bereich": "Betrieb",
+    "text": "Nur Chromium (headless, 1440×900) geprüft. Firefox, Safari/Edge, Beamer-Auflösung, Lesbarkeit aus der letzten Reihe, Lautsprecher des Raums nicht geprüft.",
+    "nachweis": "05, 06",
+    "schwere": "mittel",
+    "gate": "C",
+    "naechsterSchritt": "Technikprobe am Veranstaltungsort",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-06",
+    "bereich": "Software",
+    "text": "Keine Anmeldung und keine Trennung zwischen Bühne und Moderation: Wer den Server erreicht oder an der Bühne die Adresse ändert, sieht die Moderationsansicht mit allen vertraulichen Texten. Gemindert durch Bindung an 127.0.0.1 und CSRF-Kopf.",
+    "nachweis": "N-14",
+    "schwere": "mittel",
+    "gate": "A/C",
+    "naechsterSchritt": "geschlossenes Moderationsgerät, Bühne nur als Bildschirmfreigabe; Zugriffsschutz als eigenes Vorhaben",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-07",
+    "bereich": "Software",
+    "text": "Beschädigte Mediendatei: Bühne bleibt still, die Moderation erhält keinen Hinweis (fehlende Datei meldet die Drehbuchprüfung).",
+    "nachweis": "N-12",
+    "schwere": "niedrig",
+    "gate": "A",
+    "naechsterSchritt": "Generalprobe aller Medien vor jeder Übung; ggf. Hinweis in der Moderation nachrüsten",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-08",
+    "bereich": "Software",
+    "text": "Echtzeitverhalten über 45–180 Minuten nicht geprüft: Lagen wurden per Zeitsprung erreicht; Pause/Fortsetzen nur über Sekunden gemessen.",
+    "nachweis": "01 Abschnitt 4",
+    "schwere": "mittel",
+    "gate": "A",
+    "naechsterSchritt": "mindestens ein Lauf in Echtzeit (z. B. 45 Min.) in der Generalprobe",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-09",
+    "bereich": "Software",
+    "text": "Welche optionalen Karten das Zeitbudget je Dauer auswählt, ist nur regelgeprüft (schwache Prüfung): kein unabhängiger Sollwert für die genaue Auswahl.",
+    "nachweis": "01 Abschnitt 5, 04",
+    "schwere": "niedrig",
+    "gate": "B",
+    "naechsterSchritt": "Auswahl im fachlichen Review je Format sichten (Variantenbericht)",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-10",
+    "bereich": "Betrieb",
+    "text": "SMTP-Passwort steht lokal im Klartext in `data/settings.json`; nach einem Serverneustart zählt die Ausfallzeit als Übungszeit; Stummschaltung und Ton-Eigentümer gehen bei Neustart verloren (Funktionskatalog B-04).",
+    "nachweis": "Funktionskatalog, N-05",
+    "schwere": "mittel",
+    "gate": "C",
+    "naechsterSchritt": "Betriebs-Checkliste: eigenes Testkonto, Daten nach der Übung löschen, Neustart nur in Pausen",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-11",
+    "bereich": "Szenario",
+    "text": "W2-R11: SK31 kommt bei 180 Min. erst nach LK27; SK28/SK36 erreichen den Tisch selten (aus der zweiten unabhängigen Prüfrunde).",
+    "nachweis": "Dokument 11 des Review-Pakets, Variantenbericht",
+    "schwere": "mittel",
+    "gate": "B",
+    "naechsterSchritt": "vor dem Pilot entscheiden",
+    "szenario": "waterkant",
+    "status": "offen"
+  },
+  {
+    "id": "O-12",
+    "bereich": "Medien",
+    "text": "`telefon-klingeln.mp3` mit −12,4 LUFS über der festgelegten Grenze (wirksam mit Abspiellautstärke −16,8 LUFS); NordTech `lk01-stille-gemurmel.mp3` True Peak +0,2 dBTP. NordTech eingefroren, keine Änderung.",
+    "nachweis": "06",
+    "schwere": "niedrig",
+    "gate": "C",
+    "naechsterSchritt": "im Hörtest bewerten",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-13",
+    "bereich": "Medien",
+    "text": "NordTech B6 („zwei Durchsagen“) ist eine Durchsage ohne gesprochene Übungskennzeichnung. Außerhalb des Waterkant-Prüfumfangs, fachlich zu bewerten.",
+    "nachweis": "06 (Hinweis)",
+    "schwere": "niedrig",
+    "gate": "C/D",
+    "naechsterSchritt": "im Hörtest und mit der Spielleitung bewerten",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-14",
+    "bereich": "Medien/Recht",
+    "text": "Herkunft und Nutzungsrechte der Bilder und Töne sowie Ähnlichkeit abgebildeter Personen mit realen Menschen sind nicht schriftlich geklärt (F14).",
+    "nachweis": "Medienmatrix NordTech, 06",
+    "schwere": "mittel",
+    "gate": "C",
+    "naechsterSchritt": "Rechteklärung vor Nutzung außerhalb interner Übungen",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-15",
+    "bereich": "Szenario",
+    "text": "Waterkant 45 und 60 Minuten sind sehr dicht (5 Entscheidungen in 9 Lagen); Pilotfestlegung im Handbuch: 90 Minuten in einem Zeitfenster ab 120 Minuten.",
+    "nachweis": "Handbuch, 04",
+    "schwere": "mittel",
+    "gate": "D",
+    "naechsterSchritt": "im Probelauf bestätigen",
+    "szenario": "waterkant",
+    "status": "offen"
+  },
+  {
+    "id": "O-16",
+    "bereich": "Werkzeug",
+    "text": "Replay bildet Wartezeiten nicht nach (Zeitsprung löst fällige Ereignisse gesammelt aus) und reproduziert Mailfehler nur bei gleichartig gestörtem Testempfänger.",
+    "nachweis": "08",
+    "schwere": "niedrig",
+    "gate": "–",
+    "naechsterSchritt": "Grenze dokumentiert",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-17",
+    "bereich": "Werkzeug",
+    "text": "Der Logo-Upload-Test legt kurzzeitig eine Datei im per `.gitignore` ausgeschlossenen Ordner `media/branding/` an und entfernt sie wieder (einzige Berührung des Projektordners durch Tests).",
+    "nachweis": "01 Abschnitt 2",
+    "schwere": "niedrig",
+    "gate": "–",
+    "naechsterSchritt": "Upload-Ordner konfigurierbar machen",
+    "szenario": "beide",
+    "status": "offen"
+  },
+  {
+    "id": "O-18",
+    "bereich": "Werkzeug",
+    "text": "Negativtest beendet sich nach Abschluss nicht von selbst (Befund Z2-01); Ergebnisse vollständig",
+    "nachweis": "10",
+    "schwere": "niedrig",
+    "gate": "–",
+    "naechsterSchritt": "Browserverbindung in N-16 sauber schließen",
+    "szenario": "beide",
+    "status": "offen"
+  }
+]

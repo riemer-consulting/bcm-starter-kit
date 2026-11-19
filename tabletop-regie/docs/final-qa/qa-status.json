@@ -1,0 +1,226 @@
+{
+  "commit": "33154fdfaa660fb48cedf3d5823a795ce3200d56",
+  "zeitpunkt": "2026-11-19T13:02:40.338Z",
+  "sauber": true,
+  "version": {
+    "node": "v22.22.0",
+    "chromium": "153.0.8010.12",
+    "playwright": "1.56.1",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5"
+  },
+  "schritte": [
+    {
+      "name": "drehbuchpruefung",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 3
+    },
+    {
+      "name": "varianten-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 0
+    },
+    {
+      "name": "varianten-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 0
+    },
+    {
+      "name": "integration-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 21
+    },
+    {
+      "name": "integration-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 30
+    },
+    {
+      "name": "delta-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 0
+    },
+    {
+      "name": "lauf-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 91
+    },
+    {
+      "name": "lauf-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 92
+    },
+    {
+      "name": "buehne-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 191
+    },
+    {
+      "name": "buehne-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 191
+    },
+    {
+      "name": "protokoll-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 2
+    },
+    {
+      "name": "protokoll-waterkant",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 2
+    },
+    {
+      "name": "sicherheit",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 1
+    },
+    {
+      "name": "negativ",
+      "ergebnis": "mit Fehlern",
+      "sekunden": 900
+    },
+    {
+      "name": "referenz",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 27
+    },
+    {
+      "name": "medien",
+      "ergebnis": "mit Fehlern",
+      "sekunden": 19
+    },
+    {
+      "name": "regression-nordtech",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 469
+    },
+    {
+      "name": "e2e-NT-45-unguenstig",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 116
+    },
+    {
+      "name": "e2e-NT-60-gemischt",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 132
+    },
+    {
+      "name": "e2e-NT-90-krisenfuehrung",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 117
+    },
+    {
+      "name": "e2e-NT-90-ausgewogen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 164
+    },
+    {
+      "name": "e2e-NT-120-it",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 152
+    },
+    {
+      "name": "e2e-NT-180-alle-rollen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 210
+    },
+    {
+      "name": "e2e-WK-45-unguenstig",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 153
+    },
+    {
+      "name": "e2e-WK-60-gemischt",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 136
+    },
+    {
+      "name": "e2e-WK-90-krisenfuehrung",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 144
+    },
+    {
+      "name": "e2e-WK-90-ausgewogen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 199
+    },
+    {
+      "name": "e2e-WK-120-it",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 157
+    },
+    {
+      "name": "e2e-WK-180-alle-rollen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 209
+    },
+    {
+      "name": "e2e-WK-120-kunden-zusatz",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 152
+    },
+    {
+      "name": "e2e-WK-180-betrieb-zusatz",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 200
+    },
+    {
+      "name": "replay-NT-90-ausgewogen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 59
+    },
+    {
+      "name": "replay-WK-90-ausgewogen",
+      "ergebnis": "ohne Fehler",
+      "sekunden": 64
+    }
+  ],
+  "szenarien": [
+    {
+      "name": "NordTech – Ransomware",
+      "sha256": "7b5c26437379aab9132d930ec9ab982f4b5508a3c6ed003c25cd52ca9eff9d72",
+      "bestanden": 361,
+      "fehlgeschlagen": 4,
+      "nichtAusgefuehrt": 0,
+      "offeneBefunde": 14
+    },
+    {
+      "name": "Waterkant – Brand im Rechenzentrum",
+      "sha256": "d09cb9edd7e445cdf31960500e51157bd1def148b84b804358e95d002192a72b",
+      "bestanden": 424,
+      "fehlgeschlagen": 3,
+      "nichtAusgefuehrt": 0,
+      "offeneBefunde": 17
+    },
+    {
+      "name": "Plattform (Negativ-, Sicherheits-, Referenztests)",
+      "sha256": "",
+      "bestanden": 43,
+      "fehlgeschlagen": 0,
+      "nichtAusgefuehrt": 0,
+      "offeneBefunde": 14
+    }
+  ],
+  "gates": [
+    {
+      "name": "A – Softwarefunktion",
+      "status": "technisch bestanden, mit Auflagen",
+      "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft, keine offenen technischen Blocker. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08), Werkzeugbefund Z2-01."
+    },
+    {
+      "name": "B – Szenariokonsistenz",
+      "status": "regelbasiert bestanden; fachliche Bestätigung offen",
+      "begruendung": "Alle Varianten und Entscheidungskombinationen beider Szenarien ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert; Waterkant-Delta F01–F15 regelgeprüft. Offen: fachliche Bestätigung (Gate D) und W2-R11/SK28/SK36 (O-11)."
+    },
+    {
+      "name": "C – Medien und Betrieb",
+      "status": "offen",
+      "begruendung": "Kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
+    },
+    {
+      "name": "D – Fachlich-didaktische Abnahme",
+      "status": "offen",
+      "begruendung": "Kein Fachreview (Brandschutz, IT-Architektur, Recht/Datenschutz, Controlling, Arbeitsschutz) und kein moderierter Probelauf mit Menschen (O-01, O-02)."
+    }
+  ]
+}

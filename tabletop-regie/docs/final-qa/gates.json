@@ -1,0 +1,22 @@
+[
+  {
+    "name": "A – Softwarefunktion",
+    "status": "technisch bestanden, mit Auflagen",
+    "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft, keine offenen technischen Blocker. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08), Werkzeugbefund Z2-01."
+  },
+  {
+    "name": "B – Szenariokonsistenz",
+    "status": "regelbasiert bestanden; fachliche Bestätigung offen",
+    "begruendung": "Alle Varianten und Entscheidungskombinationen beider Szenarien ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert; Waterkant-Delta F01–F15 regelgeprüft. Offen: fachliche Bestätigung (Gate D) und W2-R11/SK28/SK36 (O-11)."
+  },
+  {
+    "name": "C – Medien und Betrieb",
+    "status": "offen",
+    "begruendung": "Kein Ton akustisch abgenommen, kein Raum-/Beamertest, kein echter Mailserver, Rechte nicht geklärt (O-03, O-04, O-05, O-10, O-14)."
+  },
+  {
+    "name": "D – Fachlich-didaktische Abnahme",
+    "status": "offen",
+    "begruendung": "Kein Fachreview (Brandschutz, IT-Architektur, Recht/Datenschutz, Controlling, Arbeitsschutz) und kein moderierter Probelauf mit Menschen (O-01, O-02)."
+  }
+]
