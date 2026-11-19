@@ -230,6 +230,15 @@ async function sendTestModeCard(card, role, recipients, recipientRoleId, art) {
 // Karten, deren Versand gerade laeuft: verhindert Doppelversand, wenn der
 // Mailserver langsam ist und dieselbe Karte erneut faellig gemeldet wird.
 const skImVersand = new Set();
+// Automatische Zustellungen laufen nacheinander in Planreihenfolge: Gleichzeitig fällige Karten
+// (z. B. nach einem Zeitsprung) erscheinen so im Journal immer in derselben Reihenfolge, statt
+// in der Reihenfolge, in der die SMTP-Antworten eintreffen (Voraussetzung für das Replay).
+let versandKette = Promise.resolve();
+const skEingereiht = new Set();
+function einreihen(aufgabe) {
+  versandKette = versandKette.then(aufgabe).catch(e => log('error', 'Versand: ' + e.message));
+  return versandKette;
+}
 async function fireSonderlagekarte(skOriginal, { manual } = {}) {
   if (state.firedSonderlagekarten.find(f => f.id === skOriginal.id) || skImVersand.has(skOriginal.id)) return;
   skImVersand.add(skOriginal.id);
@@ -463,8 +472,12 @@ function tick() {
   const lk = due.filter(e => e.type === 'lagekarte');
   lk.forEach(ev => { if (!state.firedLagekarten.includes(ev.id)) { state.firedLagekarten.push(ev.id); log('lagekarte', `Lagekarte ${ev.id} (${ev.ref.titel}) ist jetzt aktiv.`); journal('lage gezeigt', ev.id, 'ok', { titel: ev.ref.titel, simZeit: ev.ref.simZeit, ton: ev.ref.sound ? ev.ref.sound.src.split('/').pop() : null }); } });
   const dueSk = due.filter(e => e.type === 'sonderlagekarte');
-  dueSk.forEach(ev => { fireSonderlagekarte(ev.ref, { manual: false }); });
-  fireWeichenKarten();
+  dueSk.forEach(ev => {
+    if (state.firedSonderlagekarten.find(f => f.id === ev.id) || skEingereiht.has(ev.id)) return;
+    skEingereiht.add(ev.id);
+    einreihen(() => fireSonderlagekarte(ev.ref, { manual: false })).finally(() => skEingereiht.delete(ev.id));
+  });
+  einreihen(() => fireWeichenKarten());
   const total = engine.totalPlannedMinutes(scenario, state);
   if (state.status === 'running' && engine.elapsedMinutes(state) >= total && state.status !== 'ended') {
     state.status = 'ended';
@@ -1282,7 +1295,7 @@ app.post('/api/run/weiche', async (req, res) => {
   gesteuert.forEach(pid => { f.optionen[pid] = !!(o && (o.posten || []).includes(pid)); });
   if (f.step) f.step = Math.min(f.step, finaleStepCount());
   log('info', o ? `Entscheidung festgehalten: ${w.frage} → ${o.label}` : `Entscheidung zurückgenommen: ${w.frage}`);
-  await fireWeichenKarten();
+  await einreihen(() => fireWeichenKarten());
   persist();
   res.json({ ok: true });
 });

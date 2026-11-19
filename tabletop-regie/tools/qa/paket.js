@@ -6,7 +6,7 @@
 //   Nachweis, dass sich der Ergebnis-Commit nur unter docs/final-qa/ vom geprüften unterscheidet)
 // Vor dem Packen: Suche nach Passwörtern, Schlüsseln, Tokens und Mailadressen außerhalb von
 // @example.com in allen Textdateien und in den Trace-Archiven; ein Treffer bricht ab.
-// Aufruf: node tools/qa/paket.js <nachweisordner> <ziel.zip> <geprüfter-commit>
+// Aufruf: node tools/qa/paket.js <nachweisordner> <ziel.zip> <geprüfter-commit> [nachweisordner-früherer-zyklus] [commit-früherer-zyklus]
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -14,7 +14,8 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..', '..');
 const REPO = path.join(ROOT, '..');
-const [NW, ZIP, GEPRUEFT] = process.argv.slice(2).map((a, i) => i < 2 ? path.resolve(a) : a);
+// optional: Nachweisordner eines früheren Zyklus (wird unverändert als nachweis-zyklus1/ mitgeliefert)
+const [NW, ZIP, GEPRUEFT, FRUEHER, FRUEHER_COMMIT] = process.argv.slice(2).map((a, i) => a && (i < 2 || i === 3) ? path.resolve(a) : a);
 const git = (...a) => execFileSync('git', a, { cwd: REPO, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }).trim();
 const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const B = fs.mkdtempSync(path.join(os.tmpdir(), 'qa-paket-')); const P = path.join(B, 'BCM-FINAL-QA-EVIDENCE');
@@ -34,10 +35,13 @@ kopiere(NW, path.join(P, 'nachweis'), q => !/\.png$/i.test(q) || !/[\\/]buehne[\
 // Bühnenfotos als JPEG (verlustbehaftet, nur Dokumentation; Originale bleiben im Nachweisordner)
 for (const k of ['nordtech', 'waterkant']) { const d = path.join(NW, 'buehne', k); if (!fs.existsSync(d)) continue;
   fs.readdirSync(d).filter(f => /\.png$/i.test(f)).forEach(f => execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', path.join(d, f), '-q:v', '4', path.join(P, 'nachweis', 'buehne', k, f.replace(/\.png$/i, '.jpg'))])); }
+// Früherer Zyklus: alle Ergebnisdateien, Konsolen, Protokolle, Journale und Serverprotokolle;
+// ohne Traces und Bildschirmfotos (Größe) – die vollständigen Medien liegen im aktuellen Zyklus vor.
+if (FRUEHER) kopiere(FRUEHER, path.join(P, 'nachweis-zyklus1'), q => fs.statSync(q).isDirectory() || !/\.(png|jpe?g|zip)$/i.test(q));
 // Serverprotokolle bereinigen: Mailadressen und Personennamen der Testdaten pseudonymisieren
 const bereinigt = [];
 const geh = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? geh(path.join(d, e.name)) : [path.join(d, e.name)]);
-geh(path.join(P, 'nachweis')).filter(f => /\.log$/.test(f)).forEach(f => { const t = fs.readFileSync(f, 'utf8'); const n = t.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}/g, '<adresse>').replace(/\b(Test )?Person ?\d+(-\d+)?\b/g, '<person>').replace(/\b(Regression|Referenz|Replay) \d+(-\d+)?\b/g, '<person>'); if (n !== t) { fs.writeFileSync(f, n); bereinigt.push(path.relative(P, f)); } });
+fs.readdirSync(P).filter(d => d.startsWith('nachweis')).flatMap(d => geh(path.join(P, d))).filter(f => /\.log$/.test(f)).forEach(f => { const t = fs.readFileSync(f, 'utf8'); const n = t.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}/g, '<adresse>').replace(/\b(Test )?Person ?\d+(-\d+)?\b/g, '<person>').replace(/\b(Regression|Referenz|Replay) \d+(-\d+)?\b/g, '<person>'); if (n !== t) { fs.writeFileSync(f, n); bereinigt.push(path.relative(P, f)); } });
 // Quellen des geprüften Stands
 const q = path.join(P, 'quellen'); fs.mkdirSync(q);
 execFileSync('sh', ['-c', `git archive ${geprueft} tabletop-regie/server tabletop-regie/public tabletop-regie/tools tabletop-regie/data/scenario.nordtech.json tabletop-regie/data/scenario.waterkant.json tabletop-regie/package.json tabletop-regie/package-lock.json tabletop-regie/README.md tabletop-regie/docs/waterkant-moderationshandbuch.md tabletop-regie/docs/review/teile/funktionskatalog.md tabletop-regie/docs/review/teile/kostenklassen.json | tar -x -C "${q}"`], { cwd: REPO });
@@ -64,7 +68,7 @@ if (treffer.length) { console.error('Abbruch: mögliche Geheimnisse oder persone
 
 // 4 Manifest
 const dateien = geh(P).sort().map(f => ({ datei: path.relative(P, f), bytes: fs.statSync(f).size, sha256: sha(f) }));
-const manifest = { paket: 'BCM-FINAL-QA-EVIDENCE', erstellt: new Date().toISOString(), gepruefterCommit: geprueft, ergebnisCommit: ergebnis,
+const manifest = { paket: 'BCM-FINAL-QA-EVIDENCE', erstellt: new Date().toISOString(), gepruefterCommit: geprueft, ergebnisCommit: ergebnis, fruehererZyklus: FRUEHER ? { commit: FRUEHER_COMMIT || null, ordner: 'nachweis-zyklus1/', inhalt: 'Ergebnisse, Konsolen, Protokolle, Journale, Serverprotokolle; ohne Traces und Bildschirmfotos' } : null,
   regel: 'Geprüft wurde der Stand des geprüften Commits (Quellen unter quellen/ sind daraus mit git archive entnommen). Der Ergebnis-Commit unterscheidet sich davon ausschließlich unter tabletop-regie/docs/final-qa/ (Ergebnisdokumente).',
   diffZwischenCommits: diff, bereinigteProtokolle: bereinigt, geheimnisSuche: { muster: muster.map(m => m[1]), treffer: 0, zulaessigerPlatzhalter: { wert: 'GEHEIM-TEST-123 (Platzhalter des Sicherheitstests, kein echtes Passwort)', dateien: platzhalter } },
   anzahlDateien: dateien.length, dateien };

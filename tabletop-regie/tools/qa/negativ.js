@@ -235,6 +235,42 @@ const ROLLEN = ['geschaeftsfuehrer-ceo', 'leiter-it', 'rz-betrieb', 'facility-ma
       bed(f, 'Logo-Pfad mit „../“ wird nicht in den Export eingebettet', !ex.brandingLogoFile, `HTTP ${r.status}; eingebettet: ${ex.brandingLogoFile ? ex.brandingLogoFile.name : 'nichts'}`);
       await u.post('/api/settings', { branding: { logo: '/media/branding/excon-logo.png' } });
     }
+    // ---------- N-16 Browserabbruch ----------
+    { const f = fall('N-16', 'Browser der Moderation stürzt während der Übung ab (Prozess beendet)', 'Die Übung läuft serverseitig weiter (Zeit, Lagen, Zustellungen); ein neu gestarteter Browser zeigt in der Moderation den aktuellen Stand einschließlich festgehaltener Entscheidung; keine Doppelzustellung durch den Abbruch.');
+      await neueUebung(); await u.post('/api/run/jump-to-event/lagekarte/LK04');
+      const b1 = await chromium.launch(Object.assign({}, process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}));
+      const p1 = await b1.newPage(); await p1.goto(u.B + '/moderator.html'); await sleep(2500);
+      await p1.locator('.weiche-opt').first().click({ timeout: 5000 }).catch(() => {}); await sleep(1500);
+      const vorW = gewaehlt(await ms(), 'W1'); const mailsVor = u.mails().length;
+      try { process.kill(b1.process().pid, 'SIGKILL'); } catch (e) { /* bereits beendet */ }
+      await sleep(1500);
+      await u.post('/api/run/jump-to-event/lagekarte/LK06'); await sleep(2500);
+      const m = await ms(); bed(f, 'Übung läuft serverseitig weiter', m.status === 'running', m.status);
+      bed(f, 'Entscheidung aus dem abgestürzten Fenster erhalten', !!vorW && gewaehlt(m, 'W1') === vorW, `W1 = ${gewaehlt(m, 'W1')}`);
+      const b2 = await chromium.launch(Object.assign({}, process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}));
+      const p2 = await b2.newPage(); await p2.goto(u.B + '/moderator.html'); await sleep(2500);
+      const lkTitel = s.lagekarten.find(l => l.id === 'LK06').titel; const t = await p2.evaluate(() => document.body.innerText);
+      bed(f, 'neuer Browser zeigt die aktuelle Lage', t.includes(lkTitel), lkTitel);
+      const zust = (await journal()).filter(x => x.typ === 'vertrauliche karte'); const ids = zust.map(x => x.karte);
+      bed(f, 'keine Doppelzustellung', ids.length === new Set(ids).size && u.mails().length >= mailsVor, `${ids.length} Zustellungen, ${new Set(ids).size} verschiedene Karten`);
+      await p2.screenshot({ path: path.join(OUTDIR, 'bilder', 'N-16-moderation-nach-abbruch.jpg'), type: 'jpeg', quality: 70 }); await b2.close();
+    }
+    // ---------- N-17 Rücksprung in der Zeit ----------
+    { const f = fall('N-17', 'Zeitsprung zurück auf eine frühere Übungsminute', 'Die Bühne zeigt die zur neuen Minute gehörende frühere Lage; bereits gezeigte Lagen und verschickte Karten werden weder erneut ausgelöst noch erneut verschickt – auch nicht, wenn die Zeit danach wieder über ihre Minuten läuft; festgehaltene Entscheidungen bleiben.');
+      await neueUebung(); await u.post('/api/run/jump-to-event/lagekarte/LK09'); await u.post('/api/run/weiche', { id: 'W1', option: 'herunterfahren' }); await sleep(1500);
+      const mailsVor = u.mails().length; const lVor = await gezeigt(); const zVor = (await journal()).filter(x => x.typ === 'vertrauliche karte').length;
+      const lk04 = s.lagekarten.find(l => l.id === 'LK04');
+      const ziel = (await ms()).fullTimeline.find(e => e.type === 'lagekarte' && e.id === 'LK04');
+      await u.post('/api/run/jump-to-minute', { minute: ziel.minute + 0.1 }); await sleep(2000);
+      const buehne = (await st()).currentLagekarte || {};
+      bed(f, 'Bühne zeigt die frühere Lage', buehne.id === 'LK04', `${buehne.id || '–'} (erwartet LK04 ${lk04.titel})`);
+      bed(f, 'kein erneuter Versand beim Rücksprung', u.mails().length === mailsVor, `${u.mails().length - mailsVor} neue Mails`);
+      await u.post('/api/run/jump-to-event/lagekarte/LK09'); await sleep(2500);
+      const lNach = await gezeigt(); const zNach = (await journal()).filter(x => x.typ === 'vertrauliche karte');
+      bed(f, 'beim erneuten Vorlauf keine Lage doppelt gezeigt', lNach.length === new Set(lNach).size && lNach.length === lVor.length, `${lVor.length} → ${lNach.length} Einträge „lage gezeigt“`);
+      bed(f, 'beim erneuten Vorlauf keine Karte doppelt zugestellt', zNach.length === new Set(zNach.map(x => x.karte)).size && zNach.length === zVor, `${zVor} → ${zNach.length} Zustellungen`);
+      bed(f, 'Entscheidung bleibt festgehalten', gewaehlt(await ms(), 'W1') === 'herunterfahren', gewaehlt(await ms(), 'W1'));
+    }
   } catch (e) { const z = { name: 'Testlauf an dieser Stelle abgebrochen: ' + e.message, ok: false, beobachtet: (e.stack || '').split('\n').slice(0, 3).join(' ') }; if (aktuell) aktuell.bedingungen.push(z); else faelle.push({ id: 'ABBRUCH', zweck: 'Testlauf abgebrochen', erwartet: '–', bedingungen: [z], befunde: [] }); }
   finally {
     await browser.close().catch(() => {}); await u.ende();

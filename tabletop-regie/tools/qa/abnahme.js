@@ -36,7 +36,7 @@ function dateienUnter(dir, filter) {
     chromium: process.env.CHROMIUM_PATH ? version(process.env.CHROMIUM_PATH, ['--version'], /[\d.]+/) : 'Playwright-Standard',
     playwright: (() => { try { return require('playwright/package.json').version; } catch (e) { return 'nicht verfügbar'; } })(),
     ffmpeg: version('ffmpeg', ['-version'], /ffmpeg version \S+/),
-    zufall: 'Keine Zufallswerte in den Tests: feste Ports, feste Testadressen (@example.com), feste Entscheidungsfolgen. Die Drehbuchprüfung (server/validate.js) verwendet für ihre Stichprobensimulation Math.random – sie ist kein Bestandteil der Sollwerte.',
+    zufall: 'Keine Zufallswerte in den Tests: feste Ports, feste Testadressen (@example.com), feste Entscheidungsfolgen. Die Stichprobensimulation der Drehbuchprüfung (server/validate.js) verwendet einen linearen Kongruenzgenerator mit festem Startwert 42 und ist damit reproduzierbar; sie liefert keine Sollwerte.',
     konfiguration: 'Jede Prüfung startet einen eigenen Server mit TABLETOP_DATA_DIR (Kopie der Drehbücher in einem temporären Ordner) und einem lokalen SMTP-Testempfänger auf 127.0.0.1. Countdown vor Krisenbeginn: 30 s in den Browser-Durchläufen (echter Ablauf), 0 s in Integrations-, Negativ- und Referenztests (TABLETOP_COUNTDOWN_SEKUNDEN=0).',
     drehbuecher: fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^scenario\..*\.json$/.test(f)).map(f => ({ datei: f, sha256: sha(path.join(ROOT, 'data', f)) })),
     quellen: ['server', 'public', 'tools'].flatMap(d => dateienUnter(path.join(ROOT, d))).concat(['package.json', 'package-lock.json'].map(f => path.join(ROOT, f))).map(f => ({ datei: path.relative(ROOT, f), sha256: sha(f) }))
