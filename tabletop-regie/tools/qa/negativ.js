@@ -238,11 +238,23 @@ const ROLLEN = ['geschaeftsfuehrer-ceo', 'leiter-it', 'rz-betrieb', 'facility-ma
     // ---------- N-16 Browserabbruch ----------
     { const f = fall('N-16', 'Browser der Moderation stürzt während der Übung ab (Prozess beendet)', 'Die Übung läuft serverseitig weiter (Zeit, Lagen, Zustellungen); ein neu gestarteter Browser zeigt in der Moderation den aktuellen Stand einschließlich festgehaltener Entscheidung; keine Doppelzustellung durch den Abbruch.');
       await neueUebung(); await u.post('/api/run/jump-to-event/lagekarte/LK04');
-      const b1 = await chromium.launch(Object.assign({}, process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}));
+      // Eigener Browserprozess (launchServer), damit er sich hart beenden lässt. Zyklus 2 nutzte
+      // b1.process() – das gibt es an einem Browser-Objekt nicht; der Fehler wurde verschluckt,
+      // der Absturz fand nie statt (Befund Z2-01). Deshalb ist der Absturz jetzt selbst eine Bedingung.
+      const srv1 = await chromium.launchServer(Object.assign({}, process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}));
+      const b1 = await chromium.connect(srv1.wsEndpoint());
       const p1 = await b1.newPage(); await p1.goto(u.B + '/moderator.html'); await sleep(2500);
-      await p1.locator('.weiche-opt').first().click({ timeout: 5000 }).catch(() => {}); await sleep(1500);
+      let geklickt = true; await p1.locator('.weiche-opt').first().click({ timeout: 5000 }).catch(() => { geklickt = false; }); await sleep(1500);
+      bed(f, 'Entscheidung vor dem Absturz über die Oberfläche festgehalten', geklickt && !!gewaehlt(await ms(), 'W1'), geklickt ? `W1 = ${gewaehlt(await ms(), 'W1')}` : 'Klick auf die Entscheidung gescheitert');
       const vorW = gewaehlt(await ms(), 'W1'); const mailsVor = u.mails().length;
-      try { process.kill(b1.process().pid, 'SIGKILL'); } catch (e) { /* bereits beendet */ }
+      const proz = srv1.process(); const pid = proz.pid;
+      const getrennt = new Promise(r => b1.once('disconnected', () => r(true)));
+      // Prozessende über das exit-Ereignis feststellen: eine Signal-0-Probe meldet einen noch nicht
+      // abgeholten (Zombie-)Kindprozess fälschlich als lebend (beim Retest von Zyklus 3 beobachtet).
+      const beendet = new Promise(r => proz.once('exit', (code, sig) => r(sig || String(code))));
+      process.kill(-pid, 'SIGKILL'); // ganze Prozessgruppe des Browsers, wie bei einem Absturz
+      const [trennung, ende] = await Promise.all([Promise.race([getrennt, sleep(5000).then(() => false)]), Promise.race([beendet, sleep(5000).then(() => null)])]);
+      bed(f, 'Browser tatsächlich abgestürzt (Verbindung getrennt, Prozess beendet)', trennung && !!ende && !b1.isConnected(), `getrennt: ${trennung}, Hauptprozess beendet: ${ende ? 'ja (' + ende + ')' : 'nein'}`);
       await sleep(1500);
       await u.post('/api/run/jump-to-event/lagekarte/LK06'); await sleep(2500);
       const m = await ms(); bed(f, 'Übung läuft serverseitig weiter', m.status === 'running', m.status);
