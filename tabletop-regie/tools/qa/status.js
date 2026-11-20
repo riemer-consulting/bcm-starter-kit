@@ -28,6 +28,7 @@ if (fs.existsSync(e2eDir)) fs.readdirSync(e2eDir).forEach(id => { const r = lies
 const dl = lies('delta/waterkant.json'); if (dl) add('delta', 'waterkant', dl.befunde, x => x.ergebnis === 'Regeln erfüllt');
 const reg = lies('regression/nordtech.json'); if (reg) add('regression', 'nordtech', reg.vergleiche, x => x.identisch);
 fs.readdirSync(N).length && ['NT-90-ausgewogen', 'WK-90-ausgewogen'].forEach(id => { const r = lies(`replay/${id}.json`); if (r) pruef.push({ quelle: 'replay', szenario: id.startsWith('NT') ? 'nordtech' : 'waterkant', id: 'Replay ' + id, ok: !!r.identisch }); });
+const sk36 = lies('sk36/sk36.json'); if (sk36) add('sk36-manuell', 'waterkant', sk36.pruefungen, x => x.ok);
 const neg = lies('negativ/negativ.json'); if (neg) add('negativ', 'plattform', neg.faelle, x => x.ergebnis === 'bestanden');
 const ref = lies('referenz/referenz.json'); if (ref) add('referenz', 'plattform', ref.faelle, x => x.ok);
 const sich = lies('sicherheit/sicherheit.json'); if (sich) add('sicherheit', 'plattform', sich, x => x.ok, (x, i) => `S${i + 1}`);

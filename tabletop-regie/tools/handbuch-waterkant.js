@@ -64,6 +64,18 @@ if (b7) w('### B7 – Stellvertretung (Ablauf)', '', '1. Im Briefing allgemein a
   '3. Vertrauliche Karten an die abwesende Rolle in dieser Zeit mündlich an die Vertretung geben oder bis zur Rückkehr zurückhalten – vorher festlegen.',
   `4. Rückkehr: ${b7.unterbrechung.rueckkehr}`, '', '**Beobachtungsbogen:**', '', ...(b7.beobachtung || []).map(x => '- [ ] ' + x), '- [ ] Welche Informationen hatte nur die IT-Leitung – und haben sie gefehlt?', '');
 
+// SK36: nicht im automatischen Plan (Entscheidung der Spielleitung zu O-11), von Hand in langen Formaten
+const sk36 = s.sonderlagekarten.find(k => k.id === 'SK36');
+if (sk36) {
+  const lk26 = lk(sk36.zuBeginnVon);
+  w('### SK36 – von Hand in langen Formaten', '',
+    `SK36 wird nicht automatisch eingeplant. In langen Formaten kann die Moderation sie von Hand einsetzen, um das Lernziel „Ursache und Zuständigkeit“ zu vertiefen.`, '',
+    `- **Wann:** nur wenn ${lk26.id} „${lk26.titel}“ (${lk26.simZeit}) gespielt wird – direkt zu Beginn dieser Lage. Bei empfohlener Besetzung ist das bei 120 und 180 Minuten mit Schwerpunkt „Krisenführung und Personenschutz“ und bei 180 Minuten „IT-Wiederanlauf und Infrastruktur“ der Fall; die Moderation zeigt im Ablaufplan, ob LK26 enthalten ist. Ohne ${lk26.id} nicht einsetzen: Die Frage des Sachverständigen setzt das Ergebnis zur Brandursache voraus.`,
+    `- **Wie:** In der Moderation unter „Nicht eingeplante Karten“ steht SK36 mit dem Hinweis „passt jetzt“, sobald ${lk26.id} läuft. „Jetzt einsetzen“ verschickt die Karte sofort per Mail.`,
+    `- **An:** ${role(sk36.empfaenger)}; ist die Rolle nicht besetzt, geht sie an ${(sk36.fallbackEmpfaenger || []).map(role).join(', dann an ')}.`,
+    `- **Text:** „${sk36.text}“`,
+    `- **Gut:** ${sk36.moderatorGut} **Schlecht:** ${sk36.moderatorSchlecht}`, '');
+}
 w('## 7. Live-Gespräche (Telefon, Funk)', '', 'Bei diesen Lagen spielt die Bühne nur ein Signal; die Moderation spricht die Rolle des Anrufers live. In der Rolle bleiben, nachfragen, nicht helfen.', '');
 s.lagekarten.filter(l => l.gespraech).forEach(l => {
   w(`### ${l.id} ${l.titel}`, '', `**Einstieg (vorlesen):** ${l.sprechertext || ''}`, '', '**Nachfragen:**', '', ...l.gespraech.nachfragen.map(x => '- ' + x), '', `**Gesprächsende:** ${l.gespraech.abschluss}`, '');

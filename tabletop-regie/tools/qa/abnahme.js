@@ -68,6 +68,7 @@ function dateienUnter(dir, filter) {
   await lauf('sicherheit', [N, 'tools/qa/mit-server.js', '4270', '2670', 'sicherheit', E('sicherheit'), '--', N, 'tools/tests/sicherheit.js', '{BASE}']);
   delete process.env.ERGEBNIS;
   await lauf('negativ', [N, 'tools/qa/negativ.js', E('negativ')], { ordner: E('negativ') });
+  await lauf('sk36-manuell', [N, 'tools/qa/sk36-manuell.js', E('sk36')], { ordner: E('sk36') });
   await lauf('referenz', [N, 'tools/qa/referenz.js', E('referenz/referenz.json')], { ordner: E('referenz') });
   await lauf('medien', [N, 'tools/qa/medien.js', E('medien/medien.json')], { ordner: E('medien') });
   // NordTech-Ausgangsstand aus dem Repository (git archive, keine Änderung am Arbeitsstand)
