@@ -1,6 +1,6 @@
 # Anhang zu 09 – Delta-Regeln Waterkant
 
-**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `52f7c8fbe8465eb928d28b17873374bd051d41f5` · **Lauf:** 2026-11-20T08:27:50.312Z bis 2026-11-20T09:10:16.032Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Je Befund der Fremdprüfung die Text- und Strukturregeln, die die beschlossene Korrektur im Drehbuch bzw. in den Begleitdateien belegen (`tools/qa/delta-waterkant.js`). Stufe: Regelprüfung am Drehbuch; F07 zusätzlich über die Integrationsläufe. Fachliche Richtigkeit: Gate D.
 
@@ -103,4 +103,15 @@ Je Befund der Fremdprüfung die Text- und Strukturregeln, die die beschlossene K
 | Abschnitt/Begriff „echter Alarm“ | echter Alarm | ja |
 | Abschnitt/Begriff „Abbruch“ | Abbruch | ja |
 | Abschnitt/Begriff „Debriefing“ | Debriefing | ja |
+
+## O-11 – Zeitliche Plausibilität vertraulicher Karten (SK31, SK28; Entscheidung der Spielleitung): Regeln erfüllt
+
+| Regel | Beleg | erfüllt |
+|---|---|---|
+| SK31 nur zu Beginn von LK23 (Heimatlage Freitag 09:00) | zuBeginnVon: LK23 | ja |
+| SK28 Pflichtkarte im Schwerpunkt „Filialen, Lager und Saisonstart“ | SK08, SK28 | ja |
+| SK36 unverändert (nicht als Pflichtkarte eingeplant; gesonderte Entscheidung) | in keinem Schwerpunkt Pflicht | ja |
+| keine Waterkant-Karte zwei oder mehr Tage nach ihrer Heimatlage (50 Kombinationen) | 0 Fälle | ja |
+| SK31 nur unmittelbar nach LK23 | 180/it/empfohlen@LK23 180/ausgewogen/alle@LK23 180/it/alle@LK23 | ja |
+| SK28 im Schwerpunkt „betrieb“ in jeder Kombination, jeweils mit LK22 | 10 Kombinationen: 10 davon „betrieb“ | ja |
 

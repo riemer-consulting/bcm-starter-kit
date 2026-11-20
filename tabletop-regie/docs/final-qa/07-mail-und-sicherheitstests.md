@@ -1,12 +1,12 @@
 # 07 – Mail- und Sicherheitstests
 
-**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `52f7c8fbe8465eb928d28b17873374bd051d41f5` · **Lauf:** 2026-11-20T08:27:50.312Z bis 2026-11-20T09:10:16.032Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Alle Mails gingen ausschließlich an den lokalen SMTP-Testempfänger der jeweiligen Testumgebung (127.0.0.1); Adressen nur `@example.com`. Mailzählung und Empfängerprüfung in den Browser-Durchläufen: Prüfungen S2, S5, O1, O2 in Dokument 05.
 
 ## Negativ- und Lasttests
 
-17/17 Fälle bestanden (`negativ/negativ.json`, Bilder in `negativ/bilder/`). Prüfschritt `negativ`: Exit-Code 0, 132 s, Konsole `konsole/negativ.txt`
+17/17 Fälle bestanden (`negativ/negativ.json`, Bilder in `negativ/bilder/`). Prüfschritt `negativ`: Exit-Code 0, 131 s, Konsole `konsole/negativ.txt`
 
 ### N-01 – Empfänger nicht erreichbar (SMTP 550 bei RCPT)
 
@@ -14,7 +14,7 @@ Alle Mails gingen ausschließlich an den lokalen SMTP-Testempfänger der jeweili
 
 | Bedingung | beobachtet | erfüllt |
 |---|---|---|
-| Server antwortet | HTTP 200 nach 24 ms | ja |
+| Server antwortet | HTTP 200 nach 25 ms | ja |
 | Ergebnis je Person als fehlgeschlagen vermerkt | [{"ok":false,"fehler":"Can't send mail - all recipients were rejected: 550 Empfänge"}] | ja |
 | Übung läuft weiter | running | ja |
 | Journal vermerkt den Fehlschlag | zustellung fehlgeschlagen | ja |
@@ -30,8 +30,8 @@ Alle Mails gingen ausschließlich an den lokalen SMTP-Testempfänger der jeweili
 
 | Bedingung | beobachtet | erfüllt |
 |---|---|---|
-| Antwort innerhalb 60 s | HTTP 200 nach 14 ms | ja |
-| Fehlschlag vermerkt | write ECONNRESET | ja |
+| Antwort innerhalb 60 s | HTTP 200 nach 11 ms | ja |
+| Fehlschlag vermerkt | read ECONNRESET | ja |
 | nächste Karte nach Wiederherstellung zugestellt | 1 Mail(s) für SK44 | ja |
 | Übung läuft weiter | running | ja |
 
@@ -46,7 +46,7 @@ Alle Mails gingen ausschließlich an den lokalen SMTP-Testempfänger der jeweili
 | vor dem Neuladen lief der Einspieler der Lage | [{"src":"","laeuft":false},{"src":"lk04-loeschanlage-durchsage.mp3","laeuft":true}] | ja |
 | dieselbe Lage nach dem Neuladen | Brandalarm im Rechenzentrum | ja |
 | Tonfreigabe wird erneut verlangt | Freigabe sichtbar | ja |
-| genau ein Ton läuft, der der aktuellen Lage | [{"src":"","laeuft":false,"zeit":0},{"src":"lk04-loeschanlage-durchsage.mp3","laeuft":true,"zeit":2.443615}] | ja |
+| genau ein Ton läuft, der der aktuellen Lage | [{"src":"","laeuft":false,"zeit":0},{"src":"lk04-loeschanlage-durchsage.mp3","laeuft":true,"zeit":2.442858}] | ja |
 | keine vertraulichen Texte auf der Bühne | geprüft gegen alle Kartentexte | ja |
 
 **Ergebnis:** bestanden
@@ -183,7 +183,7 @@ Alle Mails gingen ausschließlich an den lokalen SMTP-Testempfänger der jeweili
 
 | Bedingung | beobachtet | erfüllt |
 |---|---|---|
-| Abruf der Moderationsdaten aus der Bühnenseite gelingt (bekannte Einschränkung) | HTTP 200, 184963 Zeichen | ja |
+| Abruf der Moderationsdaten aus der Bühnenseite gelingt (bekannte Einschränkung) | HTTP 200, 185009 Zeichen | ja |
 | Bühnen-Schnittstelle enthält keine vertraulichen Kartentexte | 0 Treffer | ja |
 
 **Ergebnis:** bestanden
@@ -242,7 +242,7 @@ Prüfschritt `sicherheit`: Exit-Code 0, 1 s, Konsole `konsole/sicherheit.txt`
 | S4 | Logo-Pfad mit "../" liest keine Datei außerhalb media/ | nichts eingebettet | bestanden |
 | S5 | Logo-Upload lehnt SVG ab | HTTP 400 | bestanden |
 | S6 | Logo-Upload lehnt text/html ab | HTTP 400 | bestanden |
-| S7 | Logo-Upload: Dateiendung folgt dem Bildtyp, nicht dem Dateinamen | HTTP 200, gespeichert als /media/branding/custom-logo-1795103024287.png | bestanden |
+| S7 | Logo-Upload: Dateiendung folgt dem Bildtyp, nicht dem Dateinamen | HTTP 200, gespeichert als /media/branding/custom-logo-1795163911882.png | bestanden |
 | S8 | Schreibender Aufruf ohne X-Regie-Header abgelehnt (Schutz vor Fremdauslösung) | POST ohne Header: HTTP 403; als Formular: HTTP 403 | bestanden |
 | S9 | Unzulässige Medienpfade liefern keine Dateien außerhalb von media/ | /media/../server/index.js → HTTP 404; /media/%2e%2e/server/index.js → HTTP 404; /media/..%2fdata%2fsettings.json → HTTP 404; /../data/settings.json → HTTP 404 | bestanden |
 | S10 | Bewertung mit roleId "__proto__" abgelehnt | HTTP 400 | bestanden |

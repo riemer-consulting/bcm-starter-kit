@@ -1,6 +1,6 @@
 # 04 – Varianten und Entscheidungsmatrix
 
-**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `52f7c8fbe8465eb928d28b17873374bd051d41f5` · **Lauf:** 2026-11-20T08:27:50.312Z bis 2026-11-20T09:10:16.032Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Alle Kombinationen aus Dauer (45, 60, 90, 120, 180 Min.) und Schwerpunkt (Ausgewogen und vier fachliche Schwerpunkte = 5; 25 Kombinationen je Szenario) sowie alle Entscheidungskombinationen (NordTech W1–W4: 16; Waterkant W1–W5: 32) – einmal als Regelprüfung des Drehbuchs (`tools/varianten.js`) und einmal über den echten Server gegen das unabhängige Orakel (`tools/qa/integration.js`).
 
@@ -71,11 +71,11 @@ Alle Kombinationen aus Dauer (45, 60, 90, 120, 180 Min.) und Schwerpunkt (Ausgew
 
 | Dauer | ausgewogen | fuehrung | it | kunden | betrieb |
 |---|---|---|---|---|---|
-| 45 | ✓ 9/14 | ✓ 9/15 | ✓ 9/14 | ✓ 9/15 | ✓ 9/13 |
-| 60 | ✓ 9/14 | ✓ 9/13 | ✓ 9/14 | ✓ 9/15 | ✓ 9/16 |
-| 90 | ✓ 13/17 | ✓ 12/21 | ✓ 12/16 | ✓ 12/17 | ✓ 12/17 |
-| 120 | ✓ 15/19 | ✓ 14/21 | ✓ 14/20 | ✓ 14/19 | ✓ 14/21 |
-| 180 | ✓ 18/23 | ✓ 18/25 | ✓ 18/22 | ✓ 18/25 | ✓ 18/24 |
+| 45 | ✓ 9/14 | ✓ 9/15 | ✓ 9/14 | ✓ 9/15 | ✓ 9/14 |
+| 60 | ✓ 9/14 | ✓ 9/13 | ✓ 9/14 | ✓ 9/15 | ✓ 9/17 |
+| 90 | ✓ 13/17 | ✓ 12/21 | ✓ 12/16 | ✓ 12/17 | ✓ 12/18 |
+| 120 | ✓ 15/19 | ✓ 14/21 | ✓ 14/20 | ✓ 14/19 | ✓ 14/22 |
+| 180 | ✓ 18/23 | ✓ 18/25 | ✓ 18/22 | ✓ 18/25 | ✓ 18/25 |
 
 ### Entscheidungskombinationen bei 90 Min., Ausgewogen
 

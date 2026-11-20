@@ -1,6 +1,6 @@
 # 05 – End-to-End-Spielverläufe im Browser
 
-**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `52f7c8fbe8465eb928d28b17873374bd051d41f5` · **Lauf:** 2026-11-20T08:27:50.312Z bis 2026-11-20T09:10:16.032Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Je Fall ein vollständiger Übungsverlauf im echten Browser (Chromium), bedient über die Oberfläche. Die Schnittstelle wurde nur lesend zur Dokumentation genutzt. Kein Teilnehmergespräch wurde simuliert: Gesprächsleitfäden sind nur als „angezeigt“ vermerkt. Zeit: Countdown echt (30 s), Lagen per „Zeitsprung hierhin“, Pause 8 s echt. Jede Lage: Bildschirmfoto Bühne und Moderation, Trace (`trace.zip`, öffnen mit `npx playwright show-trace`), bereinigtes Serverprotokoll (`server.log`), Protokoll- und Journal-Export.
 
@@ -27,7 +27,7 @@ Je Fall ein vollständiger Übungsverlauf im echten Browser (Chromium), bedient 
 
 ## NT-45-unguenstig
 
-Sitzung `20261119155441-19p0` · Entscheidungen: W1=am-netz, W2=abwarten, W3=abwarten, W4=gezahlt · Überraschungen: B2 nach LK03, B7 nach LK17 (vorher gesperrt erwartet) · Bilder: Setup `e2e/NT-45-unguenstig/bilder/00-setup.jpg`, Bilanz `e2e/NT-45-unguenstig/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-45-unguenstig/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120084928-fab9` · Entscheidungen: W1=am-netz, W2=abwarten, W3=abwarten, W4=gezahlt · Überraschungen: B2 nach LK03, B7 nach LK17 (vorher gesperrt erwartet) · Bilder: Setup `e2e/NT-45-unguenstig/bilder/00-setup.jpg`, Bilanz `e2e/NT-45-unguenstig/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-45-unguenstig/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -84,7 +84,7 @@ Dialoge des Browsers (angenommen): 6 Personen gleichmäßig auf 5 Rollen verteil
 
 ## NT-60-gemischt
 
-Sitzung `20261119155441-ro5v` · Entscheidungen: W1=trennen, W2=abwarten, W3=melden, W4=nicht-gezahlt · Überraschungen: B6 nach LK22, B4 nach LK05 · Bilder: Setup `e2e/NT-60-gemischt/bilder/00-setup.jpg`, Bilanz `e2e/NT-60-gemischt/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-60-gemischt/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120084928-hjq2` · Entscheidungen: W1=trennen, W2=abwarten, W3=melden, W4=nicht-gezahlt · Überraschungen: B6 nach LK22, B4 nach LK05 · Bilder: Setup `e2e/NT-60-gemischt/bilder/00-setup.jpg`, Bilanz `e2e/NT-60-gemischt/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-60-gemischt/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -138,7 +138,7 @@ Dialoge des Browsers (angenommen): 8 Personen gleichmäßig auf 6 Rollen verteil
 
 ## NT-90-ausgewogen
 
-Sitzung `20261119155636-3aw6` · Entscheidungen: W1=trennen, W2=proaktiv, W3=melden, W4=nicht-gezahlt · Überraschungen: B8 nach LK14, B1 nach LK05, B6 nach LK22 · Bilder: Setup `e2e/NT-90-ausgewogen/bilder/00-setup.jpg`, Bilanz `e2e/NT-90-ausgewogen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-90-ausgewogen/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085122-sqhd` · Entscheidungen: W1=trennen, W2=proaktiv, W3=melden, W4=nicht-gezahlt · Überraschungen: B8 nach LK14, B1 nach LK05, B6 nach LK22 · Bilder: Setup `e2e/NT-90-ausgewogen/bilder/00-setup.jpg`, Bilanz `e2e/NT-90-ausgewogen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-90-ausgewogen/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -197,7 +197,7 @@ Dialoge des Browsers (angenommen): 9 Personen gleichmäßig auf 9 Rollen verteil
 
 ## NT-90-krisenfuehrung
 
-Sitzung `20261119155655-8br2` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=abwarten, W4=gezahlt · Überraschungen: B7 nach LK17, B5 nach LK12 · Bilder: Setup `e2e/NT-90-krisenfuehrung/bilder/00-setup.jpg`, Bilanz `e2e/NT-90-krisenfuehrung/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-90-krisenfuehrung/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085141-w662` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=abwarten, W4=gezahlt · Überraschungen: B7 nach LK17, B5 nach LK12 · Bilder: Setup `e2e/NT-90-krisenfuehrung/bilder/00-setup.jpg`, Bilanz `e2e/NT-90-krisenfuehrung/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-90-krisenfuehrung/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -256,7 +256,7 @@ Dialoge des Browsers (angenommen): 12 Personen gleichmäßig auf 9 Rollen vertei
 
 ## NT-120-it
 
-Sitzung `20261119155918-pf5f` · Entscheidungen: W1=trennen, W2=abwarten, W3=melden, W4=gezahlt · Überraschungen: B6 nach LK22, B3 nach LK07 · Bilder: Setup `e2e/NT-120-it/bilder/00-setup.jpg`, Bilanz `e2e/NT-120-it/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-120-it/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085403-3j9d` · Entscheidungen: W1=trennen, W2=abwarten, W3=melden, W4=gezahlt · Überraschungen: B6 nach LK22, B3 nach LK07 · Bilder: Setup `e2e/NT-120-it/bilder/00-setup.jpg`, Bilanz `e2e/NT-120-it/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-120-it/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -317,7 +317,7 @@ Dialoge des Browsers (angenommen): 14 Personen gleichmäßig auf 12 Rollen verte
 
 ## NT-180-alle-rollen
 
-Sitzung `20261119155857-j844` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=melden, W4=nicht-gezahlt · Überraschungen: B8 nach LK14, B7 nach LK17, B6 nach LK22 · Bilder: Setup `e2e/NT-180-alle-rollen/bilder/00-setup.jpg`, Bilanz `e2e/NT-180-alle-rollen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-180-alle-rollen/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085336-l4c9` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=melden, W4=nicht-gezahlt · Überraschungen: B8 nach LK14, B7 nach LK17, B6 nach LK22 · Bilder: Setup `e2e/NT-180-alle-rollen/bilder/00-setup.jpg`, Bilanz `e2e/NT-180-alle-rollen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/NT-180-alle-rollen/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -331,7 +331,7 @@ Sitzung `20261119155857-j844` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=mel
 | 6 | LK02 Produktion stoppt | Montag 09:00 Uhr | 26.4 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 6 von 21 | ✓/✓ | ✓ | – | W1=am-netz W2=offen W3=offen W4=offen | – | lk02-produktion-gestoppt-foto.webp / lk02-produktion-faehrt-herunter.mp3 läuft | 8 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L06-LK02-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L06-LK02-moderation.jpg` |
 | 7 | LK22 Kommunikation ohne IT | Montag 10:00 Uhr | 35 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 7 von 21 | ✓/✓ | ✓ | SK45→standortleitung-werk-sued:zugestellt, SK21→notfallmanagement-bcm:zugestellt | W1=am-netz W2=offen W3=offen W4=offen | – | lk22-kommunikation-ohne-it.png / lk22-funk-abgebrochen.mp3 läuft | 8 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L07-LK22-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L07-LK22-moderation.jpg` |
 | 8 | LK04 Nordkanal-Anfrage | Montag 14:00 Uhr | 43.7 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 8 von 21 | ✓/✓ | ✓ | SK01→leiter-it:zugestellt | W1=am-netz W2=proaktiv W3=offen W4=offen | – · Gesprächsleitfaden angezeigt | lk04-nordkanal-anfrage.png / telefon-klingeln.mp3 läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L08-LK04-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L08-LK04-moderation.jpg` |
-| 9 | LK05 Schlüsselperson fällt aus | Dienstag 08:00 Uhr | 52.4 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 9 von 21 | ✓/✓ | ✓ | SK05→geschaeftsfuehrerin-vertrieb:zugestellt, SK06→key-account-automotive:zugestellt | W1=am-netz W2=proaktiv W3=offen W4=offen | – | lk05-leerer-arbeitsplatz-foto.webp / lk05-it-bereitschaft.mp3 läuft | 3 am Zug, 1 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L09-LK05-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L09-LK05-moderation.jpg` |
+| 9 | LK05 Schlüsselperson fällt aus | Dienstag 08:00 Uhr | 52.3 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 9 von 21 | ✓/✓ | ✓ | SK05→geschaeftsfuehrerin-vertrieb:zugestellt, SK06→key-account-automotive:zugestellt | W1=am-netz W2=proaktiv W3=offen W4=offen | – | lk05-leerer-arbeitsplatz-foto.webp / lk05-it-bereitschaft.mp3 läuft | 3 am Zug, 1 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L09-LK05-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L09-LK05-moderation.jpg` |
 | 10 | LK07 Datenschutz | Dienstag 13:00 Uhr | 61 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 10 von 21 | ✓/✓ | ✓ | SK25→key-account-pharma:zugestellt, SK08→kaufmaennische-leiterin-cfo:zugestellt | W1=am-netz W2=proaktiv W3=offen W4=offen | – | lk07-datenschutz.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L10-LK07-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L10-LK07-moderation.jpg` |
 | 11 | LK09 Backups gefunden | Mittwoch 11:00 Uhr | 69.7 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 11 von 21 | ✓/✓ | ✓ | SK41→leitung-qualitaet:zugestellt, SK20→geschaeftsfuehrer-ceo:zugestellt, SK14→inventuren-spezialprozesse:zugestellt, SK09→debitorenbuchhaltung:zugestellt, SK10→debitorenmanagement:zugestellt | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk09-offline-backup-foto.webp / kein Ton läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L11-LK09-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L11-LK09-moderation.jpg` |
 | 12 | LK24 Wer bekommt das erste System? | Mittwoch 15:00 Uhr | 78.4 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 12 von 21 | ✓/✓ | ✓ | – | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk24-erstes-system.png / kein Ton läuft | 8 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L12-LK24-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L12-LK24-moderation.jpg` |
@@ -343,7 +343,7 @@ Sitzung `20261119155857-j844` · Entscheidungen: W1=am-netz, W2=proaktiv, W3=mel
 | 18 | LK21 Chargenfreigabe | Freitag 16:00 Uhr | 130.3 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 18 von 21 | ✓/✓ | ✓ | – | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk21-chargenfreigabe.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L18-LK21-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L18-LK21-moderation.jpg` |
 | 19 | LK14 ERP-Testbetrieb | Samstag 09:00 Uhr | 139 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 19 von 21 | ✓/✓ | ✓ | SK15→assistenz-gf-dokumentation:zugestellt | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk14-erp-testbetrieb-foto.webp / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L19-LK14-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L19-LK14-moderation.jpg` |
 | 20 | LK25 Zwei Listen, zwei Wahrheiten | Samstag 11:00 Uhr | 147.7 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 20 von 21 | ✓/✓ | ✓ | SK48→erp-stammdaten:zugestellt, SK31→fakturierung:zugestellt, SK38→it-service-desk:zugestellt | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk25-zwei-listen.png / kein Ton läuft | 8 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L20-LK25-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L20-LK25-moderation.jpg` |
-| 21 | LK15 Wiederanlauf | Sonntag 12:00 Uhr | 156.4 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 21 von 21 | ✓/✓ | ✓ | SK32→leiter-einkauf:zugestellt, SK33→kommunikation-marketing:zugestellt | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk15-wiederanlauf.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L21-LK15-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L21-LK15-moderation.jpg` |
+| 21 | LK15 Wiederanlauf | Sonntag 12:00 Uhr | 156.3 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 21 von 21 | ✓/✓ | ✓ | SK32→leiter-einkauf:zugestellt, SK33→kommunikation-marketing:zugestellt | W1=am-netz W2=proaktiv W3=melden W4=nicht-gezahlt | – | lk15-wiederanlauf.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/NT-180-alle-rollen/bilder/L21-LK15-buehne.jpg`, `e2e/NT-180-alle-rollen/bilder/L21-LK15-moderation.jpg` |
 
 ### Einzelprüfungen
 
@@ -383,7 +383,7 @@ Dialoge des Browsers (angenommen): 28 Personen gleichmäßig auf 24 Rollen verte
 
 ## WK-45-unguenstig
 
-Sitzung `20261119160154-30w0` · Entscheidungen: W1=weiterlaufen, W2=spaeter, W3=bergen, W4=minimal, W5=eigene · Überraschungen: B6 nach LK09, B7 nach LK15 (vorher gesperrt erwartet) · Bilder: Setup `e2e/WK-45-unguenstig/bilder/00-setup.jpg`, Bilanz `e2e/WK-45-unguenstig/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-45-unguenstig/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085638-m84v` · Entscheidungen: W1=weiterlaufen, W2=spaeter, W3=bergen, W4=minimal, W5=eigene · Überraschungen: B6 nach LK09, B7 nach LK15 (vorher gesperrt erwartet) · Bilder: Setup `e2e/WK-45-unguenstig/bilder/00-setup.jpg`, Bilanz `e2e/WK-45-unguenstig/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-45-unguenstig/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -442,7 +442,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-60-gemischt
 
-Sitzung `20261119160219-3850` · Entscheidungen: W1=herunterfahren, W2=spaeter, W3=abwarten, W4=ausbauen, W5=gleichrangig · Überraschungen: B5 nach LK14, B2 nach LK14 · Bilder: Setup `e2e/WK-60-gemischt/bilder/00-setup.jpg`, Bilanz `e2e/WK-60-gemischt/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-60-gemischt/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085701-r1cd` · Entscheidungen: W1=herunterfahren, W2=spaeter, W3=abwarten, W4=ausbauen, W5=gleichrangig · Überraschungen: B5 nach LK14, B2 nach LK14 · Bilder: Setup `e2e/WK-60-gemischt/bilder/00-setup.jpg`, Bilanz `e2e/WK-60-gemischt/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-60-gemischt/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -456,7 +456,7 @@ Sitzung `20261119160219-3850` · Entscheidungen: W1=herunterfahren, W2=spaeter, 
 | 6 | LK15 Wie weit geht der Ausweichbetrieb? | Mittwoch 10:00 Uhr | 28 / 54 Min. + ca. 6 Min. Abschluss · Lagekarte 6 von 9 | ✓/✓ | ✓ | SK21→leiter-arbeitssicherheit:zugestellt, SK13→facility-management:zugestellt, SK14→leiter-it:zugestellt, SK18→leiter-finanzen-cfo:zugestellt, SK19→leiter-it:zugestellt | W1=herunterfahren W2=spaeter W3=abwarten W4=offen W5=offen | – | lk15-ausweich.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-60-gemischt/bilder/L06-LK15-buehne.jpg`, `e2e/WK-60-gemischt/bilder/L06-LK15-moderation.jpg` |
 | 7 | LK20 Wer wird zuerst umgestellt? | Donnerstag 10:00 Uhr | 34.5 / 54 Min. + ca. 6 Min. Abschluss · Lagekarte 7 von 9 | ✓/✓ | ✓ | SK46→geschaeftsfuehrer-ceo:zugestellt | W1=herunterfahren W2=spaeter W3=abwarten W4=ausbauen W5=offen | – | lk20-reihenfolge.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-60-gemischt/bilder/L07-LK20-buehne.jpg`, `e2e/WK-60-gemischt/bilder/L07-LK20-moderation.jpg` |
 | 8 | LK22 Die Kassen laufen wieder | Donnerstag 18:00 Uhr | 41 / 54 Min. + ca. 6 Min. Abschluss · Lagekarte 8 von 9 | ✓/✓ | ✓ | – | W1=herunterfahren W2=spaeter W3=abwarten W4=ausbauen W5=gleichrangig | – | lk22-kassen-laufen.png / lk22-kasse-startet.mp3 läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-60-gemischt/bilder/L08-LK22-buehne.jpg`, `e2e/WK-60-gemischt/bilder/L08-LK22-moderation.jpg` |
-| 9 | LK27 Stabiler Notbetrieb | Sonntag 12:00 Uhr | 47.5 / 54 Min. + ca. 6 Min. Abschluss · Lagekarte 9 von 9 | ✓/✓ | ✓ | – | W1=herunterfahren W2=spaeter W3=abwarten W4=ausbauen W5=gleichrangig | – | lk27-notbetrieb.png / kein Ton läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-60-gemischt/bilder/L09-LK27-buehne.jpg`, `e2e/WK-60-gemischt/bilder/L09-LK27-moderation.jpg` |
+| 9 | LK27 Stabiler Notbetrieb | Sonntag 12:00 Uhr | 47.5 / 54 Min. + ca. 6 Min. Abschluss · Lagekarte 9 von 9 | ✓/✓ | ✓ | SK28→leiter-it:zugestellt | W1=herunterfahren W2=spaeter W3=abwarten W4=ausbauen W5=gleichrangig | – | lk27-notbetrieb.png / kein Ton läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-60-gemischt/bilder/L09-LK27-buehne.jpg`, `e2e/WK-60-gemischt/bilder/L09-LK27-moderation.jpg` |
 
 ### Einzelprüfungen
 
@@ -478,7 +478,7 @@ Sitzung `20261119160219-3850` · Entscheidungen: W1=herunterfahren, W2=spaeter, 
 | E1 | Gesamteinschätzung (10 Kriterien) gespeichert und nach Neuladen angezeigt | 10 Werte und Notizen wie eingegeben | Werte 2,1,0,2,1,0,2,1,0,2; Notizen 10/10 | bestanden |
 | E2 | Szenariospezifisches Raster | 10 Kriterien aus dem Drehbuch | 10 | bestanden |
 | P1 | Protokoll: alle gezeigten Lagen (Zeit und Titel, Reihenfolge) | 9 Zeilen wie im Journal | 9 Zeilen, identisch | bestanden |
-| P2 | Protokoll: alle zugestellten vertraulichen Karten | SK03 SK06 SK34 SK11 SK08 SK35 SK42 SK21 SK13 SK14 SK18 SK19 SK46 SK32 | alle enthalten | bestanden |
+| P2 | Protokoll: alle zugestellten vertraulichen Karten | SK03 SK06 SK34 SK11 SK08 SK35 SK42 SK21 SK13 SK14 SK18 SK19 SK46 SK28 SK32 | alle enthalten | bestanden |
 | P3 | Protokoll: Entscheidungen im Wortlaut | Wortlaut jeder festgehaltenen Option | W1, W2, W3, W4, W5 | bestanden |
 | P4 | Protokoll: ausgelöste Überraschungen | B5 B2 | alle enthalten | bestanden |
 | P5 | Protokoll: Beobachtungsbögen der ausgelösten Überraschungen | B5 | alle enthalten | bestanden |
@@ -498,7 +498,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-90-ausgewogen
 
-Sitzung `20261119160425-bra1` · Entscheidungen: W1=herunterfahren, W2=frueh, W3=bergen, W4=minimal, W5=gleichrangig · Überraschungen: B6 nach LK09, B8 nach LK15, B1 nach LK15 · Bilder: Setup `e2e/WK-90-ausgewogen/bilder/00-setup.jpg`, Bilanz `e2e/WK-90-ausgewogen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-90-ausgewogen/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085909-3027` · Entscheidungen: W1=herunterfahren, W2=frueh, W3=bergen, W4=minimal, W5=gleichrangig · Überraschungen: B6 nach LK09, B8 nach LK15, B1 nach LK15 · Bilder: Setup `e2e/WK-90-ausgewogen/bilder/00-setup.jpg`, Bilanz `e2e/WK-90-ausgewogen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-90-ausgewogen/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -529,7 +529,7 @@ Sitzung `20261119160425-bra1` · Entscheidungen: W1=herunterfahren, W2=frueh, W3
 | S5 | Begrüßung und Rollenbriefing beim Vorbereiten | je 9 | Begrüßung 9, Briefing 9 | bestanden |
 | T1 | Countdown nach „Jetzt beginnt die Krise“ (Standard 30 s) | 25–30 s Restzeit kurz nach dem Klick | 29 s | bestanden |
 | W-W1 | Entscheidung W1 über die Oberfläche festgehalten | herunterfahren | herunterfahren | bestanden |
-| T2 | Pause und Fortsetzen über die Oberfläche | Zeit steht in der Pause (8 s), läuft danach weiter (8 s; Anzeige auf 0,1 Min. gerundet) | 16.2 → 16.2 (8 s Pause) → 16.4 | bestanden |
+| T2 | Pause und Fortsetzen über die Oberfläche | Zeit steht in der Pause (8 s), läuft danach weiter (8 s; Anzeige auf 0,1 Min. gerundet) | 16.3 → 16.3 (8 s Pause) → 16.4 | bestanden |
 | W-W2 | Entscheidung W2 über die Oberfläche festgehalten | frueh | frueh | bestanden |
 | B-B6 | Überraschung B6 über die Oberfläche | auf der Bühne | auf der Bühne; Bild bilder/U-B6-buehne.jpg | bestanden |
 | W-W3 | Entscheidung W3 über die Oberfläche festgehalten | bergen | bergen | bestanden |
@@ -559,7 +559,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-90-krisenfuehrung
 
-Sitzung `20261119160433-k1qc` · Entscheidungen: W1=weiterlaufen, W2=frueh, W3=abwarten, W4=ausbauen, W5=eigene · Überraschungen: B7 nach LK15, B5 nach LK14 · Bilder: Setup `e2e/WK-90-krisenfuehrung/bilder/00-setup.jpg`, Bilanz `e2e/WK-90-krisenfuehrung/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-90-krisenfuehrung/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120085918-32gs` · Entscheidungen: W1=weiterlaufen, W2=frueh, W3=abwarten, W4=ausbauen, W5=eigene · Überraschungen: B7 nach LK15, B5 nach LK14 · Bilder: Setup `e2e/WK-90-krisenfuehrung/bilder/00-setup.jpg`, Bilanz `e2e/WK-90-krisenfuehrung/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-90-krisenfuehrung/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -619,7 +619,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-120-it
 
-Sitzung `20261119160740-28zh` · Entscheidungen: W1=herunterfahren, W2=spaeter, W3=bergen, W4=ausbauen, W5=eigene · Überraschungen: B8 nach LK15, B3 nach LK15, B4 nach LK22 · Bilder: Setup `e2e/WK-120-it/bilder/00-setup.jpg`, Bilanz `e2e/WK-120-it/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-120-it/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120090227-1ukk` · Entscheidungen: W1=herunterfahren, W2=spaeter, W3=bergen, W4=ausbauen, W5=eigene · Überraschungen: B8 nach LK15, B3 nach LK15, B4 nach LK22 · Bilder: Setup `e2e/WK-120-it/bilder/00-setup.jpg`, Bilanz `e2e/WK-120-it/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-120-it/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -633,7 +633,7 @@ Sitzung `20261119160740-28zh` · Entscheidungen: W1=herunterfahren, W2=spaeter, 
 | 6 | LK10 Serverraum gesperrt | Dienstag 10:00 Uhr | 35.3 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 6 von 14 | ✓/✓ | ✓ | SK11→partnerbetreuung:zugestellt | W1=herunterfahren W2=spaeter W3=offen W4=offen W5=offen | – | lk10-serverraum-gesperrt.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L06-LK10-buehne.jpg`, `e2e/WK-120-it/bilder/L06-LK10-moderation.jpg` |
 | 7 | LK13 Ersatz: Hardware oder Ausweich-Rack? | Dienstag 17:00 Uhr | 43.4 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 7 von 14 | ✓/✓ | ✓ | SK13→facility-management:zugestellt, SK14→rz-betrieb:zugestellt | W1=herunterfahren W2=spaeter W3=offen W4=offen W5=offen | – | lk13-ersatz.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L07-LK13-buehne.jpg`, `e2e/WK-120-it/bilder/L07-LK13-moderation.jpg` |
 | 8 | LK14 Den Backup-Server bergen? | Mittwoch 07:30 Uhr | 51.5 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 8 von 14 | ✓/✓ | ✓ | SK18→leiter-finanzen-cfo:zugestellt, SK19→leiter-it:zugestellt, SK42→geschaeftsfuehrer-ceo:zugestellt | W1=herunterfahren W2=spaeter W3=offen W4=offen W5=offen | – | lk14-bergen.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L08-LK14-buehne.jpg`, `e2e/WK-120-it/bilder/L08-LK14-moderation.jpg` |
-| 9 | LK15 Wie weit geht der Ausweichbetrieb? | Mittwoch 10:00 Uhr | 59.5 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 9 von 14 | ✓/✓ | ✓ | SK21→leiter-arbeitssicherheit:zugestellt | W1=herunterfahren W2=spaeter W3=bergen W4=offen W5=offen | – | lk15-ausweich.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L09-LK15-buehne.jpg`, `e2e/WK-120-it/bilder/L09-LK15-moderation.jpg` |
+| 9 | LK15 Wie weit geht der Ausweichbetrieb? | Mittwoch 10:00 Uhr | 59.6 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 9 von 14 | ✓/✓ | ✓ | SK21→leiter-arbeitssicherheit:zugestellt | W1=herunterfahren W2=spaeter W3=bergen W4=offen W5=offen | – | lk15-ausweich.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L09-LK15-buehne.jpg`, `e2e/WK-120-it/bilder/L09-LK15-moderation.jpg` |
 | 10 | LK19 Rücksicherung im Ausweich-Rack | Donnerstag 08:00 Uhr | 67.6 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 10 von 14 | ✓/✓ | ✓ | SK46→geschaeftsfuehrer-ceo:zugestellt, SK23→online-shop-leitung:zugestellt | W1=herunterfahren W2=spaeter W3=bergen W4=ausbauen W5=offen | – | lk19-ruecksicherung.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L10-LK19-buehne.jpg`, `e2e/WK-120-it/bilder/L10-LK19-moderation.jpg` |
 | 11 | LK20 Wer wird zuerst umgestellt? | Donnerstag 10:00 Uhr | 75.7 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 11 von 14 | ✓/✓ | ✓ | SK29→rz-betrieb:zugestellt, SK24→leiterin-kommunikation-pr:zugestellt | W1=herunterfahren W2=spaeter W3=bergen W4=ausbauen W5=offen | – | lk20-reihenfolge.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L11-LK20-buehne.jpg`, `e2e/WK-120-it/bilder/L11-LK20-moderation.jpg` |
 | 12 | LK22 Die Kassen laufen wieder | Donnerstag 18:00 Uhr | 83.8 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 12 von 14 | ✓/✓ | ✓ | SK43→leiter-arbeitssicherheit:zugestellt | W1=herunterfahren W2=spaeter W3=bergen W4=ausbauen W5=eigene | – | lk22-kassen-laufen.png / lk22-kasse-startet.mp3 läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-it/bilder/L12-LK22-buehne.jpg`, `e2e/WK-120-it/bilder/L12-LK22-moderation.jpg` |
@@ -683,13 +683,13 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-180-alle-rollen
 
-Sitzung `20261119160704-yb92` · Entscheidungen: W1=weiterlaufen, W2=frueh, W3=bergen, W4=ausbauen, W5=gleichrangig · Überraschungen: B6 nach LK09, B5 nach LK14, B7 nach LK15, B4 nach LK22 · Bilder: Setup `e2e/WK-180-alle-rollen/bilder/00-setup.jpg`, Bilanz `e2e/WK-180-alle-rollen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-180-alle-rollen/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120090146-qmeb` · Entscheidungen: W1=weiterlaufen, W2=frueh, W3=bergen, W4=ausbauen, W5=gleichrangig · Überraschungen: B6 nach LK09, B5 nach LK14, B7 nach LK15, B4 nach LK22 · Bilder: Setup `e2e/WK-180-alle-rollen/bilder/00-setup.jpg`, Bilanz `e2e/WK-180-alle-rollen/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-180-alle-rollen/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
 | # | Lage | Simulationszeit | Übungszeit / Zeitbudget | Bühne: Titel/Zeit | Moderation zeigt Lage | zugestellt (Karte→Rolle) | Entscheidungsstand | sichtbare Folgen | Bild / Ton | Spielbrett | Leck | Bilder |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | LK01 USV meldet Batteriewarnung | Montag 22:40 Uhr | 0 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 0 von 18 | ✓/✓ | ✓ | – | W1=offen W2=offen W3=offen W4=offen W5=offen | – | lk01-usv-warnung.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-alle-rollen/bilder/L01-LK01-buehne.jpg`, `e2e/WK-180-alle-rollen/bilder/L01-LK01-moderation.jpg` |
+| 1 | LK01 USV meldet Batteriewarnung | Montag 22:40 Uhr | 0 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 1 von 18 | ✓/✓ | ✓ | – | W1=offen W2=offen W3=offen W4=offen W5=offen | – | lk01-usv-warnung.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-alle-rollen/bilder/L01-LK01-buehne.jpg`, `e2e/WK-180-alle-rollen/bilder/L01-LK01-moderation.jpg` |
 | 2 | LK02 Geruch im Technikflur | Dienstag 02:35 Uhr | 3 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 2 von 18 | ✓/✓ | ✓ | – | W1=offen W2=offen W3=offen W4=offen W5=offen | – | lk02-geruch-technikflur.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-alle-rollen/bilder/L02-LK02-buehne.jpg`, `e2e/WK-180-alle-rollen/bilder/L02-LK02-moderation.jpg` |
 | 3 | LK03 Serverraum wird warm | Dienstag 03:02 Uhr | 6 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 3 von 18 | ✓/✓ | ✓ | – | W1=offen W2=offen W3=offen W4=offen W5=offen | – | lk03-serverraum-warm.png / lk03-klimaalarm.mp3 läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-alle-rollen/bilder/L03-LK03-buehne.jpg`, `e2e/WK-180-alle-rollen/bilder/L03-LK03-moderation.jpg` |
 | 4 | LK04 Brandalarm im Rechenzentrum | Dienstag 03:10 Uhr | 9 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 4 von 18 | ✓/✓ | ✓ | SK03→leiter-it:zugestellt | W1=weiterlaufen W2=offen W3=offen W4=offen W5=offen | – | lk04-brandalarm.png / lk04-loeschanlage-durchsage.mp3 läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-alle-rollen/bilder/L04-LK04-buehne.jpg`, `e2e/WK-180-alle-rollen/bilder/L04-LK04-moderation.jpg` |
@@ -751,7 +751,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-120-kunden-zusatz
 
-Sitzung `20261119161015-xka4` · Entscheidungen: W1=weiterlaufen, W2=spaeter, W3=abwarten, W4=minimal, W5=eigene · Überraschungen: B6 nach LK09, B2 nach LK14 · Bilder: Setup `e2e/WK-120-kunden-zusatz/bilder/00-setup.jpg`, Bilanz `e2e/WK-120-kunden-zusatz/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-120-kunden-zusatz/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120090505-giw2` · Entscheidungen: W1=weiterlaufen, W2=spaeter, W3=abwarten, W4=minimal, W5=eigene · Überraschungen: B6 nach LK09, B2 nach LK14 · Bilder: Setup `e2e/WK-120-kunden-zusatz/bilder/00-setup.jpg`, Bilanz `e2e/WK-120-kunden-zusatz/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-120-kunden-zusatz/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -765,7 +765,7 @@ Sitzung `20261119161015-xka4` · Entscheidungen: W1=weiterlaufen, W2=spaeter, W3
 | 6 | LK14 Den Backup-Server bergen? | Mittwoch 07:30 Uhr | 35.3 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 6 von 14 | ✓/✓ | ✓ | SK13→facility-management:zugestellt, SK14→rz-betrieb:zugestellt, SK41→rz-betrieb:zugestellt, SK42→geschaeftsfuehrer-ceo:zugestellt | W1=weiterlaufen W2=spaeter W3=offen W4=offen W5=offen | – | lk14-bergen.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L06-LK14-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L06-LK14-moderation.jpg` |
 | 7 | LK15 Wie weit geht der Ausweichbetrieb? | Mittwoch 10:00 Uhr | 43.4 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 7 von 14 | ✓/✓ | ✓ | SK21→leiter-arbeitssicherheit:zugestellt, SK18→leiter-finanzen-cfo:zugestellt, SK19→leiter-it:zugestellt | W1=weiterlaufen W2=spaeter W3=abwarten W4=offen W5=offen | – | lk15-ausweich.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L07-LK15-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L07-LK15-moderation.jpg` |
 | 8 | LK16 Ein Bauunternehmen will Vorrang | Mittwoch 13:00 Uhr | 51.5 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 8 von 14 | ✓/✓ | ✓ | SK46→geschaeftsfuehrer-ceo:zugestellt, SK23→online-shop-leitung:zugestellt | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=offen | – · Gesprächsleitfaden angezeigt | lk16-bauunternehmen.png / telefon-klingeln.mp3 läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L08-LK16-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L08-LK16-moderation.jpg` |
-| 9 | LK17 Prospektpreise vor der Kasse | Mittwoch 16:00 Uhr | 59.5 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 9 von 14 | ✓/✓ | ✓ | – | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=offen | – | lk17-prospektpreise.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L09-LK17-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L09-LK17-moderation.jpg` |
+| 9 | LK17 Prospektpreise vor der Kasse | Mittwoch 16:00 Uhr | 59.6 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 9 von 14 | ✓/✓ | ✓ | – | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=offen | – | lk17-prospektpreise.png / kein Ton läuft | 4 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L09-LK17-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L09-LK17-moderation.jpg` |
 | 10 | LK18 Der Verbundbeirat verlangt Antworten | Mittwoch 19:00 Uhr | 67.6 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 10 von 14 | ✓/✓ | ✓ | SK24→leiterin-kommunikation-pr:zugestellt | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=offen | – | lk18-verbundbeirat.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L10-LK18-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L10-LK18-moderation.jpg` |
 | 11 | LK20 Wer wird zuerst umgestellt? | Donnerstag 10:00 Uhr | 75.7 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 11 von 14 | ✓/✓ | ✓ | SK20→geschaeftsfuehrer-ceo:zugestellt | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=offen | – | lk20-reihenfolge.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L11-LK20-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L11-LK20-moderation.jpg` |
 | 12 | LK21 Nordkanal berichtet ausführlich | Donnerstag 13:00 Uhr | 83.8 / 108 Min. + ca. 12 Min. Abschluss · Lagekarte 12 von 14 | ✓/✓ | ✓ | – | W1=weiterlaufen W2=spaeter W3=abwarten W4=minimal W5=eigene | – | lk21-nordkanal-bericht.png / lk21-nordkanal-nachrichten.mp3 läuft | 3 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-120-kunden-zusatz/bilder/L12-LK21-buehne.jpg`, `e2e/WK-120-kunden-zusatz/bilder/L12-LK21-moderation.jpg` |
@@ -813,7 +813,7 @@ Dialoge des Browsers (angenommen): Szenario wirklich wechseln? Der aktuelle Lauf
 
 ## WK-180-betrieb-zusatz
 
-Sitzung `20261119161029-ow3c` · Entscheidungen: W1=herunterfahren, W2=frueh, W3=bergen, W4=ausbauen, W5=gleichrangig · Überraschungen: B5 nach LK14, B8 nach LK15, B3 nach LK15 · Bilder: Setup `e2e/WK-180-betrieb-zusatz/bilder/00-setup.jpg`, Bilanz `e2e/WK-180-betrieb-zusatz/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-180-betrieb-zusatz/bilder/91-abschluss-fazit.jpg`
+Sitzung `20261120090508-73t9` · Entscheidungen: W1=herunterfahren, W2=frueh, W3=bergen, W4=ausbauen, W5=gleichrangig · Überraschungen: B5 nach LK14, B8 nach LK15, B3 nach LK15 · Bilder: Setup `e2e/WK-180-betrieb-zusatz/bilder/00-setup.jpg`, Bilanz `e2e/WK-180-betrieb-zusatz/bilder/90-abschluss-bilanz.jpg`, Fazit `e2e/WK-180-betrieb-zusatz/bilder/91-abschluss-fazit.jpg`
 
 ### Lage für Lage
 
@@ -834,7 +834,7 @@ Sitzung `20261119161029-ow3c` · Entscheidungen: W1=herunterfahren, W2=frueh, W3
 | 13 | LK19 Rücksicherung im Ausweich-Rack | Donnerstag 08:00 Uhr | 102.6 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 13 von 18 | ✓/✓ | ✓ | SK24→kundenservice-hotline:zugestellt, SK25→leiterin-kommunikation-pr:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=offen | – | lk19-ruecksicherung.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L13-LK19-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L13-LK19-moderation.jpg` |
 | 14 | LK20 Wer wird zuerst umgestellt? | Donnerstag 10:00 Uhr | 113 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 14 von 18 | ✓/✓ | ✓ | SK40→informationssicherheit:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=offen | – | lk20-reihenfolge.png / kein Ton läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L14-LK20-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L14-LK20-moderation.jpg` |
 | 15 | LK22 Die Kassen laufen wieder | Donnerstag 18:00 Uhr | 123.4 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 15 von 18 | ✓/✓ | ✓ | SK43→leiter-arbeitssicherheit:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=gleichrangig | – | lk22-kassen-laufen.png / lk22-kasse-startet.mp3 läuft | 6 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L15-LK22-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L15-LK22-moderation.jpg` |
-| 16 | LK23 Die Datenlücke | Freitag 09:00 Uhr | 133.8 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 16 von 18 | ✓/✓ | ✓ | SK38→regionalleiterin-filialen-nord:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=gleichrangig | – | lk23-datenluecke.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L16-LK23-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L16-LK23-moderation.jpg` |
+| 16 | LK23 Die Datenlücke | Freitag 09:00 Uhr | 133.8 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 16 von 18 | ✓/✓ | ✓ | SK28→it-support-filialen:zugestellt, SK38→regionalleiterin-filialen-nord:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=gleichrangig | – | lk23-datenluecke.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L16-LK23-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L16-LK23-moderation.jpg` |
 | 17 | LK25 Der große Saisonsamstag | Samstag 08:00 Uhr | 144.2 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 17 von 18 | ✓/✓ | ✓ | SK45→online-shop-leitung:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=gleichrangig | – | lk25-saisonsamstag.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L17-LK25-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L17-LK25-moderation.jpg` |
 | 18 | LK27 Stabiler Notbetrieb | Sonntag 12:00 Uhr | 154.6 / 165 Min. + ca. 15 Min. Abschluss · Lagekarte 18 von 18 | ✓/✓ | ✓ | SK39→online-shop-leitung:zugestellt | W1=herunterfahren W2=frueh W3=bergen W4=ausbauen W5=gleichrangig | – | lk27-notbetrieb.png / kein Ton läuft | 5 am Zug, 0 nicht erreichbar | 0 | `e2e/WK-180-betrieb-zusatz/bilder/L18-LK27-buehne.jpg`, `e2e/WK-180-betrieb-zusatz/bilder/L18-LK27-moderation.jpg` |
 
@@ -859,7 +859,7 @@ Sitzung `20261119161029-ow3c` · Entscheidungen: W1=herunterfahren, W2=frueh, W3
 | E1 | Gesamteinschätzung (10 Kriterien) gespeichert und nach Neuladen angezeigt | 10 Werte und Notizen wie eingegeben | Werte 2,1,0,2,1,0,2,1,0,2; Notizen 10/10 | bestanden |
 | E2 | Szenariospezifisches Raster | 10 Kriterien aus dem Drehbuch | 10 | bestanden |
 | P1 | Protokoll: alle gezeigten Lagen (Zeit und Titel, Reihenfolge) | 18 Zeilen wie im Journal | 18 Zeilen, identisch | bestanden |
-| P2 | Protokoll: alle zugestellten vertraulichen Karten | SK03 SK06 SK34 SK08 SK35 SK10 SK11 SK12 SK16 SK13 SK14 SK21 SK18 SK19 SK46 SK24 SK25 SK40 SK43 SK38 SK45 SK39 SK32 | alle enthalten | bestanden |
+| P2 | Protokoll: alle zugestellten vertraulichen Karten | SK03 SK06 SK34 SK08 SK35 SK10 SK11 SK12 SK16 SK13 SK14 SK21 SK18 SK19 SK46 SK24 SK25 SK40 SK43 SK28 SK38 SK45 SK39 SK32 | alle enthalten | bestanden |
 | P3 | Protokoll: Entscheidungen im Wortlaut | Wortlaut jeder festgehaltenen Option | W1, W2, W3, W4, W5 | bestanden |
 | P4 | Protokoll: ausgelöste Überraschungen | B5 B8 B3 | alle enthalten | bestanden |
 | P5 | Protokoll: Beobachtungsbögen der ausgelösten Überraschungen | B5 B8 | alle enthalten | bestanden |

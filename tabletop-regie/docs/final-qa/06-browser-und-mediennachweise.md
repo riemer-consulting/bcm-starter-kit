@@ -1,6 +1,6 @@
 # 06 – Browser- und Mediennachweise
 
-**Geprüfter Commit:** `6809dee1a7f2daac4685ace87b31a31d6e587ede` · **Lauf:** 2026-11-19T15:33:06.782Z bis 2026-11-19T16:15:36.947Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
+**Geprüfter Commit:** `52f7c8fbe8465eb928d28b17873374bd051d41f5` · **Lauf:** 2026-11-20T08:27:50.312Z bis 2026-11-20T09:10:16.032Z · erzeugt mit `tools/qa/berichte.js` aus dem Nachweisordner (Pfadangaben relativ zum Nachweispaket).
 
 Bühnentest im Browser (Generalprobe aller Lagen, Stummschalten, Wiederholen, Zeitsprung im Ton, Neuladen, Unterbrechung, Abschluss) und technische Medienmessung. Ob ein Ton im Raum verständlich, passend und angemessen laut ist, kann keine Messung feststellen: jeder Ton trägt „akustisch nicht abgenommen“, bis ein Mensch ihn gehört und in `docs/final-qa/hoerprotokoll.json` eingetragen hat.
 
@@ -13,7 +13,7 @@ Prüfschritt `buehne-nordtech`: Exit-Code 0, 199 s, Konsole `konsole/buehne-nord
 | B | Unterbrechung B7 (Geschäftsführung (CEO), Krisenstabsleitung, 5 Min.) | bestanden | Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja |
 | G | Generalprobe: 26 Lagen und 3 öffentliche Überraschungen | bestanden | 29 Bühnenzustände; Abweichungen: keine |
 | N3 | Stummschalten mitten im Ton (LK10) | bestanden | vorher: läuft lk10-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus |
-| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk10-nordkanal-nachrichten.mp3, 1.6 s) |
+| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk10-nordkanal-nachrichten.mp3, 2.1 s) |
 | N4 | Zeitsprung mitten im Ton (LK10 → LK11) | bestanden | danach: Kartenton aus; Hintergrund aus |
 | N2 | Bühne neu laden mitten im Lauf | bestanden | Ton-Freigabe angezeigt: ja; aktuelle Lage „Pharmakunde eskaliert“ sichtbar: ja; nach Klick Hintergrund aus |
 | F | Abschluss auf der Bühne bis zum Fazit | bestanden | 6 Bildschirmfotos, letzte Phase: fazit |
@@ -55,14 +55,14 @@ Prüfschritt `buehne-nordtech`: Exit-Code 0, 199 s, Konsole `konsole/buehne-nord
 
 ## Bühne – Waterkant
 
-Prüfschritt `buehne-waterkant`: Exit-Code 0, 196 s, Konsole `konsole/buehne-waterkant.txt`
+Prüfschritt `buehne-waterkant`: Exit-Code 0, 191 s, Konsole `konsole/buehne-waterkant.txt`
 
 | ID | Prüfung | Ergebnis | beobachtet |
 |---|---|---|---|
 | B | Unterbrechung B7 (IT-Leitung (Kassen, Warenwirtschaft, Rechenzentrum), 5 Min.) | bestanden | Bühne enthält Zeitangabe: ja; Moderation erwähnt B7: ja |
 | G | Generalprobe: 28 Lagen und 4 öffentliche Überraschungen | bestanden | 32 Bühnenzustände; Abweichungen: keine |
 | N3 | Stummschalten mitten im Ton (LK21) | bestanden | vorher: läuft lk21-nordkanal-nachrichten.mp3; nach Stumm: Kartenton aus, Hintergrund aus; nach Aufheben: Kartenton aus, Hintergrund aus |
-| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 1.8 s) |
+| N3 | Ton erneut abspielen nach Stummschaltung | bestanden | Kartenton läuft (lk21-nordkanal-nachrichten.mp3, 1.6 s) |
 | N4 | Zeitsprung mitten im Ton (LK21 → LK22) | bestanden | danach: läuft lk22-kasse-startet.mp3; Hintergrund aus |
 | N2 | Bühne neu laden mitten im Lauf | bestanden | Ton-Freigabe angezeigt: ja; aktuelle Lage „Die Kassen laufen wieder“ sichtbar: ja; nach Klick Hintergrund aus |
 | F | Abschluss auf der Bühne bis zum Fazit | bestanden | 6 Bildschirmfotos, letzte Phase: fazit |
@@ -81,7 +81,7 @@ Prüfschritt `buehne-waterkant`: Exit-Code 0, 196 s, Konsole `konsole/buehne-wat
 | LK07 | Was noch läuft – und was nicht | ja | – | – | – | `buehne/waterkant/08-LK07.png` |
 | LK08 | Saisonstart ohne Aktionspreise | ja | – | – | – | `buehne/waterkant/09-LK08.png` |
 | LK09 | Die Partnermärkte rufen an | ja | telefon-klingeln.mp3 | telefon-klingeln.mp3 | – | `buehne/waterkant/10-LK09.png` |
-| B6 | Wo hat es gebrannt? | ja | – | – | – | `buehne/waterkant/11-B6.png` |
+| B6 | Wo hat es gebrannt? | ja | – | telefon-klingeln.mp3 | – | `buehne/waterkant/11-B6.png` |
 | LK10 | Serverraum gesperrt | ja | – | – | – | `buehne/waterkant/12-LK10.png` |
 | LK11 | Nordkanal fragt nach | ja | telefon-klingeln.mp3 | telefon-klingeln.mp3 | – | `buehne/waterkant/13-LK11.png` |
 | LK12 | Das Zentrallager steht | ja | – | – | – | `buehne/waterkant/14-LK12.png` |

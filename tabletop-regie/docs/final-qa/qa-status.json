@@ -1,6 +1,6 @@
 {
-  "commit": "6809dee1a7f2daac4685ace87b31a31d6e587ede",
-  "zeitpunkt": "2026-11-19T16:15:36.947Z",
+  "commit": "52f7c8fbe8465eb928d28b17873374bd051d41f5",
+  "zeitpunkt": "2026-11-20T09:10:16.032Z",
   "sauber": true,
   "version": {
     "node": "v22.22.0",
@@ -12,12 +12,12 @@
     {
       "name": "drehbuchpruefung",
       "ergebnis": "ohne Fehler",
-      "sekunden": 3
+      "sekunden": 2
     },
     {
       "name": "varianten-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 1
+      "sekunden": 0
     },
     {
       "name": "varianten-waterkant",
@@ -27,12 +27,12 @@
     {
       "name": "integration-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 22
+      "sekunden": 23
     },
     {
       "name": "integration-waterkant",
       "ergebnis": "ohne Fehler",
-      "sekunden": 30
+      "sekunden": 31
     },
     {
       "name": "delta-waterkant",
@@ -42,7 +42,7 @@
     {
       "name": "lauf-nordtech",
       "ergebnis": "ohne Fehler",
-      "sekunden": 92
+      "sekunden": 91
     },
     {
       "name": "lauf-waterkant",
@@ -57,7 +57,7 @@
     {
       "name": "buehne-waterkant",
       "ergebnis": "ohne Fehler",
-      "sekunden": 196
+      "sekunden": 191
     },
     {
       "name": "protokoll-nordtech",
@@ -77,7 +77,7 @@
     {
       "name": "negativ",
       "ergebnis": "ohne Fehler",
-      "sekunden": 132
+      "sekunden": 131
     },
     {
       "name": "referenz",
@@ -97,32 +97,32 @@
     {
       "name": "e2e-NT-45-unguenstig",
       "ergebnis": "ohne Fehler",
-      "sekunden": 115
+      "sekunden": 114
     },
     {
       "name": "e2e-NT-60-gemischt",
       "ergebnis": "ohne Fehler",
-      "sekunden": 134
+      "sekunden": 133
     },
     {
       "name": "e2e-NT-90-krisenfuehrung",
       "ergebnis": "ohne Fehler",
-      "sekunden": 121
+      "sekunden": 115
     },
     {
       "name": "e2e-NT-90-ausgewogen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 162
+      "sekunden": 161
     },
     {
       "name": "e2e-NT-120-it",
       "ergebnis": "ohne Fehler",
-      "sekunden": 155
+      "sekunden": 154
     },
     {
       "name": "e2e-NT-180-alle-rollen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 201
+      "sekunden": 203
     },
     {
       "name": "e2e-WK-45-unguenstig",
@@ -132,37 +132,37 @@
     {
       "name": "e2e-WK-60-gemischt",
       "ergebnis": "ohne Fehler",
-      "sekunden": 134
+      "sekunden": 137
     },
     {
       "name": "e2e-WK-90-krisenfuehrung",
       "ergebnis": "ohne Fehler",
-      "sekunden": 150
+      "sekunden": 147
     },
     {
       "name": "e2e-WK-90-ausgewogen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 194
+      "sekunden": 197
     },
     {
       "name": "e2e-WK-120-it",
       "ergebnis": "ohne Fehler",
-      "sekunden": 156
+      "sekunden": 158
     },
     {
       "name": "e2e-WK-180-alle-rollen",
       "ergebnis": "ohne Fehler",
-      "sekunden": 206
+      "sekunden": 203
     },
     {
       "name": "e2e-WK-120-kunden-zusatz",
       "ergebnis": "ohne Fehler",
-      "sekunden": 155
+      "sekunden": 145
     },
     {
       "name": "e2e-WK-180-betrieb-zusatz",
       "ergebnis": "ohne Fehler",
-      "sekunden": 195
+      "sekunden": 194
     },
     {
       "name": "replay-NT-90-ausgewogen",
@@ -182,15 +182,15 @@
       "bestanden": 365,
       "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 13
+      "offeneBefunde": 15
     },
     {
       "name": "Waterkant – Brand im Rechenzentrum",
-      "sha256": "d09cb9edd7e445cdf31960500e51157bd1def148b84b804358e95d002192a72b",
-      "bestanden": 427,
+      "sha256": "67244cccad0db3de1d66b3d561999bdaced5e418b02861867c865be1f3fcce04",
+      "bestanden": 428,
       "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 16
+      "offeneBefunde": 17
     },
     {
       "name": "Plattform (Negativ-, Sicherheits-, Referenztests)",
@@ -198,19 +198,19 @@
       "bestanden": 43,
       "fehlgeschlagen": 0,
       "nichtAusgefuehrt": 0,
-      "offeneBefunde": 13
+      "offeneBefunde": 14
     }
   ],
   "gates": [
     {
       "name": "A – Softwarefunktion",
       "status": "technisch bestanden, mit Auflagen",
-      "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft; Zyklus 3: 33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler zur Laufzeit ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08)."
+      "begruendung": "Alle kritischen Plattformfunktionen bis zur Stufe Browser bzw. integriert geprüft; Zyklus 4: 33/33 Prüfschritte ohne Fehler, 836/836 Einzelprüfungen. Auflagen: keine Zugriffstrennung Bühne/Moderation (O-06), Medienfehler zur Laufzeit ohne Hinweis (O-07), Echtzeit über 45–180 Min. nicht gemessen (O-08)."
     },
     {
       "name": "B – Szenariokonsistenz",
       "status": "regelbasiert bestanden; fachliche Bestätigung offen",
-      "begruendung": "Alle Varianten und Entscheidungskombinationen ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert (41/41); Waterkant-Delta F01–F15 regelgeprüft. Offen: O-11 (SK31 in 22 von 50 Kombinationen zeitlich unplausibel, vom Orakel nicht erfasst; Vorlage Dokument 13) und die fachliche Bestätigung (Gate D)."
+      "begruendung": "Alle Varianten und Entscheidungskombinationen ohne Regelverstoß gegen das unabhängige Orakel; NordTech unverändert (41/41); Waterkant-Delta F01–F15 und O-11 regelgeprüft (10/10); keine Waterkant-Karte zwei oder mehr Tage zu spät. Offen: SK36 (O-11), Prüfhinweis NordTech SK15 (O-19), Ein-Tages-Verschiebungen (O-20) und die fachliche Bestätigung (Gate D)."
     },
     {
       "name": "C – Medien und Betrieb",

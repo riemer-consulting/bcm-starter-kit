@@ -12,6 +12,7 @@ Alle beobachteten Fehler und gescheiterten Tests bleiben hier stehen, auch wenn 
 | 1 | `5a61845` | vollständiger Gesamtlauf | 31 Prüfschritte, davon 30 inhaltlich ohne Befund; Medien mit bekannten Grenzwertbefunden; Replay NT und WK abweichend (Z1-03) → Produktkorrektur |
 | 2 | `33154fd` | Ergänzungstests N-16 (Browserabbruch) und N-17 (Rücksprung), Korrektur der Seed-Angabe; Produktquellen gegenüber Zyklus 1 byteweise gleich | vollständige Regression: alle Einzelprüfungen bis auf 7 bekannte Medien-Grenzwerte bestanden (828/835); Replay identisch; Negativtest-Prozess hing nach Abschluss (Z2-01) |
 | 3 | `6809dee` | Pegelkorrektur von drei Tondateien (freigegeben), Korrektur des Negativtests N-16; vollständige Regression | **33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen** |
+| 4 | `52f7c8f` | O-11: SK31 an LK23 gebunden, SK28 Pflichtkarte im Schwerpunkt Betrieb; Rollenabdeckung bei Zieldauer als Hinweis; neue Prüfungen; vollständige Regression | **33/33 Prüfschritte ohne Fehler, 836/836 Einzelprüfungen** |
 
 ## F-00 – Waterkant-Fehllauf (Testumgebungsfehler, frühere Runde)
 
@@ -71,4 +72,18 @@ Commit `6809dee`. Freigegeben durch die Spielleitung: Pegelkorrektur der drei To
 | Z3-04 | Waterkant O-11 | Bei der Ausarbeitung der Vorlage festgestellt: SK31 kommt in 22 von 50 Kombinationen verspätet, nicht nur bei 180 Min.; Orakel und Variantenprüfung erkennen „zu spät“ nicht | Szenariobefund und Lücke in der Prüfung | Rollenabdeckung wählt SK31 als einzige Logistikkarte; fehlt LK23, rutscht SK31 hinter LK27 | nicht umgesetzt (Entscheidung der Spielleitung, Dokument 13); O-11 aktualisiert |
 
 **Vollständige Regression Zyklus 3:** 33/33 Prüfschritte mit Exit-Code 0; 835/835 Einzelprüfungen. Darunter Negativtests 17/17, Medien 47/47 und 45/45, NordTech-Regression 41/41 in allen Aspekten, Browser 441/441 in 14 Übungen, Replay NT-90 und WK-90 identisch, Delta Waterkant 9/9.
+
+## Zyklus 4
+
+Commit `52f7c8f`, Auftrag „dann mal los mit O-11“ (Dokument 15). NordTech unverändert.
+
+| Nr | Bereich | Beobachtung | Klasse | Ursache | Maßnahme / Retest |
+|---|---|---|---|---|---|
+| Z4-01 | Variantenprüfung | Mit G (SK36 als Pflichtkarte Krisenführung) 3 Befunde „Pflichtkarte fehlt“ bei 45/60/90 Min. | Zielkonflikt Szenario ↔ Testregel | SK36 hängt an LK26, die in diesen Formaten nicht gespielt wird; die Regel verlangt Pflichtkarten in jeder Dauer | G zurückgenommen statt die Regel nach dem Anschlagen aufzuweichen; Entscheidung G1–G3 bei der Spielleitung (Dokument 15) |
+| Z4-02 | Drehbuchprüfung / eigene Vorlage | Mit A meldete die Drehbuchprüfung 1 Fehler („Logistikleitung bekam bei 60 Min. keine eigene Karte“). In Dokument 13 hatte ich angegeben, das sei nur ein Hinweis | Analysefehler in der Vorlage; Regelkonflikt mit der Leitlinie | Die Simulation wertete fehlende Abdeckung als Fehler | Regel im Sinne der Leitlinie geändert: bei Zieldauer Hinweis, sonst Fehler (`server/validate.js`). NordTech unverändert 0/0. Dokument 13 mit Korrekturvermerk |
+| Z4-03 | Neue Prüfung | Die Regel „Karte zwei oder mehr Tage nach ihrer Heimatlage“ findet bei NordTech SK15 (16/50) | Prüfhinweis im eingefrorenen Szenario | Rollenabdeckung bzw. Budget legt SK15 in Kurzformaten hinter die nächste gespielte Lage | keine Änderung (NordTech eingefroren); Einschätzung: Text relativ formuliert, kein Plausibilitätsfehler; Bewertung durch die Spielleitung (O-19) |
+| Z4-04 | Neue Prüfung | Eine naive Regel „jede Karte nach einer Lage eines späteren Tages“ ergäbe NordTech 261 und Waterkant 254 Treffer | Testentwurf | Ein-Tages-Verschiebungen sind dokumentiertes Engine-Verhalten bei übersprungenen Lagen | Regel auf zwei oder mehr Tage festgelegt, und zwar vor dem Abnahmelauf; Waterkant als harte Delta-Regel, beide Szenarien als Prüfhinweis im Variantenbericht. Ein-Tages-Fälle bleiben im bestehenden Abschnitt „über eine Tagesgrenze verschoben“ (O-20) |
+
+**Gegenprobe:** Die neue Delta-Regel O-11 schlägt gegen den alten Waterkant-Stand mit 5 von 6 Bedingungen an.
+**Vollständige Regression Zyklus 4:** 33/33 Prüfschritte, 836/836 Einzelprüfungen.
 

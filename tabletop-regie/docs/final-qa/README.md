@@ -10,7 +10,8 @@ Dieses Paket belegt die QA-Abnahme der BCM Tabletop-Regie mit den Drehbüchern N
 | `docs/final-qa/09-anhang-delta-regeln.md` | Regeln je Befund F01–F15 mit Beleg |
 | `docs/final-qa/referenz-sollwerte.json` | von Hand nachgerechnete Sollwerte (Eingabe der Tests) |
 | `docs/final-qa/gates.json`, `befunde.json`, `qa-status.json` | Gate-Bewertung, Befundliste, Stand für den Prüfstand `qa.html` |
-| `nachweis/` | Ergebnisse von Zyklus 3 (Commit `6809dee`, vollständiger Lauf, maßgeblich) |
+| `nachweis/` | Ergebnisse des jeweils letzten vollständigen Laufs (zuletzt Zyklus 4, Commit `52f7c8f`) |
+| `docs/final-qa/15-o11-umsetzung-zyklus4.md` | O-11: Umsetzung, Prüfhinweise, offene Entscheidung SK36 |
 | `docs/final-qa/14-nachtrag-zyklus3.md` | Nachtrag: Pegelkorrektur, N-16, alte und neue Prüfsummen, NordTech-Basis |
 | `docs/final-qa/13-o11-entscheidungsvorlage.md` | Alternativen zu O-11 (nicht umgesetzt) |
 | frühere Zyklen | im Paket `BCM-FINAL-QA-EVIDENCE.zip` (Zyklus 1 und 2; Prüfsumme in Dokument 14) |

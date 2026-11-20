@@ -1,6 +1,6 @@
 # 02 – Traceability-Matrix
 
-Anforderung → Implementierung → Testfall → tatsächliches Ergebnis → Nachweis (Stufe und Pfad). Stufen wie in Dokument 01 definiert; angegeben ist jeweils die **höchste** erreichte Stufe. „schwach“ kennzeichnet Prüfungen, bei denen Soll und Ist (teilweise) aus derselben Quelle stammen. Pfade relativ zum Nachweispaket; Testfallkennungen wie in Dokument 03. Alle Ergebnisse aus Zyklus 3 (vollständiger Lauf, Commit `6809dee`); Zyklen 1 und 2 siehe Dokument 10.
+Anforderung → Implementierung → Testfall → tatsächliches Ergebnis → Nachweis (Stufe und Pfad). Stufen wie in Dokument 01 definiert; angegeben ist jeweils die **höchste** erreichte Stufe. „schwach“ kennzeichnet Prüfungen, bei denen Soll und Ist (teilweise) aus derselben Quelle stammen. Pfade relativ zum Nachweispaket; Testfallkennungen wie in Dokument 03. Alle Ergebnisse aus Zyklus 4 (vollständiger Lauf, Commit `52f7c8f`); frühere Zyklen siehe Dokument 10.
 
 ## Plattform
 
@@ -52,12 +52,13 @@ Anforderung → Implementierung → Testfall → tatsächliches Ergebnis → Nac
 | S-04 | Wissensstand: vertrauliche Information nur bei der Rolle | Empfängerrouting | E2E O2 (Mails je Person = Karten ihrer Rolle) | 441/441 Einzelprüfungen in 14 Fällen | End-to-End im Browser | |
 | S-05 | Entscheidungen und Auswirkungen | `weichen` im Drehbuch | Integration (alle Kombinationen), E2E | NordTech 41/41, Waterkant 57/57 Läufe ohne Befund; Orakel-Selbsttest erkennt falsche Erwartungen | End-to-End im Browser | |
 | S-06 | Wirtschaftliche Berechnung | `nachspiel` | Orakel, REF R1…R6 | 14/14 | integriert, Sollwerte unabhängig | |
-| S-07 | Waterkant: Wiederanlaufabhängigkeiten, fachliche Freigaben (F02, F04) | LK13, LK19, LK06, LK10, LK14 | DELTA-F02, F04 | 9/9 Befunde mit erfüllten Regeln | durch Quellcode (Drehbuch) geprüft – **fachlich nicht geprüft** | `nachweis/delta/` |
-| S-08 | Waterkant: Vertrag, Zustimmung, Meilensteine, Kosten, Handbuch, Raster (F01, F03, F05, F12, F13, F15) | siehe 09 | DELTA | 9/9 Befunde mit erfüllten Regeln | durch Quellcode (Drehbuch) geprüft | |
-| S-09 | Waterkant: lange Formate enthalten Ursache und Rückkehr (F07) | Schwerpunkte | DELTA-F07 über Integrationsläufe | 9/9 Befunde mit erfüllten Regeln | integriert | |
+| S-07 | Waterkant: Wiederanlaufabhängigkeiten, fachliche Freigaben (F02, F04) | LK13, LK19, LK06, LK10, LK14 | DELTA-F02, F04 | 10/10 (F01–F15 und O-11) | durch Quellcode (Drehbuch) geprüft – **fachlich nicht geprüft** | `nachweis/delta/` |
+| S-08 | Waterkant: Vertrag, Zustimmung, Meilensteine, Kosten, Handbuch, Raster (F01, F03, F05, F12, F13, F15) | siehe 09 | DELTA | 10/10 (F01–F15 und O-11) | durch Quellcode (Drehbuch) geprüft | |
+| S-09 | Waterkant: lange Formate enthalten Ursache und Rückkehr (F07) | Schwerpunkte | DELTA-F07 über Integrationsläufe | 10/10 (F01–F15 und O-11) | integriert | |
 | S-10 | Rollenbeteiligung | `recommendRoles`, Drehbuch `zustaendig` | E2E Spielbrett je Lage; Variantenbericht | 441/441 Einzelprüfungen in 14 Fällen | End-to-End im Browser (Anzeige) | |
 | S-11 | NordTech unverändert (Karten, Chronologie, 4 Weichen, Folgen, Rechnung, Routing, Zustellung, Medien, 8 Kriterien) | eingefroren seit `79c9b89` | Regression (41 Kombinationen über den Server) | 41/41 Kombinationen in allen Aspekten identisch | integriert | `nachweis/regression/` |
 | S-12 | Waterkant-Alarme mit Übungskennzeichnung | Drehbuch `uebungshinweis`, Abschrift; `tools/medien/waterkant-toene.py` | MED-WK Alarmregeln; Bühne G (Hinweis sichtbar) | NordTech 47/47, Waterkant 45/45 technisch in Ordnung (nach Pegelkorrektur in Zyklus 3); 0/25 Töne akustisch abgenommen | Browser (Bühnenhinweis), Quellcode (gesprochene Kennzeichnung); **akustisch nicht abgenommen** | |
+| S-16 | Keine vertrauliche Karte zwei oder mehr Tage nach ihrer Heimatlage (Waterkant) | `zuBeginnVon` SK31; Engine | DELTA-O-11 (50 Kombinationen, Gegenprobe gegen alten Stand) | erfüllt | Regelprüfung über die Engine | `nachweis/delta/` |
 | S-13 | Dramaturgische Zielkonflikte, Debriefing, Lernziele | Drehbuch, Handbuch | – | – | **nicht getestet** (Gate D) | |
 | S-14 | Fachliche Richtigkeit Brand, Strom, Verträge, Räumung, Kosten | – | – | – | **nicht getestet** (Gate D) | |
 | S-15 | Wirkung in einer Übung mit Menschen | – | – | – | **nicht getestet** | |

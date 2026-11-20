@@ -1,6 +1,6 @@
 # 13 – Entscheidungsvorlage O-11 (Waterkant: SK31, SK28, SK36)
 
-**Status:** Vorlage, **nicht umgesetzt**. Grundlage: Drehbuch und Engine im Stand `6809dee` (Zyklus 3). Die Wirkungen sind mit der Ablauf-Engine an Kopien des Drehbuchs im Speicher berechnet. Geprüft wurden 50 Kombinationen: 5 Dauern × 5 Schwerpunkte, jeweils mit empfohlener Besetzung („empf“) und mit allen Rollen („alle“). Am Projekt wurde nichts geändert.
+**Status:** In Zyklus 4 umgesetzt sind A (SK31) und E (SK28). G (SK36) ist zurückgestellt und braucht eine gesonderte Entscheidung (Dokument 15). Ursprünglicher Text der Vorlage: Grundlage: Drehbuch und Engine im Stand `6809dee` (Zyklus 3). Die Wirkungen sind mit der Ablauf-Engine an Kopien des Drehbuchs im Speicher berechnet. Geprüft wurden 50 Kombinationen: 5 Dauern × 5 Schwerpunkte, jeweils mit empfohlener Besetzung („empf“) und mit allen Rollen („alle“). Am Projekt wurde nichts geändert.
 **Leitlinie der Spielleitung:** Fachliche und zeitliche Plausibilität haben Vorrang vor einer vollständigen Kartenverteilung. Eine Rolle ohne eigene vertrauliche Karte in einem Kurzformat ist eher hinnehmbar als eine Information, die sie zu diesem Zeitpunkt noch nicht oder nicht mehr so wissen dürfte.
 
 ## 1. Befund – größer als bisher dokumentiert
@@ -40,7 +40,7 @@ Für SK28 und SK36 (Spieltiefe):
 
 ## 3. Empfehlung (zur Entscheidung durch die Spielleitung)
 
-1. **SK31: Alternative A.** Sie folgt Ihrer Leitlinie ohne Ausnahme: In keiner Kombination kommt SK31 mehr verspätet. Die Kosten sind 21 Kombinationen, in denen die Logistikleitung besetzt ist, aber keine eigene Karte bekommt. Das sind fast ausschließlich Besetzungen mit allen Rollen in kurzen Formaten, die das Handbuch ohnehin nicht empfiehlt. Die Drehbuchprüfung (`server/validate.js`) weist das in ihren Simulationen als Hinweis aus, nicht als Fehler; die statische Prüfung bleibt erfüllt, weil die Logistikleitung mit SK16 eine terminierte eigene Karte hat. Wer die Lücke schließen will, ergänzt später A+; dafür braucht es einen neuen, fachlich geprüften Kartentext.
+1. **SK31: Alternative A.** Sie folgt Ihrer Leitlinie ohne Ausnahme: In keiner Kombination kommt SK31 mehr verspätet. Die Kosten sind 21 Kombinationen, in denen die Logistikleitung besetzt ist, aber keine eigene Karte bekommt. Das sind fast ausschließlich Besetzungen mit allen Rollen in kurzen Formaten, die das Handbuch ohnehin nicht empfiehlt. Die Drehbuchprüfung (`server/validate.js`) weist das in ihren Simulationen als Hinweis aus, nicht als Fehler; die statische Prüfung bleibt erfüllt, weil die Logistikleitung mit SK16 eine terminierte eigene Karte hat. **[Korrektur Zyklus 4: Diese Aussage war falsch. Die Simulation wertete fehlende Rollenabdeckung als Fehler. Die Regel wurde im Sinne der Leitlinie zum Hinweis geändert (Dokument 15, Befund Z4-02).]** Wer die Lücke schließen will, ergänzt später A+; dafür braucht es einen neuen, fachlich geprüften Kartentext.
 2. **SK28: Alternative E**, **SK36: Alternative G.** Beide kommen damit nur in den Formaten, zu denen sie fachlich gehören, und immer zu Beginn ihrer Lage.
 3. **Nicht empfohlen:** C (greift in die eingefrorene NordTech-Logik ein), F (überlädt Kurzformate), B und D (die Information bliebe zeitlich unplausibel).
 

@@ -112,13 +112,13 @@
   {
     "id": "O-11",
     "bereich": "Szenario",
-    "text": "SK31 kommt in 22 von 50 Kombinationen (5 Dauern × 5 Schwerpunkte, empfohlene und volle Besetzung) nach LK25–LK28, meist nach LK27 (Sonntag), obwohl seine Heimatlage LK23 (Freitag) ist; SK28 und SK36 werden in keiner Kombination gespielt.",
+    "text": "SK31 an LK23 gebunden, SK28 Pflichtkarte Betrieb (Zyklus 4); offen: SK36",
     "nachweis": "Dokument 11 des Review-Pakets, Variantenbericht",
-    "schwere": "mittel",
+    "schwere": "niedrig",
     "gate": "B",
-    "naechsterSchritt": "Entscheidung der Spielleitung anhand Dokument 13 (Empfehlung: A für SK31, E für SK28, G für SK36)",
+    "naechsterSchritt": "Entscheidung SK36 (G1–G3, Dokument 15)",
     "szenario": "waterkant",
-    "status": "offen"
+    "status": "teilweise geschlossen"
   },
   {
     "id": "O-12",
@@ -196,5 +196,27 @@
     "naechsterSchritt": "Zyklus 3: Absturz per launchServer/SIGKILL, Prozessende als Bedingung; 17/17 mit Exit-Code 0",
     "szenario": "beide",
     "status": "geschlossen"
+  },
+  {
+    "id": "O-19",
+    "bereich": "Szenario (NordTech)",
+    "text": "SK15 in 16/50 Kombinationen zwei oder mehr Tage nach Heimatlage LK21; Text relativ formuliert",
+    "nachweis": "15",
+    "schwere": "niedrig",
+    "gate": "B/D",
+    "naechsterSchritt": "Bewertung durch die Spielleitung",
+    "szenario": "nordtech",
+    "status": "offen"
+  },
+  {
+    "id": "O-20",
+    "bereich": "Szenario (beide)",
+    "text": "Ein-Tages-Verschiebungen vertraulicher Karten (NT 245, WK 254 Fälle in 50 Kombinationen) redaktionell nicht geprüft",
+    "nachweis": "15",
+    "schwere": "mittel",
+    "gate": "D",
+    "naechsterSchritt": "redaktionelle Durchsicht im Fachreview",
+    "szenario": "beide",
+    "status": "offen"
   }
 ]

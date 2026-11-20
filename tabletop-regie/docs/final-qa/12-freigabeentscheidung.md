@@ -1,6 +1,6 @@
 # 12 – Freigabeentscheidung
 
-**Geprüfter Stand:** Commit `6809dee` (Zyklus 3, vollständiger Lauf: 33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen). Vorherige Zyklen: 2 `33154fd`, 1 `5a61845`.
+**Geprüfter Stand:** Commit `52f7c8f` (Zyklus 4, vollständiger Lauf: 33/33 Prüfschritte ohne Fehler, 836/836 Einzelprüfungen). Baseline NordTech: Release `nordtech-rc1` (`d89f902`). Vorherige Zyklen: 3 `6809dee`, 2 `33154fd`, 1 `5a61845`.
 **Ergebnis in einem Satz:** Die Software ist für beide Szenarien technisch belastbar geprüft. Eine **Pilotfreigabe wird mit diesem Paket nicht erteilt**: Medien und Betrieb im Raum (Gate C) sowie die fachlich-didaktische Abnahme (Gate D) sind offen. Die endgültige Bewertung erfolgt im unabhängigen Review anhand dieses Pakets.
 
 ## Die vier Gates
@@ -19,7 +19,7 @@ Jedes Gate ist für sich bewertet. Keines ist bestanden, weil ein anderes bestan
 | Szenario | Empfehlung | Voraussetzungen |
 |---|---|---|
 | NordTech | **bereit für eine moderierte Generalprobe** mit einer Testgruppe; technische Medienbefunde in Zyklus 3 behoben | Hörtest und Technikprobe im Raum (Gate C); Testpostfächer der Organisation; danach Entscheidung der Spielleitung über den Pilot |
-| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, Entscheidung zu O-11 (Vorlage: Dokument 13); Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
+| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, Entscheidung zu SK36 (O-11, Dokument 15); Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
 
 ## Selbstprüfung (Abschnitt 16 des Auftrags)
 
