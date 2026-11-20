@@ -19,7 +19,7 @@ Jedes Gate ist für sich bewertet. Keines ist bestanden, weil ein anderes bestan
 | Szenario | Empfehlung | Voraussetzungen |
 |---|---|---|
 | NordTech | **bereit für eine moderierte Generalprobe** mit einer Testgruppe; technische Medienbefunde in Zyklus 3 behoben | Hörtest und Technikprobe im Raum (Gate C); Testpostfächer der Organisation; danach Entscheidung der Spielleitung über den Pilot |
-| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, Entscheidung zu SK36 (O-11, Dokument 15); Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
+| Waterkant | **bereit für das fachliche Review**, danach Generalprobe | Fachprüfung F01–F05/F13 durch die zuständigen Stellen (Gate D), Hörtest der Alarm-Einspielungen mit vorheriger Information von Empfang und Sicherheitsdienst, SK36 nur von Hand laut Handbuch (O-11 geschlossen); Format 90 Minuten in einem Zeitfenster ab 120 Minuten |
 
 ## Selbstprüfung (Abschnitt 16 des Auftrags)
 

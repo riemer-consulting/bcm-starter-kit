@@ -13,6 +13,7 @@ Alle beobachteten Fehler und gescheiterten Tests bleiben hier stehen, auch wenn 
 | 2 | `33154fd` | Ergänzungstests N-16 (Browserabbruch) und N-17 (Rücksprung), Korrektur der Seed-Angabe; Produktquellen gegenüber Zyklus 1 byteweise gleich | vollständige Regression: alle Einzelprüfungen bis auf 7 bekannte Medien-Grenzwerte bestanden (828/835); Replay identisch; Negativtest-Prozess hing nach Abschluss (Z2-01) |
 | 3 | `6809dee` | Pegelkorrektur von drei Tondateien (freigegeben), Korrektur des Negativtests N-16; vollständige Regression | **33/33 Prüfschritte ohne Fehler, 835/835 Einzelprüfungen** |
 | 4 | `52f7c8f` | O-11: SK31 an LK23 gebunden, SK28 Pflichtkarte im Schwerpunkt Betrieb; Rollenabdeckung bei Zieldauer als Hinweis; neue Prüfungen; vollständige Regression | **33/33 Prüfschritte ohne Fehler, 836/836 Einzelprüfungen** |
+| 5 (gezielt) | `824e51c` | SK36 nach Weg G2: Handbuchabschnitt und Browsertest; Produkt unverändert | Drehbuchprüfung ohne Fehler, Delta 10/10, SK36-Test 7/7, Varianten ohne Befund |
 
 ## F-00 – Waterkant-Fehllauf (Testumgebungsfehler, frühere Runde)
 
@@ -86,4 +87,13 @@ Commit `52f7c8f`, Auftrag „dann mal los mit O-11“ (Dokument 15). NordTech un
 
 **Gegenprobe:** Die neue Delta-Regel O-11 schlägt gegen den alten Waterkant-Stand mit 5 von 6 Bedingungen an.
 **Vollständige Regression Zyklus 4:** 33/33 Prüfschritte, 836/836 Einzelprüfungen.
+
+## Zyklus 5 (gezielt)
+
+Commit `824e51c`. Entscheidung der Spielleitung zu SK36: Weg G2 (von Hand in langen Formaten). Geändert: Handbuch-Generator und Handbuch, neuer Browsertest, Gesamtlauf und Prüfstand. Drehbuch, Server und Oberfläche sind gegenüber `52f7c8f` unverändert.
+
+| Nr | Bereich | Beobachtung | Klasse | Ursache | Maßnahme / Retest |
+|---|---|---|---|---|---|
+| Z5-01 | Moderation | Die Liste der nicht eingeplanten vertraulichen Karten (`unscheduledSonderlagekarten`) zeigt nur Karten ohne Drehbuchminute; SK36 erscheint dort nicht | Feststellung | SK36 hat eine Drehbuchminute; sie erscheint stattdessen unter „Nicht eingeplante Karten“ (übersprungene Ereignisse) mit „Jetzt einsetzen“ | Handbuch beschreibt den tatsächlichen Weg; per Browsertest belegt |
+| Z5-02 | Test SK36 | Erster Lauf 7/7, aber K3 hatte mehr als die SK36-Zeile erfasst (Text einer anderen Karte) | Testfehler (zu breiter Selektor) | `closest('div').parentElement` griff auf die ganze Liste | Zeile exakt über das Elternelement der Schaltfläche, Eindeutigkeit geprüft; erneut 7/7, K3 jetzt eindeutig auf SK36 bezogen |
 

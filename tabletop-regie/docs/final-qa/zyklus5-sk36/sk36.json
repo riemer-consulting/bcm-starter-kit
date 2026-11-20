@@ -1,0 +1,47 @@
+{
+  "zeitpunkt": "2026-11-20T11:52:14.444Z",
+  "pruefungen": [
+    {
+      "id": "K1",
+      "name": "SK36 nicht automatisch eingeplant",
+      "ok": true,
+      "beobachtet": "nicht im Plan"
+    },
+    {
+      "id": "K2",
+      "name": "LK26 ist in diesem Format im Plan",
+      "ok": true,
+      "beobachtet": "LK03 LK04 LK05 LK06 LK09 LK14 LK15 LK18 LK20 LK22 LK24 LK26 LK27 LK28"
+    },
+    {
+      "id": "K3",
+      "name": "vor LK26 nicht als „passt jetzt“ angeboten",
+      "ok": true,
+      "beobachtet": "Vertrauliche Karte für Gebäudetechnik und Facility Management · gehört zu „Die B"
+    },
+    {
+      "id": "K4",
+      "name": "zu Beginn von LK26 unter „Nicht eingeplante Karten“ mit „passt jetzt“",
+      "ok": true,
+      "beobachtet": "Vertrauliche Karte für Gebäudetechnik und Facility Management passt jetzt · gehört zu „Die Brandursache“ (Samstag 15:00 "
+    },
+    {
+      "id": "K5",
+      "name": "„Jetzt einsetzen“ stellt SK36 genau einmal an die richtige Rolle zu",
+      "ok": true,
+      "beobachtet": "facility-management: zugestellt"
+    },
+    {
+      "id": "K6",
+      "name": "genau eine Mail an die Person der Rolle",
+      "ok": true,
+      "beobachtet": "person3@example.com"
+    },
+    {
+      "id": "K7",
+      "name": "SK36-Text nicht auf der Bühne",
+      "ok": true,
+      "beobachtet": "geprüft"
+    }
+  ]
+}

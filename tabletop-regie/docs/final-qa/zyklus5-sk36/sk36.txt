@@ -1,0 +1,8 @@
+BESTANDEN K1 SK36 nicht automatisch eingeplant – nicht im Plan
+BESTANDEN K2 LK26 ist in diesem Format im Plan – LK03 LK04 LK05 LK06 LK09 LK14 LK15 LK18 LK20 LK22 LK24 LK26 LK27 LK28
+BESTANDEN K3 vor LK26 nicht als „passt jetzt“ angeboten – Vertrauliche Karte für Gebäudetechnik und Facility Management · gehört zu „Die B
+BESTANDEN K4 zu Beginn von LK26 unter „Nicht eingeplante Karten“ mit „passt jetzt“ – Vertrauliche Karte für Gebäudetechnik und Facility Management passt jetzt · gehört zu „Die Brandursache“ (Samstag 15:00 
+BESTANDEN K5 „Jetzt einsetzen“ stellt SK36 genau einmal an die richtige Rolle zu – facility-management: zugestellt
+BESTANDEN K6 genau eine Mail an die Person der Rolle – person3@example.com
+BESTANDEN K7 SK36-Text nicht auf der Bühne – geprüft
+SK36 von Hand: 7/7 bestanden

@@ -112,13 +112,13 @@
   {
     "id": "O-11",
     "bereich": "Szenario",
-    "text": "SK31 an LK23 gebunden, SK28 Pflichtkarte Betrieb (Zyklus 4); offen: SK36",
+    "text": "SK31 an LK23, SK28 Pflichtkarte Betrieb (Zyklus 4); SK36 von Hand laut Handbuch (Zyklus 5, Test 7/7)",
     "nachweis": "Dokument 11 des Review-Pakets, Variantenbericht",
     "schwere": "niedrig",
     "gate": "B",
-    "naechsterSchritt": "Entscheidung SK36 (G1–G3, Dokument 15)",
+    "naechsterSchritt": "–",
     "szenario": "waterkant",
-    "status": "teilweise geschlossen"
+    "status": "geschlossen"
   },
   {
     "id": "O-12",

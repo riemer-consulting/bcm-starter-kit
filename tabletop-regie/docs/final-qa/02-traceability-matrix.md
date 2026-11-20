@@ -59,6 +59,7 @@ Anforderung → Implementierung → Testfall → tatsächliches Ergebnis → Nac
 | S-11 | NordTech unverändert (Karten, Chronologie, 4 Weichen, Folgen, Rechnung, Routing, Zustellung, Medien, 8 Kriterien) | eingefroren seit `79c9b89` | Regression (41 Kombinationen über den Server) | 41/41 Kombinationen in allen Aspekten identisch | integriert | `nachweis/regression/` |
 | S-12 | Waterkant-Alarme mit Übungskennzeichnung | Drehbuch `uebungshinweis`, Abschrift; `tools/medien/waterkant-toene.py` | MED-WK Alarmregeln; Bühne G (Hinweis sichtbar) | NordTech 47/47, Waterkant 45/45 technisch in Ordnung (nach Pegelkorrektur in Zyklus 3); 0/25 Töne akustisch abgenommen | Browser (Bühnenhinweis), Quellcode (gesprochene Kennzeichnung); **akustisch nicht abgenommen** | |
 | S-16 | Keine vertrauliche Karte zwei oder mehr Tage nach ihrer Heimatlage (Waterkant) | `zuBeginnVon` SK31; Engine | DELTA-O-11 (50 Kombinationen, Gegenprobe gegen alten Stand) | erfüllt | Regelprüfung über die Engine | `nachweis/delta/` |
+| S-17 | SK36 von Hand nur mit LK26 (Handbuch) | Handbuch Abschnitt 6; „Nicht eingeplante Karten“, `POST /api/run/promote` | SK36-Test K1–K7 | 7/7 | End-to-End im Browser (Einsetzen per Klick) | `zyklus5-sk36/` |
 | S-13 | Dramaturgische Zielkonflikte, Debriefing, Lernziele | Drehbuch, Handbuch | – | – | **nicht getestet** (Gate D) | |
 | S-14 | Fachliche Richtigkeit Brand, Strom, Verträge, Räumung, Kosten | – | – | – | **nicht getestet** (Gate D) | |
 | S-15 | Wirkung in einer Übung mit Menschen | – | – | – | **nicht getestet** | |

@@ -13,17 +13,18 @@
 
 Am Drehbuch geändert sind genau zwei Felder: `sonderlagekarten[SK31].zuBeginnVon` und `schwerpunkte[betrieb].pflicht`. Kein Kartentext ist geändert. NordTech ist unverändert (Drehbuch, Engine, Rechnung, Medien).
 
-## 2. Nicht umgesetzt – SK36 (G), gesonderte Entscheidung nötig
+## 2. SK36 – Weg G2: von Hand in langen Formaten (Zyklus 5)
 
-G sah SK36 als Pflichtkarte im Schwerpunkt „Krisenführung und Personenschutz“ vor. SK36 hängt an LK26, und LK26 wird bei 45, 60 und 90 Minuten Krisenführung nicht gespielt. Die Variantenprüfung verlangt seit jeher, dass jede Pflichtkarte in **jeder** Dauer kommt (frühere Runde: SK16 wurde deshalb durch SK08 ersetzt). Mit G meldete sie 3 Befunde. Als bevorzugte Karte statt Pflichtkarte wird SK36 in keiner Kombination eingeplant. G wurde deshalb zurückgenommen, statt die Testregel nach dem Anschlagen aufzuweichen.
+G sah SK36 als Pflichtkarte im Schwerpunkt „Krisenführung und Personenschutz“ vor. SK36 hängt an LK26, und LK26 wird bei 45, 60 und 90 Minuten Krisenführung nicht gespielt. Die Variantenprüfung verlangt, dass jede Pflichtkarte in jeder Dauer kommt; mit G meldete sie 3 Befunde. Als bevorzugte Karte wird SK36 nie eingeplant. G wurde deshalb zurückgenommen, statt die Testregel aufzuweichen.
 
-Möglichkeiten für Sie:
+**Entscheidung der Spielleitung: G2.** SK36 wird nicht automatisch eingeplant. Das Waterkant-Moderationshandbuch (Abschnitt 6, „SK36 – von Hand in langen Formaten“) beschreibt die Karte für den Einsatz von Hand:
+- **Wann:** nur wenn LK26 „Die Brandursache“ gespielt wird, direkt zu Beginn (bei empfohlener Besetzung: 120/180 Min. Krisenführung, 180 Min. IT).
+- **Wie:** „Nicht eingeplante Karten“ → SK36 („passt jetzt“) → „Jetzt einsetzen“.
+- An wen, Text und Beobachtungshinweise stehen im Handbuch.
 
-| | Weg | Folge |
-|---|---|---|
-| G1 | Testregel bewusst ändern: Pflichtkarte nur „sofern erreichbar“ (so arbeiten Engine und Orakel bereits) | SK36 in 120/180 Krisenführung (3 von 50 Kombinationen) |
-| G2 | SK36 im Handbuch als manuell auslösbare Karte für lange Formate führen | kein Eingriff in Regeln oder Plan |
-| G3 | SK36 bleibt ungenutzt | Lernimpuls „Zuständigkeit USV-Wartung“ nur über Abschluss und Debriefing |
+**Nachweis (Commit `824e51c`, `zyklus5-sk36/`):** Browsertest `tools/qa/sk36-manuell.js` mit 7/7 bestanden (Waterkant 120 Min. Krisenführung): SK36 nicht im Plan, LK26 im Plan, vor LK26 kein „passt jetzt“, zu Beginn von LK26 „passt jetzt“ in der Moderation (Bildschirmfoto), Klick auf „Jetzt einsetzen“ stellt genau einmal an die Gebäudetechnik zu, genau eine Mail, kein Text auf der Bühne. Delta 10/10 (das Handbuch entspricht dem Generator), Drehbuchprüfung und Variantenprüfung ohne Fehler. Drehbuch, Server und Oberfläche sind gegenüber Zyklus 4 unverändert, deshalb gezielter Lauf statt vollständiger Regression. Der neue Test ist in den Gesamtlauf aufgenommen.
+
+**Hinweis für die Moderation:** Der Server prüft beim „Jetzt einsetzen“ keine Voraussetzungen. Dass SK36 nur mit LK26 kommt, ist eine Regel des Handbuchs; die Oberfläche unterstützt sie mit „passt jetzt“, erzwingt sie aber nicht.
 
 ## 3. Neue Prüfungen
 

@@ -1,0 +1,16 @@
+
+scenario.nordtech.json: 0 Fehler, 0 Hinweise
+
+scenario.waterkant.json: 0 Fehler, 10 Hinweise
+  Hinweis Weiche W1/herunterfahren: Folge-Lagekarte LK19 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W1/weiterlaufen: Folge-Lagekarte LK08 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W2/spaeter: Folge-Lagekarte LK18 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W3/bergen: Folge-Lagekarte LK19 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W3/bergen: Folge-Lagekarte LK23 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W3/abwarten: Folge-Lagekarte LK23 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W4/minimal: Folge-Lagekarte LK25 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W4/ausbauen: Folge-Lagekarte LK25 hat nicht Priorität 1 – die Folge kann entfallen.
+  Hinweis Weiche W4/ausbauen: LK25 hat nicht Priorität 1 – die Folgekarte kann entfallen.
+  Hinweis Rolle "Leitung Logistik und Zentrallager" bekam bei 60 Min. keine eigene Karte (Besetzung: 13 Rollen) – zulässig, wenn ihre Karten zeitlich nicht passen.
+
+Alle Drehbücher in Ordnung.

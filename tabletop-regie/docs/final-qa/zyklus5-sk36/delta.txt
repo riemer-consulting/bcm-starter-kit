@@ -1,0 +1,10 @@
+F01 Regeln erfüllt: Vertragslage Ausweich-Rack (LK13/SK22)
+F02 Regeln erfüllt: Wiederanlaufabhängigkeiten (LK13, LK19)
+F03 Regeln erfüllt: Meilensteine Serverraum (Zugang, Reinigung, Freigabe, Produktivbetrieb)
+F04 Regeln erfüllt: Sichere Brandfreigabe nach Lithium-Ionen-Brand
+F05 Regeln erfüllt: Zustimmungspfad bei zwölf Monaten Bindung (W4, SK46)
+F07 Regeln erfüllt: Brandursache und Rückkehrentscheidung in langen Formaten (LK24, LK26, LK28)
+F12 Regeln erfüllt: Szenariospezifisches Bewertungsraster
+F13 Regeln erfüllt: Kostenklassifizierung je Posten
+F15 Regeln erfüllt: Waterkant-Moderationshandbuch
+O-11 Regeln erfüllt: Zeitliche Plausibilität vertraulicher Karten (SK31, SK28; Entscheidung der Spielleitung)
