@@ -1726,7 +1726,8 @@
       "fallbackEmpfaenger": [
         "schichtleiter-zentrallager",
         "leiter-einkauf"
-      ]
+      ],
+      "zuBeginnVon": "LK23"
     },
     {
       "id": "SK32",
@@ -2740,7 +2741,8 @@
         "Wo hätte eine vorbereitete Papierlösung geholfen?"
       ],
       "pflicht": [
-        "SK08"
+        "SK08",
+        "SK28"
       ]
     }
   ]

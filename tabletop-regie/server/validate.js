@@ -184,6 +184,12 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
   const rand = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
   const problems = new Map();
   const note = (key, msg) => { if (!problems.has(key)) problems.set(key, msg); };
+  // Rollenabdeckung bei Zieldauer nur als Hinweis: Zeitliche und fachliche Plausibilität haben
+  // Vorrang vor einer vollständigen Kartenverteilung (Entscheidung der Spielleitung zu O-11).
+  // Eine Rolle ohne eigene Karte in einem Kurzformat ist zulässig, eine verfrühte oder verspätete
+  // Information nicht. In den Modi „Erprobte Zeiten“ und „berechnet“ bleibt es ein Fehler.
+  const hinweise = new Map();
+  const hinweis = (key, msg) => { if (!hinweise.has(key)) hinweise.set(key, msg); };
   for (let i = 0; i < simulations; i++) {
     const n = 1 + Math.floor(rand() * realRoles.length);
     const staffed = realRoles.slice().sort(() => rand() - 0.5).slice(0, n).map(r => r.id);
@@ -235,7 +241,7 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
       else recipients.add(rid);
     });
     staffed.forEach(rid => {
-      if (!recipients.has(rid)) note('cov:' + rid, `Rolle "${(scenario.roles.find(r => r.id === rid) || {}).funktion}" bekam bei ${targetMinutes} Min. keine eigene Karte (Besetzung: ${n} Rollen).`);
+      if (!recipients.has(rid)) hinweis('cov:' + rid, `Rolle "${(scenario.roles.find(r => r.id === rid) || {}).funktion}" bekam bei ${targetMinutes} Min. keine eigene Karte (Besetzung: ${n} Rollen) – zulässig, wenn ihre Karten zeitlich nicht passen.`);
     });
 
     ['authored', 'computed'].forEach(mode => {
@@ -249,6 +255,7 @@ function validateScenario(scenario, { simulations = 400 } = {}) {
     });
   }
   problems.forEach(msg => errors.push(msg));
+  hinweise.forEach(msg => warnings.push(msg));
   return { errors, warnings };
 }
 

@@ -84,6 +84,20 @@ if ((s.weichen || []).length) {
 }
 w('### Vertrauliche Karten, die über eine Tagesgrenze verschoben werden', '', 'Hinweis: Fehlt die Heimatlage einer vertraulichen Karte im Plan, kommt sie mit der nächsten gespielten Lage. Liegt diese an einem anderen Wochentag, müssen Zeitangaben im Kartentext dazu passen (zeitneutral formulieren oder die Karte an eine Kernlage binden).', '',
   ...(Object.keys(verschoben).length ? Object.entries(verschoben).map(([id, v]) => `- **${id}** (${v.size}×): ${[...v].slice(0, 3).join('; ')}${v.size > 3 ? ' …' : ''}`) : ['- keine']), '');
+// ---- Mehr als einen Tag zu spät (Prüfhinweis, O-11): Tagesindex entlang der Drehbuchreihenfolge,
+// damit auch ein Montag der Folgewoche als späterer Tag zählt. Geprüft mit empfohlener und voller Besetzung.
+const tagIndex = (() => { const m = {}; let t = 0, vor = null; s.lagekarten.slice().sort((a, b) => a.minuteOffset - b.minuteOffset).forEach(l => { const d = l.simZeit.split(' ')[0]; if (vor !== null && d !== vor) t++; vor = d; m[l.id] = t; }); return m; })();
+const heimatVon = k => k.zuBeginnVon || (typeof k.minuteOffset === 'number' ? (s.lagekarten.filter(l => l.minuteOffset <= k.minuteOffset).sort((a, b) => b.minuteOffset - a.minuteOffset)[0] || {}).id : null);
+const zuSpaet = {};
+const alleRollen = s.roles.filter(r => r.id !== 'teilnehmer').map(r => r.id);
+for (const besetzung of ['empfohlen', 'alle Rollen']) for (const m of DAUERN) for (const sp of SP) {
+  const { p } = plan(m, sp, besetzung === 'alle Rollen' ? alleRollen : null); let maxTag = -1, letzte = null;
+  p.schedule.forEach(ev => { if (ev.type === 'lagekarte') { if (tagIndex[ev.id] > maxTag) { maxTag = tagIndex[ev.id]; } letzte = ev.id; return; }
+    const k = s.sonderlagekarten.find(x => x.id === ev.id); const h = k && heimatVon(k); if (!h) return;
+    if (maxTag - tagIndex[h] >= 2) (zuSpaet[k.id] = zuSpaet[k.id] || []).push(`${m} Min. ${spLabel(sp)}, ${besetzung}: nach ${letzte} (${lk(letzte).simZeit}), Heimat ${h} (${lk(h).simZeit})`); });
+}
+w('### Vertrauliche Karten mindestens zwei Tage nach ihrer Heimatlage (Prüfhinweis)', '', 'Hinweis, kein automatischer Befund: Die Karte kommt erst, nachdem der Tisch schon Lagen von mindestens zwei Tagen später gesehen hat (Prüfung mit empfohlener Besetzung und mit allen Rollen, je 25 Kombinationen). Ob das inhaltlich trägt, hängt vom Kartentext ab und ist fachlich zu bewerten. Eine Verschiebung um genau einen Tag steht im Abschnitt davor.', '',
+  ...(Object.keys(zuSpaet).length ? Object.entries(zuSpaet).map(([id, v]) => `- **${id}** (${v.length} von 50 Kombinationen): „${s.sonderlagekarten.find(x => x.id === id).text.slice(0, 110)}…“ – z. B. ${v.slice(0, 2).join('; ')}${v.length > 2 ? ' …' : ''}`) : ['- keine']), '');
 w('### Ablauf je Kombination (Lagen, ausgelassene Lagen, vertrauliche Karten → Empfänger)', '');
 detail.forEach(d => w(`- **${d.m} Min. · ${spLabel(d.sp)}** – gespielt: ${d.lks.join(' ')} · ausgelassen: ${d.skipped.join(' ') || '–'} · Rollen (${d.ids.length}): ${d.ids.join(', ')} · vertraulich: ${d.sks.join(', ')} · Weichen: ${d.weichen.join(', ') || '–'}`));
 w('');
@@ -126,6 +140,6 @@ if (W.length) {
 w('## Gesamtergebnis', '', fehler.length ? '**Befunde:**\n\n' + fehler.map(f => '- ' + f).join('\n') : '**Keine Befunde in den automatisch geprüften Regeln** (Reihenfolge, Abhängigkeiten, Zeitbindung, Dauer, Pflichtkarten, Einsetzbarkeit der Überraschungen, Folgen nach ihrer Entscheidung, Folgekarten, Posten, Rechnung). **Nicht automatisch geprüft:** inhaltliche Widersprüche zwischen Texten (z. B. Zusätze verschiedener Entscheidungen in derselben Lage) – dafür die fachliche Prüfung und die Hinweisabschnitte oben.', '');
 fs.writeFileSync(outFile, out.join('\n'));
 // maschinenlesbare Fassung (optional, 3. Argument): Befunde mit Kennung
-if (process.argv[4]) fs.writeFileSync(process.argv[4], JSON.stringify({ datei: path.basename(file), werkzeug: 'tools/varianten.js', befunde: fehler.map((f, i) => ({ id: `V${String(i + 1).padStart(3, '0')}`, text: f })), ergebnis: fehler.length ? 'Befunde' : 'keine Befunde in den automatisch geprüften Regeln' }, null, 2));
+if (process.argv[4]) fs.writeFileSync(process.argv[4], JSON.stringify({ datei: path.basename(file), werkzeug: 'tools/varianten.js', befunde: fehler.map((f, i) => ({ id: `V${String(i + 1).padStart(3, '0')}`, text: f })), pruefhinweiseZweiTage: Object.fromEntries(Object.entries(zuSpaet).map(([id, v]) => [id, v.length])), ergebnis: fehler.length ? 'Befunde' : 'keine Befunde in den automatisch geprüften Regeln' }, null, 2));
 console.log(path.basename(file), fehler.length ? 'BEFUNDE: ' + fehler.length : 'ok');
 process.exitCode = fehler.length ? 1 : 0;

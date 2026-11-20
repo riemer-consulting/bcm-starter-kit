@@ -1,4 +1,4 @@
-// Delta-Abnahme Waterkant: prüft je Befund der Fremdprüfung (F01–F05, F07, F12, F13, F15),
+// Delta-Abnahme Waterkant: prüft je Befund der Fremdprüfung (F01–F05, F07, F12, F13, F15) und O-11,
 // ob die beschlossene Korrektur im Drehbuch bzw. in den Begleitdateien steht und die
 // ursprünglich beanstandete Formulierung nicht mehr vorkommt.
 // Stufe: Regelprüfung am Drehbuch (Text- und Strukturregeln), bei F07 zusätzlich anhand der
@@ -81,6 +81,29 @@ const nirgends = phrase => { const t = alleTexte.filter(x => x.t.includes(phrase
     s.weichen.forEach(w => R(b, `Entscheidung ${w.id} im Handbuch`, hb.includes(w.frage), w.frage.slice(0, 80)));
     ['B7', 'echter Alarm', 'Abbruch', 'Debriefing'].forEach(w => R(b, `Abschnitt/Begriff „${w}“`, hb.includes(w), w)); } }
 
+{ const b = F('O-11', 'Zeitliche Plausibilität vertraulicher Karten (SK31, SK28; Entscheidung der Spielleitung)');
+  const engine = require(path.join(ROOT, 'server', 'runEngine.js'));
+  const k31 = karte('SK31'), k28 = karte('SK28');
+  R(b, 'SK31 nur zu Beginn von LK23 (Heimatlage Freitag 09:00)', k31.zuBeginnVon === 'LK23', `zuBeginnVon: ${k31.zuBeginnVon || '–'}`);
+  const betrieb = (s.schwerpunkte || []).find(x => x.key === 'betrieb');
+  R(b, 'SK28 Pflichtkarte im Schwerpunkt „Filialen, Lager und Saisonstart“', (betrieb.pflicht || []).includes('SK28'), (betrieb.pflicht || []).join(', '));
+  const sk36 = (s.schwerpunkte || []).filter(x => (x.pflicht || []).includes('SK36')).map(x => x.key);
+  R(b, 'SK36 unverändert (nicht als Pflichtkarte eingeplant; gesonderte Entscheidung)', !sk36.length, sk36.join(', ') || 'in keinem Schwerpunkt Pflicht');
+  // Tagesindex entlang der Drehbuchreihenfolge (Montag der Folgewoche zählt als späterer Tag)
+  const tag = {}; { let tz = 0, vor = null; s.lagekarten.slice().sort((a, c) => a.minuteOffset - c.minuteOffset).forEach(l => { const d = l.simZeit.split(' ')[0]; if (vor !== null && d !== vor) tz++; vor = d; tag[l.id] = tz; }); }
+  const heimat = k => k.zuBeginnVon || (typeof k.minuteOffset === 'number' ? (s.lagekarten.filter(l => l.minuteOffset <= k.minuteOffset).sort((a, c) => c.minuteOffset - a.minuteOffset)[0] || {}).id : null);
+  const alle = s.roles.filter(r => r.id !== 'teilnehmer').map(r => r.id); let n = 0; const spaet = [], sk31 = [], sk28 = [];
+  for (const bes of ['empfohlen', 'alle']) for (const m of [45, 60, 90, 120, 180]) for (const sp of ['', ...(s.schwerpunkte || []).map(x => x.key)]) {
+    const rr = engine.recommendRoles(s, { targetMinutes: m }); const ids = bes === 'alle' ? alle : rr.roleIds;
+    const p = engine.buildAdaptiveSchedule(s, { targetMinutes: m, difficulty: 'mittel', roleCount: bes === 'alle' ? s.standardablauf.speakingOrder.length : rr.groups.length, schwerpunkt: sp || undefined, activeRoleIds: ids });
+    n++; let maxTag = -1, letzte = null; const id = `${m}/${sp || 'ausgewogen'}/${bes}`;
+    p.schedule.forEach(ev => { if (ev.type === 'lagekarte') { maxTag = Math.max(maxTag, tag[ev.id]); letzte = ev.id; return; }
+      const k = karte(ev.id); const h = heimat(k); if (h && maxTag - tag[h] >= 2) spaet.push(`${id}: ${k.id}`);
+      if (ev.id === 'SK31') sk31.push(`${id}@${letzte}`); if (ev.id === 'SK28') sk28.push(`${id}@${letzte}`); });
+  }
+  R(b, `keine Waterkant-Karte zwei oder mehr Tage nach ihrer Heimatlage (${n} Kombinationen)`, !spaet.length, spaet.slice(0, 5).join('; ') || '0 Fälle');
+  R(b, 'SK31 nur unmittelbar nach LK23', sk31.every(x => x.endsWith('@LK23')), sk31.join(' ') || 'nicht gespielt');
+  R(b, 'SK28 im Schwerpunkt „betrieb“ in jeder Kombination, jeweils mit LK22', sk28.filter(x => x.includes('/betrieb/')).length === 10 && sk28.every(x => x.endsWith('@LK22')), `${sk28.length} Kombinationen: ${sk28.filter(x => x.includes('/betrieb/')).length} davon „betrieb“`); }
 befunde.forEach(b => { b.ergebnis = b.regeln.every(r => r.ok) ? 'Regeln erfüllt' : 'Regel verletzt'; });
 fs.writeFileSync(OUT, JSON.stringify({ zeitpunkt: new Date().toISOString(), stufe: 'Regelprüfung am Drehbuch (Text/Struktur); F07 zusätzlich über die Integrationsläufe', befunde }, null, 2));
 befunde.forEach(b => console.log(`${b.id} ${b.ergebnis}: ${b.titel}` + b.regeln.filter(r => !r.ok).map(r => `\n   ✗ ${r.name}: ${r.beleg}`).join('')));

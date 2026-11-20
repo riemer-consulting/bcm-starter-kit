@@ -1,6 +1,6 @@
 # Moderationshandbuch Waterkant – „Wenn das Rechenzentrum brennt“
 
-Version 1.0 · Stand 2026-11-19 · erzeugt mit `tools/handbuch-waterkant.js` aus `data/scenario.waterkant.json`. Alle Inhalte fiktiv. Die Karten enthalten keine Rechts-, Versicherungs- oder Arbeitsschutzberatung; Fachfragen werden festgehalten und an die zuständigen Fachabteilungen gegeben.
+Version 1.0 · Stand 2026-11-20 · erzeugt mit `tools/handbuch-waterkant.js` aus `data/scenario.waterkant.json`. Alle Inhalte fiktiv. Die Karten enthalten keine Rechts-, Versicherungs- oder Arbeitsschutzberatung; Fachfragen werden festgehalten und an die zuständigen Fachabteilungen gegeben.
 
 **Status:** Arbeitsfassung für den moderierten Probelauf. Nicht freigegeben für einen externen Pilot (siehe Review-Paket, Dokument 12).
 
